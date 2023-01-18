@@ -1,0 +1,11 @@
+# Node artifact files
+node_modules/
+dist/
+
+#Env
+.env
+
+#Debug environment
+.vscode/
+# JetBrains IDE
+.idea/

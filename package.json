@@ -1,0 +1,23 @@
+{
+  "name": "@smartico/public-api",
+  "version": "0.0.1",
+  "description": "Smartico public API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.modern.mjs",
+  "source": "src/index.ts",
+  "scripts": {
+    "build": "microbundle --no-compress --format modern,cjs",
+    "start": "microbundle watch --no-compress --format modern,cjs",
+    "pub": "npm run build && npm publish"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "md5-typescript": "^1.0.5",
+    "typescript-map": "^0.1.0"
+  },
+  "devDependencies": {
+    "microbundle": "0.15.0"
+  }
+}
