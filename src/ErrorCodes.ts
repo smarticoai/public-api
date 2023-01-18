@@ -1,5 +1,3 @@
-import { SAWSpinErrorCode } from "./SmarticoProto/SAW/SAWDoSpinResponse";
-
 export const ErrorCodes_FatalStartingRange = 100000;
 
 export enum ErrorCodesGame {
@@ -16,4 +14,4 @@ export enum ErrorCodesGame {
 }
 
 
-export type ErrorCodes = SAWSpinErrorCode | ErrorCodesGame;
+export type ErrorCodes = ErrorCodesGame;

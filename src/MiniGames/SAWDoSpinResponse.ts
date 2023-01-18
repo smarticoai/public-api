@@ -1,4 +1,4 @@
-import { ProtocolResponse } from "../ProtocolResponse";
+import { ProtocolResponse } from "./../Base/ProtocolResponse";
 
 
 export enum SAWSpinErrorCode {

@@ -1,4 +1,4 @@
-import { ProtocolRequest } from "./ProtocolRequest";
+import { ProtocolRequest } from "./../Base/ProtocolRequest";
 
 
 export interface SAWDoSpinRequest extends ProtocolRequest {

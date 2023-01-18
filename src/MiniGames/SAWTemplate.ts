@@ -26,4 +26,9 @@ export interface SAWTemplate {
     maxSpinsCount: number;
     maxSpinsPediodMs: number;    
 
+    saw_skin_key: string;
+    saw_skin_ui_definition: {
+        skin_folder: string;
+        skin_css: string;
+    };    
 }
