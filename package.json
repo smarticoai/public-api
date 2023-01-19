@@ -9,10 +9,10 @@
   "scripts": {
     "build": "microbundle --no-compress --format modern,cjs",
     "start": "microbundle watch --no-compress --format modern,cjs",
-    "git-commit": "git add -A && git commit -m 'Pre-publish commit'",
     "git-push": "git push --follow-tags",
     "pub": "npm publish",
     "patch": "npm version patch",
+    ".sm-commit": "git add -A && git commit -m 'Pre-publish commit'",    
     ".sm-deploy": "npm-run-all build patch pub git-push"
   },
   "author": "",
