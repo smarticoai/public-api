@@ -15,6 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "md5-typescript": "^1.0.5",
+    "node-cache": "^5.1.2",
     "superagent": "^8.0.6",
     "typescript-map": "^0.1.0"
   },

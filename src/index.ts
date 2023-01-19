@@ -3,6 +3,7 @@ import { ILogger } from './ILogger';
 import { SmarticoAPI } from './SmarticoAPI'
 
 export * from './MiniGames';
+export * from './Core';
 
 export {
     SmarticoAPI,

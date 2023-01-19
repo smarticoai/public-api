@@ -1,7 +1,5 @@
-export enum AskForUsername {
-    NOASK = "no-ask",
-    ONSUMBIT = "on-submit"
-}
+import { SAWAskForUsername } from "./SAWAskForUsername";
+
 export interface SAWTemplateUI {
     skin: string;
     name: string;
@@ -26,7 +24,7 @@ export interface SAWTemplateUI {
 
     promo_image?: string;
     promo_text?: string;
-    ask_for_username?: AskForUsername;
+    ask_for_username?: SAWAskForUsername;
     show_prize_board?: boolean;
 
     max_spins_period_ms?: number;

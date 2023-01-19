@@ -1,8 +1,7 @@
-# The library for communication with Smartico API
-- Allows to make requests and receive a response over https
-- Describes data types
+# Smartico Public API
+API allows you to build and manage Smartico Gamification context on behalf of the user. It can be used in the JS/TS based frontend or in NodeJS backend
 
-# Install in your application
+# Installation
 
 ```bash
 npm install --save @smartico/public-api
@@ -11,65 +10,45 @@ npm install --save @smartico/public-api
 ## Usage
 
 ```typescript
-import { ProtocolRequest, GBaseRequest } from '@smartico/public-api';
+import { SmarticoAPI } from '@smartico/public-api';
 
-class Example {
-  
-    private static buildMessage<TRequest,TResponse>(rq: GBaseRequest): TResponse {
+const SAPI = new SmarticoAPI( 'your-label-api-key', 'your-brand-key', { logger: console });
+            
+const response = await SAPI.miniGamesGetTemplates(rsUser.user_ext_id);
 
-        const message: ProtocolRequest = {
-            api_key: rq.label_api_key,
-            brand_key: rq.brand_key,
-            ext_user_id: rq.smartico_ext_user_id,
-            uuid: Util.uuid(),
-            ts: new Date().getTime(),
-        };
-
-        return message as any
-    }
-
+response.templates.forEach( t => {
+    console.log(t.saw_template_ui_definition.name)
 }
+
 ```
 
-## Pre-requisite for publish new version of package
 
-### Set new package version
+## Development and publishing process
+
+### Publishing process
 
 ```sh
+git commit
 npm run build
-npm version [<newversion> | major | minor | patch ]
-```
-
-### Manual publish new version
-
-```sh
+npm version patch
 npm run pub
 ```
 
-# Developing & debugging locally
-
-### Enable Debug changes locally
-
-(reference article: https://terodox.tech/using-npm-link-for-package-development/)
+###  Debug locally
 
 In the public-api project console:
 
-1. Assure you are in the project folder (`cd <your-local-git-folder-for-this-project>/public-api `)
-2. Run:
-    ```sh
-    npm link
-    ```
-   This will create a symlink from the global `node_modules/@smartico/public-api` to your current folder - `<your-local-git-folder-for-this-project>/public-api`
+```sh
+npm link
+# when you are done
+npm unlink
+```
 
 Consumer project console:
 ```bash
 npm link @smartico/public-api
-```
 
-Now you are ready to debug locally the library!
-
-### Before you deploy !!! Cleanup if you enabled the debug changes locally steps above
-```bash
+# when you are done
 npm unlink npm link @smartico/public-api
 npm install npm link @smartico/public-api
 ```

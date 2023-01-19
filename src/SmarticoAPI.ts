@@ -7,9 +7,14 @@ import { SAWGetTemplatesRequest } from './MiniGames/SAWGetTemplatesRequest';
 import { SAWTemplate } from './MiniGames/SAWTemplate';
 import { IntUtils } from './IntUtils';
 import { ILogger } from './ILogger';
-import { SAWBuyInType, SAWBuyInTypeName, SAWGameType, SAWGameTypeName } from './MiniGames';
+import { SAWBuyInType, SAWBuyInTypeName, SAWDoSpinRequest, SAWDoSpinResponse, SAWGameType, SAWGameTypeName, SAWSpinErrorCode, SAWUtils } from './MiniGames';
+import { ECacheContext, OCache } from './OCache';
+import { GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
+import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
+import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
+const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
 
 interface IOptions {
     logger?: ILogger;
@@ -21,6 +26,9 @@ interface IOptions {
 class SmarticoAPI {
 
     private publicUrl: string;
+    private avatarDomain: string;
+
+
     private logger: ILogger;
     private logCIDs: ClassId[];
     private logHTTPTiming: boolean;
@@ -43,7 +51,8 @@ class SmarticoAPI {
         }
         label_api_key = label_api_key.substring(0, 36);
 
-        this.publicUrl = PUBLIC_API_URL.replace('{ENV_ID}', ENV_ID);        
+        this.publicUrl = PUBLIC_API_URL.replace('{ENV_ID}', ENV_ID);    
+        this.avatarDomain = AVATAR_DOMAIN.replace('{ENV_ID}', ENV_ID);    
     }    
 
     private async send<T>(message: any, expectCID?: ClassId): Promise<T> {
@@ -59,6 +68,7 @@ class SmarticoAPI {
         try {
             const timeStart = new Date().getTime();
             const res = await superagent.post(this.publicUrl).send(message);
+            // const res = await superagent.post('http://channel01.int.smartico.ai:81/services/public').send(message);
             const timeEnd = new Date().getTime();
 
             if (this.logHTTPTiming) {
@@ -118,10 +128,94 @@ class SmarticoAPI {
             ...payload
         };
 
+        if (message.ext_user_id === undefined || message.ext_user_id === null) {
+            delete message.ext_user_id;
+        }
+
         return message as any
     }
 
-    public async miniGamesGetTemplates(user_ext_id: string): Promise<SAWGetTemplatesResponse> {
+    public async coreReportCustomEvent(user_ext_id: string, eventType: string, payload: any = {}): Promise<any> {
+        const eventMessage = this.buildMessage<any, any>(user_ext_id, ClassId.EVENT, {
+            eventType,
+            payload
+        });
+
+        const eventResponse = await this.send<any>(eventMessage, ClassId.EVENT_RESPONSE);
+        return eventResponse;
+    }
+
+    public async coreGetTranslations(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec: number = 60): Promise<GetTranslationsResponse> {
+
+        const response = await OCache.use<GetTranslationsResponse>(`${lang_code}-${this.label_api_key}-${this.brand_api_key}`, ECacheContext.Translations, async () => {
+
+            const tsBaseRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(user_ext_id, ClassId.GET_TRANSLATIONS_REQUEST, {
+                lang_code: "EN",
+                hash_code: 0,
+                areas
+            });
+
+            const trBase = await this.send<GetTranslationsResponse>(tsBaseRQ);
+
+            if (lang_code !== "EN") {
+                const trUserRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(user_ext_id, ClassId.GET_TRANSLATIONS_REQUEST, {
+                    lang_code,
+                    hash_code: 0,
+                    areas
+                });  
+
+                const trUser = await this.send<GetTranslationsResponse>(trUserRQ);
+                
+                Object.keys(trUser.translations).forEach( k => {
+                    trBase.translations[k] = trUser.translations[k];
+                })
+            }
+
+            return trBase;
+
+        }, cacheSec );
+
+        return response;
+    }    
+
+    public async coreIdentifyLabel(user_ext_id: string, cacheSec: number = 60): Promise<GetLabelInfoResponse> {
+        
+        return OCache.use<GetLabelInfoResponse>(`${this.label_api_key} - ${this.brand_api_key}`, ECacheContext.LabelInfo, async () => {
+
+            const message = this.buildMessage<GetLabelInfoResponse, GetLabelInfoRequest>(user_ext_id, ClassId.GET_LABEL_INFO);
+
+            return this.send<GetLabelInfoResponse>(message, ClassId.GET_LABEL_INFO_RESPONSE)
+            
+        }, cacheSec);
+        
+    }    
+
+    public async coreIdentifyUser(user_ext_id: string): Promise<ResponseIdentify> {
+
+        const message = this.buildMessage<any, ResponseIdentify>(user_ext_id, ClassId.IDENTIFY, {
+            request_id: IntUtils.uuid() // AA: do we need request_id?
+        });
+
+        const r = await this.send<ResponseIdentify>(message, ClassId.IDENTIFY_RESPONSE);
+
+        if (!(r.avatar_id && r.avatar_id.startsWith('http'))) {
+            r.avatar_id = AVATAR_DOMAIN + '/avatar/' + r.avatar_id
+        }
+
+        return r;
+    }            
+
+    public async coreChangeUsername(user_ext_id: string, public_username_custom: string): Promise<{ public_username_custom: string }> {
+        
+        const message = this.buildMessage<any, any>(user_ext_id, ClassId.CHANGE_USERNAME, {
+            public_username_custom
+        });
+        
+        return this.send(message, ClassId.CHANGE_USERNAME_RESPONSE);
+    }
+
+
+    public async sawGetTemplates(user_ext_id: string): Promise<SAWGetTemplatesResponse> {
 
         const message = this.buildMessage<SAWGetTemplatesResponse, SAWGetTemplatesRequest>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST);
 
@@ -146,7 +240,7 @@ class SmarticoAPI {
 
     }
 
-    public miniGamesFormatTemplatesForWidget(templates: SAWTemplate[], pointsBalance: number): any[] {
+    public async sawFormatTemplatesForWidget(templates: SAWTemplate[], pointsBalance: number): Promise<any[]> {
 
         return templates.filter( r => r.saw_template_id >= 1).map( r => (
             {
@@ -158,11 +252,7 @@ class SmarticoAPI {
                 jackpot: r.jackpot_current,
                 spin_count: r.spin_count,
                 buyin_cost_points: r.buyin_cost_points,
-                can_play: (
-                    r.saw_buyin_type_id === SAWBuyInType.Free
-                    || (r.saw_buyin_type_id === SAWBuyInType.Points && r.buyin_cost_points <= pointsBalance)
-                    || (r.saw_buyin_type_id === SAWBuyInType.Spins && r.spin_count > 0)
-                ), 
+                can_play: SAWUtils.canPlay(r, pointsBalance), 
                 icon: 
                     r.saw_skin_ui_definition?.skin_folder
                     ? r.saw_skin_ui_definition?.skin_folder + '/ico.png'
@@ -171,6 +261,35 @@ class SmarticoAPI {
         ));
 
     }
+
+    public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id: number): Promise<SAWDoSpinResponse> {
+
+        const message = this.buildMessage<SAWDoSpinRequest, SAWDoSpinResponse>(user_ext_id, ClassId.SAW_DO_SPIN_REQUEST, {
+            saw_template_id,
+            request_id: IntUtils.uuid()
+        });
+
+        const spinAttemptResponse = await this.send<SAWDoSpinResponse>(message, ClassId.SAW_DO_SPIN_RESPONSE);
+
+        // to simulate fail
+        // response.errCode = SAWSpinErrorCode.SAW_NO_SPINS;
+
+        const status: string = {
+            [SAWSpinErrorCode.SAW_OK]: 'OK',
+            [SAWSpinErrorCode.SAW_NO_SPINS]: 'NO SPINS AVAILABLE',
+            [SAWSpinErrorCode.SAW_PRIZE_POOL_EMPTY]: 'PRIZE POOL IS EMPTY',
+            [SAWSpinErrorCode.SAW_NOT_ENOUGH_POINTS]: 'NOT ENOUGH POINTS',
+            [SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED]: 'MAX SPIN ATTEMPTS REACHED',
+        }[spinAttemptResponse.errCode] || 'OTHER';
+
+        await this.coreReportCustomEvent(user_ext_id, 'minigame_attempt', {
+            saw_template_id,
+            status,
+            round_id,
+        });
+
+        return spinAttemptResponse;
+    }        
 
 }
 
