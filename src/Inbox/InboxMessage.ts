@@ -11,4 +11,6 @@ export interface InboxMessage {
         title: string;
         html_body: string;
     };
+    engagement_uuid: string;
+    ff: string;
 }
