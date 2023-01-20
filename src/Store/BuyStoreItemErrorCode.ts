@@ -1,4 +1,4 @@
-export enum BuyShopItemErrorCode {
+export enum BuyStoreItemErrorCode {
     FAILED_TO_BUY_SHOP_ITEM = 121,
     SHOP_NO_BALANCE = 11000,
     SHOP_WRONG_LABEL = 11001,

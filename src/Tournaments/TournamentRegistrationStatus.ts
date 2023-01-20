@@ -1,0 +1,11 @@
+export enum TournamentRegistrationStatus {
+
+    NOT_REGISTERED = 0,
+    REGISTERED = 1,
+    FINISHED = 2,
+    PENDING = 3,
+    CANCELLED = 4,
+    REGISTERED_PENDING_QUALIFICATION = 5,
+    QUALIFIED_PENDING_REGISTRATION = 6
+}
+

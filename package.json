@@ -22,6 +22,7 @@
   "license": "ISC",
   "dependencies": {
     "md5-typescript": "^1.0.5",
+    "node-fetch": "^3.3.0",
     "superagent": "^8.0.6",
     "typescript-map": "^0.1.0"
   },

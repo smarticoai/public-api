@@ -1,18 +1,21 @@
-import * as superagent from 'superagent';
 import { ClassId } from "./Base/ClassId";
 import { ProtocolRequest } from './Base/ProtocolRequest';
 import { ProtocolResponse } from './Base/ProtocolResponse';
 import { SAWGetTemplatesResponse } from './MiniGames/SAWGetTemplatesResponse';
 import { SAWGetTemplatesRequest } from './MiniGames/SAWGetTemplatesRequest';
-import { SAWTemplate } from './MiniGames/SAWTemplate';
 import { IntUtils } from './IntUtils';
 import { ILogger } from './ILogger';
-import { SAWBuyInType, SAWBuyInTypeName, SAWDoSpinRequest, SAWDoSpinResponse, SAWGameType, SAWGameTypeName, SAWSpinErrorCode, SAWUtils } from './MiniGames';
+import { SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode } from './MiniGames';
 import { ECacheContext, OCache } from './OCache';
 import { GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
+import { GetStoreItemsResponse } from './Store';
+import { GetAchievementMapRequest, GetAchievementMapResponse } from './Missions';
+import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
+
+
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
@@ -68,7 +71,7 @@ class SmarticoAPI {
         
         try {
             const timeStart = new Date().getTime();
-            const res = await superagent.post(this.publicUrl).send(message);
+            const res = await fetch(this.publicUrl, { method: 'POST', body: JSON.stringify(message), headers: { 'Content-Type': 'application/json' }});
             // const res = await superagent.post('http://channel01.int.smartico.ai:81/services/public').send(message);
             const timeEnd = new Date().getTime();
 
@@ -76,7 +79,8 @@ class SmarticoAPI {
                 this.logger.always('HTTP time, ms:' + (timeEnd - timeStart))
             }
             
-            result = JSON.parse(res.text);
+            result = await res.json();
+
         } catch (e) {
             this.logger.error(`Failed to make request to smartico channel. ${e.message}`, { url: this.publicUrl, request: message, error: e.message });
             throw(new Error(`Failed to make request to smartico channel. ${e.message}`));
@@ -177,7 +181,7 @@ class SmarticoAPI {
         }, cacheSec );
 
         return response;
-    }    
+    }        
 
     public async coreIdentifyLabel(user_ext_id: string, cacheSec: number = 60): Promise<GetLabelInfoResponse> {
         
@@ -241,28 +245,6 @@ class SmarticoAPI {
 
     }
 
-    public async sawFormatTemplatesForWidget(templates: SAWTemplate[], pointsBalance: number): Promise<any[]> {
-
-        return templates.filter( r => r.saw_template_id >= 1).map( r => (
-            {
-                id: r.saw_template_id,
-                name: r.saw_template_ui_definition.name,
-                // description: r.saw_template_ui_definition.description,
-                game_type: SAWGameTypeName[r.saw_game_type_id] || 'unknown',
-                buyin_type: SAWBuyInTypeName[r.saw_buyin_type_id] || 'unknown',
-                jackpot: r.jackpot_current,
-                spin_count: r.spin_count,
-                buyin_cost_points: r.buyin_cost_points,
-                can_play: SAWUtils.canPlay(r, pointsBalance), 
-                icon: 
-                    r.saw_skin_ui_definition?.skin_folder
-                    ? r.saw_skin_ui_definition?.skin_folder + '/ico.png'
-                    : `https://libs.smartico.ai/gf/images/saw/${r.saw_skin_key}/ico.png`
-            }
-        ));
-
-    }
-
     public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id: number): Promise<SAWDoSpinResponse> {
 
         const message = this.buildMessage<SAWDoSpinRequest, SAWDoSpinResponse>(user_ext_id, ClassId.SAW_DO_SPIN_REQUEST, {
@@ -299,11 +281,41 @@ class SmarticoAPI {
             offset
         });
 
-        const response = await this.send<GetInboxMessagesResponse>(message);
-
-        return response;
+        return await this.send<GetInboxMessagesResponse>(message);
 
     }    
+
+    public async storeGetItems(user_ext_id: string): Promise<GetStoreItemsResponse> {
+
+        const message = this.buildMessage<any, GetStoreItemsResponse>(user_ext_id, ClassId.GET_SHOP_ITEMS_REQUEST);
+        return await this.send<GetStoreItemsResponse>(message);
+
+    }
+
+    public async missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
+
+        const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
+        return await this.send<GetAchievementMapResponse>(message);
+
+    }
+
+    public async tournamentsGetLobby(user_ext_id: string): Promise<GetTournamentsResponse> {
+
+        const message = this.buildMessage<GetTournamentsRequest, GetTournamentsResponse>(user_ext_id, ClassId.GET_TOURNAMENT_LOBBY_REQUEST);
+        return await this.send<GetTournamentsResponse>(message);
+
+    }
+
+    public async tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number): Promise<GetTournamentInfoResponse> {
+
+        const message = this.buildMessage<GetTournamentInfoRequest, GetTournamentInfoResponse>(user_ext_id, ClassId.GET_TOURNAMENT_INFO_REQUEST, 
+            {
+                tournamentInstanceId
+            }            
+        );
+        return await this.send<GetTournamentInfoResponse>(message);
+
+    }
 
 }
 

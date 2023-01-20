@@ -1,5 +1,5 @@
 import { ProtocolMessage } from "../Base/ProtocolMessage";
 
-export interface BuyShopItemRequest extends ProtocolMessage {
+export interface BuyStoreItemRequest extends ProtocolMessage {
     itemId: number;
 }

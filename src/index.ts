@@ -8,6 +8,7 @@ export * from './Leaderboard';
 export * from './MiniGames';
 export * from './Missions';
 export * from './Store';
+export * from './Tournaments';
 
 
 export {

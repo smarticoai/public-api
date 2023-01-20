@@ -1,4 +1,4 @@
-export interface ShopItemPublicMeta {
+export interface StoreItemPublicMeta {
     price: string;
     image_url: string;
     name: string;
