@@ -16,7 +16,7 @@
     "pub": "npm publish",
     "patch": "npm version patch",
     ".sm-commit": "git add -A && git commit -m 'Pre-publish commit'",
-    ".sm-deploy": "npm-run-all unlink build patch pub git-push"
+    ".sm-deploy": "npm-run-all build patch pub git-push"
   },
   "author": "",
   "license": "ISC",
