@@ -12,6 +12,7 @@ import { ECacheContext, OCache } from './OCache';
 import { GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
+import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
@@ -182,9 +183,9 @@ class SmarticoAPI {
         
         return OCache.use<GetLabelInfoResponse>(`${this.label_api_key} - ${this.brand_api_key}`, ECacheContext.LabelInfo, async () => {
 
-            const message = this.buildMessage<GetLabelInfoResponse, GetLabelInfoRequest>(user_ext_id, ClassId.GET_LABEL_INFO);
+            const message = this.buildMessage<GetLabelInfoResponse, GetLabelInfoRequest>(user_ext_id, ClassId.INIT);
 
-            return this.send<GetLabelInfoResponse>(message, ClassId.GET_LABEL_INFO_RESPONSE)
+            return this.send<GetLabelInfoResponse>(message, ClassId.INIT_RESPONSE)
             
         }, cacheSec);
         
@@ -207,11 +208,11 @@ class SmarticoAPI {
 
     public async coreChangeUsername(user_ext_id: string, public_username_custom: string): Promise<{ public_username_custom: string }> {
         
-        const message = this.buildMessage<any, any>(user_ext_id, ClassId.CHANGE_USERNAME, {
+        const message = this.buildMessage<any, any>(user_ext_id, ClassId.CLIENT_SET_CUSTOM_USERNAME_REQUEST, {
             public_username_custom
         });
         
-        return this.send(message, ClassId.CHANGE_USERNAME_RESPONSE);
+        return this.send(message, ClassId.CLIENT_SET_CUSTOM_USERNAME_RESPONSE);
     }
 
 
@@ -290,6 +291,19 @@ class SmarticoAPI {
 
         return spinAttemptResponse;
     }        
+
+    public async inboxGetMessages(user_ext_id: string, limit: number = 10, offset: number = 0): Promise<GetInboxMessagesResponse> {
+
+        const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(user_ext_id, ClassId.GET_ACTIVITY_LOG_REQUEST, {
+            limit,
+            offset
+        });
+
+        const response = await this.send<GetInboxMessagesResponse>(message);
+
+        return response;
+
+    }    
 
 }
 

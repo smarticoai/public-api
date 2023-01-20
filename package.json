@@ -9,17 +9,19 @@
   "scripts": {
     "build": "microbundle --no-compress --format modern,cjs",
     "start": "microbundle watch --no-compress --format modern,cjs",
+    "link": "npm link",
+    "dev": "npm-run-all link start",
+    "unlink": "npm unlink",
     "git-push": "git push --follow-tags",
     "pub": "npm publish",
     "patch": "npm version patch",
-    ".sm-commit": "git add -A && git commit -m 'Pre-publish commit'",    
-    ".sm-deploy": "npm-run-all build patch pub git-push"
+    ".sm-commit": "git add -A && git commit -m 'Pre-publish commit'",
+    ".sm-deploy": "npm-run-all unlink build patch pub git-push"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "md5-typescript": "^1.0.5",
-    "node-cache": "^5.1.2",
     "superagent": "^8.0.6",
     "typescript-map": "^0.1.0"
   },

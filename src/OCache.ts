@@ -1,4 +1,5 @@
-import NodeCache from 'node-cache';
+import { NodeCache } from "./NodeCache";
+
 
 export enum ECacheContext {
     Translations,
@@ -18,7 +19,7 @@ export class OCache {
         const key = cacheContext.toString() + '_' + JSON.stringify(oKey);
 
         if (this.cache[cacheContext] === undefined) {
-            this.cache[cacheContext] = new NodeCache( { useClones: !WITH_REF_CACHE.includes(cacheContext) } );
+            this.cache[cacheContext] = new NodeCache( );
         }
 
         return this.cache[cacheContext].get(key);
