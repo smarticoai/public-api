@@ -46,9 +46,8 @@ npm unlink
 
 Consumer project console:
 ```bash
-npm link @smartico/public-api
+npm link @smartico/public-api --legacy-peer-deps
 
 # when you are done
-npm unlink npm link @smartico/public-api
-npm install npm link @smartico/public-api
+npm unlink @smartico/public-api --legacy-peer-deps && npm install @smartico/public-api --legacy-peer-deps
 ```
