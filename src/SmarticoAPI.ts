@@ -26,18 +26,19 @@ interface IOptions {
     logHTTPTiming?: boolean;
 }
 
+type MessageSender = (message: any, publicApuUrl: string) => Promise<any>;
+
 
 class SmarticoAPI {
 
     private publicUrl: string;
     private avatarDomain: string;
 
-
     private logger: ILogger;
     private logCIDs: ClassId[];
     private logHTTPTiming: boolean;
 
-    public constructor(private label_api_key: string, private brand_api_key: string, options: IOptions = {}) {
+    public constructor(private label_api_key: string, private brand_api_key: string, private messageSender: MessageSender, options: IOptions = {}) {
 
         this.logger = options.logger || (console as any);
 
@@ -71,15 +72,12 @@ class SmarticoAPI {
         
         try {
             const timeStart = new Date().getTime();
-            const res = await fetch(this.publicUrl, { method: 'POST', body: JSON.stringify(message), headers: { 'Content-Type': 'application/json' }});
-            // const res = await superagent.post('http://channel01.int.smartico.ai:81/services/public').send(message);
+            result = await this.messageSender(message, this.publicUrl);
             const timeEnd = new Date().getTime();
 
             if (this.logHTTPTiming) {
                 this.logger.always('HTTP time, ms:' + (timeEnd - timeStart))
             }
-            
-            result = await res.json();
 
         } catch (e) {
             this.logger.error(`Failed to make request to smartico channel. ${e.message}`, { url: this.publicUrl, request: message, error: e.message });
@@ -204,7 +202,7 @@ class SmarticoAPI {
         const r = await this.send<ResponseIdentify>(message, ClassId.IDENTIFY_RESPONSE);
 
         if (!(r.avatar_id && r.avatar_id.startsWith('http'))) {
-            r.avatar_id = AVATAR_DOMAIN + '/avatar/' + r.avatar_id
+            r.avatar_id = this.avatarDomain + '/avatar/' + r.avatar_id
         }
 
         return r;
@@ -319,4 +317,4 @@ class SmarticoAPI {
 
 }
 
-export { SmarticoAPI }
+export { SmarticoAPI, MessageSender }

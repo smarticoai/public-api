@@ -1,6 +1,6 @@
 import { ClassId } from './Base/ClassId'
 import { ILogger } from './ILogger';
-import { SmarticoAPI } from './SmarticoAPI'
+import { MessageSender, SmarticoAPI } from './SmarticoAPI'
 
 export * from './Core';
 export * from './Inbox';
@@ -13,6 +13,7 @@ export * from './Tournaments';
 
 export {
     SmarticoAPI,
+    MessageSender,
     ClassId,
     ILogger
 }

@@ -22,11 +22,10 @@
   "license": "ISC",
   "dependencies": {
     "md5-typescript": "^1.0.5",
-    "node-fetch": "^3.3.0",
-    "superagent": "^8.0.6",
     "typescript-map": "^0.1.0"
   },
   "devDependencies": {
+    "@types/node-fetch": "^2.6.2",
     "microbundle": "0.15.0",
     "npm-run-all": "4.1.5"
   }
