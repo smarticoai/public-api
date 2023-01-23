@@ -50,15 +50,28 @@ class SmarticoAPI {
         this.logCIDs = options.logCIDs || [];
         this.logHTTPTiming = options.logHTTPTiming || false;
 
-        let ENV_ID = this.label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
+        this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
+        this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key);
+
+        this.label_api_key = label_api_key.substring(0, 36);
+
+    }    
+
+    private static getEnvId(label_api_key: string): string {
+        let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
         
         if (ENV_ID === '1' || ENV_ID === '2') {
             ENV_ID = ''
         }
-        label_api_key = label_api_key.substring(0, 36);
+        return ENV_ID;        
+    }
 
-        this.publicUrl = PUBLIC_API_URL.replace('{ENV_ID}', ENV_ID);    
-        this.avatarDomain = AVATAR_DOMAIN.replace('{ENV_ID}', ENV_ID);    
+    public static getPublicUrl(label_api_key: string): string {
+        return PUBLIC_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvId(label_api_key));    
+    }
+
+    public static getAvatarUrl(label_api_key: string): string {
+        return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvId(label_api_key));    
     }    
 
     private async send<T>(message: any, expectCID?: ClassId): Promise<T> {
