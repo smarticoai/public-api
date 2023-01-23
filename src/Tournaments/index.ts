@@ -1,35 +1,16 @@
-import { GetTournamentInfoRequest } from "./GetTournamentInfoRequest";
-import { GetTournamentInfoResponse } from "./GetTournamentInfoResponse";
-import { GetTournamentsRequest } from "./GetTournamentsRequest";
-import { GetTournamentsResponse } from "./GetTournamentsResponse";
-import { Tournament } from "./Tournament";
-import { TournamentInstanceStatus } from "./TournamentInstanceStatus";
-import { TournamentPlayer } from "./TournamentPlayer";
-import { TournamentPrize } from "./TournamentPrize";
-import { TournamentPublicMeta } from "./TournamentPublicMeta";
-import { TournamentRegisterRequest } from "./TournamentRegisterRequest";
-import { TournamentRegisterResponse } from "./TournamentRegisterResponse";
-import { TournamentRegistrationError } from "./TournamentRegistrationError";
-import { TournamentRegistrationStatus } from "./TournamentRegistrationStatus";
-import { TournamentRegistrationType } from "./TournamentRegistrationType";
-import { TournamentType } from "./TournamentType";
-import { TournamentUtils } from "./TournamentUtils";
-
-export {
-    GetTournamentInfoRequest,
-    GetTournamentInfoResponse,
-    GetTournamentsRequest,
-    GetTournamentsResponse,
-    Tournament,
-    TournamentInstanceStatus,
-    TournamentPlayer,
-    TournamentPrize,
-    TournamentPublicMeta,
-    TournamentRegisterRequest,
-    TournamentRegisterResponse,
-    TournamentRegistrationError,
-    TournamentRegistrationStatus,
-    TournamentRegistrationType,
-    TournamentType,
-    TournamentUtils
-}
+export * from "./GetTournamentInfoRequest";
+export * from "./GetTournamentInfoResponse";
+export * from "./GetTournamentsRequest";
+export * from "./GetTournamentsResponse";
+export * from "./Tournament";
+export * from "./TournamentInstanceStatus";
+export * from "./TournamentPlayer";
+export * from "./TournamentPrize";
+export * from "./TournamentPublicMeta";
+export * from "./TournamentRegisterRequest";
+export * from "./TournamentRegisterResponse";
+export * from "./TournamentRegistrationError";
+export * from "./TournamentRegistrationStatus";
+export * from "./TournamentRegistrationType";
+export * from "./TournamentType";
+export * from "./TournamentUtils";

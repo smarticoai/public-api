@@ -1,11 +1,8 @@
-import { GetInboxMessagesRequest } from "./GetInboxMessagesRequest";
-import { GetInboxMessagesResponse } from "./GetInboxMessagesResponse";
-import { InboxMessage } from "./InboxMessage";
-import { InboxMessageType } from "./InboxMessageType";
-
-export {
-    InboxMessage,
-    InboxMessageType,
-    GetInboxMessagesRequest,
-    GetInboxMessagesResponse,
-}
+export * from "./GetInboxMessagesRequest";
+export * from "./GetInboxMessagesResponse";
+export * from "./InboxMessage";
+export * from "./InboxMessageType";
+export * from "./MarkInboxMessageReadRequest";
+export * from "./MarkInboxMessageReadResponse";
+export * from "./MarkInboxMessageStarredRequest";
+export * from "./MarkInboxMessageStarredResponse";

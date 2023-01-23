@@ -9,8 +9,9 @@ export interface InboxMessage {
         type: InboxMessageType;
         image: string;
         title: string;
-        html_body: string;
-    };
-    engagement_uuid: string;
-    ff: string;
+        html_body: string;  
+    }; 
+    engagement_uid: string;
+    is_read: boolean;
+    is_starred: boolean;
 }
