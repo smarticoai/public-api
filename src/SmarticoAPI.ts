@@ -326,12 +326,12 @@ class SmarticoAPI {
         const response = await this.send<GetTournamentInfoResponse>(message);
         
         if (response.userPosition?.avatar_id) {
-            response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_url, this.avatarDomain);
+            response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_id, this.avatarDomain);
         }
 
         if (response.tournamentInfo.players?.length) {
             response.tournamentInfo.players.forEach(p => {
-                p.avatar_url = CoreUtils.avatarUrl(p.avatar_url, this.avatarDomain);
+                p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain);
             });
         }
 
