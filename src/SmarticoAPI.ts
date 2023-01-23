@@ -7,13 +7,14 @@ import { IntUtils } from './IntUtils';
 import { ILogger } from './ILogger';
 import { SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode } from './MiniGames';
 import { ECacheContext, OCache } from './OCache';
-import { GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
+import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
 import { GetStoreItemsResponse } from './Store';
 import { GetAchievementMapRequest, GetAchievementMapResponse } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
+import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardPeriodType } from "./Leaderboard";
 
 
 
@@ -201,9 +202,7 @@ class SmarticoAPI {
 
         const r = await this.send<ResponseIdentify>(message, ClassId.IDENTIFY_RESPONSE);
 
-        if (!(r.avatar_id && r.avatar_id.startsWith('http'))) {
-            r.avatar_id = this.avatarDomain + '/avatar/' + r.avatar_id
-        }
+        r.avatar_id = CoreUtils.avatarUrl(r.avatar_id, this.avatarDomain);
 
         return r;
     }            
@@ -311,9 +310,47 @@ class SmarticoAPI {
                 tournamentInstanceId
             }            
         );
-        return await this.send<GetTournamentInfoResponse>(message);
+        const response = await this.send<GetTournamentInfoResponse>(message);
+        
+        if (response.userPosition?.avatar_id) {
+            response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_url, this.avatarDomain);
+        }
+
+        if (response.tournamentInfo.players?.length) {
+            response.tournamentInfo.players.forEach(p => {
+                p.avatar_url = CoreUtils.avatarUrl(p.avatar_url, this.avatarDomain);
+            });
+        }
+
+        return response;
 
     }
+
+    public async leaderboardGet(user_ext_id: string, period_type_id: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<GetLeaderBoardsResponse> {
+
+        const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(user_ext_id, ClassId.GET_LEADERS_BOARD_REQUEST, 
+            {
+                period_type_id,
+                snapshot_offset: prevPeriod ? 1 : 0,
+                include_users: true
+            }            
+        );
+        const response = await this.send<GetLeaderBoardsResponse>(message);
+
+        if (response.map[period_type_id]?.userPosition?.avatar_id) {
+            response.map[period_type_id].userPosition.avatar_url = CoreUtils.avatarUrl(response.map[period_type_id].userPosition.avatar_id, this.avatarDomain);
+        }
+
+        if (response.map[period_type_id]?.positions?.length) {
+            response.map[period_type_id].positions.forEach(p => {
+                p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain);
+            });
+            
+        }
+        
+        return response;
+
+    }    
 
 }
 

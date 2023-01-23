@@ -1,4 +1,5 @@
 import { ActivityTypeLimited } from './ActivityTypeLimited'
+import { CoreUtils } from './CoreUtils'
 import { GetLabelInfoRequest } from './GetLabelInfoRequest'
 import { GetLabelInfoResponse } from './GetLabelInfoResponse'
 import { GetTranslationsRequest } from './GetTranslationsRequest'
@@ -16,5 +17,6 @@ export {
     TranslationArea,
     PublicLabelSettings,
     ResponseIdentify,
-    ActivityTypeLimited
+    ActivityTypeLimited,
+    CoreUtils
 }
