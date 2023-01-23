@@ -1,6 +1,6 @@
 import { ProtocolMessage } from "../Base/ProtocolMessage";
 
 
-export interface SetMessageIsStarredResponse extends ProtocolMessage {
+export interface MarkInboxMessageStarredResponse extends ProtocolMessage {
     errCode: number;
 }

@@ -1,6 +1,6 @@
 import { ProtocolMessage } from "../Base/ProtocolMessage";
 
 
-export interface SetMessageIsStarredRequest extends ProtocolMessage {
+export interface MarkInboxMessageStarredRequest extends ProtocolMessage {
     engagement_uid: string;
 } 
