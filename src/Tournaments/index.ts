@@ -13,6 +13,7 @@ import { TournamentRegistrationError } from "./TournamentRegistrationError";
 import { TournamentRegistrationStatus } from "./TournamentRegistrationStatus";
 import { TournamentRegistrationType } from "./TournamentRegistrationType";
 import { TournamentType } from "./TournamentType";
+import { TournamentUtils } from "./TournamentUtils";
 
 export {
     GetTournamentInfoRequest,
@@ -30,4 +31,5 @@ export {
     TournamentRegistrationStatus,
     TournamentRegistrationType,
     TournamentType,
+    TournamentUtils
 }
