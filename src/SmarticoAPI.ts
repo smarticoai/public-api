@@ -14,7 +14,7 @@ import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
 import { GetStoreItemsResponse } from './Store';
 import { GetAchievementMapRequest, GetAchievementMapResponse } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
-import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardPeriodType } from "./Leaderboard";
+import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 
 
 
@@ -339,7 +339,7 @@ class SmarticoAPI {
 
     }
 
-    public async leaderboardGet(user_ext_id: string, period_type_id: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<GetLeaderBoardsResponse> {
+    public async leaderboardGet(user_ext_id: string, period_type_id: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<LeaderBoardDetails> {
 
         const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(user_ext_id, ClassId.GET_LEADERS_BOARD_REQUEST, 
             {
@@ -361,7 +361,7 @@ class SmarticoAPI {
             
         }
         
-        return response;
+        return response[period_type_id];
 
     }    
 
