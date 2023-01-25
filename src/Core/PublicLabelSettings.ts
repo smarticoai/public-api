@@ -31,4 +31,6 @@ export enum PublicLabelSettings {
   
     GAMIFICATION_SHOW_POWERED_BY = "GAMIFICATION_SHOW_POWERED_BY",
     _system_leader_board_mask_username = "_system_leader_board_mask_username",
+
+    INBOX_PUBLIC_CDN = "INBOX_PUBLIC_CDN",
 }
