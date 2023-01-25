@@ -1,4 +1,7 @@
 export enum ClassId {
+    PING = 1,
+    PONG = 2,
+
 
     INIT = 3,
     INIT_RESPONSE = 4,
