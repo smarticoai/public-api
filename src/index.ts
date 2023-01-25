@@ -1,6 +1,7 @@
-export * from './Base/ClassId'
+export * from './Base/ClassId';
 export * from './ILogger';
-export * from './SmarticoAPI'
+export * from './SmarticoAPI';
+export * from './CookieStore';
 
 export * from './Core';
 export * from './Inbox';
