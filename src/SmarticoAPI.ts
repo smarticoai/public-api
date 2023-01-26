@@ -15,6 +15,7 @@ import { GetStoreItemsResponse } from './Store';
 import { GetAchievementMapRequest, GetAchievementMapResponse } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
+import { GetLevelMapResponse } from "./Level";
 
 
 
@@ -56,7 +57,7 @@ class SmarticoAPI {
 
         this.label_api_key = label_api_key.substring(0, 36);
 
-    }    
+    }
 
     public static getEnvId(label_api_key: string): string {
         let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
@@ -64,7 +65,7 @@ class SmarticoAPI {
         if (ENV_ID === '1' || ENV_ID === '2') {
             ENV_ID = ''
         }
-        return ENV_ID;        
+        return ENV_ID;
     }
 
     public static getCleanLabelApiKey(label_api_key: string): string {
@@ -257,7 +258,7 @@ class SmarticoAPI {
                         p.saw_prize_ui_definition.aknowledge_message = IntUtils.replaceAll(p.saw_prize_ui_definition.aknowledge_message, '{{jackpot}}', t.jackpot_current);
                     })
                 }
-            });   
+            });
         }
 
         return response;
@@ -291,7 +292,7 @@ class SmarticoAPI {
         });
 
         return spinAttemptResponse;
-    }        
+    }
 
     public async inboxGetMessages(user_ext_id: string, limit: number = 10, offset: number = 0): Promise<GetInboxMessagesResponse> {
 
@@ -302,7 +303,7 @@ class SmarticoAPI {
 
         return await this.send<GetInboxMessagesResponse>(message);
 
-    }    
+    }
 
     public async storeGetItems(user_ext_id: string): Promise<GetStoreItemsResponse> {
 
@@ -330,7 +331,7 @@ class SmarticoAPI {
         const message = this.buildMessage<GetTournamentInfoRequest, GetTournamentInfoResponse>(user_ext_id, ClassId.GET_TOURNAMENT_INFO_REQUEST, 
             {
                 tournamentInstanceId
-            }            
+            }
         );
         const response = await this.send<GetTournamentInfoResponse>(message);
         
@@ -355,7 +356,7 @@ class SmarticoAPI {
                 period_type_id,
                 snapshot_offset: prevPeriod ? 1 : 0,
                 include_users: true
-            }            
+            }
         );
         const response = await this.send<GetLeaderBoardsResponse>(message);
 
@@ -372,7 +373,12 @@ class SmarticoAPI {
         
         return response[period_type_id];
 
-    }    
+    }
+
+    public async levelsGet(user_ext_id: string): Promise<GetLevelMapResponse> {
+        const message = this.buildMessage<any, GetLevelMapResponse>(user_ext_id, ClassId.GET_LEVEL_MAP_REQUEST);
+        return await this.send<GetLevelMapResponse>(message);
+    }
 
 }
 
