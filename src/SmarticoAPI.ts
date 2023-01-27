@@ -18,7 +18,6 @@ import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, Le
 import { GetLevelMapResponse } from "./Level";
 
 
-
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
@@ -35,6 +34,8 @@ type MessageSender = (message: any, publicApuUrl: string) => Promise<any>;
 class SmarticoAPI {
 
     private publicUrl: string;
+    private wsUrl: string;
+    private partnerUrl: string;
     private avatarDomain: string;
 
     private logger: ILogger;
@@ -53,9 +54,11 @@ class SmarticoAPI {
         this.logHTTPTiming = options.logHTTPTiming || false;
 
         this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
+        this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key);
+
         this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key);
 
-        this.label_api_key = label_api_key.substring(0, 36);
+        this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key);
 
     }
 
