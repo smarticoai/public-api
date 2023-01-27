@@ -349,7 +349,7 @@ class SmarticoAPI {
 
     }
 
-    public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<any> {
+    public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<LeaderBoardDetails> {
 
         const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(user_ext_id, ClassId.GET_LEADERS_BOARD_REQUEST, 
             {
@@ -361,8 +361,13 @@ class SmarticoAPI {
 
         const response = await this.send<GetLeaderBoardsResponse>(message);
 
-        const [firstKey, secondKey] = Object.keys(response.map);
-        const boardKey = period_type_id || secondKey;
+
+
+        const boardKey =  Object.keys(response.map).find( k => period_type_id === undefined || k === period_type_id?.toString());
+
+        if (boardKey === undefined) {
+            return undefined;
+        }
 
         if (response.map[boardKey]?.userPosition?.avatar_id) {
             response.map[boardKey].userPosition.avatar_url = CoreUtils.avatarUrl(response.map[boardKey].userPosition.avatar_id, this.avatarDomain);
