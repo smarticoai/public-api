@@ -349,7 +349,7 @@ class SmarticoAPI {
 
     }
 
-    public async leaderboardGet(user_ext_id: string, period_type_id: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<LeaderBoardDetails> {
+    public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<any> {
 
         const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(user_ext_id, ClassId.GET_LEADERS_BOARD_REQUEST, 
             {
@@ -358,20 +358,24 @@ class SmarticoAPI {
                 include_users: true
             }
         );
+
         const response = await this.send<GetLeaderBoardsResponse>(message);
 
-        if (response.map[period_type_id]?.userPosition?.avatar_id) {
-            response.map[period_type_id].userPosition.avatar_url = CoreUtils.avatarUrl(response.map[period_type_id].userPosition.avatar_id, this.avatarDomain);
+        const [firstKey, secondKey] = Object.keys(response.map);
+        const boardKey = period_type_id || secondKey;
+
+        if (response.map[boardKey]?.userPosition?.avatar_id) {
+            response.map[boardKey].userPosition.avatar_url = CoreUtils.avatarUrl(response.map[boardKey].userPosition.avatar_id, this.avatarDomain);
         }
 
-        if (response.map[period_type_id]?.positions?.length) {
-            response.map[period_type_id].positions.forEach(p => {
+        if (response.map[boardKey]?.positions?.length) {
+            response.map[boardKey].positions.forEach(p => {
                 p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain);
             });
             
         }
         
-        return response[period_type_id];
+        return response.map[boardKey];
 
     }
 
