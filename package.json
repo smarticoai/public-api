@@ -17,13 +17,13 @@
     "patch": "npm version patch",
     ".sm-commit": "git add -A && git commit -m 'Pre-publish commit'",
     ".sm-deploy": "npm-run-all build patch pub git-push",
-    "bump": "npm-run-all --parallel bump-r-server bump-r-client bump-tracker bump-ach bump-bo-server bump-bo-client",
+    "bump": "npm-run-all bump-r-server bump-r-client bump-tracker bump-ach bump-bo-server bump-bo-client",
     "bump-r-server": "cd ../r-games/r-server && npm install @smartico/public-api@latest",
     "bump-r-client": "cd ../r-games/r-client && npm install @smartico/public-api@latest",
     "bump-tracker": "cd ../tracker && npm install @smartico/public-api@latest --legacy-peer-deps",
     "bump-ach": "cd ../tracker/ach && npm install @smartico/public-api@latest --legacy-peer-deps",
-    "bump-bo-server": "cd ../bo_server/server && npm install @smartico/public-api@latest",
-    "bump-bo-client": "cd ../bo_server/client && npm install @smartico/public-api@latest"
+    "bump-bo-server": "cd ../bo_server/server && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
+    "bump-bo-client": "cd ../bo_server/client && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest"
   },
   "author": "",
   "license": "ISC",
