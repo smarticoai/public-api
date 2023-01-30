@@ -299,7 +299,7 @@ class SmarticoAPI {
 
     public async inboxGetMessages(user_ext_id: string, limit: number = 10, offset: number = 0): Promise<GetInboxMessagesResponse> {
 
-        const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(user_ext_id, ClassId.GET_ACTIVITY_LOG_REQUEST, {
+        const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(user_ext_id, ClassId.GET_INBOX_MESSAGES_REQUEST, {
             limit,
             offset
         });
