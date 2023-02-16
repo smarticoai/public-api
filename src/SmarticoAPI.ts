@@ -12,7 +12,7 @@ import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
 import { GetStoreItemsResponse } from './Store';
-import { GetAchievementMapRequest, GetAchievementMapResponse } from './Missions';
+import { AchievementType, GetAchievementMapRequest, GetAchievementMapResponse } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse } from "./Level";
@@ -318,9 +318,22 @@ class SmarticoAPI {
     public async missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
-        return await this.send<GetAchievementMapResponse>(message);
-
+        const response = await this.send<GetAchievementMapResponse>(message);
+        if (response.achievements) { 
+            response.achievements = response.achievements.filter(a => a.ach_type_id === AchievementType.Mission);
+        }
+        return response;
     }
+
+    public async badgetsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
+
+        const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
+        const response = await this.send<GetAchievementMapResponse>(message);
+        if (response.achievements) { 
+            response.achievements = response.achievements.filter(a => a.ach_type_id === AchievementType.Badge);
+        }
+        return response;
+    }    
 
     public async tournamentsGetLobby(user_ext_id: string): Promise<GetTournamentsResponse> {
 
