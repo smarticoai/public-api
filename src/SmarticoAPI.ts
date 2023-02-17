@@ -253,12 +253,13 @@ class SmarticoAPI {
             response.templates.forEach(t => {
     
                 if (t.jackpot_current) {
-                    t.saw_template_ui_definition.name = IntUtils.replaceAll(t.saw_template_ui_definition.name, '{{jackpot}}', t.jackpot_current);
-                    t.saw_template_ui_definition.description = IntUtils.replaceAll(t.saw_template_ui_definition.description, '{{jackpot}}', t.jackpot_current);
-                    t.saw_template_ui_definition.promo_text = IntUtils.replaceAll(t.saw_template_ui_definition.promo_text, '{{jackpot}}', t.jackpot_current);
+                    const jackpotValue = t.jackpot_current + (t.saw_template_ui_definition?.jackpot_symbol ? ' ' + t.saw_template_ui_definition?.jackpot_symbol : '');
+                    t.saw_template_ui_definition.name = IntUtils.replaceAll(t.saw_template_ui_definition.name, '{{jackpot}}', jackpotValue);
+                    t.saw_template_ui_definition.description = IntUtils.replaceAll(t.saw_template_ui_definition.description, '{{jackpot}}', jackpotValue);
+                    t.saw_template_ui_definition.promo_text = IntUtils.replaceAll(t.saw_template_ui_definition.promo_text, '{{jackpot}}', jackpotValue);
                     t.prizes.forEach(p => {
-                        p.saw_prize_ui_definition.name = IntUtils.replaceAll(p.saw_prize_ui_definition.name, '{{jackpot}}', t.jackpot_current);
-                        p.saw_prize_ui_definition.aknowledge_message = IntUtils.replaceAll(p.saw_prize_ui_definition.aknowledge_message, '{{jackpot}}', t.jackpot_current);
+                        p.saw_prize_ui_definition.name = IntUtils.replaceAll(p.saw_prize_ui_definition.name, '{{jackpot}}', jackpotValue);
+                        p.saw_prize_ui_definition.aknowledge_message = IntUtils.replaceAll(p.saw_prize_ui_definition.aknowledge_message, '{{jackpot}}', jackpotValue);
                     })
                 }
             });
