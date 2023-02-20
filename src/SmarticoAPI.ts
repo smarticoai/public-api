@@ -252,7 +252,7 @@ class SmarticoAPI {
         if (response && response.templates) {
             response.templates.forEach(t => {
     
-                if (t.jackpot_current) {
+                if (t.jackpot_current !== undefined && t.jackpot_current !== null) {
                     const jackpotValue = t.jackpot_current + (t.saw_template_ui_definition?.jackpot_symbol ? ' ' + t.saw_template_ui_definition?.jackpot_symbol : '');
                     t.saw_template_ui_definition.name = IntUtils.replaceAll(t.saw_template_ui_definition.name, '{{jackpot}}', jackpotValue);
                     t.saw_template_ui_definition.description = IntUtils.replaceAll(t.saw_template_ui_definition.description, '{{jackpot}}', jackpotValue);
