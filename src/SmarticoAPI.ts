@@ -162,6 +162,10 @@ class SmarticoAPI {
             delete message.ext_user_id;
         }
 
+        if (message.brand_key === undefined || message.brand_key === null) {
+            delete message.brand_key;
+        }        
+
         return message as any
     }
 
