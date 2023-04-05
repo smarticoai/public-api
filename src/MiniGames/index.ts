@@ -14,3 +14,6 @@ export * from "./SAWSpinErrorCode";
 export * from "./SAWTemplate";
 export * from "./SAWTemplateUI";
 export * from "./SAWWinSoundType";
+export * from "./SAWDoAknowledgeRequest";
+export * from "./SAWDoAknowledgeResponse";
+export * from "./SAWSpinsCountPush";

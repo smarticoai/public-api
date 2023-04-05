@@ -11,4 +11,5 @@ export interface SAWPrizeUI {
     font_size?: number;
     sound_type: SAWWinSoundType;    
     icon?: string;
+    replace_name_with_image?: boolean;
 }
