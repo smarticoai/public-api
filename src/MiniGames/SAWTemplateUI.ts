@@ -24,6 +24,7 @@ export interface SAWTemplateUI {
 
     promo_image?: string;
     promo_text?: string;
+    matchx_banner?: string;
     ask_for_username?: SAWAskForUsername;
     show_prize_board?: boolean;
 
