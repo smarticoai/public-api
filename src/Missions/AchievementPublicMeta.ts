@@ -2,6 +2,7 @@ export interface AchievementPublicMeta {
 
     description?: string;
     unlock_mission_description?: string;
+    custom_data?: string;
     cta_text?: string;
     cta_action?: string;
     label_tag?: string;
