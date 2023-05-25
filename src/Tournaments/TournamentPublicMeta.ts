@@ -23,4 +23,7 @@ export interface TournamentPublicMeta {
     label_tag?: string;
 
     featured?: boolean;
+
+    // custom data as string or JSON string that can be used in UIWidget
+    custom_data?: string;    
 }
