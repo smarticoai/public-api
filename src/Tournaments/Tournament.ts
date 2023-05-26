@@ -42,9 +42,6 @@ export interface Tournament {
     playersMaxCount?: number;
     /** Tournament duration in millisecnnds */
     durationMs?: number;
-
-    // custom data as string or JSON string that can be used in UIWidget
-    custom_data?: string;
 }
 
 
