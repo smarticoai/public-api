@@ -249,7 +249,7 @@ class SmarticoAPI {
 
     public async sawGetTemplates(user_ext_id: string, lang?: string): Promise<SAWGetTemplatesResponse> {
 
-        const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, lang ? {force_language: lang} : null);
+        const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, lang ? { force_language: lang} : null);
 
         const response = await this.send<SAWGetTemplatesResponse>(message);
 

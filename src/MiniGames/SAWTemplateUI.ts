@@ -29,4 +29,6 @@ export interface SAWTemplateUI {
     show_prize_board?: boolean;
 
     max_spins_period_ms?: number;
+
+    visitor_game?: boolean;
 }
