@@ -5,4 +5,6 @@ export enum SAWSpinErrorCode {
     SAW_PRIZE_POOL_EMPTY = 40002,
     SAW_NOT_ENOUGH_POINTS = 40003,
     SAW_FAILED_MAX_SPINS_REACHED = 40004,
+
+    SAW_VISITOR_STOP_SPIN_REQUEST = -40001 // special code for visitor game mode to stop spin request
 }
