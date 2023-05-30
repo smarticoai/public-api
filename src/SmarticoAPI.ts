@@ -247,10 +247,9 @@ class SmarticoAPI {
         return this.send(message, ClassId.CLIENT_SET_CUSTOM_USERNAME_RESPONSE);
     }
 
+    public async sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode: boolean = false): Promise<SAWGetTemplatesResponse> {
 
-    public async sawGetTemplates(user_ext_id: string, lang?: string): Promise<SAWGetTemplatesResponse> {
-
-        const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, lang ? { force_language: lang} : null);
+        const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, lang ? { force_language: lang, is_visitor_mode } : { is_visitor_mode });
 
         const response = await this.send<SAWGetTemplatesResponse>(message);
 
