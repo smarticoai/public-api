@@ -63,6 +63,7 @@ class SmarticoAPI {
     }
 
     public static getEnvId(label_api_key: string): string {
+
         let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
         
         if (ENV_ID === '1' || ENV_ID === '2') {
