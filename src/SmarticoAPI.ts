@@ -21,6 +21,7 @@ import { GetLevelMapResponse } from "./Level";
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
+const DEFAULT_LANG_EN = "EN";
 
 interface IOptions {
     logger?: ILogger;
@@ -182,17 +183,21 @@ class SmarticoAPI {
 
     public async coreGetTranslations(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec: number = 60): Promise<GetTranslationsResponse> {
 
+        if (lang_code === undefined || lang_code === null || lang_code.trim && lang_code.trim() === '') {
+            lang_code = DEFAULT_LANG_EN;
+        }        
+
         const response = await OCache.use<GetTranslationsResponse>(`${lang_code}-${this.label_api_key}-${this.brand_api_key}`, ECacheContext.Translations, async () => {
 
             const tsBaseRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(user_ext_id, ClassId.GET_TRANSLATIONS_REQUEST, {
-                lang_code: "EN",
+                lang_code: DEFAULT_LANG_EN,
                 hash_code: 0,
                 areas
             });
 
             const trBase = await this.send<GetTranslationsResponse>(tsBaseRQ);
 
-            if (lang_code !== "EN") {
+            if (lang_code !== DEFAULT_LANG_EN) {
                 const trUserRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(user_ext_id, ClassId.GET_TRANSLATIONS_REQUEST, {
                     lang_code,
                     hash_code: 0,
