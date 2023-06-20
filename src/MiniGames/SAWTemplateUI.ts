@@ -30,5 +30,4 @@ export interface SAWTemplateUI {
 
     max_spins_period_ms?: number;
 
-    visitor_game?: boolean;
 }
