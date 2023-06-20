@@ -201,7 +201,7 @@ class SmarticoAPI {
 
                 const trUser = await this.send<GetTranslationsResponse>(trUserRQ);
                 
-                Object.keys(trUser.translations).forEach( k => {
+                Object.keys(trUser?.translations ?? {}).forEach( k => {
                     trBase.translations[k] = trUser.translations[k];
                 })
             }
