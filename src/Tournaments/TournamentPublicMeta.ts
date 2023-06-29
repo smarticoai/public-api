@@ -21,6 +21,7 @@ export interface TournamentPublicMeta {
     only_in_custom_section?: boolean;
 
     label_tag?: string;
+    custom_label_tag?: string;
 
     featured?: boolean;
 
