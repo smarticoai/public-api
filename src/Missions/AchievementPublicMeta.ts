@@ -6,6 +6,7 @@ export interface AchievementPublicMeta {
     cta_text?: string;
     cta_action?: string;
     label_tag?: string;
+    custom_label_tag?: string;
     reward?: string;
     image_url?: string;
     name?: string;
