@@ -10,7 +10,7 @@ export class WSAPI {
     constructor(private api: SmarticoAPI) {
     }
 
-    /** Returns all the levels available the current user */
+    /** Returns information about current user */
     public async getUserProfile(): Promise<TUserProfile> {
         if (this.api.tracker) {
             const o: TUserProfile = Object.assign({}, this.api.tracker.userPublicProps);

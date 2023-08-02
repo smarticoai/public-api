@@ -6,7 +6,7 @@
 
 ▸ **getUserProfile**(): `Promise`<[`TUserProfile`](../interfaces/TUserProfile.md)\>
 
-Returns all the levels available the current user
+Returns information about current user
 
 #### Returns
 
