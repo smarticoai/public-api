@@ -12,6 +12,15 @@
     },
     "include": [
         "src/**/*"
-    ]
+    ],
+    "typedocOptions": {
+        "name": "Smartico API documentation",
+        "entryPoints": ["src/WSAPI/WSAPI.ts", "src/WSAPI/WSAPITypes.ts"],
+        "out": "docs_test",
+        "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],
+        "entryDocument": "README_TWO.md",
+        "disableSources": true,
+        "excludePrivate": true,
+    }
   }
   

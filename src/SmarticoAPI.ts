@@ -16,7 +16,7 @@ import { AchievementType, GetAchievementMapRequest, GetAchievementMapResponse } 
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse } from "./Level";
-
+import { WSAPI } from "./WSAPI/WSAPI";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -29,7 +29,7 @@ interface IOptions {
     logHTTPTiming?: boolean;
 }
 
-type MessageSender = (message: any, publicApuUrl: string) => Promise<any>;
+type MessageSender = (message: any, publicApuUrl?: string, expectCID?: ClassId) => Promise<any>;
 
 
 class SmarticoAPI {
@@ -101,7 +101,7 @@ class SmarticoAPI {
         
         try {
             const timeStart = new Date().getTime();
-            result = await this.messageSender(message, this.publicUrl);
+            result = await this.messageSender(message, this.publicUrl, expectCID);
             const timeEnd = new Date().getTime();
 
             if (this.logHTTPTiming) {
@@ -410,9 +410,13 @@ class SmarticoAPI {
 
     }
 
-    public async levelsGet(user_ext_id: string): Promise<GetLevelMapResponse> {
+    public async levelsGet(user_ext_id?: string ): Promise<GetLevelMapResponse> {
         const message = this.buildMessage<any, GetLevelMapResponse>(user_ext_id, ClassId.GET_LEVEL_MAP_REQUEST);
-        return await this.send<GetLevelMapResponse>(message);
+        return await this.send<GetLevelMapResponse>(message, ClassId.GET_LEVEL_MAP_RESPONSE);
+    }
+    
+    public getWSCalls(): WSAPI {
+        return new WSAPI(this);
     }
 
 }

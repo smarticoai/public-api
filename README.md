@@ -12,7 +12,7 @@ npm install --save @smartico/public-api
 ```typescript
 import { SmarticoAPI } from '@smartico/public-api';
 
-const SAPI = new SmarticoAPI( 'your-label-api-key', 'your-brand-key', { logger: console });
+const SAPI = new SmarticoAPI( 'your-label-api-key', 'your-brand-key', 'your-message-sender', { logger: console });
             
 const response = await SAPI.miniGamesGetTemplates(rsUser.user_ext_id);
 
@@ -21,6 +21,9 @@ response.templates.forEach( t => {
 }
 
 ```
+
+## API 
+### To learn more about the capabilities of our API, go to the [API documentation](docs_test/modules.md)
 
 
 ## Development and publishing process

@@ -23,7 +23,8 @@
     "bump-tracker": "cd ../tracker && npm install @smartico/public-api@latest --legacy-peer-deps",
     "bump-ach": "cd ../tracker/ach && npm install @smartico/public-api@latest --legacy-peer-deps",
     "bump-bo-server": "cd ../bo_server/server && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
-    "bump-bo-client": "cd ../bo_server/client && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest"
+    "bump-bo-client": "cd ../bo_server/client && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
+    "doc": "typedoc"
   },
   "author": "",
   "license": "ISC",
@@ -34,6 +35,9 @@
   "devDependencies": {
     "@types/node-fetch": "^2.6.2",
     "microbundle": "0.15.0",
-    "npm-run-all": "4.1.5"
+    "npm-run-all": "4.1.5",
+    "typedoc": "^0.24.8",
+    "typedoc-plugin-markdown": "^3.15.4",
+    "typedoc-plugin-merge-modules": "^5.0.1"
   }
 }
