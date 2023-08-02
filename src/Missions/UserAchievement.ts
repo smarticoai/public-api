@@ -17,6 +17,7 @@ export interface UserAchievement {
     requiresOptin?: boolean;
     isOptedIn?: boolean;
     start_date?: string; // time when mission unlocked or opted-in. Needed to calculated "remaining time" in case time_limit_ms is set
+    start_date_ts?: number; 
     time_limit_ms?: number;
     progress?: number;
     complete_date?: string;
@@ -40,7 +41,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
             is_requires_optin: r.requiresOptin,
             is_opted_in: r.isOptedIn,
             time_limit_ms: r.time_limit_ms,
-            dt_start: r.start_date as any, // TODO: convert to epoch
+            dt_start: r.start_date_ts,
             reward: r.ach_public_meta.reward,
             progress: r.progress,
             type: r.ach_type_id === AchievementType.Mission ? 'mission' : 'badge',

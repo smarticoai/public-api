@@ -16,7 +16,7 @@ export const GetLevelMapResponseTransform = (levels: GetLevelMapResponse): TLeve
         description: l.level_public_meta.description,
         image: l.level_public_meta.image_url,
         required_points: l.required_points,
-        visibility_points: l.level_public_meta.visibility_points,
+        visibility_points: parseInt(l.level_public_meta.visibility_points as any),
         required_level_counter_1: l.required_level_counter_1,
         required_level_counter_2: l.required_level_counter_2,
     })));

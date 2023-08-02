@@ -203,7 +203,7 @@ class SmarticoAPI {
                 areas
             });
 
-            const trBase = await this.send<GetTranslationsResponse>(tsBaseRQ);
+            const trBase = await this.send<GetTranslationsResponse>(tsBaseRQ, ClassId.GET_TRANSLATIONS_RESPONSE);
 
             if (lang_code !== DEFAULT_LANG_EN) {
                 const trUserRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(user_ext_id, ClassId.GET_TRANSLATIONS_REQUEST, {
@@ -212,7 +212,7 @@ class SmarticoAPI {
                     areas
                 });  
 
-                const trUser = await this.send<GetTranslationsResponse>(trUserRQ);
+                const trUser = await this.send<GetTranslationsResponse>(trUserRQ, ClassId.GET_TRANSLATIONS_RESPONSE);
                 
                 Object.keys(trUser?.translations ?? {}).forEach( k => {
                     trBase.translations[k] = trUser.translations[k];
@@ -264,7 +264,7 @@ class SmarticoAPI {
 
         const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, lang ? { force_language: lang, is_visitor_mode } : { is_visitor_mode });
 
-        const response = await this.send<SAWGetTemplatesResponse>(message);
+        const response = await this.send<SAWGetTemplatesResponse>(message, ClassId.SAW_GET_SPINS_RESPONSE);
 
         if (response && response.templates) {
             response.templates.forEach(t => {
@@ -322,21 +322,21 @@ class SmarticoAPI {
             offset
         });
 
-        return await this.send<GetInboxMessagesResponse>(message);
+        return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE);
 
     }
 
     public async storeGetItems(user_ext_id: string): Promise<GetStoreItemsResponse> {
 
         const message = this.buildMessage<any, GetStoreItemsResponse>(user_ext_id, ClassId.GET_SHOP_ITEMS_REQUEST);
-        return await this.send<GetStoreItemsResponse>(message);
+        return await this.send<GetStoreItemsResponse>(message, ClassId.GET_SHOP_ITEMS_RESPONSE);
 
     }
 
     public async missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
-        const response = await this.send<GetAchievementMapResponse>(message);
+        const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE);
         if (response.achievements) { 
             response.achievements = response.achievements.filter(a => a.ach_type_id === AchievementType.Mission);
         }
@@ -350,7 +350,7 @@ class SmarticoAPI {
     public async badgetsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
-        const response = await this.send<GetAchievementMapResponse>(message);
+        const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE);
         if (response.achievements) { 
             response.achievements = response.achievements.filter(a => a.ach_type_id === AchievementType.Badge);
         }
@@ -360,7 +360,7 @@ class SmarticoAPI {
     public async tournamentsGetLobby(user_ext_id: string): Promise<GetTournamentsResponse> {
 
         const message = this.buildMessage<GetTournamentsRequest, GetTournamentsResponse>(user_ext_id, ClassId.GET_TOURNAMENT_LOBBY_REQUEST);
-        return await this.send<GetTournamentsResponse>(message);
+        return await this.send<GetTournamentsResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE);
 
     }
 
@@ -371,7 +371,7 @@ class SmarticoAPI {
                 tournamentInstanceId
             }
         );
-        const response = await this.send<GetTournamentInfoResponse>(message);
+        const response = await this.send<GetTournamentInfoResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE);
         
         if (response.userPosition?.avatar_id) {
             response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_id, this.avatarDomain);
@@ -397,9 +397,7 @@ class SmarticoAPI {
             }
         );
 
-        const response = await this.send<GetLeaderBoardsResponse>(message);
-
-
+        const response = await this.send<GetLeaderBoardsResponse>(message, ClassId.GET_LEADERS_BOARD_RESPONSE);
 
         const boardKey =  Object.keys(response.map).find( k => period_type_id === undefined || k === period_type_id?.toString());
 
