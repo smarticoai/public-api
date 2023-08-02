@@ -22,7 +22,10 @@
         "disableSources": true,
         "excludePrivate": true,
         "readme": "none",
-        "cleanOutputDir": true
+        "cleanOutputDir": true,
+        "hideBreadcrumbs": true,
+        "hideInPageTOC": true,
+        "sort": "source-order"
     }
   }
   

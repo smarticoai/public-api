@@ -32,6 +32,25 @@ class IntUtils {
         return v;
     }
 
+    public static JsonOrText = (str: string): any => {
+        if (str && str.includes && (str.includes('{') || str.includes('['))) {
+            try {
+                return JSON.parse(str)
+            } catch (e) {
+                return str;
+            }
+        }
+        return str;
+    }
+    
+    // public static wsTimeToEpoch = (time: string): number => {
+    //     if (time) {
+    //         return moment.utc(time, "DD/MM/YYYY HH:mm:ss").valueOf()
+    //     } else {
+    //         return null
+    //     }
+    // }    
+
 }
 
 

@@ -1,13 +1,12 @@
-Smartico API documentation
-
 # Smartico API documentation
 
-## Table of contents
+## Interfaces
 
-### General API
+- [TUserProfile](interfaces/TUserProfile.md)
+- [TLevel](interfaces/TLevel.md)
+- [TMissionOrBadge](interfaces/TMissionOrBadge.md)
+- [TMissionOrBadgeTask](interfaces/TMissionOrBadgeTask.md)
+
+## General API
 
 - [WSAPI](classes/WSAPI.md)
-
-### Levels response
-
-- [GetLevelMapClearedResponse](interfaces/GetLevelMapClearedResponse.md)

@@ -1,19 +1,37 @@
-[Smartico API documentation](../README.md) / WSAPI
-
 # Class: WSAPI
-
-## Table of contents
-
-### Methods
-
-- [getLevelsTransformed](WSAPI.md#getlevelstransformed)
 
 ## Methods
 
-### getLevelsTransformed
+### getUserProfile
 
-▸ **getLevelsTransformed**(): `Promise`<[`GetLevelMapClearedResponse`](../interfaces/GetLevelMapClearedResponse.md)[]\>
+▸ **getUserProfile**(): `Promise`<[`TUserProfile`](../interfaces/TUserProfile.md)\>
+
+Returns all the levels available the current user
 
 #### Returns
 
-`Promise`<[`GetLevelMapClearedResponse`](../interfaces/GetLevelMapClearedResponse.md)[]\>
+`Promise`<[`TUserProfile`](../interfaces/TUserProfile.md)\>
+
+___
+
+### getLevels
+
+▸ **getLevels**(): `Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
+
+Returns all the levels available the current user
+
+#### Returns
+
+`Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
+
+___
+
+### getMissions
+
+▸ **getMissions**(): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+
+Returns all the missions available the current user
+
+#### Returns
+
+`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>

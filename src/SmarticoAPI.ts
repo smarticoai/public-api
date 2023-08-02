@@ -12,21 +12,27 @@ import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
 import { GetStoreItemsResponse } from './Store';
-import { AchievementType, GetAchievementMapRequest, GetAchievementMapResponse } from './Missions';
+import { AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
-import { GetLevelMapResponse } from "./Level";
+import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
+import { TLevel, TMissionOrBadge } from "./WSAPI/WSAPITypes";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
 const DEFAULT_LANG_EN = "EN";
 
+interface Tracker {
+    label_api_key: string;
+    userPublicProps: any;
+}
 interface IOptions {
     logger?: ILogger;
     logCIDs?: ClassId[];
     logHTTPTiming?: boolean;
+    tracker?: Tracker;
 }
 
 type MessageSender = (message: any, publicApuUrl?: string, expectCID?: ClassId) => Promise<any>;
@@ -37,11 +43,12 @@ class SmarticoAPI {
     private publicUrl: string;
     private wsUrl: string;
     private partnerUrl: string;
-    private avatarDomain: string;
+    public avatarDomain: string;
 
     private logger: ILogger;
     private logCIDs: ClassId[];
     private logHTTPTiming: boolean;
+    public tracker?: Tracker;
 
     public constructor(private label_api_key: string, private brand_api_key: string, private messageSender: MessageSender, options: IOptions = {}) {
 
@@ -53,11 +60,12 @@ class SmarticoAPI {
 
         this.logCIDs = options.logCIDs || [];
         this.logHTTPTiming = options.logHTTPTiming || false;
+        this.tracker = options.tracker;
 
         this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
         this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key);
 
-        this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key);
+        this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
 
         this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key);
 
@@ -335,6 +343,10 @@ class SmarticoAPI {
         return response;
     }
 
+    public async missionsGetItemsT(user_ext_id?: string): Promise<TMissionOrBadge[]> {
+        return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements);
+    }
+
     public async badgetsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
@@ -410,10 +422,15 @@ class SmarticoAPI {
 
     }
 
-    public async levelsGet(user_ext_id?: string ): Promise<GetLevelMapResponse> {
+    public async levelsGet(user_ext_id?: string): Promise<GetLevelMapResponse> {
         const message = this.buildMessage<any, GetLevelMapResponse>(user_ext_id, ClassId.GET_LEVEL_MAP_REQUEST);
         return await this.send<GetLevelMapResponse>(message, ClassId.GET_LEVEL_MAP_RESPONSE);
     }
+
+    public async levelsGetT(user_ext_id?: string): Promise<TLevel[]> {
+        return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id));
+    }
+
     
     public getWSCalls(): WSAPI {
         return new WSAPI(this);

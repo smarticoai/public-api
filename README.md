@@ -1,30 +1,55 @@
 # Smartico Public API
-API allows you to build and manage Smartico Gamification context on behalf of the user. It can be used in the JS/TS based frontend or in NodeJS backend
+API allows you to build custom Gamification UI using smartico.ai as a backend system.
 
-# Installation
+
+```
+Please contact your Smartico account manager to get the API keys
+and for terms of API usage
+```
+
+
+
+## Front-end usage
+
+To use the API you need the smartico.js library installed and initialized on your site according to this guide https://help.smartico.ai/welcome/technical-guides/front-end-integration
+
+As soon as the _smartico object is available in the global context and the user is identified, you can call API methods to get the data or act on behalf of the logged-in user.
+
+```javascript
+
+_smartico.api.levelsGet().then( levels => {
+    console.log('There are ' + levels.length + ' levels available');
+});
+
+```
+
+See the [API documentation](docs/classes/WSAPI.md) for all available methods and returning data.
+
+
+## Backend usage (NodeJS context)
+
+### Installation
 
 ```bash
 npm install --save @smartico/public-api
 ```
 
-## Usage
+### Usage
 
 ```typescript
 import { SmarticoAPI } from '@smartico/public-api';
 
 const SAPI = new SmarticoAPI( 'your-label-api-key', 'your-brand-key', 'your-message-sender', { logger: console });
+
+const userExtId = 'John1984'
             
-const response = await SAPI.miniGamesGetTemplates(rsUser.user_ext_id);
+const response = await SAPI.miniGamesGetTemplates(userExtId);
 
 response.templates.forEach( t => {
     console.log(t.saw_template_ui_definition.name)
 }
 
 ```
-
-## API 
-### To learn more about the capabilities of our API, go to the [API documentation](docs/API_DOC.md)
-
 
 ## Development and publishing process
 
@@ -37,9 +62,9 @@ npm version patch
 npm run pub
 ```
 
-###  Debug locally
+### To debug locally
 
-In the public-api project console:
+In the public-api project:
 
 ```sh
 npm link
@@ -47,7 +72,7 @@ npm link
 npm unlink
 ```
 
-Consumer project console:
+In the target project
 ```bash
 npm link @smartico/public-api --legacy-peer-deps
 
