@@ -23,7 +23,7 @@ response.templates.forEach( t => {
 ```
 
 ## API 
-### To learn more about the capabilities of our API, go to the [API documentation](docs_test/modules.md)
+### To learn more about the capabilities of our API, go to the [API documentation](docs/API_DOC.md)
 
 
 ## Development and publishing process
