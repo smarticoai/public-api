@@ -1,4 +1,4 @@
-[Smartico API documentation](../README_TWO.md) / [Modules](../modules.md) / WSAPI
+[Smartico API documentation](../README.md) / WSAPI
 
 # Class: WSAPI
 

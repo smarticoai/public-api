@@ -18,10 +18,11 @@
         "entryPoints": ["src/WSAPI/WSAPI.ts", "src/WSAPI/WSAPITypes.ts"],
         "out": "docs",
         "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],
-        "entryDocument": "API_DOC.md",
+        "entryDocument": "README.md",
         "disableSources": true,
         "excludePrivate": true,
-        "readme": "none"
+        "readme": "none",
+        "cleanOutputDir": true
     }
   }
   

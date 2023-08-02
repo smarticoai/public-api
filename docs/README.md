@@ -1,4 +1,4 @@
-[Smartico API documentation](README_TWO.md) / Modules
+Smartico API documentation
 
 # Smartico API documentation
 

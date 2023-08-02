@@ -1,4 +1,4 @@
-[Smartico API documentation](../README_TWO.md) / [Modules](../modules.md) / GetLevelMapClearedResponse
+[Smartico API documentation](../README.md) / GetLevelMapClearedResponse
 
 # Interface: GetLevelMapClearedResponse
 
