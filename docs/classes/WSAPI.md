@@ -35,3 +35,15 @@ Returns all the missions available the current user
 #### Returns
 
 `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+
+___
+
+### getBadges
+
+▸ **getBadges**(): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+
+Returns all the badges available the current user
+
+#### Returns
+
+`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>

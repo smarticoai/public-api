@@ -357,6 +357,11 @@ class SmarticoAPI {
         return response;
     }    
 
+    public async badgetsGetItemsT(user_ext_id?: string): Promise<TMissionOrBadge[]> {
+        return UserAchievementTransform((await this.badgetsGetItems(user_ext_id)).achievements);
+    }    
+
+
     public async tournamentsGetLobby(user_ext_id: string): Promise<GetTournamentsResponse> {
 
         const message = this.buildMessage<GetTournamentsRequest, GetTournamentsResponse>(user_ext_id, ClassId.GET_TOURNAMENT_LOBBY_REQUEST);

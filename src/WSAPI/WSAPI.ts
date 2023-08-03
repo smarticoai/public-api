@@ -31,4 +31,10 @@ export class WSAPI {
         return this.api.missionsGetItemsT(null);
     }
 
+    /** Returns all the badges available the current user */
+    public async getBadges(): Promise<TMissionOrBadge[]> {
+        return this.api.missionsGetItemsT(null);
+    }    
+
+
 }
