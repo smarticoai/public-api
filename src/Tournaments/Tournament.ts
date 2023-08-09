@@ -26,9 +26,9 @@ export interface Tournament {
     /** The time when tournament is going to finish */
     endTime?: string;
     /** The time when tournament is going to start, epoch */
-    startTime_ts?: number;
+    startTimeTs?: number;
     /** The time when tournament is going to finish, epoch */
-    endTime_ts?: number;    
+    endTimeTs?: number;    
     /** Number of users registered in the tournament */
     registrationCount?: number;
     /** Not in use */
@@ -71,8 +71,8 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
             is_featured: r.publicMeta.featured,
             ribbon: r.publicMeta.label_tag,
 
-            start_time: r.startTime_ts,
-            end_time: r.endTime_ts,
+            start_time: r.startTimeTs,
+            end_time: r.endTimeTs,
             registration_count: r.registrationCount,
             is_user_registered: r.isUserRegistered,
             players_min_count: r.playersMinCount,
