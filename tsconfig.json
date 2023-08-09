@@ -15,7 +15,11 @@
     ],
     "typedocOptions": {
         "name": "Smartico API documentation",
-        "entryPoints": ["src/WSAPI/WSAPI.ts", "src/WSAPI/WSAPITypes.ts"],
+        "entryPoints": [
+            "src/WSAPI/WSAPI.ts", "src/WSAPI/WSAPITypes.ts", 
+            "src/Tournaments/TournamentRegistrationStatus.ts",
+            "src/Tournaments/TournamentRegistrationType.ts"
+        ],
         "out": "docs",
         "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],
         "entryDocument": "README.md",

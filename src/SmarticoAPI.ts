@@ -11,13 +11,13 @@ import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, ResponseIde
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
-import { GetStoreItemsResponse } from './Store';
+import { GetStoreItemsResponse, StoreItemTransform } from './Store';
 import { AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
-import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse } from './Tournaments';
+import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, tournamentInfoItemTransform } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TLevel, TMissionOrBadge } from "./WSAPI/WSAPITypes";
+import { TLevel, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -333,6 +333,10 @@ class SmarticoAPI {
 
     }
 
+    public async storeGetItemsT(user_ext_id: string): Promise<TStoreItem[]> {
+        return StoreItemTransform((await this.storeGetItems(user_ext_id)).items);
+    }    
+
     public async missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
@@ -343,7 +347,7 @@ class SmarticoAPI {
         return response;
     }
 
-    public async missionsGetItemsT(user_ext_id?: string): Promise<TMissionOrBadge[]> {
+    public async missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
         return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements);
     }
 
@@ -357,7 +361,7 @@ class SmarticoAPI {
         return response;
     }    
 
-    public async badgetsGetItemsT(user_ext_id?: string): Promise<TMissionOrBadge[]> {
+    public async badgetsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
         return UserAchievementTransform((await this.badgetsGetItems(user_ext_id)).achievements);
     }    
 
@@ -367,6 +371,10 @@ class SmarticoAPI {
         const message = this.buildMessage<GetTournamentsRequest, GetTournamentsResponse>(user_ext_id, ClassId.GET_TOURNAMENT_LOBBY_REQUEST);
         return await this.send<GetTournamentsResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE);
 
+    }
+
+    public async tournamentsGetLobbyT(user_ext_id: string): Promise<TTournament[]> {
+        return TournamentItemsTransform((await this.tournamentsGetLobby(user_ext_id)).tournaments);
     }
 
     public async tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number): Promise<GetTournamentInfoResponse> {
@@ -391,6 +399,10 @@ class SmarticoAPI {
         return response;
 
     }
+
+    public async tournamentsGetInfoT(user_ext_id: string, tournamentInstanceId: number): Promise<TTournamentDetailed> {
+        return tournamentInfoItemTransform((await this.tournamentsGetInfo(user_ext_id, tournamentInstanceId)));
+    }    
 
     public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<LeaderBoardDetails> {
 
@@ -425,12 +437,12 @@ class SmarticoAPI {
 
     }
 
-    public async levelsGet(user_ext_id?: string): Promise<GetLevelMapResponse> {
+    public async levelsGet(user_ext_id: string): Promise<GetLevelMapResponse> {
         const message = this.buildMessage<any, GetLevelMapResponse>(user_ext_id, ClassId.GET_LEVEL_MAP_REQUEST);
         return await this.send<GetLevelMapResponse>(message, ClassId.GET_LEVEL_MAP_RESPONSE);
     }
 
-    public async levelsGetT(user_ext_id?: string): Promise<TLevel[]> {
+    public async levelsGetT(user_ext_id: string): Promise<TLevel[]> {
         return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id));
     }
 

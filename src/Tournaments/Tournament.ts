@@ -1,8 +1,11 @@
-import {TournamentRegistrationType} from "./TournamentRegistrationType";
+import {TournamentRegistrationType, TournamentRegistrationTypeGetName} from "./TournamentRegistrationType";
 import {TournamentInstanceStatus} from "./TournamentInstanceStatus";
-import { TournamentRegistrationStatus } from "./TournamentRegistrationStatus";
+import { TournamentRegistrationStatus, TournamentRegistrationStatusName } from "./TournamentRegistrationStatus";
 import { TournamentType } from "./TournamentType";
 import { TournamentPublicMeta } from "./TournamentPublicMeta";
+import { TTournament } from "../WSAPI/WSAPITypes";
+import { TournamentUtils } from ".";
+import { IntUtils } from "../IntUtils";
 
 export interface Tournament {
 
@@ -22,6 +25,10 @@ export interface Tournament {
     startTime?: string;
     /** The time when tournament is going to finish */
     endTime?: string;
+    /** The time when tournament is going to start, epoch */
+    startTime_ts?: number;
+    /** The time when tournament is going to finish, epoch */
+    endTime_ts?: number;    
     /** Number of users registered in the tournament */
     registrationCount?: number;
     /** Not in use */
@@ -44,4 +51,50 @@ export interface Tournament {
     durationMs?: number;
 }
 
+
+export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => {    
+
+    return items.filter( r => r.tournamentId >= 1).map( r => {
+
+        const x: TTournament =         {
+            instance_id: r.tournamentInstanceId,
+            tournament_id: r.tournamentId,
+            name: r.publicMeta.name,
+            description: r.publicMeta.description,
+            segment_dont_match_message: r.publicMeta.segment_dont_match_message,
+            image1: r.publicMeta.image_url,
+            image2: r.publicMeta.image_url2,
+            prize_pool_short: r.publicMeta.prize_pool_short,
+            custom_price_text: r.publicMeta.custom_price_text,
+            custom_section_id: r.publicMeta.custom_section_id,
+            custom_data: IntUtils.JsonOrText(r.publicMeta.custom_data),
+            is_featured: r.publicMeta.featured,
+            ribbon: r.publicMeta.label_tag,
+
+            start_time: r.startTime_ts,
+            end_time: r.endTime_ts,
+            registration_count: r.registrationCount,
+            is_user_registered: r.isUserRegistered,
+            players_min_count: r.playersMinCount,
+            players_max_count: r.playersMaxCount,
+            registration_status: TournamentRegistrationStatusName(r.tournamentRegistrationStatus),
+
+            registration_type: TournamentRegistrationTypeGetName(r.registrationType),
+            registration_cost_points: r.buyInAmount,
+            duration_ms: r.durationMs,
+
+            is_active: TournamentUtils.isActive(r),
+            is_can_register: TournamentUtils.isCanRegister(r),
+            is_cancelled: TournamentUtils.isCancelled(r),
+            is_finished: TournamentUtils.isFinished(r),
+            is_in_progress: TournamentUtils.isInProgress(r),
+            is_upcoming: TournamentUtils.isUpcoming(r),
+
+        }
+
+        return x;
+    });
+
+
+}
 

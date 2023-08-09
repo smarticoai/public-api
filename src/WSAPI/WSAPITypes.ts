@@ -1,3 +1,6 @@
+import { TournamentRegistrationStatus, TournamentRegistrationStatusName, TournamentRegistrationType, TournamentRegistrationTypeName } from "../Tournaments";
+
+type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
 
 /**
  * TUser interface describes the information of the user
@@ -66,6 +69,150 @@ export interface TLevel {
      * 
     */    
     required_level_counter_2: number,
+}
+
+/** 
+ * TTournament interface describes the general information of the tournament item
+ */
+
+export interface TTournament {
+    /** ID of tournament instance. Generated every time when tournament based on specific template is scheduled for run */
+    instance_id: number;
+    /** ID of tournament template */
+    tournament_id: number;
+    /** Name of the tournament, translated to the user language */
+    name: string;
+    /** Description of the tournament, translated to the user language */
+    description: string;
+    /* 1st image URL representing the tournament */
+    image1: string;
+    /* 2nd image URL representing the tournament */
+    image2: string;
+    /* The message indicating the prize pool of the tournament */
+    prize_pool_short: string;
+    /* The message indicating the price to register in the tournament */
+    custom_price_text: string;
+
+    /** The message that should be shown to the user when the user cannot register in tournament with error code TOURNAMENT_USER_DONT_MATCH_CONDITIONS  */
+    segment_dont_match_message: string;
+    /** 
+     * The ID of the custom section where the tournament is assigned
+     * The list of custom sections can be retrieved using _smartico.api.getCustomSections() method (TODO-API)
+    */
+    custom_section_id: number;
+    /** The custom data of the tournament defined by operator. Can be a JSON object, string or number */
+    custom_data: any;
+
+    /** The indicator if the tournament is 'Featured' */
+    is_featured: boolean;
+
+    /** The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
+    ribbon: TRibbon;
+
+    /** The time when tournament is going to start, epoch with milliseconds */
+    start_time: number;
+    /** The time when tournament is going to finish, epoch with milliseconds */
+    end_time: number;
+    /** Type of registration in the tournament */
+    registration_type: TournamentRegistrationTypeName,
+    /** Number of users registered in the tournament */
+    registration_count: number;
+    /** flag indicating if current user is registered in the tournament */
+    is_user_registered: boolean;
+    /** Minimum number of participant for this tournament. If tournament doesnt have enough registrations, it will not start */
+    players_min_count: number;
+    /** Maximum number of participant for this tournament. When reached, new users won't be able to register */
+    players_max_count: number;
+    /** Status of registration in the tournament for current user */
+    registration_status: TournamentRegistrationStatusName,
+    /** Tournament duration in millisecnnds */
+    duration_ms: number;
+
+    /** Cost of registration in the tournament in gamification points */
+    registration_cost_points: number;
+
+    /** Indicator if tournament instance is active, means in one of the statues -  PUBLISHED, REGISTED, STARTED */
+    is_active: boolean;
+    
+    /** Indicator if user can register in this tournament instance, e.g tournament is active, max users is not reached, user is not registered yet */
+    is_can_register: boolean;
+    /** Indicator if tournament instance is cancelled (status CANCELLED) */
+    is_cancelled: boolean;
+    /** Indicator if tournament instance is finished (status FINISHED, CANCELLED OR FINIALIZING) */
+    is_finished: boolean;
+    /** Indicator if tournament instance is running (status STARTED) */
+    is_in_progress: boolean;
+    /** Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER) */
+    is_upcoming: boolean;
+}
+
+/** 
+ * TTournamentDetailed interface describes the information of the tournament item and includes list of participants, their scores and position in the tournament leaderboard
+ */
+export interface TTournamentDetailed extends TTournament {
+    
+    /** The list of the tournament participants */
+    players?: {
+        /** The username of the participant */
+        public_username: string;
+        /** The URL to the avatar of the participant */
+        avatar_url: string;
+        /** The position of the participant in the tournament */
+        position: number;
+        /** The scores of the participant in the tournament */
+        scores: number;
+        /** The indicator if the participant is current user */
+        is_me: boolean;
+    }[],
+    /** The information about current user in the tournament if he is registered in the tournamnet */
+    me?: {
+        /** The username of the current user */
+        public_username: string;
+        /** The URL to the avatar of the current user */
+        avatar_url: string;
+        /** The position of the current user in the tournament */
+        position: number;
+        /** The scores of the current user in the tournament */
+        scores: number;
+    }
+
+};
+
+
+/** 
+ * TStoreItem interface describes the information of the store item defined in the system
+ */
+export interface TStoreItem {
+    /** ID of the store item  */
+    id: number;
+    /** Name of the store item, translated to the user language */
+    name: string;
+    /** Description of the store item, translated to the user language */
+    description: string;
+    /** URL of the image of the store item */
+    image: string;    
+    /** Type of the store item. Can be 'bonus' or 'manual'. Manual, means it's tangible item, e.g. iPhone */
+    type: 'bonus' | 'manual';
+    /** The price of the store item in the gamification points */
+    price: number;
+    /** The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
+    ribbon: TRibbon;
+    /** 
+     *  The message that should be shown to the user if he is not eligible to buy it. this message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item' and can be used in case can_buy property is false.
+        The message is translated to the user language.
+        **Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
+    */
+    limit_message: string;
+    /** The priority of the store item. Can be used to sort the items in the store */
+    priority: number;
+    /** The list of IDs of the related items. Can be used to show the related items in the store */
+    related_item_ids: number[];    
+    /** The indicator if the user can buy the item
+     *  This indicator is taking into account the segment conditions for the store item, the price of item towards users balance, 
+    */
+    can_buy: boolean;
+    /** The list of IDs of the categories where the store item is assigned, information about categories can be retrievend with getStoreCategories method */
+    category_ids: number[];
 }
 
 /** 

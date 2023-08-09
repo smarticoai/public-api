@@ -47,3 +47,45 @@ Returns all the badges available the current user
 #### Returns
 
 `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+
+___
+
+### getStoreItems
+
+▸ **getStoreItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+
+Returns all the store items available the current user
+
+#### Returns
+
+`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+
+___
+
+### getTournamentsList
+
+▸ **getTournamentsList**(): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
+
+Returns all the active instances of tournaments
+
+#### Returns
+
+`Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
+
+___
+
+### getTournamentInstanceInfo
+
+▸ **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
+
+Returns details information of specific tournament instance, the response will includ tournamnet info and the leaderboard of players
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `tournamentInstanceId` | `number` |
+
+#### Returns
+
+`Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
