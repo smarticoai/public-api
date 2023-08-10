@@ -27,8 +27,6 @@ export enum PublicLabelSettings {
     AVATAR_CUSTOM_IMAGE_MAX_ID = "AVATAR_CUSTOM_IMAGE_MAX_ID",
     AVATAR_CUSTOM_IMAGE_FOLDER = "AVATAR_CUSTOM_IMAGE_FOLDER",
   
-    RETENTION_GAMES_CUSTOMER_ID = "RETENTION_GAMES_CUSTOMER_ID",
-  
     GAMIFICATION_SHOW_POWERED_BY = "GAMIFICATION_SHOW_POWERED_BY",
     _system_leader_board_mask_username = "_system_leader_board_mask_username",
 
