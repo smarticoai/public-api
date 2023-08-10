@@ -81,11 +81,10 @@ class SmarticoAPI {
         return ENV_ID;
     }
 
-    public static getEnvId(label_api_key: string): string {
+    public static getEnvId(label_api_key: string): number {
 
-        let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
+        return label_api_key.length === 38 ? parseInt(label_api_key.substring(37, 38), 10) : 2;
         
-        return ENV_ID;
     }
 
     public static getCleanLabelApiKey(label_api_key: string): string {
