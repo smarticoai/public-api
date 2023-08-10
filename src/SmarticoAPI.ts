@@ -71,7 +71,7 @@ class SmarticoAPI {
 
     }
 
-    public static getEnvId(label_api_key: string): string {
+    public static getEnvDnsSuffix(label_api_key: string): string {
 
         let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
         
@@ -81,20 +81,27 @@ class SmarticoAPI {
         return ENV_ID;
     }
 
+    public static getEnvId(label_api_key: string): string {
+
+        let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
+        
+        return ENV_ID;
+    }
+
     public static getCleanLabelApiKey(label_api_key: string): string {
         return label_api_key.substring(0, 36);
     }
 
     public static getPublicUrl(label_api_key: string): string {
-        return PUBLIC_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvId(label_api_key));    
+        return PUBLIC_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));    
     }
 
     public static getPublicWsUrl(label_api_key: string): string {
-        return C_SOCKET_PROD.replace('{ENV_ID}', SmarticoAPI.getEnvId(label_api_key));    
+        return C_SOCKET_PROD.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));    
     }    
 
     public static getAvatarUrl(label_api_key: string): string {
-        return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvId(label_api_key));    
+        return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));    
     }    
 
     private async send<T>(message: any, expectCID?: ClassId): Promise<T> {
