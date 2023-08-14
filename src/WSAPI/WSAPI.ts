@@ -11,7 +11,7 @@ export class WSAPI {
     }
 
     /** Returns information about current user */
-    public async getUserProfile(): Promise<TUserProfile> {
+    public getUserProfile(): TUserProfile {
         if (this.api.tracker) {
             const o: TUserProfile = Object.assign({}, this.api.tracker.userPublicProps);
             o.avatar_url = CoreUtils.avatarUrl(this.api.tracker.userPublicProps.avatar_id, this.api.avatarDomain);
