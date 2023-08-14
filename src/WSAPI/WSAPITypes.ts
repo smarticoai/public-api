@@ -1,11 +1,11 @@
-import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWPrizeType, SAWPrizeUI } from "../MiniGames";
+import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWPrizeType, SAWPrizeUI, SAWSpinErrorCode } from "../MiniGames";
 import { TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
 
 
 /**
- * TMiniGamePrize interface describes the information of prize in the array of prizes in the TMiniGameTemplate
+ * TMiniGamePrize describes the information of prize in the array of prizes in the TMiniGameTemplate
 */
 export interface TMiniGamePrize {
     /** ID of the prize */
@@ -23,9 +23,21 @@ export interface TMiniGamePrize {
 }
 
 
+/**
+ * TMiniGamePlayResult describes the response of call to _smartico.api.playMiniGame(template_id) method
+*/
+export interface TMiniGamePlayResult {
+    /** Name of the mini-game template, translated to the user language */
+    err_code: SAWSpinErrorCode;
+    /** Name of the mini-game template, translated to the user language */
+    err_message: string;
+    /** The prize_id that user won, details of the prize can be found in the mini-game definition */
+    prize_id: number;
+}
+
 
 /**
- * TMiniGameTemplate interface describes the information of mini-games available for the user
+ * TMiniGameTemplate describes the information of mini-games available for the user
 */
 export interface TMiniGameTemplate {
     /** ID of the mini-game template */
@@ -69,7 +81,7 @@ export interface TMiniGameTemplate {
 
 
 /**
- * TUser interface describes the information of the user
+ * TUser describes the information of the user
  * The user object is returned by _smartico.api.getUserProfile() method.
  * If you want to track the changes of the user profile, you can subscribe to the callback in the following way
  *  _smartico.on('props_change', () => console.log(_smartico.api.getUserProfile()) );
@@ -102,7 +114,7 @@ export interface TUserProfile {
 }
 
 /** 
- * TLevel interface describes the information of each level defined in the system
+ * TLevel describes the information of each level defined in the system
  * There is no order of the levels, but it can be calculated using required_points property
  * The current level of user can be taken from the user object using ach_level_current_id property
  * The progress to the next level can be calculated using ach_points_ever and required_points properties of next level
@@ -138,7 +150,7 @@ export interface TLevel {
 }
 
 /** 
- * TTournament interface describes the general information of the tournament item
+ * TTournament describes the general information of the tournament item
  */
 
 export interface TTournament {
@@ -213,7 +225,7 @@ export interface TTournament {
 }
 
 /** 
- * TTournamentDetailed interface describes the information of the tournament item and includes list of participants, their scores and position in the tournament leaderboard
+ * TTournamentDetailed describes the information of the tournament item and includes list of participants, their scores and position in the tournament leaderboard
  */
 export interface TTournamentDetailed extends TTournament {
     
@@ -245,7 +257,7 @@ export interface TTournamentDetailed extends TTournament {
 };
 
 /** 
- * TStoreCategory interface describes the store category item. Each store item can be assigned to 1 or more categories
+ * TStoreCategory describes the store category item. Each store item can be assigned to 1 or more categories
  */
 export interface TStoreCategory {
     id: number;
@@ -254,7 +266,7 @@ export interface TStoreCategory {
 }
 
 /** 
- * TStoreItem interface describes the information of the store item defined in the system
+ * TStoreItem describes the information of the store item defined in the system
  */
 export interface TStoreItem {
     /** ID of the store item  */
@@ -290,7 +302,7 @@ export interface TStoreItem {
 }
 
 /** 
- * TMissionOrBadge interface describes the information of mission or badge defined in the system
+ * TMissionOrBadge describes the information of mission or badge defined in the system
  */
 export interface TMissionOrBadge {
     /** ID of the mission or badge  */
@@ -346,7 +358,7 @@ export interface TMissionOrBadge {
 }
 
 /** 
- * TMissionOrBadgeTask interface describes the information of tasks that belings to mission or badge. See also TMissionOrBadge
+ * TMissionOrBadgeTask describes the information of tasks that belings to mission or badge. See also TMissionOrBadge
  */
 export interface TMissionOrBadgeTask {
     /** ID of the task */

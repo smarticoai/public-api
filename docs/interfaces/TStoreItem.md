@@ -1,6 +1,6 @@
 # Interface: TStoreItem
 
-TStoreItem interface describes the information of the store item defined in the system
+TStoreItem describes the information of the store item defined in the system
 
 ## Properties
 

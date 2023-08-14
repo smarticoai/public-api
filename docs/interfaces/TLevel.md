@@ -1,6 +1,6 @@
 # Interface: TLevel
 
-TLevel interface describes the information of each level defined in the system
+TLevel describes the information of each level defined in the system
 There is no order of the levels, but it can be calculated using required_points property
 The current level of user can be taken from the user object using ach_level_current_id property
 The progress to the next level can be calculated using ach_points_ever and required_points properties of next level

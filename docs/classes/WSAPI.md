@@ -4,13 +4,13 @@
 
 ### getUserProfile
 
-▸ **getUserProfile**(): `Promise`<[`TUserProfile`](../interfaces/TUserProfile.md)\>
+▸ **getUserProfile**(): [`TUserProfile`](../interfaces/TUserProfile.md)
 
 Returns information about current user
 
 #### Returns
 
-`Promise`<[`TUserProfile`](../interfaces/TUserProfile.md)\>
+[`TUserProfile`](../interfaces/TUserProfile.md)
 
 ___
 
@@ -83,6 +83,24 @@ Returns the list of mini-games available for user
 #### Returns
 
 `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+
+___
+
+### playMiniGame
+
+▸ **playMiniGame**(`template_id`): `Promise`<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
+
+Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `template_id` | `number` |
+
+#### Returns
+
+`Promise`<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 ___
 

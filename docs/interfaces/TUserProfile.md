@@ -1,6 +1,6 @@
 # Interface: TUserProfile
 
-TUser interface describes the information of the user
+TUser describes the information of the user
 The user object is returned by _smartico.api.getUserProfile() method.
 If you want to track the changes of the user profile, you can subscribe to the callback in the following way
  _smartico.on('props_change', () => console.log(_smartico.api.getUserProfile()) );

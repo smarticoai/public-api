@@ -1,7 +1,7 @@
 import { CoreUtils } from "../Core";
 import { SmarticoAPI } from "../SmarticoAPI";
 
-import { TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TUserProfile } from "./WSAPITypes";
+import { TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TUserProfile } from "./WSAPITypes";
 
 /** @group General API */
 export class WSAPI {
@@ -49,7 +49,21 @@ export class WSAPI {
     /** Returns the list of mini-games available for user */
     public async getMiniGames(): Promise<TMiniGameTemplate[]> {
         return this.api.sawGetTemplatesT(null);
-    }        
+    }
+
+    /** Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code  */
+    public async playMiniGame(template_id: number): Promise<TMiniGamePlayResult> {
+        
+        const r = await this.api.sawSpinRequest(null, template_id);
+
+        const o: TMiniGamePlayResult = {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+            prize_id: r.saw_prize_id,
+        }
+
+        return o;
+    }    
 
     /** Returns all the active instances of tournaments */
     public async getTournamentsList(): Promise<TTournament[]> {

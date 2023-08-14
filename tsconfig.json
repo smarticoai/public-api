@@ -22,6 +22,7 @@
             "src/MiniGames/SAWBuyInType.ts",
             "src/MiniGames/SAWGameType.ts",
             "src/MiniGames/SAWPrizeType.ts",
+            "src/MiniGames/SAWSpinErrorCode.ts",
         ],
         "out": "docs",
         "plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],

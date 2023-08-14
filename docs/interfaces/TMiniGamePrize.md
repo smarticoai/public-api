@@ -1,6 +1,6 @@
 # Interface: TMiniGamePrize
 
-TMiniGamePrize interface describes the information of prize in the array of prizes in the TMiniGameTemplate
+TMiniGamePrize describes the information of prize in the array of prizes in the TMiniGameTemplate
 
 ## Properties
 

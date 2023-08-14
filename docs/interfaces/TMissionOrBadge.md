@@ -1,6 +1,6 @@
 # Interface: TMissionOrBadge
 
-TMissionOrBadge interface describes the information of mission or badge defined in the system
+TMissionOrBadge describes the information of mission or badge defined in the system
 
 ## Properties
 

@@ -1,6 +1,6 @@
 # Interface: TStoreCategory
 
-TStoreCategory interface describes the store category item. Each store item can be assigned to 1 or more categories
+TStoreCategory describes the store category item. Each store item can be assigned to 1 or more categories
 
 ## Properties
 

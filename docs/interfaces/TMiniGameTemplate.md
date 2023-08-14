@@ -1,6 +1,6 @@
 # Interface: TMiniGameTemplate
 
-TMiniGameTemplate interface describes the information of mini-games available for the user
+TMiniGameTemplate describes the information of mini-games available for the user
 
 ## Properties
 

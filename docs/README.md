@@ -5,11 +5,13 @@
 - [SAWBuyInTypeName](enums/SAWBuyInTypeName.md)
 - [SAWGameTypeName](enums/SAWGameTypeName.md)
 - [MiniGamePrizeTypeName](enums/MiniGamePrizeTypeName.md)
+- [SAWSpinErrorCode](enums/SAWSpinErrorCode.md)
 - [TournamentRegistrationStatusName](enums/TournamentRegistrationStatusName.md)
 
 ## Interfaces
 
 - [TMiniGamePrize](interfaces/TMiniGamePrize.md)
+- [TMiniGamePlayResult](interfaces/TMiniGamePlayResult.md)
 - [TMiniGameTemplate](interfaces/TMiniGameTemplate.md)
 - [TUserProfile](interfaces/TUserProfile.md)
 - [TLevel](interfaces/TLevel.md)

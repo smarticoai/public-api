@@ -1,6 +1,6 @@
 # Interface: TMissionOrBadgeTask
 
-TMissionOrBadgeTask interface describes the information of tasks that belings to mission or badge. See also TMissionOrBadge
+TMissionOrBadgeTask describes the information of tasks that belings to mission or badge. See also TMissionOrBadge
 
 ## Properties
 

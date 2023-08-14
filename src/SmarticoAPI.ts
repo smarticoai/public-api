@@ -295,7 +295,7 @@ class SmarticoAPI {
         return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates);
     }    
 
-    public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id: number): Promise<SAWDoSpinResponse> {
+    public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id?: number): Promise<SAWDoSpinResponse> {
 
         const message = this.buildMessage<SAWDoSpinRequest, SAWDoSpinResponse>(user_ext_id, ClassId.SAW_DO_SPIN_REQUEST, {
             saw_template_id,

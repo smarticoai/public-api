@@ -1,6 +1,6 @@
 # Interface: TTournament
 
-TTournament interface describes the general information of the tournament item
+TTournament describes the general information of the tournament item
 
 ## Hierarchy
 

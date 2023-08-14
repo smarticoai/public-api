@@ -1,6 +1,6 @@
 # Interface: TTournamentDetailed
 
-TTournamentDetailed interface describes the information of the tournament item and includes list of participants, their scores and position in the tournament leaderboard
+TTournamentDetailed describes the information of the tournament item and includes list of participants, their scores and position in the tournament leaderboard
 
 ## Hierarchy
 
