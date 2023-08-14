@@ -62,6 +62,30 @@ Returns all the store items available the current user
 
 ___
 
+### getStoreCategories
+
+▸ **getStoreCategories**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+
+Returns store categories
+
+#### Returns
+
+`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+
+___
+
+### getMiniGames
+
+▸ **getMiniGames**(): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+
+Returns the list of mini-games available for user
+
+#### Returns
+
+`Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+
+___
+
 ### getTournamentsList
 
 ▸ **getTournamentsList**(): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>

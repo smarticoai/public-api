@@ -1,6 +1,6 @@
 import {TournamentRegistrationType, TournamentRegistrationTypeGetName} from "./TournamentRegistrationType";
 import {TournamentInstanceStatus} from "./TournamentInstanceStatus";
-import { TournamentRegistrationStatus, TournamentRegistrationStatusName } from "./TournamentRegistrationStatus";
+import { TournamentRegistrationStatus, TournamentRegistrationStatusName, TournamentRegistrationStatusNamed } from "./TournamentRegistrationStatus";
 import { TournamentType } from "./TournamentType";
 import { TournamentPublicMeta } from "./TournamentPublicMeta";
 import { TTournament } from "../WSAPI/WSAPITypes";
@@ -77,7 +77,7 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
             is_user_registered: r.isUserRegistered,
             players_min_count: r.playersMinCount,
             players_max_count: r.playersMaxCount,
-            registration_status: TournamentRegistrationStatusName(r.tournamentRegistrationStatus),
+            registration_status: TournamentRegistrationStatusNamed(r.tournamentRegistrationStatus),
 
             registration_type: TournamentRegistrationTypeGetName(r.registrationType),
             registration_cost_points: r.buyInAmount,

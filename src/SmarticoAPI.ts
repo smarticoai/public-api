@@ -5,19 +5,19 @@ import { SAWGetTemplatesResponse } from './MiniGames/SAWGetTemplatesResponse';
 import { SAWGetTemplatesRequest } from './MiniGames/SAWGetTemplatesRequest';
 import { IntUtils } from './IntUtils';
 import { ILogger } from './ILogger';
-import { SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode } from './MiniGames';
+import { SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode, SAWTemplatesTransform } from './MiniGames';
 import { ECacheContext, OCache } from './OCache';
 import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
-import { GetStoreItemsResponse, StoreItemTransform } from './Store';
+import { GetCategoriesStoreResponse, GetStoreItemsResponse, StoreCategoryTransform, StoreItemTransform } from './Store';
 import { AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, tournamentInfoItemTransform } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TLevel, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
+import { TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -289,8 +289,11 @@ class SmarticoAPI {
         }
 
         return response;
-
     }
+
+    public async sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]> {
+        return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates);
+    }    
 
     public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id: number): Promise<SAWDoSpinResponse> {
 
@@ -336,12 +339,21 @@ class SmarticoAPI {
 
         const message = this.buildMessage<any, GetStoreItemsResponse>(user_ext_id, ClassId.GET_SHOP_ITEMS_REQUEST);
         return await this.send<GetStoreItemsResponse>(message, ClassId.GET_SHOP_ITEMS_RESPONSE);
-
     }
 
     public async storeGetItemsT(user_ext_id: string): Promise<TStoreItem[]> {
         return StoreItemTransform((await this.storeGetItems(user_ext_id)).items);
-    }    
+    }
+
+    public async storeGetCategories(user_ext_id: string): Promise<GetCategoriesStoreResponse> {
+
+        const message = this.buildMessage<any, GetCategoriesStoreResponse>(user_ext_id, ClassId.GET_SHOP_CATEGORIES_REQUEST);
+        return await this.send<GetCategoriesStoreResponse>(message, ClassId.GET_SHOP_CATEGORIES_RESPONSE);
+    }
+
+    public async storeGetCategoriesT(user_ext_id: string): Promise<TStoreCategory[]> {
+        return StoreCategoryTransform((await this.storeGetCategories(user_ext_id)).categories);
+    }        
 
     public async missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
 

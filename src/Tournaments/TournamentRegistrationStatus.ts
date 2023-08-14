@@ -10,18 +10,27 @@ export enum TournamentRegistrationStatus {
     QUALIFIED_PENDING_REGISTRATION = 6
 }
 
-export type TournamentRegistrationStatusName = 'NOT_REGISTERED' | 'REGISTERED' | 'FINISHED' | 'PENDING' | 'CANCELLED' | 'REGISTERED_PENDING_QUALIFICATION' | 'QUALIFIED_PENDING_REGISTRATION';
+export enum TournamentRegistrationStatusName {
+    NOT_REGISTERED = 'NOT_REGISTERED',
+    REGISTERED = 'REGISTERED',
+    FINISHED = 'FINISHED',
+    PENDING = 'PENDING',
+    CANCELLED = 'CANCELLED',
+    REGISTERED_PENDING_QUALIFICATION = 'REGISTERED_PENDING_QUALIFICATION',
+    QUALIFIED_PENDING_REGISTRATION = 'QUALIFIED_PENDING_REGISTRATION',
+    UNKNOWN = "UNKNOWN"
+}
 
 /** @hidden */
-export const TournamentRegistrationStatusName = (type: TournamentRegistrationStatus): TournamentRegistrationStatusName => {
+export const TournamentRegistrationStatusNamed = (type: TournamentRegistrationStatus): TournamentRegistrationStatusName => {
     return ({
-        [TournamentRegistrationStatus.CANCELLED]: 'CANCELLED',
-        [TournamentRegistrationStatus.FINISHED]: 'FINISHED',
-        [TournamentRegistrationStatus.NOT_REGISTERED]: 'NOT_REGISTERED',
-        [TournamentRegistrationStatus.PENDING]: 'PENDING',
-        [TournamentRegistrationStatus.QUALIFIED_PENDING_REGISTRATION]: 'QUALIFIED_PENDING_REGISTRATION',
-        [TournamentRegistrationStatus.REGISTERED]: 'REGISTERED',
-        [TournamentRegistrationStatus.REGISTERED_PENDING_QUALIFICATION]: 'REGISTERED_PENDING_QUALIFICATION',
-    }[type] || 'UNKNOWN') as TournamentRegistrationStatusName;
+        [TournamentRegistrationStatus.CANCELLED]: TournamentRegistrationStatusName.CANCELLED,
+        [TournamentRegistrationStatus.FINISHED]: TournamentRegistrationStatusName.FINISHED,
+        [TournamentRegistrationStatus.NOT_REGISTERED]: TournamentRegistrationStatusName.NOT_REGISTERED,
+        [TournamentRegistrationStatus.PENDING]: TournamentRegistrationStatusName.PENDING,
+        [TournamentRegistrationStatus.QUALIFIED_PENDING_REGISTRATION]: TournamentRegistrationStatusName.QUALIFIED_PENDING_REGISTRATION,
+        [TournamentRegistrationStatus.REGISTERED]: TournamentRegistrationStatusName.REGISTERED,
+        [TournamentRegistrationStatus.REGISTERED_PENDING_QUALIFICATION]: TournamentRegistrationStatusName.REGISTERED_PENDING_QUALIFICATION
+    }[type] || TournamentRegistrationStatusName.UNKNOWN) as TournamentRegistrationStatusName;
 }    
 

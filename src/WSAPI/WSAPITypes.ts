@@ -1,6 +1,72 @@
-import { TournamentRegistrationStatus, TournamentRegistrationStatusName, TournamentRegistrationType, TournamentRegistrationTypeName } from "../Tournaments";
+import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWPrizeType, SAWPrizeUI } from "../MiniGames";
+import { TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
+
+
+/**
+ * TMiniGamePrize interface describes the information of prize in the array of prizes in the TMiniGameTemplate
+*/
+export interface TMiniGamePrize {
+    /** ID of the prize */
+    id: number;
+    /** The visual name of the prize */
+    name: string;
+    /** The type of the prize,  no-prize, points, bonus, manual, spin, jackpot */
+    prize_type: MiniGamePrizeTypeName;
+    /** Numeric value of the prize in case it's pints or spin type */
+    prize_value?: number;
+    /** Custom font size for the prize */
+    font_size?: number;
+    /** The URL of the icon of the prize */
+    icon?: string;
+}
+
+
+
+/**
+ * TMiniGameTemplate interface describes the information of mini-games available for the user
+*/
+export interface TMiniGameTemplate {
+    /** ID of the mini-game template */
+    id: number;
+    /** Name of the mini-game template, translated to the user language */
+    name: string;
+    /** Description of the mini-game template, translated to the user language */
+    description: string;
+    /** URL of the icon of the mini-game template */
+    thumbnail: string;
+
+    /** The type of the game, e.g. Spin the Wheel, Gift Box, Scratch card, MatchX etc */
+    saw_game_type: SAWGameTypeName;
+    /** How the user is charged for each game attempt e.g. Free, Points or Spin attempts */
+    saw_buyin_type: SAWBuyInTypeName;    
+
+    // in case of charging type 'Points', what is the points amount will be deducted from user balance
+    buyin_cost_points: number;
+    // in case of charging type 'Spin attempts', shows the current number of spin attempts that user has
+    spin_count?: number; 
+
+
+    /** The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED */
+    over_limit_message: string;
+    /** The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points. */
+    no_attempts_message: string;
+
+    /** Current jackpont amount, if jackpot is enabled. */
+    jackpot_current: number;
+    /** The amount that will be added to the jackpot every time when somebody plays the game. Note that the contribution amount is abstract, means that no money or points are deducted from the user balance. */
+    jackpot_add_on_attempt: number;
+    /** The symbol of jackpot that is giving the sense to the 'amount' E.g. the symbol could be EUR and connected to the amount it can indicate that amount is monetary, e.g. '100 EUR'. Or the symbol can be 'Free spins' and connected to the amount it can indicate that amount is number of free spins, e.g. '100 Free spins'.
+     */
+    jackpot_symbol: string;
+        
+    prizes: TMiniGamePrize[];
+
+}
+
+
+
 
 /**
  * TUser interface describes the information of the user
@@ -178,6 +244,14 @@ export interface TTournamentDetailed extends TTournament {
 
 };
 
+/** 
+ * TStoreCategory interface describes the store category item. Each store item can be assigned to 1 or more categories
+ */
+export interface TStoreCategory {
+    id: number;
+    name: string;
+    order: number
+}
 
 /** 
  * TStoreItem interface describes the information of the store item defined in the system

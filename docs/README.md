@@ -1,11 +1,21 @@
 # Smartico API documentation
 
+## Enumerations
+
+- [SAWBuyInTypeName](enums/SAWBuyInTypeName.md)
+- [SAWGameTypeName](enums/SAWGameTypeName.md)
+- [MiniGamePrizeTypeName](enums/MiniGamePrizeTypeName.md)
+- [TournamentRegistrationStatusName](enums/TournamentRegistrationStatusName.md)
+
 ## Interfaces
 
+- [TMiniGamePrize](interfaces/TMiniGamePrize.md)
+- [TMiniGameTemplate](interfaces/TMiniGameTemplate.md)
 - [TUserProfile](interfaces/TUserProfile.md)
 - [TLevel](interfaces/TLevel.md)
 - [TTournament](interfaces/TTournament.md)
 - [TTournamentDetailed](interfaces/TTournamentDetailed.md)
+- [TStoreCategory](interfaces/TStoreCategory.md)
 - [TStoreItem](interfaces/TStoreItem.md)
 - [TMissionOrBadge](interfaces/TMissionOrBadge.md)
 - [TMissionOrBadgeTask](interfaces/TMissionOrBadgeTask.md)
@@ -15,12 +25,6 @@
 - [WSAPI](classes/WSAPI.md)
 
 ## Type Aliases
-
-### TournamentRegistrationStatusName
-
-Ƭ **TournamentRegistrationStatusName**: ``"NOT_REGISTERED"`` \| ``"REGISTERED"`` \| ``"FINISHED"`` \| ``"PENDING"`` \| ``"CANCELLED"`` \| ``"REGISTERED_PENDING_QUALIFICATION"`` \| ``"QUALIFIED_PENDING_REGISTRATION"``
-
-___
 
 ### TournamentRegistrationTypeName
 

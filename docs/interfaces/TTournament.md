@@ -165,7 +165,7 @@ ___
 
 ### registration\_status
 
-• **registration\_status**: `TournamentRegistrationStatusName`
+• **registration\_status**: [`TournamentRegistrationStatusName`](../enums/TournamentRegistrationStatusName.md)
 
 Status of registration in the tournament for current user
 

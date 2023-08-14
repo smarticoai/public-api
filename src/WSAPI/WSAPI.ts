@@ -1,7 +1,7 @@
 import { CoreUtils } from "../Core";
 import { SmarticoAPI } from "../SmarticoAPI";
 
-import { TLevel, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TUserProfile } from "./WSAPITypes";
+import { TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TUserProfile } from "./WSAPITypes";
 
 /** @group General API */
 export class WSAPI {
@@ -40,6 +40,16 @@ export class WSAPI {
     public async getStoreItems(): Promise<TStoreItem[]> {
         return this.api.storeGetItemsT(null);
     }
+
+    /** Returns store categories */
+    public async getStoreCategories(): Promise<TStoreItem[]> {
+        return this.api.storeGetItemsT(null);
+    }    
+
+    /** Returns the list of mini-games available for user */
+    public async getMiniGames(): Promise<TMiniGameTemplate[]> {
+        return this.api.sawGetTemplatesT(null);
+    }        
 
     /** Returns all the active instances of tournaments */
     public async getTournamentsList(): Promise<TTournament[]> {
