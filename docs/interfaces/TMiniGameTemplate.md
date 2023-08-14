@@ -1,0 +1,109 @@
+# Interface: TMiniGameTemplate
+
+TMiniGameTemplate interface describes the information of mini-games available for the user
+
+## Properties
+
+### id
+
+• **id**: `number`
+
+ID of the mini-game template
+
+___
+
+### name
+
+• **name**: `string`
+
+Name of the mini-game template, translated to the user language
+
+___
+
+### description
+
+• **description**: `string`
+
+Description of the mini-game template, translated to the user language
+
+___
+
+### thumbnail
+
+• **thumbnail**: `string`
+
+URL of the icon of the mini-game template
+
+___
+
+### saw\_game\_type
+
+• **saw\_game\_type**: [`SAWGameTypeName`](../enums/SAWGameTypeName.md)
+
+The type of the game, e.g. Spin the Wheel, Gift Box, Scratch card, MatchX etc
+
+___
+
+### saw\_buyin\_type
+
+• **saw\_buyin\_type**: [`SAWBuyInTypeName`](../enums/SAWBuyInTypeName.md)
+
+How the user is charged for each game attempt e.g. Free, Points or Spin attempts
+
+___
+
+### buyin\_cost\_points
+
+• **buyin\_cost\_points**: `number`
+
+___
+
+### spin\_count
+
+• `Optional` **spin\_count**: `number`
+
+___
+
+### over\_limit\_message
+
+• **over\_limit\_message**: `string`
+
+The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED
+
+___
+
+### no\_attempts\_message
+
+• **no\_attempts\_message**: `string`
+
+The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points.
+
+___
+
+### jackpot\_current
+
+• **jackpot\_current**: `number`
+
+Current jackpont amount, if jackpot is enabled.
+
+___
+
+### jackpot\_add\_on\_attempt
+
+• **jackpot\_add\_on\_attempt**: `number`
+
+The amount that will be added to the jackpot every time when somebody plays the game. Note that the contribution amount is abstract, means that no money or points are deducted from the user balance.
+
+___
+
+### jackpot\_symbol
+
+• **jackpot\_symbol**: `string`
+
+The symbol of jackpot that is giving the sense to the 'amount' E.g. the symbol could be EUR and connected to the amount it can indicate that amount is monetary, e.g. '100 EUR'. Or the symbol can be 'Free spins' and connected to the amount it can indicate that amount is number of free spins, e.g. '100 Free spins'.
+
+___
+
+### prizes
+
+• **prizes**: [`TMiniGamePrize`](TMiniGamePrize.md)[]

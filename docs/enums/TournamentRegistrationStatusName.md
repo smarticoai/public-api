@@ -1,0 +1,49 @@
+# Enumeration: TournamentRegistrationStatusName
+
+## Enumeration Members
+
+### NOT\_REGISTERED
+
+• **NOT\_REGISTERED** = ``"NOT_REGISTERED"``
+
+___
+
+### REGISTERED
+
+• **REGISTERED** = ``"REGISTERED"``
+
+___
+
+### FINISHED
+
+• **FINISHED** = ``"FINISHED"``
+
+___
+
+### PENDING
+
+• **PENDING** = ``"PENDING"``
+
+___
+
+### CANCELLED
+
+• **CANCELLED** = ``"CANCELLED"``
+
+___
+
+### REGISTERED\_PENDING\_QUALIFICATION
+
+• **REGISTERED\_PENDING\_QUALIFICATION** = ``"REGISTERED_PENDING_QUALIFICATION"``
+
+___
+
+### QUALIFIED\_PENDING\_REGISTRATION
+
+• **QUALIFIED\_PENDING\_REGISTRATION** = ``"QUALIFIED_PENDING_REGISTRATION"``
+
+___
+
+### UNKNOWN
+
+• **UNKNOWN** = ``"UNKNOWN"``
