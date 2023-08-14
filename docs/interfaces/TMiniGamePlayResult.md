@@ -8,7 +8,7 @@ TMiniGamePlayResult describes the response of call to _smartico.api.playMiniGame
 
 • **err\_code**: [`SAWSpinErrorCode`](../enums/SAWSpinErrorCode.md)
 
-Name of the mini-game template, translated to the user language
+Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0
 
 ___
 
@@ -16,7 +16,7 @@ ___
 
 • **err\_message**: `string`
 
-Name of the mini-game template, translated to the user language
+Optional error message
 
 ___
 

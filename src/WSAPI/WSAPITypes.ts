@@ -27,9 +27,9 @@ export interface TMiniGamePrize {
  * TMiniGamePlayResult describes the response of call to _smartico.api.playMiniGame(template_id) method
 */
 export interface TMiniGamePlayResult {
-    /** Name of the mini-game template, translated to the user language */
+    /** Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0 */
     err_code: SAWSpinErrorCode;
-    /** Name of the mini-game template, translated to the user language */
+    /** Optional error message */
     err_message: string;
     /** The prize_id that user won, details of the prize can be found in the mini-game definition */
     prize_id: number;
