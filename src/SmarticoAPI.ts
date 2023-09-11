@@ -402,7 +402,7 @@ class SmarticoAPI {
                 tournamentInstanceId
             }
         );
-        const response = await this.send<GetTournamentInfoResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE);
+        const response = await this.send<GetTournamentInfoResponse>(message, ClassId.GET_TOURNAMENT_INFO_RESPONSE);
         
         if (response.userPosition?.avatar_id) {
             response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_id, this.avatarDomain);
