@@ -36,6 +36,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
             buyin_cost_points: r.buyin_cost_points,
             jackpot_add_on_attempt: r.jackpot_add_on_attempt,
             jackpot_current: r.jackpot_current,
+            spin_count: r.spin_count,
 
             prizes: r.prizes.map( p => {
                 const y: TMiniGamePrize = {
