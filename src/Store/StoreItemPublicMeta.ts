@@ -7,5 +7,6 @@ export interface StoreItemPublicMeta {
     custom_label_tag?: string;
     limit_message: string;
     priority: number;
-    related_items: number[];    
+    related_items: number[];
+    hint_text: string;
 }
