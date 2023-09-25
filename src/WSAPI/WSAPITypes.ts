@@ -59,6 +59,9 @@ export interface TMiniGameTemplate {
     // in case of charging type 'Spin attempts', shows the current number of spin attempts that user has
     spin_count?: number; 
 
+    // if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available
+    next_availabe_spin_ts: number;
+
 
     /** The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED */
     over_limit_message: string;

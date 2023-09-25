@@ -38,6 +38,8 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
             jackpot_current: r.jackpot_current,
             spin_count: r.spin_count,
 
+            next_availabe_spin_ts: r.next_availabe_spin_ts,
+
             prizes: r.prizes.map( p => {
                 const y: TMiniGamePrize = {
                     id: p.saw_prize_id,
