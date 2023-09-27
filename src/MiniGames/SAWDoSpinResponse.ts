@@ -9,5 +9,4 @@ export interface SAWDoSpinResponse extends ProtocolResponse {
     saw_prize_id: number;
     first_spin_in_period: number;
     visitor_win_uuid?: string;
-    next_available_spin_ts: number;
 };
