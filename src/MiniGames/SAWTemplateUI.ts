@@ -27,6 +27,7 @@ export interface SAWTemplateUI {
     matchx_banner?: string;
     matchx_seasonal_ranking?: boolean;
     matchx_general_board_users_count?: number;
+    matchx_hide_ranking?: boolean;
     ask_for_username?: SAWAskForUsername;
     show_prize_board?: boolean;
 
