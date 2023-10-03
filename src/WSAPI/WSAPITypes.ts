@@ -54,12 +54,12 @@ export interface TMiniGameTemplate {
     /** How the user is charged for each game attempt e.g. Free, Points or Spin attempts */
     saw_buyin_type: SAWBuyInTypeName;    
 
-    // in case of charging type 'Points', what is the points amount will be deducted from user balance
+    /** in case of charging type 'Points', what is the points amount will be deducted from user balance */
     buyin_cost_points: number;
-    // in case of charging type 'Spin attempts', shows the current number of spin attempts that user has
+    /** in case of charging type 'Spin attempts', shows the current number of spin attempts that user has */
     spin_count?: number; 
 
-    // if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available
+    /** if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available */
     next_available_spin_ts: number;
 
 

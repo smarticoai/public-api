@@ -56,11 +56,23 @@ ___
 
 • **buyin\_cost\_points**: `number`
 
+in case of charging type 'Points', what is the points amount will be deducted from user balance
+
 ___
 
 ### spin\_count
 
 • `Optional` **spin\_count**: `number`
+
+in case of charging type 'Spin attempts', shows the current number of spin attempts that user has
+
+___
+
+### next\_available\_spin\_ts
+
+• **next\_available\_spin\_ts**: `number`
+
+if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available
 
 ___
 
