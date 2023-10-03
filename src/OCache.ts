@@ -3,7 +3,8 @@ import { NodeCache } from "./NodeCache";
 
 export enum ECacheContext {
     Translations,
-    LabelInfo
+    LabelInfo,
+    WSAPI,
 }
 
 const WITH_REF_CACHE = [
@@ -12,15 +13,19 @@ const WITH_REF_CACHE = [
 
 export class OCache {
 
-    private static cache: { [key: string] : NodeCache } = {}
+    private static cache: { [key: string]: NodeCache } = {};
+
+    private static init(cacheContext: ECacheContext) {
+        if (this.cache[cacheContext] === undefined) {
+            this.cache[cacheContext] = new NodeCache();
+        }
+    }
 
     public static get<T>(oKey: any, cacheContext: ECacheContext): T | undefined {
 
         const key = cacheContext.toString() + '_' + JSON.stringify(oKey);
 
-        if (this.cache[cacheContext] === undefined) {
-            this.cache[cacheContext] = new NodeCache( );
-        }
+        this.init(cacheContext);
 
         return this.cache[cacheContext].get(key);
     }
@@ -28,6 +33,8 @@ export class OCache {
     public static set(oKey: any, o: any, cacheContext: ECacheContext, ttlSeconds: number = 60) {
 
         const key = cacheContext.toString() + '_' + JSON.stringify(oKey);
+
+        this.init(cacheContext);
 
         this.cache[cacheContext].set(key, o, ttlSeconds);
     }

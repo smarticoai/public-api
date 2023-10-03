@@ -5,7 +5,7 @@ import { SAWGetTemplatesResponse } from './MiniGames/SAWGetTemplatesResponse';
 import { SAWGetTemplatesRequest } from './MiniGames/SAWGetTemplatesRequest';
 import { IntUtils } from './IntUtils';
 import { ILogger } from './ILogger';
-import { SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode, SAWTemplatesTransform } from './MiniGames';
+import { SAWDoAknowledgeRequest, SAWDoAknowledgeResponse, SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode, SAWTemplatesTransform } from './MiniGames';
 import { ECacheContext, OCache } from './OCache';
 import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
@@ -27,6 +27,7 @@ const DEFAULT_LANG_EN = "EN";
 interface Tracker {
     label_api_key: string;
     userPublicProps: any;
+    on: any;
 }
 interface IOptions {
     logger?: ILogger;
@@ -293,13 +294,22 @@ class SmarticoAPI {
 
     public async sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]> {
         return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates);
-    }    
+    }
+
+    public async doAcknowledgeRequest(user_ext_id: string, request_id: string): Promise<SAWDoAknowledgeResponse>{
+        const message = this.buildMessage<SAWDoAknowledgeRequest, SAWDoAknowledgeResponse>(user_ext_id, ClassId.SAW_AKNOWLEDGE_REQUEST, {
+            request_id
+        });
+
+        return await this.send<SAWDoAknowledgeResponse>(message, ClassId.SAW_AKNOWLEDGE_RESPONSE);
+    }
 
     public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id?: number): Promise<SAWDoSpinResponse> {
+        const request_id = IntUtils.uuid();
 
         const message = this.buildMessage<SAWDoSpinRequest, SAWDoSpinResponse>(user_ext_id, ClassId.SAW_DO_SPIN_REQUEST, {
             saw_template_id,
-            request_id: IntUtils.uuid()
+            request_id
         });
 
         const spinAttemptResponse = await this.send<SAWDoSpinResponse>(message, ClassId.SAW_DO_SPIN_RESPONSE);
@@ -321,7 +331,7 @@ class SmarticoAPI {
             round_id,
         });
 
-        return spinAttemptResponse;
+        return {...spinAttemptResponse, request_id };
     }
 
     public async inboxGetMessages(user_ext_id: string, limit: number = 10, offset: number = 0): Promise<GetInboxMessagesResponse> {
