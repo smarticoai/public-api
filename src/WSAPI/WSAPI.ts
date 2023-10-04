@@ -73,7 +73,7 @@ export class WSAPI {
 
     /** Returns the list of mini-games available for user 
      * The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one. 
-     * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one . Updated templates will be passed to onUpdate callback. */
+     * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one. Updated templates will be passed to onUpdate callback. */
     public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void }): Promise<TMiniGameTemplate[]> {
         if (onUpdate) {
             this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);

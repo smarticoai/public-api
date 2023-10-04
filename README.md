@@ -23,6 +23,21 @@ _smartico.api.levelsGet().then( levels => {
 
 ```
 
+Some methods can be called with onUpdate callback, which is executed when there are changes in the underlying data.
+Example:
+
+```javascript
+
+var miniGamesUpdates = (games) => {
+    console.log('There are ' + games.length + ' games available now');
+}
+
+_smartico.api.getMiniGames( { onUpdate: miniGamesUpdates} ).then( games => {
+    console.log('There are ' + games.length + ' games available');
+});
+
+```
+
 See the [API documentation](docs/classes/WSAPI.md) for all available methods and returning data.
 
 
