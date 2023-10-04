@@ -27,7 +27,7 @@ const DEFAULT_LANG_EN = "EN";
 interface Tracker {
     label_api_key: string;
     userPublicProps: any;
-    on: any;
+    on: (callBackKey: ClassId, func: (data: any) => void) => void;
 }
 interface IOptions {
     logger?: ILogger;
