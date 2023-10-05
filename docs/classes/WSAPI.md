@@ -28,7 +28,7 @@ ___
 
 ### getMissions
 
-▸ **getMissions**(`«destructured»`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+▸ **getMissions**(`«destructured»?`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the missions available the current user.
 The returned missions is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one. 
@@ -85,11 +85,11 @@ ___
 
 ### getMiniGames
 
-▸ **getMiniGames**(`«destructured»`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+▸ **getMiniGames**(`«destructured»?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
 Returns the list of mini-games available for user 
 The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one. 
-The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one . Updated templates will be passed to onUpdate callback.
+The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one. Updated templates will be passed to onUpdate callback.
 
 #### Parameters
 
@@ -124,7 +124,7 @@ ___
 
 ### getTournamentsList
 
-▸ **getTournamentsList**(`«destructured»`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
+▸ **getTournamentsList**(`«destructured»?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
 
 Returns all the active instances of tournaments 
 The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one. 
