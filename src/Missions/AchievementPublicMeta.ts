@@ -15,5 +15,5 @@ export interface AchievementPublicMeta {
     hide_locked_mission?: boolean;
     custom_section_id?: number;
     only_in_custom_section?: boolean;
-
+    hint_text?: string;
 }

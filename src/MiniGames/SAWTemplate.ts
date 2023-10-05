@@ -26,7 +26,7 @@ export interface SAWTemplate {
     maxSpinsCount: number;
     maxSpinsPediodMs: number;    
 
-    next_available_spin_ts: number;
+    next_available_spin_ts?: number;
 
     saw_skin_key: string;
     saw_skin_ui_definition: {
