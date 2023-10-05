@@ -48,7 +48,7 @@ export class WSAPI {
     /** Returns all the missions available the current user.
      * The returned missions is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one. 
      * The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it. */ 
-    public async getMissions({ onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void }): Promise<TMissionOrBadge[]> {
+    public async getMissions({ onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMissionOrBadge[]> {
         if (onUpdate) {
             this.onUpdateCallback.set(onUpdateContextKey.Missions, onUpdate);
         }
@@ -74,7 +74,7 @@ export class WSAPI {
     /** Returns the list of mini-games available for user 
      * The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one. 
      * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one. Updated templates will be passed to onUpdate callback. */
-    public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void }): Promise<TMiniGameTemplate[]> {
+    public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<TMiniGameTemplate[]> {
         if (onUpdate) {
             this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
         }
@@ -99,7 +99,7 @@ export class WSAPI {
     /** Returns all the active instances of tournaments 
      * The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one. 
      * The onUpdate callback will be called when the user has registered in a tournament. Updated list will be passed to onUpdate callback.*/
-    public async getTournamentsList({ onUpdate }: { onUpdate?: (data: TTournament[]) => void }): Promise<TTournament[]> {
+    public async getTournamentsList({ onUpdate }: { onUpdate?: (data: TTournament[]) => void } = {}): Promise<TTournament[]> {
         if (onUpdate) {
             this.onUpdateCallback.set(onUpdateContextKey.TournamentList, onUpdate);
         }
