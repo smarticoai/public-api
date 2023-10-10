@@ -28,18 +28,14 @@ ___
 
 ### getMissions
 
-▸ **getMissions**(`«destructured»?`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
-
-Returns all the missions available the current user.
-The returned missions is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one. 
-The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it.
+▸ **getMissions**(`params?`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]) => `void` |
+| `params` | `Object` |
+| `params.onUpdate?` | (`data`: [`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]) => `void` |
 
 #### Returns
 
@@ -85,18 +81,17 @@ ___
 
 ### getMiniGames
 
-▸ **getMiniGames**(`«destructured»?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+▸ **getMiniGames**(`params?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
-Returns the list of mini-games available for user 
-The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one. 
-The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one. Updated templates will be passed to onUpdate callback.
+/**
+ *
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
+| `params` | `Object` |
+| `params.onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
 
 #### Returns
 
@@ -124,18 +119,14 @@ ___
 
 ### getTournamentsList
 
-▸ **getTournamentsList**(`«destructured»?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
-
-Returns all the active instances of tournaments 
-The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one. 
-The onUpdate callback will be called when the user has registered in a tournament. Updated list will be passed to onUpdate callback.
+▸ **getTournamentsList**(`params?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TTournament`](../interfaces/TTournament.md)[]) => `void` |
+| `params` | `Object` |
+| `params.onUpdate?` | (`data`: [`TTournament`](../interfaces/TTournament.md)[]) => `void` |
 
 #### Returns
 
