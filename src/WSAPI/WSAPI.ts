@@ -24,6 +24,8 @@ export class WSAPI {
     constructor(private api: SmarticoAPI) {
         const on = this.api.tracker.on;
         on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
+        on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
+        on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.updateOnAddSpin());
         on(ClassId.SAW_DO_SPIN_RESPONSE, (data: SAWDoSpinResponse) => on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => this.updateOnPrizeWin(data)));
         on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissionsOnOptIn());
         on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournamentsOnRegistration());
@@ -47,7 +49,10 @@ export class WSAPI {
 
     /** Returns all the missions available the current user.
      * The returned missions is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one. 
-     * The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it. */ 
+     * The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it. */
+     /**
+     * @param params
+     */
     public async getMissions({ onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMissionOrBadge[]> {
         if (onUpdate) {
             this.onUpdateCallback.set(onUpdateContextKey.Missions, onUpdate);
@@ -73,7 +78,11 @@ export class WSAPI {
 
     /** Returns the list of mini-games available for user 
      * The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one. 
-     * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one. Updated templates will be passed to onUpdate callback. */
+     * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback. */
+    /**
+    /**
+     * @param params
+     */
     public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<TMiniGameTemplate[]> {
         if (onUpdate) {
             this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
@@ -99,6 +108,9 @@ export class WSAPI {
     /** Returns all the active instances of tournaments 
      * The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one. 
      * The onUpdate callback will be called when the user has registered in a tournament. Updated list will be passed to onUpdate callback.*/
+    /**
+     * @param params
+     */
     public async getTournamentsList({ onUpdate }: { onUpdate?: (data: TTournament[]) => void } = {}): Promise<TTournament[]> {
         if (onUpdate) {
             this.onUpdateCallback.set(onUpdateContextKey.TournamentList, onUpdate);
@@ -117,6 +129,11 @@ export class WSAPI {
         const index = templates.findIndex(t => t.id === data.saw_template_id);
         templates[index].spin_count = data.spin_count;
         this.updateEntity(onUpdateContextKey.Saw, templates)
+    }
+
+    private async updateOnAddSpin() {
+        const payload = await this.api.sawGetTemplatesT(null);
+        this.updateEntity(onUpdateContextKey.Saw, payload)
     }
 
     private async updateOnPrizeWin(data: SAWDoSpinResponse) {
