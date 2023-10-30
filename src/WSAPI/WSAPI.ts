@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { TLevel, TMiniGamePlayResult, TMiniGamePrize, TMiniGameTemplate, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TUserProfile } from "./WSAPITypes";
+import { TLevel, TMiniGamePlayResult, TMiniGamePrize, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TUserProfile } from "./WSAPITypes";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -103,7 +103,19 @@ export class WSAPI {
         }
 
         return o;
-    }    
+    }
+
+    /** Requests an opt-in for the specified mission_id. Returns the err_code. */
+    public async requestMissionOptIn(mission_id: number): Promise<TMissionOptInResult>{
+        const r = await this.api.missionOptIn(null, mission_id);
+
+        const o: TMissionOptInResult = {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+
+        return o;
+    }
 
     /** Returns all the active instances of tournaments 
      * The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one. 

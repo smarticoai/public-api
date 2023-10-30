@@ -12,7 +12,7 @@ import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
 import { GetCategoriesStoreResponse, GetStoreItemsResponse, StoreCategoryTransform, StoreItemTransform } from './Store';
-import { AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
+import { AchievementOptinRequest, AchievementOptinResponse, AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, tournamentInfoItemTransform } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
@@ -332,6 +332,16 @@ class SmarticoAPI {
         });
 
         return {...spinAttemptResponse, request_id };
+    }
+
+    public async missionOptIn(user_ext_id: string, mission_id: number) {
+        const message = this.buildMessage<AchievementOptinRequest, AchievementOptinResponse>(user_ext_id, ClassId.MISSION_OPTIN_REQUEST, {
+           achievementId: mission_id
+        });
+
+        const res = await this.send<AchievementOptinResponse>(message, ClassId.MISSION_OPTIN_RESPONSE);
+
+        return res;
     }
 
     public async inboxGetMessages(user_ext_id: string, limit: number = 10, offset: number = 0): Promise<GetInboxMessagesResponse> {

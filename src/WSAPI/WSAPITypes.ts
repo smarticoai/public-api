@@ -373,3 +373,13 @@ export interface TMissionOrBadgeTask {
     /** The progress of the task in percents */
     progress: number
 }
+
+/**
+ * TMissionOptInResult describes the response of call to _smartico.api.requestMissionOptIn(mission_id) method
+*/
+export interface TMissionOptInResult {
+     /** Error code that represents outcome of the opt-in request. Successful opt-in in case err_code is 0 */
+     err_code: number;
+     /** Optional error message */
+     err_message: string;
+}
