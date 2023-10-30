@@ -24,7 +24,6 @@ export class WSAPI {
     constructor(private api: SmarticoAPI) {
         const on = this.api.tracker.on;
         on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
-        on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
         on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.updateOnAddSpin());
         on(ClassId.SAW_DO_SPIN_RESPONSE, (data: SAWDoSpinResponse) => on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => this.updateOnPrizeWin(data)));
         on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissionsOnOptIn());
