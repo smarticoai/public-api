@@ -117,6 +117,24 @@ Plays the specified by template_id mini-game on behalf of user and returns prize
 
 ___
 
+### requestMissionOptIn
+
+▸ **requestMissionOptIn**(`mission_id`): `Promise`<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+
+Requests an opt-in for the specified mission_id. Returns the err_code.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mission_id` | `number` |
+
+#### Returns
+
+`Promise`<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+
+___
+
 ### getTournamentsList
 
 ▸ **getTournamentsList**(`params?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>

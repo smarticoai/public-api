@@ -21,6 +21,7 @@
 - [TStoreItem](interfaces/TStoreItem.md)
 - [TMissionOrBadge](interfaces/TMissionOrBadge.md)
 - [TMissionOrBadgeTask](interfaces/TMissionOrBadgeTask.md)
+- [TMissionOptInResult](interfaces/TMissionOptInResult.md)
 
 ## General API
 
