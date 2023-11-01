@@ -25,12 +25,12 @@ export interface GetTournamentInfoResponse extends ProtocolResponse {
 
 const tournamentPrizeTypeToPrizeName = (type: ActivityTypeLimited) => {
     return {
-        [ActivityTypeLimited.DoNothing]: 'Tangible prize',
-        [ActivityTypeLimited.Points]: 'Add points',
-        [ActivityTypeLimited.DeductPoints]: 'Deduct points',
-        [ActivityTypeLimited.ResetPoints]: 'Reset points',
-        [ActivityTypeLimited.MiniGameAttempt]: "Mini game attempt",
-        [ActivityTypeLimited.Bonus]: 'Bonus',
+        [ActivityTypeLimited.DoNothing]: 'TANGIBLE',
+        [ActivityTypeLimited.Points]: 'POINTS_ADD',
+        [ActivityTypeLimited.DeductPoints]: 'POINTS_DEDUCT',
+        [ActivityTypeLimited.ResetPoints]: 'POINTS_RESET',
+        [ActivityTypeLimited.MiniGameAttempt]: "MINI_GAME_ATTEMPT",
+        [ActivityTypeLimited.Bonus]: 'BONUS',
     }[type]
 }
 

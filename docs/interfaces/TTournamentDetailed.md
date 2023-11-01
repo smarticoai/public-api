@@ -373,3 +373,9 @@ The information about current user in the tournament if he is registered in the 
 | `avatar_url` | `string` | The URL to the avatar of the current user |
 | `position` | `number` | The position of the current user in the tournament |
 | `scores` | `number` | The scores of the current user in the tournament |
+
+___
+
+### prizes
+
+• `Optional` **prizes**: { `name`: `string` ; `description`: `string` ; `image_url`: `string` ; `place_from`: `number` ; `place_to`: `number` ; `type`: `string` ; `points?`: `number`  }[]

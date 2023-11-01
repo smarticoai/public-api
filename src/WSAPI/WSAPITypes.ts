@@ -258,12 +258,18 @@ export interface TTournamentDetailed extends TTournament {
     }
 
     prizes?: {
+        /** The name of the prize */
         name: string;
+        /** The description of the prize */
         description: string;
+        /** The image of the prize */
         image_url: string;
+        /** from-to range of the places to which this prize */
         place_from: number;
         place_to: number;
+        /** type of the prize: TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS */
         type: string;
+        /** if the prize is points related, indicates amount of points */
         points?: number;
     }[]
 
