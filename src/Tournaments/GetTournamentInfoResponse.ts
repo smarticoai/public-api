@@ -3,6 +3,7 @@ import {TournamentPlayer} from "./TournamentPlayer";
 import { ProtocolResponse } from "../Base/ProtocolResponse";
 import { TournamentPrize } from "./TournamentPrize";
 import { TTournamentDetailed } from "../WSAPI/WSAPITypes";
+import { ActivityTypeLimited } from "src/Core";
 
 export interface GetTournamentInfoResponse extends ProtocolResponse {
 
@@ -22,6 +23,16 @@ export interface GetTournamentInfoResponse extends ProtocolResponse {
     }
 }
 
+const tournamentPrizeTypeToPrizeName = (type: ActivityTypeLimited) => {
+    return {
+        [ActivityTypeLimited.DoNothing]: 'Tangible prize',
+        [ActivityTypeLimited.Points]: 'Add points',
+        [ActivityTypeLimited.DeductPoints]: 'Deduct points',
+        [ActivityTypeLimited.ResetPoints]: 'Reset points',
+        [ActivityTypeLimited.MiniGameAttempt]: "Mini game attempt",
+        [ActivityTypeLimited.Bonus]: 'Bonus',
+    }[type]
+}
 
 export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTournamentDetailed => {
     const response: TTournamentDetailed = {
@@ -34,6 +45,10 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
             is_me: p.isMe,
         })),
     };
+
+    if (t.prizeStructure) {
+        response.prizes = t.prizeStructure.prizes.map(p => ({...p, type: tournamentPrizeTypeToPrizeName(p.type)}))
+    }
 
     if (t.userPosition) {
         response.me = {
