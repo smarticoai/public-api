@@ -305,6 +305,10 @@ class SmarticoAPI {
     }
 
     public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id?: number): Promise<SAWDoSpinResponse> {
+        if (!saw_template_id) {
+            throw new Error('Missing template id');
+        }
+
         const request_id = IntUtils.uuid();
 
         const message = this.buildMessage<SAWDoSpinRequest, SAWDoSpinResponse>(user_ext_id, ClassId.SAW_DO_SPIN_REQUEST, {
@@ -335,6 +339,9 @@ class SmarticoAPI {
     }
 
     public async missionOptIn(user_ext_id: string, mission_id: number) {
+        if (!mission_id) {
+            throw new Error('Missing mission id');
+        }
         const message = this.buildMessage<AchievementOptinRequest, AchievementOptinResponse>(user_ext_id, ClassId.MISSION_OPTIN_REQUEST, {
            achievementId: mission_id
         });
@@ -439,6 +446,9 @@ class SmarticoAPI {
     }
 
     public async tournamentsGetInfoT(user_ext_id: string, tournamentInstanceId: number): Promise<TTournamentDetailed> {
+        if (!tournamentInstanceId) {
+            throw new Error('Missing tournament instance id');
+        }
         return tournamentInfoItemTransform((await this.tournamentsGetInfo(user_ext_id, tournamentInstanceId)));
     }    
 
