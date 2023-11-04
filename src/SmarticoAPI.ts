@@ -449,7 +449,8 @@ class SmarticoAPI {
         if (!tournamentInstanceId) {
             throw new Error('Missing tournament instance id');
         }
-        return tournamentInfoItemTransform((await this.tournamentsGetInfo(user_ext_id, tournamentInstanceId)));
+        const response = await this.tournamentsGetInfo(user_ext_id, tournamentInstanceId);
+        return tournamentInfoItemTransform(response);
     }    
 
     public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<LeaderBoardDetails> {
