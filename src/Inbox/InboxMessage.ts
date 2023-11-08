@@ -14,4 +14,5 @@ export interface InboxMessage {
     engagement_uid: string;
     is_read: boolean;
     is_starred: boolean;
+    additional_buttons?: { inbox_cta_text: string, action: string }
 }
