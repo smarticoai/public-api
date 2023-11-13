@@ -1,5 +1,6 @@
-import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWPrizeType, SAWPrizeUI, SAWSpinErrorCode } from "../MiniGames";
-import { TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
+import { BuyStoreItemErrorCode } from "../Store";
+import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode } from "../MiniGames";
+import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
 
@@ -398,4 +399,18 @@ export interface TMissionOptInResult {
      err_code: number;
      /** Optional error message */
      err_message: string;
+}
+
+export interface TTournamentRegistrationResult {
+     /** Error code that represents outcome of the tournament registration request. Successful registration in case err_code is 0 */
+    err_code: TournamentRegistrationError;
+     /** Optional error message */
+    err_message: string;
+}
+
+export interface TBuyStoreItemResult {
+    /** Error code representing the result of the purchase of the shop item. Successful purchase if err_code is 0 */
+   err_code: BuyStoreItemErrorCode;
+    /** Optional error message */
+   err_message: string;
 }

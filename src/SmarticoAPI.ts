@@ -11,9 +11,9 @@ import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, ResponseIde
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
-import { GetCategoriesStoreResponse, GetStoreItemsResponse, StoreCategoryTransform, StoreItemTransform } from './Store';
+import { BuyStoreItemRequest, BuyStoreItemResponse, GetCategoriesStoreResponse, GetStoreItemsResponse, StoreCategoryTransform, StoreItemTransform } from './Store';
 import { AchievementOptinRequest, AchievementOptinResponse, AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
-import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, tournamentInfoItemTransform } from './Tournaments';
+import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, TournamentRegisterRequest, TournamentRegisterResponse, tournamentInfoItemTransform } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
@@ -264,7 +264,7 @@ class SmarticoAPI {
             public_username_custom
         });
         
-        return this.send(message, ClassId.CLIENT_SET_CUSTOM_USERNAME_RESPONSE);
+        return await this.send(message, ClassId.CLIENT_SET_CUSTOM_USERNAME_RESPONSE);
     }
 
     public async sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode: boolean = false): Promise<SAWGetTemplatesResponse> {
@@ -347,6 +347,32 @@ class SmarticoAPI {
         });
 
         const res = await this.send<AchievementOptinResponse>(message, ClassId.MISSION_OPTIN_RESPONSE);
+
+        return res;
+    }
+
+    public async registerInTournament(user_ext_id: string, tournamentInstanceId: number) {
+        if (!tournamentInstanceId) {
+            throw new Error('Missing tournament instance id');
+        }
+        const message = this.buildMessage<TournamentRegisterRequest, TournamentRegisterResponse>(user_ext_id, ClassId.TOURNAMENT_REGISTER_REQUEST, {
+            tournamentInstanceId
+        });
+
+        const res = await this.send<TournamentRegisterResponse>(message, ClassId.TOURNAMENT_REGISTER_RESPONSE);
+
+        return res;
+    }
+
+    public async buyStoreItem(user_ext_id: string, itemId: number) {
+        if (!itemId) {
+            throw new Error('Missing store item id');
+        }
+        const message = this.buildMessage<BuyStoreItemRequest, BuyStoreItemResponse>(user_ext_id, ClassId.BUY_SHOP_ITEM_REQUEST, {
+            itemId
+        });
+
+        const res = await this.send<BuyStoreItemResponse>(message, ClassId.BUY_SHOP_ITEM_RESPONSE);
 
         return res;
     }

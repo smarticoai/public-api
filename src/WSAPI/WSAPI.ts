@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { TLevel, TMiniGamePlayResult, TMiniGamePrize, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TUserProfile } from "./WSAPITypes";
+import { TBuyStoreItemResult, TLevel, TMiniGamePlayResult, TMiniGamePrize, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -70,6 +70,18 @@ export class WSAPI {
         return this.api.storeGetItemsT(null);
     }
 
+    /** Buy the specific shop item by item_id. Returns the err_code.*/
+    public async buyStoreItem(item_id: number): Promise<TBuyStoreItemResult> {
+        const r = await this.api.buyStoreItem(null, item_id);
+
+        const o: TBuyStoreItemResult = {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+
+        return o;
+    }
+
     /** Returns store categories */
     public async getStoreCategories(): Promise<TStoreItem[]> {
         return this.api.storeGetItemsT(null);
@@ -133,6 +145,18 @@ export class WSAPI {
     /** Returns details information of specific tournament instance, the response will includ tournamnet info and the leaderboard of players */
     public async getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed> {
         return this.api.tournamentsGetInfoT(null, tournamentInstanceId);
+    }
+
+    /** Requests registration for the specified tournament instance. Returns the err_code. */
+    public async registerInTournament(tournamentInstanceId: number): Promise<TTournamentRegistrationResult>{
+        const r = await this.api.registerInTournament(null, tournamentInstanceId);
+
+        const o: TTournamentRegistrationResult = {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+
+        return o;
     }
 
     private async updateOnSpin(data: SAWSpinsCountPush) {
