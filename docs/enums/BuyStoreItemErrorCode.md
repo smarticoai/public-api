@@ -1,0 +1,49 @@
+# Enumeration: BuyStoreItemErrorCode
+
+## Enumeration Members
+
+### FAILED\_TO\_BUY\_SHOP\_ITEM
+
+• **FAILED\_TO\_BUY\_SHOP\_ITEM** = ``121``
+
+___
+
+### SHOP\_NO\_BALANCE
+
+• **SHOP\_NO\_BALANCE** = ``11000``
+
+___
+
+### SHOP\_WRONG\_LABEL
+
+• **SHOP\_WRONG\_LABEL** = ``11001``
+
+___
+
+### SHOP\_FAILED\_TO\_BUY\_BONUS
+
+• **SHOP\_FAILED\_TO\_BUY\_BONUS** = ``11002``
+
+___
+
+### SHOP\_FAILED\_TO\_BUY\_SHOP\_ITEM\_CONDITION
+
+• **SHOP\_FAILED\_TO\_BUY\_SHOP\_ITEM\_CONDITION** = ``11003``
+
+___
+
+### SHOP\_FAILED\_TO\_BUY\_SHOP\_ITEM\_CONDITION\_PURSHASE
+
+• **SHOP\_FAILED\_TO\_BUY\_SHOP\_ITEM\_CONDITION\_PURSHASE** = ``11004``
+
+___
+
+### SHOP\_FAILED\_TO\_BUY\_MATCHING\_BONUS
+
+• **SHOP\_FAILED\_TO\_BUY\_MATCHING\_BONUS** = ``11005``
+
+___
+
+### SHOP\_FAILED\_MAX\_BOUGHT\_ITEMS\_REACHED
+
+• **SHOP\_FAILED\_MAX\_BOUGHT\_ITEMS\_REACHED** = ``11006``

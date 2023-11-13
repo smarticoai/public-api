@@ -6,6 +6,8 @@
 - [SAWGameTypeName](enums/SAWGameTypeName.md)
 - [MiniGamePrizeTypeName](enums/MiniGamePrizeTypeName.md)
 - [SAWSpinErrorCode](enums/SAWSpinErrorCode.md)
+- [BuyStoreItemErrorCode](enums/BuyStoreItemErrorCode.md)
+- [TournamentRegistrationError](enums/TournamentRegistrationError.md)
 - [TournamentRegistrationStatusName](enums/TournamentRegistrationStatusName.md)
 
 ## Interfaces
@@ -22,6 +24,8 @@
 - [TMissionOrBadge](interfaces/TMissionOrBadge.md)
 - [TMissionOrBadgeTask](interfaces/TMissionOrBadgeTask.md)
 - [TMissionOptInResult](interfaces/TMissionOptInResult.md)
+- [TTournamentRegistrationResult](interfaces/TTournamentRegistrationResult.md)
+- [TBuyStoreItemResult](interfaces/TBuyStoreItemResult.md)
 
 ## General API
 

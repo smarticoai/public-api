@@ -67,6 +67,24 @@ Returns all the store items available the current user
 
 ___
 
+### buyStoreItem
+
+▸ **buyStoreItem**(`item_id`): `Promise`<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
+
+Buy the specific shop item by item_id. Returns the err_code.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `item_id` | `number` |
+
+#### Returns
+
+`Promise`<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
+
+___
+
 ### getStoreCategories
 
 ▸ **getStoreCategories**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
@@ -167,3 +185,21 @@ Returns details information of specific tournament instance, the response will i
 #### Returns
 
 `Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
+
+___
+
+### registerInTournament
+
+▸ **registerInTournament**(`tournamentInstanceId`): `Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+
+Requests registration for the specified tournament instance. Returns the err_code.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `tournamentInstanceId` | `number` |
+
+#### Returns
+
+`Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
