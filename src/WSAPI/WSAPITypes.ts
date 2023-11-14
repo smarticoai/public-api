@@ -389,6 +389,8 @@ export interface TMissionOrBadgeTask {
     is_completed: boolean,
     /** The progress of the task in percents */
     progress: number
+    /** Reward for completing the task in points */
+    points_reward: number
 }
 
 /**

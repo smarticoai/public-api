@@ -55,6 +55,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
                 .map( t => ({
                     id: t.task_id,
                     name: t.task_public_meta?.name,
+                    points_reward: t.points_reward,
                     is_completed: t.isCompleted,
                     progress: t.userProgress,
                 }))
