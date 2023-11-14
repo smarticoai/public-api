@@ -33,3 +33,11 @@ ___
 • **progress**: `number`
 
 The progress of the task in percents
+
+___
+
+### points\_reward
+
+• **points\_reward**: `number`
+
+Reward for completing the task in points
