@@ -28,9 +28,9 @@ Name of the mission or badge, translated to the user language
 
 ___
 
-### desription
+### description
 
-• **desription**: `string`
+• **description**: `string`
 
 Description of the mission or badge, translated to the user language
 
