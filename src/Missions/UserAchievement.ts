@@ -33,7 +33,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
         {
             id: r.ach_id,
             name: r.ach_public_meta.name,
-            desription: r.ach_public_meta.description,
+            description: r.ach_public_meta.description,
             unlock_mission_description: r.ach_public_meta.unlock_mission_description,
             image: r.ach_public_meta.image_url,
             is_completed: r.isCompleted,

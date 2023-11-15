@@ -332,7 +332,7 @@ export interface TMissionOrBadge {
     /** Name of the mission or badge, translated to the user language */
     name: string;
     /** Description of the mission or badge, translated to the user language */
-    desription: string;
+    description: string;
     /** Description of the mission reward if defined */
     reward: string;
     /** URL of the image of the mission or badge */
