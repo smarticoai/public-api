@@ -34,5 +34,5 @@ export interface SAWTemplateUI {
     max_spins_period_ms?: number;
     show_countdown_for_next_availability?: boolean;
     disable_background_music?: boolean;
-
+    custom_section_id?: number;
 }
