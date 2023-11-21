@@ -203,3 +203,21 @@ Requests registration for the specified tournament instance. Returns the err_cod
 #### Returns
 
 `Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+
+___
+
+### getTranslations
+
+▸ **getTranslations**(`lang_code`): `Promise`<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
+
+Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `lang_code` | `string` |
+
+#### Returns
+
+`Promise`<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>

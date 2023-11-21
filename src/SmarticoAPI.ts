@@ -521,6 +521,10 @@ class SmarticoAPI {
         return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id));
     }
 
+    public async getTranslationsT(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec: number = 60): Promise<GetTranslationsResponse> {
+        return await this.coreGetTranslations(user_ext_id, lang_code, areas, 30);
+    }
+
     
     public getWSCalls(): WSAPI {
         return new WSAPI(this);

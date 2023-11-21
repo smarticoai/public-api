@@ -26,6 +26,7 @@
 - [TMissionOptInResult](interfaces/TMissionOptInResult.md)
 - [TTournamentRegistrationResult](interfaces/TTournamentRegistrationResult.md)
 - [TBuyStoreItemResult](interfaces/TBuyStoreItemResult.md)
+- [TGetTranslations](interfaces/TGetTranslations.md)
 
 ## General API
 
