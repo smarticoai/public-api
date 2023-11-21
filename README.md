@@ -17,7 +17,7 @@ As soon as the _smartico object is available in the global context and the user 
 
 ```javascript
 
-_smartico.api.levelsGet().then( levels => {
+_smartico.api.getLevels().then( levels => {
     console.log('There are ' + levels.length + ' levels available');
 });
 
