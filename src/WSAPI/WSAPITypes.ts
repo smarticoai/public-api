@@ -416,3 +416,7 @@ export interface TBuyStoreItemResult {
     /** Optional error message */
    err_message: string;
 }
+
+export interface TGetTranslations {
+    translations: {[key: string]: string};
+}

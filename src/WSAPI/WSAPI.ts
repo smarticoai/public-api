@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { TBuyStoreItemResult, TLevel, TMiniGamePlayResult, TMiniGamePrize, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
+import { TBuyStoreItemResult, TGetTranslations, TLevel, TMiniGamePlayResult, TMiniGamePrize, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -157,6 +157,15 @@ export class WSAPI {
         }
 
         return o;
+    }
+
+    /** Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office. */
+    public async getTranslations(lang_code: string): Promise<TGetTranslations> {
+        const r = await this.api.getTranslationsT(null, lang_code, []);
+
+        return {
+            translations: r.translations
+        }
     }
 
     private async updateOnSpin(data: SAWSpinsCountPush) {
