@@ -35,4 +35,5 @@ export interface SAWTemplateUI {
     show_countdown_for_next_availability?: boolean;
     disable_background_music?: boolean;
     custom_section_id?: number;
+    only_in_custom_section?: boolean;
 }
