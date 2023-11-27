@@ -5,6 +5,7 @@ import { AchievementPublicMeta } from "./AchievementPublicMeta";
 import { AchievementStatus } from "./AchievementStatus";
 import { AchievementTaskType } from "./AchievementTaskType";
 import { AchievementType } from "./AchievementType";
+import { ScheduledMissionType } from "./ScheduledMissionType";
 import { UserAchievementTask } from "./UserAchievementTask";
 
 export interface UserAchievement {
@@ -25,6 +26,7 @@ export interface UserAchievement {
     completed_tasks?: number;
     achievementTasks?: UserAchievementTask[];
     ach_status_id?: AchievementStatus;
+    scheduledMissionType?: ScheduledMissionType;
 }
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
