@@ -10,3 +10,4 @@ export * from "./GetAchievementMapResponse";
 export * from "./ReloadAchievementsEvent";
 export * from "./UserAchievement";
 export * from "./UserAchievementTask";
+export * from "./ScheduledMissionType";
