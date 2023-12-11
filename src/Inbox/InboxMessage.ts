@@ -10,9 +10,9 @@ export interface InboxMessage {
         image: string;
         title: string;
         html_body: string;  
+        additional_buttons?: { inbox_cta_text: string, action: string }[];
     }; 
     engagement_uid: string;
     is_read: boolean;
     is_starred: boolean;
-    additional_buttons?: { inbox_cta_text: string, action: string }[];
 }
