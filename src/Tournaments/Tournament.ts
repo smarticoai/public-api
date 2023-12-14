@@ -6,6 +6,7 @@ import { TournamentPublicMeta } from "./TournamentPublicMeta";
 import { TTournament } from "../WSAPI/WSAPITypes";
 import { TournamentUtils } from ".";
 import { IntUtils } from "../IntUtils";
+import { AchRelatedGame } from "../Base/AchRelatedGame";
 
 export interface Tournament {
 
@@ -49,6 +50,9 @@ export interface Tournament {
     playersMaxCount?: number;
     /** Tournament duration in millisecnnds */
     durationMs?: number;
+
+    /** List of casino games (or other types of entities) related to the tournament */
+    related_games?: AchRelatedGame[];
 }
 
 

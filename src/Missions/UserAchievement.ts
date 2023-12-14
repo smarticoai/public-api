@@ -1,4 +1,5 @@
 
+import { AchRelatedGame } from "../Base/AchRelatedGame";
 import { IntUtils } from "../IntUtils";
 import { TMissionOrBadge } from "../WSAPI/WSAPITypes";
 import { AchievementPublicMeta } from "./AchievementPublicMeta";
@@ -27,6 +28,7 @@ export interface UserAchievement {
     achievementTasks?: UserAchievementTask[];
     ach_status_id?: AchievementStatus;
     scheduledMissionType?: ScheduledMissionType;
+    related_games?: AchRelatedGame[];
 }
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
