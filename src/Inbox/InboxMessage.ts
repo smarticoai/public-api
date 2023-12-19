@@ -15,4 +15,5 @@ export interface InboxMessage {
     engagement_uid: string;
     is_read: boolean;
     is_starred: boolean;
+    is_deleted: boolean;
 }

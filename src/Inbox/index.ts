@@ -6,3 +6,5 @@ export * from "./MarkInboxMessageReadRequest";
 export * from "./MarkInboxMessageReadResponse";
 export * from "./MarkInboxMessageStarredRequest";
 export * from "./MarkInboxMessageStarredResponse";
+export * from './MarkInboxMessageDeletedRequest';
+export * from './MarkInboxMessageDeletedResponse';
