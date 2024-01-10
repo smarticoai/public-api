@@ -24,6 +24,7 @@ export interface UserAchievement {
     progress?: number;
     complete_date?: string;
     unlock_date?: string;
+    milliseconds_till_available?: number;
     completed_tasks?: number;
     achievementTasks?: UserAchievementTask[];
     ach_status_id?: AchievementStatus;
