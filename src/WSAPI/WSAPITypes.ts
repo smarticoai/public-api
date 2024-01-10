@@ -21,6 +21,12 @@ export interface TMiniGamePrize {
     font_size?: number;
     /** The URL of the icon of the prize */
     icon?: string;
+    /* for scratch card defines position of prize in the list */
+    position: number; 
+    aknowledge_message: string;
+    acknowledge_dp: string;
+    acknowledge_action_title: string;    
+
 }
 
 
@@ -76,6 +82,14 @@ export interface TMiniGameTemplate {
     /** The symbol of jackpot that is giving the sense to the 'amount' E.g. the symbol could be EUR and connected to the amount it can indicate that amount is monetary, e.g. '100 EUR'. Or the symbol can be 'Free spins' and connected to the amount it can indicate that amount is number of free spins, e.g. '100 Free spins'.
      */
     jackpot_symbol: string;
+
+    /** The promo image  */
+    promo_image: string;
+    /** The promo text  */
+    promo_text: string;
+    /** The custom data of the mini-game defined by operator. Can be a JSON object, string or number */
+    custom_data: any;
+
         
     prizes: TMiniGamePrize[];
 

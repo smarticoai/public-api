@@ -1,3 +1,4 @@
+import { IntUtils } from "../IntUtils";
 import { TMiniGamePrize, TMiniGameTemplate } from "../WSAPI/WSAPITypes";
 import { ProtocolResponse } from "./../Base/ProtocolResponse";
 import { SAWBuyInTypeNamed } from "./SAWBuyInType";
@@ -37,6 +38,9 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
             jackpot_add_on_attempt: r.jackpot_add_on_attempt,
             jackpot_current: r.jackpot_current,
             spin_count: r.spin_count,
+            promo_image: r.saw_template_ui_definition.promo_image,
+            promo_text: r.saw_template_ui_definition.promo_text,
+            custom_data: IntUtils.JsonOrText(r.saw_template_ui_definition.custom_data),
 
             next_available_spin_ts: r.next_available_spin_ts,
 
@@ -47,7 +51,11 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
                     prize_type: MiniGamePrizeTypeNamed(p.prize_type_id),
                     prize_value: p.prize_value,
                     font_size: p.saw_prize_ui_definition.font_size,
-                    icon: p.saw_prize_ui_definition.icon
+                    icon: p.saw_prize_ui_definition.icon,
+                    position: p.saw_prize_ui_definition.position,
+                    aknowledge_message: p.saw_prize_ui_definition.aknowledge_message,
+                    acknowledge_dp: p.saw_prize_ui_definition.acknowledge_dp,
+                    acknowledge_action_title: p.saw_prize_ui_definition.acknowledge_action_title,
                 }
                 return y;
             })

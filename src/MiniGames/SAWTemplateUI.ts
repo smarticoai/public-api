@@ -38,4 +38,6 @@ export interface SAWTemplateUI {
     disable_background_music?: boolean;
     custom_section_id?: number;
     only_in_custom_section?: boolean;
+
+    custom_data: any;
 }
