@@ -49,3 +49,27 @@ ___
 • `Optional` **icon**: `string`
 
 The URL of the icon of the prize
+
+___
+
+### position
+
+• **position**: `number`
+
+___
+
+### aknowledge\_message
+
+• **aknowledge\_message**: `string`
+
+___
+
+### acknowledge\_dp
+
+• **acknowledge\_dp**: `string`
+
+___
+
+### acknowledge\_action\_title
+
+• **acknowledge\_action\_title**: `string`

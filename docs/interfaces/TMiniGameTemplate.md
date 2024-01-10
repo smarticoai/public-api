@@ -116,6 +116,30 @@ The symbol of jackpot that is giving the sense to the 'amount' E.g. the symbol c
 
 ___
 
+### promo\_image
+
+• **promo\_image**: `string`
+
+The promo image
+
+___
+
+### promo\_text
+
+• **promo\_text**: `string`
+
+The promo text
+
+___
+
+### custom\_data
+
+• **custom\_data**: `any`
+
+The custom data of the mini-game defined by operator. Can be a JSON object, string or number
+
+___
+
 ### prizes
 
 • **prizes**: [`TMiniGamePrize`](TMiniGamePrize.md)[]
