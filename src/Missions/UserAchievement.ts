@@ -30,6 +30,7 @@ export interface UserAchievement {
     ach_status_id?: AchievementStatus;
     scheduledMissionType?: ScheduledMissionType;
     related_games?: AchRelatedGame[];
+    active_from_ts?: number; // indicates when 'scheduled' mission is active from
 }
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
