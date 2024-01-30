@@ -65,7 +65,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
                     is_completed: t.isCompleted,
                     progress: t.userProgress,
                 })),
-            related_games: r.related_games.map(g => ({
+            related_games: (r.related_games || []).map(g => ({
                 ext_game_id: g.ext_game_id,
                 game_public_meta: {
                     name: g.game_public_meta.name,
