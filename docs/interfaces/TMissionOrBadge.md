@@ -165,3 +165,11 @@ ___
 • **tasks**: [`TMissionOrBadgeTask`](TMissionOrBadgeTask.md)[]
 
 The list of tasks of the mission or badge
+
+___
+
+### related\_games
+
+• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
+
+List of casino games (or other types of entities) related to the mission or badge

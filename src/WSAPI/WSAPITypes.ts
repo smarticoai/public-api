@@ -247,6 +247,8 @@ export interface TTournament {
  */
 export interface TTournamentDetailed extends TTournament {
     
+    /** List of casino games (or other types of entities) related to the tournament */
+    related_games?: AchRelatedGame[],
     /** The list of the tournament participants */
     players?: {
         /** The username of the participant */
@@ -389,6 +391,29 @@ export interface TMissionOrBadge {
 
     /** The list of tasks of the mission or badge */
     tasks: TMissionOrBadgeTask[]
+
+    /** List of casino games (or other types of entities) related to the mission or badge */
+    related_games?: AchRelatedGame[];
+}
+
+export interface AchRelatedGame {
+    /** The ID of the related game */
+    ext_game_id: string;
+    /** Game public meta information */
+    game_public_meta: {
+        /** The name of the game */
+        name: string;
+        /** The URL to the game */
+        link: string;
+        /** The URL to the image of the game */
+        image: string;
+        /** The indicator if the game is enabled */
+        enabled: boolean;
+        /** The list of categories of the game */
+        game_categories: string[];
+        /** The name of the game provider */
+        game_provider: string;
+    }
 }
 
 /** 

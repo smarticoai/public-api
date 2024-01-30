@@ -16,19 +16,19 @@ ___
 
 ### getLevels
 
-▸ **getLevels**(): `Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
+▸ **getLevels**(): `Promise`\<[`TLevel`](../interfaces/TLevel.md)[]\>
 
 Returns all the levels available the current user
 
 #### Returns
 
-`Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
+`Promise`\<[`TLevel`](../interfaces/TLevel.md)[]\>
 
 ___
 
 ### getMissions
 
-▸ **getMissions**(`params?`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+▸ **getMissions**(`params?`): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 #### Parameters
 
@@ -39,37 +39,37 @@ ___
 
 #### Returns
 
-`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+`Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 ___
 
 ### getBadges
 
-▸ **getBadges**(): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+▸ **getBadges**(): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the badges available the current user
 
 #### Returns
 
-`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+`Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 ___
 
 ### getStoreItems
 
-▸ **getStoreItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStoreItems**(): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns all the store items available the current user
 
 #### Returns
 
-`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+`Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 ___
 
 ### buyStoreItem
 
-▸ **buyStoreItem**(`item_id`): `Promise`<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
+▸ **buyStoreItem**(`item_id`): `Promise`\<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
 
 Buy the specific shop item by item_id. Returns the err_code.
 
@@ -81,25 +81,25 @@ Buy the specific shop item by item_id. Returns the err_code.
 
 #### Returns
 
-`Promise`<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
+`Promise`\<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
 
 ___
 
 ### getStoreCategories
 
-▸ **getStoreCategories**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStoreCategories**(): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns store categories
 
 #### Returns
 
-`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+`Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 ___
 
 ### getMiniGames
 
-▸ **getMiniGames**(`params?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+▸ **getMiniGames**(`params?`): `Promise`\<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
 /**
  *
@@ -113,13 +113,13 @@ ___
 
 #### Returns
 
-`Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+`Promise`\<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
 ___
 
 ### playMiniGame
 
-▸ **playMiniGame**(`template_id`): `Promise`<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
+▸ **playMiniGame**(`template_id`): `Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
 
@@ -131,13 +131,13 @@ Plays the specified by template_id mini-game on behalf of user and returns prize
 
 #### Returns
 
-`Promise`<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
+`Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 ___
 
 ### requestMissionOptIn
 
-▸ **requestMissionOptIn**(`mission_id`): `Promise`<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+▸ **requestMissionOptIn**(`mission_id`): `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
 
 Requests an opt-in for the specified mission_id. Returns the err_code.
 
@@ -149,13 +149,13 @@ Requests an opt-in for the specified mission_id. Returns the err_code.
 
 #### Returns
 
-`Promise`<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+`Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
 
 ___
 
 ### getTournamentsList
 
-▸ **getTournamentsList**(`params?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
+▸ **getTournamentsList**(`params?`): `Promise`\<[`TTournament`](../interfaces/TTournament.md)[]\>
 
 #### Parameters
 
@@ -166,13 +166,13 @@ ___
 
 #### Returns
 
-`Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
+`Promise`\<[`TTournament`](../interfaces/TTournament.md)[]\>
 
 ___
 
 ### getTournamentInstanceInfo
 
-▸ **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
+▸ **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`\<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
 
 Returns details information of specific tournament instance, the response will includ tournamnet info and the leaderboard of players
 
@@ -184,13 +184,13 @@ Returns details information of specific tournament instance, the response will i
 
 #### Returns
 
-`Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
+`Promise`\<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
 
 ___
 
 ### registerInTournament
 
-▸ **registerInTournament**(`tournamentInstanceId`): `Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+▸ **registerInTournament**(`tournamentInstanceId`): `Promise`\<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
 
 Requests registration for the specified tournament instance. Returns the err_code.
 
@@ -202,13 +202,13 @@ Requests registration for the specified tournament instance. Returns the err_cod
 
 #### Returns
 
-`Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+`Promise`\<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
 
 ___
 
 ### getTranslations
 
-▸ **getTranslations**(`lang_code`): `Promise`<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
+▸ **getTranslations**(`lang_code`): `Promise`\<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
 
 Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office.
 
@@ -220,4 +220,4 @@ Requests translations for the given language. Returns the object including trans
 
 #### Returns
 
-`Promise`<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
+`Promise`\<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>

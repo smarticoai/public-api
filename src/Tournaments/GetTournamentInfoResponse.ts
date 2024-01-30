@@ -37,6 +37,17 @@ const tournamentPrizeTypeToPrizeName = (type: ActivityTypeLimited) => {
 export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTournamentDetailed => {
     const response: TTournamentDetailed = {
         ...TournamentItemsTransform([t.tournamentInfo.tournamentLobbyInfo])[0],
+        related_games: t.tournamentInfo.tournamentLobbyInfo.related_games.map(g => ({
+            ext_game_id: g.ext_game_id,
+            game_public_meta: {
+                name: g.game_public_meta.name,
+                link: g.game_public_meta.link,
+                image: g.game_public_meta.image,
+                enabled: g.game_public_meta.enabled,
+                game_categories: g.game_public_meta.game_categories,
+                game_provider: g.game_public_meta.game_provider,
+            },
+        })),
         players: t.tournamentInfo.players.map( p => ({
             public_username: p.userAltName,
             avatar_url: p.avatar_url,

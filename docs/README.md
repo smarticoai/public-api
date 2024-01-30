@@ -22,6 +22,7 @@
 - [TStoreCategory](interfaces/TStoreCategory.md)
 - [TStoreItem](interfaces/TStoreItem.md)
 - [TMissionOrBadge](interfaces/TMissionOrBadge.md)
+- [AchRelatedGame](interfaces/AchRelatedGame.md)
 - [TMissionOrBadgeTask](interfaces/TMissionOrBadgeTask.md)
 - [TMissionOptInResult](interfaces/TMissionOptInResult.md)
 - [TTournamentRegistrationResult](interfaces/TTournamentRegistrationResult.md)
