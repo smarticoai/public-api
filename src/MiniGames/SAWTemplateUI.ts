@@ -6,6 +6,7 @@ export interface SAWTemplateUI {
     description?: string;
     over_limit_message?: string;
     no_attempts_message?: string;
+    no_points_message?: string;
     thumbnail?: string;
     sectors_count: number;
     priority: number;
