@@ -72,11 +72,8 @@ export interface TMiniGameTemplate {
 
     /** The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED */
     over_limit_message: string;
-    /** The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts. */
+    /** The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points. */
     no_attempts_message: string;
-
-    /** The message that should be shown to the user when he cannot play the game because he doesn't have points. */
-    no_points_message: string;
 
     /** Current jackpont amount, if jackpot is enabled. */
     jackpot_current: number;

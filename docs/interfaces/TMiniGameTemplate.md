@@ -88,15 +88,7 @@ ___
 
 • **no\_attempts\_message**: `string`
 
-The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts.
-
-___
-
-### no\_points\_message
-
-• **no\_points\_message**: `string`
-
-The message that should be shown to the user when he cannot play the game because he doesn't have points.
+The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points.
 
 ___
 

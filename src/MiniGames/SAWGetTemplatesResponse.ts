@@ -31,7 +31,6 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
                 ,
             over_limit_message: r.saw_template_ui_definition.over_limit_message,
             no_attempts_message: r.saw_template_ui_definition.no_attempts_message,
-            no_points_message: r.saw_template_ui_definition.no_points_message,
             jackpot_symbol: r.saw_template_ui_definition.jackpot_symbol,
             saw_game_type: SAWGameTypeNamed(r.saw_game_type_id),
             saw_buyin_type: SAWBuyInTypeNamed(r.saw_buyin_type_id),
