@@ -1,7 +1,21 @@
+import { ActivityTypeLimited } from "src/Core";
 import { Tournament } from "./Tournament";
 import { TournamentInstanceStatus } from "./TournamentInstanceStatus";
+import { TournamentPlayer } from "./TournamentPlayer";
+import { TournamentPrize } from "./TournamentPrize";
 import { TournamentRegistrationStatus } from "./TournamentRegistrationStatus";
 import { TournamentRegistrationType } from "./TournamentRegistrationType";
+
+const tournamentPrizeTypeToPrizeName = (type: ActivityTypeLimited) => {
+    return {
+        [ActivityTypeLimited.DoNothing]: 'TANGIBLE',
+        [ActivityTypeLimited.Points]: 'POINTS_ADD',
+        [ActivityTypeLimited.DeductPoints]: 'POINTS_DEDUCT',
+        [ActivityTypeLimited.ResetPoints]: 'POINTS_RESET',
+        [ActivityTypeLimited.MiniGameAttempt]: "MINI_GAME_ATTEMPT",
+        [ActivityTypeLimited.Bonus]: 'BONUS',
+    }[type]
+}
 
 export class TournamentUtils {
 
@@ -59,6 +73,34 @@ export class TournamentUtils {
             return tournament.tournamentInstanceStatus === TournamentInstanceStatus.PUBLISHED || tournament.tournamentInstanceStatus === TournamentInstanceStatus.REGISTER;
         }
         return false;
+    }
+
+    public static getPlayerTransformed = (player: TournamentPlayer, isMe?: boolean) => {
+        if (player) {
+            const playerTransformed = {
+                public_username: player.userAltName,
+                avatar_url: player.avatar_url,
+                position: player.position,
+                scores: player.scores,
+                is_me: player.isMe,
+            }
+            
+            if (isMe) {
+                delete playerTransformed.is_me;
+            }
+
+            return playerTransformed;
+        }
+
+        return null;
+    }
+
+    public static getPrizeTransformed = (prize: TournamentPrize) => {
+        if (prize) {
+            return ({...prize, type: tournamentPrizeTypeToPrizeName(prize.type)})
+        }
+
+        return null;
     }
 
 }

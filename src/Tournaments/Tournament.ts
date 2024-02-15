@@ -4,7 +4,7 @@ import { TournamentRegistrationStatus, TournamentRegistrationStatusName, Tournam
 import { TournamentType } from "./TournamentType";
 import { TournamentPublicMeta } from "./TournamentPublicMeta";
 import { TTournament } from "../WSAPI/WSAPITypes";
-import { TournamentUtils } from ".";
+import { TournamentPlayer, TournamentPrize, TournamentUtils } from ".";
 import { IntUtils } from "../IntUtils";
 import { AchRelatedGame } from "../Base/AchRelatedGame";
 
@@ -50,6 +50,12 @@ export interface Tournament {
     playersMaxCount?: number;
     /** Tournament duration in millisecnnds */
     durationMs?: number;
+     /** prizes structure */
+    prizeStructure?: {
+        prizes: TournamentPrize[],
+    }
+    /** Information about current user */
+    tournamentPlayer?: TournamentPlayer
 
     /** List of casino games (or other types of entities) related to the tournament */
     related_games?: AchRelatedGame[];
@@ -58,9 +64,8 @@ export interface Tournament {
 
 export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => {    
 
-    return items.filter( r => r.tournamentId >= 1).map( r => {
-
-        const x: TTournament =         {
+    return items.filter(r => r.tournamentId >= 1).map(r => {
+        const x: TTournament = {
             instance_id: r.tournamentInstanceId,
             tournament_id: r.tournamentId,
             name: r.publicMeta.name,
@@ -74,6 +79,8 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
             custom_data: IntUtils.JsonOrText(r.publicMeta.custom_data),
             is_featured: r.publicMeta.featured,
             ribbon: r.publicMeta.label_tag,
+            priority: r.publicMeta.position,
+            
 
             start_time: r.startTimeTs,
             end_time: r.endTimeTs,
@@ -94,6 +101,14 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
             is_in_progress: TournamentUtils.isInProgress(r),
             is_upcoming: TournamentUtils.isUpcoming(r),
 
+        }
+
+        if (r.prizeStructure) {
+            x.prizes = r.prizeStructure.prizes.map(p => TournamentUtils.getPrizeTransformed(p));
+        }
+
+        if (r.tournamentPlayer) {
+            x.me = TournamentUtils.getPlayerTransformed(r.tournamentPlayer, true)
         }
 
         return x;

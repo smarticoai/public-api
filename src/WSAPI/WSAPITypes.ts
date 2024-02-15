@@ -205,6 +205,36 @@ export interface TTournament {
     /** The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
     ribbon: TRibbon;
 
+    /** A number is used to order the tournaments, representing their priority in the list  */
+    priority: number;
+    /** Info about current player in tournament */
+    me?: {
+        /** The username of the participant */
+        public_username: string;
+        /** The URL to the avatar of the participant */
+        avatar_url: string;
+        /** The position of the participant in the tournament */
+        position: number;
+        /** The scores of the participant in the tournament */
+        scores: number;
+    },
+    /** Prize structure */
+    prizes?: {
+        /** The name of the prize */
+        name: string;
+        /** The description of the prize */
+        description: string;
+        /** The image of the prize */
+        image_url: string;
+        /** from-to range of the places to which this prize */
+        place_from: number;
+        place_to: number;
+        /** type of the prize: TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS */
+        type: string;
+        /** if the prize is points related, indicates amount of points */
+        points?: number;
+    }[]
+
     /** The time when tournament is going to start, epoch with milliseconds */
     start_time: number;
     /** The time when tournament is going to finish, epoch with milliseconds */
@@ -240,6 +270,7 @@ export interface TTournament {
     is_in_progress: boolean;
     /** Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER) */
     is_upcoming: boolean;
+    
 }
 
 /** 

@@ -4,6 +4,7 @@ import { ProtocolResponse } from "../Base/ProtocolResponse";
 import { TournamentPrize } from "./TournamentPrize";
 import { TTournamentDetailed } from "../WSAPI/WSAPITypes";
 import { ActivityTypeLimited } from "src/Core";
+import { TournamentUtils } from "./TournamentUtils";
 
 export interface GetTournamentInfoResponse extends ProtocolResponse {
 
@@ -23,17 +24,6 @@ export interface GetTournamentInfoResponse extends ProtocolResponse {
     }
 }
 
-const tournamentPrizeTypeToPrizeName = (type: ActivityTypeLimited) => {
-    return {
-        [ActivityTypeLimited.DoNothing]: 'TANGIBLE',
-        [ActivityTypeLimited.Points]: 'POINTS_ADD',
-        [ActivityTypeLimited.DeductPoints]: 'POINTS_DEDUCT',
-        [ActivityTypeLimited.ResetPoints]: 'POINTS_RESET',
-        [ActivityTypeLimited.MiniGameAttempt]: "MINI_GAME_ATTEMPT",
-        [ActivityTypeLimited.Bonus]: 'BONUS',
-    }[type]
-}
-
 export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTournamentDetailed => {
     const response: TTournamentDetailed = {
         ...TournamentItemsTransform([t.tournamentInfo.tournamentLobbyInfo])[0],
@@ -48,26 +38,11 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
                 game_provider: g.game_public_meta.game_provider,
             },
         })),
-        players: t.tournamentInfo.players.map( p => ({
-            public_username: p.userAltName,
-            avatar_url: p.avatar_url,
-            position: p.position,
-            scores: p.scores,
-            is_me: p.isMe,
-        })),
+        players: t.tournamentInfo.players.map( p => TournamentUtils.getPlayerTransformed(p)),
     };
 
-    if (t.prizeStructure) {
-        response.prizes = t.prizeStructure.prizes.map(p => ({...p, type: tournamentPrizeTypeToPrizeName(p.type)}))
-    }
-
     if (t.userPosition) {
-        response.me = {
-            public_username: t.userPosition.userAltName,
-            avatar_url: t.userPosition.avatar_url,
-            position: t.userPosition.position,
-            scores: t.userPosition.scores,
-        }
+        response.me = TournamentUtils.getPlayerTransformed(t.userPosition, true)
     }
 
     return response;
