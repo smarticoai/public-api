@@ -159,6 +159,18 @@ The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to 
 
 ___
 
+### priority
+
+• **priority**: `number`
+
+A number is used to order the tournaments, representing their priority in the list
+
+#### Inherited from
+
+[TTournament](TTournament.md).[priority](TTournament.md#priority)
+
+___
+
 ### start\_time
 
 • **start\_time**: `number`
@@ -382,8 +394,18 @@ The information about current user in the tournament if he is registered in the 
 | `position` | `number` | The position of the current user in the tournament |
 | `scores` | `number` | The scores of the current user in the tournament |
 
+#### Overrides
+
+[TTournament](TTournament.md).[me](TTournament.md#me)
+
 ___
 
 ### prizes
 
 • `Optional` **prizes**: { `name`: `string` ; `description`: `string` ; `image_url`: `string` ; `place_from`: `number` ; `place_to`: `number` ; `type`: `string` ; `points?`: `number`  }[]
+
+Prize structure
+
+#### Overrides
+
+[TTournament](TTournament.md).[prizes](TTournament.md#prizes)

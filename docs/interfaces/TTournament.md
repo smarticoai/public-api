@@ -107,6 +107,39 @@ The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to 
 
 ___
 
+### priority
+
+• **priority**: `number`
+
+A number is used to order the tournaments, representing their priority in the list
+
+___
+
+### me
+
+• `Optional` **me**: `Object`
+
+Info about current player in tournament
+
+#### Type declaration
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `public_username` | `string` | The username of the participant |
+| `avatar_url` | `string` | The URL to the avatar of the participant |
+| `position` | `number` | The position of the participant in the tournament |
+| `scores` | `number` | The scores of the participant in the tournament |
+
+___
+
+### prizes
+
+• `Optional` **prizes**: { `name`: `string` ; `description`: `string` ; `image_url`: `string` ; `place_from`: `number` ; `place_to`: `number` ; `type`: `string` ; `points?`: `number`  }[]
+
+Prize structure
+
+___
+
 ### start\_time
 
 • **start\_time**: `number`
