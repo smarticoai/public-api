@@ -43,6 +43,8 @@ See the [API documentation](docs/classes/WSAPI.md) for all available methods and
 
 ## Backend usage (NodeJS context)
 
+Note: access to the API is not provided by default and is topic for a separate agreement with Smartico
+
 ### Installation
 
 ```bash
