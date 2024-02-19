@@ -41,6 +41,10 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
         players: t.tournamentInfo.players.map( p => TournamentUtils.getPlayerTransformed(p)),
     };
 
+    if (t.prizeStructure) {
+        response.prizes = t.prizeStructure.prizes.map(p => TournamentUtils.getPrizeTransformed(p));
+    }
+
     if (t.userPosition) {
         response.me = TournamentUtils.getPlayerTransformed(t.userPosition, true)
     }
