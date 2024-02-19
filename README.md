@@ -43,7 +43,8 @@ See the [API documentation](docs/classes/WSAPI.md) for all available methods and
 
 ## Backend usage (NodeJS context)
 
-Note: access to the API is not provided by default and is topic for a separate agreement with Smartico
+Note: access to the server-to-server API is not provided by default and is a topic for a separate agreement with Smartico.
+We recommend using a front-end API approach in most cases.
 
 ### Installation
 
