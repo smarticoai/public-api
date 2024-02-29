@@ -6,5 +6,6 @@ export enum BuyStoreItemErrorCode {
     SHOP_FAILED_TO_BUY_SHOP_ITEM_CONDITION = 11003, // when not visible but trying to buy. Shoudnt happen
     SHOP_FAILED_TO_BUY_SHOP_ITEM_CONDITION_PURSHASE = 11004, // when visible but not matching to purchase segment
     SHOP_FAILED_TO_BUY_MATCHING_BONUS = 11005,
-    SHOP_FAILED_MAX_BOUGHT_ITEMS_REACHED = 11006
+    SHOP_FAILED_MAX_BOUGHT_ITEMS_REACHED = 11006,
+    SHOP_FAILED_POOL_EMPTY = 11009,
 }

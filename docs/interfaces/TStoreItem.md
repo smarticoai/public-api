@@ -100,3 +100,11 @@ ___
 • **category\_ids**: `number`[]
 
 The list of IDs of the categories where the store item is assigned, information about categories can be retrievend with getStoreCategories method
+
+___
+
+### pool
+
+• `Optional` **pool**: `number`
+
+Number of items in the pool avaliable for the purchase.

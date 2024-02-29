@@ -8,6 +8,7 @@ export interface StoreItem {
     itemPublicMeta: StoreItemPublicMeta;
     categoryIds?: number[];
     canBuy?: boolean;
+    shopPool: number;
 }
 
 
@@ -31,7 +32,8 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
             }[r.itemTypeId] as 'bonus' | 'manual',
 
             can_buy: r.canBuy,
-            category_ids: r.categoryIds ?? []
+            category_ids: r.categoryIds ?? [],
+            pool: r.shopPool,
         }
         return x;
     });

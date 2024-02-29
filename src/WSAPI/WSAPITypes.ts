@@ -366,6 +366,8 @@ export interface TStoreItem {
     can_buy: boolean;
     /** The list of IDs of the categories where the store item is assigned, information about categories can be retrievend with getStoreCategories method */
     category_ids: number[];
+    /** Number of items in the pool avaliable for the purchase.*/
+    pool?: number;
 }
 
 /** 
