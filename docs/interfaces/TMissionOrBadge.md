@@ -122,7 +122,7 @@ ___
 • **cta\_action**: `string`
 
 The action that should be performed when user clicks on the mission or badge
-Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.do(cta_action);
+Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
 The 'dp' function will handle the CTA and will execute it in the most safe way
 
 ___

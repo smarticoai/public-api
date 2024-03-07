@@ -28,6 +28,9 @@
 - [TTournamentRegistrationResult](interfaces/TTournamentRegistrationResult.md)
 - [TBuyStoreItemResult](interfaces/TBuyStoreItemResult.md)
 - [TGetTranslations](interfaces/TGetTranslations.md)
+- [TInboxMessage](interfaces/TInboxMessage.md)
+- [TInboxMessageBody](interfaces/TInboxMessageBody.md)
+- [InboxMarkMessageAction](interfaces/InboxMarkMessageAction.md)
 
 ## General API
 

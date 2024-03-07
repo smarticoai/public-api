@@ -373,7 +373,7 @@ ___
 
 ### players
 
-• `Optional` **players**: \{ `public_username`: `string` ; `avatar_url`: `string` ; `position`: `number` ; `scores`: `number` ; `is_me`: `boolean`  }[]
+• `Optional` **players**: { `public_username`: `string` ; `avatar_url`: `string` ; `position`: `number` ; `scores`: `number` ; `is_me`: `boolean`  }[]
 
 The list of the tournament participants
 
@@ -402,7 +402,7 @@ ___
 
 ### prizes
 
-• `Optional` **prizes**: \{ `name`: `string` ; `description`: `string` ; `image_url`: `string` ; `place_from`: `number` ; `place_to`: `number` ; `type`: `string` ; `points?`: `number`  }[]
+• `Optional` **prizes**: { `name`: `string` ; `description`: `string` ; `image_url`: `string` ; `place_from`: `number` ; `place_to`: `number` ; `type`: `string` ; `points?`: `number`  }[]
 
 Prize structure
 

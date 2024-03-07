@@ -9,3 +9,5 @@ dist/
 .vscode/
 # JetBrains IDE
 .idea/
+
+package-lock.json
