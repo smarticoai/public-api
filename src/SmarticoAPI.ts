@@ -7,17 +7,17 @@ import { IntUtils } from './IntUtils';
 import { ILogger } from './ILogger';
 import { SAWDoAknowledgeRequest, SAWDoAknowledgeResponse, SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode, SAWTemplatesTransform } from './MiniGames';
 import { ECacheContext, OCache } from './OCache';
-import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, ResponseIdentify, TranslationArea } from './Core';
+import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, PublicLabelSettings, ResponseIdentify, TranslationArea } from './Core';
 import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
-import { GetInboxMessagesRequest, GetInboxMessagesResponse } from './Inbox';
+import { GetInboxMessagesRequest, GetInboxMessagesResponse, InboxMessageBody, InboxMessageBodyTransform, InboxMessagesTransform, MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse, MarkInboxMessageReadRequest, MarkInboxMessageReadResponse, MarkInboxMessageStarredRequest, MarkInboxMessageStarredResponse } from './Inbox';
 import { BuyStoreItemRequest, BuyStoreItemResponse, GetCategoriesStoreResponse, GetStoreItemsResponse, StoreCategoryTransform, StoreItemTransform } from './Store';
 import { AchievementOptinRequest, AchievementOptinResponse, AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, TournamentRegisterRequest, TournamentRegisterResponse, tournamentInfoItemTransform } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
+import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -28,6 +28,7 @@ interface Tracker {
     label_api_key: string;
     userPublicProps: any;
     on: (callBackKey: ClassId, func: (data: any) => void) => void;
+    getLabelSetting: (key: PublicLabelSettings) => any;
 }
 interface IOptions {
     logger?: ILogger;
@@ -43,6 +44,7 @@ class SmarticoAPI {
 
     private publicUrl: string;
     private wsUrl: string;
+    private inboxCdnUrl: string;
     private partnerUrl: string;
     public avatarDomain: string;
 
@@ -523,6 +525,95 @@ class SmarticoAPI {
 
     public async getTranslationsT(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec: number = 60): Promise<GetTranslationsResponse> {
         return await this.coreGetTranslations(user_ext_id, lang_code, areas, 30);
+    }
+
+    public async getInboxMessages(user_ext_id: string, limit: number = 20, offset: number = 0, starred_only: boolean): Promise<GetInboxMessagesResponse> {
+        const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(user_ext_id, ClassId.GET_INBOX_MESSAGES_REQUEST, {
+            limit,
+            offset,
+            starred_only
+        });
+        return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE);
+    }
+
+    public async getInboxMessagesT(user_ext_id: string, from: number = 0, to: number = 20, favoriteOnly: boolean = false): Promise<TInboxMessage[]> {
+        const limit = (to - from) > 20 ? 20 : to - from;
+        const offset = from;
+
+        return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly)).log);
+    }
+
+    public async getInboxMessageBody(messageGuid: string): Promise<InboxMessageBody> {
+
+        const getMessageBody = async (messageGuid: string): Promise<InboxMessageBody>=> {
+            const inboxCdnUrl = this.tracker.getLabelSetting(PublicLabelSettings.INBOX_PUBLIC_CDN);
+
+            try {
+                const url = `${inboxCdnUrl}${messageGuid}.json`;
+        
+                const response = await fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    }
+                });
+                const data = await response.json();
+                return data || {};
+            } catch (error) {
+                this.logger.error('Error fetching inbox message body:', error);
+                return null;
+            }
+        };
+
+        return await getMessageBody(messageGuid)
+    }
+
+    public async getInboxMessageBodyT(messageGuid: string): Promise<TInboxMessageBody> {
+        const message = await this.getInboxMessageBody(messageGuid);
+        return InboxMessageBodyTransform(message);
+    }
+
+    public async markInboxMessageRead(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageReadResponse> {
+        const message = this.buildMessage<MarkInboxMessageReadRequest, MarkInboxMessageReadResponse>(user_ext_id, ClassId.MARK_INBOX_READ_REQUEST, {
+            engagement_uid: messageGuid
+        });
+
+        return await this.send<MarkInboxMessageReadResponse>(message, ClassId.MARK_INBOX_READ_RESPONSE);
+    }
+
+    public async markAllInboxMessageRead(user_ext_id: string): Promise<MarkInboxMessageReadResponse> {
+        const message = this.buildMessage<MarkInboxMessageReadRequest, MarkInboxMessageReadResponse>(user_ext_id, ClassId.MARK_INBOX_READ_REQUEST, {
+            all_read: true
+        });
+
+        return await this.send<MarkInboxMessageReadResponse>(message, ClassId.MARK_INBOX_READ_RESPONSE);
+    }
+
+    public async markUnmarkInboxMessageAsFavorite(user_ext_id: string, messageGuid: string, mark: boolean): Promise<MarkInboxMessageStarredResponse> {
+        const message = this.buildMessage<MarkInboxMessageStarredRequest, MarkInboxMessageStarredResponse>(user_ext_id, ClassId.MARK_INBOX_STARRED_REQUEST, {
+            engagement_uid: messageGuid,
+            is_starred: mark
+        });
+
+        return await this.send<MarkInboxMessageStarredResponse>(message, ClassId.MARK_INBOX_STARRED_RESPONSE);
+    }
+
+    public async deleteInboxMessage(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageDeletedResponse> {
+        const message = this.buildMessage<MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse>(user_ext_id, ClassId.MARK_INBOX_DELETED_REQUEST, {
+            engagement_uid: messageGuid,
+        });
+
+        return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
+    }
+
+    public async deleteAllInboxMessages(user_ext_id: string): Promise<MarkInboxMessageDeletedResponse> {
+        const message = this.buildMessage<MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse>(user_ext_id, ClassId.MARK_INBOX_DELETED_REQUEST, {
+            all_deleted: true
+        });
+
+        return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
     }
 
     

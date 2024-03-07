@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { TBuyStoreItemResult, TGetTranslations, TLevel, TMiniGamePlayResult, TMiniGamePrize, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
+import { InboxMarkMessageAction, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -12,6 +12,7 @@ enum onUpdateContextKey {
     Saw = 'saw',
     Missions = 'missions',
     TournamentList = 'tournamentList',
+    InboxMessages = 'inboxMessages',
 }
 
 
@@ -28,6 +29,7 @@ export class WSAPI {
         on(ClassId.SAW_DO_SPIN_RESPONSE, (data: SAWDoSpinResponse) => on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => this.updateOnPrizeWin(data)));
         on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissionsOnOptIn());
         on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournamentsOnRegistration());
+        on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
     }
 
     /** Returns information about current user */
@@ -142,7 +144,7 @@ export class WSAPI {
         return OCache.use(onUpdateContextKey.TournamentList, ECacheContext.WSAPI, () => this.api.tournamentsGetLobbyT(null), CACHE_DATA_SEC);
     }
 
-    /** Returns details information of specific tournament instance, the response will includ tournamnet info and the leaderboard of players */
+    /** Returns details information of specific tournament instance, the response will include tournament info and the leaderboard of players */
     public async getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed> {
         return this.api.tournamentsGetInfoT(null, tournamentInstanceId);
     }
@@ -157,6 +159,79 @@ export class WSAPI {
         }
 
         return o;
+    }
+
+    /** Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched. 
+    * The maximum number of messages per request is limited to 20. An indicator "onlyFavorite" can be passed to get only messages marked as favorites. 
+    * You can leave this params empty and by default it will return list of messages ranging from 0 to 20.
+    * This functions return list of messages without the body of the message. 
+    * To get the body of the message you need to call getInboxMessageBody function and pass the message guid contained in each message of this request.
+    * All other action like mark as read, favorite, delete, etc. can be done using this message GUID.
+    * The "onUpdate" callback will be triggered when the user receives a new message. It will provide an updated list of messages, ranging from 0 to 20, to the onUpdate callback function. */
+    /**
+    * @param params
+    */
+    public async getInboxMessages({ from, to, onlyFavorite, onUpdate }: { from?: number, to?: number, onlyFavorite?: boolean, onUpdate?: (data: TInboxMessage[]) => void } = {}): Promise<TInboxMessage[]> { 
+        if (onUpdate) {
+            this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate);
+        }
+
+        return await this.api.getInboxMessagesT(null, from, to, onlyFavorite);
+    }
+
+    /** Returns the message body of the specified message guid. */
+    public async getInboxMessageBody(messageGuid: string): Promise<TInboxMessageBody> {
+        return await this.api.getInboxMessageBodyT(messageGuid);
+    }
+
+    /** Requests to mark inbox message with specified guid as read */
+    public async markInboxMessageAsRead(messageGuid: string): Promise<InboxMarkMessageAction> {
+        const r = await this.api.markInboxMessageRead(null, messageGuid);
+
+        return {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+    }
+
+    /** Requests to mark all inbox messages as read */
+    public async markAllInboxMessagesAsRead(): Promise<InboxMarkMessageAction> {
+        const r = await this.api.markAllInboxMessageRead(null);
+
+        return {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+    }
+
+    /** Requests to mark inbox message with specified guid as favorite. Pass mark true to add message to favorite and false to remove. */
+    public async markUnmarkInboxMessageAsFavorite(messageGuid: string, mark: boolean): Promise<InboxMarkMessageAction> {
+        const r = await this.api.markUnmarkInboxMessageAsFavorite(null, messageGuid, mark);
+
+        return {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+    }
+
+    /** Requests to delete inbox message */
+    public async deleteInboxMessage(messageGuid: string): Promise<InboxMarkMessageAction> {
+        const r = await this.api.deleteInboxMessage(null, messageGuid);
+
+        return {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+    }
+
+    /** Requests to delete all inbox messages */
+    public async deleteAllInboxMessages(): Promise<InboxMarkMessageAction> {
+        const r = await this.api.deleteAllInboxMessages(null);
+
+        return {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
     }
 
     /** Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office. */
@@ -206,6 +281,11 @@ export class WSAPI {
     private async updateTournamentsOnRegistration() {
         const payload = await this.api.tournamentsGetLobbyT(null);
         this.updateEntity(onUpdateContextKey.TournamentList, payload)
+    }
+
+    private async updateInboxMessages() {
+        const payload = await this.api.getInboxMessagesT(null);
+        this.updateEntity(onUpdateContextKey.InboxMessages, payload)
     }
 
     private async updateEntity(contextKey: onUpdateContextKey, payload: any) {

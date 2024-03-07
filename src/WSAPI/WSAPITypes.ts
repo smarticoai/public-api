@@ -406,7 +406,7 @@ export interface TMissionOrBadge {
     progress: number;
     /** 
      * The action that should be performed when user clicks on the mission or badge
-     * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.do(cta_action);
+     * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
      * The 'dp' function will handle the CTA and will execute it in the most safe way
      */
     cta_action: string,
@@ -491,4 +491,45 @@ export interface TBuyStoreItemResult {
 
 export interface TGetTranslations {
     translations: {[key: string]: string};
+}
+
+export interface TInboxMessage {
+    /** Uniq identifier of the message. It is needed to request the message body, mark the message as read/deleted/favorite. */
+    message_guid: string;
+    /** Date when the message was sent */
+    sent_date: string;
+    /** Indicator if a message is read */
+    read: boolean;
+    /** Indicator if a message is added to favorites */
+    favorite: boolean;
+}
+
+export interface TInboxMessageBody {
+    /** Message title */
+    title: string
+    /** Short preview body of the message */
+    preview_body: string,
+    /** Message icon */
+    icon: string,
+    /** The action that should be performed when user clicks on the message.
+     * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
+     * The 'dp' function will handle the CTA and will execute it in the most safe way. 
+     * If the message has a rich html body - the action will always be 'dp:inbox' which will open the inbox widget when triggered. */
+    action: string,
+    /** Rich HTML body of the message. */
+    html_body?: string,
+    /** Optional additional buttons to show in the message, available only if message has rich HTML body. Max count - 2. */
+    buttons?: {
+        /** The action that should be performed when user clicks on the button. The logic is the same as for message actions */
+        action: string,
+        /** Button text */
+        text: string
+    }[];
+}
+
+export interface InboxMarkMessageAction {
+    /** An error code representing the result of marking a message as deleted, favorite or read. Successful marking action if err_code is 0 */
+    err_code: number;
+    /** Optional error message */
+    err_message: string;
 }
