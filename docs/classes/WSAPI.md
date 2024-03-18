@@ -97,6 +97,19 @@ Returns store categories
 
 ___
 
+### getAchCategories
+
+▸ **getAchCategories**(): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+
+Returns achievement categories
+
+#### Returns
+
+`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+
+___
+
+
 ### getMiniGames
 
 ▸ **getMiniGames**(`params?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
