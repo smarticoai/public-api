@@ -11,3 +11,7 @@ export * from "./ReloadAchievementsEvent";
 export * from "./UserAchievement";
 export * from "./UserAchievementTask";
 export * from "./ScheduledMissionType";
+export * from './AchCategoryPublicMeta';
+export * from './AchievementCategory';
+export * from './GetAchCategoriesResponse';
+export * from './GetAchCategoriesRequest';

@@ -12,12 +12,12 @@ import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse, InboxMessageBody, InboxMessageBodyTransform, InboxMessagesTransform, MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse, MarkInboxMessageReadRequest, MarkInboxMessageReadResponse, MarkInboxMessageStarredRequest, MarkInboxMessageStarredResponse } from './Inbox';
 import { BuyStoreItemRequest, BuyStoreItemResponse, GetCategoriesStoreResponse, GetStoreItemsResponse, StoreCategoryTransform, StoreItemTransform } from './Store';
-import { AchievementOptinRequest, AchievementOptinResponse, AchievementType, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
+import { AchCategoryTransform, AchievementOptinRequest, AchievementOptinResponse, AchievementType, GetAchCategoriesResponse, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, TournamentRegisterRequest, TournamentRegisterResponse, tournamentInfoItemTransform } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
+import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -423,6 +423,16 @@ class SmarticoAPI {
     public async missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
         return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements);
     }
+
+    public async achGetCategories(user_ext_id: string): Promise<GetAchCategoriesResponse> {
+
+        const message = this.buildMessage<any, GetAchCategoriesResponse>(user_ext_id, ClassId.GET_ACH_CATEGORIES_REQUEST);
+        return await this.send<GetAchCategoriesResponse>(message, ClassId.GET_ACH_CATEGORIES_RESPONSE);
+    }
+
+    public async achGetCategoriesT(user_ext_id: string): Promise<TAchCategory[]> {
+        return AchCategoryTransform((await this.achGetCategories(user_ext_id)).categories);
+    }   
 
     public async badgetsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
 

@@ -2,6 +2,7 @@
 import { AchRelatedGame } from "../Base/AchRelatedGame";
 import { IntUtils } from "../IntUtils";
 import { TMissionOrBadge } from "../WSAPI/WSAPITypes";
+import { AchCategory } from "./AchievementCategory";
 import { AchievementPublicMeta } from "./AchievementPublicMeta";
 import { AchievementStatus } from "./AchievementStatus";
 import { AchievementTaskType } from "./AchievementTaskType";
@@ -30,7 +31,8 @@ export interface UserAchievement {
     ach_status_id?: AchievementStatus;
     scheduledMissionType?: ScheduledMissionType;
     related_games?: AchRelatedGame[];
-    active_from_ts?: number; // indicates when 'scheduled' mission is active from
+    active_from_ts?: number; // indicates when 'scheduled' mission is active from,
+    ach_categories?: number[];
 }
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
@@ -76,6 +78,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
                     game_provider: g.game_public_meta.game_provider,
                 },
             })),
+            category_ids: r.ach_categories ?? [],
         }
     ));
 }    

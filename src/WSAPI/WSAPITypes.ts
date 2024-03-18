@@ -1,6 +1,7 @@
 import { BuyStoreItemErrorCode } from "../Store";
 import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode } from "../MiniGames";
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
+import { AchCategory } from "../Missions";
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
 
@@ -364,10 +365,19 @@ export interface TStoreItem {
      *  This indicator is taking into account the segment conditions for the store item, the price of item towards users balance, 
     */
     can_buy: boolean;
-    /** The list of IDs of the categories where the store item is assigned, information about categories can be retrievend with getStoreCategories method */
+    /** The list of IDs of the categories where the store item is assigned, information about categories can be retrieved with getStoreCategories method */
     category_ids: number[];
     /** Number of items in the pool avaliable for the purchase.*/
     pool?: number;
+}
+
+/** 
+ * TAchCategory describes the badge category item. Each badge item can be assigned to 1 or more categories
+ */
+export interface TAchCategory {
+    id: number;
+    name: string;
+    order: number;
 }
 
 /** 
@@ -427,6 +437,9 @@ export interface TMissionOrBadge {
 
     /** List of casino games (or other types of entities) related to the mission or badge */
     related_games?: AchRelatedGame[];
+
+    /** The list of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method */
+    category_ids: number[];
 }
 
 export interface AchRelatedGame {
