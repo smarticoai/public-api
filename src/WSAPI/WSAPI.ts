@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { InboxMarkMessageAction, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
+import { InboxMarkMessageAction, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -85,13 +85,13 @@ export class WSAPI {
     }
 
     /** Returns store categories */
-    public async getStoreCategories(): Promise<TStoreItem[]> {
-        return this.api.storeGetItemsT(null);
+    public async getStoreCategories(): Promise<TStoreCategory[]> {
+        return this.api.storeGetCategoriesT(null);
     }
 
     /** Returns ach categories */
-    public async getAchCategories(): Promise<TMissionOrBadge[]> {
-        return this.api.badgetsGetItemsT(null);
+    public async getAchCategories(): Promise<TAchCategory[]> {
+        return this.api.achGetCategoriesT(null);
     }
 
     /** Returns the list of mini-games available for user 
