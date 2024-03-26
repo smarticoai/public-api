@@ -31,6 +31,7 @@ export class WSAPI {
         on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournamentsOnRegistration());
         on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
         on(ClassId.LOGOUT_RESPONSE, () => OCache.clear(ECacheContext.WSAPI));
+        on(ClassId.IDENTIFY_RESPONSE, () => OCache.clear(ECacheContext.WSAPI));
     }
 
     /** Returns information about current user */
