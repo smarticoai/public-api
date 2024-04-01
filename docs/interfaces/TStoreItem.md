@@ -99,7 +99,7 @@ ___
 
 • **category\_ids**: `number`[]
 
-The list of IDs of the categories where the store item is assigned, information about categories can be retrievend with getStoreCategories method
+The list of IDs of the categories where the store item is assigned, information about categories can be retrieved with getStoreCategories method
 
 ___
 

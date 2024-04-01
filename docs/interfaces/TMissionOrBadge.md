@@ -176,11 +176,8 @@ List of casino games (or other types of entities) related to the mission or badg
 
 ___
 
-
 ### category\_ids
 
 • **category\_ids**: `number`[]
 
 The list of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method
-
-___

@@ -72,3 +72,11 @@ ___
 The counter of 2nd metric used to reach the Level. 
 Relevant in case of using advanced leveling logic
 https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
+
+___
+
+### custom\_data
+
+• **custom\_data**: `string`
+
+The custom data of the mini-game defined by operator. Can be a JSON object, string or number
