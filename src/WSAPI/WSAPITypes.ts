@@ -166,6 +166,9 @@ export interface TLevel {
      * 
     */    
     required_level_counter_2: number,
+
+     /** The custom data of the mini-game defined by operator. Can be a JSON object, string or number */
+     custom_data: string;
 }
 
 /** 

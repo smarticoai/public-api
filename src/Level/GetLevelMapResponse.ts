@@ -1,3 +1,4 @@
+import { IntUtils } from "src/IntUtils";
 import { ProtocolResponse } from "../Base/ProtocolResponse";
 import { TLevel } from "../WSAPI/WSAPITypes";
 import { Level } from "./Level";
@@ -19,5 +20,6 @@ export const GetLevelMapResponseTransform = (levels: GetLevelMapResponse): TLeve
         visibility_points: parseInt(l.level_public_meta.visibility_points as any),
         required_level_counter_1: l.required_level_counter_1,
         required_level_counter_2: l.required_level_counter_2,
+        custom_data: IntUtils.JsonOrText(l.level_public_meta?.custom_data),
     })));
 }

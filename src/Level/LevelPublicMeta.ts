@@ -14,4 +14,6 @@ export interface LevelPublicMeta {
         dx: number;
         dy: number;
     };
+    /**custom data as string or JSON string that can be used in UIWidget */
+    custom_data: string;
 }
