@@ -415,10 +415,13 @@ class SmarticoAPI {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
         const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE);
-        if (response.achievements) { 
-            response.achievements = response.achievements.filter(a => a.ach_type_id === AchievementType.Mission);
+        // we need to clone response to avoid changing original object,for cases when its called together with badgesGetItems (e.g. in Promise.all)
+        const responseClone = { ...response };
+
+        if (responseClone.achievements) { 
+            responseClone.achievements = responseClone.achievements.filter(a => a.ach_type_id === AchievementType.Mission);
         }
-        return response;
+        return responseClone;
     }
 
     public async missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
@@ -439,10 +442,13 @@ class SmarticoAPI {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
         const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE);
-        if (response.achievements) { 
-            response.achievements = response.achievements.filter(a => a.ach_type_id === AchievementType.Badge);
+        // we need to clone response to avoid changing original object,for cases when its called together with missionsGetItems (e.g. in Promise.all)
+        const responseClone = { ...response };
+
+        if (responseClone.achievements) { 
+            responseClone.achievements = responseClone.achievements.filter(a => a.ach_type_id === AchievementType.Badge);
         }
-        return response;
+        return responseClone;
     }    
 
     public async badgetsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
