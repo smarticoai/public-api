@@ -87,28 +87,27 @@ ___
 
 ### getStoreCategories
 
-▸ **getStoreCategories**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStoreCategories**(): `Promise`<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
 
 Returns store categories
 
 #### Returns
 
-`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+`Promise`<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
 
 ___
 
 ### getAchCategories
 
-▸ **getAchCategories**(): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+▸ **getAchCategories**(): `Promise`<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
 
-Returns achievement categories
+Returns ach categories
 
 #### Returns
 
-`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+`Promise`<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
 
 ___
-
 
 ### getMiniGames
 
@@ -216,6 +215,26 @@ Requests registration for the specified tournament instance. Returns the err_cod
 #### Returns
 
 `Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+
+___
+
+### getLeaderBoard
+
+▸ **getLeaderBoard**(`periodType`, `getPreviousPeriod?`): `Promise`<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
+
+Returns the leaderboard for the current type (default is Daily). If getPreviousPeriod is passed as true, a leaderboard for the previous period for the current type will be returned.
+For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `periodType` | `LeaderBoardPeriodType` |
+| `getPreviousPeriod?` | `boolean` |
+
+#### Returns
+
+`Promise`<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
 
 ___
 

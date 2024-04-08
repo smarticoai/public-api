@@ -32,6 +32,9 @@
 - [TInboxMessage](interfaces/TInboxMessage.md)
 - [TInboxMessageBody](interfaces/TInboxMessageBody.md)
 - [InboxMarkMessageAction](interfaces/InboxMarkMessageAction.md)
+- [LeaderBoardDetailsT](interfaces/LeaderBoardDetailsT.md)
+- [LeaderBoardsRewardsT](interfaces/LeaderBoardsRewardsT.md)
+- [LeaderBoardUserT](interfaces/LeaderBoardUserT.md)
 
 ## General API
 
