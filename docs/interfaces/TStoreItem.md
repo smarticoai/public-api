@@ -108,3 +108,11 @@ ___
 • `Optional` **pool**: `number`
 
 Number of items in the pool avaliable for the purchase.
+
+___
+
+### hint\_text
+
+• `Optional` **hint\_text**: `string`
+
+The T&C text for the store item

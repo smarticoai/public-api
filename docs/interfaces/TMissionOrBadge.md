@@ -181,3 +181,11 @@ ___
 • **category\_ids**: `number`[]
 
 The list of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method
+
+___
+
+### hint\_text
+
+• `Optional` **hint\_text**: `string`
+
+The T&C text for the missions
