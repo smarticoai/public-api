@@ -1,6 +1,5 @@
 import { NodeCache } from "./NodeCache";
 
-
 export enum ECacheContext {
     Translations,
     LabelInfo,
@@ -27,7 +26,7 @@ export class OCache {
 
         this.init(cacheContext);
 
-        return this.cache[cacheContext].get(key);
+        return deepClone(this.cache[cacheContext].get(key));
     }
 
     public static set(oKey: any, o: any, cacheContext: ECacheContext, ttlSeconds: number = 60) {
@@ -36,7 +35,7 @@ export class OCache {
 
         this.init(cacheContext);
 
-        this.cache[cacheContext].set(key, o, ttlSeconds);
+        this.cache[cacheContext].set(key, deepClone(o), ttlSeconds);
     }
 
     public static async use<T>(oKey: any, cacheContext: ECacheContext, f: () => Promise<T>, ttlSeconds: number = 60) {
@@ -59,4 +58,12 @@ export class OCache {
             this.cache[cacheContext].flushAll();
         }
     }
+}
+
+const deepClone = (o: any) => {
+    if (o) {
+        return JSON.parse(JSON.stringify(o));
+    }
+
+    return o;
 }
