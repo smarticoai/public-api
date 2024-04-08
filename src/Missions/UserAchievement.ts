@@ -37,11 +37,12 @@ export interface UserAchievement {
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
 
-    return items.filter( r => r.ach_id >= 1).map( r => (
-        {
+    return items.filter( r => r.ach_id >= 1).map( r => {
+        const x: TMissionOrBadge = {
             id: r.ach_id,
             name: r.ach_public_meta.name,
             description: r.ach_public_meta.description,
+            hint_text: r.ach_public_meta.hint_text,
             unlock_mission_description: r.ach_public_meta.unlock_mission_description,
             image: r.ach_public_meta.image_url,
             is_completed: r.isCompleted,
@@ -80,6 +81,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
             })),
             category_ids: r.ach_categories ?? [],
         }
-    ));
+        return x;
+});
 }    
 

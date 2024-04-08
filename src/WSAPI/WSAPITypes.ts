@@ -372,6 +372,8 @@ export interface TStoreItem {
     category_ids: number[];
     /** Number of items in the pool avaliable for the purchase.*/
     pool?: number;
+    /** The T&C text for the store item */
+    hint_text?: string;
 }
 
 /** 
@@ -443,6 +445,9 @@ export interface TMissionOrBadge {
 
     /** The list of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method */
     category_ids: number[];
+
+    /** The T&C text for the missions */
+    hint_text?: string;
 }
 
 export interface AchRelatedGame {

@@ -25,6 +25,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
             limit_message: r.itemPublicMeta.limit_message,
             priority: r.itemPublicMeta.priority,
             related_item_ids: r.itemPublicMeta.related_items,
+            hint_text: r.itemPublicMeta.hint_text,
 
             type: {
                 [StoreItemType.Bonus]: 'bonus',
