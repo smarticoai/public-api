@@ -3,7 +3,8 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { InboxMarkMessageAction, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
+import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
+import { LeaderBoardPeriodType } from "src/Leaderboard";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -166,6 +167,13 @@ export class WSAPI {
         }
 
         return o;
+    }
+
+    /** Returns the leaderboard for the current type (default is Daily). If getPreviousPeriod is passed as true, a leaderboard for the previous period for the current type will be returned.
+        For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
+     */
+    public async getLeaderBoard(periodType: LeaderBoardPeriodType, getPreviousPeriod?: boolean): Promise<LeaderBoardDetailsT> {
+        return await this.api.leaderboardsGetT(null, periodType, getPreviousPeriod);
     }
 
     /** Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched. 

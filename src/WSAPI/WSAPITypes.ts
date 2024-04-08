@@ -2,6 +2,7 @@ import { BuyStoreItemErrorCode } from "../Store";
 import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode } from "../MiniGames";
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
 import { AchCategory } from "../Missions";
+import { LeaderBoardPeriodType } from "src/Leaderboard";
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
 
@@ -554,3 +555,41 @@ export interface InboxMarkMessageAction {
     /** Optional error message */
     err_message: string;
 }
+
+export interface LeaderBoardDetailsT {
+    /** ID of the leaderboard */
+    board_id: number;
+    /** Name of the leaderboard */
+    name: string;
+    /** Description of the leaderboard */
+    description: string;
+    /** Rules of the leaderboard */
+    rules: string;
+    /** Leaderboard period type ID */
+    period_type_id: LeaderBoardPeriodType;
+    /** Leaderboard points rewards */
+    rewards: LeaderBoardsRewardsT[];
+    /** Leaderboard users */
+    users: LeaderBoardUserT[];
+    /** Info about current user in leaderboard */
+    me?: LeaderBoardUserT;
+}
+
+export interface LeaderBoardsRewardsT {
+    place: number;
+    points: number;
+}
+
+export interface LeaderBoardUserT {
+    /** The username of the participant */
+    public_username: string;
+    /** The URL to the avatar of the participant */
+    avatar_url: string;
+    /** The position of the participant in the leaderboard */
+    position: number;
+    /** The points of the participant in the leaderboard */
+    points: number;
+    /** The indicator if the participant is current user */
+    is_me: boolean;
+}
+

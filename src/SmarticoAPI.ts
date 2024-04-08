@@ -17,7 +17,8 @@ import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequ
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed } from "./WSAPI/WSAPITypes";
+import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed, LeaderBoardDetailsT } from "./WSAPI/WSAPITypes";
+import { getLeaderBoardTransform } from "./Leaderboard/LeaderBoards";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -522,6 +523,10 @@ class SmarticoAPI {
         
         return response.map[boardKey];
 
+    }
+
+    public async leaderboardsGetT(user_ext_id: string, period_type_id: LeaderBoardPeriodType = LeaderBoardPeriodType.DAILY, prevPeriod: boolean = false): Promise<LeaderBoardDetailsT> { 
+        return getLeaderBoardTransform(await this.leaderboardGet(user_ext_id, period_type_id, prevPeriod));
     }
 
     public async levelsGet(user_ext_id: string): Promise<GetLevelMapResponse> {
