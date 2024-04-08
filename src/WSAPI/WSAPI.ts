@@ -14,6 +14,12 @@ enum onUpdateContextKey {
     Missions = 'missions',
     TournamentList = 'tournamentList',
     InboxMessages = 'inboxMessages',
+    Badges = 'badges',
+    Levels = 'levels',
+    StoreItems = 'storeItems',
+    StoreCategories = 'storeCategories',
+    AchCategories = 'achCategories',
+    LeaderBoards = 'leaderBoards',
 }
 
 
@@ -48,7 +54,7 @@ export class WSAPI {
 
     /** Returns all the levels available the current user */
     public async getLevels(): Promise<TLevel[]> {
-        return this.api.levelsGetT(null);
+        return OCache.use(onUpdateContextKey.Levels, ECacheContext.WSAPI, () => this.api.levelsGetT(null), CACHE_DATA_SEC);
     }
 
     /** Returns all the missions available the current user.
@@ -67,12 +73,12 @@ export class WSAPI {
 
     /** Returns all the badges available the current user */
     public async getBadges(): Promise<TMissionOrBadge[]> {
-        return this.api.badgetsGetItemsT(null);
+        return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(null), CACHE_DATA_SEC);
     }
 
     /** Returns all the store items available the current user */
     public async getStoreItems(): Promise<TStoreItem[]> {
-        return this.api.storeGetItemsT(null);
+        return OCache.use(onUpdateContextKey.StoreItems, ECacheContext.WSAPI, () => this.api.storeGetItemsT(null), CACHE_DATA_SEC);
     }
 
     /** Buy the specific shop item by item_id. Returns the err_code.*/
@@ -89,12 +95,12 @@ export class WSAPI {
 
     /** Returns store categories */
     public async getStoreCategories(): Promise<TStoreCategory[]> {
-        return this.api.storeGetCategoriesT(null);
+        return OCache.use(onUpdateContextKey.StoreCategories, ECacheContext.WSAPI, () => this.api.storeGetCategoriesT(null), CACHE_DATA_SEC);
     }
 
     /** Returns ach categories */
     public async getAchCategories(): Promise<TAchCategory[]> {
-        return this.api.achGetCategoriesT(null);
+        return OCache.use(onUpdateContextKey.AchCategories, ECacheContext.WSAPI, () => this.api.achGetCategoriesT(null), CACHE_DATA_SEC);
     }
 
     /** Returns the list of mini-games available for user 
@@ -173,7 +179,7 @@ export class WSAPI {
         For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
      */
     public async getLeaderBoard(periodType: LeaderBoardPeriodType, getPreviousPeriod?: boolean): Promise<LeaderBoardDetailsT> {
-        return await this.api.leaderboardsGetT(null, periodType, getPreviousPeriod);
+        return OCache.use(onUpdateContextKey.LeaderBoards, ECacheContext.WSAPI, () => this.api.leaderboardsGetT(null, periodType, getPreviousPeriod), CACHE_DATA_SEC);
     }
 
     /** Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched. 
