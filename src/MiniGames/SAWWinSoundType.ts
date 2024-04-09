@@ -3,7 +3,8 @@ export enum SAWWinSoundType {
     Disappointing = 1,
     Positive = 2,
     HighlyPositive = 3,
-    NoSound = 4
+    NoSound = 4,
+    Custom = 5,
 }
 
 export const SAWWinSoundFiles = {

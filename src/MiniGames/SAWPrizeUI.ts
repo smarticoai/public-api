@@ -13,4 +13,5 @@ export interface SAWPrizeUI {
     icon?: string;
     replace_name_with_image?: boolean;
     acknowledge_action_title?: string;
+    custom_win_sound?: string;
 }
