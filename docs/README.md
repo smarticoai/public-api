@@ -35,6 +35,7 @@
 - [LeaderBoardDetailsT](interfaces/LeaderBoardDetailsT.md)
 - [LeaderBoardsRewardsT](interfaces/LeaderBoardsRewardsT.md)
 - [LeaderBoardUserT](interfaces/LeaderBoardUserT.md)
+- [UserLevelExtraCountersT](interfaces/UserLevelExtraCountersT.md)
 
 ## General API
 

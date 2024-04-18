@@ -55,6 +55,18 @@ Returns all the badges available the current user
 
 ___
 
+### getUserLevelExtraCounters
+
+▸ **getUserLevelExtraCounters**(): `Promise`<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
+
+Returns the extra counters for the current user level
+
+#### Returns
+
+`Promise`<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
+
+___
+
 ### getStoreItems
 
 ▸ **getStoreItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
