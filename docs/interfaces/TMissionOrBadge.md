@@ -189,3 +189,11 @@ ___
 • `Optional` **hint\_text**: `string`
 
 The T&C text for the missions
+
+___
+
+### position
+
+• `Optional` **position**: `number`
+
+Priority (or position) of the mission in the UI. Low value indicates higher position in the UI

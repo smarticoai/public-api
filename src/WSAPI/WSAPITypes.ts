@@ -449,6 +449,9 @@ export interface TMissionOrBadge {
 
     /** The T&C text for the missions */
     hint_text?: string;
+
+    /** Priority (or position) of the mission in the UI. Low value indicates higher position in the UI */
+    position?: number;
 }
 
 export interface AchRelatedGame {
