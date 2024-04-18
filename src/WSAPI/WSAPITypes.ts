@@ -593,3 +593,10 @@ export interface LeaderBoardUserT {
     is_me: boolean;
 }
 
+export interface UserLevelExtraCountersT {
+    /** The counter of 1st metric used to reach the level. */
+    level_counter_1?: number,
+    /** The counter of 2nd metric used to reach the level. */
+    level_counter_2?: number,
+}
+

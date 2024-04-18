@@ -17,8 +17,9 @@ import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequ
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed, LeaderBoardDetailsT } from "./WSAPI/WSAPITypes";
+import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed, LeaderBoardDetailsT, UserLevelExtraCountersT } from "./WSAPI/WSAPITypes";
 import { getLeaderBoardTransform } from "./Leaderboard/LeaderBoards";
+import { GetAchievementsUserInfoResponse } from "./Core/GetAchievementsUserInfoResponse";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -426,6 +427,21 @@ class SmarticoAPI {
 
     public async missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
         return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements);
+    }
+
+    public async getUserGamificationInfo(user_ext_id: string): Promise<GetAchievementsUserInfoResponse> {
+        const message = this.buildMessage<GetAchievementMapRequest, GetAchievementsUserInfoResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_USER_REQUEST);
+
+        return await this.send<GetAchievementsUserInfoResponse>(message, ClassId.GET_ACHIEVEMENT_USER_RESPONSE);
+    }
+
+    public async getUserGamificationInfoT(user_ext_id: string): Promise<UserLevelExtraCountersT> {
+        const response = await this.getUserGamificationInfo(user_ext_id);
+        
+        return {
+            level_counter_1: response.level_counter_1,
+            level_counter_2: response.level_counter_2,
+        }
     }
 
     public async achGetCategories(user_ext_id: string): Promise<GetAchCategoriesResponse> {

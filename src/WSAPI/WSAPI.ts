@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile } from "./WSAPITypes";
+import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "src/Leaderboard";
  
 /** @hidden */
@@ -20,6 +20,7 @@ enum onUpdateContextKey {
     StoreCategories = 'storeCategories',
     AchCategories = 'achCategories',
     LeaderBoards = 'leaderBoards',
+    LevelExtraCounters = 'levelExtraCounters',
 }
 
 
@@ -74,6 +75,11 @@ export class WSAPI {
     /** Returns all the badges available the current user */
     public async getBadges(): Promise<TMissionOrBadge[]> {
         return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(null), CACHE_DATA_SEC);
+    }
+
+    /** Returns the extra counters for the current user level */
+    public async getUserLevelExtraCounters(): Promise<UserLevelExtraCountersT> {
+        return OCache.use(onUpdateContextKey.LevelExtraCounters, ECacheContext.WSAPI, () => this.api.getUserGamificationInfoT(null), CACHE_DATA_SEC);
     }
 
     /** Returns all the store items available the current user */
