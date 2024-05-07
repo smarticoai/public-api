@@ -51,6 +51,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
                     prize_type: MiniGamePrizeTypeNamed(p.prize_type_id),
                     prize_value: p.prize_value,
                     font_size: p.saw_prize_ui_definition.font_size,
+                    font_size_mobile: p.saw_prize_ui_definition.font_size_mobile,
                     icon: p.saw_prize_ui_definition.icon,
                     position: p.saw_prize_ui_definition.position,
                     aknowledge_message: p.saw_prize_ui_definition.aknowledge_message,

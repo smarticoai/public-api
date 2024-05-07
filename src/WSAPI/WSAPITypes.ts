@@ -19,8 +19,10 @@ export interface TMiniGamePrize {
     prize_type: MiniGamePrizeTypeName;
     /** Numeric value of the prize in case it's pints or spin type */
     prize_value?: number;
-    /** Custom font size for the prize */
+    /** Custom font size for the prize (desktop) */
     font_size?: number;
+    /** Custom font size for the prize (mobile) */
+    font_size_mobile?: number;
     /** The URL of the icon of the prize */
     icon?: string;
     /* for scratch card defines position of prize in the list */

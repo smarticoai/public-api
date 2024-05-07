@@ -10,6 +10,7 @@ export interface SAWPrizeUI {
     acknowledge_type: SAWAcknowledgeType;
     acknowledge_dp?: string;
     font_size?: number;
+    font_size_mobile?: number;
     sound_type: SAWWinSoundType;    
     icon?: string;
     replace_name_with_image?: boolean;
