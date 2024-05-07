@@ -452,6 +452,9 @@ export interface TMissionOrBadge {
 
     /** Priority (or position) of the mission in the UI. Low value indicates higher position in the UI */
     position?: number;
+
+    /** The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
+    ribbon?: TRibbon;
 }
 
 export interface AchRelatedGame {

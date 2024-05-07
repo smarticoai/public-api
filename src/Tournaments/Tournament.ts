@@ -78,7 +78,7 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
             custom_section_id: r.publicMeta.custom_section_id,
             custom_data: IntUtils.JsonOrText(r.publicMeta.custom_data),
             is_featured: r.publicMeta.featured,
-            ribbon: r.publicMeta.label_tag,
+            ribbon: r.publicMeta.label_tag === 'custom' ? r.publicMeta.custom_label_tag : r.publicMeta.label_tag,
             priority: r.publicMeta.position,
             
 

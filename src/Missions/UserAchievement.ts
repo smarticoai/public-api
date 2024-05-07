@@ -60,6 +60,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
             only_in_custom_section: r.ach_public_meta.only_in_custom_section,
             custom_data: IntUtils.JsonOrText(r.ach_public_meta.custom_data),
             position: r.ach_public_meta.position,
+            ribbon: r.ach_public_meta.label_tag === 'custom' ? r.ach_public_meta.custom_label_tag : r.ach_public_meta.label_tag,
             tasks: (r.achievementTasks || [])
                 .filter( t => t.task_type_id === AchievementTaskType.CompleteAchievement)
                 .map( t => ({
