@@ -1,4 +1,4 @@
-import { IntUtils } from "src/IntUtils";
+import { IntUtils } from "../IntUtils";
 import { ProtocolResponse } from "../Base/ProtocolResponse";
 import { TLevel } from "../WSAPI/WSAPITypes";
 import { Level } from "./Level";

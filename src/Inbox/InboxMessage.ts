@@ -1,4 +1,4 @@
-import { TInboxMessageBody } from "src/WSAPI/WSAPITypes";
+import { TInboxMessageBody } from "../WSAPI/WSAPITypes";
 import { InboxMessageType } from "./InboxMessageType";
 
 export interface InboxMessageBody {

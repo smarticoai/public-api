@@ -2,7 +2,7 @@ import { BuyStoreItemErrorCode } from "../Store";
 import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode } from "../MiniGames";
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
 import { AchCategory } from "../Missions";
-import { LeaderBoardPeriodType } from "src/Leaderboard";
+import { LeaderBoardPeriodType } from "../Leaderboard";
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
 

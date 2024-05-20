@@ -3,7 +3,6 @@ import {TournamentPlayer} from "./TournamentPlayer";
 import { ProtocolResponse } from "../Base/ProtocolResponse";
 import { TournamentPrize } from "./TournamentPrize";
 import { TTournamentDetailed } from "../WSAPI/WSAPITypes";
-import { ActivityTypeLimited } from "src/Core";
 import { TournamentUtils } from "./TournamentUtils";
 
 export interface GetTournamentInfoResponse extends ProtocolResponse {

@@ -1,4 +1,4 @@
-import { TInboxMessage } from "src/WSAPI/WSAPITypes";
+import { TInboxMessage } from "../WSAPI/WSAPITypes";
 import { ProtocolResponse } from "../Base/ProtocolResponse";
 import { InboxMessage } from "./InboxMessage";
 

@@ -1,4 +1,4 @@
-import { LeaderBoardDetailsT, LeaderBoardUserT, LeaderBoardsRewardsT } from "src/WSAPI/WSAPITypes";
+import { LeaderBoardDetailsT, LeaderBoardUserT, LeaderBoardsRewardsT } from "../WSAPI/WSAPITypes";
 import { LeaderBoardDetails } from "./LeaderBoardDetails";
 import { LeaderBoardPeriodType } from "./LeaderBoardPeriodType";
 import { LeaderBoardPosition } from "./LeaderBoardPosition";

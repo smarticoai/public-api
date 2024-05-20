@@ -1,4 +1,4 @@
-import { ActivityTypeLimited } from "src/Core";
+import { ActivityTypeLimited } from "../Core";
 import { Tournament } from "./Tournament";
 import { TournamentInstanceStatus } from "./TournamentInstanceStatus";
 import { TournamentPlayer } from "./TournamentPlayer";
