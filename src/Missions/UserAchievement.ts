@@ -33,6 +33,10 @@ export interface UserAchievement {
     related_games?: AchRelatedGame[];
     active_from_ts?: number; // indicates when 'scheduled' mission is active from,
     ach_categories?: number[];
+
+    ach_completed_id?: number; // ID of the completion fact from ach_completed or ach_completed_recurring tables
+    requires_prize_claim?: boolean; // flag from achievement if the mission prize will be given only after user claims it
+    prize_claimed_date_ts?: number; // the date/timestamp indicating when the prize was claimed by the user
 }
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
