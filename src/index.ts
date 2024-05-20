@@ -11,3 +11,4 @@ export * from './Missions';
 export * from './Store';
 export * from './Tournaments';
 export * from './Level';
+export * from './Quiz';
