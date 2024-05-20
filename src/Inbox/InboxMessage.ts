@@ -18,7 +18,7 @@ export interface InboxMessage {
     engagement_uid: string;
     is_read: boolean;
     is_starred: boolean;
-    is_deleted: boolean;
+    is_deleted?: boolean;
 }
 
 export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessageBody => {
