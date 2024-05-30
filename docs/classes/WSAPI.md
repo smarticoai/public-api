@@ -177,6 +177,26 @@ Requests an opt-in for the specified mission_id. Returns the err_code.
 
 ___
 
+### requestMissionClaimReward
+
+▸ **requestMissionClaimReward**(`mission_id`, `ach_completed_id`): `Promise`<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
+
+Requests a claim reward for the specified mission_id. Returns the err_code.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `mission_id` | `number` |
+| `ach_completed_id` | `number` |
+
+#### Returns
+
+`Promise`<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
+
+___
+
+
 ### getTournamentsList
 
 ▸ **getTournamentsList**(`params?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>

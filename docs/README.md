@@ -26,6 +26,7 @@
 - [AchRelatedGame](interfaces/AchRelatedGame.md)
 - [TMissionOrBadgeTask](interfaces/TMissionOrBadgeTask.md)
 - [TMissionOptInResult](interfaces/TMissionOptInResult.md)
+- [TMissionClaimRewardResult](interfaces/TMissionClaimRewardResult.md)
 - [TTournamentRegistrationResult](interfaces/TTournamentRegistrationResult.md)
 - [TBuyStoreItemResult](interfaces/TBuyStoreItemResult.md)
 - [TGetTranslations](interfaces/TGetTranslations.md)
