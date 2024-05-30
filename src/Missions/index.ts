@@ -15,3 +15,5 @@ export * from './AchCategoryPublicMeta';
 export * from './AchievementCategory';
 export * from './GetAchCategoriesResponse';
 export * from './GetAchCategoriesRequest';
+export * from './AchClaimPrizeRequest';
+export * from './AchClaimPrizeResponse'

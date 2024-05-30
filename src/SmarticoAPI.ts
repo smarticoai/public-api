@@ -12,7 +12,7 @@ import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
 import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import { GetInboxMessagesRequest, GetInboxMessagesResponse, InboxMessageBody, InboxMessageBodyTransform, InboxMessagesTransform, MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse, MarkInboxMessageReadRequest, MarkInboxMessageReadResponse, MarkInboxMessageStarredRequest, MarkInboxMessageStarredResponse } from './Inbox';
 import { BuyStoreItemRequest, BuyStoreItemResponse, GetCategoriesStoreResponse, GetStoreItemsResponse, StoreCategoryTransform, StoreItemTransform } from './Store';
-import { AchCategoryTransform, AchievementOptinRequest, AchievementOptinResponse, AchievementType, GetAchCategoriesResponse, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
+import { AchCategoryTransform, AchClaimPrizeRequest, AchClaimPrizeResponse, AchievementOptinRequest, AchievementOptinResponse, AchievementType, GetAchCategoriesResponse, GetAchievementMapRequest, GetAchievementMapResponse, UserAchievementTransform } from './Missions';
 import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequest, GetTournamentsResponse, TournamentItemsTransform, TournamentRegisterRequest, TournamentRegisterResponse, tournamentInfoItemTransform } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
@@ -351,6 +351,21 @@ class SmarticoAPI {
         });
 
         const res = await this.send<AchievementOptinResponse>(message, ClassId.MISSION_OPTIN_RESPONSE);
+
+        return res;
+    }
+
+    public async missionClaimPrize(user_ext_id: string, mission_id: number, ach_completed_id: number) {
+        if (!mission_id) {
+            throw new Error('Missing mission id');
+        }
+
+        const message = this.buildMessage<AchClaimPrizeRequest, AchClaimPrizeResponse>(user_ext_id, ClassId.ACHIEVEMENT_CLAIM_PRIZE_REQUEST, {
+            ach_id: mission_id,
+            ach_completed_id: ach_completed_id
+        })
+
+        const res = await this.send<AchClaimPrizeResponse>(message, ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE);
 
         return res;
     }

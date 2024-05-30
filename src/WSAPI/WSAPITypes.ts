@@ -457,6 +457,15 @@ export interface TMissionOrBadge {
 
     /** The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
     ribbon?: TRibbon;
+
+    /** ID of the completion fact from ach_completed or ach_completed_recurring tables */
+    ach_completed_id?: number;
+
+    /** Flag from achievement if the mission prize will be given only after user claims it */
+    requires_prize_claim?: boolean;
+
+    /** The date/timestamp indicating when the prize was claimed by the user */
+    prize_claimed_date_ts?: number;
 }
 
 export interface AchRelatedGame {
@@ -503,6 +512,16 @@ export interface TMissionOptInResult {
      err_code: number;
      /** Optional error message */
      err_message: string;
+}
+
+/**
+ * TMissionClaimRewardResult describes the response of call to _smartico.api.requestMissionClaimReward(mission_id, ach_completed_id) method
+*/
+export interface TMissionClaimRewardResult {
+    /** Error code that represents outcome of the claim request. Successful claim reward in case err_code is 0 */
+    err_code: number;
+    /** Optional error message */
+    err_message: string;
 }
 
 export interface TTournamentRegistrationResult {

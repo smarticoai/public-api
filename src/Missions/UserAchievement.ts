@@ -86,6 +86,9 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
                 },
             })),
             category_ids: r.ach_categories ?? [],
+            ach_completed_id: r.ach_completed_id,
+            requires_prize_claim: r.requires_prize_claim,
+            prize_claimed_date_ts: r.prize_claimed_date_ts,
         }
         return x;
 });

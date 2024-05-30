@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
+import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "../Leaderboard";
  
 /** @hidden */
@@ -143,6 +143,18 @@ export class WSAPI {
         const r = await this.api.missionOptIn(null, mission_id);
 
         const o: TMissionOptInResult = {
+            err_code: r.errCode,
+            err_message: r.errMsg,
+        }
+
+        return o;
+    }
+
+    /** Request for claim reward for the specified mission id. Returns the err_code. */
+    public async requestMissionClaimReward(mission_id: number, ach_completed_id: number): Promise<TMissionClaimRewardResult> {
+        const r = await this.api.missionClaimPrize(null, mission_id, ach_completed_id);
+
+        const o: TMissionClaimRewardResult = {
             err_code: r.errCode,
             err_message: r.errMsg,
         }
