@@ -40,7 +40,15 @@ ___
 
 • `Optional` **font\_size**: `number`
 
-Custom font size for the prize
+Custom font size for the prize (desktop)
+
+___
+
+### font\_size\_mobile
+
+• `Optional` **font\_size\_mobile**: `number`
+
+Custom font size for the prize (mobile)
 
 ___
 

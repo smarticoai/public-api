@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
+import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TSegmentCheckResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "../Leaderboard";
  
 /** @hidden */
@@ -21,6 +21,7 @@ enum onUpdateContextKey {
     AchCategories = 'achCategories',
     LeaderBoards = 'leaderBoards',
     LevelExtraCounters = 'levelExtraCounters',
+    Segments = 'segments',
 }
 
 
@@ -52,6 +53,22 @@ export class WSAPI {
             throw new Error('Tracker is not initialized, cannot getUserProfile');
         }
     }
+
+    /** Check if user belongs to specific segments */
+
+    public async checkSegmentMatch(segment_id: number): Promise<boolean> {
+        const r = await this.api.coreCheckSegments(null, [segment_id]);
+        if (r && r.find(s => s.segment_id === segment_id && s.is_matching)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /** Check if user belongs to specific list of segments */
+    public async checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentCheckResult[]> {
+        return await this.api.coreCheckSegments(null, segment_ids)
+    }    
 
     /** Returns all the levels available the current user */
     public async getLevels(): Promise<TLevel[]> {

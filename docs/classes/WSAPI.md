@@ -14,6 +14,42 @@ Returns information about current user
 
 ___
 
+### checkSegmentMatch
+
+▸ **checkSegmentMatch**(`segment_id`): `Promise`<`boolean`\>
+
+Check if user belongs to specific segments
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `segment_id` | `number` |
+
+#### Returns
+
+`Promise`<`boolean`\>
+
+___
+
+### checkSegmentListMatch
+
+▸ **checkSegmentListMatch**(`segment_ids`): `Promise`<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
+
+Check if user belongs to specific list of segments
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `segment_ids` | `number`[] |
+
+#### Returns
+
+`Promise`<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
+
+___
+
 ### getLevels
 
 ▸ **getLevels**(): `Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
@@ -181,7 +217,7 @@ ___
 
 ▸ **requestMissionClaimReward**(`mission_id`, `ach_completed_id`): `Promise`<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
 
-Requests a claim reward for the specified mission_id. Returns the err_code.
+Request for claim reward for the specified mission id. Returns the err_code.
 
 #### Parameters
 
@@ -195,7 +231,6 @@ Requests a claim reward for the specified mission_id. Returns the err_code.
 `Promise`<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
 
 ___
-
 
 ### getTournamentsList
 

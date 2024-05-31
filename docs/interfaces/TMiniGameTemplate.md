@@ -136,7 +136,7 @@ ___
 
 • **custom\_data**: `any`
 
-The custom data of the mini-game defined by operator. Can be a JSON object, string or number
+The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number
 
 ___
 

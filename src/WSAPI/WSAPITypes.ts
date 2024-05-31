@@ -627,3 +627,8 @@ export interface UserLevelExtraCountersT {
     level_counter_2?: number,
 }
 
+
+export interface TSegmentCheckResult {
+    segment_id: number;
+    is_matching: boolean;
+}

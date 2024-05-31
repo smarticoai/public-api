@@ -17,9 +17,11 @@ import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequ
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed, LeaderBoardDetailsT, UserLevelExtraCountersT } from "./WSAPI/WSAPITypes";
+import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed, LeaderBoardDetailsT, UserLevelExtraCountersT, TSegmentCheckResult } from "./WSAPI/WSAPITypes";
 import { getLeaderBoardTransform } from "./Leaderboard/LeaderBoards";
 import { GetAchievementsUserInfoResponse } from "./Core/GetAchievementsUserInfoResponse";
+import { CheckSegmentMatchResponse } from "./Core/CheckSegmentMatchResponse";
+import { CheckSegmentMatchRequest } from "./Core/CheckSegmentMatchRequest";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -270,6 +272,19 @@ class SmarticoAPI {
         
         return await this.send(message, ClassId.CLIENT_SET_CUSTOM_USERNAME_RESPONSE);
     }
+
+    public async coreCheckSegments(user_ext_id: string, segment_id: number[]): Promise<TSegmentCheckResult[]> {
+        
+        const message = this.buildMessage<CheckSegmentMatchRequest, any>(user_ext_id, ClassId.CHECK_SEGMENT_MATCH_REQUEST, {
+            segment_id
+        });
+        
+        const results = await this.send<CheckSegmentMatchResponse>(message, ClassId.CHECK_SEGMENT_MATCH_RESPONSE);
+
+        return results.segments || [];
+    }    
+
+
 
     public async sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode: boolean = false): Promise<SAWGetTemplatesResponse> {
 

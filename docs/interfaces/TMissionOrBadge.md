@@ -197,3 +197,35 @@ ___
 • `Optional` **position**: `number`
 
 Priority (or position) of the mission in the UI. Low value indicates higher position in the UI
+
+___
+
+### ribbon
+
+• `Optional` **ribbon**: `string`
+
+The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon
+
+___
+
+### ach\_completed\_id
+
+• `Optional` **ach\_completed\_id**: `number`
+
+ID of the completion fact from ach_completed or ach_completed_recurring tables
+
+___
+
+### requires\_prize\_claim
+
+• `Optional` **requires\_prize\_claim**: `boolean`
+
+Flag from achievement if the mission prize will be given only after user claims it
+
+___
+
+### prize\_claimed\_date\_ts
+
+• `Optional` **prize\_claimed\_date\_ts**: `number`
+
+The date/timestamp indicating when the prize was claimed by the user

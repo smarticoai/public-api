@@ -37,6 +37,7 @@
 - [LeaderBoardsRewardsT](interfaces/LeaderBoardsRewardsT.md)
 - [LeaderBoardUserT](interfaces/LeaderBoardUserT.md)
 - [UserLevelExtraCountersT](interfaces/UserLevelExtraCountersT.md)
+- [TSegmentCheckResult](interfaces/TSegmentCheckResult.md)
 
 ## General API
 

@@ -26,6 +26,12 @@ ___
 
 ___
 
+### PrizeDrop
+
+• **PrizeDrop** = ``"prizedrop"``
+
+___
+
 ### Unknown
 
 • **Unknown** = ``"unknown"``
