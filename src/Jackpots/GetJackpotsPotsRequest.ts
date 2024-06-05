@@ -1,5 +1,5 @@
 import { ProtocolMessage } from "../Base/ProtocolMessage";
 
 export interface  GetJackpotsPotsRequest extends ProtocolMessage {
-    pot_ids: number[];
+    jp_template_ids: number[];
 }

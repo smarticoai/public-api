@@ -3,6 +3,6 @@ import { JackpotPot } from "./JackpotPot";
 
 export interface GetJackpotsPotsResponse extends ProtocolResponse {
 
-    pots: JackpotPot[];
+    items: JackpotPot[];
 }
 
