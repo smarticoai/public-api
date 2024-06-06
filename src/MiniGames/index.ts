@@ -17,3 +17,4 @@ export * from "./SAWWinSoundType";
 export * from "./SAWDoAknowledgeRequest";
 export * from "./SAWDoAknowledgeResponse";
 export * from "./SAWSpinsCountPush";
+export * from "./SAWPrizeDropWinPush";
