@@ -44,7 +44,14 @@ export class WSAPI {
         on(ClassId.IDENTIFY_RESPONSE, () => OCache.clear(ECacheContext.WSAPI));
     }
 
-    /** Returns information about current user */
+    /** Returns information about current user
+     * Example usage:
+     * ```
+     * _smartico.api.getUserProfile().then((result) => {
+     *  console.log(result);
+     * });
+     * ```
+     * */
     public getUserProfile(): TUserProfile {
         if (this.api.tracker) {
             const o: TUserProfile = Object.assign({}, this.api.tracker.userPublicProps);
@@ -55,8 +62,14 @@ export class WSAPI {
         }
     }
 
-    /** Check if user belongs to specific segments */
-
+    /** Check if user belongs to specific segments
+     * Example usage:
+     * ```
+     * _smartico.api.checkSegmentMatch(1).then((result) => {
+     *   console.log(result);
+     * });
+     * ```
+    */
     public async checkSegmentMatch(segment_id: number): Promise<boolean> {
         const r = await this.api.coreCheckSegments(null, [segment_id]);
         if (r && r.find(s => s.segment_id === segment_id && s.is_matching)) {
@@ -66,19 +79,40 @@ export class WSAPI {
         }
     }
 
-    /** Check if user belongs to specific list of segments */
+    /** Check if user belongs to specific list of segments
+     * Example usage:
+     * ```
+     * _smartico.api.checkSegmentListMatch([1, 2, 3]).then((result) => {
+     *    console.log(result);
+     * });
+     * ```
+    */
     public async checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentCheckResult[]> {
-        return await this.api.coreCheckSegments(null, segment_ids)
+        return await this.api.coreCheckSegments(null, Array.isArray(segment_ids) ? segment_ids : [segment_ids]);
     }    
 
-    /** Returns all the levels available the current user */
+    /** Returns all the levels available the current user
+     * Example usage:
+     * ```
+     * _smartico.api.getLevels().then((result) => {
+     *   console.log(result);
+     * });
+     * ```
+    */
     public async getLevels(): Promise<TLevel[]> {
         return OCache.use(onUpdateContextKey.Levels, ECacheContext.WSAPI, () => this.api.levelsGetT(null), CACHE_DATA_SEC);
     }
 
     /** Returns all the missions available the current user.
-     * The returned missions is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one. 
-     * The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it. */
+     * The returned missions are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+     * Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one. 
+     * The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it.
+     * Example usage:
+     * ```
+     * _smartico.api.getMissions().then((result) => {
+     *  console.log(result);
+     * });
+     * ```
      /**
      * @param params
      */
@@ -95,17 +129,40 @@ export class WSAPI {
         return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(null), CACHE_DATA_SEC);
     }
 
-    /** Returns the extra counters for the current user level */
+    /** 
+     * Returns the extra counters for the current user level.
+     * These are counters that are configured for each Smartico client separatly by request.
+     * For example 1st counter could be total wagering amount, 2nd counter could be total deposit amount, etc.
+     * Example usage:
+     * ```
+     * _smartico.api.getUserLevelExtraCounters().then((result) => {
+     *      console.log(result);
+     * });
+     * ```
+    */
     public async getUserLevelExtraCounters(): Promise<UserLevelExtraCountersT> {
         return OCache.use(onUpdateContextKey.LevelExtraCounters, ECacheContext.WSAPI, () => this.api.getUserGamificationInfoT(null), CACHE_DATA_SEC);
     }
 
-    /** Returns all the store items available the current user */
+    /** Returns all the store items available the current user
+     * Example usage:
+     * ```
+     * _smartico.api.getStoreItems().then((result) => {
+     *      console.log(result);
+     * });
+    */
+
     public async getStoreItems(): Promise<TStoreItem[]> {
         return OCache.use(onUpdateContextKey.StoreItems, ECacheContext.WSAPI, () => this.api.storeGetItemsT(null), CACHE_DATA_SEC);
     }
 
-    /** Buy the specific shop item by item_id. Returns the err_code.*/
+    /** Buy the specific shop item by item_id. Returns the err_code in case of success or error.
+     * Example usage:
+     * ```
+     * _smartico.api.buyStoreItem(1).then((result) => {
+     *     console.log(result);
+     * });
+    */
     public async buyStoreItem(item_id: number): Promise<TBuyStoreItemResult> {
         const r = await this.api.buyStoreItem(null, item_id);
 
@@ -138,7 +195,7 @@ export class WSAPI {
         return await this.api.storeGetPurchasedItemsT(null, from, to);
     }
 
-    /** Returns ach categories */
+    /** Returns missions & badges categories */
     public async getAchCategories(): Promise<TAchCategory[]> {
         return OCache.use(onUpdateContextKey.AchCategories, ECacheContext.WSAPI, () => this.api.achGetCategoriesT(null), CACHE_DATA_SEC);
     }
