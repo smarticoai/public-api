@@ -117,11 +117,15 @@ ___
 
 The T&C text for the store item
 
+___
+
 ### purchase\_ts
 
 • `Optional` **purchase\_ts**: `number`
 
 Purchase time to show in purchase history screen
+
+___
 
 ### purchase\_points\_amount
 
