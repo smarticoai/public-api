@@ -1,7 +1,7 @@
-import { ProtocolMessage } from "../Base/ProtocolMessage";
-import { StorItemPruchased } from "./StorItemPruchased";
+import { ProtocolResponse } from "../Base/ProtocolResponse";
+import { StoreItemPurchased } from "./StoreItemPurchased";
 
-export interface GetStoreHistoryResponse extends ProtocolMessage {
-    items: StorItemPruchased[];
+export interface GetStoreHistoryResponse extends ProtocolResponse {
+    items: StoreItemPurchased[];
     hasMore: boolean;
 }

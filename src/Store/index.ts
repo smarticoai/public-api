@@ -8,3 +8,6 @@ export * from "./StoreCategoryPublicMeta";
 export * from "./StoreItem";
 export * from "./StoreItemPublicMeta";
 export * from "./StoreItemType";
+export * from './StoreItemPurchased';
+export * from './GetStoreHistoryRequest';
+export * from './GetStoreHistoryResponse';

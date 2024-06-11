@@ -377,6 +377,10 @@ export interface TStoreItem {
     pool?: number;
     /** The T&C text for the store item */
     hint_text?: string;
+    /** Purchase time to show in purchase history screen */
+    purchase_ts?: number;
+    /** The amount of points you can purchase an item */
+    purchase_points_amount?: number;
 }
 
 /** 
