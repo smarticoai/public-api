@@ -145,6 +145,25 @@ Returns store categories
 
 ___
 
+### storeGetPurchasedItems
+
+▸ **storeGetPurchasedItems**(`params?`): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `params` | `Object` |
+| `params.from?` | `number` |
+| `params.to?` | `number` |
+| `params.onUpdate?` | (`data`: [`TStoreItem`](../interfaces/TStoreItem.md)[]) => `void` |
+
+#### Returns
+
+`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+
+___
+
 ### getAchCategories
 
 ▸ **getAchCategories**(): `Promise`<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
