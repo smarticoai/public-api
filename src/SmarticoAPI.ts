@@ -22,6 +22,7 @@ import { getLeaderBoardTransform } from "./Leaderboard/LeaderBoards";
 import { GetAchievementsUserInfoResponse } from "./Core/GetAchievementsUserInfoResponse";
 import { CheckSegmentMatchResponse } from "./Core/CheckSegmentMatchResponse";
 import { CheckSegmentMatchRequest } from "./Core/CheckSegmentMatchRequest";
+import { GetJackpotsRequest, GetJackpotsResponse, JackpotDetails, JackpotsOptinRequest, JackpotsOptinResponse, JackpotsOptoutRequest, JackpotsOptoutResponse } from "./Jackpots";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -282,9 +283,25 @@ class SmarticoAPI {
         const results = await this.send<CheckSegmentMatchResponse>(message, ClassId.CHECK_SEGMENT_MATCH_RESPONSE);
 
         return results.segments || [];
-    }    
+    }
 
+    public async getJackpots(user_ext_id: string, payload?: { related_game_id?: string, jp_template_id?: number }): Promise<JackpotDetails[]> {
+        const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, payload);
 
+        const response = await this.send<GetJackpotsResponse>(message, ClassId.JP_GET_JACKPOTS_RESPONSE);
+
+        return response.jackpots || [];
+    }
+
+    public async jackpotOptIn(user_ext_id: string, payload: { jp_template_id: number }): Promise<JackpotsOptinResponse> {
+        const message = this.buildMessage<JackpotsOptinRequest, JackpotsOptinResponse>(user_ext_id, ClassId.JP_OPTIN_REQUEST, payload);
+        return await this.send<JackpotsOptinResponse>(message, ClassId.JP_OPTIN_RESPONSE);
+    }
+
+    public async jackpotOptOut(user_ext_id: string, payload: { jp_template_id: number }): Promise<JackpotsOptoutResponse> {
+        const message = this.buildMessage<JackpotsOptoutRequest, JackpotsOptoutResponse>(user_ext_id, ClassId.JP_OPTOUT_REQUEST, payload);
+        return await this.send<JackpotsOptoutResponse>(message, ClassId.JP_OPTOUT_RESPONSE);
+    }
 
     public async sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode: boolean = false): Promise<SAWGetTemplatesResponse> {
 

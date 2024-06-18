@@ -13,3 +13,4 @@ export * from './JackpotsOptinRequest';
 export * from './JackpotsOptinResponse';
 export * from './JackpotsOptoutRequest';
 export * from './JackpotsOptoutResponse';
+export * from './JackpotHtmlTemplate';

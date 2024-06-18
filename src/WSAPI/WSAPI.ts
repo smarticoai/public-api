@@ -5,6 +5,7 @@ import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
 import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TSegmentCheckResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "../Leaderboard";
+import { JackpotDetails, JackpotsOptinResponse, JackpotsOptoutResponse } from "src/Jackpots";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -22,7 +23,8 @@ enum onUpdateContextKey {
     LeaderBoards = 'leaderBoards',
     LevelExtraCounters = 'levelExtraCounters',
     Segments = 'segments',
-    StoreHistory = 'storeHistory'
+    StoreHistory = 'storeHistory',
+    Jackpots = 'jackpots',
 }
 
 
@@ -425,5 +427,57 @@ export class WSAPI {
         if (onUpdate) {
             onUpdate(payload);
         }
+    }
+
+    private async updateJackpotCache(payload?: any): Promise<JackpotDetails[]> {
+        const jackpots = await this.api.getJackpots(null, payload);
+
+        if (jackpots.length) {
+            OCache.set(onUpdateContextKey.Jackpots, jackpots, ECacheContext.WSAPI, 30);
+        }
+
+        return jackpots;
+    }
+
+    private getCachedJackpots(params: { ext_game_id?: string, jp_template_id?: number}): JackpotDetails[] {
+        const jackpots = OCache.get<JackpotDetails[]>(onUpdateContextKey.Jackpots, ECacheContext.WSAPI);
+        if (!jackpots) return;
+
+        const filter = Object.keys(params)[0];
+
+        if (filter) {
+            return jackpots.filter((jackpot) => jackpot.related_games.find((game) => game[filter] === params[filter]));
+        }
+
+        return jackpots;
+    }
+
+    public async getJackpots({ related_game_id, jp_template_id } : { related_game_id?: string, jp_template_id?: number}): Promise<JackpotDetails[]> {
+       const cached = this.getCachedJackpots({ ext_game_id: related_game_id, jp_template_id });
+        if (cached) return cached;
+
+        return await this.updateJackpotCache({ related_game_id, jp_template_id });
+    }
+
+    public async jackpotOptIn({ jp_template_id } : { jp_template_id: number }): Promise<JackpotsOptinResponse> {
+        if (!jp_template_id) return;
+
+        const result = await this.api.jackpotOptIn(null, { jp_template_id });
+        if (result.errCode !== 0) return result;
+
+        await this.updateJackpotCache(null);
+
+        return result;
+    }
+
+    public async jackpotOptOut({ jp_template_id } : { jp_template_id: number }): Promise<JackpotsOptoutResponse> {
+        if (!jp_template_id) return;
+
+        const result = await this.api.jackpotOptOut(null, { jp_template_id });
+        if (result.errCode !== 0) return result;
+
+        await this.updateJackpotCache(null);
+
+        return result;
     }
 }
