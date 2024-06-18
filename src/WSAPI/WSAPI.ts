@@ -445,7 +445,7 @@ export class WSAPI {
 
     public async jackpotGet(filter?: { related_game_id?: string, jp_template_id?: number }): Promise<JackpotDetails[]> {
 
-        const signature: string = `${filter.jp_template_id}:${filter.related_game_id}`;
+        const signature: string = `${filter?.jp_template_id}:${filter?.related_game_id}`;
 
         if (signature !== this.jackpotGetSignature) {
             this.jackpotGetSignature = signature;
