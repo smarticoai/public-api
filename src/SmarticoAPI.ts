@@ -22,7 +22,7 @@ import { getLeaderBoardTransform } from "./Leaderboard/LeaderBoards";
 import { GetAchievementsUserInfoResponse } from "./Core/GetAchievementsUserInfoResponse";
 import { CheckSegmentMatchResponse } from "./Core/CheckSegmentMatchResponse";
 import { CheckSegmentMatchRequest } from "./Core/CheckSegmentMatchRequest";
-import { GetJackpotsRequest, GetJackpotsResponse, JackpotDetails, JackpotsOptinRequest, JackpotsOptinResponse, JackpotsOptoutRequest, JackpotsOptoutResponse } from "./Jackpots";
+import { GetJackpotsPotsRequest, GetJackpotsPotsResponse, GetJackpotsRequest, GetJackpotsResponse, JackpotDetails, JackpotPot, JackpotsOptinRequest, JackpotsOptinResponse, JackpotsOptoutRequest, JackpotsOptoutResponse } from "./Jackpots";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -285,12 +285,18 @@ class SmarticoAPI {
         return results.segments || [];
     }
 
-    public async getJackpots(user_ext_id: string, payload?: { related_game_id?: string, jp_template_id?: number }): Promise<JackpotDetails[]> {
-        const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, payload);
-
+    public async jackpotGet(user_ext_id: string, filter?: { related_game_id?: string, jp_template_id?: number }): Promise<JackpotDetails[]> {
+        const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, filter);
         const response = await this.send<GetJackpotsResponse>(message, ClassId.JP_GET_JACKPOTS_RESPONSE);
 
-        return response.jackpots || [];
+        return response?.jackpots || [];
+    }
+
+    public async potGet(user_ext_id: string, filter: { jp_template_ids: number[] }): Promise<JackpotPot[]> {
+        const message = this.buildMessage<GetJackpotsPotsRequest, GetJackpotsPotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, filter);
+        const response = await this.send<GetJackpotsPotsResponse>(message, ClassId.JP_GET_LATEST_POTS_RESPONSE);
+
+        return response?.items || [];
     }
 
     public async jackpotOptIn(user_ext_id: string, payload: { jp_template_id: number }): Promise<JackpotsOptinResponse> {
