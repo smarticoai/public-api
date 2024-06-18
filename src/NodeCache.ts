@@ -35,6 +35,13 @@ class NodeCache {
         }
     }
 
+    public remove(key: string) {
+        if (NodeCache.cache.hasOwnProperty(key)) { 
+            delete NodeCache.cache[key];
+
+        }
+    }    
+
     public flushAll() {
         NodeCache.cache = {};
     }

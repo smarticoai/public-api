@@ -10,7 +10,10 @@ import { AchRelatedGame } from "src/Base/AchRelatedGame";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
-const POT_CACHE_TIME_SEC = 1;
+
+const JACKPOT_TEMPLATE_CACHE_SEC = 30;
+const JACKPOT_POT_CACHE_SEC = 1;
+
  /** @hidden */
 enum onUpdateContextKey {
     Saw = 'saw',
@@ -46,9 +49,9 @@ export class WSAPI {
         on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissionsOnOptIn());
         on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournamentsOnRegistration());
         on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
-        on(ClassId.LOGOUT_RESPONSE, () => OCache.clear(ECacheContext.WSAPI));
-        on(ClassId.IDENTIFY_RESPONSE, () => OCache.clear(ECacheContext.WSAPI));
-        on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.updateCachedPots({ jp_template_id: data?.jackpot?.jp_template_id }))
+        on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
+        on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
+        on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache())
     }
 
     /** Returns information about current user
@@ -434,77 +437,76 @@ export class WSAPI {
         }
     }
 
-    private clearJackpotCache() {
-        OCache.set(onUpdateContextKey.Jackpots, {}, ECacheContext.WSAPI, POT_CACHE_TIME_SEC)
-        OCache.set(onUpdateContextKey.Pots, {}, ECacheContext.WSAPI, POT_CACHE_TIME_SEC)
+    private async jackpotClearCache() {
+        OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Jackpots);
+        OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Pots);    
     }
 
-    private async updateCachedPots(filter?: { jp_template_id?: number }) {
-        const potFilter = filter?.jp_template_id ? [filter.jp_template_id] : [];
-        const pots: JackpotPot[] = await OCache.use(onUpdateContextKey.Pots, ECacheContext.WSAPI, () => this.api.potGet(null, { jp_template_ids: potFilter }), POT_CACHE_TIME_SEC);
-        const jackpots: JackpotDetails[] = await OCache.use(onUpdateContextKey.Jackpots, ECacheContext.WSAPI, () => this.api.jackpotGet(null, filter), CACHE_DATA_SEC);
-
-        const updatedJackpots: JackpotDetails[] = jackpots.map((jackpot: JackpotDetails) => ({
-            ...jackpot,
-            pots: (pots || []).filter((pot: JackpotPot) => pot.jp_template_id === jackpot.jp_template_id),
-        }));
-
-        OCache.set(onUpdateContextKey.Jackpots, updatedJackpots, ECacheContext.WSAPI, CACHE_DATA_SEC);
-    }
-
-    private async jackpotGetFiltered(filter?: { ext_game_id?: string, jp_template_id?: number}): Promise<JackpotDetails[]> {
-        const jackpots: JackpotDetails[] = await OCache.use(onUpdateContextKey.Jackpots, ECacheContext.WSAPI, () => this.api.jackpotGet(null, filter), CACHE_DATA_SEC);
-        if (!filter) return jackpots;
-
-        const result: JackpotDetails[] = [];
-        if (filter?.ext_game_id) {
-            const filtered: JackpotDetails[] = jackpots.filter((jackpot: JackpotDetails) => (jackpot.related_games || []).find(
-                (game: AchRelatedGame) => game.ext_game_id === filter.ext_game_id
-            ));
-
-            result.push(...filtered);
-        }
-
-        if (filter?.jp_template_id) {
-            const filtered: JackpotDetails[] = jackpots.filter((jackpot: JackpotDetails) => jackpot.jp_template_id === filter.jp_template_id);
-
-            result.push(...filtered);
-        }
-
-        return result;
-    }
 
     public async jackpotGet(filter?: { related_game_id?: string, jp_template_id?: number }): Promise<JackpotDetails[]> {
+
         const signature: string = `${filter.jp_template_id}:${filter.related_game_id}`;
 
         if (signature !== this.jackpotGetSignature) {
-            this.clearJackpotCache();
             this.jackpotGetSignature = signature;
-            return await this.jackpotGetFiltered(filter);
-        } else {
-            await this.updateCachedPots(filter);
-            return await this.jackpotGetFiltered(filter);
+            this.jackpotClearCache();
         }
+
+        let jackpots: JackpotDetails[] = [];
+        let pots: JackpotPot[] = [];
+
+        jackpots = await OCache.use<JackpotDetails[]>(onUpdateContextKey.Jackpots, ECacheContext.WSAPI, async () => {
+            
+            const _jackpots = await this.api.jackpotGet(null, filter);
+            const _pots = _jackpots.map( jp => jp.pot);
+
+            OCache.set(onUpdateContextKey.Pots, _pots, ECacheContext.WSAPI, JACKPOT_POT_CACHE_SEC);
+            return _jackpots;
+
+        }, JACKPOT_TEMPLATE_CACHE_SEC);
+
+
+        if (jackpots.length > 0) {
+            pots = await OCache.use<JackpotPot[]>(onUpdateContextKey.Pots, ECacheContext.WSAPI, async () => {
+                
+                const jp_template_ids = jackpots.map(jp => jp.jp_template_id);
+                return this.api.potGet(null, { jp_template_ids })
+
+            }, JACKPOT_POT_CACHE_SEC);
+        }
+
+        return jackpots.map( jp => {
+            let _jp: JackpotDetails = {
+                ...jp,
+                pot: pots.find( p => p.jp_template_id === jp.jp_template_id),
+            };
+            return _jp;
+        });
+
     }
 
     public async jackpotOptIn(filter: { jp_template_id: number }): Promise<JackpotsOptinResponse> {
-        if (!filter.jp_template_id) return;
+        
+        if (!filter.jp_template_id) {
+            throw new Error('jp_template_id is required in jackpotOptIn');
+        };
 
         const result = await this.api.jackpotOptIn(null, filter);
-        if (result.errCode !== 0) return result;
 
-        await this.updateCachedPots(filter);
+        this.jackpotClearCache();
 
         return result;
     }
 
     public async jackpotOptOut(filter: { jp_template_id: number }): Promise<JackpotsOptoutResponse> {
-        if (!filter.jp_template_id) return;
+        
+        if (!filter.jp_template_id) {
+            throw new Error('jp_template_id is required in jackpotOptOut');
+        };
 
         const result = await this.api.jackpotOptOut(null, filter);
-        if (result.errCode !== 0) return result;
 
-        await this.updateCachedPots(filter);
+        this.jackpotClearCache();
 
         return result;
     }

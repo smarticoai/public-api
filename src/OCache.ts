@@ -53,7 +53,15 @@ export class OCache {
         }
     }
 
-    public static async clear(cacheContext: ECacheContext) {
+    public static async clear(cacheContext: ECacheContext, oKey: any) {
+        const key = cacheContext.toString() + '_' + JSON.stringify(oKey);
+
+        if (this.cache[cacheContext]) {
+            this.cache[cacheContext].remove(key);
+        }
+    }
+
+    public static async clearContext(cacheContext: ECacheContext) {
         if (this.cache[cacheContext]) {
             this.cache[cacheContext].flushAll();
         }
