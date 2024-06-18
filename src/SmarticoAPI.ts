@@ -289,7 +289,7 @@ class SmarticoAPI {
         const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, filter);
         const response = await this.send<GetJackpotsResponse>(message, ClassId.JP_GET_JACKPOTS_RESPONSE);
 
-        return response?.jackpots || [];
+        return response?.items || [];
     }
 
     public async potGet(user_ext_id: string, filter: { jp_template_ids: number[] }): Promise<JackpotPot[]> {

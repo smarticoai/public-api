@@ -4,6 +4,6 @@ import { JackpotDetails } from "./JackpotDetails";
 
 export interface  GetJackpotsResponse extends ProtocolResponse {
 
-    jackpots: JackpotDetails[];
+    items: JackpotDetails[];
 }
 
