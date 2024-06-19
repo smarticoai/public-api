@@ -33,4 +33,8 @@ export interface SAWTemplate {
         skin_folder: string;
         skin_css: string;
     };    
+
+
+    // AA: releavnt only in the context of the SAWPrizeDropWinPush
+    requires_prize_claim?: boolean;
 }
