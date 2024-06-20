@@ -5,7 +5,8 @@ export enum SAWGameType {
     ScratchCard = 2,
     MatchX = 3,
     GiftBox = 4,
-    PrizeDrop = 5
+    PrizeDrop = 5,
+    Quiz = 6
 }
 
 export enum SAWGameTypeName {
@@ -14,6 +15,7 @@ export enum SAWGameTypeName {
     MatchX = "matchx",
     GiftBox = "giftbox",
     PrizeDrop = "prizedrop",
+    Quiz = 'quiz',
     Unknown = "unknown"
 }
 
@@ -24,6 +26,7 @@ export const SAWGameTypeNamed = (type: SAWGameType): SAWGameTypeName => {
         [SAWGameType.ScratchCard]: SAWGameTypeName.ScratchCard,
         [SAWGameType.MatchX]: SAWGameTypeName.MatchX,
         [SAWGameType.GiftBox]: SAWGameTypeName.GiftBox,
-        [SAWGameType.PrizeDrop]: SAWGameTypeName.PrizeDrop
+        [SAWGameType.PrizeDrop]: SAWGameTypeName.PrizeDrop,
+        [SAWGameType.Quiz]: SAWGameTypeName.Quiz
     }[type] || SAWGameTypeName.Unknown;
 }
