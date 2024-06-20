@@ -14,7 +14,6 @@ interface JackpotDetails {
     contribution_value: number;
     pot: JackpotPot;
     is_opted_in: boolean;
-
 }
 
 export { JackpotDetails }
