@@ -99,6 +99,8 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
             ach_completed_id: r.ach_completed_id,
             requires_prize_claim: r.requires_prize_claim,
             prize_claimed_date_ts: r.prize_claimed_date_ts,
+            complete_date: r.complete_date,
+            complete_date_ts: r.complete_date_ts,
             completed_today: completedToday,
             completed_this_week: completedThisWeek,
             completed_this_month: completedThisMonth

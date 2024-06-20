@@ -482,6 +482,12 @@ export interface TMissionOrBadge {
     /** The date/timestamp indicating when the prize was claimed by the user */
     prize_claimed_date_ts?: number;
 
+    /** Time in hours that took this player to complete mission */
+    complete_date?: string;
+
+    /** Time of mission/badge being completed, this property shows the epoch time in UTC */
+    complete_date_ts?: number;
+
     /** Flag for mission/badge indicating that mission/badge completed today */
     completed_today?: boolean;
 

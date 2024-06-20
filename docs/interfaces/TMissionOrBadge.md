@@ -232,6 +232,23 @@ The date/timestamp indicating when the prize was claimed by the user
 
 ___
 
+### completed\_date
+
+• `Optional` **completed\_date**: `string`
+
+Time in hours that took this player to complete mission
+
+___
+
+### completed\_date_ts
+
+• `Optional` **completed\_date\_ts**: `number`
+
+Time of mission/badge being completed, this property shows the epoch time in UTC
+
+___
+
+
 ### completed\_today
 
 • `Optional` **completed\_today**: `boolean`
