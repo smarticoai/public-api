@@ -49,7 +49,42 @@ class IntUtils {
     //     } else {
     //         return null
     //     }
-    // }    
+    // }
+    
+    public static isCompletedToday = (timestamp: number): boolean => {
+        const now = new Date();
+        const completedDate = new Date(timestamp * 1000);
+    
+        return (
+            now.getFullYear() === completedDate.getFullYear() &&
+            now.getMonth() === completedDate.getMonth() &&
+            now.getDate() === completedDate.getDate()
+        );
+    };
+    
+    public static isCompletedThisWeek = (timestamp: number): boolean => {
+        const now = new Date();
+        const completedDate = new Date(timestamp * 1000);
+    
+        const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+        startOfWeek.setHours(0, 0, 0, 0);
+    
+        const endOfWeek = new Date(startOfWeek);
+        endOfWeek.setDate(startOfWeek.getDate() + 6);
+        endOfWeek.setHours(23, 59, 59, 999);
+    
+        return completedDate >= startOfWeek && completedDate <= endOfWeek;
+    };
+    
+    public static isCompletedThisMonth = (timestamp: number): boolean => {
+        const now = new Date();
+        const completedDate = new Date(timestamp * 1000);
+    
+        return (
+            now.getFullYear() === completedDate.getFullYear() &&
+            now.getMonth() === completedDate.getMonth()
+        );
+    };
 
 }
 

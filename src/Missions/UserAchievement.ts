@@ -2,7 +2,6 @@
 import { AchRelatedGame } from "../Base/AchRelatedGame";
 import { IntUtils } from "../IntUtils";
 import { TMissionOrBadge } from "../WSAPI/WSAPITypes";
-import { AchCategory } from "./AchievementCategory";
 import { AchievementPublicMeta } from "./AchievementPublicMeta";
 import { AchievementStatus } from "./AchievementStatus";
 import { AchievementTaskType } from "./AchievementTaskType";
@@ -24,6 +23,7 @@ export interface UserAchievement {
     time_limit_ms?: number;
     progress?: number;
     complete_date?: string;
+    complete_date_ts?: number;
     unlock_date?: string;
     milliseconds_till_available?: number;
     completed_tasks?: number;
@@ -37,11 +37,21 @@ export interface UserAchievement {
     ach_completed_id?: number; // ID of the completion fact from ach_completed or ach_completed_recurring tables
     requires_prize_claim?: boolean; // flag from achievement if the mission prize will be given only after user claims it
     prize_claimed_date_ts?: number; // the date/timestamp indicating when the prize was claimed by the user
+
+    completed_today?: boolean;
+    completed_this_week?: boolean;
+    completed_this_month?: boolean;
 }
 
-export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
 
+
+export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
+    
     return items.filter( r => r.ach_id >= 1).map( r => {
+        const completedToday = r.complete_date_ts ? IntUtils.isCompletedToday(r.complete_date_ts) : false;
+        const completedThisWeek = r.complete_date_ts ? IntUtils.isCompletedThisWeek(r.complete_date_ts) : false;
+        const completedThisMonth = r.complete_date_ts ? IntUtils.isCompletedThisMonth(r.complete_date_ts) : false;
+
         const x: TMissionOrBadge = {
             id: r.ach_id,
             name: r.ach_public_meta.name,
@@ -89,6 +99,9 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
             ach_completed_id: r.ach_completed_id,
             requires_prize_claim: r.requires_prize_claim,
             prize_claimed_date_ts: r.prize_claimed_date_ts,
+            completed_today: completedToday,
+            completed_this_week: completedThisWeek,
+            completed_this_month: completedThisMonth
         }
         return x;
 });
