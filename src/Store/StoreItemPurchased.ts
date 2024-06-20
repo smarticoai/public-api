@@ -1,3 +1,4 @@
+import { IntUtils } from "../IntUtils";
 import { TStoreItem } from "../WSAPI/WSAPITypes";
 import { StoreItem } from "./StoreItem";
 import { StoreItemType } from "./StoreItemType";
@@ -5,10 +6,17 @@ import { StoreItemType } from "./StoreItemType";
 interface StoreItemPurchased extends StoreItem {
     purchase_ts: number;
     purchase_points_amount: number;
+    purchased_today?: boolean;
+    purchased_this_week?: boolean;
+    purchased_this_month?: boolean;
 }
 
 export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStoreItem[] => {    
     return items.filter( r => r.id >= 1).map( r => {
+        const purchasedToday = r.purchase_ts ? IntUtils.isCompletedToday(r.purchase_ts) : false;
+        const purchasedThisWeek = r.purchase_ts ? IntUtils.isCompletedThisWeek(r.purchase_ts) : false;
+        const purchasedThisMonth = r.purchase_ts ? IntUtils.isCompletedThisMonth(r.purchase_ts) : false;
+
         const x: TStoreItem = 
         {
             id: r.id,
@@ -31,7 +39,10 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
             category_ids: r.categoryIds ?? [],
             pool: r.shopPool,
             purchase_ts: r.purchase_ts,
-            purchase_points_amount: r.purchase_points_amount
+            purchase_points_amount: r.purchase_points_amount,
+            purchased_today: purchasedToday,
+            purchased_this_week: purchasedThisWeek,
+            purchased_this_month: purchasedThisMonth,
         }
         return x;
     });
