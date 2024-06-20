@@ -53,7 +53,7 @@ class IntUtils {
 
     public static isWithinPeriod = (timestamp: number, period: 'today' | 'thisWeek' | 'thisMonth'): boolean => {
         const now = new Date();
-        const completedDate = new Date(timestamp * 1000);
+        const completedDate = new Date(timestamp);
 
         switch(period) {
             case 'today':
