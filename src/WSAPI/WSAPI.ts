@@ -5,7 +5,7 @@ import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
 import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TSegmentCheckResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "../Leaderboard";
-import { JackpotDetails, JackpotPot, JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutResponse } from "src/Jackpots";
+import { JackpotDetails, JackpotPot, JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutResponse } from "../Jackpots";
 import { AchRelatedGame } from "src/Base/AchRelatedGame";
  
 /** @hidden */
