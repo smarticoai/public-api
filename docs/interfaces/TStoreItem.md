@@ -132,3 +132,27 @@ ___
 • `Optional` **purchase\_points\_amount**: `number`
 
 The amount of points you can purchase an item
+
+___
+
+### purchased\_today
+
+• `Optional` **purchased\_today**: `boolean`
+
+Flag for store item indicating that it was purchased today
+
+___
+
+### purchased\_this\_week
+
+• `Optional` **purchased\_this\_week**: `boolean`
+
+Flag for store item indicating that it was purchased this week
+
+___
+
+### purchased\_this\_month
+
+• `Optional` **purchased\_this\_month**: `boolean`
+
+Flag for store item indicating that it was purchased this month

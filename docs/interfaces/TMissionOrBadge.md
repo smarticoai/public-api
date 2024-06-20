@@ -229,3 +229,27 @@ ___
 • `Optional` **prize\_claimed\_date\_ts**: `number`
 
 The date/timestamp indicating when the prize was claimed by the user
+
+___
+
+### completed\_today
+
+• `Optional` **completed\_today**: `boolean`
+
+Flag for mission/badge indicating that mission/badge completed today
+
+___
+
+### completed\_this\_week
+
+• `Optional` **completed\_this\_week**: `boolean`
+
+Flag for mission/badge indicating that mission/badge completed this week
+
+___
+
+### completed\_this\_month
+
+• `Optional` **completed\_this\_month**: `boolean`
+
+Flag for mission/badge indicating that mission/badge completed this month

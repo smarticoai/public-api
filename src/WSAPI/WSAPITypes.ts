@@ -94,9 +94,8 @@ export interface TMiniGameTemplate {
     /** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
     custom_data: any;
 
-        
+    /** List of prizes for mini-games */    
     prizes: TMiniGamePrize[];
-
 }
 
 
@@ -334,8 +333,11 @@ export interface TTournamentDetailed extends TTournament {
  * TStoreCategory describes the store category item. Each store item can be assigned to 1 or more categories
  */
 export interface TStoreCategory {
+    /**ID of the store category */
     id: number;
+    /**Name of the store category */
     name: string;
+    /**Order of the store category among other categories. Default value is 1 */
     order: number
 }
 
@@ -381,15 +383,24 @@ export interface TStoreItem {
     purchase_ts?: number;
     /** The amount of points you can purchase an item */
     purchase_points_amount?: number;
+    /** Flag for store item indicating that it was purchased today */
+    purchased_today?: boolean;
+    /** Flag for store item indicating that it was purchased this week  */
+    purchased_this_week?: boolean;
+    /** Flag for store item indicating that it was purchased this month  */
+    purchased_this_month?: boolean;
 }
 
 /** 
  * TAchCategory describes the badge category item. Each badge item can be assigned to 1 or more categories
  */
 export interface TAchCategory {
+    /**ID of the badge category */
     id: number;
+    /**Name of the badge category */
     name: string;
-    order: number;
+    /**Order of the badge category among other categories. Default value is 1 */
+    order: number
 }
 
 /** 
@@ -470,6 +481,15 @@ export interface TMissionOrBadge {
 
     /** The date/timestamp indicating when the prize was claimed by the user */
     prize_claimed_date_ts?: number;
+
+    /** Flag for mission/badge indicating that mission/badge completed today */
+    completed_today?: boolean;
+
+    /** Flag for mission/badge indicating that mission/badge completed this week */
+    completed_this_week?: boolean;
+
+    /** Flag for mission/badge indicating that mission/badge completed this month */
+    completed_this_month?: boolean;
 }
 
 export interface AchRelatedGame {
