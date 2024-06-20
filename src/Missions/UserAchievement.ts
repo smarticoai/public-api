@@ -48,9 +48,9 @@ export interface UserAchievement {
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
     
     return items.filter( r => r.ach_id >= 1).map( r => {
-        const completedToday = r.complete_date_ts ? IntUtils.isCompletedToday(r.complete_date_ts) : false;
-        const completedThisWeek = r.complete_date_ts ? IntUtils.isCompletedThisWeek(r.complete_date_ts) : false;
-        const completedThisMonth = r.complete_date_ts ? IntUtils.isCompletedThisMonth(r.complete_date_ts) : false;
+        const completedToday = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'today') : false;
+        const completedThisWeek = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisWeek') : false;
+        const completedThisMonth = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisMonth') : false;
 
         const x: TMissionOrBadge = {
             id: r.ach_id,
