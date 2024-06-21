@@ -73,6 +73,7 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
             segment_dont_match_message: r.publicMeta.segment_dont_match_message,
             image1: r.publicMeta.image_url,
             image2: r.publicMeta.image_url2,
+            image2_mobile: r.publicMeta.image_url2_mobile,
             prize_pool_short: r.publicMeta.prize_pool_short,
             custom_price_text: r.publicMeta.custom_price_text,
             custom_section_id: r.publicMeta.custom_section_id,

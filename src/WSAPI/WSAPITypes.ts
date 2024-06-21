@@ -190,6 +190,8 @@ export interface TTournament {
     image1: string;
     /* 2nd image URL representing the tournament */
     image2: string;
+    /* 2nd image URL representing the tournament for mobile */
+    image2_mobile: string;
     /* The message indicating the prize pool of the tournament */
     prize_pool_short: string;
     /* The message indicating the price to register in the tournament */
