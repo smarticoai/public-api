@@ -5,6 +5,8 @@ export interface TournamentPublicMeta {
     image_url?: string;
     /** 2nd image */
     image_url2?: string;
+    /** 2nd image for mobile */
+    image_url2_mobile?: string;
     /** Description, html capable */
     description?: string;
     /** Short explanation of prize pool */
