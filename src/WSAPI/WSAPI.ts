@@ -189,20 +189,16 @@ export class WSAPI {
         return OCache.use(onUpdateContextKey.StoreCategories, ECacheContext.WSAPI, () => this.api.storeGetCategoriesT(null), CACHE_DATA_SEC);
     }
 
-     /** Returns store purchased items based on the provided parameters. "From" and "to" indicate the range of items to be fetched. 
-    * The maximum number of messages per request is limited to 20. 
-    * You can leave this params empty and by default it will return list of purchased items ranging from 0 to 20.
-    * This functions return list of purchased items. 
-    * The "onUpdate" callback will be triggered when the user receives a new purchased item. It will provide an updated list of items, ranging from 0 to 20, to the onUpdate callback function. */
-    /**
-    * @param params
+       /** Returns all the purchased store items available the current user
+     * Example usage:
+     * ```
+     * _smartico.api.getStorePurchasedItems().then((result) => {
+     *      console.log(result);
+     * });
     */
-    public async storeGetPurchasedItems({ from, to, onUpdate }: { from?: number, to?: number, onUpdate?: (data: TStoreItem[]) => void } = {}): Promise<TStoreItem[]> { 
-        if (onUpdate) {
-            this.onUpdateCallback.set(onUpdateContextKey.StoreHistory, onUpdate);
-        }
 
-        return await this.api.storeGetPurchasedItemsT(null, from, to);
+    public async getStorePurchasedItems(): Promise<TStoreItem[]> {
+        return OCache.use(onUpdateContextKey.StoreItems, ECacheContext.WSAPI, () => this.api.storeGetPurchasedItemsT(null), CACHE_DATA_SEC);
     }
 
     /** Returns missions & badges categories */

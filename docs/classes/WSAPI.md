@@ -201,16 +201,14 @@ ___
 
 ### storeGetPurchasedItems
 
-▸ **storeGetPurchasedItems**(`params?`): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **storeGetPurchasedItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
-#### Parameters
+Returns all the store items available the current user
+Example usage:
 
-| Name | Type |
-| :------ | :------ |
-| `params` | `Object` |
-| `params.from?` | `number` |
-| `params.to?` | `number` |
-| `params.onUpdate?` | (`data`: [`TStoreItem`](../interfaces/TStoreItem.md)[]) => `void` |
+_smartico.api.storeGetPurchasedItems().then((result) => {
+     console.log(result);
+});
 
 #### Returns
 
