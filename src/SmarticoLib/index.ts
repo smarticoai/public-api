@@ -410,8 +410,8 @@ export interface SAWTemplateUI {
 	custom_section_id?: number;
 	only_in_custom_section?: boolean;
 	custom_data: any;
-	placeholder_1?: string;
-	placeholder_2?: string;
+	placeholder1?: string;
+	placeholder2?: string;
 	prize_drop_template?: {
 		id: string;
 		content: string;

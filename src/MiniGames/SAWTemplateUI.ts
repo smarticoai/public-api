@@ -43,8 +43,8 @@ export interface SAWTemplateUI {
 
 
     // prize drop specific
-    placeholder_1?: string;
-    placeholder_2?: string;
+    placeholder1?: string;
+    placeholder2?: string;
     prize_drop_template?: {
         id: string;
         content: string;
