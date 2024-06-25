@@ -78,6 +78,16 @@ ___
 
 ___
 
+### image2\_mobile
+
+• **image2\_mobile**: `string`
+
+#### Inherited from
+
+[TTournament](TTournament.md).[image2_mobile](TTournament.md#image2_mobile)
+
+___
+
 ### prize\_pool\_short
 
 • **prize\_pool\_short**: `string`
@@ -365,7 +375,7 @@ ___
 
 ### related\_games
 
-• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
+• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame-1.md)[]
 
 List of casino games (or other types of entities) related to the tournament
 

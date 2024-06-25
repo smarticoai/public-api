@@ -143,3 +143,5 @@ ___
 ### prizes
 
 • **prizes**: [`TMiniGamePrize`](TMiniGamePrize.md)[]
+
+List of prizes for mini-games

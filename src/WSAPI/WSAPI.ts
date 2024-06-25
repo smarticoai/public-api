@@ -195,6 +195,7 @@ export class WSAPI {
      * _smartico.api.getStorePurchasedItems().then((result) => {
      *      console.log(result);
      * });
+     * ```
     */
 
     public async getStorePurchasedItems(): Promise<TStoreItem[]> {
@@ -438,7 +439,17 @@ export class WSAPI {
         OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Pots);    
     }
 
-
+    /** Returns list of Jackpots that are active in the systen and matching to the filter definition.
+     * If filter is not provided, all active jackpots will be returned.
+     * Filter can be used to get jackpots related to specific game or specific jackpot template.
+     * You can call this method every second in order to get up to date information about current value of the jackpot(s) and present them to the end-users
+     * Example usage:
+     * ```
+     * _smartico.api.jackpotGet({ related_game_id: 'wooko-slot' }).then((result) => {
+     *      console.log(result);
+     * });
+     * ```
+    */
     public async jackpotGet(filter?: { related_game_id?: string, jp_template_id?: number }): Promise<JackpotDetails[]> {
 
         const signature: string = `${filter?.jp_template_id}:${filter?.related_game_id}`;
@@ -481,6 +492,15 @@ export class WSAPI {
 
     }
 
+    /** Opt-in currently logged in user to the jackpot with the specified jp_template_id.
+     * You may call jackpotGet method after doing optin to see that user is opted in to the jackpot.
+     * Example usage:
+     * ```
+     * _smartico.api.jackpotOptIn({ jp_template_id: 123 }).then((result) => {
+     *      console.log('Opted in to the jackpot');
+     * });
+     * ```
+    */    
     public async jackpotOptIn(filter: { jp_template_id: number }): Promise<JackpotsOptinResponse> {
         
         if (!filter.jp_template_id) {
@@ -494,6 +514,15 @@ export class WSAPI {
         return result;
     }
 
+    /** Opt-out currently logged in user from the jackpot with the specified jp_template_id.
+     * You may call jackpotGet method after doing optout to see that user is not opted in to the jackpot.
+     * Example usage:
+     * ```
+     * _smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
+     *      console.log('Opted out from the jackpot');
+     * });
+     * ```
+    */       
     public async jackpotOptOut(filter: { jp_template_id: number }): Promise<JackpotsOptoutResponse> {
         
         if (!filter.jp_template_id) {

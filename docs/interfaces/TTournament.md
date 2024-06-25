@@ -54,6 +54,12 @@ ___
 
 ___
 
+### image2\_mobile
+
+• **image2\_mobile**: `string`
+
+___
+
 ### prize\_pool\_short
 
 • **prize\_pool\_short**: `string`

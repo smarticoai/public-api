@@ -36,7 +36,7 @@ ___
 
 ### period\_type\_id
 
-• **period\_type\_id**: `LeaderBoardPeriodType`
+• **period\_type\_id**: [`LeaderBoardPeriodType`](../enums/LeaderBoardPeriodType.md)
 
 Leaderboard period type ID
 

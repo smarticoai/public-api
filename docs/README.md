@@ -2,6 +2,9 @@
 
 ## Enumerations
 
+- [JackpotContributionType](enums/JackpotContributionType.md)
+- [JackpotType](enums/JackpotType.md)
+- [LeaderBoardPeriodType](enums/LeaderBoardPeriodType.md)
 - [SAWBuyInTypeName](enums/SAWBuyInTypeName.md)
 - [SAWGameTypeName](enums/SAWGameTypeName.md)
 - [MiniGamePrizeTypeName](enums/MiniGamePrizeTypeName.md)
@@ -12,6 +15,21 @@
 
 ## Interfaces
 
+- [AchRelatedGame](interfaces/AchRelatedGame.md)
+- [GetJackpotsPotsRequest](interfaces/GetJackpotsPotsRequest.md)
+- [GetJackpotsPotsResponse](interfaces/GetJackpotsPotsResponse.md)
+- [GetJackpotsRequest](interfaces/GetJackpotsRequest.md)
+- [GetJackpotsResponse](interfaces/GetJackpotsResponse.md)
+- [JackPotWinner](interfaces/JackPotWinner.md)
+- [JackpotDetails](interfaces/JackpotDetails.md)
+- [JackpotHtmlTemplate](interfaces/JackpotHtmlTemplate.md)
+- [JackpotPot](interfaces/JackpotPot.md)
+- [JackpotPublicMeta](interfaces/JackpotPublicMeta.md)
+- [JackpotWinPush](interfaces/JackpotWinPush.md)
+- [JackpotsOptinRequest](interfaces/JackpotsOptinRequest.md)
+- [JackpotsOptinResponse](interfaces/JackpotsOptinResponse.md)
+- [JackpotsOptoutRequest](interfaces/JackpotsOptoutRequest.md)
+- [JackpotsOptoutResponse](interfaces/JackpotsOptoutResponse.md)
 - [TMiniGamePrize](interfaces/TMiniGamePrize.md)
 - [TMiniGamePlayResult](interfaces/TMiniGamePlayResult.md)
 - [TMiniGameTemplate](interfaces/TMiniGameTemplate.md)
@@ -23,7 +41,7 @@
 - [TStoreItem](interfaces/TStoreItem.md)
 - [TAchCategory](interfaces/TAchCategory.md)
 - [TMissionOrBadge](interfaces/TMissionOrBadge.md)
-- [AchRelatedGame](interfaces/AchRelatedGame.md)
+- [AchRelatedGame](interfaces/AchRelatedGame-1.md)
 - [TMissionOrBadgeTask](interfaces/TMissionOrBadgeTask.md)
 - [TMissionOptInResult](interfaces/TMissionOptInResult.md)
 - [TMissionClaimRewardResult](interfaces/TMissionClaimRewardResult.md)

@@ -170,7 +170,7 @@ ___
 
 ### related\_games
 
-• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
+• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame-1.md)[]
 
 List of casino games (or other types of entities) related to the mission or badge
 
@@ -232,22 +232,21 @@ The date/timestamp indicating when the prize was claimed by the user
 
 ___
 
-### completed\_date
+### complete\_date
 
-• `Optional` **completed\_date**: `string`
+• `Optional` **complete\_date**: `string`
 
 Time in hours that took this player to complete mission
 
 ___
 
-### completed\_date_ts
+### complete\_date\_ts
 
-• `Optional` **completed\_date\_ts**: `number`
+• `Optional` **complete\_date\_ts**: `number`
 
 Time of mission/badge being completed, this property shows the epoch time in UTC
 
 ___
-
 
 ### completed\_today
 

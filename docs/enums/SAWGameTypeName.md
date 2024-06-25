@@ -32,6 +32,12 @@ ___
 
 ___
 
+### Quiz
+
+• **Quiz** = ``"quiz"``
+
+___
+
 ### Unknown
 
 • **Unknown** = ``"unknown"``

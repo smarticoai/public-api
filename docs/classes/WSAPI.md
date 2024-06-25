@@ -199,16 +199,17 @@ Returns store categories
 
 ___
 
-### storeGetPurchasedItems
+### getStorePurchasedItems
 
-▸ **storeGetPurchasedItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStorePurchasedItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
-Returns all the store items available the current user
+Returns all the purchased store items available the current user
 Example usage:
-
-_smartico.api.storeGetPurchasedItems().then((result) => {
+```
+_smartico.api.getStorePurchasedItems().then((result) => {
      console.log(result);
 });
+```
 
 #### Returns
 
@@ -367,7 +368,7 @@ For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard 
 
 | Name | Type |
 | :------ | :------ |
-| `periodType` | `LeaderBoardPeriodType` |
+| `periodType` | [`LeaderBoardPeriodType`](../enums/LeaderBoardPeriodType.md) |
 | `getPreviousPeriod?` | `boolean` |
 
 #### Returns
@@ -508,3 +509,84 @@ Requests translations for the given language. Returns the object including trans
 #### Returns
 
 `Promise`<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
+
+___
+
+### jackpotGet
+
+▸ **jackpotGet**(`filter?`): `Promise`<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
+
+Returns list of Jackpots that are active in the systen and matching to the filter definition.
+If filter is not provided, all active jackpots will be returned.
+Filter can be used to get jackpots related to specific game or specific jackpot template.
+You can call this method every second in order to get up to date information about current value of the jackpot(s) and present them to the end-users
+Example usage:
+```
+_smartico.api.jackpotGet({ related_game_id: 'wooko-slot' }).then((result) => {
+     console.log(result);
+});
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `filter?` | `Object` |
+| `filter.related_game_id?` | `string` |
+| `filter.jp_template_id?` | `number` |
+
+#### Returns
+
+`Promise`<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
+
+___
+
+### jackpotOptIn
+
+▸ **jackpotOptIn**(`filter`): `Promise`<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
+
+Opt-in currently logged in user to the jackpot with the specified jp_template_id.
+You may call jackpotGet method after doing optin to see that user is opted in to the jackpot.
+Example usage:
+```
+_smartico.api.jackpotOptIn({ jp_template_id: 123 }).then((result) => {
+     console.log('Opted in to the jackpot');
+});
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `filter` | `Object` |
+| `filter.jp_template_id` | `number` |
+
+#### Returns
+
+`Promise`<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
+
+___
+
+### jackpotOptOut
+
+▸ **jackpotOptOut**(`filter`): `Promise`<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
+
+Opt-out currently logged in user from the jackpot with the specified jp_template_id.
+You may call jackpotGet method after doing optout to see that user is not opted in to the jackpot.
+Example usage:
+```
+_smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
+     console.log('Opted out from the jackpot');
+});
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `filter` | `Object` |
+| `filter.jp_template_id` | `number` |
+
+#### Returns
+
+`Promise`<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
