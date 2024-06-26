@@ -38,9 +38,9 @@ ___
 
 ### type
 
-• **type**: ``"manual"`` \| ``"bonus"``
+• **type**: ``"tangible"`` \| ``"bonus"`` \| ``"minigamespin"`` \| ``"changelevel"`` \| ``"prizedrop"`` \| ``"unknown"``
 
-Type of the store item. Can be 'bonus' or 'manual'. Manual, means it's tangible item, e.g. iPhone
+Type of the store item. Can be 'bonus' or 'tangible' or different others.
 
 ___
 

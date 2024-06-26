@@ -1,7 +1,7 @@
 import { IntUtils } from "../IntUtils";
 import { TStoreItem } from "../WSAPI/WSAPITypes";
 import { StoreItem } from "./StoreItem";
-import { StoreItemType } from "./StoreItemType";
+import { StoreItemTypeNamed } from "./StoreItemType";
 
 interface StoreItemPurchased extends StoreItem {
     purchase_ts: number;
@@ -26,15 +26,10 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
             description: r.itemPublicMeta.description,
             ribbon: r.itemPublicMeta.label_tag === 'custom' ? r.itemPublicMeta.custom_label_tag : r.itemPublicMeta.label_tag,
             limit_message: r.itemPublicMeta.limit_message,
-            priority: r.itemPublicMeta.priority,
+            priority: r.itemPublicMeta.priority ?? 0,
             related_item_ids: r.itemPublicMeta.related_items,
             hint_text: r.itemPublicMeta.hint_text,
-
-            type: {
-                [StoreItemType.Bonus]: 'bonus',
-                [StoreItemType.Manual]: 'manual'
-            }[r.itemTypeId] as 'bonus' | 'manual',
-
+            type: StoreItemTypeNamed(r.itemTypeId),
             can_buy: r.canBuy,
             category_ids: r.categoryIds ?? [],
             pool: r.shopPool,
@@ -44,6 +39,7 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
             purchased_this_week: purchasedThisWeek,
             purchased_this_month: purchasedThisMonth,
         }
+
         return x;
     });
 
