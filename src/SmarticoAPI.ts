@@ -465,14 +465,18 @@ class SmarticoAPI {
         return StoreCategoryTransform((await this.storeGetCategories(user_ext_id)).categories);
     }
 
-    public async storeGetPurchasedItems(user_ext_id: string): Promise<GetStoreHistoryResponse> {
+    public async storeGetPurchasedItems(user_ext_id: string, limit: number = 20, offset: number = 0): Promise<GetStoreHistoryResponse> {
 
-        const message = this.buildMessage<any, GetStoreHistoryResponse>(user_ext_id, ClassId.ACH_SHOP_ITEM_HISTORY_REQUEST);
+        const message = this.buildMessage<GetStoreHistoryRequest, GetStoreHistoryResponse>(user_ext_id, ClassId.ACH_SHOP_ITEM_HISTORY_REQUEST, {
+            limit,
+            offset
+        });
+
         return await this.send<GetStoreHistoryResponse>(message, ClassId.ACH_SHOP_ITEM_HISTORY_RESPONSE);
     }
 
-    public async storeGetPurchasedItemsT(user_ext_id: string): Promise<TStoreItem[]> {
-        return StoreItemPurchasedTransform((await this.storeGetPurchasedItems(user_ext_id)).items);
+    public async storeGetPurchasedItemsT(user_ext_id: string, limit?: number, offset?: number): Promise<TStoreItem[]> {
+        return StoreItemPurchasedTransform((await this.storeGetPurchasedItems(user_ext_id, limit, offset)).items);
     }
 
     public async missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {

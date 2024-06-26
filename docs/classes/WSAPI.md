@@ -203,12 +203,14 @@ ___
 
 ▸ **getStorePurchasedItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
-Returns all the purchased store items available the current user
+Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched. 
+The maximum number of items per request is limited to 20. 
+You can leave this params empty and by default it will return list of purchased items ranging from 0 to 20.
 Example usage:
 ```
 _smartico.api.getStorePurchasedItems().then((result) => {
      console.log(result);
-});
+ });
 ```
 
 #### Returns

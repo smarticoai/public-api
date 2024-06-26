@@ -6,7 +6,6 @@ import { SmarticoAPI } from "../SmarticoAPI";
 import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TSegmentCheckResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "../Leaderboard";
 import { JackpotDetails, JackpotPot, JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutResponse } from "../Jackpots";
-import { AchRelatedGame } from "src/Base/AchRelatedGame";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -51,7 +50,7 @@ export class WSAPI {
         on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
         on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
         on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
-        on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache())
+        on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache());
     }
 
     /** Returns information about current user
@@ -189,7 +188,9 @@ export class WSAPI {
         return OCache.use(onUpdateContextKey.StoreCategories, ECacheContext.WSAPI, () => this.api.storeGetCategoriesT(null), CACHE_DATA_SEC);
     }
 
-       /** Returns all the purchased store items available the current user
+     /** Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched. 
+     * The maximum number of items per request is limited to 20. 
+     * You can leave this params empty and by default it will return list of purchased items ranging from 0 to 20.
      * Example usage:
      * ```
      * _smartico.api.getStorePurchasedItems().then((result) => {
@@ -198,8 +199,11 @@ export class WSAPI {
      * ```
     */
 
-    public async getStorePurchasedItems(): Promise<TStoreItem[]> {
-        return OCache.use(onUpdateContextKey.StoreItems, ECacheContext.WSAPI, () => this.api.storeGetPurchasedItemsT(null), CACHE_DATA_SEC);
+    public async getStorePurchasedItems({ limit, offset, onUpdate } : { limit?: number, offset?: number, onUpdate?: (data: TStoreItem[]) => void} = {}): Promise<TStoreItem[]> {
+        if (onUpdate) {
+            this.onUpdateCallback.set(onUpdateContextKey.StoreHistory, onUpdate);
+        }
+        return OCache.use(onUpdateContextKey.StoreHistory, ECacheContext.WSAPI, () => this.api.storeGetPurchasedItemsT(null, limit, offset), CACHE_DATA_SEC);
     }
 
     /** Returns missions & badges categories */
