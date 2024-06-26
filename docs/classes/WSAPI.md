@@ -201,7 +201,7 @@ ___
 
 ### getStorePurchasedItems
 
-▸ **getStorePurchasedItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStorePurchasedItems**(`«destructured»?`): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched. 
 The maximum number of items per request is limited to 20. 
@@ -210,8 +210,17 @@ Example usage:
 ```
 _smartico.api.getStorePurchasedItems().then((result) => {
      console.log(result);
- });
+});
 ```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `limit?` | `number` |
+| › `offset?` | `number` |
+| › `onUpdate?` | (`data`: [`TStoreItem`](../interfaces/TStoreItem.md)[]) => `void` |
 
 #### Returns
 
