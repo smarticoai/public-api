@@ -1,13 +1,14 @@
 import { MarketsValueType } from "./MarketsAnswersType";
 import { QuizMarketType } from "./MarketsType";
 
-const quizAnswerHomeTeamReplacementText = '{quiz_home_team}';
-const quizAnswerAwayTeamReplacementText = '{quiz_away_team}';
-const drawReplacementText = '{quiz_draw}';
-const quizYesReplacementText = '{yes}';
-const quizNoReplacementText = '{no}';
-const quizOddReplacementText = '{odd}';
-const quizEvenReplacementText = '{even}';
+export const quizAnswerHomeTeamReplacementText = '{quiz_home_team}';
+export const quizAnswerAwayTeamReplacementText = '{quiz_away_team}';
+export const quizDrawReplacementText = '{quiz_draw}';
+export const quizYesReplacementText = '{yes}';
+export const quizNoReplacementText = '{no}';
+export const quizOddReplacementText = '{odd}';
+export const quizEvenReplacementText = '{even}';
+export const quizOrReplacementText = '{or}';
 
 const yesNoAnswers = [
     { text: quizYesReplacementText, value: MarketsValueType.Yes },
@@ -21,7 +22,7 @@ const homeAwayAnswers = [
 
 const homeAwayDrawAnswers = [
     ...homeAwayAnswers,
-    { text: drawReplacementText, value: MarketsValueType.Draw },
+    { text: quizDrawReplacementText, value: MarketsValueType.Draw },
 ]
 
 export const marketsInfo = [
@@ -43,13 +44,13 @@ export const marketsInfo = [
         question: { text: 'Who will lead the first half and who will win the match ?', trKey: 'quizQuestion__HalftimeFulltime' },
         answers: [
             { text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`, value: MarketsValueType.HomeTeamHomeTeam },
-            { text: `${quizAnswerHomeTeamReplacementText} / ${drawReplacementText}`, value: MarketsValueType.HomeTeamDraw },
+            { text: `${quizAnswerHomeTeamReplacementText} / ${quizDrawReplacementText}`, value: MarketsValueType.HomeTeamDraw },
             { text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`,  value: MarketsValueType.HomeTeamAwayTeam },
-            { text: `${drawReplacementText} / ${quizAnswerHomeTeamReplacementText}`, value: MarketsValueType.DrawHomeTeam },
-            { text: `${drawReplacementText} / ${drawReplacementText}`,  value: MarketsValueType.DrawDraw },
-            { text: `${drawReplacementText} / ${quizAnswerAwayTeamReplacementText}`, value: MarketsValueType.DrawAwayTeam },
+            { text: `${quizDrawReplacementText} / ${quizAnswerHomeTeamReplacementText}`, value: MarketsValueType.DrawHomeTeam },
+            { text: `${quizDrawReplacementText} / ${quizDrawReplacementText}`,  value: MarketsValueType.DrawDraw },
+            { text: `${quizDrawReplacementText} / ${quizAnswerAwayTeamReplacementText}`, value: MarketsValueType.DrawAwayTeam },
             { text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`, value: MarketsValueType.AwayTeamHomeTeam },
-            { text: `${quizAnswerAwayTeamReplacementText} / ${drawReplacementText}`,  value: MarketsValueType.AwayTeamDraw },
+            { text: `${quizAnswerAwayTeamReplacementText} / ${quizDrawReplacementText}`,  value: MarketsValueType.AwayTeamDraw },
             { text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`, value: MarketsValueType.AwayTeamAwayTeam }
         ]
     },
@@ -70,9 +71,9 @@ export const marketsInfo = [
         name: 'Double Chance',
         question: { text: 'Who will win the match? Choose a combination: ?', trKey: 'quizQuestion_doubleChance' },
         answers: [
-            { text: `${drawReplacementText} or ${quizAnswerHomeTeamReplacementText}`, value: MarketsValueType.HomeTeamDraw },
-            { text: `${quizAnswerHomeTeamReplacementText} or ${quizAnswerAwayTeamReplacementText}`, value: MarketsValueType.HomeTeamAwayTeam },
-            { text: `${drawReplacementText} or ${quizAnswerAwayTeamReplacementText}`, value: MarketsValueType.AwayTeamDraw }
+            { text: `${quizDrawReplacementText} ${quizOrReplacementText} ${quizAnswerHomeTeamReplacementText}`, value: MarketsValueType.HomeTeamDraw },
+            { text: `${quizAnswerHomeTeamReplacementText} ${quizOrReplacementText} ${quizAnswerAwayTeamReplacementText}`, value: MarketsValueType.HomeTeamAwayTeam },
+            { text: `${quizDrawReplacementText} ${quizOrReplacementText} ${quizAnswerAwayTeamReplacementText}`, value: MarketsValueType.AwayTeamDraw }
         ]
     },
     {

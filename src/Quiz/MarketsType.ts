@@ -23,5 +23,8 @@ export enum QuizMarketType {
     FifthSet = 22,
     PlayerOneWinsOneSet = 23,
     PlayerTwoWinsOneSet = 24,
-    LastGoal = 25
+    LastGoal = 25,
+
+    CustomSport = 26,
+    CustomNonSport = 27,
 }
