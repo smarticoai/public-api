@@ -5,7 +5,7 @@ import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
 import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TSegmentCheckResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "../Leaderboard";
-import { JackpotDetails, JackpotPot, JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutResponse } from "../Jackpots";
+import { JackpotDetails, JackpotPot, JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutRequest, JackpotsOptoutResponse } from "../Jackpots";
  
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -51,6 +51,8 @@ export class WSAPI {
         on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
         on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
         on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache());
+        on(ClassId.JP_OPTOUT_RESPONSE, (data: JackpotsOptoutRequest) => this.jackpotClearCache());
+        on(ClassId.JP_OPTIN_RESPONSE, (data: JackpotsOptinResponse) => this.jackpotClearCache());
     }
 
     /** Returns information about current user
@@ -513,8 +515,6 @@ export class WSAPI {
 
         const result = await this.api.jackpotOptIn(null, filter);
 
-        this.jackpotClearCache();
-
         return result;
     }
 
@@ -534,8 +534,6 @@ export class WSAPI {
         };
 
         const result = await this.api.jackpotOptOut(null, filter);
-
-        this.jackpotClearCache();
 
         return result;
     }

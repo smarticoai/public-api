@@ -173,7 +173,9 @@ class SmarticoAPI {
     private buildMessage<TRequest,TResponse>(user_ext_id: string, cid: ClassId, payload: Partial<TRequest> = {}): TResponse {
 
         const message: ProtocolRequest = {
-            api_key: this.label_api_key,
+            // AA: in fact we need api and brand keys and ext_user_id only in the context of HTTP
+            // its not needed in WebSocket and can be deleted
+            api_key: this.label_api_key, 
             brand_key: this.brand_api_key,
             ext_user_id: user_ext_id,
             cid,
