@@ -189,6 +189,7 @@ _smartico.api.getStoreItems().then((result) => {
 _smartico.vapi('EN').getStoreItems().then((result) => {
      console.log(result);
 });
+```
 
 #### Returns
 

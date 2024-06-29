@@ -200,6 +200,7 @@ export class WSAPI {
      * _smartico.vapi('EN').getStoreItems().then((result) => {
      *      console.log(result);
      * });
+     * ```
     */
 
     public async getStoreItems(): Promise<TStoreItem[]> {
