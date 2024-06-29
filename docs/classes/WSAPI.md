@@ -7,12 +7,14 @@
 ▸ **getUserProfile**(): [`TUserProfile`](../interfaces/TUserProfile.md)
 
 Returns information about current user
-Example usage:
+
+**Example**:
 ```
 _smartico.api.getUserProfile().then((result) => {
  console.log(result);
 });
 ```
+**Visitor mode: not supported**
 
 #### Returns
 
@@ -25,12 +27,14 @@ ___
 ▸ **checkSegmentMatch**(`segment_id`): `Promise`<`boolean`\>
 
 Check if user belongs to specific segments
-Example usage:
+**Example**:
 ```
 _smartico.api.checkSegmentMatch(1).then((result) => {
   console.log(result);
 });
 ```
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -49,12 +53,13 @@ ___
 ▸ **checkSegmentListMatch**(`segment_ids`): `Promise`<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
 
 Check if user belongs to specific list of segments
-Example usage:
+**Example**:
 ```
 _smartico.api.checkSegmentListMatch([1, 2, 3]).then((result) => {
    console.log(result);
 });
 ```
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -73,10 +78,17 @@ ___
 ▸ **getLevels**(): `Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
 
 Returns all the levels available the current user
-Example usage:
+**Example**:
 ```
 _smartico.api.getLevels().then((result) => {
-  console.log(result);
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getLevels().then((result) => {
+     console.log(result);
 });
 ```
 
@@ -88,26 +100,33 @@ ___
 
 ### getMissions
 
-▸ **getMissions**(`params?`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+▸ **getMissions**(`«destructured»?`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the missions available the current user.
 The returned missions are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
 Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one. 
 The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it.
-Example usage:
+
+**Example**:
 ```
 _smartico.api.getMissions().then((result) => {
- console.log(result);
+     console.log(result);
 });
 ```
-/**
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getMissions().then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `params` | `Object` |
-| `params.onUpdate?` | (`data`: [`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]) => `void` |
+| `«destructured»` | `Object` |
+| › `onUpdate?` | (`data`: [`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]) => `void` |
 
 #### Returns
 
@@ -120,6 +139,8 @@ ___
 ▸ **getBadges**(): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the badges available the current user
+
+**Visitor mode: not supported**
 
 #### Returns
 
@@ -134,12 +155,15 @@ ___
 Returns the extra counters for the current user level.
 These are counters that are configured for each Smartico client separatly by request.
 For example 1st counter could be total wagering amount, 2nd counter could be total deposit amount, etc.
-Example usage:
+
+**Example**:
 ```
 _smartico.api.getUserLevelExtraCounters().then((result) => {
      console.log(result);
 });
 ```
+
+**Visitor mode: not supported**
 
 #### Returns
 
@@ -152,9 +176,17 @@ ___
 ▸ **getStoreItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns all the store items available the current user
-Example usage:
+
+**Example**:
 ```
 _smartico.api.getStoreItems().then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getStoreItems().then((result) => {
      console.log(result);
 });
 
@@ -169,11 +201,14 @@ ___
 ▸ **buyStoreItem**(`item_id`): `Promise`<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
 
 Buy the specific shop item by item_id. Returns the err_code in case of success or error.
-Example usage:
+**Example**:
 ```
 _smartico.api.buyStoreItem(1).then((result) => {
     console.log(result);
 });
+```
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -193,6 +228,19 @@ ___
 
 Returns store categories
 
+**Example**:
+```
+_smartico.api.getStoreCategories().then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getStoreCategories().then((result) => {
+     console.log(result);
+});
+
 #### Returns
 
 `Promise`<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
@@ -206,12 +254,15 @@ ___
 Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched. 
 The maximum number of items per request is limited to 20. 
 You can leave this params empty and by default it will return list of purchased items ranging from 0 to 20.
-Example usage:
+
+**Example**:
 ```
 _smartico.api.getStorePurchasedItems().then((result) => {
      console.log(result);
 });
 ```
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -234,6 +285,20 @@ ___
 
 Returns missions & badges categories
 
+**Example**:
+```
+_smartico.api.getAchCategories().then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getAchCategories().then((result) => {
+     console.log(result);
+});
+```
+
 #### Returns
 
 `Promise`<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
@@ -242,17 +307,32 @@ ___
 
 ### getMiniGames
 
-▸ **getMiniGames**(`params?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+▸ **getMiniGames**(`«destructured»?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
-/**
- *
+Returns the list of mini-games available for user 
+The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one. 
+The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
+
+**Example**:
+```
+_smartico.api.getMiniGames().then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getMiniGames().then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `params` | `Object` |
-| `params.onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
+| `«destructured»` | `Object` |
+| › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
 
 #### Returns
 
@@ -265,6 +345,8 @@ ___
 ▸ **playMiniGame**(`template_id`): `Promise`<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -284,6 +366,8 @@ ___
 
 Requests an opt-in for the specified mission_id. Returns the err_code.
 
+**Visitor mode: not supported**
+
 #### Parameters
 
 | Name | Type |
@@ -302,6 +386,8 @@ ___
 
 Request for claim reward for the specified mission id. Returns the err_code.
 
+**Visitor mode: not supported**
+
 #### Parameters
 
 | Name | Type |
@@ -317,14 +403,32 @@ ___
 
 ### getTournamentsList
 
-▸ **getTournamentsList**(`params?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
+▸ **getTournamentsList**(`«destructured»?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
+
+Returns all the active instances of tournaments 
+The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one. 
+The onUpdate callback will be called when the user has registered in a tournament. Updated list will be passed to onUpdate callback.
+
+**Example**:
+```
+_smartico.api.getTournamentsList().then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getTournamentsList().then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `params` | `Object` |
-| `params.onUpdate?` | (`data`: [`TTournament`](../interfaces/TTournament.md)[]) => `void` |
+| `«destructured»` | `Object` |
+| › `onUpdate?` | (`data`: [`TTournament`](../interfaces/TTournament.md)[]) => `void` |
 
 #### Returns
 
@@ -337,6 +441,28 @@ ___
 ▸ **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
 
 Returns details information of specific tournament instance, the response will include tournament info and the leaderboard of players
+
+**Example**:
+```
+_smartico.api.getTournamentsList().then((result) => {
+     if (result.length > 0) {
+        _smartico.api.getTournamentInstanceInfo(result[0].instance_id).then((result) => {
+            console.log(result);
+       });
+    }
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getTournamentsList().then((result) => {
+     if (result.length > 0) {
+        _smartico.vapi('EN').getTournamentInstanceInfo(result[0].instance_id).then((result) => {
+            console.log(result);
+       });
+    }
+});
+```
 
 #### Parameters
 
@@ -355,6 +481,8 @@ ___
 ▸ **registerInTournament**(`tournamentInstanceId`): `Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
 
 Requests registration for the specified tournament instance. Returns the err_code.
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -375,6 +503,20 @@ ___
 Returns the leaderboard for the current type (default is Daily). If getPreviousPeriod is passed as true, a leaderboard for the previous period for the current type will be returned.
 For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
 
+**Example**:
+```
+_smartico.api.getLeaderBoard(1).then((result) => {
+    console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getLeaderBoard(1).then((result) => {
+   console.log(result);
+});
+```
+
 #### Parameters
 
 | Name | Type |
@@ -391,6 +533,16 @@ ___
 ### getInboxMessages
 
 ▸ **getInboxMessages**(`params?`): `Promise`<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
+
+Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched. 
+The maximum number of messages per request is limited to 20. An indicator "onlyFavorite" can be passed to get only messages marked as favorites. 
+You can leave this params empty and by default it will return list of messages ranging from 0 to 20.
+This functions return list of messages without the body of the message. 
+To get the body of the message you need to call getInboxMessageBody function and pass the message guid contained in each message of this request.
+All other action like mark as read, favorite, delete, etc. can be done using this message GUID.
+The "onUpdate" callback will be triggered when the user receives a new message. It will provide an updated list of messages, ranging from 0 to 20, to the onUpdate callback function.
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -414,6 +566,8 @@ ___
 
 Returns the message body of the specified message guid.
 
+**Visitor mode: not supported**
+
 #### Parameters
 
 | Name | Type |
@@ -432,6 +586,8 @@ ___
 
 Requests to mark inbox message with specified guid as read
 
+**Visitor mode: not supported**
+
 #### Parameters
 
 | Name | Type |
@@ -448,7 +604,9 @@ ___
 
 ▸ **markAllInboxMessagesAsRead**(): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
-Requests to mark all inbox messages as read
+Requests to mark all inbox messages as rea
+
+**Visitor mode: not supported**
 
 #### Returns
 
@@ -461,6 +619,8 @@ ___
 ▸ **markUnmarkInboxMessageAsFavorite**(`messageGuid`, `mark`): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to mark inbox message with specified guid as favorite. Pass mark true to add message to favorite and false to remove.
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -481,6 +641,8 @@ ___
 
 Requests to delete inbox message
 
+**Visitor mode: not supported**
+
 #### Parameters
 
 | Name | Type |
@@ -498,6 +660,8 @@ ___
 ▸ **deleteAllInboxMessages**(): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to delete all inbox messages
+
+**Visitor mode: not supported**
 
 #### Returns
 
@@ -531,9 +695,17 @@ Returns list of Jackpots that are active in the systen and matching to the filte
 If filter is not provided, all active jackpots will be returned.
 Filter can be used to get jackpots related to specific game or specific jackpot template.
 You can call this method every second in order to get up to date information about current value of the jackpot(s) and present them to the end-users
-Example usage:
+
+**Example**:
 ```
 _smartico.api.jackpotGet({ related_game_id: 'wooko-slot' }).then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').jackpotGet({ related_game_id: 'wooko-slot' }).then((result) => {
      console.log(result);
 });
 ```
@@ -558,12 +730,15 @@ ___
 
 Opt-in currently logged in user to the jackpot with the specified jp_template_id.
 You may call jackpotGet method after doing optin to see that user is opted in to the jackpot.
-Example usage:
+
+**Example**:
 ```
 _smartico.api.jackpotOptIn({ jp_template_id: 123 }).then((result) => {
      console.log('Opted in to the jackpot');
 });
 ```
+
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -584,12 +759,15 @@ ___
 
 Opt-out currently logged in user from the jackpot with the specified jp_template_id.
 You may call jackpotGet method after doing optout to see that user is not opted in to the jackpot.
-Example usage:
+
+**Example**:
 ```
 _smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
      console.log('Opted out from the jackpot');
 });
 ```
+
+**Visitor mode: not supported**
 
 #### Parameters
 

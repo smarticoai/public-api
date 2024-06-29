@@ -66,6 +66,11 @@ export class OCache {
             this.cache[cacheContext].flushAll();
         }
     }
+
+    public static async clearAll() {
+        this.cache = {};
+    }    
+
 }
 
 const deepClone = (o: any) => {

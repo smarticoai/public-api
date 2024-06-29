@@ -111,13 +111,16 @@ class SmarticoAPI {
         return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));    
     }    
 
-    private async send<T>(message: any, expectCID?: ClassId): Promise<T> {
+    private async send<T>(message: any, expectCID?: ClassId, force_language?: string): Promise<T> {
 
 
         if (this.logCIDs.includes(message.cid)) {
             this.logger.info('REQ', message)
         }
 
+        if (force_language) {
+            message.force_language = force_language;
+        }
 
         let result: any;
         
@@ -287,18 +290,15 @@ class SmarticoAPI {
         return results.segments || [];
     }
 
-    public async jackpotGet(user_ext_id: string, filter?: { related_game_id?: string, jp_template_id?: number }): Promise<JackpotDetails[]> {
-        const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, filter);
-        const response = await this.send<GetJackpotsResponse>(message, ClassId.JP_GET_JACKPOTS_RESPONSE);
+    public async jackpotGet(user_ext_id: string, filter?: { related_game_id?: string, jp_template_id?: number }, force_language?: string ): Promise<GetJackpotsResponse> {
 
-        return response?.items || [];
+        const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, filter);
+        return await this.send<GetJackpotsResponse>(message, ClassId.JP_GET_JACKPOTS_RESPONSE, force_language);
     }
 
-    public async potGet(user_ext_id: string, filter: { jp_template_ids: number[] }): Promise<JackpotPot[]> {
+    public async potGet(user_ext_id: string, filter: { jp_template_ids: number[] }): Promise<GetJackpotsPotsResponse> {
         const message = this.buildMessage<GetJackpotsPotsRequest, GetJackpotsPotsResponse>(user_ext_id, ClassId.JP_GET_LATEST_POTS_REQUEST, filter);
-        const response = await this.send<GetJackpotsPotsResponse>(message, ClassId.JP_GET_LATEST_POTS_RESPONSE);
-
-        return response?.items || [];
+        return await this.send<GetJackpotsPotsResponse>(message, ClassId.JP_GET_LATEST_POTS_RESPONSE);
     }
 
     public async jackpotOptIn(user_ext_id: string, payload: { jp_template_id: number }): Promise<JackpotsOptinResponse> {
@@ -311,11 +311,11 @@ class SmarticoAPI {
         return await this.send<JackpotsOptoutResponse>(message, ClassId.JP_OPTOUT_RESPONSE);
     }
 
-    public async sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode: boolean = false): Promise<SAWGetTemplatesResponse> {
+    public async sawGetTemplates(user_ext_id: string, force_language?: string, is_visitor_mode: boolean = false): Promise<SAWGetTemplatesResponse> {
 
-        const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, lang ? { force_language: lang, is_visitor_mode } : { is_visitor_mode });
+        const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, { is_visitor_mode });
 
-        const response = await this.send<SAWGetTemplatesResponse>(message, ClassId.SAW_GET_SPINS_RESPONSE);
+        const response = await this.send<SAWGetTemplatesResponse>(message, ClassId.SAW_GET_SPINS_RESPONSE, force_language);
 
         if (response && response.templates) {
             response.templates.forEach(t => {
@@ -447,20 +447,18 @@ class SmarticoAPI {
 
     }
 
-    public async storeGetItems(user_ext_id: string): Promise<GetStoreItemsResponse> {
-
+    public async storeGetItems(user_ext_id: string, force_language?: string): Promise<GetStoreItemsResponse> {
         const message = this.buildMessage<any, GetStoreItemsResponse>(user_ext_id, ClassId.GET_SHOP_ITEMS_REQUEST);
-        return await this.send<GetStoreItemsResponse>(message, ClassId.GET_SHOP_ITEMS_RESPONSE);
+        return await this.send<GetStoreItemsResponse>(message, ClassId.GET_SHOP_ITEMS_RESPONSE, force_language);
     }
 
     public async storeGetItemsT(user_ext_id: string): Promise<TStoreItem[]> {
         return StoreItemTransform((await this.storeGetItems(user_ext_id)).items);
     }
 
-    public async storeGetCategories(user_ext_id: string): Promise<GetCategoriesStoreResponse> {
-
+    public async storeGetCategories(user_ext_id: string, force_language?: string): Promise<GetCategoriesStoreResponse> {
         const message = this.buildMessage<any, GetCategoriesStoreResponse>(user_ext_id, ClassId.GET_SHOP_CATEGORIES_REQUEST);
-        return await this.send<GetCategoriesStoreResponse>(message, ClassId.GET_SHOP_CATEGORIES_RESPONSE);
+        return await this.send<GetCategoriesStoreResponse>(message, ClassId.GET_SHOP_CATEGORIES_RESPONSE, force_language);
     }
 
     public async storeGetCategoriesT(user_ext_id: string): Promise<TStoreCategory[]> {
@@ -481,10 +479,10 @@ class SmarticoAPI {
         return StoreItemPurchasedTransform((await this.storeGetPurchasedItems(user_ext_id, limit, offset)).items);
     }
 
-    public async missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
+    public async missionsGetItems(user_ext_id: string, force_language?: string): Promise<GetAchievementMapResponse> {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
-        const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE);
+        const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE, force_language);
         // we need to clone response to avoid changing original object,for cases when its called together with badgesGetItems (e.g. in Promise.all)
         const responseClone = { ...response };
 
@@ -513,20 +511,20 @@ class SmarticoAPI {
         }
     }
 
-    public async achGetCategories(user_ext_id: string): Promise<GetAchCategoriesResponse> {
+    public async achGetCategories(user_ext_id: string, force_language?: string): Promise<GetAchCategoriesResponse> {
 
         const message = this.buildMessage<any, GetAchCategoriesResponse>(user_ext_id, ClassId.GET_ACH_CATEGORIES_REQUEST);
-        return await this.send<GetAchCategoriesResponse>(message, ClassId.GET_ACH_CATEGORIES_RESPONSE);
+        return await this.send<GetAchCategoriesResponse>(message, ClassId.GET_ACH_CATEGORIES_RESPONSE, force_language);
     }
 
     public async achGetCategoriesT(user_ext_id: string): Promise<TAchCategory[]> {
         return AchCategoryTransform((await this.achGetCategories(user_ext_id)).categories);
     }   
 
-    public async badgetsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse> {
+    public async badgetsGetItems(user_ext_id: string, force_language?: string): Promise<GetAchievementMapResponse> {
 
         const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST);
-        const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE);
+        const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE, force_language);
         // we need to clone response to avoid changing original object,for cases when its called together with missionsGetItems (e.g. in Promise.all)
         const responseClone = { ...response };
 
@@ -541,10 +539,10 @@ class SmarticoAPI {
     }    
 
 
-    public async tournamentsGetLobby(user_ext_id: string): Promise<GetTournamentsResponse> {
+    public async tournamentsGetLobby(user_ext_id: string, force_language?: string): Promise<GetTournamentsResponse> {
 
         const message = this.buildMessage<GetTournamentsRequest, GetTournamentsResponse>(user_ext_id, ClassId.GET_TOURNAMENT_LOBBY_REQUEST);
-        return await this.send<GetTournamentsResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE);
+        return await this.send<GetTournamentsResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE, force_language);
 
     }
 
@@ -552,14 +550,14 @@ class SmarticoAPI {
         return TournamentItemsTransform((await this.tournamentsGetLobby(user_ext_id)).tournaments);
     }
 
-    public async tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number): Promise<GetTournamentInfoResponse> {
+    public async tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number, force_language?: string): Promise<GetTournamentInfoResponse> {
 
         const message = this.buildMessage<GetTournamentInfoRequest, GetTournamentInfoResponse>(user_ext_id, ClassId.GET_TOURNAMENT_INFO_REQUEST, 
             {
                 tournamentInstanceId
             }
         );
-        const response = await this.send<GetTournamentInfoResponse>(message, ClassId.GET_TOURNAMENT_INFO_RESPONSE);
+        const response = await this.send<GetTournamentInfoResponse>(message, ClassId.GET_TOURNAMENT_INFO_RESPONSE, force_language);
         
         if (response.userPosition?.avatar_id) {
             response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_id, this.avatarDomain);
@@ -583,7 +581,7 @@ class SmarticoAPI {
         return tournamentInfoItemTransform(response);
     }    
 
-    public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false): Promise<LeaderBoardDetails> {
+    public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false, force_language?: string): Promise<LeaderBoardDetails> {
 
         const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(user_ext_id, ClassId.GET_LEADERS_BOARD_REQUEST, 
             {
@@ -593,7 +591,7 @@ class SmarticoAPI {
             }
         );
 
-        const response = await this.send<GetLeaderBoardsResponse>(message, ClassId.GET_LEADERS_BOARD_RESPONSE);
+        const response = await this.send<GetLeaderBoardsResponse>(message, ClassId.GET_LEADERS_BOARD_RESPONSE, force_language);
 
         const boardKey =  Object.keys(response.map).find( k => period_type_id === undefined || k === period_type_id?.toString());
 
@@ -620,9 +618,9 @@ class SmarticoAPI {
         return getLeaderBoardTransform(await this.leaderboardGet(user_ext_id, period_type_id, prevPeriod));
     }
 
-    public async levelsGet(user_ext_id: string): Promise<GetLevelMapResponse> {
+    public async levelsGet(user_ext_id: string, force_language?: string): Promise<GetLevelMapResponse> {
         const message = this.buildMessage<any, GetLevelMapResponse>(user_ext_id, ClassId.GET_LEVEL_MAP_REQUEST);
-        return await this.send<GetLevelMapResponse>(message, ClassId.GET_LEVEL_MAP_RESPONSE);
+        return await this.send<GetLevelMapResponse>(message, ClassId.GET_LEVEL_MAP_RESPONSE, force_language);
     }
 
     public async levelsGetT(user_ext_id: string): Promise<TLevel[]> {
