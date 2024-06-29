@@ -13,7 +13,7 @@ and for terms of API usage
 
 To use the API you need the smartico.js library installed and initialized on your site according to this guide https://help.smartico.ai/welcome/technical-guides/front-end-integration
 
-As soon as the _smartico object is available in the global context and the user is identified, you can call API methods to get the data or act on behalf of the logged-in user.
+As soon as the **_smartico** object is available in the global context of the browser window and the user is identified, you can call API methods to get the data or act on behalf of the logged-in user.
 
 ```javascript
 
@@ -40,6 +40,19 @@ _smartico.api.getMiniGames( { onUpdate: miniGamesUpdates} ).then( games => {
 
 See the [API documentation](docs/classes/WSAPI.md) for all available methods and returning data.
 
+## Visitor mode
+
+You can also get gamification data for the visitors (not authorized users). 
+
+Calls to the methods look similar, with the only exception that you need to use **_smartico.vapi('EN')** method in order to get access to the Visitor API object with specific language.
+
+```javascript
+
+_smartico.vapi('EN').getLevels().then( levels => {
+    console.log('There are ' + levels.length + ' levels available');
+});
+
+```
 
 ## Backend usage (NodeJS context)
 
