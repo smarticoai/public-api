@@ -244,6 +244,7 @@ export class WSAPI {
      * _smartico.vapi('EN').getStoreCategories().then((result) => {
      *      console.log(result);
      * });
+     * ```
      */
     public async getStoreCategories(): Promise<TStoreCategory[]> {
         return OCache.use(onUpdateContextKey.StoreCategories, ECacheContext.WSAPI, () => this.api.storeGetCategoriesT(null), CACHE_DATA_SEC);

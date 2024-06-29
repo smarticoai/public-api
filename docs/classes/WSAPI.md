@@ -241,6 +241,7 @@ _smartico.api.getStoreCategories().then((result) => {
 _smartico.vapi('EN').getStoreCategories().then((result) => {
      console.log(result);
 });
+```
 
 #### Returns
 
