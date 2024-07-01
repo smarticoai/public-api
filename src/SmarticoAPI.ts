@@ -17,12 +17,13 @@ import { GetTournamentInfoRequest, GetTournamentInfoResponse, GetTournamentsRequ
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from "./Leaderboard";
 import { GetLevelMapResponse, GetLevelMapResponseTransform } from "./Level";
 import { WSAPI } from "./WSAPI/WSAPI";
-import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed, LeaderBoardDetailsT, UserLevelExtraCountersT, TSegmentCheckResult } from "./WSAPI/WSAPITypes";
+import { TInboxMessage, TInboxMessageBody, TLevel, TMiniGameTemplate, TMissionOrBadge, TStoreCategory, TAchCategory, TStoreItem, TTournament, TTournamentDetailed, LeaderBoardDetailsT, UserLevelExtraCountersT, TSegmentCheckResult, TUICustomSection } from "./WSAPI/WSAPITypes";
 import { getLeaderBoardTransform } from "./Leaderboard/LeaderBoards";
 import { GetAchievementsUserInfoResponse } from "./Core/GetAchievementsUserInfoResponse";
 import { CheckSegmentMatchResponse } from "./Core/CheckSegmentMatchResponse";
 import { CheckSegmentMatchRequest } from "./Core/CheckSegmentMatchRequest";
 import { GetJackpotsPotsRequest, GetJackpotsPotsResponse, GetJackpotsRequest, GetJackpotsResponse, JackpotDetails, JackpotPot, JackpotsOptinRequest, JackpotsOptinResponse, JackpotsOptoutRequest, JackpotsOptoutResponse } from "./Jackpots";
+import { GetCustomSectionsRequest, GetCustomSectionsResponse, UICustomSectionTransform } from "./CustomSections";
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -627,6 +628,15 @@ class SmarticoAPI {
         return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id));
     }
 
+    public async getCustomSections(user_ext_id: string): Promise<GetCustomSectionsResponse> {
+        const message = this.buildMessage<GetCustomSectionsRequest, GetCustomSectionsResponse>(user_ext_id, ClassId.GET_CUSTOM_SECTIONS_REQUEST);
+        return await this.send<GetCustomSectionsResponse>(message, ClassId.GET_CUSTOM_SECTIONS_RESPONSE);
+    }
+
+    public async getCustomSectionsT(user_ext_id: string): Promise<TUICustomSection[]> {
+        return UICustomSectionTransform(Object.values((await this.getCustomSections(user_ext_id)).customSections));
+    }
+
     public async getTranslationsT(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec: number = 60): Promise<GetTranslationsResponse> {
         return await this.coreGetTranslations(user_ext_id, lang_code, areas, 30);
     }
@@ -720,7 +730,7 @@ class SmarticoAPI {
         return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
     }
 
-    
+
     public getWSCalls(): WSAPI {
         return new WSAPI(this);
     }

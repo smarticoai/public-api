@@ -3,7 +3,7 @@ import { CoreUtils } from "../Core";
 import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from "../MiniGames";
 import { ECacheContext, OCache } from "../OCache";
 import { SmarticoAPI } from "../SmarticoAPI";
-import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TSegmentCheckResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
+import { InboxMarkMessageAction, LeaderBoardDetailsT, TAchCategory, TBuyStoreItemResult, TGetTranslations, TInboxMessage, TInboxMessageBody, TLevel, TMiniGamePlayResult, TMiniGameTemplate, TMissionClaimRewardResult, TMissionOptInResult, TMissionOrBadge, TSegmentCheckResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed, TTournamentRegistrationResult, TUICustomSection, TUserProfile, UserLevelExtraCountersT } from "./WSAPITypes";
 import { LeaderBoardPeriodType } from "../Leaderboard";
 import { JackpotDetails, JackpotPot, JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutRequest, JackpotsOptoutResponse } from "../Jackpots";
  
@@ -30,6 +30,7 @@ enum onUpdateContextKey {
     StoreHistory = 'storeHistory',
     Jackpots = 'jackpots',
     Pots = 'Pots',
+    CustomSections = 'customSections'
 }
 
 
@@ -292,6 +293,28 @@ export class WSAPI {
      * */
     public async getAchCategories(): Promise<TAchCategory[]> {
         return OCache.use(onUpdateContextKey.AchCategories, ECacheContext.WSAPI, () => this.api.achGetCategoriesT(null), CACHE_DATA_SEC);
+    }
+
+     /**
+     * Returns list of custom sections
+     * 
+     * **Example**:
+     * ```
+     * _smartico.api.getCustomSections().then((result) => {
+     *      console.log(result);
+     * });
+     * ```
+     * 
+     * **Example in the Visitor mode**:
+     * ```
+     * _smartico.vapi('EN').getCustomSections().then((result) => {
+     *      console.log(result);
+     * });
+     * ```
+     * 
+     * */
+    public async getCustomSections(): Promise<TUICustomSection[]> {
+        return OCache.use(onUpdateContextKey.CustomSections, ECacheContext.WSAPI, () => this.api.getCustomSectionsT(null), CACHE_DATA_SEC);
     }
 
     /** 

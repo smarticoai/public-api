@@ -3,6 +3,7 @@ import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorC
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from "../Tournaments";
 import { AchCategory } from "../Missions";
 import { LeaderBoardPeriodType } from "../Leaderboard";
+import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from "../CustomSections";
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
 
@@ -498,6 +499,9 @@ export interface TMissionOrBadge {
 
     /** Flag for mission/badge indicating that mission/badge completed this month */
     completed_this_month?: boolean;
+
+    /** Flag for mission indicating whether that missions is used in Lootbox Custom Section */
+    isInLootbox?: boolean;
 }
 
 export interface AchRelatedGame {
@@ -663,4 +667,27 @@ export interface UserLevelExtraCountersT {
 export interface TSegmentCheckResult {
     segment_id: number;
     is_matching: boolean;
+}
+
+export interface TUICustomSection {
+    /** The body of the custom section */
+    body?: string;
+    /** The image of the custom section */
+    menu_img?: string;
+    /** The name of the custom section */
+    menu_name?: string;
+    /** Custom images for custom section */
+    custom_skin_images?: string;
+    /** The particular type of custom section, can be Missions, Tournaments, Lootbox and etc */
+    section_type_id?: AchCustomSectionType;
+    /** Theme of the custom section */
+    theme?: AchCustomLayoutTheme;
+    /** Custom css for the custom section */
+    generic_custom_css?: string;
+    /** Tabs that can be shown in custom section, e.g Overview, No Overview, All tabs */
+    mission_tabs_options?: AchMissionsTabsOptions;
+    /** Filter that allow to show missions by criteria */
+    overview_missions_filter?: AchOverviewMissionsFilter;
+    /** Quantity of missions to be shown in overview */
+    overview_missions_count?: number;
 }

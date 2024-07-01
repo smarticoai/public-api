@@ -18,4 +18,5 @@ export interface AchievementPublicMeta {
     hint_text?: string;
     hide_badge_from_ui?: boolean;
     show_badge_first_task_completed?: boolean;
+    custom_section_type_id?: number;
 }
