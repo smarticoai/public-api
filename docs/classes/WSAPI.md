@@ -307,6 +307,33 @@ _smartico.vapi('EN').getAchCategories().then((result) => {
 
 ___
 
+### getCustomSections
+
+▸ **getCustomSections**(): `Promise`<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
+
+Returns all custom sections available for the label
+
+**Example**:
+```
+_smartico.api.getCustomSections().then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getCustomSections().then((result) => {
+     console.log(result);
+});
+```
+
+#### Returns
+
+`Promise`<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
+
+___
+
+
 ### getMiniGames
 
 ▸ **getMiniGames**(`«destructured»?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
