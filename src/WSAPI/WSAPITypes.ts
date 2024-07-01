@@ -500,8 +500,8 @@ export interface TMissionOrBadge {
     /** Flag for mission/badge indicating that mission/badge completed this month */
     completed_this_month?: boolean;
 
-    /** Flag for mission indicating whether that missions is used in Lootbox Custom Section */
-    isInLootbox?: boolean;
+    /** ID of specific Custom Section type */
+    custom_section_type_id?: number;
 }
 
 export interface AchRelatedGame {

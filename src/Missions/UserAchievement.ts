@@ -1,6 +1,5 @@
 
 import { AchRelatedGame } from "../Base/AchRelatedGame";
-import { AchCustomSectionType } from "../CustomSections";
 import { IntUtils } from "../IntUtils";
 import { TMissionOrBadge } from "../WSAPI/WSAPITypes";
 import { AchievementPublicMeta } from "./AchievementPublicMeta";
@@ -42,7 +41,7 @@ export interface UserAchievement {
     completed_today?: boolean;
     completed_this_week?: boolean;
     completed_this_month?: boolean;
-    isInLootBox?: boolean;
+    custom_section_type_id?: number;
 }
 
 
@@ -53,7 +52,6 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
         const completedToday = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'today') : false;
         const completedThisWeek = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisWeek') : false;
         const completedThisMonth = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisMonth') : false;
-        const isMissionInLootbox = r.ach_public_meta.custom_section_id && r.ach_public_meta.custom_section_type_id === AchCustomSectionType.MISSION_CUSTOM_LAYOUT;
 
         const x: TMissionOrBadge = {
             id: r.ach_id,
@@ -107,7 +105,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
             completed_today: completedToday,
             completed_this_week: completedThisWeek,
             completed_this_month: completedThisMonth,
-            isInLootbox: isMissionInLootbox ?? false,
+            custom_section_type_id: r.ach_public_meta.custom_section_type_id,
         }
         return x;
 });
