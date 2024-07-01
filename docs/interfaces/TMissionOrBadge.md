@@ -269,3 +269,11 @@ ___
 • `Optional` **completed\_this\_month**: `boolean`
 
 Flag for mission/badge indicating that mission/badge completed this month
+
+___
+
+### custom\_section\_type\_id
+
+• `Optional` **custom\_section\_type\_id**: `number`
+
+ID of specific Custom Section type

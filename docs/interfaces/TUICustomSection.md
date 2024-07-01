@@ -1,44 +1,42 @@
 # Interface: TUICustomSection
 
-TUICustomSection describes the information of the custom sections defined in the system
-
 ## Properties
 
 ### body
 
-• **body**: `string`
+• `Optional` **body**: `string`
 
 The body of the custom section
 
 ___
 
-### menu_img
+### menu\_img
 
-• **menu_img**: `string`
+• `Optional` **menu\_img**: `string`
 
 The image of the custom section
 
 ___
 
-### menu_name
+### menu\_name
 
-• **menu_name**: `string`
+• `Optional` **menu\_name**: `string`
 
 The name of the custom section
 
 ___
 
-### custom_skin_images
+### custom\_skin\_images
 
-• **custom_skin_images**: `string`
+• `Optional` **custom\_skin\_images**: `string`
 
 Custom images for custom section
 
 ___
 
-### section_type_id
+### section\_type\_id
 
-• **section_type_id**: [`AchCustomSectionType`](../enums/AchCustomSectionType.md)
+• `Optional` **section\_type\_id**: `AchCustomSectionType`
 
 The particular type of custom section, can be Missions, Tournaments, Lootbox and etc
 
@@ -46,15 +44,15 @@ ___
 
 ### theme
 
-• **theme**: [`AchCustomLayoutTheme`](../enums/AchCustomLayoutTheme.md)
+• `Optional` **theme**: `AchCustomLayoutTheme`
 
 Theme of the custom section
 
 ___
 
-### generic_custom_css
+### generic\_custom\_css
 
-• **generic_custom_css**: `string`
+• `Optional` **generic\_custom\_css**: `string`
 
 Custom css for the custom section
 
@@ -62,7 +60,7 @@ ___
 
 ### mission\_tabs\_options
 
-• **mission\_tabs\_options**: [`AchMissionsTabsOptions`](../enums/AchMissionsTabsOptions.md)
+• `Optional` **mission\_tabs\_options**: `AchMissionsTabsOptions`
 
 Tabs that can be shown in custom section, e.g Overview, No Overview, All tabs
 
@@ -70,7 +68,7 @@ ___
 
 ### overview\_missions\_filter
 
-• **overview\_missions\_filter**: [`AchOverviewMissionsFilter`](../enums/AchOverviewMissionsFilter.md)
+• `Optional` **overview\_missions\_filter**: `AchOverviewMissionsFilter`
 
 Filter that allow to show missions by criteria
 
@@ -78,8 +76,6 @@ ___
 
 ### overview\_missions\_count
 
-• **overview\_missions\_count**: `number`
+• `Optional` **overview\_missions\_count**: `number`
 
 Quantity of missions to be shown in overview
-
-___

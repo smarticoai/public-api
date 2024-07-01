@@ -56,7 +56,7 @@
 - [LeaderBoardUserT](interfaces/LeaderBoardUserT.md)
 - [UserLevelExtraCountersT](interfaces/UserLevelExtraCountersT.md)
 - [TSegmentCheckResult](interfaces/TSegmentCheckResult.md)
-- [TTUICustomSection](interfaces/TUICustomSection.md)
+- [TUICustomSection](interfaces/TUICustomSection.md)
 
 ## General API
 

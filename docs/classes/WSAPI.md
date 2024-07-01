@@ -311,7 +311,7 @@ ___
 
 ▸ **getCustomSections**(): `Promise`<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
 
-Returns all custom sections available for the label
+Returns list of custom sections
 
 **Example**:
 ```
@@ -332,7 +332,6 @@ _smartico.vapi('EN').getCustomSections().then((result) => {
 `Promise`<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
 
 ___
-
 
 ### getMiniGames
 
