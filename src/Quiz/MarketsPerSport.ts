@@ -1,39 +1,39 @@
-import { QuizMarketType } from "./MarketsType";
+import { SAWGPMarketType } from "./MarketsType";
 import { QuizSportType } from "./SportTypes";
 
 export const QuizMarketPerSport = {
     [QuizSportType.Basketball]: [
-        QuizMarketType.One_Two,
-        QuizMarketType.Overtime,
-        QuizMarketType.OneXTwo,
-        QuizMarketType.OddEven,
-        QuizMarketType.OddEvenHomeAway,
-        QuizMarketType.DoubleChance,
+        SAWGPMarketType.One_Two,
+        SAWGPMarketType.Overtime,
+        SAWGPMarketType.OneXTwo,
+        SAWGPMarketType.OddEven,
+        SAWGPMarketType.OddEvenHomeAway,
+        SAWGPMarketType.DoubleChance,
     ],
     [QuizSportType.Soccer]: [
-        QuizMarketType.OneXTwo,
-        QuizMarketType.OneXTwoHalftime,
-        QuizMarketType.HalftimeFulltime,
-        QuizMarketType.FirstGoal,
-        QuizMarketType.LastGoal,
-        QuizMarketType.DoubleChance,
-        QuizMarketType.OverUnder2_5,
-        QuizMarketType.OverUnder1_5Halftime,
-        QuizMarketType.OverUnder1_5__2ndHalf,
-        QuizMarketType.RedCard,
-        QuizMarketType.TotalCorners8_5,
-        QuizMarketType.TotalCorners9_5,
-        QuizMarketType.Corners1x2,
+        SAWGPMarketType.OneXTwo,
+        SAWGPMarketType.OneXTwoHalftime,
+        SAWGPMarketType.HalftimeFulltime,
+        SAWGPMarketType.FirstGoal,
+        SAWGPMarketType.LastGoal,
+        SAWGPMarketType.DoubleChance,
+        SAWGPMarketType.OverUnder2_5,
+        SAWGPMarketType.OverUnder1_5Halftime,
+        SAWGPMarketType.OverUnder1_5__2ndHalf,
+        SAWGPMarketType.RedCard,
+        SAWGPMarketType.TotalCorners8_5,
+        SAWGPMarketType.TotalCorners9_5,
+        SAWGPMarketType.Corners1x2,
     ],
     [QuizSportType.Tennis]: [
-        QuizMarketType.One_Two,
-        QuizMarketType.FirstSet,
-        QuizMarketType.SecondSet,
-        QuizMarketType.ThirdSet,
-        QuizMarketType.FourthSet,
-        QuizMarketType.FifthSet,
-        QuizMarketType.PlayerOneWinsOneSet,
-        QuizMarketType.PlayerTwoWinsOneSet,
-        QuizMarketType.OddEven
+        SAWGPMarketType.One_Two,
+        SAWGPMarketType.FirstSet,
+        SAWGPMarketType.SecondSet,
+        SAWGPMarketType.ThirdSet,
+        SAWGPMarketType.FourthSet,
+        SAWGPMarketType.FifthSet,
+        SAWGPMarketType.PlayerOneWinsOneSet,
+        SAWGPMarketType.PlayerTwoWinsOneSet,
+        SAWGPMarketType.OddEven
     ]
 }

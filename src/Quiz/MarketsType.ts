@@ -1,4 +1,4 @@
-export enum QuizMarketType {
+export enum SAWGPMarketType {
     TwoTeamsWithScore = 1,
     RedCard = 2,
     OneXTwo = 3,
