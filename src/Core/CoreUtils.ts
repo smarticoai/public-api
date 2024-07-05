@@ -15,7 +15,7 @@ class CoreUtils {
 
     public static currencySymbol(currency: string) {
         return {
-            [currency.toUpperCase()]: currency.toUpperCase(),
+            [currency?.toUpperCase()]: currency?.toUpperCase(),
             USD: "$", // United States Dollar
             EUR: "€", // Euro
             JPY: "¥", // Japanese Yen
@@ -36,7 +36,7 @@ class CoreUtils {
             RUB: "₽", // Russian Ruble
             BRL: "R$", // Brazilian Real
             ZAR: "R", // South African Rand            
-        }[currency.toUpperCase()];
+        }[currency?.toUpperCase()];
     }
 }
 
