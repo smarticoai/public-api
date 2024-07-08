@@ -81,3 +81,21 @@ ___
 ### acknowledge\_action\_title
 
 • **acknowledge\_action\_title**: `string`
+
+___
+
+### pool
+
+• `Optional` **pool**: `number`
+
+Number of items in stock
+
+___
+
+### wins\_count
+
+• `Optional` **wins\_count**: `number`
+
+Number of wins in game
+
+___
