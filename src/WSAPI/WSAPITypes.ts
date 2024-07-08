@@ -27,11 +27,17 @@ export interface TMiniGamePrize {
     /** The URL of the icon of the prize */
     icon?: string;
     /* for scratch card defines position of prize in the list */
-    position: number; 
+    position: number;
+    /* Message that will be shown to user in modal pop-up */
     aknowledge_message: string;
+    /* Deep link that will trigger some action in modal pop-up */
     acknowledge_dp: string;
-    acknowledge_action_title: string;    
-
+    /* The name of the action button in modal pop-up */
+    acknowledge_action_title: string;
+    /* Number of items in stock */    
+    pool?: number;
+    /* Number of wins in game */
+    wins_count?: number;
 }
 
 
@@ -97,6 +103,9 @@ export interface TMiniGameTemplate {
 
     /** List of prizes for mini-games */    
     prizes: TMiniGamePrize[];
+
+    /* When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets */
+    expose_game_stat_on_api?: boolean;
 }
 
 

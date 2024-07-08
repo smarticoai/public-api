@@ -34,7 +34,8 @@ export interface SAWTemplate {
         skin_css: string;
     };    
 
-
+    expose_game_stat_on_api?: boolean;
+    
     // AA: releavnt only in the context of the SAWPrizeDropWinPush
     requires_prize_claim?: boolean;
 }
