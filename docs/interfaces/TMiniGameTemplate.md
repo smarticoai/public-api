@@ -146,12 +146,8 @@ ___
 
 List of prizes for mini-games
 
-
 ___
 
 ### expose\_game\_stat\_on\_api
 
 • `Optional` **expose\_game\_stat\_on\_api**: `boolean`
-
-When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets
-

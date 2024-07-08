@@ -88,14 +88,8 @@ ___
 
 • `Optional` **pool**: `number`
 
-Number of items in stock
-
 ___
 
 ### wins\_count
 
 • `Optional` **wins\_count**: `number`
-
-Number of wins in game
-
-___
