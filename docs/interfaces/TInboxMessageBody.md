@@ -47,6 +47,6 @@ ___
 
 ### buttons
 
-• `Optional` **buttons**: { `action`: `string` ; `text`: `string`  }[]
+• `Optional` **buttons**: \{ `action`: `string` ; `text`: `string`  }[]
 
 Optional additional buttons to show in the message, available only if message has rich HTML body. Max count - 2.

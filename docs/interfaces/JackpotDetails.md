@@ -83,3 +83,11 @@ ___
 • **is\_opted\_in**: `boolean`
 
 indication if the current user is opted in to the jackpot
+
+___
+
+### ach\_related\_game\_allow\_all
+
+• **ach\_related\_game\_allow\_all**: `boolean`
+
+indicates whether all related games are allowed for the jackpot

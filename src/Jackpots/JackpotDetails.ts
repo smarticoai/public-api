@@ -30,6 +30,8 @@ interface JackpotDetails {
     pot: JackpotPot;
     /**  indication if the current user is opted in to the jackpot */
     is_opted_in: boolean;
+    /** indicates whether all games are eligible for the jackpot */
+    ach_related_game_allow_all: boolean;
 }
 
 export { JackpotDetails }
