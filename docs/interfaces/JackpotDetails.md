@@ -90,4 +90,4 @@ ___
 
 • **ach\_related\_game\_allow\_all**: `boolean`
 
-indicates whether all related games are allowed for the jackpot
+indicates whether all games are eligible for the jackpot
