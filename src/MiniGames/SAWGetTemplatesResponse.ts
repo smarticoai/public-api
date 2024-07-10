@@ -41,7 +41,6 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
             promo_image: r.saw_template_ui_definition.promo_image,
             promo_text: r.saw_template_ui_definition.promo_text,
             custom_data: IntUtils.JsonOrText(r.saw_template_ui_definition.custom_data),
-            expose_game_stat_on_api: r.expose_game_stat_on_api,
 
             next_available_spin_ts: r.next_available_spin_ts,
 
@@ -58,7 +57,6 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
                     aknowledge_message: p.saw_prize_ui_definition.aknowledge_message,
                     acknowledge_dp: p.saw_prize_ui_definition.acknowledge_dp,
                     acknowledge_action_title: p.saw_prize_ui_definition.acknowledge_action_title,
-                    ...(r.expose_game_stat_on_api && { pool: p.pool, wins_count: p.wins_count })
                 }
                 return y;
             })
