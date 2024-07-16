@@ -18,6 +18,11 @@ export enum ClassId {
     GET_TRANSLATIONS_REQUEST = 13,
     GET_TRANSLATIONS_RESPONSE = 14,
 
+    /*
+        !Important, if adding new messages that are 'acting' on behalf of the client,
+        you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
+    */    
+
     CLIENT_ENGAGEMENT_IMPRESSION_REQUEST = 103,
     CLIENT_ENGAGEMENT_ACTION_REQUEST = 104,
     CLIENT_EXECUTE_DEEPLINK_EVENT = 105,
@@ -35,6 +40,11 @@ export enum ClassId {
 
     CHECK_SEGMENT_MATCH_REQUEST = 161,
     CHECK_SEGMENT_MATCH_RESPONSE = 162,
+
+    /*
+        !Important, if adding new messages that are 'acting' on behalf of the client,
+        you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
+    */    
 
     // 500-1000 - Achievements
     GET_LEVEL_MAP_REQUEST = 500,
@@ -63,6 +73,11 @@ export enum ClassId {
     MISSION_OPTIN_REQUEST = 525,
     MISSION_OPTIN_RESPONSE = 526,
 
+    /*
+        !Important, if adding new messages that are 'acting' on behalf of the client,
+        you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
+    */    
+
     GET_ACHIEVEMENT_USER_REQUEST = 527,
     GET_ACHIEVEMENT_USER_RESPONSE = 528,
 
@@ -82,6 +97,11 @@ export enum ClassId {
     ACH_SHOP_ITEM_HISTORY_REQUEST = 541,
     ACH_SHOP_ITEM_HISTORY_RESPONSE = 542,
 
+    /*
+        !Important, if adding new messages that are 'acting' on behalf of the client,
+        you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
+    */    
+
     GET_BONUSES_REQUEST = 600,
     GET_BONUSES_RESPONSE = 601,
     CLAIM_BONUS_REQUEST = 602,
@@ -99,6 +119,11 @@ export enum ClassId {
     SAW_PRIZE_DROP_WIN_AKNOWLEDGE_REQUEST = 709,
     SAW_PRIZE_DROP_WIN_AKNOWLEDGE_RESPONSE = 710,
 
+    /*
+        !Important, if adding new messages that are 'acting' on behalf of the client,
+        you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
+    */    
+
 
     JP_GET_JACKPOTS_REQUEST = 800,
     JP_GET_JACKPOTS_RESPONSE = 801,
@@ -114,12 +139,21 @@ export enum ClassId {
 
     JP_WIN_PUSH = 808,
 
+    /*
+        !Important, if adding new messages that are 'acting' on behalf of the client,
+        you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
+    */
+
     REGISTER_PUSH_NOTIFICATIONS_TOKEN_REQ = 1003,
     REGISTER_PUSH_NOTIFICATIONS_TOKEN_RESP = 2003,
 
     CLIENT_DEBUG_REQUEST = 77777,
 
     
+    /*
+        !Important, if adding new messages that are 'acting' on behalf of the client,
+        you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
+    */    
 
     UNSUPPORTED_COMMAND = 99999,
 }

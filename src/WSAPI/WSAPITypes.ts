@@ -538,15 +538,19 @@ export interface AchRelatedGame {
  */
 export interface TMissionOrBadgeTask {
     /** ID of the task */
-    id: number,
+    id: number;
     /** Name of the task, translated to the user language */
-    name: string,
+    name: string;
     /** Indicator if the task is completed */
-    is_completed: boolean,
+    is_completed: boolean;
     /** The progress of the task in percents */
-    progress: number
+    progress: number;
     /** Reward for completing the task in points */
-    points_reward: number
+    points_reward: number;
+    /** This is the total number of times the user needs to execute to complete task. e.g. he needs to bet 100 times. Here will be 100 */
+    execution_count_expected?: number;
+    /** This is the number of times the user has executed 'activity' of the task. e.g. he bet 5 times out of 100. Here will be 5 */
+    execution_count_actual?: number;
 }
 
 /**
