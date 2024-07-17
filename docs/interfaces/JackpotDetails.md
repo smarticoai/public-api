@@ -96,6 +96,6 @@ ___
 
 ### registration\_count
 
-• `Optional` **registration\_count**: `number`
+• **registration\_count**: `number`
 
 The number of users who have opted in to participate in the jackpot

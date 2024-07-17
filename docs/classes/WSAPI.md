@@ -24,7 +24,7 @@ ___
 
 ### checkSegmentMatch
 
-▸ **checkSegmentMatch**(`segment_id`): `Promise`\<`boolean`\>
+▸ **checkSegmentMatch**(`segment_id`): `Promise`<`boolean`\>
 
 Check if user belongs to specific segments
 **Example**:
@@ -44,13 +44,13 @@ _smartico.api.checkSegmentMatch(1).then((result) => {
 
 #### Returns
 
-`Promise`\<`boolean`\>
+`Promise`<`boolean`\>
 
 ___
 
 ### checkSegmentListMatch
 
-▸ **checkSegmentListMatch**(`segment_ids`): `Promise`\<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
+▸ **checkSegmentListMatch**(`segment_ids`): `Promise`<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
 
 Check if user belongs to specific list of segments
 **Example**:
@@ -69,13 +69,13 @@ _smartico.api.checkSegmentListMatch([1, 2, 3]).then((result) => {
 
 #### Returns
 
-`Promise`\<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
+`Promise`<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
 
 ___
 
 ### getLevels
 
-▸ **getLevels**(): `Promise`\<[`TLevel`](../interfaces/TLevel.md)[]\>
+▸ **getLevels**(): `Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
 
 Returns all the levels available the current user
 **Example**:
@@ -94,13 +94,13 @@ _smartico.vapi('EN').getLevels().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TLevel`](../interfaces/TLevel.md)[]\>
+`Promise`<[`TLevel`](../interfaces/TLevel.md)[]\>
 
 ___
 
 ### getMissions
 
-▸ **getMissions**(`«destructured»?`): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+▸ **getMissions**(`«destructured»?`): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the missions available the current user.
 The returned missions are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
@@ -130,13 +130,13 @@ _smartico.vapi('EN').getMissions().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 ___
 
 ### getBadges
 
-▸ **getBadges**(): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+▸ **getBadges**(): `Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the badges available the current user
 
@@ -144,13 +144,13 @@ Returns all the badges available the current user
 
 #### Returns
 
-`Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+`Promise`<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 ___
 
 ### getUserLevelExtraCounters
 
-▸ **getUserLevelExtraCounters**(): `Promise`\<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
+▸ **getUserLevelExtraCounters**(): `Promise`<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
 
 Returns the extra counters for the current user level.
 These are counters that are configured for each Smartico client separatly by request.
@@ -167,13 +167,13 @@ _smartico.api.getUserLevelExtraCounters().then((result) => {
 
 #### Returns
 
-`Promise`\<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
+`Promise`<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
 
 ___
 
 ### getStoreItems
 
-▸ **getStoreItems**(): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStoreItems**(): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns all the store items available the current user
 
@@ -193,13 +193,13 @@ _smartico.vapi('EN').getStoreItems().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 ___
 
 ### buyStoreItem
 
-▸ **buyStoreItem**(`item_id`): `Promise`\<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
+▸ **buyStoreItem**(`item_id`): `Promise`<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
 
 Buy the specific shop item by item_id. Returns the err_code in case of success or error.
 **Example**:
@@ -219,13 +219,13 @@ _smartico.api.buyStoreItem(1).then((result) => {
 
 #### Returns
 
-`Promise`\<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
+`Promise`<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
 
 ___
 
 ### getStoreCategories
 
-▸ **getStoreCategories**(): `Promise`\<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
+▸ **getStoreCategories**(): `Promise`<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
 
 Returns store categories
 
@@ -245,13 +245,13 @@ _smartico.vapi('EN').getStoreCategories().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
+`Promise`<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
 
 ___
 
 ### getStorePurchasedItems
 
-▸ **getStorePurchasedItems**(`«destructured»?`): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStorePurchasedItems**(`«destructured»?`): `Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched. 
 The maximum number of items per request is limited to 20. 
@@ -277,13 +277,13 @@ _smartico.api.getStorePurchasedItems().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+`Promise`<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 ___
 
 ### getAchCategories
 
-▸ **getAchCategories**(): `Promise`\<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
+▸ **getAchCategories**(): `Promise`<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
 
 Returns missions & badges categories
 
@@ -303,13 +303,13 @@ _smartico.vapi('EN').getAchCategories().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
+`Promise`<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
 
 ___
 
 ### getCustomSections
 
-▸ **getCustomSections**(): `Promise`\<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
+▸ **getCustomSections**(): `Promise`<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
 
 Returns list of custom sections
 
@@ -329,13 +329,13 @@ _smartico.vapi('EN').getCustomSections().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
+`Promise`<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
 
 ___
 
 ### getMiniGames
 
-▸ **getMiniGames**(`«destructured»?`): `Promise`\<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+▸ **getMiniGames**(`«destructured»?`): `Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
 Returns the list of mini-games available for user 
 The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one. 
@@ -364,13 +364,13 @@ _smartico.vapi('EN').getMiniGames().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+`Promise`<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
 ___
 
 ### playMiniGame
 
-▸ **playMiniGame**(`template_id`): `Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
+▸ **playMiniGame**(`template_id`): `Promise`<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
 
@@ -384,13 +384,13 @@ Plays the specified by template_id mini-game on behalf of user and returns prize
 
 #### Returns
 
-`Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
+`Promise`<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 ___
 
 ### requestMissionOptIn
 
-▸ **requestMissionOptIn**(`mission_id`): `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+▸ **requestMissionOptIn**(`mission_id`): `Promise`<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
 
 Requests an opt-in for the specified mission_id. Returns the err_code.
 
@@ -404,13 +404,13 @@ Requests an opt-in for the specified mission_id. Returns the err_code.
 
 #### Returns
 
-`Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+`Promise`<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
 
 ___
 
 ### requestMissionClaimReward
 
-▸ **requestMissionClaimReward**(`mission_id`, `ach_completed_id`): `Promise`\<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
+▸ **requestMissionClaimReward**(`mission_id`, `ach_completed_id`): `Promise`<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
 
 Request for claim reward for the specified mission id. Returns the err_code.
 
@@ -425,13 +425,13 @@ Request for claim reward for the specified mission id. Returns the err_code.
 
 #### Returns
 
-`Promise`\<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
+`Promise`<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
 
 ___
 
 ### getTournamentsList
 
-▸ **getTournamentsList**(`«destructured»?`): `Promise`\<[`TTournament`](../interfaces/TTournament.md)[]\>
+▸ **getTournamentsList**(`«destructured»?`): `Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
 
 Returns all the active instances of tournaments 
 The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one. 
@@ -460,13 +460,13 @@ _smartico.vapi('EN').getTournamentsList().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TTournament`](../interfaces/TTournament.md)[]\>
+`Promise`<[`TTournament`](../interfaces/TTournament.md)[]\>
 
 ___
 
 ### getTournamentInstanceInfo
 
-▸ **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`\<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
+▸ **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
 
 Returns details information of specific tournament instance, the response will include tournament info and the leaderboard of players
 
@@ -500,13 +500,13 @@ _smartico.vapi('EN').getTournamentsList().then((result) => {
 
 #### Returns
 
-`Promise`\<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
+`Promise`<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
 
 ___
 
 ### registerInTournament
 
-▸ **registerInTournament**(`tournamentInstanceId`): `Promise`\<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+▸ **registerInTournament**(`tournamentInstanceId`): `Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
 
 Requests registration for the specified tournament instance. Returns the err_code.
 
@@ -520,13 +520,13 @@ Requests registration for the specified tournament instance. Returns the err_cod
 
 #### Returns
 
-`Promise`\<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+`Promise`<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
 
 ___
 
 ### getLeaderBoard
 
-▸ **getLeaderBoard**(`periodType`, `getPreviousPeriod?`): `Promise`\<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
+▸ **getLeaderBoard**(`periodType`, `getPreviousPeriod?`): `Promise`<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
 
 Returns the leaderboard for the current type (default is Daily). If getPreviousPeriod is passed as true, a leaderboard for the previous period for the current type will be returned.
 For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
@@ -554,13 +554,13 @@ _smartico.vapi('EN').getLeaderBoard(1).then((result) => {
 
 #### Returns
 
-`Promise`\<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
+`Promise`<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
 
 ___
 
 ### getInboxMessages
 
-▸ **getInboxMessages**(`params?`): `Promise`\<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
+▸ **getInboxMessages**(`params?`): `Promise`<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
 
 Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched. 
 The maximum number of messages per request is limited to 20. An indicator "onlyFavorite" can be passed to get only messages marked as favorites. 
@@ -584,13 +584,13 @@ The "onUpdate" callback will be triggered when the user receives a new message. 
 
 #### Returns
 
-`Promise`\<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
+`Promise`<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
 
 ___
 
 ### getInboxMessageBody
 
-▸ **getInboxMessageBody**(`messageGuid`): `Promise`\<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
+▸ **getInboxMessageBody**(`messageGuid`): `Promise`<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
 
 Returns the message body of the specified message guid.
 
@@ -604,13 +604,13 @@ Returns the message body of the specified message guid.
 
 #### Returns
 
-`Promise`\<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
+`Promise`<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
 
 ___
 
 ### markInboxMessageAsRead
 
-▸ **markInboxMessageAsRead**(`messageGuid`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+▸ **markInboxMessageAsRead**(`messageGuid`): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to mark inbox message with specified guid as read
 
@@ -624,13 +624,13 @@ Requests to mark inbox message with specified guid as read
 
 #### Returns
 
-`Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+`Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 ___
 
 ### markAllInboxMessagesAsRead
 
-▸ **markAllInboxMessagesAsRead**(): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+▸ **markAllInboxMessagesAsRead**(): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to mark all inbox messages as rea
 
@@ -638,13 +638,13 @@ Requests to mark all inbox messages as rea
 
 #### Returns
 
-`Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+`Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 ___
 
 ### markUnmarkInboxMessageAsFavorite
 
-▸ **markUnmarkInboxMessageAsFavorite**(`messageGuid`, `mark`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+▸ **markUnmarkInboxMessageAsFavorite**(`messageGuid`, `mark`): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to mark inbox message with specified guid as favorite. Pass mark true to add message to favorite and false to remove.
 
@@ -659,13 +659,13 @@ Requests to mark inbox message with specified guid as favorite. Pass mark true t
 
 #### Returns
 
-`Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+`Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 ___
 
 ### deleteInboxMessage
 
-▸ **deleteInboxMessage**(`messageGuid`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+▸ **deleteInboxMessage**(`messageGuid`): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to delete inbox message
 
@@ -679,13 +679,13 @@ Requests to delete inbox message
 
 #### Returns
 
-`Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+`Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 ___
 
 ### deleteAllInboxMessages
 
-▸ **deleteAllInboxMessages**(): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+▸ **deleteAllInboxMessages**(): `Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to delete all inbox messages
 
@@ -693,13 +693,13 @@ Requests to delete all inbox messages
 
 #### Returns
 
-`Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+`Promise`<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 ___
 
 ### getTranslations
 
-▸ **getTranslations**(`lang_code`): `Promise`\<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
+▸ **getTranslations**(`lang_code`): `Promise`<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
 
 Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office.
 
@@ -711,13 +711,13 @@ Requests translations for the given language. Returns the object including trans
 
 #### Returns
 
-`Promise`\<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
+`Promise`<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
 
 ___
 
 ### jackpotGet
 
-▸ **jackpotGet**(`filter?`): `Promise`\<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
+▸ **jackpotGet**(`filter?`): `Promise`<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
 
 Returns list of Jackpots that are active in the systen and matching to the filter definition.
 If filter is not provided, all active jackpots will be returned.
@@ -748,13 +748,13 @@ _smartico.vapi('EN').jackpotGet({ related_game_id: 'wooko-slot' }).then((result)
 
 #### Returns
 
-`Promise`\<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
+`Promise`<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
 
 ___
 
 ### jackpotOptIn
 
-▸ **jackpotOptIn**(`filter`): `Promise`\<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
+▸ **jackpotOptIn**(`filter`): `Promise`<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
 
 Opt-in currently logged in user to the jackpot with the specified jp_template_id.
 You may call jackpotGet method after doing optin to see that user is opted in to the jackpot.
@@ -777,13 +777,13 @@ _smartico.api.jackpotOptIn({ jp_template_id: 123 }).then((result) => {
 
 #### Returns
 
-`Promise`\<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
+`Promise`<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
 
 ___
 
 ### jackpotOptOut
 
-▸ **jackpotOptOut**(`filter`): `Promise`\<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
+▸ **jackpotOptOut**(`filter`): `Promise`<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
 
 Opt-out currently logged in user from the jackpot with the specified jp_template_id.
 You may call jackpotGet method after doing optout to see that user is not opted in to the jackpot.
@@ -806,4 +806,4 @@ _smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
 
 #### Returns
 
-`Promise`\<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
+`Promise`<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
