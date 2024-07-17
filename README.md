@@ -44,7 +44,7 @@ See the [API documentation](docs/classes/WSAPI.md) for all available methods and
 
 You can also get gamification data for the visitors (not authorized users). 
 
-Calls to the methods look similar, with the only exception that you need to use **_smartico.vapi('EN'**)** method to get access to the Visitor API object with a specific language.
+Calls to the methods look similar, with the only exception that you need to use **_smartico.vapi('EN')** method to get access to the Visitor API object with a specific language.
 
 **Note: please contact your Success Manager on the Smartico side to enable Visitor mode**
 
