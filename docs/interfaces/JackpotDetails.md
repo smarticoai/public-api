@@ -91,3 +91,11 @@ ___
 • **ach\_related\_game\_allow\_all**: `boolean`
 
 indicates whether all games are eligible for the jackpot
+
+___
+
+### registration\_count
+
+• `Optional` **registration\_count**: `number`
+
+The number of users who have opted in to participate in the jackpot

@@ -32,6 +32,8 @@ interface JackpotDetails {
     is_opted_in: boolean;
     /** indicates whether all games are eligible for the jackpot */
     ach_related_game_allow_all: boolean;
+    /** The number of users who have opted in to participate in the jackpot */
+    registration_count: number;
 }
 
 export { JackpotDetails }
