@@ -18,7 +18,7 @@ class CoreUtils {
             [currency?.toUpperCase()]: currency?.toUpperCase(),
             USD: "$", // United States Dollar
             EUR: "€", // Euro
-            JPY: "¥", // Japanese Yen
+            JPY: "\u00A5", // Japanese Yen
             GBP: "£", // British Pound Sterling
             AUD: "A$", // Australian Dollar
             CAD: "C$", // Canadian Dollar
@@ -35,7 +35,7 @@ class CoreUtils {
             INR: "₹", // Indian Rupee
             RUB: "₽", // Russian Ruble
             BRL: "R$", // Brazilian Real
-            ZAR: "R", // South African Rand            
+            ZAR: "R", // South African Rand
         }[currency?.toUpperCase()];
     }
 }
