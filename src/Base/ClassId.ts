@@ -121,6 +121,7 @@ export enum ClassId {
     SAW_PRIZE_DROP_WIN_PUSH = 708,
     SAW_PRIZE_DROP_WIN_AKNOWLEDGE_REQUEST = 709,
     SAW_PRIZE_DROP_WIN_AKNOWLEDGE_RESPONSE = 710,
+    SAW_AKNOWLEDGE_SPIN_PUSH = 711,
 
     /*
         !Important, if adding new messages that are 'acting' on behalf of the client,
