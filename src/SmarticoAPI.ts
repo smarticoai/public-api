@@ -136,7 +136,7 @@ class SmarticoAPI {
 
         } catch (e) {
             this.logger.error(`Failed to make request to smartico channel, L2. ${e.message}`, { url: this.publicUrl, request: message, error: e.message });
-            throw(new Error(`Failed to make request to smartico channel, L1. ${e.message}`));
+            throw(new Error(`Failed to make request to smartico channel, L2 L1. ${e.message}`));
         }
 
         if (this.logCIDs.includes(message.cid)) {

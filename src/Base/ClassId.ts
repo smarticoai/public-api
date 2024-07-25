@@ -97,6 +97,9 @@ export enum ClassId {
     ACH_SHOP_ITEM_HISTORY_REQUEST = 541,
     ACH_SHOP_ITEM_HISTORY_RESPONSE = 542,
 
+    GET_RELATED_ACH_N_TOURNAMENTS_REQUEST = 543,
+    GET_RELATED_ACH_N_TOURNAMENTS_RESPONSE = 544,
+
     /*
         !Important, if adding new messages that are 'acting' on behalf of the client,
         you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
