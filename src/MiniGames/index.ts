@@ -18,3 +18,5 @@ export * from "./SAWDoAknowledgeRequest";
 export * from "./SAWDoAknowledgeResponse";
 export * from "./SAWSpinsCountPush";
 export * from "./SAWPrizeDropWinPush";
+export * from "./SAWEventSawPush";
+export * from "./SAWAcknowledgeSpinPushRequest";
