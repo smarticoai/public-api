@@ -1,6 +1,5 @@
 export interface LeaderBoardPublicMeta {
-
-    name: string;
-    description: string;
-    rules: string;
+	name: string
+	description: string
+	rules: string
 }

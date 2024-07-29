@@ -1,6 +1,6 @@
-import { ProtocolResponse } from "../Base/ProtocolResponse";
+import { ProtocolResponse } from '../Base/ProtocolResponse'
 
 export interface GetLabelInfoResponse extends ProtocolResponse {
-    settings: { [key: string]: string },
-    label_id: string,
-  }
+	settings: { [key: string]: string }
+	label_id: string
+}

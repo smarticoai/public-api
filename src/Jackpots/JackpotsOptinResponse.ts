@@ -1,5 +1,3 @@
-import { ProtocolResponse } from "../Base/ProtocolResponse";
+import { ProtocolResponse } from '../Base/ProtocolResponse'
 
-export interface JackpotsOptinResponse extends ProtocolResponse {
-
-}
+export interface JackpotsOptinResponse extends ProtocolResponse {}

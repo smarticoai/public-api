@@ -1,5 +1,4 @@
 export enum AchievementType {
-
-    Mission = 1,
-    Badge = 2
+	Mission = 1,
+	Badge = 2,
 }

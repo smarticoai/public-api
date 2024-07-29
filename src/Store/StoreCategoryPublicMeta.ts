@@ -1,5 +1,4 @@
 export interface StoreCategoryPublicMeta {
-
-    name?: string;
-    order?: number;
+	name?: string
+	order?: number
 }

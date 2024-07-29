@@ -1,7 +1,6 @@
-
-import { ProtocolResponse } from "../Base/ProtocolResponse";
-import { StoreItem } from "./StoreItem";
+import { ProtocolResponse } from '../Base/ProtocolResponse'
+import { StoreItem } from './StoreItem'
 
 export interface GetStoreItemsResponse extends ProtocolResponse {
-    items: StoreItem[];
+	items: StoreItem[]
 }

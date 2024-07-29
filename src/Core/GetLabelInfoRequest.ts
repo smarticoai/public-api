@@ -1,5 +1,3 @@
+import { ProtocolRequest } from '../Base/ProtocolRequest'
 
-import { ProtocolRequest } from "../Base/ProtocolRequest";
-
-export interface GetLabelInfoRequest extends ProtocolRequest {
-}
+export interface GetLabelInfoRequest extends ProtocolRequest {}

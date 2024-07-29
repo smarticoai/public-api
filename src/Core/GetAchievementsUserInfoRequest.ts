@@ -1,5 +1,3 @@
+import { ProtocolRequest } from '../Base/ProtocolRequest'
 
-import { ProtocolRequest } from "../Base/ProtocolRequest";
-
-export interface GetAchievementsUserInfoRequest extends ProtocolRequest {
-}
+export interface GetAchievementsUserInfoRequest extends ProtocolRequest {}

@@ -1,6 +1,5 @@
-import { ProtocolResponse } from "../Base/ProtocolResponse";
+import { ProtocolResponse } from '../Base/ProtocolResponse'
 
 export interface BuyStoreItemResponse extends ProtocolResponse {
-    success?: boolean;
+	success?: boolean
 }
-

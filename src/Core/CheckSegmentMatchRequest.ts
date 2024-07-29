@@ -1,6 +1,5 @@
-
-import { ProtocolRequest } from "../Base/ProtocolRequest";
+import { ProtocolRequest } from '../Base/ProtocolRequest'
 
 export interface CheckSegmentMatchRequest extends ProtocolRequest {
-    segment_id: number[];
+	segment_id: number[]
 }

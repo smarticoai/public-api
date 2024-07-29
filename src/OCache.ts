@@ -1,82 +1,76 @@
-import { NodeCache } from "./NodeCache";
+import { NodeCache } from './NodeCache'
 
 export enum ECacheContext {
-    Translations,
-    LabelInfo,
-    WSAPI,
+	Translations,
+	LabelInfo,
+	WSAPI,
 }
 
-const WITH_REF_CACHE = [
-    ECacheContext.Translations
-];
+const WITH_REF_CACHE = [ECacheContext.Translations]
 
 export class OCache {
+	private static cache: { [key: string]: NodeCache } = {}
 
-    private static cache: { [key: string]: NodeCache } = {};
+	private static init(cacheContext: ECacheContext) {
+		if (this.cache[cacheContext] === undefined) {
+			this.cache[cacheContext] = new NodeCache()
+		}
+	}
 
-    private static init(cacheContext: ECacheContext) {
-        if (this.cache[cacheContext] === undefined) {
-            this.cache[cacheContext] = new NodeCache();
-        }
-    }
+	public static get<T>(oKey: any, cacheContext: ECacheContext): T | undefined {
+		const key = cacheContext.toString() + '_' + JSON.stringify(oKey)
 
-    public static get<T>(oKey: any, cacheContext: ECacheContext): T | undefined {
+		this.init(cacheContext)
 
-        const key = cacheContext.toString() + '_' + JSON.stringify(oKey);
+		return deepClone(this.cache[cacheContext].get(key))
+	}
 
-        this.init(cacheContext);
+	public static set(oKey: any, o: any, cacheContext: ECacheContext, ttlSeconds: number = 60) {
+		const key = cacheContext.toString() + '_' + JSON.stringify(oKey)
 
-        return deepClone(this.cache[cacheContext].get(key));
-    }
+		this.init(cacheContext)
 
-    public static set(oKey: any, o: any, cacheContext: ECacheContext, ttlSeconds: number = 60) {
+		this.cache[cacheContext].set(key, deepClone(o), ttlSeconds)
+	}
 
-        const key = cacheContext.toString() + '_' + JSON.stringify(oKey);
+	public static async use<T>(oKey: any, cacheContext: ECacheContext, f: () => Promise<T>, ttlSeconds: number = 60) {
+		if (ttlSeconds <= 0) {
+			return await f()
+		} else {
+			let o: T = OCache.get(oKey, cacheContext)
 
-        this.init(cacheContext);
+			if (o === undefined) {
+				o = await f()
+				OCache.set(oKey, o, cacheContext, ttlSeconds)
+			}
 
-        this.cache[cacheContext].set(key, deepClone(o), ttlSeconds);
-    }
+			return o
+		}
+	}
 
-    public static async use<T>(oKey: any, cacheContext: ECacheContext, f: () => Promise<T>, ttlSeconds: number = 60) {
-        if (ttlSeconds <= 0) {
-            return await f();
-        } else {
-            let o: T = OCache.get(oKey, cacheContext);
+	public static async clear(cacheContext: ECacheContext, oKey: any) {
+		const key = cacheContext.toString() + '_' + JSON.stringify(oKey)
 
-            if (o === undefined) {
-                o = await f();
-                OCache.set(oKey, o, cacheContext, ttlSeconds);
-            }
-    
-            return o;
-        }
-    }
+		if (this.cache[cacheContext]) {
+			this.cache[cacheContext].remove(key)
+		}
+	}
 
-    public static async clear(cacheContext: ECacheContext, oKey: any) {
-        const key = cacheContext.toString() + '_' + JSON.stringify(oKey);
+	public static async clearContext(cacheContext: ECacheContext) {
+		if (this.cache[cacheContext]) {
+			this.cache[cacheContext].flushAll()
+		}
+	}
 
-        if (this.cache[cacheContext]) {
-            this.cache[cacheContext].remove(key);
-        }
-    }
-
-    public static async clearContext(cacheContext: ECacheContext) {
-        if (this.cache[cacheContext]) {
-            this.cache[cacheContext].flushAll();
-        }
-    }
-
-    public static async clearAll() {
-        this.cache = {};
-    }    
-
+	public static async clearAll() {
+		this.cache = {}
+	}
 }
 
 const deepClone = (o: any) => {
-    if (o) {
-        return JSON.parse(JSON.stringify(o));
-    }
+	if (o) {
+		return JSON.parse(JSON.stringify(o))
+	}
 
-    return o;
+	return o
 }

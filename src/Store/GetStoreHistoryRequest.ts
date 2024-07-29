@@ -1,6 +1,6 @@
-import { ProtocolMessage } from "../Base/ProtocolMessage";
+import { ProtocolMessage } from '../Base/ProtocolMessage'
 
 export interface GetStoreHistoryRequest extends ProtocolMessage {
-    limit?: number;
-    offset?: number;
+	limit?: number
+	offset?: number
 }

@@ -1,12 +1,12 @@
-import { ErrorCodes } from "./ErrorCodes";
+import { ErrorCodes } from './ErrorCodes'
 
 interface GResponseBase {
-    errCode: ErrorCodes;
-    errMessage?: string;
+	errCode: ErrorCodes
+	errMessage?: string
 }
 
 interface GResponse<T> extends GResponseBase {
-    data?: T;
+	data?: T
 }
 
-export { GResponseBase, GResponse };
+export { GResponseBase, GResponse }

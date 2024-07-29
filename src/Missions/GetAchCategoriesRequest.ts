@@ -1,5 +1,3 @@
-import { ProtocolMessage } from "../Base/ProtocolMessage";
+import { ProtocolMessage } from '../Base/ProtocolMessage'
 
-export interface GetAchCategoriesRequest extends ProtocolMessage {
-    
-}
+export interface GetAchCategoriesRequest extends ProtocolMessage {}
