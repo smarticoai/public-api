@@ -6,5 +6,6 @@ export interface SAWPrizeDropWinPush extends ProtocolMessage {
 	request_id: string // guid
 	saw_template_id: number
 	saw_prize: SAWPrize
-	saw_template: SAWTemplate
+    saw_template: SAWTemplate
+    pending_message_id: number
 }
