@@ -114,7 +114,7 @@ export const marketsInfo = [
 		type: SAWGPMarketType.Corners1x2,
 		name: 'Corners 1x2',
 		question: { text: 'Which team will have more corners in the match?', trKey: 'quizQuestion_corners1x2' },
-		answers: homeAwayAnswers,
+		answers: homeAwayDrawAnswers,
 	},
 	{
 		type: SAWGPMarketType.One_Two,
@@ -189,5 +189,17 @@ export const marketsInfo = [
 		name: 'Player Two Wins One Set',
 		question: { text: 'Will Player Two win at least one set?', trKey: 'quizQuestion_playerTwoWinsOneSet' },
 		answers: yesNoAnswers,
+    },
+    {
+		type: SAWGPMarketType.CustomNonSport,
+		name: 'Custom question (non sport)',
+		question: null,
+		answers: null,
+    },
+    {
+		type: SAWGPMarketType.CustomSport,
+		name: 'Custom question (sport)',
+		question: null,
+		answers: null,
 	},
 ]
