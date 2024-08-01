@@ -1,54 +1,54 @@
-import { AchRelatedGame } from '../Base/AchRelatedGame'
-import { IntUtils } from '../IntUtils'
-import { TMissionOrBadge } from '../WSAPI/WSAPITypes'
-import { AchievementPublicMeta } from './AchievementPublicMeta'
-import { AchievementStatus } from './AchievementStatus'
-import { AchievementTaskType } from './AchievementTaskType'
-import { AchievementType } from './AchievementType'
-import { ScheduledMissionType } from './ScheduledMissionType'
-import { UserAchievementTask } from './UserAchievementTask'
+import { AchRelatedGame } from '../Base/AchRelatedGame';
+import { IntUtils } from '../IntUtils';
+import { TMissionOrBadge } from '../WSAPI/WSAPITypes';
+import { AchievementPublicMeta } from './AchievementPublicMeta';
+import { AchievementStatus } from './AchievementStatus';
+import { AchievementTaskType } from './AchievementTaskType';
+import { AchievementType } from './AchievementType';
+import { ScheduledMissionType } from './ScheduledMissionType';
+import { UserAchievementTask } from './UserAchievementTask';
 
 export interface UserAchievement {
-	ach_id?: number
-	ach_type_id?: AchievementType
-	ach_public_meta?: AchievementPublicMeta
-	isCompleted?: boolean
-	isLocked?: boolean
-	requiresOptin?: boolean
-	isOptedIn?: boolean
-	start_date?: string // time when mission unlocked or opted-in. Needed to calculated "remaining time" in case time_limit_ms is set
-	start_date_ts?: number
-	time_limit_ms?: number
-	progress?: number
-	complete_date?: string
-	complete_date_ts?: number
-	unlock_date?: string
-	milliseconds_till_available?: number
-	completed_tasks?: number
-	achievementTasks?: UserAchievementTask[]
-	ach_status_id?: AchievementStatus
-	scheduledMissionType?: ScheduledMissionType
-	related_games?: AchRelatedGame[]
-	active_from_ts?: number // indicates when 'scheduled' mission is active from,
-	ach_categories?: number[]
+	ach_id?: number;
+	ach_type_id?: AchievementType;
+	ach_public_meta?: AchievementPublicMeta;
+	isCompleted?: boolean;
+	isLocked?: boolean;
+	requiresOptin?: boolean;
+	isOptedIn?: boolean;
+	start_date?: string; // time when mission unlocked or opted-in. Needed to calculated "remaining time" in case time_limit_ms is set
+	start_date_ts?: number;
+	time_limit_ms?: number;
+	progress?: number;
+	complete_date?: string;
+	complete_date_ts?: number;
+	unlock_date?: string;
+	milliseconds_till_available?: number;
+	completed_tasks?: number;
+	achievementTasks?: UserAchievementTask[];
+	ach_status_id?: AchievementStatus;
+	scheduledMissionType?: ScheduledMissionType;
+	related_games?: AchRelatedGame[];
+	active_from_ts?: number; // indicates when 'scheduled' mission is active from,
+	ach_categories?: number[];
 
-	ach_completed_id?: number // ID of the completion fact from ach_completed or ach_completed_recurring tables
-	requires_prize_claim?: boolean // flag from achievement if the mission prize will be given only after user claims it
-	prize_claimed_date_ts?: number // the date/timestamp indicating when the prize was claimed by the user
+	ach_completed_id?: number; // ID of the completion fact from ach_completed or ach_completed_recurring tables
+	requires_prize_claim?: boolean; // flag from achievement if the mission prize will be given only after user claims it
+	prize_claimed_date_ts?: number; // the date/timestamp indicating when the prize was claimed by the user
 
-	completed_today?: boolean
-	completed_this_week?: boolean
-	completed_this_month?: boolean
-	custom_section_type_id?: number
+	completed_today?: boolean;
+	completed_this_week?: boolean;
+	completed_this_month?: boolean;
+	custom_section_type_id?: number;
 }
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
 	return items
 		.filter((r) => r.ach_id >= 1)
 		.map((r) => {
-			const completedToday = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'today') : false
-			const completedThisWeek = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisWeek') : false
-			const completedThisMonth = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisMonth') : false
+			const completedToday = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'today') : false;
+			const completedThisWeek = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisWeek') : false;
+			const completedThisMonth = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisMonth') : false;
 
 			const x: TMissionOrBadge = {
 				id: r.ach_id,
@@ -72,7 +72,8 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				only_in_custom_section: r.ach_public_meta.only_in_custom_section,
 				custom_data: IntUtils.JsonOrText(r.ach_public_meta.custom_data),
 				position: r.ach_public_meta.position,
-				ribbon: r.ach_public_meta.label_tag === 'custom' ? r.ach_public_meta.custom_label_tag : r.ach_public_meta.label_tag,
+				ribbon:
+					r.ach_public_meta.label_tag === 'custom' ? r.ach_public_meta.custom_label_tag : r.ach_public_meta.label_tag,
 				tasks: (r.achievementTasks || [])
 					.filter((t) => t.task_type_id === AchievementTaskType.CompleteAchievement)
 					.map((t) => ({
@@ -106,7 +107,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				completed_this_week: completedThisWeek,
 				completed_this_month: completedThisMonth,
 				custom_section_type_id: r.ach_public_meta.custom_section_type_id,
-			}
-			return x
-		})
-}
+			};
+			return x;
+		});
+};

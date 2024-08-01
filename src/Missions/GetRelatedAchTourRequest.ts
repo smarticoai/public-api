@@ -1,5 +1,5 @@
-import { ProtocolMessage } from '../Base/ProtocolMessage'
+import { ProtocolMessage } from '../Base/ProtocolMessage';
 
 export interface GetRelatedAchTourRequest extends ProtocolMessage {
-	related_game_id?: string
+	related_game_id?: string;
 }

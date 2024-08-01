@@ -1,34 +1,34 @@
 export interface TournamentPublicMeta {
 	/** Name of tournament */
-	name?: string
+	name?: string;
 	/** 1st image */
-	image_url?: string
+	image_url?: string;
 	/** 2nd image */
-	image_url2?: string
+	image_url2?: string;
 	/** 2nd image for mobile */
-	image_url2_mobile?: string
+	image_url2_mobile?: string;
 	/** Description, html capable */
-	description?: string
+	description?: string;
 	/** Short explanation of prize pool */
-	prize_pool_short?: string
+	prize_pool_short?: string;
 	/** Message to show when user is not matching to the segment allowed to register (error code 30005 in registration response) */
-	segment_dont_match_message?: string
+	segment_dont_match_message?: string;
 	/** Short explanation of registration price */
-	custom_price_text?: string
+	custom_price_text?: string;
 	/** Indicator if the scores of other users should be shown in the leaderboard of tournament */
-	show_other_users_score?: boolean
+	show_other_users_score?: boolean;
 
-	custom_section_id?: number
+	custom_section_id?: number;
 
-	only_in_custom_section?: boolean
+	only_in_custom_section?: boolean;
 
-	label_tag?: string
-	custom_label_tag?: string
+	label_tag?: string;
+	custom_label_tag?: string;
 
-	featured?: boolean
+	featured?: boolean;
 
-	position?: number
+	position?: number;
 
 	// custom data as string or JSON string that can be used in UIWidget
-	custom_data?: string
+	custom_data?: string;
 }

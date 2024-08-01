@@ -1,6 +1,6 @@
-import { ProtocolResponse } from '../Base/ProtocolResponse'
-import { JackpotPot } from './JackpotPot'
+import { ProtocolResponse } from '../Base/ProtocolResponse';
+import { JackpotPot } from './JackpotPot';
 
 export interface GetJackpotsPotsResponse extends ProtocolResponse {
-	items: JackpotPot[]
+	items: JackpotPot[];
 }

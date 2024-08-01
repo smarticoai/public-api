@@ -17,5 +17,5 @@ export const TournamentInstanceStatusName = (s: TournamentInstanceStatus): strin
 		[TournamentInstanceStatus.CANCELLED]: 'CANCELLED',
 		[TournamentInstanceStatus.FAILED]: 'FAILED',
 		[TournamentInstanceStatus.FINALIZING]: 'FINALIZING',
-	}[s]
-}
+	}[s];
+};

@@ -1,9 +1,9 @@
-import { TInboxMessage } from '../WSAPI/WSAPITypes'
-import { ProtocolResponse } from '../Base/ProtocolResponse'
-import { InboxMessage } from './InboxMessage'
+import { TInboxMessage } from '../WSAPI/WSAPITypes';
+import { ProtocolResponse } from '../Base/ProtocolResponse';
+import { InboxMessage } from './InboxMessage';
 
 export interface GetInboxMessagesResponse extends ProtocolResponse {
-	log: InboxMessage[]
+	log: InboxMessage[];
 }
 
 export const InboxMessagesTransform = (items: InboxMessage[]): TInboxMessage[] => {
@@ -13,7 +13,7 @@ export const InboxMessagesTransform = (items: InboxMessage[]): TInboxMessage[] =
 			message_guid: item.engagement_uid,
 			read: item.is_read,
 			favorite: item.is_starred,
-		}
-		return x
-	})
-}
+		};
+		return x;
+	});
+};

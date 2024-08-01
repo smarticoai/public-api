@@ -27,8 +27,10 @@ export const TournamentRegistrationStatusNamed = (type: TournamentRegistrationSt
 		[TournamentRegistrationStatus.FINISHED]: TournamentRegistrationStatusName.FINISHED,
 		[TournamentRegistrationStatus.NOT_REGISTERED]: TournamentRegistrationStatusName.NOT_REGISTERED,
 		[TournamentRegistrationStatus.PENDING]: TournamentRegistrationStatusName.PENDING,
-		[TournamentRegistrationStatus.QUALIFIED_PENDING_REGISTRATION]: TournamentRegistrationStatusName.QUALIFIED_PENDING_REGISTRATION,
+		[TournamentRegistrationStatus.QUALIFIED_PENDING_REGISTRATION]:
+			TournamentRegistrationStatusName.QUALIFIED_PENDING_REGISTRATION,
 		[TournamentRegistrationStatus.REGISTERED]: TournamentRegistrationStatusName.REGISTERED,
-		[TournamentRegistrationStatus.REGISTERED_PENDING_QUALIFICATION]: TournamentRegistrationStatusName.REGISTERED_PENDING_QUALIFICATION,
-	}[type] || TournamentRegistrationStatusName.UNKNOWN) as TournamentRegistrationStatusName
-}
+		[TournamentRegistrationStatus.REGISTERED_PENDING_QUALIFICATION]:
+			TournamentRegistrationStatusName.REGISTERED_PENDING_QUALIFICATION,
+	}[type] || TournamentRegistrationStatusName.UNKNOWN) as TournamentRegistrationStatusName;
+};

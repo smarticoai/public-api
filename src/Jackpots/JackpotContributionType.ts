@@ -3,4 +3,4 @@ enum JackpotContributionType {
 	Percentage = 2,
 }
 
-export { JackpotContributionType }
+export { JackpotContributionType };

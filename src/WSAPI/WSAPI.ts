@@ -1,8 +1,8 @@
-import { ClassId } from '../Base/ClassId'
-import { CoreUtils } from '../Core'
-import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from '../MiniGames'
-import { ECacheContext, OCache } from '../OCache'
-import { SmarticoAPI } from '../SmarticoAPI'
+import { ClassId } from '../Base/ClassId';
+import { CoreUtils } from '../Core';
+import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from '../MiniGames';
+import { ECacheContext, OCache } from '../OCache';
+import { SmarticoAPI } from '../SmarticoAPI';
 import {
 	InboxMarkMessageAction,
 	LeaderBoardDetailsT,
@@ -26,15 +26,22 @@ import {
 	TUICustomSection,
 	TUserProfile,
 	UserLevelExtraCountersT,
-} from './WSAPITypes'
-import { LeaderBoardPeriodType } from '../Leaderboard'
-import { JackpotDetails, JackpotPot, JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutRequest, JackpotsOptoutResponse } from '../Jackpots'
+} from './WSAPITypes';
+import { LeaderBoardPeriodType } from '../Leaderboard';
+import {
+	JackpotDetails,
+	JackpotPot,
+	JackpotWinPush,
+	JackpotsOptinResponse,
+	JackpotsOptoutRequest,
+	JackpotsOptoutResponse,
+} from '../Jackpots';
 
 /** @hidden */
-const CACHE_DATA_SEC = 30
+const CACHE_DATA_SEC = 30;
 
-const JACKPOT_TEMPLATE_CACHE_SEC = 30
-const JACKPOT_POT_CACHE_SEC = 1
+const JACKPOT_TEMPLATE_CACHE_SEC = 30;
+const JACKPOT_POT_CACHE_SEC = 1;
 
 /** @hidden */
 enum onUpdateContextKey {
@@ -58,25 +65,27 @@ enum onUpdateContextKey {
 
 /** @group General API */
 export class WSAPI {
-	private onUpdateCallback: Map<onUpdateContextKey, (data: any) => void> = new Map()
-	private jackpotGetSignature: string = ''
+	private onUpdateCallback: Map<onUpdateContextKey, (data: any) => void> = new Map();
+	private jackpotGetSignature: string = '';
 
 	/** @private */
 	constructor(private api: SmarticoAPI) {
-		OCache.clearAll()
+		OCache.clearAll();
 		if (this.api.tracker) {
-			const on = this.api.tracker.on
-			on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data))
-			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.updateOnAddSpin())
-			on(ClassId.SAW_DO_SPIN_RESPONSE, (data: SAWDoSpinResponse) => on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => this.updateOnPrizeWin(data)))
-			on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissionsOnOptIn())
-			on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournamentsOnRegistration())
-			on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages())
-			on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI))
-			on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI))
-			on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache())
-			on(ClassId.JP_OPTOUT_RESPONSE, (data: JackpotsOptoutRequest) => this.jackpotClearCache())
-			on(ClassId.JP_OPTIN_RESPONSE, (data: JackpotsOptinResponse) => this.jackpotClearCache())
+			const on = this.api.tracker.on;
+			on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
+			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.updateOnAddSpin());
+			on(ClassId.SAW_DO_SPIN_RESPONSE, (data: SAWDoSpinResponse) =>
+				on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => this.updateOnPrizeWin(data)),
+			);
+			on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissionsOnOptIn());
+			on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournamentsOnRegistration());
+			on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
+			on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
+			on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
+			on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache());
+			on(ClassId.JP_OPTOUT_RESPONSE, (data: JackpotsOptoutRequest) => this.jackpotClearCache());
+			on(ClassId.JP_OPTIN_RESPONSE, (data: JackpotsOptinResponse) => this.jackpotClearCache());
 		}
 	}
 
@@ -92,11 +101,11 @@ export class WSAPI {
 	 * */
 	public getUserProfile(): TUserProfile {
 		if (this.api.tracker) {
-			const o: TUserProfile = Object.assign({}, this.api.tracker.userPublicProps)
-			o.avatar_url = CoreUtils.avatarUrl(this.api.tracker.userPublicProps.avatar_id, this.api.avatarDomain)
-			return o
+			const o: TUserProfile = Object.assign({}, this.api.tracker.userPublicProps);
+			o.avatar_url = CoreUtils.avatarUrl(this.api.tracker.userPublicProps.avatar_id, this.api.avatarDomain);
+			return o;
 		} else {
-			throw new Error('Tracker is not initialized, cannot getUserProfile')
+			throw new Error('Tracker is not initialized, cannot getUserProfile');
 		}
 	}
 
@@ -111,11 +120,11 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async checkSegmentMatch(segment_id: number): Promise<boolean> {
-		const r = await this.api.coreCheckSegments(null, [segment_id])
+		const r = await this.api.coreCheckSegments(null, [segment_id]);
 		if (r && r.find((s) => s.segment_id === segment_id && s.is_matching)) {
-			return true
+			return true;
 		} else {
-			return false
+			return false;
 		}
 	}
 
@@ -129,7 +138,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentCheckResult[]> {
-		return await this.api.coreCheckSegments(null, Array.isArray(segment_ids) ? segment_ids : [segment_ids])
+		return await this.api.coreCheckSegments(null, Array.isArray(segment_ids) ? segment_ids : [segment_ids]);
 	}
 
 	/** Returns all the levels available the current user
@@ -148,7 +157,7 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getLevels(): Promise<TLevel[]> {
-		return OCache.use(onUpdateContextKey.Levels, ECacheContext.WSAPI, () => this.api.levelsGetT(null), CACHE_DATA_SEC)
+		return OCache.use(onUpdateContextKey.Levels, ECacheContext.WSAPI, () => this.api.levelsGetT(null), CACHE_DATA_SEC);
 	}
 
 	/** Returns all the missions available the current user.
@@ -172,10 +181,15 @@ export class WSAPI {
 	 */
 	public async getMissions({ onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMissionOrBadge[]> {
 		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.Missions, onUpdate)
+			this.onUpdateCallback.set(onUpdateContextKey.Missions, onUpdate);
 		}
 
-		return OCache.use(onUpdateContextKey.Missions, ECacheContext.WSAPI, () => this.api.missionsGetItemsT(null), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.Missions,
+			ECacheContext.WSAPI,
+			() => this.api.missionsGetItemsT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -184,7 +198,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async getBadges(): Promise<TMissionOrBadge[]> {
-		return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(null), CACHE_DATA_SEC)
+		return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(null), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -202,7 +216,12 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async getUserLevelExtraCounters(): Promise<UserLevelExtraCountersT> {
-		return OCache.use(onUpdateContextKey.LevelExtraCounters, ECacheContext.WSAPI, () => this.api.getUserGamificationInfoT(null), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.LevelExtraCounters,
+			ECacheContext.WSAPI,
+			() => this.api.getUserGamificationInfoT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -225,7 +244,12 @@ export class WSAPI {
 	 */
 
 	public async getStoreItems(): Promise<TStoreItem[]> {
-		return OCache.use(onUpdateContextKey.StoreItems, ECacheContext.WSAPI, () => this.api.storeGetItemsT(null), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.StoreItems,
+			ECacheContext.WSAPI,
+			() => this.api.storeGetItemsT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/** Buy the specific shop item by item_id. Returns the err_code in case of success or error.
@@ -239,14 +263,14 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async buyStoreItem(item_id: number): Promise<TBuyStoreItemResult> {
-		const r = await this.api.buyStoreItem(null, item_id)
+		const r = await this.api.buyStoreItem(null, item_id);
 
 		const o: TBuyStoreItemResult = {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 
-		return o
+		return o;
 	}
 
 	/**
@@ -268,7 +292,12 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getStoreCategories(): Promise<TStoreCategory[]> {
-		return OCache.use(onUpdateContextKey.StoreCategories, ECacheContext.WSAPI, () => this.api.storeGetCategoriesT(null), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.StoreCategories,
+			ECacheContext.WSAPI,
+			() => this.api.storeGetCategoriesT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -286,11 +315,20 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 
-	public async getStorePurchasedItems({ limit, offset, onUpdate }: { limit?: number; offset?: number; onUpdate?: (data: TStoreItem[]) => void } = {}): Promise<TStoreItem[]> {
+	public async getStorePurchasedItems({
+		limit,
+		offset,
+		onUpdate,
+	}: { limit?: number; offset?: number; onUpdate?: (data: TStoreItem[]) => void } = {}): Promise<TStoreItem[]> {
 		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.StoreHistory, onUpdate)
+			this.onUpdateCallback.set(onUpdateContextKey.StoreHistory, onUpdate);
 		}
-		return OCache.use(onUpdateContextKey.StoreHistory, ECacheContext.WSAPI, () => this.api.storeGetPurchasedItemsT(null, limit, offset), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.StoreHistory,
+			ECacheContext.WSAPI,
+			() => this.api.storeGetPurchasedItemsT(null, limit, offset),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -312,7 +350,12 @@ export class WSAPI {
 	 *
 	 * */
 	public async getAchCategories(): Promise<TAchCategory[]> {
-		return OCache.use(onUpdateContextKey.AchCategories, ECacheContext.WSAPI, () => this.api.achGetCategoriesT(null), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.AchCategories,
+			ECacheContext.WSAPI,
+			() => this.api.achGetCategoriesT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -334,7 +377,12 @@ export class WSAPI {
 	 *
 	 * */
 	public async getCustomSections(): Promise<TUICustomSection[]> {
-		return OCache.use(onUpdateContextKey.CustomSections, ECacheContext.WSAPI, () => this.api.getCustomSectionsT(null), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.CustomSections,
+			ECacheContext.WSAPI,
+			() => this.api.getCustomSectionsT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -357,12 +405,14 @@ export class WSAPI {
 	 * ```
 	 *
 	 */
-	public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<TMiniGameTemplate[]> {
+	public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<
+		TMiniGameTemplate[]
+	> {
 		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate)
+			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 
-		return OCache.use(onUpdateContextKey.Saw, ECacheContext.WSAPI, () => this.api.sawGetTemplatesT(null), CACHE_DATA_SEC)
+		return OCache.use(onUpdateContextKey.Saw, ECacheContext.WSAPI, () => this.api.sawGetTemplatesT(null), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -371,16 +421,16 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async playMiniGame(template_id: number): Promise<TMiniGamePlayResult> {
-		const r = await this.api.sawSpinRequest(null, template_id)
-		this.api.doAcknowledgeRequest(null, r.request_id)
+		const r = await this.api.sawSpinRequest(null, template_id);
+		this.api.doAcknowledgeRequest(null, r.request_id);
 
 		const o: TMiniGamePlayResult = {
 			err_code: r.errCode,
 			err_message: r.errMsg,
 			prize_id: r.saw_prize_id,
-		}
+		};
 
-		return o
+		return o;
 	}
 
 	/**
@@ -389,14 +439,14 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async requestMissionOptIn(mission_id: number): Promise<TMissionOptInResult> {
-		const r = await this.api.missionOptIn(null, mission_id)
+		const r = await this.api.missionOptIn(null, mission_id);
 
 		const o: TMissionOptInResult = {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 
-		return o
+		return o;
 	}
 
 	/**
@@ -405,14 +455,14 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async requestMissionClaimReward(mission_id: number, ach_completed_id: number): Promise<TMissionClaimRewardResult> {
-		const r = await this.api.missionClaimPrize(null, mission_id, ach_completed_id)
+		const r = await this.api.missionClaimPrize(null, mission_id, ach_completed_id);
 
 		const o: TMissionClaimRewardResult = {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 
-		return o
+		return o;
 	}
 
 	/** Returns all the active instances of tournaments
@@ -435,10 +485,15 @@ export class WSAPI {
 	 * */
 	public async getTournamentsList({ onUpdate }: { onUpdate?: (data: TTournament[]) => void } = {}): Promise<TTournament[]> {
 		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.TournamentList, onUpdate)
+			this.onUpdateCallback.set(onUpdateContextKey.TournamentList, onUpdate);
 		}
 
-		return OCache.use(onUpdateContextKey.TournamentList, ECacheContext.WSAPI, () => this.api.tournamentsGetLobbyT(null), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.TournamentList,
+			ECacheContext.WSAPI,
+			() => this.api.tournamentsGetLobbyT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -467,7 +522,7 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed> {
-		return this.api.tournamentsGetInfoT(null, tournamentInstanceId)
+		return this.api.tournamentsGetInfoT(null, tournamentInstanceId);
 	}
 
 	/**
@@ -476,14 +531,14 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async registerInTournament(tournamentInstanceId: number): Promise<TTournamentRegistrationResult> {
-		const r = await this.api.registerInTournament(null, tournamentInstanceId)
+		const r = await this.api.registerInTournament(null, tournamentInstanceId);
 
 		const o: TTournamentRegistrationResult = {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 
-		return o
+		return o;
 	}
 
 	/**
@@ -505,7 +560,12 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getLeaderBoard(periodType: LeaderBoardPeriodType, getPreviousPeriod?: boolean): Promise<LeaderBoardDetailsT> {
-		return OCache.use(onUpdateContextKey.LeaderBoards, ECacheContext.WSAPI, () => this.api.leaderboardsGetT(null, periodType, getPreviousPeriod), CACHE_DATA_SEC)
+		return OCache.use(
+			onUpdateContextKey.LeaderBoards,
+			ECacheContext.WSAPI,
+			() => this.api.leaderboardsGetT(null, periodType, getPreviousPeriod),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/** Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched.
@@ -520,14 +580,19 @@ export class WSAPI {
 	 *
 	 * @param params
 	 */
-	public async getInboxMessages({ from, to, onlyFavorite, onUpdate }: { from?: number; to?: number; onlyFavorite?: boolean; onUpdate?: (data: TInboxMessage[]) => void } = {}): Promise<
+	public async getInboxMessages({
+		from,
+		to,
+		onlyFavorite,
+		onUpdate,
+	}: { from?: number; to?: number; onlyFavorite?: boolean; onUpdate?: (data: TInboxMessage[]) => void } = {}): Promise<
 		TInboxMessage[]
 	> {
 		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate)
+			this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate);
 		}
 
-		return await this.api.getInboxMessagesT(null, from, to, onlyFavorite)
+		return await this.api.getInboxMessagesT(null, from, to, onlyFavorite);
 	}
 
 	/**
@@ -536,7 +601,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async getInboxMessageBody(messageGuid: string): Promise<TInboxMessageBody> {
-		return await this.api.getInboxMessageBodyT(messageGuid)
+		return await this.api.getInboxMessageBodyT(messageGuid);
 	}
 
 	/**
@@ -545,12 +610,12 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async markInboxMessageAsRead(messageGuid: string): Promise<InboxMarkMessageAction> {
-		const r = await this.api.markInboxMessageRead(null, messageGuid)
+		const r = await this.api.markInboxMessageRead(null, messageGuid);
 
 		return {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 	}
 
 	/**
@@ -559,12 +624,12 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async markAllInboxMessagesAsRead(): Promise<InboxMarkMessageAction> {
-		const r = await this.api.markAllInboxMessageRead(null)
+		const r = await this.api.markAllInboxMessageRead(null);
 
 		return {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 	}
 
 	/**
@@ -573,12 +638,12 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async markUnmarkInboxMessageAsFavorite(messageGuid: string, mark: boolean): Promise<InboxMarkMessageAction> {
-		const r = await this.api.markUnmarkInboxMessageAsFavorite(null, messageGuid, mark)
+		const r = await this.api.markUnmarkInboxMessageAsFavorite(null, messageGuid, mark);
 
 		return {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 	}
 
 	/**
@@ -588,12 +653,12 @@ export class WSAPI {
 	 */
 
 	public async deleteInboxMessage(messageGuid: string): Promise<InboxMarkMessageAction> {
-		const r = await this.api.deleteInboxMessage(null, messageGuid)
+		const r = await this.api.deleteInboxMessage(null, messageGuid);
 
 		return {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 	}
 
 	/**
@@ -603,77 +668,92 @@ export class WSAPI {
 	 */
 
 	public async deleteAllInboxMessages(): Promise<InboxMarkMessageAction> {
-		const r = await this.api.deleteAllInboxMessages(null)
+		const r = await this.api.deleteAllInboxMessages(null);
 
 		return {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		}
+		};
 	}
 
 	/**
 	 * Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office.
 	 */
 	public async getTranslations(lang_code: string): Promise<TGetTranslations> {
-		const r = await this.api.getTranslationsT(null, lang_code, [])
+		const r = await this.api.getTranslationsT(null, lang_code, []);
 
 		return {
 			translations: r.translations,
-		}
+		};
 	}
 
 	private async updateOnSpin(data: SAWSpinsCountPush) {
-		const templates: TMiniGameTemplate[] = await OCache.use(onUpdateContextKey.Saw, ECacheContext.WSAPI, () => this.api.sawGetTemplatesT(null), CACHE_DATA_SEC)
-		const index = templates.findIndex((t) => t.id === data.saw_template_id)
-		templates[index].spin_count = data.spin_count
-		this.updateEntity(onUpdateContextKey.Saw, templates)
+		const templates: TMiniGameTemplate[] = await OCache.use(
+			onUpdateContextKey.Saw,
+			ECacheContext.WSAPI,
+			() => this.api.sawGetTemplatesT(null),
+			CACHE_DATA_SEC,
+		);
+		const index = templates.findIndex((t) => t.id === data.saw_template_id);
+		templates[index].spin_count = data.spin_count;
+		this.updateEntity(onUpdateContextKey.Saw, templates);
 	}
 
 	private async updateOnAddSpin() {
-		const payload = await this.api.sawGetTemplatesT(null)
-		this.updateEntity(onUpdateContextKey.Saw, payload)
+		const payload = await this.api.sawGetTemplatesT(null);
+		this.updateEntity(onUpdateContextKey.Saw, payload);
 	}
 
 	private async updateOnPrizeWin(data: SAWDoSpinResponse) {
 		if (data.errCode === SAWSpinErrorCode.SAW_OK) {
-			const templates: TMiniGameTemplate[] = await OCache.use(onUpdateContextKey.Saw, ECacheContext.WSAPI, () => this.api.sawGetTemplatesT(null), CACHE_DATA_SEC)
-			const template: TMiniGameTemplate = templates.find((t) => t.prizes.find((p) => p.id === data.saw_prize_id))
-			const prizeType = template.prizes.find((p) => p.id === data.saw_prize_id)?.prize_type
+			const templates: TMiniGameTemplate[] = await OCache.use(
+				onUpdateContextKey.Saw,
+				ECacheContext.WSAPI,
+				() => this.api.sawGetTemplatesT(null),
+				CACHE_DATA_SEC,
+			);
+			const template: TMiniGameTemplate = templates.find((t) => t.prizes.find((p) => p.id === data.saw_prize_id));
+			const prizeType = template.prizes.find((p) => p.id === data.saw_prize_id)?.prize_type;
 
-			if (template.jackpot_add_on_attempt || template.spin_count === 1 || prizeType === MiniGamePrizeTypeName.JACKPOT || prizeType === MiniGamePrizeTypeName.SPIN) {
-				const updatedTemplates = await this.api.sawGetTemplatesT(null)
-				this.updateEntity(onUpdateContextKey.Saw, updatedTemplates)
+			if (
+				template.jackpot_add_on_attempt ||
+				template.spin_count === 1 ||
+				prizeType === MiniGamePrizeTypeName.JACKPOT ||
+				prizeType === MiniGamePrizeTypeName.SPIN
+			) {
+				const updatedTemplates = await this.api.sawGetTemplatesT(null);
+				this.updateEntity(onUpdateContextKey.Saw, updatedTemplates);
 			}
 		}
 	}
 
 	private async updateMissionsOnOptIn() {
-		const payload = await this.api.missionsGetItemsT(null)
-		this.updateEntity(onUpdateContextKey.Missions, payload)
+		const payload = await this.api.missionsGetItemsT(null);
+		this.updateEntity(onUpdateContextKey.Missions, payload);
 	}
 
 	private async updateTournamentsOnRegistration() {
-		const payload = await this.api.tournamentsGetLobbyT(null)
-		this.updateEntity(onUpdateContextKey.TournamentList, payload)
+		const payload = await this.api.tournamentsGetLobbyT(null);
+		this.updateEntity(onUpdateContextKey.TournamentList, payload);
 	}
 
 	private async updateInboxMessages() {
-		const payload = await this.api.getInboxMessagesT(null)
-		this.updateEntity(onUpdateContextKey.InboxMessages, payload)
+		const payload = await this.api.getInboxMessagesT(null);
+		this.updateEntity(onUpdateContextKey.InboxMessages, payload);
 	}
 
 	private async updateEntity(contextKey: onUpdateContextKey, payload: any) {
-		OCache.set(contextKey, payload, ECacheContext.WSAPI)
+		OCache.set(contextKey, payload, ECacheContext.WSAPI);
 
-		const onUpdate = this.onUpdateCallback.get(contextKey)
+		const onUpdate = this.onUpdateCallback.get(contextKey);
 		if (onUpdate) {
-			onUpdate(payload)
+			onUpdate(payload);
 		}
 	}
 
 	private async jackpotClearCache() {
-		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Jackpots)
-		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Pots)
+		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Jackpots);
+		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Pots);
 	}
 
 	/** Returns list of Jackpots that are active in the systen and matching to the filter definition.
@@ -696,48 +776,48 @@ export class WSAPI {
 	 * ```
 	 */
 	public async jackpotGet(filter?: { related_game_id?: string; jp_template_id?: number }): Promise<JackpotDetails[]> {
-		const signature: string = `${filter?.jp_template_id}:${filter?.related_game_id}`
+		const signature: string = `${filter?.jp_template_id}:${filter?.related_game_id}`;
 
 		if (signature !== this.jackpotGetSignature) {
-			this.jackpotGetSignature = signature
-			this.jackpotClearCache()
+			this.jackpotGetSignature = signature;
+			this.jackpotClearCache();
 		}
 
-		let jackpots: JackpotDetails[] = []
-		let pots: JackpotPot[] = []
+		let jackpots: JackpotDetails[] = [];
+		let pots: JackpotPot[] = [];
 
 		jackpots = await OCache.use<JackpotDetails[]>(
 			onUpdateContextKey.Jackpots,
 			ECacheContext.WSAPI,
 			async () => {
-				const _jackpots = await this.api.jackpotGet(null, filter)
-				const _pots = _jackpots.items.map((jp) => jp.pot)
+				const _jackpots = await this.api.jackpotGet(null, filter);
+				const _pots = _jackpots.items.map((jp) => jp.pot);
 
-				OCache.set(onUpdateContextKey.Pots, _pots, ECacheContext.WSAPI, JACKPOT_POT_CACHE_SEC)
-				return _jackpots.items
+				OCache.set(onUpdateContextKey.Pots, _pots, ECacheContext.WSAPI, JACKPOT_POT_CACHE_SEC);
+				return _jackpots.items;
 			},
 			JACKPOT_TEMPLATE_CACHE_SEC,
-		)
+		);
 
 		if (jackpots.length > 0) {
 			pots = await OCache.use<JackpotPot[]>(
 				onUpdateContextKey.Pots,
 				ECacheContext.WSAPI,
 				async () => {
-					const jp_template_ids = jackpots.map((jp) => jp.jp_template_id)
-					return (await this.api.potGet(null, { jp_template_ids })).items
+					const jp_template_ids = jackpots.map((jp) => jp.jp_template_id);
+					return (await this.api.potGet(null, { jp_template_ids })).items;
 				},
 				JACKPOT_POT_CACHE_SEC,
-			)
+			);
 		}
 
 		return jackpots.map((jp) => {
 			let _jp: JackpotDetails = {
 				...jp,
 				pot: pots.find((p) => p.jp_template_id === jp.jp_template_id),
-			}
-			return _jp
-		})
+			};
+			return _jp;
+		});
 	}
 
 	/**
@@ -756,12 +836,12 @@ export class WSAPI {
 	 */
 	public async jackpotOptIn(filter: { jp_template_id: number }): Promise<JackpotsOptinResponse> {
 		if (!filter.jp_template_id) {
-			throw new Error('jp_template_id is required in jackpotOptIn')
+			throw new Error('jp_template_id is required in jackpotOptIn');
 		}
 
-		const result = await this.api.jackpotOptIn(null, filter)
+		const result = await this.api.jackpotOptIn(null, filter);
 
-		return result
+		return result;
 	}
 
 	/**
@@ -780,11 +860,11 @@ export class WSAPI {
 	 */
 	public async jackpotOptOut(filter: { jp_template_id: number }): Promise<JackpotsOptoutResponse> {
 		if (!filter.jp_template_id) {
-			throw new Error('jp_template_id is required in jackpotOptOut')
+			throw new Error('jp_template_id is required in jackpotOptOut');
 		}
 
-		const result = await this.api.jackpotOptOut(null, filter)
+		const result = await this.api.jackpotOptOut(null, filter);
 
-		return result
+		return result;
 	}
 }

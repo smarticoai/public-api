@@ -8,20 +8,20 @@ import {
 	quizOddReplacementText,
 	quizOrReplacementText,
 	quizYesReplacementText,
-} from './MarketsAnswers'
-import { SAWGPMarketType } from './MarketsType'
+} from './MarketsAnswers';
+import { SAWGPMarketType } from './MarketsType';
 
 const yesNoAnswers = [
 	{ text: quizYesReplacementText, value: QuizAnswersValueType.Yes },
 	{ text: quizNoReplacementText, value: QuizAnswersValueType.No },
-]
+];
 
 const homeAwayAnswers = [
 	{ text: quizAnswerHomeTeamReplacementText, value: QuizAnswersValueType.HomeTeam },
 	{ text: quizAnswerAwayTeamReplacementText, value: QuizAnswersValueType.AwayTeam },
-]
+];
 
-const homeAwayDrawAnswers = [...homeAwayAnswers, { text: quizDrawReplacementText, value: QuizAnswersValueType.Draw }]
+const homeAwayDrawAnswers = [...homeAwayAnswers, { text: quizDrawReplacementText, value: QuizAnswersValueType.Draw }];
 
 export const marketsInfo = [
 	{
@@ -41,15 +41,39 @@ export const marketsInfo = [
 		name: 'Halftime / Fulltime',
 		question: { text: 'Who will lead the first half and who will win the match ?', trKey: 'quizQuestion__HalftimeFulltime' },
 		answers: [
-			{ text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`, value: QuizAnswersValueType.HomeTeamHomeTeam },
-			{ text: `${quizAnswerHomeTeamReplacementText} / ${quizDrawReplacementText}`, value: QuizAnswersValueType.HomeTeamDraw },
-			{ text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`, value: QuizAnswersValueType.HomeTeamAwayTeam },
-			{ text: `${quizDrawReplacementText} / ${quizAnswerHomeTeamReplacementText}`, value: QuizAnswersValueType.DrawHomeTeam },
+			{
+				text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
+				value: QuizAnswersValueType.HomeTeamHomeTeam,
+			},
+			{
+				text: `${quizAnswerHomeTeamReplacementText} / ${quizDrawReplacementText}`,
+				value: QuizAnswersValueType.HomeTeamDraw,
+			},
+			{
+				text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
+				value: QuizAnswersValueType.HomeTeamAwayTeam,
+			},
+			{
+				text: `${quizDrawReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
+				value: QuizAnswersValueType.DrawHomeTeam,
+			},
 			{ text: `${quizDrawReplacementText} / ${quizDrawReplacementText}`, value: QuizAnswersValueType.DrawDraw },
-			{ text: `${quizDrawReplacementText} / ${quizAnswerAwayTeamReplacementText}`, value: QuizAnswersValueType.DrawAwayTeam },
-			{ text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`, value: QuizAnswersValueType.AwayTeamHomeTeam },
-			{ text: `${quizAnswerAwayTeamReplacementText} / ${quizDrawReplacementText}`, value: QuizAnswersValueType.AwayTeamDraw },
-			{ text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`, value: QuizAnswersValueType.AwayTeamAwayTeam },
+			{
+				text: `${quizDrawReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
+				value: QuizAnswersValueType.DrawAwayTeam,
+			},
+			{
+				text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
+				value: QuizAnswersValueType.AwayTeamHomeTeam,
+			},
+			{
+				text: `${quizAnswerAwayTeamReplacementText} / ${quizDrawReplacementText}`,
+				value: QuizAnswersValueType.AwayTeamDraw,
+			},
+			{
+				text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
+				value: QuizAnswersValueType.AwayTeamAwayTeam,
+			},
 		],
 	},
 	{
@@ -69,9 +93,18 @@ export const marketsInfo = [
 		name: 'Double Chance',
 		question: { text: 'Who will win the match? Choose a combination:', trKey: 'quizQuestion_doubleChance' },
 		answers: [
-			{ text: `${quizDrawReplacementText} ${quizOrReplacementText} ${quizAnswerHomeTeamReplacementText}`, value: QuizAnswersValueType.HomeTeamDraw },
-			{ text: `${quizAnswerHomeTeamReplacementText} ${quizOrReplacementText} ${quizAnswerAwayTeamReplacementText}`, value: QuizAnswersValueType.HomeTeamAwayTeam },
-			{ text: `${quizDrawReplacementText} ${quizOrReplacementText} ${quizAnswerAwayTeamReplacementText}`, value: QuizAnswersValueType.AwayTeamDraw },
+			{
+				text: `${quizDrawReplacementText} ${quizOrReplacementText} ${quizAnswerHomeTeamReplacementText}`,
+				value: QuizAnswersValueType.HomeTeamDraw,
+			},
+			{
+				text: `${quizAnswerHomeTeamReplacementText} ${quizOrReplacementText} ${quizAnswerAwayTeamReplacementText}`,
+				value: QuizAnswersValueType.HomeTeamAwayTeam,
+			},
+			{
+				text: `${quizDrawReplacementText} ${quizOrReplacementText} ${quizAnswerAwayTeamReplacementText}`,
+				value: QuizAnswersValueType.AwayTeamDraw,
+			},
 		],
 	},
 	{
@@ -131,7 +164,10 @@ export const marketsInfo = [
 	{
 		type: SAWGPMarketType.OddEven,
 		name: 'Odd/Even',
-		question: { text: 'Is the sum of all points scored in the game going to be an odd number or even?', trKey: 'quizQuestion_oddEven' },
+		question: {
+			text: 'Is the sum of all points scored in the game going to be an odd number or even?',
+			trKey: 'quizQuestion_oddEven',
+		},
 		answers: [
 			{ text: quizOddReplacementText, value: QuizAnswersValueType.Odd },
 			{ text: quizEvenReplacementText, value: QuizAnswersValueType.Even },
@@ -140,7 +176,10 @@ export const marketsInfo = [
 	{
 		type: SAWGPMarketType.OddEvenHomeAway,
 		name: 'Odd/Even Home/Away',
-		question: { text: 'Which team will win and what will be the sum of the points (Odd or Even)?', trKey: 'quizQuestion_oddEvenHomeAway' },
+		question: {
+			text: 'Which team will win and what will be the sum of the points (Odd or Even)?',
+			trKey: 'quizQuestion_oddEvenHomeAway',
+		},
 		answers: [
 			{ text: `${quizAnswerHomeTeamReplacementText} - ${quizOddReplacementText}`, value: QuizAnswersValueType.HomeOdd },
 			{ text: `${quizAnswerHomeTeamReplacementText} - ${quizEvenReplacementText}`, value: QuizAnswersValueType.HomeEven },
@@ -189,17 +228,17 @@ export const marketsInfo = [
 		name: 'Player Two Wins One Set',
 		question: { text: 'Will Player Two win at least one set?', trKey: 'quizQuestion_playerTwoWinsOneSet' },
 		answers: yesNoAnswers,
-    },
-    {
+	},
+	{
 		type: SAWGPMarketType.CustomNonSport,
 		name: 'Custom question (non sport)',
 		question: null,
 		answers: null,
-    },
-    {
+	},
+	{
 		type: SAWGPMarketType.CustomSport,
 		name: 'Custom question (sport)',
 		question: null,
 		answers: null,
 	},
-]
+];

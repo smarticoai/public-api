@@ -1,63 +1,67 @@
-import { TournamentRegistrationType, TournamentRegistrationTypeGetName } from './TournamentRegistrationType'
-import { TournamentInstanceStatus } from './TournamentInstanceStatus'
-import { TournamentRegistrationStatus, TournamentRegistrationStatusName, TournamentRegistrationStatusNamed } from './TournamentRegistrationStatus'
-import { TournamentType } from './TournamentType'
-import { TournamentPublicMeta } from './TournamentPublicMeta'
-import { TTournament } from '../WSAPI/WSAPITypes'
-import { TournamentPlayer, TournamentPrize, TournamentUtils } from '.'
-import { IntUtils } from '../IntUtils'
-import { AchRelatedGame } from '../Base/AchRelatedGame'
+import { TournamentRegistrationType, TournamentRegistrationTypeGetName } from './TournamentRegistrationType';
+import { TournamentInstanceStatus } from './TournamentInstanceStatus';
+import {
+	TournamentRegistrationStatus,
+	TournamentRegistrationStatusName,
+	TournamentRegistrationStatusNamed,
+} from './TournamentRegistrationStatus';
+import { TournamentType } from './TournamentType';
+import { TournamentPublicMeta } from './TournamentPublicMeta';
+import { TTournament } from '../WSAPI/WSAPITypes';
+import { TournamentPlayer, TournamentPrize, TournamentUtils } from '.';
+import { IntUtils } from '../IntUtils';
+import { AchRelatedGame } from '../Base/AchRelatedGame';
 
 export interface Tournament {
 	/** ID of tournament template */
-	tournamentId?: number
+	tournamentId?: number;
 	/** ID of tournament instance. Generated every time when tournament based on specific template is scheduled for run */
-	tournamentInstanceId?: number
+	tournamentInstanceId?: number;
 	/** Type of the tournament. For now only SCHEDULED is support */
-	tournamentType?: TournamentType
+	tournamentType?: TournamentType;
 	/** Meta information about tournament that should be used to build UI */
-	publicMeta?: TournamentPublicMeta
+	publicMeta?: TournamentPublicMeta;
 	/** Cost of registration in the tournament in gamification points */
-	buyInAmount?: number
+	buyInAmount?: number;
 	/** Not in use */
-	prizePool?: number
+	prizePool?: number;
 	/** The time when tournament is going to start */
-	startTime?: string
+	startTime?: string;
 	/** The time when tournament is going to finish */
-	endTime?: string
+	endTime?: string;
 	/** The time when tournament is going to start, epoch */
-	startTimeTs?: number
+	startTimeTs?: number;
 	/** The time when tournament is going to finish, epoch */
-	endTimeTs?: number
+	endTimeTs?: number;
 	/** Number of users registered in the tournament */
-	registrationCount?: number
+	registrationCount?: number;
 	/** Not in use */
-	totalCount?: number
+	totalCount?: number;
 	/** Type of registration in the tournament */
-	registrationType?: TournamentRegistrationType
+	registrationType?: TournamentRegistrationType;
 	/** Status of registration in the tournament for current user */
-	tournamentRegistrationStatus?: TournamentRegistrationStatus
+	tournamentRegistrationStatus?: TournamentRegistrationStatus;
 	/** Status of tournament instance */
-	tournamentInstanceStatus?: TournamentInstanceStatus
+	tournamentInstanceStatus?: TournamentInstanceStatus;
 	/** flag indicating if current user is registered in the tournament */
-	isUserRegistered?: boolean
+	isUserRegistered?: boolean;
 	/** Indicator if tournament allows later registration, when tournament is already started */
-	allowLateRegistration?: boolean
+	allowLateRegistration?: boolean;
 	/** Minimum number of participant for this tournament. If tournament doesnt have enough registrations, it will not start */
-	playersMinCount?: number
+	playersMinCount?: number;
 	/** Maximum number of participant for this tournament. When reached, new users won't be able to register */
-	playersMaxCount?: number
+	playersMaxCount?: number;
 	/** Tournament duration in millisecnnds */
-	durationMs?: number
+	durationMs?: number;
 	/** prizes structure */
 	prizeStructure?: {
-		prizes: TournamentPrize[]
-	}
+		prizes: TournamentPrize[];
+	};
 	/** Information about current user */
-	tournamentPlayer?: TournamentPlayer
+	tournamentPlayer?: TournamentPlayer;
 
 	/** List of casino games (or other types of entities) related to the tournament */
-	related_games?: AchRelatedGame[]
+	related_games?: AchRelatedGame[];
 }
 
 export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => {
@@ -99,16 +103,16 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
 				is_finished: TournamentUtils.isFinished(r),
 				is_in_progress: TournamentUtils.isInProgress(r),
 				is_upcoming: TournamentUtils.isUpcoming(r),
-			}
+			};
 
 			if (r.prizeStructure) {
-				x.prizes = r.prizeStructure.prizes.map((p) => TournamentUtils.getPrizeTransformed(p))
+				x.prizes = r.prizeStructure.prizes.map((p) => TournamentUtils.getPrizeTransformed(p));
 			}
 
 			if (r.tournamentPlayer) {
-				x.me = TournamentUtils.getPlayerTransformed(r.tournamentPlayer, true)
+				x.me = TournamentUtils.getPlayerTransformed(r.tournamentPlayer, true);
 			}
 
-			return x
-		})
-}
+			return x;
+		});
+};

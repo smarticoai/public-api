@@ -1,14 +1,14 @@
-import { IntUtils } from '../IntUtils'
-import { TMiniGamePrize, TMiniGameTemplate } from '../WSAPI/WSAPITypes'
-import { ProtocolResponse } from './../Base/ProtocolResponse'
-import { SAWBuyInTypeNamed } from './SAWBuyInType'
-import { SAWGameTypeNamed } from './SAWGameType'
-import { MiniGamePrizeTypeName, MiniGamePrizeTypeNamed } from './SAWPrizeType'
-import { SAWTemplate } from './SAWTemplate'
-import { SAWUtils } from './SAWUtils'
+import { IntUtils } from '../IntUtils';
+import { TMiniGamePrize, TMiniGameTemplate } from '../WSAPI/WSAPITypes';
+import { ProtocolResponse } from './../Base/ProtocolResponse';
+import { SAWBuyInTypeNamed } from './SAWBuyInType';
+import { SAWGameTypeNamed } from './SAWGameType';
+import { MiniGamePrizeTypeName, MiniGamePrizeTypeNamed } from './SAWPrizeType';
+import { SAWTemplate } from './SAWTemplate';
+import { SAWUtils } from './SAWUtils';
 
 export interface SAWGetTemplatesResponse extends ProtocolResponse {
-	templates: SAWTemplate[]
+	templates: SAWTemplate[];
 }
 
 export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[] => {
@@ -17,7 +17,9 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			id: r.saw_template_id,
 			name: r.saw_template_ui_definition.name,
 			description: r.saw_template_ui_definition.description,
-			thumbnail: r.saw_skin_ui_definition?.skin_folder ? r.saw_skin_ui_definition?.skin_folder + '/ico.png' : `https://libs.smartico.ai/gf/images/saw/${r.saw_skin_key}/ico.png`,
+			thumbnail: r.saw_skin_ui_definition?.skin_folder
+				? r.saw_skin_ui_definition?.skin_folder + '/ico.png'
+				: `https://libs.smartico.ai/gf/images/saw/${r.saw_skin_key}/ico.png`,
 			over_limit_message: r.saw_template_ui_definition.over_limit_message,
 			no_attempts_message: r.saw_template_ui_definition.no_attempts_message,
 			jackpot_symbol: r.saw_template_ui_definition.jackpot_symbol,
@@ -49,10 +51,10 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					acknowledge_action_title: p.saw_prize_ui_definition.acknowledge_action_title,
 					pool: p.pool,
 					wins_count: p.wins_count,
-				}
-				return y
+				};
+				return y;
 			}),
-		}
-		return x
-	})
-}
+		};
+		return x;
+	});
+};

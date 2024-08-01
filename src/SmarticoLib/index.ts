@@ -101,20 +101,20 @@ declare enum ClientActivityRequestId {
 	MISSIONS_CLICK = 201,
 }
 export interface PublicProperties {
-	core_user_language?: string
-	ach_points_balance?: number
-	ach_points_ever?: number
-	core_public_tags?: string[]
-	ach_level_current_id?: number
-	ach_level_current?: string
-	core_is_test_account?: boolean
-	avatar_id?: string
-	ach_gamification_in_control_group?: boolean
-	ach_gamification_ui_explicitly_on?: boolean
-	public_username?: string
-	core_inbox_unread_count?: number
-	is_visitor?: boolean
-	core_registration_date?: number
+	core_user_language?: string;
+	ach_points_balance?: number;
+	ach_points_ever?: number;
+	core_public_tags?: string[];
+	ach_level_current_id?: number;
+	ach_level_current?: string;
+	core_is_test_account?: boolean;
+	avatar_id?: string;
+	ach_gamification_in_control_group?: boolean;
+	ach_gamification_ui_explicitly_on?: boolean;
+	public_username?: string;
+	core_inbox_unread_count?: number;
+	is_visitor?: boolean;
+	core_registration_date?: number;
 }
 declare enum ClassId {
 	PING = 1,
@@ -214,11 +214,11 @@ declare enum ClassId {
 	UNSUPPORTED_COMMAND = 99999,
 }
 export interface ILogger {
-	debug(...any: any[]): void
-	error(...any: any[]): void
-	info(...any: any[]): void
-	warn(...any: any[]): void
-	always(...any: any[]): void
+	debug(...any: any[]): void;
+	error(...any: any[]): void;
+	info(...any: any[]): void;
+	warn(...any: any[]): void;
+	always(...any: any[]): void;
 }
 declare enum BuyStoreItemErrorCode {
 	FAILED_TO_BUY_SHOP_ITEM = 121,
@@ -232,62 +232,62 @@ declare enum BuyStoreItemErrorCode {
 	SHOP_FAILED_POOL_EMPTY = 11009,
 }
 export interface ProtocolMessage {
-	cid: number
-	ts?: number
-	uuid?: string
+	cid: number;
+	ts?: number;
+	uuid?: string;
 }
 export interface ProtocolResponse extends ProtocolMessage {
-	errCode?: number
-	errMsg?: string
+	errCode?: number;
+	errMsg?: string;
 }
 export interface BuyStoreItemResponse extends ProtocolResponse {
-	success?: boolean
+	success?: boolean;
 }
 export interface StoreCategoryPublicMeta {
-	name?: string
-	order?: number
+	name?: string;
+	order?: number;
 }
 export interface StoreCategory {
-	id?: number
-	publicMeta?: StoreCategoryPublicMeta
+	id?: number;
+	publicMeta?: StoreCategoryPublicMeta;
 }
 export interface GetCategoriesStoreResponse extends ProtocolResponse {
-	categories: StoreCategory[]
+	categories: StoreCategory[];
 }
 export interface StoreItemPublicMeta {
-	price: string
-	image_url: string
-	name: string
-	description: string
-	label_tag: string
-	custom_label_tag?: string
-	limit_message: string
-	priority: number
-	related_items: number[]
-	hint_text: string
+	price: string;
+	image_url: string;
+	name: string;
+	description: string;
+	label_tag: string;
+	custom_label_tag?: string;
+	limit_message: string;
+	priority: number;
+	related_items: number[];
+	hint_text: string;
 }
 declare enum StoreItemType {
 	Bonus = 1,
 	Manual = 2,
 }
 export interface StoreItem {
-	id: number
-	itemTypeId: StoreItemType
-	itemPublicMeta: StoreItemPublicMeta
-	categoryIds?: number[]
-	canBuy?: boolean
-	shopPool: number
+	id: number;
+	itemTypeId: StoreItemType;
+	itemPublicMeta: StoreItemPublicMeta;
+	categoryIds?: number[];
+	canBuy?: boolean;
+	shopPool: number;
 }
 export interface GetStoreItemsResponse extends ProtocolResponse {
-	items: StoreItem[]
+	items: StoreItem[];
 }
 export interface StoreItemPurchased extends StoreItem {
-	purchase_ts: number
-	purchase_points_amount: number
+	purchase_ts: number;
+	purchase_points_amount: number;
 }
 export interface GetStoreHistoryResponse extends ProtocolResponse {
-	items: StoreItemPurchased[]
-	hasMore: boolean
+	items: StoreItemPurchased[];
+	hasMore: boolean;
 }
 declare enum SAWBuyInType {
 	Free = 1,
@@ -345,100 +345,100 @@ declare enum SAWWinSoundType {
 	Custom = 5,
 }
 export interface SAWPrizeUI {
-	position?: number
-	name: string
-	name_original: string
-	aknowledge_message: string
-	sectors: number[]
-	acknowledge_type: SAWAcknowledgeType
-	acknowledge_dp?: string
-	font_size?: number
-	font_size_mobile?: number
-	sound_type: SAWWinSoundType
-	icon?: string
-	replace_name_with_image?: boolean
-	acknowledge_action_title?: string
-	custom_win_sound?: string
+	position?: number;
+	name: string;
+	name_original: string;
+	aknowledge_message: string;
+	sectors: number[];
+	acknowledge_type: SAWAcknowledgeType;
+	acknowledge_dp?: string;
+	font_size?: number;
+	font_size_mobile?: number;
+	sound_type: SAWWinSoundType;
+	icon?: string;
+	replace_name_with_image?: boolean;
+	acknowledge_action_title?: string;
+	custom_win_sound?: string;
 }
 export interface SAWPrize {
-	saw_prize_id: number
-	saw_prize_ui_definition: SAWPrizeUI
-	prize_value?: number
-	prize_type_id: SAWPrizeType
-	place_from?: number
-	place_to?: number
-	sawUniqueWinId?: string
+	saw_prize_id: number;
+	saw_prize_ui_definition: SAWPrizeUI;
+	prize_value?: number;
+	prize_type_id: SAWPrizeType;
+	place_from?: number;
+	place_to?: number;
+	sawUniqueWinId?: string;
 }
 declare enum SAWAskForUsername {
 	NOASK = 'no-ask',
 	ONSUMBIT = 'on-submit',
 }
 export interface SAWTemplateUI {
-	skin: string
-	name: string
-	description?: string
-	over_limit_message?: string
-	no_attempts_message?: string
-	thumbnail?: string
-	sectors_count: number
-	priority: number
-	flow_builder_only: boolean
-	background_image?: string
-	background_image_mobile?: string
-	background_sound?: string
-	spin_animation_duration?: number
-	scratch_logo?: string
-	scratch_cover?: string
-	scratch_bg_desktop?: string
-	scratch_bg_mobile?: string
-	scratch_cursor?: string
-	custom_css?: string
-	custom_skin_folder?: string
-	jackpot_symbol?: string
-	promo_image?: string
-	promo_text?: string
-	matchx_banner?: string
-	matchx_seasonal_ranking?: boolean
-	matchx_is_completed?: boolean
-	matchx_general_board_users_count?: number
-	matchx_hide_ranking?: boolean
-	ask_for_username?: SAWAskForUsername
-	show_prize_board?: boolean
-	max_spins_period_ms?: number
-	show_countdown_for_next_availability?: boolean
-	disable_background_music?: boolean
-	custom_section_id?: number
-	only_in_custom_section?: boolean
-	custom_data: any
-	placeholder1?: string
-	placeholder2?: string
+	skin: string;
+	name: string;
+	description?: string;
+	over_limit_message?: string;
+	no_attempts_message?: string;
+	thumbnail?: string;
+	sectors_count: number;
+	priority: number;
+	flow_builder_only: boolean;
+	background_image?: string;
+	background_image_mobile?: string;
+	background_sound?: string;
+	spin_animation_duration?: number;
+	scratch_logo?: string;
+	scratch_cover?: string;
+	scratch_bg_desktop?: string;
+	scratch_bg_mobile?: string;
+	scratch_cursor?: string;
+	custom_css?: string;
+	custom_skin_folder?: string;
+	jackpot_symbol?: string;
+	promo_image?: string;
+	promo_text?: string;
+	matchx_banner?: string;
+	matchx_seasonal_ranking?: boolean;
+	matchx_is_completed?: boolean;
+	matchx_general_board_users_count?: number;
+	matchx_hide_ranking?: boolean;
+	ask_for_username?: SAWAskForUsername;
+	show_prize_board?: boolean;
+	max_spins_period_ms?: number;
+	show_countdown_for_next_availability?: boolean;
+	disable_background_music?: boolean;
+	custom_section_id?: number;
+	only_in_custom_section?: boolean;
+	custom_data: any;
+	placeholder1?: string;
+	placeholder2?: string;
 	prize_drop_template?: {
-		id: string
-		content: string
-	}
+		id: string;
+		content: string;
+	};
 }
 export interface SAWTemplate {
-	saw_template_id: number
-	saw_game_type_id: SAWGameType
-	saw_template_ui_definition: SAWTemplateUI
-	saw_buyin_type_id: SAWBuyInType
-	buyin_cost_points?: number
-	visibile_when_can_spin: boolean
-	spin_count?: number
-	prizes: SAWPrize[]
-	is_visible: boolean
-	jackpot_add_on_attempt: number
-	jackpot_current: number
-	jackpot_guaranteed: number
-	maxActiveSpinsAllowed: number
-	maxSpinsCount: number
-	maxSpinsPediodMs: number
-	next_available_spin_ts?: number
-	saw_skin_key: string
+	saw_template_id: number;
+	saw_game_type_id: SAWGameType;
+	saw_template_ui_definition: SAWTemplateUI;
+	saw_buyin_type_id: SAWBuyInType;
+	buyin_cost_points?: number;
+	visibile_when_can_spin: boolean;
+	spin_count?: number;
+	prizes: SAWPrize[];
+	is_visible: boolean;
+	jackpot_add_on_attempt: number;
+	jackpot_current: number;
+	jackpot_guaranteed: number;
+	maxActiveSpinsAllowed: number;
+	maxSpinsCount: number;
+	maxSpinsPediodMs: number;
+	next_available_spin_ts?: number;
+	saw_skin_key: string;
 	saw_skin_ui_definition: {
-		skin_folder: string
-		skin_css: string
-	}
+		skin_folder: string;
+		skin_css: string;
+	};
 }
 declare enum SAWSpinErrorCode {
 	/** No error */
@@ -455,16 +455,16 @@ declare enum SAWSpinErrorCode {
 	SAW_VISITOR_STOP_SPIN_REQUEST = -40001,
 }
 export interface SAWDoSpinResponse extends ProtocolResponse {
-	errCode: SAWSpinErrorCode
-	errMsg?: string
-	request_id: string
-	saw_prize_id: number
-	jackpot_amount?: number
-	first_spin_in_period: number
-	visitor_win_uuid?: string
+	errCode: SAWSpinErrorCode;
+	errMsg?: string;
+	request_id: string;
+	saw_prize_id: number;
+	jackpot_amount?: number;
+	first_spin_in_period: number;
+	visitor_win_uuid?: string;
 }
 export interface SAWDoAknowledgeResponse extends ProtocolMessage {
-	request_id: string
+	request_id: string;
 }
 declare enum TournamentRegistrationType {
 	AUTO = 1,
@@ -473,7 +473,13 @@ declare enum TournamentRegistrationType {
 	MANUAL_APPROVAL = 4,
 	REQUIRES_QUALIFICATION = 5,
 }
-export type TournamentRegistrationTypeName = 'AUTO' | 'OPT_IN' | 'BUY_IN_POINTS' | 'MANUAL_APPROVAL' | 'REQUIRES_QUALIFICATION' | 'UNKNOWN'
+export type TournamentRegistrationTypeName =
+	| 'AUTO'
+	| 'OPT_IN'
+	| 'BUY_IN_POINTS'
+	| 'MANUAL_APPROVAL'
+	| 'REQUIRES_QUALIFICATION'
+	| 'UNKNOWN';
 declare enum TournamentInstanceStatus {
 	PUBLISHED = 1,
 	REGISTER = 2,
@@ -509,101 +515,101 @@ declare enum TournamentType {
 }
 export interface TournamentPublicMeta {
 	/** Name of tournament */
-	name?: string
+	name?: string;
 	/** 1st image */
-	image_url?: string
+	image_url?: string;
 	/** 2nd image */
-	image_url2?: string
+	image_url2?: string;
 	/** 2nd image for mobile */
-	image_url2_mobile?: string
+	image_url2_mobile?: string;
 	/** Description, html capable */
-	description?: string
+	description?: string;
 	/** Short explanation of prize pool */
-	prize_pool_short?: string
+	prize_pool_short?: string;
 	/** Message to show when user is not matching to the segment allowed to register (error code 30005 in registration response) */
-	segment_dont_match_message?: string
+	segment_dont_match_message?: string;
 	/** Short explanation of registration price */
-	custom_price_text?: string
+	custom_price_text?: string;
 	/** Indicator if the scores of other users should be shown in the leaderboard of tournament */
-	show_other_users_score?: boolean
-	custom_section_id?: number
-	only_in_custom_section?: boolean
-	label_tag?: string
-	custom_label_tag?: string
-	featured?: boolean
-	position?: number
-	custom_data?: string
+	show_other_users_score?: boolean;
+	custom_section_id?: number;
+	only_in_custom_section?: boolean;
+	label_tag?: string;
+	custom_label_tag?: string;
+	featured?: boolean;
+	position?: number;
+	custom_data?: string;
 }
 export interface AchRelatedGame {
-	ach_game_id: number
-	ext_game_id: string
+	ach_game_id: number;
+	ext_game_id: string;
 	game_public_meta: {
-		name: string
-		link: string
-		image: string
-		enabled: boolean
-		game_categories?: string[]
-		game_provider?: string
-	}
+		name: string;
+		link: string;
+		image: string;
+		enabled: boolean;
+		game_categories?: string[];
+		game_provider?: string;
+	};
 }
 export interface Tournament {
 	/** ID of tournament template */
-	tournamentId?: number
+	tournamentId?: number;
 	/** ID of tournament instance. Generated every time when tournament based on specific template is scheduled for run */
-	tournamentInstanceId?: number
+	tournamentInstanceId?: number;
 	/** Type of the tournament. For now only SCHEDULED is support */
-	tournamentType?: TournamentType
+	tournamentType?: TournamentType;
 	/** Meta information about tournament that should be used to build UI */
-	publicMeta?: TournamentPublicMeta
+	publicMeta?: TournamentPublicMeta;
 	/** Cost of registration in the tournament in gamification points */
-	buyInAmount?: number
+	buyInAmount?: number;
 	/** Not in use */
-	prizePool?: number
+	prizePool?: number;
 	/** The time when tournament is going to start */
-	startTime?: string
+	startTime?: string;
 	/** The time when tournament is going to finish */
-	endTime?: string
+	endTime?: string;
 	/** The time when tournament is going to start, epoch */
-	startTimeTs?: number
+	startTimeTs?: number;
 	/** The time when tournament is going to finish, epoch */
-	endTimeTs?: number
+	endTimeTs?: number;
 	/** Number of users registered in the tournament */
-	registrationCount?: number
+	registrationCount?: number;
 	/** Not in use */
-	totalCount?: number
+	totalCount?: number;
 	/** Type of registration in the tournament */
-	registrationType?: TournamentRegistrationType
+	registrationType?: TournamentRegistrationType;
 	/** Status of registration in the tournament for current user */
-	tournamentRegistrationStatus?: TournamentRegistrationStatus
+	tournamentRegistrationStatus?: TournamentRegistrationStatus;
 	/** Status of tournament instance */
-	tournamentInstanceStatus?: TournamentInstanceStatus
+	tournamentInstanceStatus?: TournamentInstanceStatus;
 	/** flag indicating if current user is registered in the tournament */
-	isUserRegistered?: boolean
+	isUserRegistered?: boolean;
 	/** Indicator if tournament allows later registration, when tournament is already started */
-	allowLateRegistration?: boolean
+	allowLateRegistration?: boolean;
 	/** Minimum number of participant for this tournament. If tournament doesnt have enough registrations, it will not start */
-	playersMinCount?: number
+	playersMinCount?: number;
 	/** Maximum number of participant for this tournament. When reached, new users won't be able to register */
-	playersMaxCount?: number
+	playersMaxCount?: number;
 	/** Tournament duration in millisecnnds */
-	durationMs?: number
+	durationMs?: number;
 	/** prizes structure */
 	prizeStructure?: {
-		prizes: TournamentPrize[]
-	}
+		prizes: TournamentPrize[];
+	};
 	/** Information about current user */
-	tournamentPlayer?: TournamentPlayer
+	tournamentPlayer?: TournamentPlayer;
 	/** List of casino games (or other types of entities) related to the tournament */
-	related_games?: AchRelatedGame[]
+	related_games?: AchRelatedGame[];
 }
 export interface TournamentPlayer {
-	userAltName: string
-	position: number
-	scores: number
-	isMe: boolean
-	userId: number
-	avatar_id: string
-	avatar_url?: string
+	userAltName: string;
+	position: number;
+	scores: number;
+	isMe: boolean;
+	userId: number;
+	avatar_id: string;
+	avatar_url?: string;
 }
 declare enum ActivityTypeLimited {
 	DoNothing = 8,
@@ -624,33 +630,33 @@ declare enum ActivityTypeLimited {
 	UnTagCustomer = 505,
 }
 export interface TournamentPrize {
-	name: string
-	description: string
-	image_url: string
-	place_from: number
-	place_to: number
-	type: ActivityTypeLimited
-	points: number
+	name: string;
+	description: string;
+	image_url: string;
+	place_from: number;
+	place_to: number;
+	type: ActivityTypeLimited;
+	points: number;
 }
 export interface GetTournamentInfoResponse extends ProtocolResponse {
 	/** tournament info */
 	tournamentInfo: {
 		/** id of label, not in use */
-		labelId: number
-		tournamentLobbyInfo: Tournament
+		labelId: number;
+		tournamentLobbyInfo: Tournament;
 		/** list of registered users */
-		players: TournamentPlayer[]
-	}
+		players: TournamentPlayer[];
+	};
 	/** information about current user position */
-	userPosition: TournamentPlayer
+	userPosition: TournamentPlayer;
 	/** prizes structure */
 	prizeStructure?: {
-		prizes: TournamentPrize[]
-	}
+		prizes: TournamentPrize[];
+	};
 }
 export interface GetTournamentsResponse extends ProtocolResponse {
 	/** array of the tournaments */
-	tournaments?: Tournament[]
+	tournaments?: Tournament[];
 }
 declare enum TournamentRegistrationError {
 	NO_ERROR = 0,
@@ -664,7 +670,7 @@ declare enum TournamentRegistrationError {
 	TOURNAMENT_MAX_REGISTRATIONS_REACHED = 30008,
 }
 export interface TournamentRegisterResponse extends ProtocolResponse {
-	errCode?: TournamentRegistrationError
+	errCode?: TournamentRegistrationError;
 }
 declare enum LeaderBoardPeriodType {
 	DAILY = 1,
@@ -672,105 +678,105 @@ declare enum LeaderBoardPeriodType {
 	MONTHLY = 3,
 }
 export interface LeaderBoardPosition {
-	public_username?: string
-	user_alt_name: string
-	position_in_board: number
-	points_accumulated: number
-	is_me: boolean
-	level_id: number
-	avatar_id: string
-	avatar_url?: string
+	public_username?: string;
+	user_alt_name: string;
+	position_in_board: number;
+	points_accumulated: number;
+	is_me: boolean;
+	level_id: number;
+	avatar_id: string;
+	avatar_url?: string;
 }
 export interface LeaderBoardPublicMeta {
-	name: string
-	description: string
-	rules: string
+	name: string;
+	description: string;
+	rules: string;
 }
 export interface LeaderBoardDetails {
-	board_id: number
-	period_type_id: LeaderBoardPeriodType
-	create_date?: number
-	versiod_id: number
-	reward_points: number[]
-	board_public_meta: LeaderBoardPublicMeta
-	positions: LeaderBoardPosition[]
-	userPosition: LeaderBoardPosition
+	board_id: number;
+	period_type_id: LeaderBoardPeriodType;
+	create_date?: number;
+	versiod_id: number;
+	reward_points: number[];
+	board_public_meta: LeaderBoardPublicMeta;
+	positions: LeaderBoardPosition[];
+	userPosition: LeaderBoardPosition;
 }
-export type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string
+export type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
 /**
  * TMiniGamePrize describes the information of prize in the array of prizes in the TMiniGameTemplate
  */
 export interface TMiniGamePrize {
 	/** ID of the prize */
-	id: number
+	id: number;
 	/** The visual name of the prize */
-	name: string
+	name: string;
 	/** The type of the prize,  no-prize, points, bonus, manual, spin, jackpot */
-	prize_type: MiniGamePrizeTypeName
+	prize_type: MiniGamePrizeTypeName;
 	/** Numeric value of the prize in case it's pints or spin type */
-	prize_value?: number
+	prize_value?: number;
 	/** Custom font size for the prize (desktop) */
-	font_size?: number
+	font_size?: number;
 	/** Custom font size for the prize (mobile) */
-	font_size_mobile?: number
+	font_size_mobile?: number;
 	/** The URL of the icon of the prize */
-	icon?: string
-	position: number
-	aknowledge_message: string
-	acknowledge_dp: string
-	acknowledge_action_title: string
+	icon?: string;
+	position: number;
+	aknowledge_message: string;
+	acknowledge_dp: string;
+	acknowledge_action_title: string;
 }
 /**
  * TMiniGamePlayResult describes the response of call to _smartico.api.playMiniGame(template_id) method
  */
 export interface TMiniGamePlayResult {
 	/** Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0 */
-	err_code: SAWSpinErrorCode
+	err_code: SAWSpinErrorCode;
 	/** Optional error message */
-	err_message: string
+	err_message: string;
 	/** The prize_id that user won, details of the prize can be found in the mini-game definition */
-	prize_id: number
+	prize_id: number;
 }
 /**
  * TMiniGameTemplate describes the information of mini-games available for the user
  */
 export interface TMiniGameTemplate {
 	/** ID of the mini-game template */
-	id: number
+	id: number;
 	/** Name of the mini-game template, translated to the user language */
-	name: string
+	name: string;
 	/** Description of the mini-game template, translated to the user language */
-	description: string
+	description: string;
 	/** URL of the icon of the mini-game template */
-	thumbnail: string
+	thumbnail: string;
 	/** The type of the game, e.g. Spin the Wheel, Gift Box, Scratch card, MatchX etc */
-	saw_game_type: SAWGameTypeName
+	saw_game_type: SAWGameTypeName;
 	/** How the user is charged for each game attempt e.g. Free, Points or Spin attempts */
-	saw_buyin_type: SAWBuyInTypeName
+	saw_buyin_type: SAWBuyInTypeName;
 	/** in case of charging type 'Points', what is the points amount will be deducted from user balance */
-	buyin_cost_points: number
+	buyin_cost_points: number;
 	/** in case of charging type 'Spin attempts', shows the current number of spin attempts that user has */
-	spin_count?: number
+	spin_count?: number;
 	/** if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available */
-	next_available_spin_ts: number
+	next_available_spin_ts: number;
 	/** The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED */
-	over_limit_message: string
+	over_limit_message: string;
 	/** The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points. */
-	no_attempts_message: string
+	no_attempts_message: string;
 	/** Current jackpont amount, if jackpot is enabled. */
-	jackpot_current: number
+	jackpot_current: number;
 	/** The amount that will be added to the jackpot every time when somebody plays the game. Note that the contribution amount is abstract, means that no money or points are deducted from the user balance. */
-	jackpot_add_on_attempt: number
+	jackpot_add_on_attempt: number;
 	/** The symbol of jackpot that is giving the sense to the 'amount' E.g. the symbol could be EUR and connected to the amount it can indicate that amount is monetary, e.g. '100 EUR'. Or the symbol can be 'Free spins' and connected to the amount it can indicate that amount is number of free spins, e.g. '100 Free spins'.
 	 */
-	jackpot_symbol: string
+	jackpot_symbol: string;
 	/** The promo image  */
-	promo_image: string
+	promo_image: string;
 	/** The promo text  */
-	promo_text: string
+	promo_text: string;
 	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
-	custom_data: any
-	prizes: TMiniGamePrize[]
+	custom_data: any;
+	prizes: TMiniGamePrize[];
 }
 /**
  * TUser describes the information of the user
@@ -780,28 +786,28 @@ export interface TMiniGameTemplate {
  */
 export interface TUserProfile {
 	/** The language of the user */
-	core_user_language: string
+	core_user_language: string;
 	/** The current points balance that user can use in the Store, Mini-games, Tournaments, etc.. */
-	ach_points_balance: number
+	ach_points_balance: number;
 	/** The amount of points that user collected in total */
-	ach_points_ever: number
+	ach_points_ever: number;
 	/**
 	 * The array of the public tags set on the user object.
 	 * They can be treated as server-based cookies.
 	 * You can set tags using following method _smartico.event('core_public_tags_update', { core_public_tags: ['A', 'B'] } );
 	 * And then you can check for the tags
 	 */
-	core_public_tags: string[]
+	core_public_tags: string[];
 	/** The ID of the current level of the user */
-	ach_level_current_id?: number
+	ach_level_current_id?: number;
 	/** The indicator if user is marked as test user */
-	core_is_test_account?: boolean
+	core_is_test_account?: boolean;
 	/** The URL to the user avatar */
-	avatar_url?: string
+	avatar_url?: string;
 	/** The username of current user */
-	public_username?: string
+	public_username?: string;
 	/** THe number of unread inbox messages */
-	core_inbox_unread_count?: number
+	core_inbox_unread_count?: number;
 }
 /**
  * TLevel describes the information of each level defined in the system
@@ -811,459 +817,459 @@ export interface TUserProfile {
  */
 export interface TLevel {
 	/** The ID of the Level */
-	id: number
+	id: number;
 	/** The name of the Level, translated to the user language */
-	name: string
+	name: string;
 	/** The description of the Level, translated to the user language */
-	description: string
+	description: string;
 	/** The URL of the image of the Level */
-	image: string
+	image: string;
 	/** The amount of points required to reach the Level */
-	required_points: number
+	required_points: number;
 	/** Number of points that user should collect in order to see this level */
-	visibility_points: number
+	visibility_points: number;
 	/**
 	 * The counter of 1st metric used to reach the Level.
 	 * Relevant in case of using advanced leveling logic
 	 * https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
 	 *
 	 */
-	required_level_counter_1: number
+	required_level_counter_1: number;
 	/**
 	 * The counter of 2nd metric used to reach the Level.
 	 * Relevant in case of using advanced leveling logic
 	 * https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
 	 *
 	 */
-	required_level_counter_2: number
+	required_level_counter_2: number;
 	/** The custom data of the Level defined by operator in the BackOffice. Can be a JSON object, string or number */
-	custom_data: string
+	custom_data: string;
 }
 /**
  * TTournament describes the general information of the tournament item
  */
 export interface TTournament {
 	/** ID of tournament instance. Generated every time when tournament based on specific template is scheduled for run */
-	instance_id: number
+	instance_id: number;
 	/** ID of tournament template */
-	tournament_id: number
+	tournament_id: number;
 	/** Name of the tournament, translated to the user language */
-	name: string
+	name: string;
 	/** Description of the tournament, translated to the user language */
-	description: string
-	image1: string
-	image2: string
-	prize_pool_short: string
-	custom_price_text: string
+	description: string;
+	image1: string;
+	image2: string;
+	prize_pool_short: string;
+	custom_price_text: string;
 	/** The message that should be shown to the user when the user cannot register in tournament with error code TOURNAMENT_USER_DONT_MATCH_CONDITIONS  */
-	segment_dont_match_message: string
+	segment_dont_match_message: string;
 	/**
 	 * The ID of the custom section where the tournament is assigned
 	 * The list of custom sections can be retrieved using _smartico.api.getCustomSections() method (TODO-API)
 	 */
-	custom_section_id: number
+	custom_section_id: number;
 	/** The custom data of the tournament defined by operator. Can be a JSON object, string or number */
-	custom_data: any
+	custom_data: any;
 	/** The indicator if the tournament is 'Featured' */
-	is_featured: boolean
+	is_featured: boolean;
 	/** The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
-	ribbon: TRibbon
+	ribbon: TRibbon;
 	/** A number is used to order the tournaments, representing their priority in the list  */
-	priority: number
+	priority: number;
 	/** Info about current player in tournament */
 	me?: {
 		/** The username of the participant */
-		public_username: string
+		public_username: string;
 		/** The URL to the avatar of the participant */
-		avatar_url: string
+		avatar_url: string;
 		/** The position of the participant in the tournament */
-		position: number
+		position: number;
 		/** The scores of the participant in the tournament */
-		scores: number
-	}
+		scores: number;
+	};
 	/** Prize structure */
 	prizes?: {
 		/** The name of the prize */
-		name: string
+		name: string;
 		/** The description of the prize */
-		description: string
+		description: string;
 		/** The image of the prize */
-		image_url: string
+		image_url: string;
 		/** from-to range of the places to which this prize */
-		place_from: number
-		place_to: number
+		place_from: number;
+		place_to: number;
 		/** type of the prize: TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS */
-		type: string
+		type: string;
 		/** if the prize is points related, indicates amount of points */
-		points?: number
-	}[]
+		points?: number;
+	}[];
 	/** The time when tournament is going to start, epoch with milliseconds */
-	start_time: number
+	start_time: number;
 	/** The time when tournament is going to finish, epoch with milliseconds */
-	end_time: number
+	end_time: number;
 	/** Type of registration in the tournament */
-	registration_type: TournamentRegistrationTypeName
+	registration_type: TournamentRegistrationTypeName;
 	/** Number of users registered in the tournament */
-	registration_count: number
+	registration_count: number;
 	/** flag indicating if current user is registered in the tournament */
-	is_user_registered: boolean
+	is_user_registered: boolean;
 	/** Minimum number of participant for this tournament. If tournament doesnt have enough registrations, it will not start */
-	players_min_count: number
+	players_min_count: number;
 	/** Maximum number of participant for this tournament. When reached, new users won't be able to register */
-	players_max_count: number
+	players_max_count: number;
 	/** Status of registration in the tournament for current user */
-	registration_status: TournamentRegistrationStatusName
+	registration_status: TournamentRegistrationStatusName;
 	/** Tournament duration in millisecnnds */
-	duration_ms: number
+	duration_ms: number;
 	/** Cost of registration in the tournament in gamification points */
-	registration_cost_points: number
+	registration_cost_points: number;
 	/** Indicator if tournament instance is active, means in one of the statues -  PUBLISHED, REGISTED, STARTED */
-	is_active: boolean
+	is_active: boolean;
 	/** Indicator if user can register in this tournament instance, e.g tournament is active, max users is not reached, user is not registered yet */
-	is_can_register: boolean
+	is_can_register: boolean;
 	/** Indicator if tournament instance is cancelled (status CANCELLED) */
-	is_cancelled: boolean
+	is_cancelled: boolean;
 	/** Indicator if tournament instance is finished (status FINISHED, CANCELLED OR FINIALIZING) */
-	is_finished: boolean
+	is_finished: boolean;
 	/** Indicator if tournament instance is running (status STARTED) */
-	is_in_progress: boolean
+	is_in_progress: boolean;
 	/** Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER) */
-	is_upcoming: boolean
+	is_upcoming: boolean;
 }
 /**
  * TTournamentDetailed describes the information of the tournament item and includes list of participants, their scores and position in the tournament leaderboard
  */
 export interface TTournamentDetailed extends TTournament {
 	/** List of casino games (or other types of entities) related to the tournament */
-	related_games?: AchRelatedGame$1[]
+	related_games?: AchRelatedGame$1[];
 	/** The list of the tournament participants */
 	players?: {
 		/** The username of the participant */
-		public_username: string
+		public_username: string;
 		/** The URL to the avatar of the participant */
-		avatar_url: string
+		avatar_url: string;
 		/** The position of the participant in the tournament */
-		position: number
+		position: number;
 		/** The scores of the participant in the tournament */
-		scores: number
+		scores: number;
 		/** The indicator if the participant is current user */
-		is_me: boolean
-	}[]
+		is_me: boolean;
+	}[];
 	/** The information about current user in the tournament if he is registered in the tournamnet */
 	me?: {
 		/** The username of the current user */
-		public_username: string
+		public_username: string;
 		/** The URL to the avatar of the current user */
-		avatar_url: string
+		avatar_url: string;
 		/** The position of the current user in the tournament */
-		position: number
+		position: number;
 		/** The scores of the current user in the tournament */
-		scores: number
-	}
+		scores: number;
+	};
 	prizes?: {
 		/** The name of the prize */
-		name: string
+		name: string;
 		/** The description of the prize */
-		description: string
+		description: string;
 		/** The image of the prize */
-		image_url: string
+		image_url: string;
 		/** from-to range of the places to which this prize */
-		place_from: number
-		place_to: number
+		place_from: number;
+		place_to: number;
 		/** type of the prize: TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS */
-		type: string
+		type: string;
 		/** if the prize is points related, indicates amount of points */
-		points?: number
-	}[]
+		points?: number;
+	}[];
 }
 /**
  * TStoreCategory describes the store category item. Each store item can be assigned to 1 or more categories
  */
 export interface TStoreCategory {
-	id: number
-	name: string
-	order: number
+	id: number;
+	name: string;
+	order: number;
 }
 /**
  * TStoreItem describes the information of the store item defined in the system
  */
 export interface TStoreItem {
 	/** ID of the store item  */
-	id: number
+	id: number;
 	/** Name of the store item, translated to the user language */
-	name: string
+	name: string;
 	/** Description of the store item, translated to the user language */
-	description: string
+	description: string;
 	/** URL of the image of the store item */
-	image: string
+	image: string;
 	/** Type of the store item. Can be 'bonus' or 'manual'. Manual, means it's tangible item, e.g. iPhone */
-	type: 'bonus' | 'manual'
+	type: 'bonus' | 'manual';
 	/** The price of the store item in the gamification points */
-	price: number
+	price: number;
 	/** The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
-	ribbon: TRibbon
+	ribbon: TRibbon;
 	/**
 	 *  The message that should be shown to the user if he is not eligible to buy it. this message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item' and can be used in case can_buy property is false.
 		The message is translated to the user language.
 		**Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
 	*/
-	limit_message: string
+	limit_message: string;
 	/** The priority of the store item. Can be used to sort the items in the store */
-	priority: number
+	priority: number;
 	/** The list of IDs of the related items. Can be used to show the related items in the store */
-	related_item_ids: number[]
+	related_item_ids: number[];
 	/** The indicator if the user can buy the item
 	 *  This indicator is taking into account the segment conditions for the store item, the price of item towards users balance,
 	 */
-	can_buy: boolean
+	can_buy: boolean;
 	/** The list of IDs of the categories where the store item is assigned, information about categories can be retrieved with getStoreCategories method */
-	category_ids: number[]
+	category_ids: number[];
 	/** Number of items in the pool avaliable for the purchase.*/
-	pool?: number
+	pool?: number;
 	/** The T&C text for the store item */
-	hint_text?: string
+	hint_text?: string;
 	/** Purchase time to show in purchase history screen */
-	purchase_ts?: number
+	purchase_ts?: number;
 	/** The amount of points you can purchase an item */
-	purchase_points_amount?: number
+	purchase_points_amount?: number;
 }
 /**
  * TAchCategory describes the badge category item. Each badge item can be assigned to 1 or more categories
  */
 export interface TAchCategory {
-	id: number
-	name: string
-	order: number
+	id: number;
+	name: string;
+	order: number;
 }
 /**
  * TMissionOrBadge describes the information of mission or badge defined in the system
  */
 export interface TMissionOrBadge {
 	/** ID of the mission or badge  */
-	id: number
+	id: number;
 	/** Type of entity. Can be 'mission' or 'badge' */
-	type: 'mission' | 'badge'
+	type: 'mission' | 'badge';
 	/** Name of the mission or badge, translated to the user language */
-	name: string
+	name: string;
 	/** Description of the mission or badge, translated to the user language */
-	description: string
+	description: string;
 	/** Description of the mission reward if defined */
-	reward: string
+	reward: string;
 	/** URL of the image of the mission or badge */
-	image: string
+	image: string;
 	/** Indicator if the mission is completed or badge is granted */
-	is_completed: boolean
+	is_completed: boolean;
 	/** Indicator if the mission is locked. Means that it's visible to the user, but he cannot progress in it until it's unlocked.
 	 * Mission may optionally contain the explanation of what should be done to unlock it in the unlock_mission_description property
 	 */
-	is_locked: boolean
+	is_locked: boolean;
 	/** Optional explaination of what should be done to unlock the mission */
-	unlock_mission_description: string
+	unlock_mission_description: string;
 	/** Indicator if the mission requires opt-in. Means that user should explicitly opt-in to the mission in order to start progressing in it */
-	is_requires_optin: boolean
+	is_requires_optin: boolean;
 	/** Indicator if the user opted-in to the mission */
-	is_opted_in: boolean
+	is_opted_in: boolean;
 	/** The amount of time in milliseconds that user has to complete the mission */
-	time_limit_ms: number
+	time_limit_ms: number;
 	/** The date when the mission was started, relevant for the time limited missions */
-	dt_start: number
+	dt_start: number;
 	/** The progress of the mission in percents calculated as the aggregated relative percentage of all tasks */
-	progress: number
+	progress: number;
 	/**
 	 * The action that should be performed when user clicks on the mission or badge
 	 * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
 	 * The 'dp' function will handle the CTA and will execute it in the most safe way
 	 */
-	cta_action: string
+	cta_action: string;
 	/** The text of the CTA button, e.g. 'Make a deposit' */
-	cta_text: string
+	cta_text: string;
 	/**
 	 * The ID of the custom section where the mission or badge is assigned
 	 * The list of custom sections can be retrieved using _smartico.api.getCustomSections() method (TODO-API)
 	 */
-	custom_section_id: number
+	custom_section_id: number;
 	/** The indicator if the mission or badge is visible only in the custom section and should be hidden from the main overview of missions/badges */
-	only_in_custom_section: boolean
+	only_in_custom_section: boolean;
 	/** The custom data of the mission or badge defined by operator. Can be a JSON object, string or number */
-	custom_data: any
+	custom_data: any;
 	/** The list of tasks of the mission or badge */
-	tasks: TMissionOrBadgeTask[]
+	tasks: TMissionOrBadgeTask[];
 	/** List of casino games (or other types of entities) related to the mission or badge */
-	related_games?: AchRelatedGame$1[]
+	related_games?: AchRelatedGame$1[];
 	/** The list of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method */
-	category_ids: number[]
+	category_ids: number[];
 	/** The T&C text for the missions */
-	hint_text?: string
+	hint_text?: string;
 	/** Priority (or position) of the mission in the UI. Low value indicates higher position in the UI */
-	position?: number
+	position?: number;
 	/** The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
-	ribbon?: TRibbon
+	ribbon?: TRibbon;
 	/** ID of the completion fact from ach_completed or ach_completed_recurring tables */
-	ach_completed_id?: number
+	ach_completed_id?: number;
 	/** Flag from achievement if the mission prize will be given only after user claims it */
-	requires_prize_claim?: boolean
+	requires_prize_claim?: boolean;
 	/** The date/timestamp indicating when the prize was claimed by the user */
-	prize_claimed_date_ts?: number
+	prize_claimed_date_ts?: number;
 }
 interface AchRelatedGame$1 {
 	/** The ID of the related game */
-	ext_game_id: string
+	ext_game_id: string;
 	/** Game public meta information */
 	game_public_meta: {
 		/** The name of the game */
-		name: string
+		name: string;
 		/** The URL to the game */
-		link: string
+		link: string;
 		/** The URL to the image of the game */
-		image: string
+		image: string;
 		/** The indicator if the game is enabled */
-		enabled: boolean
+		enabled: boolean;
 		/** The list of categories of the game */
-		game_categories: string[]
+		game_categories: string[];
 		/** The name of the game provider */
-		game_provider: string
-	}
+		game_provider: string;
+	};
 }
 /**
  * TMissionOrBadgeTask describes the information of tasks that belings to mission or badge. See also TMissionOrBadge
  */
 export interface TMissionOrBadgeTask {
 	/** ID of the task */
-	id: number
+	id: number;
 	/** Name of the task, translated to the user language */
-	name: string
+	name: string;
 	/** Indicator if the task is completed */
-	is_completed: boolean
+	is_completed: boolean;
 	/** The progress of the task in percents */
-	progress: number
+	progress: number;
 	/** Reward for completing the task in points */
-	points_reward: number
+	points_reward: number;
 }
 /**
  * TMissionOptInResult describes the response of call to _smartico.api.requestMissionOptIn(mission_id) method
  */
 export interface TMissionOptInResult {
 	/** Error code that represents outcome of the opt-in request. Successful opt-in in case err_code is 0 */
-	err_code: number
+	err_code: number;
 	/** Optional error message */
-	err_message: string
+	err_message: string;
 }
 /**
  * TMissionClaimRewardResult describes the response of call to _smartico.api.requestMissionClaimReward(mission_id, ach_completed_id) method
  */
 export interface TMissionClaimRewardResult {
 	/** Error code that represents outcome of the claim request. Successful claim reward in case err_code is 0 */
-	err_code: number
+	err_code: number;
 	/** Optional error message */
-	err_message: string
+	err_message: string;
 }
 export interface TTournamentRegistrationResult {
 	/** Error code that represents outcome of the tournament registration request. Successful registration in case err_code is 0 */
-	err_code: TournamentRegistrationError
+	err_code: TournamentRegistrationError;
 	/** Optional error message */
-	err_message: string
+	err_message: string;
 }
 export interface TBuyStoreItemResult {
 	/** Error code representing the result of the purchase of the shop item. Successful purchase if err_code is 0 */
-	err_code: BuyStoreItemErrorCode
+	err_code: BuyStoreItemErrorCode;
 	/** Optional error message */
-	err_message: string
+	err_message: string;
 }
 export interface TGetTranslations {
 	translations: {
-		[key: string]: string
-	}
+		[key: string]: string;
+	};
 }
 export interface TInboxMessage {
 	/** Uniq identifier of the message. It is needed to request the message body, mark the message as read/deleted/favorite. */
-	message_guid: string
+	message_guid: string;
 	/** Date when the message was sent */
-	sent_date: string
+	sent_date: string;
 	/** Indicator if a message is read */
-	read: boolean
+	read: boolean;
 	/** Indicator if a message is added to favorites */
-	favorite: boolean
+	favorite: boolean;
 }
 export interface TInboxMessageBody {
 	/** Message title */
-	title: string
+	title: string;
 	/** Short preview body of the message */
-	preview_body: string
+	preview_body: string;
 	/** Message icon */
-	icon: string
+	icon: string;
 	/** The action that should be performed when user clicks on the message.
 	 * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
 	 * The 'dp' function will handle the CTA and will execute it in the most safe way.
 	 * If the message has a rich html body - the action will always be 'dp:inbox' which will open the inbox widget when triggered. */
-	action: string
+	action: string;
 	/** Rich HTML body of the message. */
-	html_body?: string
+	html_body?: string;
 	/** Optional additional buttons to show in the message, available only if message has rich HTML body. Max count - 2. */
 	buttons?: {
 		/** The action that should be performed when user clicks on the button. The logic is the same as for message actions */
-		action: string
+		action: string;
 		/** Button text */
-		text: string
-	}[]
+		text: string;
+	}[];
 }
 export interface InboxMarkMessageAction {
 	/** An error code representing the result of marking a message as deleted, favorite or read. Successful marking action if err_code is 0 */
-	err_code: number
+	err_code: number;
 	/** Optional error message */
-	err_message: string
+	err_message: string;
 }
 export interface LeaderBoardDetailsT {
 	/** ID of the leaderboard */
-	board_id: number
+	board_id: number;
 	/** Name of the leaderboard */
-	name: string
+	name: string;
 	/** Description of the leaderboard */
-	description: string
+	description: string;
 	/** Rules of the leaderboard */
-	rules: string
+	rules: string;
 	/** Leaderboard period type ID */
-	period_type_id: LeaderBoardPeriodType
+	period_type_id: LeaderBoardPeriodType;
 	/** Leaderboard points rewards */
-	rewards: LeaderBoardsRewardsT[]
+	rewards: LeaderBoardsRewardsT[];
 	/** Leaderboard users */
-	users: LeaderBoardUserT[]
+	users: LeaderBoardUserT[];
 	/** Info about current user in leaderboard */
-	me?: LeaderBoardUserT
+	me?: LeaderBoardUserT;
 }
 export interface LeaderBoardsRewardsT {
-	place: number
-	points: number
+	place: number;
+	points: number;
 }
 export interface LeaderBoardUserT {
 	/** The username of the participant */
-	public_username: string
+	public_username: string;
 	/** The URL to the avatar of the participant */
-	avatar_url: string
+	avatar_url: string;
 	/** The position of the participant in the leaderboard */
-	position: number
+	position: number;
 	/** The points of the participant in the leaderboard */
-	points: number
+	points: number;
 	/** The indicator if the participant is current user */
-	is_me: boolean
+	is_me: boolean;
 }
 export interface UserLevelExtraCountersT {
 	/** The counter of 1st metric used to reach the level. */
-	level_counter_1?: number
+	level_counter_1?: number;
 	/** The counter of 2nd metric used to reach the level. */
-	level_counter_2?: number
+	level_counter_2?: number;
 }
 export interface TSegmentCheckResult {
-	segment_id: number
-	is_matching: boolean
+	segment_id: number;
+	is_matching: boolean;
 }
 export interface SAWGetTemplatesResponse extends ProtocolResponse {
-	templates: SAWTemplate[]
+	templates: SAWTemplate[];
 }
 export interface GetLabelInfoResponse extends ProtocolResponse {
 	settings: {
-		[key: string]: string
-	}
-	label_id: string
+		[key: string]: string;
+	};
+	label_id: string;
 }
 declare enum TranslationArea {
 	Casino = 1,
@@ -1275,10 +1281,10 @@ declare enum TranslationArea {
 	AffIliateAdminNew = 7,
 }
 export interface GetTranslationsResponse extends ProtocolResponse {
-	hash_code: number
+	hash_code: number;
 	translations: {
-		[key: string]: string
-	}
+		[key: string]: string;
+	};
 }
 declare enum PublicLabelSettings$1 {
 	PUBLIC_API_URL = 'PUBLIC_API_URL',
@@ -1308,22 +1314,22 @@ declare enum PublicLabelSettings$1 {
 	INBOX_PUBLIC_CDN = 'INBOX_PUBLIC_CDN',
 }
 interface PublicProperties$1 {
-	core_user_language?: string
-	ach_points_balance?: number
-	ach_points_ever?: number
-	ach_level_current_id?: number
-	ach_level_current?: string
-	core_is_test_account?: boolean
-	ach_gamification_in_control_group?: boolean
+	core_user_language?: string;
+	ach_points_balance?: number;
+	ach_points_ever?: number;
+	ach_level_current_id?: number;
+	ach_level_current?: string;
+	core_is_test_account?: boolean;
+	ach_gamification_in_control_group?: boolean;
 }
 export interface ResponseIdentify extends ProtocolResponse {
-	user_id: number
-	ext_user_id: string
-	public_username: string
-	avatar_id: string
-	job: boolean
-	props?: PublicProperties$1
-	pubic_username_set: boolean
+	user_id: number;
+	ext_user_id: string;
+	public_username: string;
+	avatar_id: string;
+	job: boolean;
+	props?: PublicProperties$1;
+	pubic_username_set: boolean;
 }
 declare enum InboxMessageType {
 	Custom = 0,
@@ -1337,60 +1343,60 @@ declare enum InboxMessageType {
 	PersonalMessage = 8,
 }
 export interface InboxMessageBody {
-	action: string
-	body: string
-	type: InboxMessageType
-	image: string
-	title: string
-	html_body: string
+	action: string;
+	body: string;
+	type: InboxMessageType;
+	image: string;
+	title: string;
+	html_body: string;
 	additional_buttons?: {
-		inbox_cta_text: string
-		action: string
-	}[]
+		inbox_cta_text: string;
+		action: string;
+	}[];
 }
 export interface InboxMessage {
-	createDate: string
-	body: InboxMessageBody
-	engagement_uid: string
-	is_read: boolean
-	is_starred: boolean
-	is_deleted?: boolean
+	createDate: string;
+	body: InboxMessageBody;
+	engagement_uid: string;
+	is_read: boolean;
+	is_starred: boolean;
+	is_deleted?: boolean;
 }
 export interface GetInboxMessagesResponse extends ProtocolResponse {
-	log: InboxMessage[]
+	log: InboxMessage[];
 }
 export interface MarkInboxMessageReadResponse extends ProtocolMessage {
-	errCode: number
-	errMsg?: string
+	errCode: number;
+	errMsg?: string;
 }
 export interface MarkInboxMessageStarredResponse extends ProtocolMessage {
-	errCode: number
-	errMsg?: string
+	errCode: number;
+	errMsg?: string;
 }
 export interface MarkInboxMessageDeletedResponse extends ProtocolMessage {
-	errCode: number
-	errMsg?: string
+	errCode: number;
+	errMsg?: string;
 }
 export interface AchievementOptinResponse extends ProtocolResponse {}
 export interface AchievementPublicMeta {
-	description?: string
-	unlock_mission_description?: string
-	custom_data?: string
-	cta_text?: string
-	cta_action?: string
-	label_tag?: string
-	custom_label_tag?: string
-	reward?: string
-	image_url?: string
-	name?: string
-	position?: number
-	hide_tasks?: boolean
-	hide_locked_mission?: boolean
-	custom_section_id?: number
-	only_in_custom_section?: boolean
-	hint_text?: string
-	hide_badge_from_ui?: boolean
-	show_badge_first_task_completed?: boolean
+	description?: string;
+	unlock_mission_description?: string;
+	custom_data?: string;
+	cta_text?: string;
+	cta_action?: string;
+	label_tag?: string;
+	custom_label_tag?: string;
+	reward?: string;
+	image_url?: string;
+	name?: string;
+	position?: number;
+	hide_tasks?: boolean;
+	hide_locked_mission?: boolean;
+	custom_section_id?: number;
+	only_in_custom_section?: boolean;
+	hint_text?: string;
+	hide_badge_from_ui?: boolean;
+	show_badge_first_task_completed?: boolean;
 }
 declare enum AchievementStatus {
 	Draft = 1,
@@ -1401,7 +1407,7 @@ declare enum AchievementStatus {
 	FeaturedAI = 6,
 }
 export interface AchievementTaskPublicMeta {
-	name?: string
+	name?: string;
 }
 declare enum AchievementTaskType {
 	CompleteAchievement = 1,
@@ -1417,96 +1423,96 @@ declare enum ScheduledMissionType {
 	Present = 3,
 }
 export interface UserAchievementTask {
-	task_id?: number
-	task_public_meta?: AchievementTaskPublicMeta
-	points_reward?: number
-	task_type_id: AchievementTaskType
-	isCompleted?: boolean
-	userExecutedCount?: number
-	userProgress?: number
-	lastExecutionDate: string
-	unlocked_by_mission_id?: number
-	unlocked_by_level_id?: number
+	task_id?: number;
+	task_public_meta?: AchievementTaskPublicMeta;
+	points_reward?: number;
+	task_type_id: AchievementTaskType;
+	isCompleted?: boolean;
+	userExecutedCount?: number;
+	userProgress?: number;
+	lastExecutionDate: string;
+	unlocked_by_mission_id?: number;
+	unlocked_by_level_id?: number;
 }
 export interface UserAchievement {
-	ach_id?: number
-	ach_type_id?: AchievementType
-	ach_public_meta?: AchievementPublicMeta
-	isCompleted?: boolean
-	isLocked?: boolean
-	requiresOptin?: boolean
-	isOptedIn?: boolean
-	start_date?: string
-	start_date_ts?: number
-	time_limit_ms?: number
-	progress?: number
-	complete_date?: string
-	unlock_date?: string
-	milliseconds_till_available?: number
-	completed_tasks?: number
-	achievementTasks?: UserAchievementTask[]
-	ach_status_id?: AchievementStatus
-	scheduledMissionType?: ScheduledMissionType
-	related_games?: AchRelatedGame[]
-	active_from_ts?: number
-	ach_categories?: number[]
-	ach_completed_id?: number
-	requires_prize_claim?: boolean
-	prize_claimed_date_ts?: number
+	ach_id?: number;
+	ach_type_id?: AchievementType;
+	ach_public_meta?: AchievementPublicMeta;
+	isCompleted?: boolean;
+	isLocked?: boolean;
+	requiresOptin?: boolean;
+	isOptedIn?: boolean;
+	start_date?: string;
+	start_date_ts?: number;
+	time_limit_ms?: number;
+	progress?: number;
+	complete_date?: string;
+	unlock_date?: string;
+	milliseconds_till_available?: number;
+	completed_tasks?: number;
+	achievementTasks?: UserAchievementTask[];
+	ach_status_id?: AchievementStatus;
+	scheduledMissionType?: ScheduledMissionType;
+	related_games?: AchRelatedGame[];
+	active_from_ts?: number;
+	ach_categories?: number[];
+	ach_completed_id?: number;
+	requires_prize_claim?: boolean;
+	prize_claimed_date_ts?: number;
 }
 export interface GetAchievementMapResponse extends ProtocolResponse {
-	achievements?: UserAchievement[]
+	achievements?: UserAchievement[];
 }
 export interface AchCategoryPublicMeta {
-	name?: string
-	order?: number
+	name?: string;
+	order?: number;
 }
 export interface AchCategory {
-	id?: number
-	publicMeta?: AchCategoryPublicMeta
+	id?: number;
+	publicMeta?: AchCategoryPublicMeta;
 }
 export interface GetAchCategoriesResponse extends ProtocolResponse {
-	categories: AchCategory[]
+	categories: AchCategory[];
 }
 export interface AchClaimPrizeResponse extends ProtocolResponse {}
 export interface LevelPublicMeta {
 	/** Description of level, HTML capabable */
-	description?: string
+	description?: string;
 	/** URL to the image of level */
-	image_url?: string
+	image_url?: string;
 	/** Name of level */
-	name?: string
+	name?: string;
 	/** Number of points that user should have collected in order to see this level */
-	visibility_points?: number
+	visibility_points?: number;
 	/** X & Y coordinates of level on the visual mission map, for desktop and mobile */
 	position?: {
-		mx: number
-		my: number
-		dx: number
-		dy: number
-	}
+		mx: number;
+		my: number;
+		dx: number;
+		dy: number;
+	};
 	/**custom data as string or JSON string that can be used in UIWidget */
-	custom_data: string
+	custom_data: string;
 }
 export interface Level {
-	level_id: number
-	level_public_meta: LevelPublicMeta
-	required_points: number
-	is_first_level: boolean
+	level_id: number;
+	level_public_meta: LevelPublicMeta;
+	required_points: number;
+	is_first_level: boolean;
 	/** Internal status of level. Not in use right now on the front-end */
-	level_status_id: number
-	required_level_counter_1: number
-	required_level_counter_2: number
-	general_level_progress: number
+	level_status_id: number;
+	required_level_counter_1: number;
+	required_level_counter_2: number;
+	general_level_progress: number;
 }
 export interface GetLevelMapResponse extends ProtocolResponse {
-	levels: Level[]
+	levels: Level[];
 }
 declare class WSAPI {
-	private api
-	private onUpdateCallback
+	private api;
+	private onUpdateCallback;
 	/** @private */
-	constructor(api: SmarticoAPI)
+	constructor(api: SmarticoAPI);
 	/** Returns information about current user
 	 * Example usage:
 	 * ```
@@ -1515,7 +1521,7 @@ declare class WSAPI {
 	 * });
 	 * ```
 	 * */
-	getUserProfile(): TUserProfile
+	getUserProfile(): TUserProfile;
 	/** Check if user belongs to specific segments
 	 * Example usage:
 	 * ```
@@ -1524,7 +1530,7 @@ declare class WSAPI {
 	 * });
 	 * ```
 	 */
-	checkSegmentMatch(segment_id: number): Promise<boolean>
+	checkSegmentMatch(segment_id: number): Promise<boolean>;
 	/** Check if user belongs to specific list of segments
 	 * Example usage:
 	 * ```
@@ -1533,7 +1539,7 @@ declare class WSAPI {
 	 * });
 	 * ```
 	 */
-	checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentCheckResult[]>
+	checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentCheckResult[]>;
 	/** Returns all the levels available the current user
 	 * Example usage:
 	 * ```
@@ -1542,7 +1548,7 @@ declare class WSAPI {
 	 * });
 	 * ```
 	 */
-	getLevels(): Promise<TLevel[]>
+	getLevels(): Promise<TLevel[]>;
 	/** Returns all the missions available the current user.
 	 * The returned missions are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
 	 * Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one.
@@ -1556,9 +1562,9 @@ declare class WSAPI {
 	 /**
 	 * @param params
 	 */
-	getMissions({ onUpdate }?: { onUpdate?: (data: TMissionOrBadge[]) => void }): Promise<TMissionOrBadge[]>
+	getMissions({ onUpdate }?: { onUpdate?: (data: TMissionOrBadge[]) => void }): Promise<TMissionOrBadge[]>;
 	/** Returns all the badges available the current user */
-	getBadges(): Promise<TMissionOrBadge[]>
+	getBadges(): Promise<TMissionOrBadge[]>;
 	/**
 	 * Returns the extra counters for the current user level.
 	 * These are counters that are configured for each Smartico client separatly by request.
@@ -1570,7 +1576,7 @@ declare class WSAPI {
 	 * });
 	 * ```
 	 */
-	getUserLevelExtraCounters(): Promise<UserLevelExtraCountersT>
+	getUserLevelExtraCounters(): Promise<UserLevelExtraCountersT>;
 	/** Returns all the store items available the current user
 	 * Example usage:
 	 * ```
@@ -1578,7 +1584,7 @@ declare class WSAPI {
 	 *      console.log(result);
 	 * });
 	 */
-	getStoreItems(): Promise<TStoreItem[]>
+	getStoreItems(): Promise<TStoreItem[]>;
 	/** Buy the specific shop item by item_id. Returns the err_code in case of success or error.
 	 * Example usage:
 	 * ```
@@ -1586,9 +1592,9 @@ declare class WSAPI {
 	 *     console.log(result);
 	 * });
 	 */
-	buyStoreItem(item_id: number): Promise<TBuyStoreItemResult>
+	buyStoreItem(item_id: number): Promise<TBuyStoreItemResult>;
 	/** Returns store categories */
-	getStoreCategories(): Promise<TStoreCategory[]>
+	getStoreCategories(): Promise<TStoreCategory[]>;
 	/** Returns store purchased items based on the provided parameters. "From" and "to" indicate the range of items to be fetched.
 	 * The maximum number of messages per request is limited to 20.
 	 * You can leave this params empty and by default it will return list of purchased items ranging from 0 to 20.
@@ -1597,9 +1603,17 @@ declare class WSAPI {
 	/**
 	 * @param params
 	 */
-	storeGetPurchasedItems({ from, to, onUpdate }?: { from?: number; to?: number; onUpdate?: (data: TStoreItem[]) => void }): Promise<TStoreItem[]>
+	storeGetPurchasedItems({
+		from,
+		to,
+		onUpdate,
+	}?: {
+		from?: number;
+		to?: number;
+		onUpdate?: (data: TStoreItem[]) => void;
+	}): Promise<TStoreItem[]>;
 	/** Returns missions & badges categories */
-	getAchCategories(): Promise<TAchCategory[]>
+	getAchCategories(): Promise<TAchCategory[]>;
 	/** Returns the list of mini-games available for user
 	 * The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one.
 	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback. */
@@ -1607,28 +1621,28 @@ declare class WSAPI {
 	/**
 	 * @param params
 	 */
-	getMiniGames({ onUpdate }?: { onUpdate?: (data: TMiniGameTemplate[]) => void }): Promise<TMiniGameTemplate[]>
+	getMiniGames({ onUpdate }?: { onUpdate?: (data: TMiniGameTemplate[]) => void }): Promise<TMiniGameTemplate[]>;
 	/** Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code  */
-	playMiniGame(template_id: number): Promise<TMiniGamePlayResult>
+	playMiniGame(template_id: number): Promise<TMiniGamePlayResult>;
 	/** Requests an opt-in for the specified mission_id. Returns the err_code. */
-	requestMissionOptIn(mission_id: number): Promise<TMissionOptInResult>
+	requestMissionOptIn(mission_id: number): Promise<TMissionOptInResult>;
 	/** Request for claim reward for the specified mission id. Returns the err_code. */
-	requestMissionClaimReward(mission_id: number, ach_completed_id: number): Promise<TMissionClaimRewardResult>
+	requestMissionClaimReward(mission_id: number, ach_completed_id: number): Promise<TMissionClaimRewardResult>;
 	/** Returns all the active instances of tournaments
 	 * The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one.
 	 * The onUpdate callback will be called when the user has registered in a tournament. Updated list will be passed to onUpdate callback.*/
 	/**
 	 * @param params
 	 */
-	getTournamentsList({ onUpdate }?: { onUpdate?: (data: TTournament[]) => void }): Promise<TTournament[]>
+	getTournamentsList({ onUpdate }?: { onUpdate?: (data: TTournament[]) => void }): Promise<TTournament[]>;
 	/** Returns details information of specific tournament instance, the response will include tournament info and the leaderboard of players */
-	getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed>
+	getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed>;
 	/** Requests registration for the specified tournament instance. Returns the err_code. */
-	registerInTournament(tournamentInstanceId: number): Promise<TTournamentRegistrationResult>
+	registerInTournament(tournamentInstanceId: number): Promise<TTournamentRegistrationResult>;
 	/** Returns the leaderboard for the current type (default is Daily). If getPreviousPeriod is passed as true, a leaderboard for the previous period for the current type will be returned.
 		For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
 	 */
-	getLeaderBoard(periodType: LeaderBoardPeriodType, getPreviousPeriod?: boolean): Promise<LeaderBoardDetailsT>
+	getLeaderBoard(periodType: LeaderBoardPeriodType, getPreviousPeriod?: boolean): Promise<LeaderBoardDetailsT>;
 	/** Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched.
 	 * The maximum number of messages per request is limited to 20. An indicator "onlyFavorite" can be passed to get only messages marked as favorites.
 	 * You can leave this params empty and by default it will return list of messages ranging from 0 to 20.
@@ -1639,140 +1653,177 @@ declare class WSAPI {
 	/**
 	 * @param params
 	 */
-	getInboxMessages({ from, to, onlyFavorite, onUpdate }?: { from?: number; to?: number; onlyFavorite?: boolean; onUpdate?: (data: TInboxMessage[]) => void }): Promise<TInboxMessage[]>
+	getInboxMessages({
+		from,
+		to,
+		onlyFavorite,
+		onUpdate,
+	}?: {
+		from?: number;
+		to?: number;
+		onlyFavorite?: boolean;
+		onUpdate?: (data: TInboxMessage[]) => void;
+	}): Promise<TInboxMessage[]>;
 	/** Returns the message body of the specified message guid. */
-	getInboxMessageBody(messageGuid: string): Promise<TInboxMessageBody>
+	getInboxMessageBody(messageGuid: string): Promise<TInboxMessageBody>;
 	/** Requests to mark inbox message with specified guid as read */
-	markInboxMessageAsRead(messageGuid: string): Promise<InboxMarkMessageAction>
+	markInboxMessageAsRead(messageGuid: string): Promise<InboxMarkMessageAction>;
 	/** Requests to mark all inbox messages as read */
-	markAllInboxMessagesAsRead(): Promise<InboxMarkMessageAction>
+	markAllInboxMessagesAsRead(): Promise<InboxMarkMessageAction>;
 	/** Requests to mark inbox message with specified guid as favorite. Pass mark true to add message to favorite and false to remove. */
-	markUnmarkInboxMessageAsFavorite(messageGuid: string, mark: boolean): Promise<InboxMarkMessageAction>
+	markUnmarkInboxMessageAsFavorite(messageGuid: string, mark: boolean): Promise<InboxMarkMessageAction>;
 	/** Requests to delete inbox message */
-	deleteInboxMessage(messageGuid: string): Promise<InboxMarkMessageAction>
+	deleteInboxMessage(messageGuid: string): Promise<InboxMarkMessageAction>;
 	/** Requests to delete all inbox messages */
-	deleteAllInboxMessages(): Promise<InboxMarkMessageAction>
+	deleteAllInboxMessages(): Promise<InboxMarkMessageAction>;
 	/** Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office. */
-	getTranslations(lang_code: string): Promise<TGetTranslations>
-	private updateOnSpin
-	private updateOnAddSpin
-	private updateOnPrizeWin
-	private updateMissionsOnOptIn
-	private updateTournamentsOnRegistration
-	private updateInboxMessages
-	private updateEntity
+	getTranslations(lang_code: string): Promise<TGetTranslations>;
+	private updateOnSpin;
+	private updateOnAddSpin;
+	private updateOnPrizeWin;
+	private updateMissionsOnOptIn;
+	private updateTournamentsOnRegistration;
+	private updateInboxMessages;
+	private updateEntity;
 }
 export interface GetAchievementsUserInfoResponse extends ProtocolResponse {
-	level_counter_1?: number
-	level_counter_2?: number
+	level_counter_1?: number;
+	level_counter_2?: number;
 }
 export interface Tracker {
-	label_api_key: string
-	userPublicProps: any
-	on: (callBackKey: ClassId, func: (data: any) => void) => void
-	getLabelSetting: (key: PublicLabelSettings$1) => any
+	label_api_key: string;
+	userPublicProps: any;
+	on: (callBackKey: ClassId, func: (data: any) => void) => void;
+	getLabelSetting: (key: PublicLabelSettings$1) => any;
 }
 export interface IOptions {
-	logger?: ILogger
-	logCIDs?: ClassId[]
-	logHTTPTiming?: boolean
-	tracker?: Tracker
+	logger?: ILogger;
+	logCIDs?: ClassId[];
+	logHTTPTiming?: boolean;
+	tracker?: Tracker;
 }
-export type MessageSender = (message: any, publicApuUrl?: string, expectCID?: ClassId) => Promise<any>
+export type MessageSender = (message: any, publicApuUrl?: string, expectCID?: ClassId) => Promise<any>;
 declare class SmarticoAPI {
-	private label_api_key
-	private brand_api_key
-	private messageSender
-	private publicUrl
-	private wsUrl
-	private inboxCdnUrl
-	private partnerUrl
-	avatarDomain: string
-	private logger
-	private logCIDs
-	private logHTTPTiming
-	tracker?: Tracker
-	constructor(label_api_key: string, brand_api_key: string, messageSender: MessageSender, options?: IOptions)
-	static getEnvDnsSuffix(label_api_key: string): string
-	static getEnvId(label_api_key: string): number
-	static getCleanLabelApiKey(label_api_key: string): string
-	static getPublicUrl(label_api_key: string): string
-	static getPublicWsUrl(label_api_key: string): string
-	static getAvatarUrl(label_api_key: string): string
-	private send
-	private buildMessage
-	coreReportCustomEvent(user_ext_id: string, eventType: string, payload?: any): Promise<any>
-	coreGetTranslations(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec?: number): Promise<GetTranslationsResponse>
-	coreIdentifyLabel(user_ext_id: string, cacheSec?: number): Promise<GetLabelInfoResponse>
-	coreIdentifyUser(user_ext_id: string): Promise<ResponseIdentify>
+	private label_api_key;
+	private brand_api_key;
+	private messageSender;
+	private publicUrl;
+	private wsUrl;
+	private inboxCdnUrl;
+	private partnerUrl;
+	avatarDomain: string;
+	private logger;
+	private logCIDs;
+	private logHTTPTiming;
+	tracker?: Tracker;
+	constructor(label_api_key: string, brand_api_key: string, messageSender: MessageSender, options?: IOptions);
+	static getEnvDnsSuffix(label_api_key: string): string;
+	static getEnvId(label_api_key: string): number;
+	static getCleanLabelApiKey(label_api_key: string): string;
+	static getPublicUrl(label_api_key: string): string;
+	static getPublicWsUrl(label_api_key: string): string;
+	static getAvatarUrl(label_api_key: string): string;
+	private send;
+	private buildMessage;
+	coreReportCustomEvent(user_ext_id: string, eventType: string, payload?: any): Promise<any>;
+	coreGetTranslations(
+		user_ext_id: string,
+		lang_code: string,
+		areas: TranslationArea[],
+		cacheSec?: number,
+	): Promise<GetTranslationsResponse>;
+	coreIdentifyLabel(user_ext_id: string, cacheSec?: number): Promise<GetLabelInfoResponse>;
+	coreIdentifyUser(user_ext_id: string): Promise<ResponseIdentify>;
 	coreChangeUsername(
 		user_ext_id: string,
 		public_username_custom: string,
 	): Promise<{
-		public_username_custom: string
-	}>
-	coreCheckSegments(user_ext_id: string, segment_id: number[]): Promise<TSegmentCheckResult[]>
-	sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode?: boolean): Promise<SAWGetTemplatesResponse>
-	sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]>
-	doAcknowledgeRequest(user_ext_id: string, request_id: string): Promise<SAWDoAknowledgeResponse>
-	sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id?: number): Promise<SAWDoSpinResponse>
-	missionOptIn(user_ext_id: string, mission_id: number): Promise<AchievementOptinResponse>
-	missionClaimPrize(user_ext_id: string, mission_id: number, ach_completed_id: number): Promise<AchClaimPrizeResponse>
-	registerInTournament(user_ext_id: string, tournamentInstanceId: number): Promise<TournamentRegisterResponse>
-	buyStoreItem(user_ext_id: string, itemId: number): Promise<BuyStoreItemResponse>
-	inboxGetMessages(user_ext_id: string, limit?: number, offset?: number): Promise<GetInboxMessagesResponse>
-	storeGetItems(user_ext_id: string): Promise<GetStoreItemsResponse>
-	storeGetItemsT(user_ext_id: string): Promise<TStoreItem[]>
-	storeGetCategories(user_ext_id: string): Promise<GetCategoriesStoreResponse>
-	storeGetCategoriesT(user_ext_id: string): Promise<TStoreCategory[]>
-	storeGetPurchasedItems(user_ext_id: string, limit?: number, offset?: number): Promise<GetStoreHistoryResponse>
-	storeGetPurchasedItemsT(user_ext_id: string, from?: number, to?: number): Promise<TStoreItem[]>
-	missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse>
-	missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]>
-	getUserGamificationInfo(user_ext_id: string): Promise<GetAchievementsUserInfoResponse>
-	getUserGamificationInfoT(user_ext_id: string): Promise<UserLevelExtraCountersT>
-	achGetCategories(user_ext_id: string): Promise<GetAchCategoriesResponse>
-	achGetCategoriesT(user_ext_id: string): Promise<TAchCategory[]>
-	badgetsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse>
-	badgetsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]>
-	tournamentsGetLobby(user_ext_id: string): Promise<GetTournamentsResponse>
-	tournamentsGetLobbyT(user_ext_id: string): Promise<TTournament[]>
-	tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number): Promise<GetTournamentInfoResponse>
-	tournamentsGetInfoT(user_ext_id: string, tournamentInstanceId: number): Promise<TTournamentDetailed>
-	leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod?: boolean): Promise<LeaderBoardDetails>
-	leaderboardsGetT(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod?: boolean): Promise<LeaderBoardDetailsT>
-	levelsGet(user_ext_id: string): Promise<GetLevelMapResponse>
-	levelsGetT(user_ext_id: string): Promise<TLevel[]>
-	getTranslationsT(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec?: number): Promise<GetTranslationsResponse>
-	getInboxMessages(user_ext_id: string, limit: number, offset: number, starred_only: boolean): Promise<GetInboxMessagesResponse>
-	getInboxMessagesT(user_ext_id: string, from?: number, to?: number, favoriteOnly?: boolean): Promise<TInboxMessage[]>
-	getInboxMessageBody(messageGuid: string): Promise<InboxMessageBody>
-	getInboxMessageBodyT(messageGuid: string): Promise<TInboxMessageBody>
-	markInboxMessageRead(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageReadResponse>
-	markAllInboxMessageRead(user_ext_id: string): Promise<MarkInboxMessageReadResponse>
-	markUnmarkInboxMessageAsFavorite(user_ext_id: string, messageGuid: string, mark: boolean): Promise<MarkInboxMessageStarredResponse>
-	deleteInboxMessage(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageDeletedResponse>
-	deleteAllInboxMessages(user_ext_id: string): Promise<MarkInboxMessageDeletedResponse>
-	getWSCalls(): WSAPI
+		public_username_custom: string;
+	}>;
+	coreCheckSegments(user_ext_id: string, segment_id: number[]): Promise<TSegmentCheckResult[]>;
+	sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode?: boolean): Promise<SAWGetTemplatesResponse>;
+	sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]>;
+	doAcknowledgeRequest(user_ext_id: string, request_id: string): Promise<SAWDoAknowledgeResponse>;
+	sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id?: number): Promise<SAWDoSpinResponse>;
+	missionOptIn(user_ext_id: string, mission_id: number): Promise<AchievementOptinResponse>;
+	missionClaimPrize(user_ext_id: string, mission_id: number, ach_completed_id: number): Promise<AchClaimPrizeResponse>;
+	registerInTournament(user_ext_id: string, tournamentInstanceId: number): Promise<TournamentRegisterResponse>;
+	buyStoreItem(user_ext_id: string, itemId: number): Promise<BuyStoreItemResponse>;
+	inboxGetMessages(user_ext_id: string, limit?: number, offset?: number): Promise<GetInboxMessagesResponse>;
+	storeGetItems(user_ext_id: string): Promise<GetStoreItemsResponse>;
+	storeGetItemsT(user_ext_id: string): Promise<TStoreItem[]>;
+	storeGetCategories(user_ext_id: string): Promise<GetCategoriesStoreResponse>;
+	storeGetCategoriesT(user_ext_id: string): Promise<TStoreCategory[]>;
+	storeGetPurchasedItems(user_ext_id: string, limit?: number, offset?: number): Promise<GetStoreHistoryResponse>;
+	storeGetPurchasedItemsT(user_ext_id: string, from?: number, to?: number): Promise<TStoreItem[]>;
+	missionsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse>;
+	missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]>;
+	getUserGamificationInfo(user_ext_id: string): Promise<GetAchievementsUserInfoResponse>;
+	getUserGamificationInfoT(user_ext_id: string): Promise<UserLevelExtraCountersT>;
+	achGetCategories(user_ext_id: string): Promise<GetAchCategoriesResponse>;
+	achGetCategoriesT(user_ext_id: string): Promise<TAchCategory[]>;
+	badgetsGetItems(user_ext_id: string): Promise<GetAchievementMapResponse>;
+	badgetsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]>;
+	tournamentsGetLobby(user_ext_id: string): Promise<GetTournamentsResponse>;
+	tournamentsGetLobbyT(user_ext_id: string): Promise<TTournament[]>;
+	tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number): Promise<GetTournamentInfoResponse>;
+	tournamentsGetInfoT(user_ext_id: string, tournamentInstanceId: number): Promise<TTournamentDetailed>;
+	leaderboardGet(
+		user_ext_id: string,
+		period_type_id?: LeaderBoardPeriodType,
+		prevPeriod?: boolean,
+	): Promise<LeaderBoardDetails>;
+	leaderboardsGetT(
+		user_ext_id: string,
+		period_type_id?: LeaderBoardPeriodType,
+		prevPeriod?: boolean,
+	): Promise<LeaderBoardDetailsT>;
+	levelsGet(user_ext_id: string): Promise<GetLevelMapResponse>;
+	levelsGetT(user_ext_id: string): Promise<TLevel[]>;
+	getTranslationsT(
+		user_ext_id: string,
+		lang_code: string,
+		areas: TranslationArea[],
+		cacheSec?: number,
+	): Promise<GetTranslationsResponse>;
+	getInboxMessages(
+		user_ext_id: string,
+		limit: number,
+		offset: number,
+		starred_only: boolean,
+	): Promise<GetInboxMessagesResponse>;
+	getInboxMessagesT(user_ext_id: string, from?: number, to?: number, favoriteOnly?: boolean): Promise<TInboxMessage[]>;
+	getInboxMessageBody(messageGuid: string): Promise<InboxMessageBody>;
+	getInboxMessageBodyT(messageGuid: string): Promise<TInboxMessageBody>;
+	markInboxMessageRead(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageReadResponse>;
+	markAllInboxMessageRead(user_ext_id: string): Promise<MarkInboxMessageReadResponse>;
+	markUnmarkInboxMessageAsFavorite(
+		user_ext_id: string,
+		messageGuid: string,
+		mark: boolean,
+	): Promise<MarkInboxMessageStarredResponse>;
+	deleteInboxMessage(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageDeletedResponse>;
+	deleteAllInboxMessages(user_ext_id: string): Promise<MarkInboxMessageDeletedResponse>;
+	getWSCalls(): WSAPI;
 }
 export interface SmarticoClearParams {
-	keepCallBacks: boolean
+	keepCallBacks: boolean;
 }
 export interface RequestBase {
-	cid?: number
-	ts?: number
-	uuid?: string
+	cid?: number;
+	ts?: number;
+	uuid?: string;
 }
 export interface RequestClientEngagmentBase extends RequestBase {
-	engagement_uid: string
-	activityType: CJMActivityType
+	engagement_uid: string;
+	activityType: CJMActivityType;
 }
 export interface RequestClientEngagementAction extends RequestClientEngagmentBase {
-	action?: string
+	action?: string;
 }
 export interface RequestClientEngagementFailed extends RequestClientEngagmentBase {
-	action?: string
-	reason?: string
+	action?: string;
+	reason?: string;
 }
 declare enum EWidgetType {
 	Achievements2 = 'achievements2',
@@ -1835,100 +1886,105 @@ declare enum DpType {
 	Action = 'action',
 }
 export interface DeepLinkParams {
-	[key: string]: string
+	[key: string]: string;
 }
 export interface DeepLink {
-	action: DpType
-	params?: DeepLinkParams
-	actionToReport?: string
+	action: DpType;
+	params?: DeepLinkParams;
+	actionToReport?: string;
 }
 export interface IVisitorGameParams {
-	template_id: number
-	onBeforePlay: () => boolean
-	onWin: (prize: SAWPrize) => void
-	frame_id: string
+	template_id: number;
+	onBeforePlay: () => boolean;
+	onWin: (prize: SAWPrize) => void;
+	frame_id: string;
 }
 export interface IWidgetParams {
-	iframe: string
-	zoom: number
-	height: 'auto' | string
-	theme: string
-	wuuid: string
-	withBridge?: any
-	noQuestionMark?: any
-	inline?: boolean
-	force_mobile?: boolean
+	iframe: string;
+	zoom: number;
+	height: 'auto' | string;
+	theme: string;
+	wuuid: string;
+	withBridge?: any;
+	noQuestionMark?: any;
+	inline?: boolean;
+	force_mobile?: boolean;
 }
 declare enum ConnectionStatus {
 	OPEN = 0,
 	CLOSED = 1,
 }
 export interface TrackerInterface {
-	log?: (message: string) => void
-	clear?: (params: SmarticoClearParams) => void
-	logout?: (payload: any) => void
-	reportEngagmentAction: (message: RequestClientEngagementAction) => void
-	reportEngagmentFail: (message: RequestClientEngagementFailed) => void
-	reportEngagmentImpression: (message: RequestClientEngagementFailed) => void
-	requestPushPermissions: () => void
-	executeNativeDp: (dp: string) => void
-	executeGfDp: (dp: DeepLink) => void
-	executeManualDP?: (deepLink: string, engagement_uid?: string, activityType?: CJMActivityType) => void
-	promoMessageClosed: () => void
-	connectionStatus?: ConnectionStatus
-	suspendPopups?: (flag: boolean) => void
-	suspendInbox?: (flag: boolean) => void
-	registerNativePushToken?: (token: string, platform: PushClientPlatform, app_package_id: any) => void
-	registerHandler?: (cid: ClassId, handler: (o: any) => void) => void
-	triggerExternalCallBack?: (callBackKey: EXTERNAL_CALLBACK_KEY | number, ...args: any[]) => void
-	getExtUserId?: () => string
-	bSuspendPopups?: boolean
-	identify?: (ext_user_id: string, hash: string, payload: any, visitor_id: string) => void
-	changeLanguage?: (lang: string) => void
-	getPublicProps?: () => PublicProperties
-	getLabelSetting?: (key: PublicLabelSettings) => any
-	getParams?: () => typeof TrackerParams
-	setNickname?: (nickname: string) => void
-	setAvatar?: (avatar_id: string) => void
-	setLoginPayload?: (payload: any) => void
-	sendServerError?: (message: string) => void
-	sendServerDebug?: (message: string) => void
-	sendAnalytics?: (activity_id: ClientActivityRequestId, type: 'view' | 'click' | 'other', view_time_sec?: number, more?: any) => void
-	sendRow: (cid: ClassId, toIdentified: boolean, data?: any) => string
-	miniGame?: (saw_template_id: string, params: IWidgetParams) => void
-	showWidget?: (widgetType: EWidgetType, params: IWidgetParams) => void
-	showVisitorGame?: (params: IVisitorGameParams) => void
-	convertVisitorGame?: (visitor_win_uuid: string) => void
-	isIdenfitied?: () => boolean
+	log?: (message: string) => void;
+	clear?: (params: SmarticoClearParams) => void;
+	logout?: (payload: any) => void;
+	reportEngagmentAction: (message: RequestClientEngagementAction) => void;
+	reportEngagmentFail: (message: RequestClientEngagementFailed) => void;
+	reportEngagmentImpression: (message: RequestClientEngagementFailed) => void;
+	requestPushPermissions: () => void;
+	executeNativeDp: (dp: string) => void;
+	executeGfDp: (dp: DeepLink) => void;
+	executeManualDP?: (deepLink: string, engagement_uid?: string, activityType?: CJMActivityType) => void;
+	promoMessageClosed: () => void;
+	connectionStatus?: ConnectionStatus;
+	suspendPopups?: (flag: boolean) => void;
+	suspendInbox?: (flag: boolean) => void;
+	registerNativePushToken?: (token: string, platform: PushClientPlatform, app_package_id: any) => void;
+	registerHandler?: (cid: ClassId, handler: (o: any) => void) => void;
+	triggerExternalCallBack?: (callBackKey: EXTERNAL_CALLBACK_KEY | number, ...args: any[]) => void;
+	getExtUserId?: () => string;
+	bSuspendPopups?: boolean;
+	identify?: (ext_user_id: string, hash: string, payload: any, visitor_id: string) => void;
+	changeLanguage?: (lang: string) => void;
+	getPublicProps?: () => PublicProperties;
+	getLabelSetting?: (key: PublicLabelSettings) => any;
+	getParams?: () => typeof TrackerParams;
+	setNickname?: (nickname: string) => void;
+	setAvatar?: (avatar_id: string) => void;
+	setLoginPayload?: (payload: any) => void;
+	sendServerError?: (message: string) => void;
+	sendServerDebug?: (message: string) => void;
+	sendAnalytics?: (
+		activity_id: ClientActivityRequestId,
+		type: 'view' | 'click' | 'other',
+		view_time_sec?: number,
+		more?: any,
+	) => void;
+	sendRow: (cid: ClassId, toIdentified: boolean, data?: any) => string;
+	miniGame?: (saw_template_id: string, params: IWidgetParams) => void;
+	showWidget?: (widgetType: EWidgetType, params: IWidgetParams) => void;
+	showVisitorGame?: (params: IVisitorGameParams) => void;
+	convertVisitorGame?: (visitor_win_uuid: string) => void;
+	isIdenfitied?: () => boolean;
 }
 declare const TrackerParams: {
-	brand_key: any
-	debug: boolean
-	server: any
-	simulation_mode: boolean
-	gamification_wrapper_mode: boolean
-	generate_visit: boolean
-	lang: string
-}
-declare const CallBackDefaultParams: {}
+	brand_key: any;
+	debug: boolean;
+	server: any;
+	simulation_mode: boolean;
+	gamification_wrapper_mode: boolean;
+	generate_visit: boolean;
+	lang: string;
+};
+declare const CallBackDefaultParams: {};
 declare class GamificationEngine {
-	private static _instance
-	private readonly _tracker
-	private readonly _socketPromises
-	private readonly _socketListeners
-	static instance(tracker: TrackerInterface): GamificationEngine
-	private constructor()
-	doGetLevels: () => Promise<any>
-	doGetMissions: () => Promise<any>
-	doOptinMission: (achievementId: number) => Promise<any>
-	doClaimRewardMission: (achievementId: number) => Promise<any>
-	doGetTournaments: () => Promise<any>
-	doGetTournamentLobby: (tournamentInstanceId: number) => Promise<any>
-	doTournamentRegister: (tournamentInstanceId: number) => Promise<any>
-	private socketRequest
-	private socketResponse
-	private listen
-	private notify
+	private static _instance;
+	private readonly _tracker;
+	private readonly _socketPromises;
+	private readonly _socketListeners;
+	static instance(tracker: TrackerInterface): GamificationEngine;
+	private constructor();
+	doGetLevels: () => Promise<any>;
+	doGetMissions: () => Promise<any>;
+	doOptinMission: (achievementId: number) => Promise<any>;
+	doClaimRewardMission: (achievementId: number) => Promise<any>;
+	doGetTournaments: () => Promise<any>;
+	doGetTournamentLobby: (tournamentInstanceId: number) => Promise<any>;
+	doTournamentRegister: (tournamentInstanceId: number) => Promise<any>;
+	private socketRequest;
+	private socketResponse;
+	private listen;
+	private notify;
 }
 declare enum ClientEventTypes {
 	client_action = 'client_action',
@@ -1940,64 +1996,64 @@ declare enum ClientEventTypes {
 	gf_avatar_changed = 'gf_avatar_changed',
 }
 declare class Smartico {
-	private static tracker
-	private static trackerShadow
-	private static initParams
-	private static initLabelApiKey
-	private static shadowQueue
-	private static shadowInterval
-	static gf: GamificationEngine
-	static api: WSAPI
-	private static readonly gf_api_promises
-	private static readonly gf_api_handlers
-	constructor()
-	static startIntegrationWithIframe(): void
-	private static checkInit
-	private static checkSuccessfullyIdentify
-	private static initShadowLabel
-	private static onlineTrackerInterval
-	private static onlineTrackerLastUserId
-	private static onlineTrackerLastLanguage
-	private static getUserID
-	private static getUserHash
-	private static getLanguage
-	private static getVisitorGameWinUUID
-	private static getVisitorID
-	private static onlinetrackerByInterval
-	static init(label_api_key: string, params: typeof TrackerParams): void
-	static initVisitorMode(label_api_key: string, params: typeof TrackerParams): void
-	static clear(params?: SmarticoClearParams): void
-	static getPublicProps(): PublicProperties
-	static sendServerError(message: string): void
-	static sendServerDebug(message: string): void
-	static requestPushPermissions(): void
-	static registerNativePushToken(token: string, platform?: PushClientPlatform, app_package_id?: string): void
-	static identify(ext_user_id: string, hash: string, payload: any): Promise<void>
-	static online(ext_user_id: string, language: string, user_hash: string): Promise<void>
-	static login(language?: string, payload?: any): void
-	static logout(payload?: any): void
-	static changeLanguage(language: string): void
-	static event(eventType: ClientEventTypes, payload?: any): void
-	static sendRow(cid: ClassId, payload?: any): void
-	static action(actionValue: any): void
-	static setLoginEntry(core_last_login_entry: string): void
-	static setAvatar(avatar_id: string): void
-	static setNickname(nickname: string): void
-	static dp(deepLink: string): void
-	static miniGame(saw_template_id: string, params: IWidgetParams): void
-	static showWidget(widgetType: EWidgetType, params: IWidgetParams): void
-	static sendAnalytics(activity_id: ClientActivityRequestId, view_time_sec?: number): void
-	static on(callBackKey: EXTERNAL_CALLBACK_KEY, f: null | (() => void), params?: typeof CallBackDefaultParams): void
-	static suspendPopups(flag: boolean): void
-	static suspendInbox(flag: boolean): void
-	static parseUrl(): any
-	static parseUrlHash(): any
-	static isMobile(): boolean
-	static showVisitorGame(params: IVisitorGameParams): void
-	static convertVisitorGame(visitor_win_uuid: string): void
-	private static customScripts
+	private static tracker;
+	private static trackerShadow;
+	private static initParams;
+	private static initLabelApiKey;
+	private static shadowQueue;
+	private static shadowInterval;
+	static gf: GamificationEngine;
+	static api: WSAPI;
+	private static readonly gf_api_promises;
+	private static readonly gf_api_handlers;
+	constructor();
+	static startIntegrationWithIframe(): void;
+	private static checkInit;
+	private static checkSuccessfullyIdentify;
+	private static initShadowLabel;
+	private static onlineTrackerInterval;
+	private static onlineTrackerLastUserId;
+	private static onlineTrackerLastLanguage;
+	private static getUserID;
+	private static getUserHash;
+	private static getLanguage;
+	private static getVisitorGameWinUUID;
+	private static getVisitorID;
+	private static onlinetrackerByInterval;
+	static init(label_api_key: string, params: typeof TrackerParams): void;
+	static initVisitorMode(label_api_key: string, params: typeof TrackerParams): void;
+	static clear(params?: SmarticoClearParams): void;
+	static getPublicProps(): PublicProperties;
+	static sendServerError(message: string): void;
+	static sendServerDebug(message: string): void;
+	static requestPushPermissions(): void;
+	static registerNativePushToken(token: string, platform?: PushClientPlatform, app_package_id?: string): void;
+	static identify(ext_user_id: string, hash: string, payload: any): Promise<void>;
+	static online(ext_user_id: string, language: string, user_hash: string): Promise<void>;
+	static login(language?: string, payload?: any): void;
+	static logout(payload?: any): void;
+	static changeLanguage(language: string): void;
+	static event(eventType: ClientEventTypes, payload?: any): void;
+	static sendRow(cid: ClassId, payload?: any): void;
+	static action(actionValue: any): void;
+	static setLoginEntry(core_last_login_entry: string): void;
+	static setAvatar(avatar_id: string): void;
+	static setNickname(nickname: string): void;
+	static dp(deepLink: string): void;
+	static miniGame(saw_template_id: string, params: IWidgetParams): void;
+	static showWidget(widgetType: EWidgetType, params: IWidgetParams): void;
+	static sendAnalytics(activity_id: ClientActivityRequestId, view_time_sec?: number): void;
+	static on(callBackKey: EXTERNAL_CALLBACK_KEY, f: null | (() => void), params?: typeof CallBackDefaultParams): void;
+	static suspendPopups(flag: boolean): void;
+	static suspendInbox(flag: boolean): void;
+	static parseUrl(): any;
+	static parseUrlHash(): any;
+	static isMobile(): boolean;
+	static showVisitorGame(params: IVisitorGameParams): void;
+	static convertVisitorGame(visitor_win_uuid: string): void;
+	private static customScripts;
 }
 
-export { Smartico as default }
+export { Smartico as default };
 
-export {}
+export {};

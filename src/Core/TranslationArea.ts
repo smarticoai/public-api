@@ -8,4 +8,4 @@ enum TranslationArea {
 	AffIliateAdminNew = 7,
 }
 
-export { TranslationArea }
+export { TranslationArea };

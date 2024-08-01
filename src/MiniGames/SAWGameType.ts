@@ -30,5 +30,5 @@ export const SAWGameTypeNamed = (type: SAWGameType): SAWGameTypeName => {
 			[SAWGameType.PrizeDrop]: SAWGameTypeName.PrizeDrop,
 			[SAWGameType.Quiz]: SAWGameTypeName.Quiz,
 		}[type] || SAWGameTypeName.Unknown
-	)
-}
+	);
+};

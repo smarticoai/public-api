@@ -21,14 +21,14 @@ export enum QuizAnswersValueType {
 	AwayEven = '2/even',
 }
 
-export const quizAnswerHomeTeamReplacementText = '{quiz_home_team}'
-export const quizAnswerAwayTeamReplacementText = '{quiz_away_team}'
-export const quizDrawReplacementText = '{quiz_draw}'
-export const quizYesReplacementText = '{yes}'
-export const quizNoReplacementText = '{no}'
-export const quizOddReplacementText = '{odd}'
-export const quizEvenReplacementText = '{even}'
-export const quizOrReplacementText = '{or}'
+export const quizAnswerHomeTeamReplacementText = '{quiz_home_team}';
+export const quizAnswerAwayTeamReplacementText = '{quiz_away_team}';
+export const quizDrawReplacementText = '{quiz_draw}';
+export const quizYesReplacementText = '{yes}';
+export const quizNoReplacementText = '{no}';
+export const quizOddReplacementText = '{odd}';
+export const quizEvenReplacementText = '{even}';
+export const quizOrReplacementText = '{or}';
 
 export const quizAnswersTrKeys = {
 	[quizDrawReplacementText]: 'quizAnswer_draw',
@@ -37,4 +37,4 @@ export const quizAnswersTrKeys = {
 	[quizOddReplacementText]: 'quizAnswer_odd',
 	[quizEvenReplacementText]: 'quizAnswer_even',
 	[quizOrReplacementText]: 'quizAnswer_or',
-}
+};

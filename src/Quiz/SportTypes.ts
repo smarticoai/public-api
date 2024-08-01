@@ -4,4 +4,4 @@ export enum QuizSportType {
 	Basketball = 6,
 }
 
-export const quizSupportedSports = [QuizSportType.Basketball, QuizSportType.Soccer, QuizSportType.Tennis]
+export const quizSupportedSports = [QuizSportType.Basketball, QuizSportType.Soccer, QuizSportType.Tennis];

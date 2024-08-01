@@ -1,25 +1,25 @@
-import { Tournament, TournamentItemsTransform } from './Tournament'
-import { TournamentPlayer } from './TournamentPlayer'
-import { ProtocolResponse } from '../Base/ProtocolResponse'
-import { TournamentPrize } from './TournamentPrize'
-import { TTournamentDetailed } from '../WSAPI/WSAPITypes'
-import { TournamentUtils } from './TournamentUtils'
+import { Tournament, TournamentItemsTransform } from './Tournament';
+import { TournamentPlayer } from './TournamentPlayer';
+import { ProtocolResponse } from '../Base/ProtocolResponse';
+import { TournamentPrize } from './TournamentPrize';
+import { TTournamentDetailed } from '../WSAPI/WSAPITypes';
+import { TournamentUtils } from './TournamentUtils';
 
 export interface GetTournamentInfoResponse extends ProtocolResponse {
 	/** tournament info */
 	tournamentInfo: {
 		/** id of label, not in use */
-		labelId: number
-		tournamentLobbyInfo: Tournament
+		labelId: number;
+		tournamentLobbyInfo: Tournament;
 		/** list of registered users */
-		players: TournamentPlayer[]
-	}
+		players: TournamentPlayer[];
+	};
 	/** information about current user position */
-	userPosition: TournamentPlayer
+	userPosition: TournamentPlayer;
 	/** prizes structure */
 	prizeStructure?: {
-		prizes: TournamentPrize[]
-	}
+		prizes: TournamentPrize[];
+	};
 }
 
 export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTournamentDetailed => {
@@ -37,15 +37,15 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 			},
 		})),
 		players: t.tournamentInfo.players.map((p) => TournamentUtils.getPlayerTransformed(p)),
-	}
+	};
 
 	if (t.prizeStructure) {
-		response.prizes = t.prizeStructure.prizes.map((p) => TournamentUtils.getPrizeTransformed(p))
+		response.prizes = t.prizeStructure.prizes.map((p) => TournamentUtils.getPrizeTransformed(p));
 	}
 
 	if (t.userPosition) {
-		response.me = TournamentUtils.getPlayerTransformed(t.userPosition, true)
+		response.me = TournamentUtils.getPlayerTransformed(t.userPosition, true);
 	}
 
-	return response
-}
+	return response;
+};

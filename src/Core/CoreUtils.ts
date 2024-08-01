@@ -1,15 +1,20 @@
 class CoreUtils {
 	public static avatarUrl = (avatar_id: string, avatarDomain: string): string => {
-		if (avatarDomain && avatar_id !== null && avatar_id !== undefined && !(avatar_id.startsWith && avatar_id.startsWith('http'))) {
+		if (
+			avatarDomain &&
+			avatar_id !== null &&
+			avatar_id !== undefined &&
+			!(avatar_id.startsWith && avatar_id.startsWith('http'))
+		) {
 			if (avatarDomain.endsWith('/')) {
-				return avatarDomain.slice(0, -1) + '/avatar/' + avatar_id
+				return avatarDomain.slice(0, -1) + '/avatar/' + avatar_id;
 			} else {
-				return avatarDomain + '/avatar/' + avatar_id
+				return avatarDomain + '/avatar/' + avatar_id;
 			}
 		} else {
-			return avatar_id
+			return avatar_id;
 		}
-	}
+	};
 
 	public static currencySymbol(currency: string) {
 		return {
@@ -34,8 +39,8 @@ class CoreUtils {
 			RUB: '\u20BD', // Russian Ruble
 			BRL: 'R$', // Brazilian Real
 			ZAR: 'R', // South African Rand
-		}[currency?.toUpperCase()]
+		}[currency?.toUpperCase()];
 	}
 }
 
-export { CoreUtils }
+export { CoreUtils };

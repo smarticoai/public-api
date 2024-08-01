@@ -1,17 +1,22 @@
-import { TUICustomSection } from '../WSAPI/WSAPITypes'
-import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from './AchCustomSection'
+import { TUICustomSection } from '../WSAPI/WSAPITypes';
+import {
+	AchCustomLayoutTheme,
+	AchCustomSectionType,
+	AchMissionsTabsOptions,
+	AchOverviewMissionsFilter,
+} from './AchCustomSection';
 
 export interface UICustomSection {
-	body?: string
-	menu_img?: string
-	menu_name?: string
-	custom_skin_images?: string
-	section_type_id?: AchCustomSectionType
-	theme?: AchCustomLayoutTheme
-	generic_custom_css?: string
-	mission_tabs_options?: AchMissionsTabsOptions
-	overview_missions_filter?: AchOverviewMissionsFilter
-	overview_missions_count?: number
+	body?: string;
+	menu_img?: string;
+	menu_name?: string;
+	custom_skin_images?: string;
+	section_type_id?: AchCustomSectionType;
+	theme?: AchCustomLayoutTheme;
+	generic_custom_css?: string;
+	mission_tabs_options?: AchMissionsTabsOptions;
+	overview_missions_filter?: AchOverviewMissionsFilter;
+	overview_missions_count?: number;
 }
 
 export const UICustomSectionTransform = (items: UICustomSection[]): TUICustomSection[] => {
@@ -29,7 +34,7 @@ export const UICustomSectionTransform = (items: UICustomSection[]): TUICustomSec
 				overview_missions_count: r.overview_missions_count,
 				overview_missions_filter: r.overview_missions_filter,
 				theme: r.theme,
-			}
-			return x
-		})
-}
+			};
+			return x;
+		});
+};

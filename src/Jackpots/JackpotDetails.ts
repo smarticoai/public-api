@@ -1,8 +1,8 @@
-import { AchRelatedGame } from '../Base/AchRelatedGame'
-import { JackpotContributionType } from './JackpotContributionType'
-import { JackpotPot } from './JackpotPot'
-import { JackpotPublicMeta } from './JackpotPublicMeta'
-import { JackpotType } from './JackpotType'
+import { AchRelatedGame } from '../Base/AchRelatedGame';
+import { JackpotContributionType } from './JackpotContributionType';
+import { JackpotPot } from './JackpotPot';
+import { JackpotPublicMeta } from './JackpotPublicMeta';
+import { JackpotType } from './JackpotType';
 
 /**
  * JackpotDetails the information about Jackpot template
@@ -11,29 +11,29 @@ import { JackpotType } from './JackpotType'
  */
 interface JackpotDetails {
 	/** ID of the jackpot template */
-	jp_template_id: number
+	jp_template_id: number;
 	/** type of jackpot logic */
-	jp_type_id: JackpotType
+	jp_type_id: JackpotType;
 	/** UI information of jackpot, like name, description, etc. */
-	jp_public_meta: JackpotPublicMeta
+	jp_public_meta: JackpotPublicMeta;
 	/** base currency of the jackpot */
-	jp_currency: string
+	jp_currency: string;
 	/**  wallet currency of currently logged in user */
-	user_currency: string
+	user_currency: string;
 	/**  list of related games that are eligible for the jackpot */
-	related_games?: AchRelatedGame[]
+	related_games?: AchRelatedGame[];
 	/**  type of the user contribution to the jackpot */
-	contribution_type: JackpotContributionType
+	contribution_type: JackpotContributionType;
 	/**  value of the user contribution. Fixed amount or percentage of bet depending on the contribution type */
-	contribution_value: number
+	contribution_value: number;
 	/**  information of current value of the jackpot */
-	pot: JackpotPot
+	pot: JackpotPot;
 	/**  indication if the current user is opted in to the jackpot */
-	is_opted_in: boolean
+	is_opted_in: boolean;
 	/** indicates whether all games are eligible for the jackpot */
-	ach_related_game_allow_all: boolean
+	ach_related_game_allow_all: boolean;
 	/** The number of users who have opted in to participate in the jackpot */
-	registration_count: number
+	registration_count: number;
 }
 
-export { JackpotDetails }
+export { JackpotDetails };

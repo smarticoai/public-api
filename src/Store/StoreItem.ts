@@ -1,14 +1,14 @@
-import { TStoreItem } from '../WSAPI/WSAPITypes'
-import { StoreItemPublicMeta } from './StoreItemPublicMeta'
-import { StoreItemType, StoreItemTypeNamed } from './StoreItemType'
+import { TStoreItem } from '../WSAPI/WSAPITypes';
+import { StoreItemPublicMeta } from './StoreItemPublicMeta';
+import { StoreItemType, StoreItemTypeNamed } from './StoreItemType';
 
 export interface StoreItem {
-	id: number
-	itemTypeId: StoreItemType
-	itemPublicMeta: StoreItemPublicMeta
-	categoryIds?: number[]
-	canBuy?: boolean
-	shopPool: number
+	id: number;
+	itemTypeId: StoreItemType;
+	itemPublicMeta: StoreItemPublicMeta;
+	categoryIds?: number[];
+	canBuy?: boolean;
+	shopPool: number;
 }
 
 export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
@@ -30,7 +30,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				can_buy: r.canBuy,
 				category_ids: r.categoryIds ?? [],
 				pool: r.shopPool,
-			}
-			return x
-		})
-}
+			};
+			return x;
+		});
+};

@@ -1,15 +1,15 @@
-import { LeaderBoardDetailsT, LeaderBoardUserT, LeaderBoardsRewardsT } from '../WSAPI/WSAPITypes'
-import { LeaderBoardDetails } from './LeaderBoardDetails'
-import { LeaderBoardPeriodType } from './LeaderBoardPeriodType'
-import { LeaderBoardPosition } from './LeaderBoardPosition'
+import { LeaderBoardDetailsT, LeaderBoardUserT, LeaderBoardsRewardsT } from '../WSAPI/WSAPITypes';
+import { LeaderBoardDetails } from './LeaderBoardDetails';
+import { LeaderBoardPeriodType } from './LeaderBoardPeriodType';
+import { LeaderBoardPosition } from './LeaderBoardPosition';
 
 const pointsRewardTransform = (reward_points: number[]): LeaderBoardsRewardsT[] => {
 	if (reward_points && reward_points.length) {
-		return reward_points.map((r, i) => ({ place: i + 1, points: r }))
+		return reward_points.map((r, i) => ({ place: i + 1, points: r }));
 	}
 
-	return null
-}
+	return null;
+};
 
 const getLeaderBoardPlayerTransformed = (user: LeaderBoardPosition, isMe?: boolean): LeaderBoardUserT => {
 	if (user) {
@@ -19,17 +19,17 @@ const getLeaderBoardPlayerTransformed = (user: LeaderBoardPosition, isMe?: boole
 			position: user.position_in_board,
 			points: user.points_accumulated,
 			is_me: user.is_me,
-		}
+		};
 
 		if (isMe) {
-			delete x.is_me
+			delete x.is_me;
 		}
 
-		return x
+		return x;
 	}
 
-	return null
-}
+	return null;
+};
 
 export const getLeaderBoardTransform = (board: LeaderBoardDetails): LeaderBoardDetailsT => {
 	if (board) {
@@ -42,10 +42,10 @@ export const getLeaderBoardTransform = (board: LeaderBoardDetails): LeaderBoardD
 			rewards: pointsRewardTransform(board.reward_points),
 			users: board.positions.map((p) => getLeaderBoardPlayerTransformed(p)),
 			me: getLeaderBoardPlayerTransformed(board.userPosition, true),
-		}
+		};
 
-		return x
+		return x;
 	}
 
-	return null
-}
+	return null;
+};

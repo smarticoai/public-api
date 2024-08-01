@@ -1,43 +1,43 @@
 {
-  "name": "@smartico/public-api",
-  "version": "0.0.158",
-  "description": "Smartico public API",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.modern.mjs",
-  "source": "src/index.ts",
-  "scripts": {
-    "build": "microbundle --no-compress --format modern,cjs",
-    "start": "microbundle watch --no-compress --format modern,cjs",
-    "link": "npm link",
-    "dev": "npm-run-all link start",
-    "unlink": "npm unlink",
-    "git-push": "git push --follow-tags",
-    "pub": "npm publish",
-    "patch": "npm version patch",
-    ".sm-commit": "git add -A && git commit -m 'Pre-publish commit'",
-    ".sm-deploy": "npm-run-all build patch pub git-push",
-    "bump": "npm-run-all bump-r-server bump-r-client bump-tracker bump-ach bump-bo-server bump-bo-client",
-    "bump-r-server": "cd ../r-games/r-server && npm install @smartico/public-api@latest",
-    "bump-r-client": "cd ../r-games/r-client && npm install @smartico/public-api@latest",
-    "bump-tracker": "cd ../tracker && npm install @smartico/public-api@latest --legacy-peer-deps",
-    "bump-ach": "cd ../tracker/ach && npm install @smartico/public-api@latest --legacy-peer-deps",
-    "bump-bo-server": "cd ../bo_server/server && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
-    "bump-bo-client": "cd ../bo_server/client && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
-    "doc": "typedoc"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "md5-typescript": "^1.0.5",
-    "typescript-map": "^0.1.0"
-  },
-  "devDependencies": {
-    "@types/node-fetch": "^2.6.2",
-    "microbundle": "0.15.0",
-    "npm-run-all": "4.1.5",
-    "typedoc": "^0.24.8",
-    "typedoc-plugin-markdown": "^3.15.4",
-    "typedoc-plugin-merge-modules": "^5.0.1"
-  }
+	"name": "@smartico/public-api",
+	"version": "0.0.158",
+	"description": "Smartico public API",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"module": "dist/index.modern.mjs",
+	"source": "src/index.ts",
+	"scripts": {
+		"build": "microbundle --no-compress --format modern,cjs",
+		"start": "microbundle watch --no-compress --format modern,cjs",
+		"link": "npm link",
+		"dev": "npm-run-all link start",
+		"unlink": "npm unlink",
+		"git-push": "git push --follow-tags",
+		"pub": "npm publish",
+		"patch": "npm version patch",
+		".sm-commit": "git add -A && git commit -m 'Pre-publish commit'",
+		".sm-deploy": "npm-run-all build patch pub git-push",
+		"bump": "npm-run-all bump-r-server bump-r-client bump-tracker bump-ach bump-bo-server bump-bo-client",
+		"bump-r-server": "cd ../r-games/r-server && npm install @smartico/public-api@latest",
+		"bump-r-client": "cd ../r-games/r-client && npm install @smartico/public-api@latest",
+		"bump-tracker": "cd ../tracker && npm install @smartico/public-api@latest --legacy-peer-deps",
+		"bump-ach": "cd ../tracker/ach && npm install @smartico/public-api@latest --legacy-peer-deps",
+		"bump-bo-server": "cd ../bo_server/server && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
+		"bump-bo-client": "cd ../bo_server/client && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
+		"doc": "typedoc"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"md5-typescript": "^1.0.5",
+		"typescript-map": "^0.1.0"
+	},
+	"devDependencies": {
+		"@types/node-fetch": "^2.6.2",
+		"microbundle": "0.15.0",
+		"npm-run-all": "4.1.5",
+		"typedoc": "^0.24.8",
+		"typedoc-plugin-markdown": "^3.15.4",
+		"typedoc-plugin-merge-modules": "^5.0.1"
+	}
 }

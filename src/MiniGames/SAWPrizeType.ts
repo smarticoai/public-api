@@ -29,5 +29,5 @@ export const MiniGamePrizeTypeNamed = (type: SAWPrizeType): MiniGamePrizeTypeNam
 			[SAWPrizeType.SPIN]: MiniGamePrizeTypeName.SPIN,
 			[SAWPrizeType.JACKPOT]: MiniGamePrizeTypeName.JACKPOT,
 		}[type] || MiniGamePrizeTypeName.UNKNOWN
-	)
-}
+	);
+};

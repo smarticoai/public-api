@@ -1,8 +1,15 @@
-import { SAWGPMarketType } from './MarketsType'
-import { QuizSportType } from './SportTypes'
+import { SAWGPMarketType } from './MarketsType';
+import { QuizSportType } from './SportTypes';
 
 export const QuizMarketPerSport = {
-	[QuizSportType.Basketball]: [SAWGPMarketType.One_Two, SAWGPMarketType.Overtime, SAWGPMarketType.OneXTwo, SAWGPMarketType.OddEven, SAWGPMarketType.OddEvenHomeAway, SAWGPMarketType.DoubleChance],
+	[QuizSportType.Basketball]: [
+		SAWGPMarketType.One_Two,
+		SAWGPMarketType.Overtime,
+		SAWGPMarketType.OneXTwo,
+		SAWGPMarketType.OddEven,
+		SAWGPMarketType.OddEvenHomeAway,
+		SAWGPMarketType.DoubleChance,
+	],
 	[QuizSportType.Soccer]: [
 		SAWGPMarketType.OneXTwo,
 		SAWGPMarketType.OneXTwoHalftime,
@@ -29,4 +36,4 @@ export const QuizMarketPerSport = {
 		SAWGPMarketType.PlayerTwoWinsOneSet,
 		SAWGPMarketType.OddEven,
 	],
-}
+};

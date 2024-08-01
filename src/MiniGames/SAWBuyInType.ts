@@ -20,5 +20,5 @@ export const SAWBuyInTypeNamed = (type: SAWBuyInType): SAWBuyInTypeName => {
 			[SAWBuyInType.Points]: SAWBuyInTypeName.Points,
 			[SAWBuyInType.Spins]: SAWBuyInTypeName.Spins,
 		}[type] || SAWBuyInTypeName.Unknown
-	)
-}
+	);
+};

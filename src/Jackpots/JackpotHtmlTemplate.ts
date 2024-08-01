@@ -1,6 +1,6 @@
 interface JackpotHtmlTemplate {
-	id: string
-	content: string
+	id: string;
+	content: string;
 }
 
-export { JackpotHtmlTemplate }
+export { JackpotHtmlTemplate };

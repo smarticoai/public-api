@@ -11,4 +11,4 @@ export const SAWWinSoundFiles = {
 	[SAWWinSoundType.Disappointing]: 'saw-disappointed.m4a',
 	[SAWWinSoundType.Positive]: 'saw-positive.m4a',
 	[SAWWinSoundType.HighlyPositive]: 'saw-highly-positive.m4a',
-}
+};

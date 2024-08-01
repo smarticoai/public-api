@@ -1,10 +1,10 @@
-import { IntUtils } from '../IntUtils'
-import { ProtocolResponse } from '../Base/ProtocolResponse'
-import { TLevel } from '../WSAPI/WSAPITypes'
-import { Level } from './Level'
+import { IntUtils } from '../IntUtils';
+import { ProtocolResponse } from '../Base/ProtocolResponse';
+import { TLevel } from '../WSAPI/WSAPITypes';
+import { Level } from './Level';
 
 export interface GetLevelMapResponse extends ProtocolResponse {
-	levels: Level[]
+	levels: Level[];
 }
 
 export const GetLevelMapResponseTransform = (levels: GetLevelMapResponse): TLevel[] => {
@@ -18,5 +18,5 @@ export const GetLevelMapResponseTransform = (levels: GetLevelMapResponse): TLeve
 		required_level_counter_1: l.required_level_counter_1,
 		required_level_counter_2: l.required_level_counter_2,
 		custom_data: IntUtils.JsonOrText(l.level_public_meta?.custom_data),
-	}))
-}
+	}));
+};

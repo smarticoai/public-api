@@ -1,6 +1,6 @@
-import { ProtocolMessage } from '../Base/ProtocolMessage'
+import { ProtocolMessage } from '../Base/ProtocolMessage';
 
 export interface MarkInboxMessageReadResponse extends ProtocolMessage {
-	errCode: number
-	errMsg?: string
+	errCode: number;
+	errMsg?: string;
 }

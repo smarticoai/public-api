@@ -1,5 +1,5 @@
-import { ProtocolMessage } from '../Base/ProtocolMessage'
+import { ProtocolMessage } from '../Base/ProtocolMessage';
 
 export interface SAWPrizeDropAknowledgeResponse extends ProtocolMessage {
-	request_id: string // guid
+	request_id: string; // guid
 }

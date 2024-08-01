@@ -24,5 +24,5 @@ export const StoreItemTypeNamed = (type: StoreItemType): StoreItemTypeName => {
 			[StoreItemType.ChangeLevel]: StoreItemTypeName.ChangeLevel,
 			[StoreItemType.PrizeDrop]: StoreItemTypeName.PrizeDrop,
 		}[type] || StoreItemTypeName.Unknown
-	)
-}
+	);
+};

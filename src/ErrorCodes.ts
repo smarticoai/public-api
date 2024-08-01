@@ -1,4 +1,4 @@
-export const ErrorCodes_FatalStartingRange = 100000
+export const ErrorCodes_FatalStartingRange = 100000;
 
 export enum ErrorCodesGame {
 	OK = 0,
@@ -13,4 +13,4 @@ export enum ErrorCodesGame {
 	Fatal_Unhandled = ErrorCodes_FatalStartingRange + 4,
 }
 
-export type ErrorCodes = ErrorCodesGame
+export type ErrorCodes = ErrorCodesGame;

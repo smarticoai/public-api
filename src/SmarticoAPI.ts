@@ -1,15 +1,29 @@
-import { ClassId } from './Base/ClassId'
-import { ProtocolRequest } from './Base/ProtocolRequest'
-import { ProtocolResponse } from './Base/ProtocolResponse'
-import { SAWGetTemplatesResponse } from './MiniGames/SAWGetTemplatesResponse'
-import { SAWGetTemplatesRequest } from './MiniGames/SAWGetTemplatesRequest'
-import { IntUtils } from './IntUtils'
-import { ILogger } from './ILogger'
-import { SAWDoAknowledgeRequest, SAWDoAknowledgeResponse, SAWDoSpinRequest, SAWDoSpinResponse, SAWSpinErrorCode, SAWTemplatesTransform } from './MiniGames'
-import { ECacheContext, OCache } from './OCache'
-import { CoreUtils, GetTranslationsRequest, GetTranslationsResponse, PublicLabelSettings, ResponseIdentify, TranslationArea } from './Core'
-import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse'
-import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest'
+import { ClassId } from './Base/ClassId';
+import { ProtocolRequest } from './Base/ProtocolRequest';
+import { ProtocolResponse } from './Base/ProtocolResponse';
+import { SAWGetTemplatesResponse } from './MiniGames/SAWGetTemplatesResponse';
+import { SAWGetTemplatesRequest } from './MiniGames/SAWGetTemplatesRequest';
+import { IntUtils } from './IntUtils';
+import { ILogger } from './ILogger';
+import {
+	SAWDoAknowledgeRequest,
+	SAWDoAknowledgeResponse,
+	SAWDoSpinRequest,
+	SAWDoSpinResponse,
+	SAWSpinErrorCode,
+	SAWTemplatesTransform,
+} from './MiniGames';
+import { ECacheContext, OCache } from './OCache';
+import {
+	CoreUtils,
+	GetTranslationsRequest,
+	GetTranslationsResponse,
+	PublicLabelSettings,
+	ResponseIdentify,
+	TranslationArea,
+} from './Core';
+import { GetLabelInfoResponse } from './Core/GetLabelInfoResponse';
+import { GetLabelInfoRequest } from './Core/GetLabelInfoRequest';
 import {
 	GetInboxMessagesRequest,
 	GetInboxMessagesResponse,
@@ -22,7 +36,7 @@ import {
 	MarkInboxMessageReadResponse,
 	MarkInboxMessageStarredRequest,
 	MarkInboxMessageStarredResponse,
-} from './Inbox'
+} from './Inbox';
 import {
 	BuyStoreItemRequest,
 	BuyStoreItemResponse,
@@ -33,7 +47,7 @@ import {
 	StoreCategoryTransform,
 	StoreItemPurchasedTransform,
 	StoreItemTransform,
-} from './Store'
+} from './Store';
 import {
 	AchCategoryTransform,
 	AchClaimPrizeRequest,
@@ -45,7 +59,7 @@ import {
 	GetAchievementMapRequest,
 	GetAchievementMapResponse,
 	UserAchievementTransform,
-} from './Missions'
+} from './Missions';
 import {
 	GetTournamentInfoRequest,
 	GetTournamentInfoResponse,
@@ -55,10 +69,10 @@ import {
 	TournamentRegisterRequest,
 	TournamentRegisterResponse,
 	tournamentInfoItemTransform,
-} from './Tournaments'
-import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from './Leaderboard'
-import { GetLevelMapResponse, GetLevelMapResponseTransform } from './Level'
-import { WSAPI } from './WSAPI/WSAPI'
+} from './Tournaments';
+import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from './Leaderboard';
+import { GetLevelMapResponse, GetLevelMapResponseTransform } from './Level';
+import { WSAPI } from './WSAPI/WSAPI';
 import {
 	TInboxMessage,
 	TInboxMessageBody,
@@ -74,11 +88,11 @@ import {
 	UserLevelExtraCountersT,
 	TSegmentCheckResult,
 	TUICustomSection,
-} from './WSAPI/WSAPITypes'
-import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards'
-import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse'
-import { CheckSegmentMatchResponse } from './Core/CheckSegmentMatchResponse'
-import { CheckSegmentMatchRequest } from './Core/CheckSegmentMatchRequest'
+} from './WSAPI/WSAPITypes';
+import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
+import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
+import { CheckSegmentMatchResponse } from './Core/CheckSegmentMatchResponse';
+import { CheckSegmentMatchRequest } from './Core/CheckSegmentMatchRequest';
 import {
 	GetJackpotsPotsRequest,
 	GetJackpotsPotsResponse,
@@ -90,40 +104,40 @@ import {
 	JackpotsOptinResponse,
 	JackpotsOptoutRequest,
 	JackpotsOptoutResponse,
-} from './Jackpots'
-import { GetCustomSectionsRequest, GetCustomSectionsResponse, UICustomSectionTransform } from './CustomSections'
+} from './Jackpots';
+import { GetCustomSectionsRequest, GetCustomSectionsResponse, UICustomSectionTransform } from './CustomSections';
 
-const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public'
-const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services'
-const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc'
-const DEFAULT_LANG_EN = 'EN'
+const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
+const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
+const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
+const DEFAULT_LANG_EN = 'EN';
 
 interface Tracker {
-	label_api_key: string
-	userPublicProps: any
-	on: (callBackKey: ClassId, func: (data: any) => void) => void
-	getLabelSetting: (key: PublicLabelSettings) => any
+	label_api_key: string;
+	userPublicProps: any;
+	on: (callBackKey: ClassId, func: (data: any) => void) => void;
+	getLabelSetting: (key: PublicLabelSettings) => any;
 }
 interface IOptions {
-	logger?: ILogger
-	logCIDs?: ClassId[]
-	logHTTPTiming?: boolean
-	tracker?: Tracker
+	logger?: ILogger;
+	logCIDs?: ClassId[];
+	logHTTPTiming?: boolean;
+	tracker?: Tracker;
 }
 
-type MessageSender = (message: any, publicApuUrl?: string, expectCID?: ClassId) => Promise<any>
+type MessageSender = (message: any, publicApuUrl?: string, expectCID?: ClassId) => Promise<any>;
 
 class SmarticoAPI {
-	private publicUrl: string
-	private wsUrl: string
-	private inboxCdnUrl: string
-	private partnerUrl: string
-	public avatarDomain: string
+	private publicUrl: string;
+	private wsUrl: string;
+	private inboxCdnUrl: string;
+	private partnerUrl: string;
+	public avatarDomain: string;
 
-	private logger: ILogger
-	private logCIDs: ClassId[]
-	private logHTTPTiming: boolean
-	public tracker?: Tracker
+	private logger: ILogger;
+	private logCIDs: ClassId[];
+	private logHTTPTiming: boolean;
+	public tracker?: Tracker;
 
 	public constructor(
 		private label_api_key: string,
@@ -131,109 +145,116 @@ class SmarticoAPI {
 		private messageSender: MessageSender,
 		options: IOptions = {},
 	) {
-		this.logger = options.logger || (console as any)
+		this.logger = options.logger || (console as any);
 
 		if (this.logger.always === undefined) {
-			this.logger.always = this.logger.info
+			this.logger.always = this.logger.info;
 		}
 
-		this.logCIDs = options.logCIDs || []
-		this.logHTTPTiming = options.logHTTPTiming || false
-		this.tracker = options.tracker
+		this.logCIDs = options.logCIDs || [];
+		this.logHTTPTiming = options.logHTTPTiming || false;
+		this.tracker = options.tracker;
 
-		this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key)
-		this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key)
+		this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
+		this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key);
 
-		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key)
+		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
 
-		this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key)
+		this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key);
 	}
 
 	public static getEnvDnsSuffix(label_api_key: string): string {
-		let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : ''
+		let ENV_ID = label_api_key.length === 38 ? label_api_key.substring(37, 38) : '';
 
 		if (ENV_ID === '1' || ENV_ID === '2') {
-			ENV_ID = ''
+			ENV_ID = '';
 		}
-		return ENV_ID
+		return ENV_ID;
 	}
 
 	public static getEnvId(label_api_key: string): number {
-		return label_api_key.length === 38 ? parseInt(label_api_key.substring(37, 38), 10) : 2
+		return label_api_key.length === 38 ? parseInt(label_api_key.substring(37, 38), 10) : 2;
 	}
 
 	public static getCleanLabelApiKey(label_api_key: string): string {
-		return label_api_key.substring(0, 36)
+		return label_api_key.substring(0, 36);
 	}
 
 	public static getPublicUrl(label_api_key: string): string {
-		return PUBLIC_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key))
+		return PUBLIC_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 	}
 
 	public static getPublicWsUrl(label_api_key: string): string {
-		return C_SOCKET_PROD.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key))
+		return C_SOCKET_PROD.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 	}
 
 	public static getAvatarUrl(label_api_key: string): string {
-		return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key))
+		return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 	}
 
 	private async send<T>(message: any, expectCID?: ClassId, force_language?: string): Promise<T> {
 		if (this.logCIDs.includes(message.cid)) {
-			this.logger.info('REQ', message)
+			this.logger.info('REQ', message);
 		}
 
 		if (force_language) {
-			message.force_language = force_language
+			message.force_language = force_language;
 		}
 
-		let result: any
+		let result: any;
 
 		try {
-			const timeStart = new Date().getTime()
-			result = await this.messageSender(message, this.publicUrl, expectCID)
-			const timeEnd = new Date().getTime()
+			const timeStart = new Date().getTime();
+			result = await this.messageSender(message, this.publicUrl, expectCID);
+			const timeEnd = new Date().getTime();
 
 			if (this.logHTTPTiming) {
-				this.logger.always('HTTP time, ms:' + (timeEnd - timeStart))
+				this.logger.always('HTTP time, ms:' + (timeEnd - timeStart));
 			}
 		} catch (e) {
-			this.logger.error(`Failed to make request to smartico channel, L2. ${e.message}`, { url: this.publicUrl, request: message, error: e.message })
-			throw new Error(`Failed to make request to smartico channel, L2 L1. ${e.message}`)
+			this.logger.error(`Failed to make request to smartico channel, L2. ${e.message}`, {
+				url: this.publicUrl,
+				request: message,
+				error: e.message,
+			});
+			throw new Error(`Failed to make request to smartico channel, L2 L1. ${e.message}`);
 		}
 
 		if (this.logCIDs.includes(message.cid)) {
-			this.logger.info('RES', result)
+			this.logger.info('RES', result);
 		}
 
 		if (expectCID) {
 			if (Array.isArray(result)) {
 				for (const str of result as string[]) {
-					const obj: ProtocolResponse = JSON.parse(str)
+					const obj: ProtocolResponse = JSON.parse(str);
 					if (this.logCIDs.includes(obj.cid)) {
-						this.logger.info('RES', result)
+						this.logger.info('RES', result);
 					}
 					if (obj.cid === expectCID) {
-						return obj as any
+						return obj as any;
 					}
 				}
-				this.logger.error(`Cant find proper response in array, expected CID ${expectCID}`, { request: message, response: result })
+				this.logger.error(`Cant find proper response in array, expected CID ${expectCID}`, {
+					request: message,
+					response: result,
+				});
 			} else {
-				return result
+				return result;
 			}
 		} else {
 			if (Array.isArray(result)) {
 				if (result.length === 1) {
-					const obj = JSON.parse(result[0])
+					const obj = JSON.parse(result[0]);
 					if (this.logCIDs.includes(obj.cid)) {
-						this.logger.info('RES', result)
+						this.logger.info('RES', result);
 					}
-					return obj
+					return obj;
 				} else {
-					this.logger.error('Expected one response, but got array', { request: message, response: result })
+					this.logger.error('Expected one response, but got array', { request: message, response: result });
 				}
 			}
-			return result
+			return result;
 		}
 	}
 
@@ -248,66 +269,79 @@ class SmarticoAPI {
 			uuid: IntUtils.uuid(),
 			ts: new Date().getTime(),
 			...payload,
-		}
+		};
 
 		if (message.ext_user_id === undefined || message.ext_user_id === null) {
-			delete message.ext_user_id
+			delete message.ext_user_id;
 		}
 
 		if (message.brand_key === undefined || message.brand_key === null) {
-			delete message.brand_key
+			delete message.brand_key;
 		}
 
-		return message as any
+		return message as any;
 	}
 
 	public async coreReportCustomEvent(user_ext_id: string, eventType: string, payload: any = {}): Promise<any> {
 		const eventMessage = this.buildMessage<any, any>(user_ext_id, ClassId.EVENT, {
 			eventType,
 			payload,
-		})
+		});
 
-		const eventResponse = await this.send<any>(eventMessage, ClassId.EVENT_RESPONSE)
-		return eventResponse
+		const eventResponse = await this.send<any>(eventMessage, ClassId.EVENT_RESPONSE);
+		return eventResponse;
 	}
 
-	public async coreGetTranslations(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec: number = 60): Promise<GetTranslationsResponse> {
+	public async coreGetTranslations(
+		user_ext_id: string,
+		lang_code: string,
+		areas: TranslationArea[],
+		cacheSec: number = 60,
+	): Promise<GetTranslationsResponse> {
 		if (lang_code === undefined || lang_code === null || (lang_code.trim && lang_code.trim() === '')) {
-			lang_code = DEFAULT_LANG_EN
+			lang_code = DEFAULT_LANG_EN;
 		}
 
 		const response = await OCache.use<GetTranslationsResponse>(
 			`${lang_code}-${this.label_api_key}-${this.brand_api_key}`,
 			ECacheContext.Translations,
 			async () => {
-				const tsBaseRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(user_ext_id, ClassId.GET_TRANSLATIONS_REQUEST, {
-					lang_code: DEFAULT_LANG_EN,
-					hash_code: 0,
-					areas,
-				})
-
-				const trBase = await this.send<GetTranslationsResponse>(tsBaseRQ, ClassId.GET_TRANSLATIONS_RESPONSE)
-
-				if (lang_code !== DEFAULT_LANG_EN) {
-					const trUserRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(user_ext_id, ClassId.GET_TRANSLATIONS_REQUEST, {
-						lang_code,
+				const tsBaseRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(
+					user_ext_id,
+					ClassId.GET_TRANSLATIONS_REQUEST,
+					{
+						lang_code: DEFAULT_LANG_EN,
 						hash_code: 0,
 						areas,
-					})
+					},
+				);
 
-					const trUser = await this.send<GetTranslationsResponse>(trUserRQ, ClassId.GET_TRANSLATIONS_RESPONSE)
+				const trBase = await this.send<GetTranslationsResponse>(tsBaseRQ, ClassId.GET_TRANSLATIONS_RESPONSE);
+
+				if (lang_code !== DEFAULT_LANG_EN) {
+					const trUserRQ = this.buildMessage<GetTranslationsRequest, GetTranslationsResponse>(
+						user_ext_id,
+						ClassId.GET_TRANSLATIONS_REQUEST,
+						{
+							lang_code,
+							hash_code: 0,
+							areas,
+						},
+					);
+
+					const trUser = await this.send<GetTranslationsResponse>(trUserRQ, ClassId.GET_TRANSLATIONS_RESPONSE);
 
 					Object.keys(trUser?.translations ?? {}).forEach((k) => {
-						trBase.translations[k] = trUser.translations[k]
-					})
+						trBase.translations[k] = trUser.translations[k];
+					});
 				}
 
-				return trBase
+				return trBase;
 			},
 			cacheSec,
-		)
+		);
 
-		return response
+		return response;
 	}
 
 	public async coreIdentifyLabel(user_ext_id: string, cacheSec: number = 60): Promise<GetLabelInfoResponse> {
@@ -315,112 +349,169 @@ class SmarticoAPI {
 			`${this.label_api_key} - ${this.brand_api_key}`,
 			ECacheContext.LabelInfo,
 			async () => {
-				const message = this.buildMessage<GetLabelInfoResponse, GetLabelInfoRequest>(user_ext_id, ClassId.INIT)
+				const message = this.buildMessage<GetLabelInfoResponse, GetLabelInfoRequest>(user_ext_id, ClassId.INIT);
 
-				return this.send<GetLabelInfoResponse>(message, ClassId.INIT_RESPONSE)
+				return this.send<GetLabelInfoResponse>(message, ClassId.INIT_RESPONSE);
 			},
 			cacheSec,
-		)
+		);
 	}
 
 	public async coreIdentifyUser(user_ext_id: string): Promise<ResponseIdentify> {
 		const message = this.buildMessage<any, ResponseIdentify>(user_ext_id, ClassId.IDENTIFY, {
 			request_id: IntUtils.uuid(), // AA: do we need request_id?
-		})
+		});
 
-		const r = await this.send<ResponseIdentify>(message, ClassId.IDENTIFY_RESPONSE)
+		const r = await this.send<ResponseIdentify>(message, ClassId.IDENTIFY_RESPONSE);
 
-		r.avatar_id = CoreUtils.avatarUrl(r.avatar_id, this.avatarDomain)
+		r.avatar_id = CoreUtils.avatarUrl(r.avatar_id, this.avatarDomain);
 
-		return r
+		return r;
 	}
 
-	public async coreChangeUsername(user_ext_id: string, public_username_custom: string): Promise<{ public_username_custom: string }> {
+	public async coreChangeUsername(
+		user_ext_id: string,
+		public_username_custom: string,
+	): Promise<{ public_username_custom: string }> {
 		const message = this.buildMessage<any, any>(user_ext_id, ClassId.CLIENT_SET_CUSTOM_USERNAME_REQUEST, {
 			public_username_custom,
-		})
+		});
 
-		return await this.send(message, ClassId.CLIENT_SET_CUSTOM_USERNAME_RESPONSE)
+		return await this.send(message, ClassId.CLIENT_SET_CUSTOM_USERNAME_RESPONSE);
 	}
 
 	public async coreCheckSegments(user_ext_id: string, segment_id: number[]): Promise<TSegmentCheckResult[]> {
 		const message = this.buildMessage<CheckSegmentMatchRequest, any>(user_ext_id, ClassId.CHECK_SEGMENT_MATCH_REQUEST, {
 			segment_id,
-		})
+		});
 
-		const results = await this.send<CheckSegmentMatchResponse>(message, ClassId.CHECK_SEGMENT_MATCH_RESPONSE)
+		const results = await this.send<CheckSegmentMatchResponse>(message, ClassId.CHECK_SEGMENT_MATCH_RESPONSE);
 
-		return results.segments || []
+		return results.segments || [];
 	}
 
-	public async jackpotGet(user_ext_id: string, filter?: { related_game_id?: string; jp_template_id?: number }, force_language?: string): Promise<GetJackpotsResponse> {
-		const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(user_ext_id, ClassId.JP_GET_JACKPOTS_REQUEST, filter)
-		return await this.send<GetJackpotsResponse>(message, ClassId.JP_GET_JACKPOTS_RESPONSE, force_language)
+	public async jackpotGet(
+		user_ext_id: string,
+		filter?: { related_game_id?: string; jp_template_id?: number },
+		force_language?: string,
+	): Promise<GetJackpotsResponse> {
+		const message = this.buildMessage<GetJackpotsRequest, GetJackpotsResponse>(
+			user_ext_id,
+			ClassId.JP_GET_JACKPOTS_REQUEST,
+			filter,
+		);
+		return await this.send<GetJackpotsResponse>(message, ClassId.JP_GET_JACKPOTS_RESPONSE, force_language);
 	}
 
 	public async potGet(user_ext_id: string, filter: { jp_template_ids: number[] }): Promise<GetJackpotsPotsResponse> {
-		const message = this.buildMessage<GetJackpotsPotsRequest, GetJackpotsPotsResponse>(user_ext_id, ClassId.JP_GET_LATEST_POTS_REQUEST, filter)
-		return await this.send<GetJackpotsPotsResponse>(message, ClassId.JP_GET_LATEST_POTS_RESPONSE)
+		const message = this.buildMessage<GetJackpotsPotsRequest, GetJackpotsPotsResponse>(
+			user_ext_id,
+			ClassId.JP_GET_LATEST_POTS_REQUEST,
+			filter,
+		);
+		return await this.send<GetJackpotsPotsResponse>(message, ClassId.JP_GET_LATEST_POTS_RESPONSE);
 	}
 
 	public async jackpotOptIn(user_ext_id: string, payload: { jp_template_id: number }): Promise<JackpotsOptinResponse> {
-		const message = this.buildMessage<JackpotsOptinRequest, JackpotsOptinResponse>(user_ext_id, ClassId.JP_OPTIN_REQUEST, payload)
-		return await this.send<JackpotsOptinResponse>(message, ClassId.JP_OPTIN_RESPONSE)
+		const message = this.buildMessage<JackpotsOptinRequest, JackpotsOptinResponse>(
+			user_ext_id,
+			ClassId.JP_OPTIN_REQUEST,
+			payload,
+		);
+		return await this.send<JackpotsOptinResponse>(message, ClassId.JP_OPTIN_RESPONSE);
 	}
 
 	public async jackpotOptOut(user_ext_id: string, payload: { jp_template_id: number }): Promise<JackpotsOptoutResponse> {
-		const message = this.buildMessage<JackpotsOptoutRequest, JackpotsOptoutResponse>(user_ext_id, ClassId.JP_OPTOUT_REQUEST, payload)
-		return await this.send<JackpotsOptoutResponse>(message, ClassId.JP_OPTOUT_RESPONSE)
+		const message = this.buildMessage<JackpotsOptoutRequest, JackpotsOptoutResponse>(
+			user_ext_id,
+			ClassId.JP_OPTOUT_REQUEST,
+			payload,
+		);
+		return await this.send<JackpotsOptoutResponse>(message, ClassId.JP_OPTOUT_RESPONSE);
 	}
 
-	public async sawGetTemplates(user_ext_id: string, force_language?: string, is_visitor_mode: boolean = false): Promise<SAWGetTemplatesResponse> {
-		const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(user_ext_id, ClassId.SAW_GET_SPINS_REQUEST, { is_visitor_mode })
+	public async sawGetTemplates(
+		user_ext_id: string,
+		force_language?: string,
+		is_visitor_mode: boolean = false,
+	): Promise<SAWGetTemplatesResponse> {
+		const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(
+			user_ext_id,
+			ClassId.SAW_GET_SPINS_REQUEST,
+			{ is_visitor_mode },
+		);
 
-		const response = await this.send<SAWGetTemplatesResponse>(message, ClassId.SAW_GET_SPINS_RESPONSE, force_language)
+		const response = await this.send<SAWGetTemplatesResponse>(message, ClassId.SAW_GET_SPINS_RESPONSE, force_language);
 
 		if (response && response.templates) {
 			response.templates.forEach((t) => {
 				if (t.jackpot_current !== undefined && t.jackpot_current !== null) {
-					const jackpotValue = t.jackpot_current + (t.saw_template_ui_definition?.jackpot_symbol ? ' ' + t.saw_template_ui_definition?.jackpot_symbol : '')
-					t.saw_template_ui_definition.name = IntUtils.replaceAll(t.saw_template_ui_definition.name, '{{jackpot}}', jackpotValue)
-					t.saw_template_ui_definition.description = IntUtils.replaceAll(t.saw_template_ui_definition.description, '{{jackpot}}', jackpotValue)
-					t.saw_template_ui_definition.promo_text = IntUtils.replaceAll(t.saw_template_ui_definition.promo_text, '{{jackpot}}', jackpotValue)
+					const jackpotValue =
+						t.jackpot_current +
+						(t.saw_template_ui_definition?.jackpot_symbol ? ' ' + t.saw_template_ui_definition?.jackpot_symbol : '');
+					t.saw_template_ui_definition.name = IntUtils.replaceAll(
+						t.saw_template_ui_definition.name,
+						'{{jackpot}}',
+						jackpotValue,
+					);
+					t.saw_template_ui_definition.description = IntUtils.replaceAll(
+						t.saw_template_ui_definition.description,
+						'{{jackpot}}',
+						jackpotValue,
+					);
+					t.saw_template_ui_definition.promo_text = IntUtils.replaceAll(
+						t.saw_template_ui_definition.promo_text,
+						'{{jackpot}}',
+						jackpotValue,
+					);
 					t.prizes.forEach((p) => {
-						p.saw_prize_ui_definition.name = IntUtils.replaceAll(p.saw_prize_ui_definition.name, '{{jackpot}}', jackpotValue)
-						p.saw_prize_ui_definition.aknowledge_message = IntUtils.replaceAll(p.saw_prize_ui_definition.aknowledge_message, '{{jackpot}}', jackpotValue)
-					})
+						p.saw_prize_ui_definition.name = IntUtils.replaceAll(
+							p.saw_prize_ui_definition.name,
+							'{{jackpot}}',
+							jackpotValue,
+						);
+						p.saw_prize_ui_definition.aknowledge_message = IntUtils.replaceAll(
+							p.saw_prize_ui_definition.aknowledge_message,
+							'{{jackpot}}',
+							jackpotValue,
+						);
+					});
 				}
-			})
+			});
 		}
 
-		return response
+		return response;
 	}
 
 	public async sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]> {
-		return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates)
+		return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates);
 	}
 
 	public async doAcknowledgeRequest(user_ext_id: string, request_id: string): Promise<SAWDoAknowledgeResponse> {
-		const message = this.buildMessage<SAWDoAknowledgeRequest, SAWDoAknowledgeResponse>(user_ext_id, ClassId.SAW_AKNOWLEDGE_REQUEST, {
-			request_id,
-		})
+		const message = this.buildMessage<SAWDoAknowledgeRequest, SAWDoAknowledgeResponse>(
+			user_ext_id,
+			ClassId.SAW_AKNOWLEDGE_REQUEST,
+			{
+				request_id,
+			},
+		);
 
-		return await this.send<SAWDoAknowledgeResponse>(message, ClassId.SAW_AKNOWLEDGE_RESPONSE)
+		return await this.send<SAWDoAknowledgeResponse>(message, ClassId.SAW_AKNOWLEDGE_RESPONSE);
 	}
 
 	public async sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id?: number): Promise<SAWDoSpinResponse> {
 		if (!saw_template_id) {
-			throw new Error('Missing template id')
+			throw new Error('Missing template id');
 		}
 
-		const request_id = IntUtils.uuid()
+		const request_id = IntUtils.uuid();
 
 		const message = this.buildMessage<SAWDoSpinRequest, SAWDoSpinResponse>(user_ext_id, ClassId.SAW_DO_SPIN_REQUEST, {
 			saw_template_id,
 			request_id,
-		})
+		});
 
-		const spinAttemptResponse = await this.send<SAWDoSpinResponse>(message, ClassId.SAW_DO_SPIN_RESPONSE)
+		const spinAttemptResponse = await this.send<SAWDoSpinResponse>(message, ClassId.SAW_DO_SPIN_RESPONSE);
 
 		// to simulate fail
 		// response.errCode = SAWSpinErrorCode.SAW_NO_SPINS;
@@ -432,279 +523,377 @@ class SmarticoAPI {
 				[SAWSpinErrorCode.SAW_PRIZE_POOL_EMPTY]: 'PRIZE POOL IS EMPTY',
 				[SAWSpinErrorCode.SAW_NOT_ENOUGH_POINTS]: 'NOT ENOUGH POINTS',
 				[SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED]: 'MAX SPIN ATTEMPTS REACHED',
-			}[spinAttemptResponse.errCode] || 'OTHER'
+			}[spinAttemptResponse.errCode] || 'OTHER';
 
 		await this.coreReportCustomEvent(user_ext_id, 'minigame_attempt', {
 			saw_template_id,
 			status,
 			round_id,
-		})
+		});
 
-		return { ...spinAttemptResponse, request_id }
+		return { ...spinAttemptResponse, request_id };
 	}
 
 	public async missionOptIn(user_ext_id: string, mission_id: number) {
 		if (!mission_id) {
-			throw new Error('Missing mission id')
+			throw new Error('Missing mission id');
 		}
-		const message = this.buildMessage<AchievementOptinRequest, AchievementOptinResponse>(user_ext_id, ClassId.MISSION_OPTIN_REQUEST, {
-			achievementId: mission_id,
-		})
+		const message = this.buildMessage<AchievementOptinRequest, AchievementOptinResponse>(
+			user_ext_id,
+			ClassId.MISSION_OPTIN_REQUEST,
+			{
+				achievementId: mission_id,
+			},
+		);
 
-		const res = await this.send<AchievementOptinResponse>(message, ClassId.MISSION_OPTIN_RESPONSE)
+		const res = await this.send<AchievementOptinResponse>(message, ClassId.MISSION_OPTIN_RESPONSE);
 
-		return res
+		return res;
 	}
 
 	public async missionClaimPrize(user_ext_id: string, mission_id: number, ach_completed_id: number) {
 		if (!mission_id) {
-			throw new Error('Missing mission id')
+			throw new Error('Missing mission id');
 		}
 
-		const message = this.buildMessage<AchClaimPrizeRequest, AchClaimPrizeResponse>(user_ext_id, ClassId.ACHIEVEMENT_CLAIM_PRIZE_REQUEST, {
-			ach_id: mission_id,
-			ach_completed_id: ach_completed_id,
-		})
+		const message = this.buildMessage<AchClaimPrizeRequest, AchClaimPrizeResponse>(
+			user_ext_id,
+			ClassId.ACHIEVEMENT_CLAIM_PRIZE_REQUEST,
+			{
+				ach_id: mission_id,
+				ach_completed_id: ach_completed_id,
+			},
+		);
 
-		const res = await this.send<AchClaimPrizeResponse>(message, ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE)
+		const res = await this.send<AchClaimPrizeResponse>(message, ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE);
 
-		return res
+		return res;
 	}
 
 	public async registerInTournament(user_ext_id: string, tournamentInstanceId: number) {
 		if (!tournamentInstanceId) {
-			throw new Error('Missing tournament instance id')
+			throw new Error('Missing tournament instance id');
 		}
-		const message = this.buildMessage<TournamentRegisterRequest, TournamentRegisterResponse>(user_ext_id, ClassId.TOURNAMENT_REGISTER_REQUEST, {
-			tournamentInstanceId,
-		})
+		const message = this.buildMessage<TournamentRegisterRequest, TournamentRegisterResponse>(
+			user_ext_id,
+			ClassId.TOURNAMENT_REGISTER_REQUEST,
+			{
+				tournamentInstanceId,
+			},
+		);
 
-		const res = await this.send<TournamentRegisterResponse>(message, ClassId.TOURNAMENT_REGISTER_RESPONSE)
+		const res = await this.send<TournamentRegisterResponse>(message, ClassId.TOURNAMENT_REGISTER_RESPONSE);
 
-		return res
+		return res;
 	}
 
 	public async buyStoreItem(user_ext_id: string, itemId: number) {
 		if (!itemId) {
-			throw new Error('Missing store item id')
+			throw new Error('Missing store item id');
 		}
 		const message = this.buildMessage<BuyStoreItemRequest, BuyStoreItemResponse>(user_ext_id, ClassId.BUY_SHOP_ITEM_REQUEST, {
 			itemId,
-		})
+		});
 
-		const res = await this.send<BuyStoreItemResponse>(message, ClassId.BUY_SHOP_ITEM_RESPONSE)
+		const res = await this.send<BuyStoreItemResponse>(message, ClassId.BUY_SHOP_ITEM_RESPONSE);
 
-		return res
+		return res;
 	}
 
-	public async inboxGetMessages(user_ext_id: string, limit: number = 10, offset: number = 0): Promise<GetInboxMessagesResponse> {
-		const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(user_ext_id, ClassId.GET_INBOX_MESSAGES_REQUEST, {
-			limit,
-			offset,
-		})
+	public async inboxGetMessages(
+		user_ext_id: string,
+		limit: number = 10,
+		offset: number = 0,
+	): Promise<GetInboxMessagesResponse> {
+		const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(
+			user_ext_id,
+			ClassId.GET_INBOX_MESSAGES_REQUEST,
+			{
+				limit,
+				offset,
+			},
+		);
 
-		return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE)
+		return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE);
 	}
 
 	public async storeGetItems(user_ext_id: string, force_language?: string): Promise<GetStoreItemsResponse> {
-		const message = this.buildMessage<any, GetStoreItemsResponse>(user_ext_id, ClassId.GET_SHOP_ITEMS_REQUEST)
-		return await this.send<GetStoreItemsResponse>(message, ClassId.GET_SHOP_ITEMS_RESPONSE, force_language)
+		const message = this.buildMessage<any, GetStoreItemsResponse>(user_ext_id, ClassId.GET_SHOP_ITEMS_REQUEST);
+		return await this.send<GetStoreItemsResponse>(message, ClassId.GET_SHOP_ITEMS_RESPONSE, force_language);
 	}
 
 	public async storeGetItemsT(user_ext_id: string): Promise<TStoreItem[]> {
-		return StoreItemTransform((await this.storeGetItems(user_ext_id)).items)
+		return StoreItemTransform((await this.storeGetItems(user_ext_id)).items);
 	}
 
 	public async storeGetCategories(user_ext_id: string, force_language?: string): Promise<GetCategoriesStoreResponse> {
-		const message = this.buildMessage<any, GetCategoriesStoreResponse>(user_ext_id, ClassId.GET_SHOP_CATEGORIES_REQUEST)
-		return await this.send<GetCategoriesStoreResponse>(message, ClassId.GET_SHOP_CATEGORIES_RESPONSE, force_language)
+		const message = this.buildMessage<any, GetCategoriesStoreResponse>(user_ext_id, ClassId.GET_SHOP_CATEGORIES_REQUEST);
+		return await this.send<GetCategoriesStoreResponse>(message, ClassId.GET_SHOP_CATEGORIES_RESPONSE, force_language);
 	}
 
 	public async storeGetCategoriesT(user_ext_id: string): Promise<TStoreCategory[]> {
-		return StoreCategoryTransform((await this.storeGetCategories(user_ext_id)).categories)
+		return StoreCategoryTransform((await this.storeGetCategories(user_ext_id)).categories);
 	}
 
-	public async storeGetPurchasedItems(user_ext_id: string, limit: number = 20, offset: number = 0): Promise<GetStoreHistoryResponse> {
-		const message = this.buildMessage<GetStoreHistoryRequest, GetStoreHistoryResponse>(user_ext_id, ClassId.ACH_SHOP_ITEM_HISTORY_REQUEST, {
-			limit,
-			offset,
-		})
+	public async storeGetPurchasedItems(
+		user_ext_id: string,
+		limit: number = 20,
+		offset: number = 0,
+	): Promise<GetStoreHistoryResponse> {
+		const message = this.buildMessage<GetStoreHistoryRequest, GetStoreHistoryResponse>(
+			user_ext_id,
+			ClassId.ACH_SHOP_ITEM_HISTORY_REQUEST,
+			{
+				limit,
+				offset,
+			},
+		);
 
-		return await this.send<GetStoreHistoryResponse>(message, ClassId.ACH_SHOP_ITEM_HISTORY_RESPONSE)
+		return await this.send<GetStoreHistoryResponse>(message, ClassId.ACH_SHOP_ITEM_HISTORY_RESPONSE);
 	}
 
 	public async storeGetPurchasedItemsT(user_ext_id: string, limit?: number, offset?: number): Promise<TStoreItem[]> {
-		return StoreItemPurchasedTransform((await this.storeGetPurchasedItems(user_ext_id, limit, offset)).items)
+		return StoreItemPurchasedTransform((await this.storeGetPurchasedItems(user_ext_id, limit, offset)).items);
 	}
 
 	public async missionsGetItems(user_ext_id: string, force_language?: string): Promise<GetAchievementMapResponse> {
-		const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST)
-		const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE, force_language)
+		const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(
+			user_ext_id,
+			ClassId.GET_ACHIEVEMENT_MAP_REQUEST,
+		);
+		const response = await this.send<GetAchievementMapResponse>(
+			message,
+			ClassId.GET_ACHIEVEMENT_MAP_RESPONSE,
+			force_language,
+		);
 		// we need to clone response to avoid changing original object,for cases when its called together with badgesGetItems (e.g. in Promise.all)
-		const responseClone = { ...response }
+		const responseClone = { ...response };
 
 		if (responseClone.achievements) {
-			responseClone.achievements = responseClone.achievements.filter((a) => a.ach_type_id === AchievementType.Mission)
+			responseClone.achievements = responseClone.achievements.filter((a) => a.ach_type_id === AchievementType.Mission);
 		}
-		return responseClone
+		return responseClone;
 	}
 
 	public async missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
-		return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements)
+		return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements);
 	}
 
 	public async getUserGamificationInfo(user_ext_id: string): Promise<GetAchievementsUserInfoResponse> {
-		const message = this.buildMessage<GetAchievementMapRequest, GetAchievementsUserInfoResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_USER_REQUEST)
+		const message = this.buildMessage<GetAchievementMapRequest, GetAchievementsUserInfoResponse>(
+			user_ext_id,
+			ClassId.GET_ACHIEVEMENT_USER_REQUEST,
+		);
 
-		return await this.send<GetAchievementsUserInfoResponse>(message, ClassId.GET_ACHIEVEMENT_USER_RESPONSE)
+		return await this.send<GetAchievementsUserInfoResponse>(message, ClassId.GET_ACHIEVEMENT_USER_RESPONSE);
 	}
 
 	public async getUserGamificationInfoT(user_ext_id: string): Promise<UserLevelExtraCountersT> {
-		const response = await this.getUserGamificationInfo(user_ext_id)
+		const response = await this.getUserGamificationInfo(user_ext_id);
 
 		return {
 			level_counter_1: response.level_counter_1,
 			level_counter_2: response.level_counter_2,
-		}
+		};
 	}
 
 	public async achGetCategories(user_ext_id: string, force_language?: string): Promise<GetAchCategoriesResponse> {
-		const message = this.buildMessage<any, GetAchCategoriesResponse>(user_ext_id, ClassId.GET_ACH_CATEGORIES_REQUEST)
-		return await this.send<GetAchCategoriesResponse>(message, ClassId.GET_ACH_CATEGORIES_RESPONSE, force_language)
+		const message = this.buildMessage<any, GetAchCategoriesResponse>(user_ext_id, ClassId.GET_ACH_CATEGORIES_REQUEST);
+		return await this.send<GetAchCategoriesResponse>(message, ClassId.GET_ACH_CATEGORIES_RESPONSE, force_language);
 	}
 
 	public async achGetCategoriesT(user_ext_id: string): Promise<TAchCategory[]> {
-		return AchCategoryTransform((await this.achGetCategories(user_ext_id)).categories)
+		return AchCategoryTransform((await this.achGetCategories(user_ext_id)).categories);
 	}
 
 	public async badgetsGetItems(user_ext_id: string, force_language?: string): Promise<GetAchievementMapResponse> {
-		const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(user_ext_id, ClassId.GET_ACHIEVEMENT_MAP_REQUEST)
-		const response = await this.send<GetAchievementMapResponse>(message, ClassId.GET_ACHIEVEMENT_MAP_RESPONSE, force_language)
+		const message = this.buildMessage<GetAchievementMapRequest, GetAchievementMapResponse>(
+			user_ext_id,
+			ClassId.GET_ACHIEVEMENT_MAP_REQUEST,
+		);
+		const response = await this.send<GetAchievementMapResponse>(
+			message,
+			ClassId.GET_ACHIEVEMENT_MAP_RESPONSE,
+			force_language,
+		);
 		// we need to clone response to avoid changing original object,for cases when its called together with missionsGetItems (e.g. in Promise.all)
-		const responseClone = { ...response }
+		const responseClone = { ...response };
 
 		if (responseClone.achievements) {
-			responseClone.achievements = responseClone.achievements.filter((a) => a.ach_type_id === AchievementType.Badge)
+			responseClone.achievements = responseClone.achievements.filter((a) => a.ach_type_id === AchievementType.Badge);
 		}
-		return responseClone
+		return responseClone;
 	}
 
 	public async badgetsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
-		return UserAchievementTransform((await this.badgetsGetItems(user_ext_id)).achievements)
+		return UserAchievementTransform((await this.badgetsGetItems(user_ext_id)).achievements);
 	}
 
 	public async tournamentsGetLobby(user_ext_id: string, force_language?: string): Promise<GetTournamentsResponse> {
-		const message = this.buildMessage<GetTournamentsRequest, GetTournamentsResponse>(user_ext_id, ClassId.GET_TOURNAMENT_LOBBY_REQUEST)
-		return await this.send<GetTournamentsResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE, force_language)
+		const message = this.buildMessage<GetTournamentsRequest, GetTournamentsResponse>(
+			user_ext_id,
+			ClassId.GET_TOURNAMENT_LOBBY_REQUEST,
+		);
+		return await this.send<GetTournamentsResponse>(message, ClassId.GET_TOURNAMENT_LOBBY_RESPONSE, force_language);
 	}
 
 	public async tournamentsGetLobbyT(user_ext_id: string): Promise<TTournament[]> {
-		return TournamentItemsTransform((await this.tournamentsGetLobby(user_ext_id)).tournaments)
+		return TournamentItemsTransform((await this.tournamentsGetLobby(user_ext_id)).tournaments);
 	}
 
-	public async tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number, force_language?: string): Promise<GetTournamentInfoResponse> {
-		const message = this.buildMessage<GetTournamentInfoRequest, GetTournamentInfoResponse>(user_ext_id, ClassId.GET_TOURNAMENT_INFO_REQUEST, {
-			tournamentInstanceId,
-		})
-		const response = await this.send<GetTournamentInfoResponse>(message, ClassId.GET_TOURNAMENT_INFO_RESPONSE, force_language)
+	public async tournamentsGetInfo(
+		user_ext_id: string,
+		tournamentInstanceId: number,
+		force_language?: string,
+	): Promise<GetTournamentInfoResponse> {
+		const message = this.buildMessage<GetTournamentInfoRequest, GetTournamentInfoResponse>(
+			user_ext_id,
+			ClassId.GET_TOURNAMENT_INFO_REQUEST,
+			{
+				tournamentInstanceId,
+			},
+		);
+		const response = await this.send<GetTournamentInfoResponse>(
+			message,
+			ClassId.GET_TOURNAMENT_INFO_RESPONSE,
+			force_language,
+		);
 
 		if (response.userPosition?.avatar_id) {
-			response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_id, this.avatarDomain)
+			response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_id, this.avatarDomain);
 		}
 
 		if (response.tournamentInfo.players?.length) {
 			response.tournamentInfo.players.forEach((p) => {
-				p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain)
-			})
+				p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain);
+			});
 		}
 
-		return response
+		return response;
 	}
 
 	public async tournamentsGetInfoT(user_ext_id: string, tournamentInstanceId: number): Promise<TTournamentDetailed> {
 		if (!tournamentInstanceId) {
-			throw new Error('Missing tournament instance id')
+			throw new Error('Missing tournament instance id');
 		}
-		const response = await this.tournamentsGetInfo(user_ext_id, tournamentInstanceId)
-		return tournamentInfoItemTransform(response)
+		const response = await this.tournamentsGetInfo(user_ext_id, tournamentInstanceId);
+		return tournamentInfoItemTransform(response);
 	}
 
-	public async leaderboardGet(user_ext_id: string, period_type_id?: LeaderBoardPeriodType, prevPeriod: boolean = false, force_language?: string): Promise<LeaderBoardDetails> {
-		const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(user_ext_id, ClassId.GET_LEADERS_BOARD_REQUEST, {
-			period_type_id,
-			snapshot_offset: prevPeriod ? 1 : 0,
-			include_users: true,
-		})
+	public async leaderboardGet(
+		user_ext_id: string,
+		period_type_id?: LeaderBoardPeriodType,
+		prevPeriod: boolean = false,
+		force_language?: string,
+	): Promise<LeaderBoardDetails> {
+		const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(
+			user_ext_id,
+			ClassId.GET_LEADERS_BOARD_REQUEST,
+			{
+				period_type_id,
+				snapshot_offset: prevPeriod ? 1 : 0,
+				include_users: true,
+			},
+		);
 
-		const response = await this.send<GetLeaderBoardsResponse>(message, ClassId.GET_LEADERS_BOARD_RESPONSE, force_language)
+		const response = await this.send<GetLeaderBoardsResponse>(message, ClassId.GET_LEADERS_BOARD_RESPONSE, force_language);
 
-		const boardKey = Object.keys(response.map).find((k) => period_type_id === undefined || k === period_type_id?.toString())
+		const boardKey = Object.keys(response.map).find((k) => period_type_id === undefined || k === period_type_id?.toString());
 
 		if (boardKey === undefined) {
-			return undefined
+			return undefined;
 		}
 
 		if (response.map[boardKey]?.userPosition?.avatar_id) {
-			response.map[boardKey].userPosition.avatar_url = CoreUtils.avatarUrl(response.map[boardKey].userPosition.avatar_id, this.avatarDomain)
+			response.map[boardKey].userPosition.avatar_url = CoreUtils.avatarUrl(
+				response.map[boardKey].userPosition.avatar_id,
+				this.avatarDomain,
+			);
 		}
 
 		if (response.map[boardKey]?.positions?.length) {
 			response.map[boardKey].positions.forEach((p) => {
-				p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain)
-			})
+				p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain);
+			});
 		}
 
-		return response.map[boardKey]
+		return response.map[boardKey];
 	}
 
-	public async leaderboardsGetT(user_ext_id: string, period_type_id: LeaderBoardPeriodType = LeaderBoardPeriodType.DAILY, prevPeriod: boolean = false): Promise<LeaderBoardDetailsT> {
-		return getLeaderBoardTransform(await this.leaderboardGet(user_ext_id, period_type_id, prevPeriod))
+	public async leaderboardsGetT(
+		user_ext_id: string,
+		period_type_id: LeaderBoardPeriodType = LeaderBoardPeriodType.DAILY,
+		prevPeriod: boolean = false,
+	): Promise<LeaderBoardDetailsT> {
+		return getLeaderBoardTransform(await this.leaderboardGet(user_ext_id, period_type_id, prevPeriod));
 	}
 
 	public async levelsGet(user_ext_id: string, force_language?: string): Promise<GetLevelMapResponse> {
-		const message = this.buildMessage<any, GetLevelMapResponse>(user_ext_id, ClassId.GET_LEVEL_MAP_REQUEST)
-		return await this.send<GetLevelMapResponse>(message, ClassId.GET_LEVEL_MAP_RESPONSE, force_language)
+		const message = this.buildMessage<any, GetLevelMapResponse>(user_ext_id, ClassId.GET_LEVEL_MAP_REQUEST);
+		return await this.send<GetLevelMapResponse>(message, ClassId.GET_LEVEL_MAP_RESPONSE, force_language);
 	}
 
 	public async levelsGetT(user_ext_id: string): Promise<TLevel[]> {
-		return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id))
+		return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id));
 	}
 
 	public async getCustomSections(user_ext_id: string): Promise<GetCustomSectionsResponse> {
-		const message = this.buildMessage<GetCustomSectionsRequest, GetCustomSectionsResponse>(user_ext_id, ClassId.GET_CUSTOM_SECTIONS_REQUEST)
-		return await this.send<GetCustomSectionsResponse>(message, ClassId.GET_CUSTOM_SECTIONS_RESPONSE)
+		const message = this.buildMessage<GetCustomSectionsRequest, GetCustomSectionsResponse>(
+			user_ext_id,
+			ClassId.GET_CUSTOM_SECTIONS_REQUEST,
+		);
+		return await this.send<GetCustomSectionsResponse>(message, ClassId.GET_CUSTOM_SECTIONS_RESPONSE);
 	}
 
 	public async getCustomSectionsT(user_ext_id: string): Promise<TUICustomSection[]> {
-		return UICustomSectionTransform(Object.values((await this.getCustomSections(user_ext_id)).customSections))
+		return UICustomSectionTransform(Object.values((await this.getCustomSections(user_ext_id)).customSections));
 	}
 
-	public async getTranslationsT(user_ext_id: string, lang_code: string, areas: TranslationArea[], cacheSec: number = 60): Promise<GetTranslationsResponse> {
-		return await this.coreGetTranslations(user_ext_id, lang_code, areas, 30)
+	public async getTranslationsT(
+		user_ext_id: string,
+		lang_code: string,
+		areas: TranslationArea[],
+		cacheSec: number = 60,
+	): Promise<GetTranslationsResponse> {
+		return await this.coreGetTranslations(user_ext_id, lang_code, areas, 30);
 	}
 
-	public async getInboxMessages(user_ext_id: string, limit: number = 20, offset: number = 0, starred_only: boolean): Promise<GetInboxMessagesResponse> {
-		const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(user_ext_id, ClassId.GET_INBOX_MESSAGES_REQUEST, {
-			limit,
-			offset,
-			starred_only,
-		})
-		return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE)
+	public async getInboxMessages(
+		user_ext_id: string,
+		limit: number = 20,
+		offset: number = 0,
+		starred_only: boolean,
+	): Promise<GetInboxMessagesResponse> {
+		const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(
+			user_ext_id,
+			ClassId.GET_INBOX_MESSAGES_REQUEST,
+			{
+				limit,
+				offset,
+				starred_only,
+			},
+		);
+		return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE);
 	}
 
-	public async getInboxMessagesT(user_ext_id: string, from: number = 0, to: number = 20, favoriteOnly: boolean = false): Promise<TInboxMessage[]> {
-		const limit = to - from > 20 ? 20 : to - from
-		const offset = from
+	public async getInboxMessagesT(
+		user_ext_id: string,
+		from: number = 0,
+		to: number = 20,
+		favoriteOnly: boolean = false,
+	): Promise<TInboxMessage[]> {
+		const limit = to - from > 20 ? 20 : to - from;
+		const offset = from;
 
-		return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly)).log)
+		return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly)).log);
 	}
 
 	public async getInboxMessageBody(messageGuid: string): Promise<InboxMessageBody> {
 		const getMessageBody = async (messageGuid: string): Promise<InboxMessageBody> => {
-			const inboxCdnUrl = this.tracker.getLabelSetting(PublicLabelSettings.INBOX_PUBLIC_CDN)
+			const inboxCdnUrl = this.tracker.getLabelSetting(PublicLabelSettings.INBOX_PUBLIC_CDN);
 
 			try {
-				const url = `${inboxCdnUrl}${messageGuid}.json`
+				const url = `${inboxCdnUrl}${messageGuid}.json`;
 
 				const response = await fetch(url, {
 					method: 'GET',
@@ -713,67 +902,91 @@ class SmarticoAPI {
 						'Content-Type': 'application/json',
 						'Access-Control-Allow-Origin': '*',
 					},
-				})
-				const data = await response.json()
-				return data || {}
+				});
+				const data = await response.json();
+				return data || {};
 			} catch (error) {
-				this.logger.error('Error fetching inbox message body:', error)
-				return null
+				this.logger.error('Error fetching inbox message body:', error);
+				return null;
 			}
-		}
+		};
 
-		return await getMessageBody(messageGuid)
+		return await getMessageBody(messageGuid);
 	}
 
 	public async getInboxMessageBodyT(messageGuid: string): Promise<TInboxMessageBody> {
-		const message = await this.getInboxMessageBody(messageGuid)
-		return InboxMessageBodyTransform(message)
+		const message = await this.getInboxMessageBody(messageGuid);
+		return InboxMessageBodyTransform(message);
 	}
 
 	public async markInboxMessageRead(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageReadResponse> {
-		const message = this.buildMessage<MarkInboxMessageReadRequest, MarkInboxMessageReadResponse>(user_ext_id, ClassId.MARK_INBOX_READ_REQUEST, {
-			engagement_uid: messageGuid,
-		})
+		const message = this.buildMessage<MarkInboxMessageReadRequest, MarkInboxMessageReadResponse>(
+			user_ext_id,
+			ClassId.MARK_INBOX_READ_REQUEST,
+			{
+				engagement_uid: messageGuid,
+			},
+		);
 
-		return await this.send<MarkInboxMessageReadResponse>(message, ClassId.MARK_INBOX_READ_RESPONSE)
+		return await this.send<MarkInboxMessageReadResponse>(message, ClassId.MARK_INBOX_READ_RESPONSE);
 	}
 
 	public async markAllInboxMessageRead(user_ext_id: string): Promise<MarkInboxMessageReadResponse> {
-		const message = this.buildMessage<MarkInboxMessageReadRequest, MarkInboxMessageReadResponse>(user_ext_id, ClassId.MARK_INBOX_READ_REQUEST, {
-			all_read: true,
-		})
+		const message = this.buildMessage<MarkInboxMessageReadRequest, MarkInboxMessageReadResponse>(
+			user_ext_id,
+			ClassId.MARK_INBOX_READ_REQUEST,
+			{
+				all_read: true,
+			},
+		);
 
-		return await this.send<MarkInboxMessageReadResponse>(message, ClassId.MARK_INBOX_READ_RESPONSE)
+		return await this.send<MarkInboxMessageReadResponse>(message, ClassId.MARK_INBOX_READ_RESPONSE);
 	}
 
-	public async markUnmarkInboxMessageAsFavorite(user_ext_id: string, messageGuid: string, mark: boolean): Promise<MarkInboxMessageStarredResponse> {
-		const message = this.buildMessage<MarkInboxMessageStarredRequest, MarkInboxMessageStarredResponse>(user_ext_id, ClassId.MARK_INBOX_STARRED_REQUEST, {
-			engagement_uid: messageGuid,
-			is_starred: mark,
-		})
+	public async markUnmarkInboxMessageAsFavorite(
+		user_ext_id: string,
+		messageGuid: string,
+		mark: boolean,
+	): Promise<MarkInboxMessageStarredResponse> {
+		const message = this.buildMessage<MarkInboxMessageStarredRequest, MarkInboxMessageStarredResponse>(
+			user_ext_id,
+			ClassId.MARK_INBOX_STARRED_REQUEST,
+			{
+				engagement_uid: messageGuid,
+				is_starred: mark,
+			},
+		);
 
-		return await this.send<MarkInboxMessageStarredResponse>(message, ClassId.MARK_INBOX_STARRED_RESPONSE)
+		return await this.send<MarkInboxMessageStarredResponse>(message, ClassId.MARK_INBOX_STARRED_RESPONSE);
 	}
 
 	public async deleteInboxMessage(user_ext_id: string, messageGuid: string): Promise<MarkInboxMessageDeletedResponse> {
-		const message = this.buildMessage<MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse>(user_ext_id, ClassId.MARK_INBOX_DELETED_REQUEST, {
-			engagement_uid: messageGuid,
-		})
+		const message = this.buildMessage<MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse>(
+			user_ext_id,
+			ClassId.MARK_INBOX_DELETED_REQUEST,
+			{
+				engagement_uid: messageGuid,
+			},
+		);
 
-		return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE)
+		return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
 	}
 
 	public async deleteAllInboxMessages(user_ext_id: string): Promise<MarkInboxMessageDeletedResponse> {
-		const message = this.buildMessage<MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse>(user_ext_id, ClassId.MARK_INBOX_DELETED_REQUEST, {
-			all_deleted: true,
-		})
+		const message = this.buildMessage<MarkInboxMessageDeletedRequest, MarkInboxMessageDeletedResponse>(
+			user_ext_id,
+			ClassId.MARK_INBOX_DELETED_REQUEST,
+			{
+				all_deleted: true,
+			},
+		);
 
-		return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE)
+		return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
 	}
 
 	public getWSCalls(): WSAPI {
-		return new WSAPI(this)
+		return new WSAPI(this);
 	}
 }
 
-export { SmarticoAPI, MessageSender }
+export { SmarticoAPI, MessageSender };

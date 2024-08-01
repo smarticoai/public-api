@@ -1,23 +1,23 @@
-import { IntUtils } from '../IntUtils'
-import { TStoreItem } from '../WSAPI/WSAPITypes'
-import { StoreItem } from './StoreItem'
-import { StoreItemTypeNamed } from './StoreItemType'
+import { IntUtils } from '../IntUtils';
+import { TStoreItem } from '../WSAPI/WSAPITypes';
+import { StoreItem } from './StoreItem';
+import { StoreItemTypeNamed } from './StoreItemType';
 
 interface StoreItemPurchased extends StoreItem {
-	purchase_ts: number
-	purchase_points_amount: number
-	purchased_today?: boolean
-	purchased_this_week?: boolean
-	purchased_this_month?: boolean
+	purchase_ts: number;
+	purchase_points_amount: number;
+	purchased_today?: boolean;
+	purchased_this_week?: boolean;
+	purchased_this_month?: boolean;
 }
 
 export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStoreItem[] => {
 	return items
 		.filter((r) => r.id >= 1)
 		.map((r) => {
-			const purchasedToday = r.purchase_ts ? IntUtils.isWithinPeriod(r.purchase_ts, 'today') : false
-			const purchasedThisWeek = r.purchase_ts ? IntUtils.isWithinPeriod(r.purchase_ts, 'thisWeek') : false
-			const purchasedThisMonth = r.purchase_ts ? IntUtils.isWithinPeriod(r.purchase_ts, 'thisMonth') : false
+			const purchasedToday = r.purchase_ts ? IntUtils.isWithinPeriod(r.purchase_ts, 'today') : false;
+			const purchasedThisWeek = r.purchase_ts ? IntUtils.isWithinPeriod(r.purchase_ts, 'thisWeek') : false;
+			const purchasedThisMonth = r.purchase_ts ? IntUtils.isWithinPeriod(r.purchase_ts, 'thisMonth') : false;
 
 			const x: TStoreItem = {
 				id: r.id,
@@ -39,10 +39,10 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
 				purchased_today: purchasedToday,
 				purchased_this_week: purchasedThisWeek,
 				purchased_this_month: purchasedThisMonth,
-			}
+			};
 
-			return x
-		})
-}
+			return x;
+		});
+};
 
-export { StoreItemPurchased }
+export { StoreItemPurchased };
