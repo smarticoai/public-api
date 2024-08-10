@@ -1,6 +1,6 @@
 # Interface: TMissionOrBadgeTask
 
-TMissionOrBadgeTask describes the information of tasks that belongs to mission or badge. See also TMissionOrBadge
+TMissionOrBadgeTask describes the information of tasks that belings to mission or badge. See also TMissionOrBadge
 
 ## Properties
 
@@ -57,12 +57,3 @@ ___
 • `Optional` **execution\_count\_actual**: `number`
 
 This is the number of times the user has executed 'activity' of the task. e.g. he bet 5 times out of 100. Here will be 5
-
-
-___
-
-### display\_progress\_as\_count
-
-• `Optional` **display\_progress\_as\_count**: `boolean`
-
-If enabled, mission progress will show as a count (35/100) instead of a %. For missions with multiple tasks, each task will display progress as a count, while the overall progress bar will still show a %.

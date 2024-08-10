@@ -35,8 +35,8 @@ ___
 
 • **core\_public\_tags**: `string`[]
 
-The array of the public tags set on the user object. 
-They can be treated as server-based cookies. 
+The array of the public tags set on the user object.
+They can be treated as server-based cookies.
 You can set tags using following method _smartico.event('core_public_tags_update', { core_public_tags: ['A', 'B'] } );
 And then you can check for the tags
 

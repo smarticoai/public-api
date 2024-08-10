@@ -59,7 +59,7 @@ ___
 
 • **required\_level\_counter\_1**: `number`
 
-The counter of 1st metric used to reach the Level. 
+The counter of 1st metric used to reach the Level.
 Relevant in case of using advanced leveling logic
 https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
 
@@ -69,7 +69,7 @@ ___
 
 • **required\_level\_counter\_2**: `number`
 
-The counter of 2nd metric used to reach the Level. 
+The counter of 2nd metric used to reach the Level.
 Relevant in case of using advanced leveling logic
 https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
 
