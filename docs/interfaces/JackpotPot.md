@@ -18,19 +18,19 @@ ID of the jackpot pot
 
 ___
 
-### current\_pot\_amount\_real
+### current\_pot\_amount
 
-• **current\_pot\_amount\_real**: `number`
+• **current\_pot\_amount**: `number`
 
-current jackpot pot real money amount
+currency of the jackpot pot in the Jackput base currency
 
 ___
 
-### current\_pot\_amount\_bonus
+### current\_pot\_amount\_user\_currency
 
-• **current\_pot\_amount\_bonus**: `number`
+• **current\_pot\_amount\_user\_currency**: `number`
 
-current jackpot pot bonus points amount
+currency of the jackpot pot in the user wallet currency
 
 ___
 
