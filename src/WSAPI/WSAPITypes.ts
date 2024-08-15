@@ -4,6 +4,8 @@ import { TournamentRegistrationError, TournamentRegistrationStatusName, Tourname
 import { AchCategory } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from '../CustomSections';
+import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
+
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
 
@@ -691,4 +693,45 @@ export interface TUICustomSection {
 	overview_missions_filter?: AchOverviewMissionsFilter;
 	/** Quantity of missions to be shown in overview */
 	overview_missions_count?: number;
+}
+
+export interface TBonus {
+	/** ID of the bonus */
+	bonus_id: number;
+	/** Can the bonus be redeemed (if bonus is redeemable the user needs to claim it) */
+	is_redeemable?: boolean;
+	/** Date of creation */
+	create_date?: string;
+	/** Date of last update */
+	update_date?: string;
+	/** Date of redemption */
+	redeem_date?: string;
+	/** Uniq identifier of the bonus sent to the player */
+	engagement_uid?: string;
+	/** ID of template used */
+	label_bonus_template_id?: number;
+	/** Reference ID of product */
+	source_product_ref_id?: number;
+	/** ID of product  */
+	source_product_id?: number;
+	/** ID of the user who created the bonus */
+	user_id?: number;
+	/** ID of the bonus status */
+	bonus_status_id?: BonusStatus;
+	/** Additional information about the bonus(edscription, image,name, acknowledge) */
+	label_bonus_template_meta_map?: BonusTemplateMetaMap;
+	/** Additional information presented to the player when the bonus is redeemed */
+	bonus_meta_map?: BonusMetaMap;
+}
+
+/**
+ * TClaimBonusResult describes the response of call to _smartico.api.claimBonus(bonus_id) method
+ */
+export interface TClaimBonusResult {
+	/** Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0 */
+	err_code: SAWSpinErrorCode;
+	/** Optional error message */
+	err_message: string;
+	/** If the bonus was claimed successfully, then success is true */
+	success?: boolean;
 }

@@ -1111,6 +1111,64 @@ export interface TMissionOrBadge {
 	/** The date/timestamp indicating when the prize was claimed by the user */
 	prize_claimed_date_ts?: number;
 }
+
+export enum BonusStatus {
+    /** The bonus is newly created (shouldn't be shown to the client) */
+    New = 1, 
+    /** The bonus is issued and available for redemption but has not been redeemed yet */
+    COUPON_ISSUED = 2,
+    /** The bonus has been successfully redeemed */
+    REDEEMED = 3,
+    /** The bonus is still valid, but a previous redemption attempt failed */
+    REDEEM_FAILED = 4, 
+    /** Failed to issue the bonus (shouldn't be shown to the client) */
+    COUPON_ISSUE_FAILED = 5, 
+    /** The bonus was issued but has expired and can no longer be redeemed (shouldn't be shown to the client) */
+    EXPIRED = 6, 
+}
+
+export interface BonusTemplateMetaMap {
+	/** Description of the bonus template*/
+	description: string;
+	/** Acknowledge message setup in the bonus template*/
+	acknowledge: string;
+	/** Image URL of the bonus template*/
+	image_url: string;
+}
+
+export interface BonusMetaMap {
+	/** Label and description of the bonus sent to the player*/
+	uiAmount?: string;
+}
+
+export interface TBonus {
+	/** ID of the bonus */
+	bonus_id: number;
+	/** Can the bonus be redeemed (if bonus is redeemable the user needs to claim it) */
+	is_redeemable?: boolean;
+	/** Date of creation */
+	create_date?: string;
+	/** Date of last update */
+	update_date?: string;
+	/** Date of redemption */
+	redeem_date?: string;
+	/** Uniq identifier of the bonus sent to the player */
+	engagement_uid?: string;
+	/** ID of template used */
+	label_bonus_template_id?: number;
+	/** Reference ID of product */
+	source_product_ref_id?: number;
+	/** ID of product  */
+	source_product_id?: number;
+	/** ID of the user who created the bonus */
+	user_id?: number;
+	/** ID of the bonus status */
+	bonus_status_id?: BonusStatus;
+	/** Additional information about the bonus(edscription, image,name, acknowledge) */
+	label_bonus_template_meta_map?: BonusTemplateMetaMap;
+	/** Additional information presented to the player when the bonus is redeemed */
+	bonus_meta_map?: BonusMetaMap;
+}
 interface AchRelatedGame$1 {
 	/** The ID of the related game */
 	ext_game_id: string;
@@ -1565,6 +1623,8 @@ declare class WSAPI {
 	getMissions({ onUpdate }?: { onUpdate?: (data: TMissionOrBadge[]) => void }): Promise<TMissionOrBadge[]>;
 	/** Returns all the badges available the current user */
 	getBadges(): Promise<TMissionOrBadge[]>;
+	/** Returns all the badges available the current user */
+	getBonuses(): Promise<TBonus[]>;
 	/**
 	 * Returns the extra counters for the current user level.
 	 * These are counters that are configured for each Smartico client separatly by request.

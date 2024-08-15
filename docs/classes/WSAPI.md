@@ -807,3 +807,59 @@ _smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
 #### Returns
 
 `Promise`\<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
+
+___
+
+### getBonuses
+
+▸ **getBonuses**(): `Promise`\<[`TBonus`](../interfaces/TMissionOrBadge.md)[]\>
+
+Returns all the bonuses for the current user
+
+**Example**:
+```
+_smartico.api.claimBonus(12345).then((result) => {
+    if (result.err_code === 0) {
+        console.log('Bonus claimed successfully');
+    } else {
+        console.log(`Error claiming bonus: ${result.err_message}`);
+    }
+});
+```
+
+**Visitor mode: not supported**
+
+#### Returns
+
+`Promise`\<[`TBonus`](../interfaces/TMissionOrBadge.md)[]\>
+
+___
+
+### claimBonus
+
+▸ **claimBonus**(`bonus_id`: `number`): `Promise`\<[`TClaimBonusResult`](../interfaces/TClaimBonusResult.md)\>
+
+Claims a bonus for the given `bonus_id`.
+
+**Example**:
+```
+_smartico.api.getBonuses().then((bonuses) => {
+    console.log('Retrieved bonuses:', bonuses);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type    | Description               |
+|------|---------|---------------------------|
+| `bonus_id` | `number` | The ID of the bonus to claim |
+
+#### Returns
+
+`Promise`\<[`TClaimBonusResult`](../interfaces/TClaimBonusResult.md)\>
+
+Returns a promise that resolves to a `TClaimBonusResult`, which contains the result of the bonus claim operation.
+
+___

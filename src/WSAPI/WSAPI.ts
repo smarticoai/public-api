@@ -25,7 +25,8 @@ import {
 	TTournamentRegistrationResult,
 	TUICustomSection,
 	TUserProfile,
-	UserLevelExtraCountersT,
+	UserLevelExtraCountersT,TBonus,
+	TClaimBonusResult
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -61,6 +62,7 @@ enum onUpdateContextKey {
 	Jackpots = 'jackpots',
 	Pots = 'Pots',
 	CustomSections = 'customSections',
+	Bonuses = 'bonuses',
 }
 
 /** @group General API */
@@ -200,6 +202,29 @@ export class WSAPI {
 	public async getBadges(): Promise<TMissionOrBadge[]> {
 		return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(null), CACHE_DATA_SEC);
 	}
+
+	/**
+	 * Returns all the bonuses for the current user
+	 *
+	 * **Visitor mode: not supported**
+	 */
+
+	public async getBonuses(): Promise<TBonus[]> {
+		return OCache.use(onUpdateContextKey.Bonuses, ECacheContext.WSAPI, () => this.api.bonusesGetItemsT(null), CACHE_DATA_SEC);
+	}
+
+	public async claimBonus(bonus_id: number): Promise<TClaimBonusResult> {
+		const r = await this.api.bonusClaimItem(null, bonus_id);
+
+		const o: TClaimBonusResult = {
+			err_code: r.errCode,
+			err_message: r.errMsg,
+			success: r.success,
+		};
+
+		return o;
+	}
+
 
 	/**
 	 * Returns the extra counters for the current user level.

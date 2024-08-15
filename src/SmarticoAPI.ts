@@ -88,6 +88,7 @@ import {
 	UserLevelExtraCountersT,
 	TSegmentCheckResult,
 	TUICustomSection,
+	TBonus,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -106,6 +107,8 @@ import {
 	JackpotsOptoutResponse,
 } from './Jackpots';
 import { GetCustomSectionsRequest, GetCustomSectionsResponse, UICustomSectionTransform } from './CustomSections';
+import { BonusItemsTransform, ClaimBonusRequest, ClaimBonusResponse, GetBonusesResponse } from './Bonuses';
+import { GetBonusesRequest } from './Bonuses/GetBonusesRequest';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -723,6 +726,43 @@ class SmarticoAPI {
 			responseClone.achievements = responseClone.achievements.filter((a) => a.ach_type_id === AchievementType.Badge);
 		}
 		return responseClone;
+	}
+
+	public async bonusesGetItems(user_ext_id: string, force_language?: string): Promise<GetBonusesResponse> {
+		const message = this.buildMessage<GetBonusesRequest, GetBonusesResponse>(
+			user_ext_id,
+			ClassId.GET_BONUSES_REQUEST,
+		);
+		const response = await this.send<GetBonusesResponse>(
+			message,
+			ClassId.GET_BONUSES_RESPONSE,
+			force_language,
+		);
+		
+		const responseClone = { ...response };
+
+		return responseClone;
+	}
+	public async bonusClaimItem(user_ext_id: string, bonus_id: number): Promise<ClaimBonusResponse> {
+		const message = this.buildMessage<ClaimBonusRequest, ClaimBonusResponse>(
+			user_ext_id,
+			ClassId.CLAIM_BONUS_REQUEST,
+			{ bonusId: bonus_id }
+
+		);
+		const response = await this.send<ClaimBonusResponse>(
+			message,
+			ClassId.CLAIM_BONUS_RESPONSE,
+
+		);
+		
+		const responseClone = { ...response };
+
+		return responseClone;
+	}
+
+	public async bonusesGetItemsT(user_ext_id: string): Promise<TBonus[]> {
+		return BonusItemsTransform((await this.bonusesGetItems(user_ext_id)).bonuses);
 	}
 
 	public async badgetsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {

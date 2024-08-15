@@ -15,3 +15,4 @@ export * from './Quiz';
 export * from './Jackpots';
 
 export * from './OCache';
+export * from './Bonuses';
