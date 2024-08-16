@@ -702,20 +702,10 @@ export interface TBonus {
 	is_redeemable?: boolean;
 	/** Date of creation */
 	create_date?: string;
-	/** Date of last update */
-	update_date?: string;
 	/** Date of redemption */
 	redeem_date?: string;
-	/** Uniq identifier of the bonus sent to the player */
-	engagement_uid?: string;
 	/** ID of template used */
 	label_bonus_template_id?: number;
-	/** Reference ID of product */
-	source_product_ref_id?: number;
-	/** ID of product  */
-	source_product_id?: number;
-	/** ID of the user who created the bonus */
-	user_id?: number;
 	/** ID of the bonus status */
 	bonus_status_id?: BonusStatus;
 	/** Additional information about the bonus(edscription, image,name, acknowledge) */

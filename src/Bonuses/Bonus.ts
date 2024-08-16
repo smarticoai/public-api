@@ -28,19 +28,12 @@ export const BonusItemsTransform = (items: Bonus[]): TBonus[] => {
               bonus_id: r.id,
               is_redeemable: r.redeemable,
               create_date: r.createDate,
-              update_date: r.updateDate,
               redeem_date: r.redeemDate,
-              engagement_uid: r.engagementUid,
               label_bonus_template_id: r.labelBonusTemplateId,
-              source_product_ref_id: r.sourceProductRefId,
-              source_product_id: r.sourceProductId,
-              user_id: r.userId,
               bonus_status_id: r.bonusStatusId,
               label_bonus_template_meta_map: r.labelBonusTemplateMetaMap,
               bonus_meta_map: r.bonusMetaMap
-
 			};
-
 
 			return x;
 		});

@@ -208,11 +208,18 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-
 	public async getBonuses(): Promise<TBonus[]> {
 		return OCache.use(onUpdateContextKey.Bonuses, ECacheContext.WSAPI, () => this.api.bonusesGetItemsT(null), CACHE_DATA_SEC);
 	}
 
+/**
+	 * Claim the bonus by bonus_id. Returns the err_code in case of success or error.
+	 * Note that this method can be used only on integrations where originally failed bonus can be claimed again.
+	 * For example, user won a bonus in the mini-game, but Operator rejected this bonus. 
+	 * This bonus will be available for the user to claim again.
+	 *
+	 * **Visitor mode: not supported**
+	 */	
 	public async claimBonus(bonus_id: number): Promise<TClaimBonusResult> {
 		const r = await this.api.bonusClaimItem(null, bonus_id);
 
