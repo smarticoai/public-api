@@ -57,6 +57,8 @@
 - [UserLevelExtraCountersT](interfaces/UserLevelExtraCountersT.md)
 - [TSegmentCheckResult](interfaces/TSegmentCheckResult.md)
 - [TUICustomSection](interfaces/TUICustomSection.md)
+- [TBonus](interfaces/TBonus.md)
+- [TClaimBonusResult](interfaces/TClaimBonusResult.md)
 
 ## General API
 

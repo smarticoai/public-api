@@ -1,107 +1,65 @@
 # Interface: TBonus
 
-TBonus describes the information of a bonus and its attributes.
-
 ## Properties
 
-### bonus_id
+### bonus\_id
 
-• **bonus_id**: `number`
+• **bonus\_id**: `number`
 
-ID of the bonus.
-
-___
-
-### is_redeemable
-
-• `Optional` **is_redeemable**: `boolean`
-
-Indicates if the bonus can be redeemed.
+ID of the bonus
 
 ___
 
-### create_date
+### is\_redeemable
 
-• `Optional` **create_date**: `string`
+• `Optional` **is\_redeemable**: `boolean`
 
-Date when the bonus was created (in ISO format).
-
-___
-
-### update_date
-
-• `Optional` **update_date**: `string`
-
-Date of the last update to the bonus (in ISO format).
+Can the bonus be redeemed (if bonus is redeemable the user needs to claim it)
 
 ___
 
-### redeem_date
+### create\_date
 
-• `Optional` **redeem_date**: `string`
+• `Optional` **create\_date**: `string`
 
-Date when the bonus was redeemed (in ISO format).
-
-___
-
-### engagement_uid
-
-• `Optional` **engagement_uid**: `string`
-
-Unique identifier of the bonus. It can be used to request the bonus body or mark the bonus with a specific status.
+Date of creation
 
 ___
 
-### label_bonus_template_id
+### redeem\_date
 
-• `Optional` **label_bonus_template_id**: `number`
+• `Optional` **redeem\_date**: `string`
 
-ID of the template used for the bonus.
-
-___
-
-### source_product_ref_id
-
-• `Optional` **source_product_ref_id**: `number`
-
-Reference ID of the source product related to the bonus.
+Date of redemption
 
 ___
 
-### source_product_id
+### label\_bonus\_template\_id
 
-• `Optional` **source_product_id**: `number`
+• `Optional` **label\_bonus\_template\_id**: `number`
 
-ID of the source product related to the bonus.
-
-___
-
-### user_id
-
-• `Optional` **user_id**: `number`
-
-ID of the user who created the bonus.
+ID of template used
 
 ___
 
-### bonus_status_id
+### bonus\_status\_id
 
-• `Optional` **bonus_status_id**: [`BonusStatus`](../enums/BonusStatus.md)
+• `Optional` **bonus\_status\_id**: `BonusStatus`
 
-ID representing the current status of the bonus.
-
-___
-
-### label_bonus_template_meta_map
-
-• `Optional` **label_bonus_template_meta_map**: [`BonusTemplateMetaMap`](../interfaces/BonusTemplateMetaMap.md)
-
-Additional information about the bonus, such as its description, image, or acknowledge message.
+ID of the bonus status
 
 ___
 
-### bonus_meta_map
+### label\_bonus\_template\_meta\_map
 
-• `Optional` **bonus_meta_map**: [`BonusMetaMap`](../interfaces/BonusMetaMap.md)
+• `Optional` **label\_bonus\_template\_meta\_map**: `BonusTemplateMetaMap`
 
-UI amount and other metadata related to the bonus.
+Additional information about the bonus(edscription, image,name, acknowledge)
+
+___
+
+### bonus\_meta\_map
+
+• `Optional` **bonus\_meta\_map**: `BonusMetaMap`
+
+Additional information presented to the player when the bonus is redeemed
