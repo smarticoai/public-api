@@ -436,6 +436,10 @@ export interface TMissionOrBadge {
 	is_opted_in: boolean;
 	/** The amount of time in milliseconds that user has to complete the mission */
 	time_limit_ms: number;
+
+	/** Holds time from which mission will become available, for the missions that are targeted to be available from specific date/time */
+	active_from_ts: number;
+
 	/** The date when the mission was started, relevant for the time limited missions */
 	dt_start: number;
 	/** The progress of the mission in percents calculated as the aggregated relative percentage of all tasks */

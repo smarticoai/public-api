@@ -62,6 +62,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				is_requires_optin: r.requiresOptin,
 				is_opted_in: r.isOptedIn,
 				time_limit_ms: r.time_limit_ms,
+				active_from_ts: r.active_from_ts,
 				dt_start: r.start_date_ts,
 				reward: r.ach_public_meta.reward,
 				progress: r.progress,
