@@ -101,6 +101,14 @@ The amount of time in milliseconds that user has to complete the mission
 
 ___
 
+### active\_from\_ts
+
+• **active\_from\_ts**: `number`
+
+Holds time from which mission will become available, for the missions that are targeted to be available from specific date/time
+
+___
+
 ### dt\_start
 
 • **dt\_start**: `number`
