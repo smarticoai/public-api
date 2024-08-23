@@ -10,5 +10,6 @@ export interface SAWPrize {
 	place_to?: number;
 	sawUniqueWinId?: string;
 	pool?: number;
+	pool_initial?: number;
 	wins_count?: number;
 }

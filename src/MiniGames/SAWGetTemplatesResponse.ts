@@ -50,6 +50,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					acknowledge_dp: p.saw_prize_ui_definition.acknowledge_dp,
 					acknowledge_action_title: p.saw_prize_ui_definition.acknowledge_action_title,
 					pool: p.pool,
+					pool_initial: p.pool_initial,
 					wins_count: p.wins_count,
 				};
 				return y;

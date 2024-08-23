@@ -37,6 +37,8 @@ export interface TMiniGamePrize {
 	acknowledge_action_title: string;
 	/* Number of items in stock */
 	pool?: number;
+	/* Initial number of items in stock */
+	pool_initial?: number;
 	/* Number of wins in game */
 	wins_count?: number;
 }
