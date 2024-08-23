@@ -90,6 +90,12 @@ ___
 
 ___
 
+### pool\_initial
+
+• `Optional` **pool\_initial**: `number`
+
+___
+
 ### wins\_count
 
 • `Optional` **wins\_count**: `number`
