@@ -215,7 +215,7 @@ class SmarticoAPI {
 				this.logger.always('HTTP time, ms:' + (timeEnd - timeStart));
 			}
 		} catch (e) {
-			this.logger.error(`Failed to make request to smartico channel, L2. ${e.message}`, {
+			this.logger.warn(`Failed to make request to smartico channel, L2. ${e.message}`, {
 				url: this.publicUrl,
 				request: message,
 				error: e.message,
