@@ -212,7 +212,7 @@ export class WSAPI {
 		return OCache.use(onUpdateContextKey.Bonuses, ECacheContext.WSAPI, () => this.api.bonusesGetItemsT(null), CACHE_DATA_SEC);
 	}
 
-/**
+	/**
 	 * Claim the bonus by bonus_id. Returns the err_code in case of success or error.
 	 * Note that this method can be used only on integrations where originally failed bonus can be claimed again.
 	 * For example, user won a bonus in the mini-game, but Operator rejected this bonus. 
@@ -738,24 +738,9 @@ export class WSAPI {
 
 	private async updateOnPrizeWin(data: SAWDoSpinResponse) {
 		if (data.errCode === SAWSpinErrorCode.SAW_OK) {
-			const templates: TMiniGameTemplate[] = await OCache.use(
-				onUpdateContextKey.Saw,
-				ECacheContext.WSAPI,
-				() => this.api.sawGetTemplatesT(null),
-				CACHE_DATA_SEC,
-			);
-			const template: TMiniGameTemplate = templates.find((t) => t.prizes.find((p) => p.id === data.saw_prize_id));
-			const prizeType = template.prizes.find((p) => p.id === data.saw_prize_id)?.prize_type;
 
-			if (
-				template.jackpot_add_on_attempt ||
-				template.spin_count === 1 ||
-				prizeType === MiniGamePrizeTypeName.JACKPOT ||
-				prizeType === MiniGamePrizeTypeName.SPIN
-			) {
 				const updatedTemplates = await this.api.sawGetTemplatesT(null);
 				this.updateEntity(onUpdateContextKey.Saw, updatedTemplates);
-			}
 		}
 	}
 
