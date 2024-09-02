@@ -80,14 +80,16 @@ export class WSAPI {
 			on(ClassId.SAW_DO_SPIN_RESPONSE, (data: SAWDoSpinResponse) =>
 				on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => this.updateOnPrizeWin(data)),
 			);
-			on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissionsOnOptIn());
-			on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournamentsOnRegistration());
+			on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissions());
+			on(ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE, () => this.updateMissions());
+			on(ClassId.RELOAD_ACHIEVEMENTS_EVENT, () => this.updateMissions());
+			on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournaments());
 			on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
 			on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
 			on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
 			on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache());
 			on(ClassId.JP_OPTOUT_RESPONSE, (data: JackpotsOptoutRequest) => this.jackpotClearCache());
-			on(ClassId.JP_OPTIN_RESPONSE, (data: JackpotsOptinResponse) => this.jackpotClearCache());
+			on(ClassId.CLAIM_BONUS_RESPONSE, () => this.updateBonuses());
 		}
 	}
 
@@ -186,12 +188,7 @@ export class WSAPI {
 			this.onUpdateCallback.set(onUpdateContextKey.Missions, onUpdate);
 		}
 
-		return OCache.use(
-			onUpdateContextKey.Missions,
-			ECacheContext.WSAPI,
-			() => this.api.missionsGetItemsT(null),
-			CACHE_DATA_SEC,
-		);
+		return OCache.use(onUpdateContextKey.Missions, ECacheContext.WSAPI, () => this.api.missionsGetItemsT(null), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -208,7 +205,11 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getBonuses(): Promise<TBonus[]> {
+	public async getBonuses({ onUpdate }: { onUpdate?: (data: TBonus[]) => void } = {}): Promise<TBonus[]> {
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.Bonuses, onUpdate);
+		}
+
 		return OCache.use(onUpdateContextKey.Bonuses, ECacheContext.WSAPI, () => this.api.bonusesGetItemsT(null), CACHE_DATA_SEC);
 	}
 
@@ -744,12 +745,17 @@ export class WSAPI {
 		}
 	}
 
-	private async updateMissionsOnOptIn() {
+	private async updateMissions() {
 		const payload = await this.api.missionsGetItemsT(null);
 		this.updateEntity(onUpdateContextKey.Missions, payload);
 	}
 
-	private async updateTournamentsOnRegistration() {
+	private async updateBonuses() {
+		const payload = await this.api.bonusesGetItemsT(null);
+		this.updateEntity(onUpdateContextKey.Bonuses, payload);
+	}
+	
+	private async updateTournaments() {
 		const payload = await this.api.tournamentsGetLobbyT(null);
 		this.updateEntity(onUpdateContextKey.TournamentList, payload);
 	}

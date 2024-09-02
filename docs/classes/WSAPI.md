@@ -152,7 +152,10 @@ ___
 
 ▸ **getBonuses**(): `Promise`\<[`TBonus`](../interfaces/TBonus.md)[]\>
 
-Returns all the bonuses for the current user
+Returns all the bonuses for the current user.
+The returned bonuss are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+Note that each time you call getBonuses with a new onUpdate callback, the old one will be overwritten by the new one.
+The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it.
 
 **Visitor mode: not supported**
 
