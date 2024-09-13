@@ -36,46 +36,46 @@ export const marketsInfo = [
 		question: { text: 'Who will lead the first half of the match ?', trKey: 'quizQuestion_x2half' },
 		answers: homeAwayDrawAnswers,
 	},
-	{
-		type: SAWGPMarketType.HalftimeFulltime,
-		name: 'Halftime / Fulltime',
-		question: { text: 'Who will lead the first half and who will win the match ?', trKey: 'quizQuestion__HalftimeFulltime' },
-		answers: [
-			{
-				text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
-				value: QuizAnswersValueType.HomeTeamHomeTeam,
-			},
-			{
-				text: `${quizAnswerHomeTeamReplacementText} / ${quizDrawReplacementText}`,
-				value: QuizAnswersValueType.HomeTeamDraw,
-			},
-			{
-				text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
-				value: QuizAnswersValueType.HomeTeamAwayTeam,
-			},
-			{
-				text: `${quizDrawReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
-				value: QuizAnswersValueType.DrawHomeTeam,
-			},
-			{ text: `${quizDrawReplacementText} / ${quizDrawReplacementText}`, value: QuizAnswersValueType.DrawDraw },
-			{
-				text: `${quizDrawReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
-				value: QuizAnswersValueType.DrawAwayTeam,
-			},
-			{
-				text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
-				value: QuizAnswersValueType.AwayTeamHomeTeam,
-			},
-			{
-				text: `${quizAnswerAwayTeamReplacementText} / ${quizDrawReplacementText}`,
-				value: QuizAnswersValueType.AwayTeamDraw,
-			},
-			{
-				text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
-				value: QuizAnswersValueType.AwayTeamAwayTeam,
-			},
-		],
-	},
+	// {
+	// 	type: SAWGPMarketType.HalftimeFulltime,
+	// 	name: 'Halftime / Fulltime',
+	// 	question: { text: 'Who will lead the first half and who will win the match ?', trKey: 'quizQuestion__HalftimeFulltime' },
+	// 	answers: [
+	// 		{
+	// 			text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
+	// 			value: QuizAnswersValueType.HomeTeamHomeTeam,
+	// 		},
+	// 		{
+	// 			text: `${quizAnswerHomeTeamReplacementText} / ${quizDrawReplacementText}`,
+	// 			value: QuizAnswersValueType.HomeTeamDraw,
+	// 		},
+	// 		{
+	// 			text: `${quizAnswerHomeTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
+	// 			value: QuizAnswersValueType.HomeTeamAwayTeam,
+	// 		},
+	// 		{
+	// 			text: `${quizDrawReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
+	// 			value: QuizAnswersValueType.DrawHomeTeam,
+	// 		},
+	// 		{ text: `${quizDrawReplacementText} / ${quizDrawReplacementText}`, value: QuizAnswersValueType.DrawDraw },
+	// 		{
+	// 			text: `${quizDrawReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
+	// 			value: QuizAnswersValueType.DrawAwayTeam,
+	// 		},
+	// 		{
+	// 			text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerHomeTeamReplacementText}`,
+	// 			value: QuizAnswersValueType.AwayTeamHomeTeam,
+	// 		},
+	// 		{
+	// 			text: `${quizAnswerAwayTeamReplacementText} / ${quizDrawReplacementText}`,
+	// 			value: QuizAnswersValueType.AwayTeamDraw,
+	// 		},
+	// 		{
+	// 			text: `${quizAnswerAwayTeamReplacementText} / ${quizAnswerAwayTeamReplacementText}`,
+	// 			value: QuizAnswersValueType.AwayTeamAwayTeam,
+	// 		},
+	// 	],
+	// },
 	{
 		type: SAWGPMarketType.FirstGoal,
 		name: 'First Goal',

@@ -3,7 +3,7 @@ export enum SAWGPMarketType {
 	RedCard = 2,
 	OneXTwo = 3,
 	OneXTwoHalftime = 4,
-	HalftimeFulltime = 5,
+	// HalftimeFulltime = 5,
 	FirstGoal = 6,
 	DoubleChance = 7,
 	OverUnder2_5 = 8,

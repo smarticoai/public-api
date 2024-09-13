@@ -13,7 +13,7 @@ export const QuizMarketPerSport = {
 	[QuizSportType.Soccer]: [
 		SAWGPMarketType.OneXTwo,
 		SAWGPMarketType.OneXTwoHalftime,
-		SAWGPMarketType.HalftimeFulltime,
+		// SAWGPMarketType.HalftimeFulltime,
 		SAWGPMarketType.FirstGoal,
 		SAWGPMarketType.LastGoal,
 		SAWGPMarketType.DoubleChance,
