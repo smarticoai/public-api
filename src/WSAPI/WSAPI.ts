@@ -26,7 +26,8 @@ import {
 	TUICustomSection,
 	TUserProfile,
 	UserLevelExtraCountersT,TBonus,
-	TClaimBonusResult
+	TClaimBonusResult,
+	TMiniGamePlayBatchResult
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -467,6 +468,28 @@ export class WSAPI {
 			err_message: r.errMsg,
 			prize_id: r.saw_prize_id,
 		};
+
+		return o;
+	}
+
+	/**
+	 * Plays the specified by template_id mini-game on behalf of user {count} times and returns prizes or err_code
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async playMiniGameBatch(template_id: number, spin_count: number): Promise<TMiniGamePlayBatchResult[]> {
+		const response = await this.api.sawSpinBatchRequest(null, template_id, spin_count);
+
+		const request_ids = response.results.map((result) => result.request_id);
+		this.api.doAcknowledgeBatchRequest(null, request_ids);
+
+		const o: TMiniGamePlayBatchResult[] = response.results.map((result) => ({
+			errCode: result.errCode,
+			errMessage: result.errMsg,
+			saw_prize_id: result.saw_prize_id,
+			jackpot_amount: result.jackpot_amount,
+			first_spin_in_period: result.first_spin_in_period,
+		}));
 
 		return o;
 	}

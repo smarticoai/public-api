@@ -56,6 +56,22 @@ export interface TMiniGamePlayResult {
 }
 
 /**
+ * TMiniGamePlayBatchResult describes the response of call to _smartico.api.playMiniGameBatch(template_id, spin_count) method
+ */
+export interface TMiniGamePlayBatchResult {
+	/** The saw_prize_id that user won, details of the prize can be found in the mini-game definition */
+	saw_prize_id: number;
+	/** Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0 */
+	errCode: SAWSpinErrorCode;
+	/** Optional error message */
+	errMessage?: string;
+	/** Jackpot amount what user won */
+	jackpot_amount?: number;
+	/** Period in miliseconds from last spin */
+	first_spin_in_period?: number,
+}
+
+/**
  * TMiniGameTemplate describes the information of mini-games available for the user
  */
 export interface TMiniGameTemplate {

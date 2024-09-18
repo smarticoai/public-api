@@ -109,6 +109,10 @@ import {
 import { GetCustomSectionsRequest, GetCustomSectionsResponse, UICustomSectionTransform } from './CustomSections';
 import { BonusItemsTransform, ClaimBonusRequest, ClaimBonusResponse, GetBonusesResponse } from './Bonuses';
 import { GetBonusesRequest } from './Bonuses/GetBonusesRequest';
+import { SAWDoSpinBatchResponse } from './MiniGames/SAWDoSpinBatchResponse';
+import { SAWDoSpinBatchRequest } from './MiniGames/SAWDoSpinBatchRequest';
+import { SAWDoAcknowledgeBatchRequest } from './MiniGames/SAWDoAcknowledgeBatchRequest';
+import { SAWDoAcknowledgeBatchResponse } from './MiniGames/SAWDoAcknowledgeBatchResponse';
 import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
 import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
 
@@ -537,6 +541,47 @@ class SmarticoAPI {
 		});
 
 		return { ...spinAttemptResponse, request_id };
+	}
+
+
+	public async doAcknowledgeBatchRequest(user_ext_id: string, request_ids: string[]): Promise<SAWDoAcknowledgeBatchResponse> {
+		const message = this.buildMessage<SAWDoAcknowledgeBatchRequest, SAWDoAcknowledgeBatchResponse>(
+			user_ext_id,
+			ClassId.SAW_AKNOWLEDGE_REQUEST,
+			{
+				request_ids,
+			},
+		);
+
+		return await this.send<SAWDoAcknowledgeBatchResponse>(message, ClassId.SAW_AKNOWLEDGE_BATCH_RESPONSE);
+	}
+
+	public async sawSpinBatchRequest(user_ext_id: string, saw_template_id: number, spins_count: number): Promise<SAWDoSpinBatchResponse> {
+
+		const spins = [];
+		for (let i = 0; i < spins_count; i++) {
+			const request_id = IntUtils.uuid();
+			spins.push({ request_id, saw_template_id })
+		}
+
+		const message = this.buildMessage<SAWDoSpinBatchRequest, SAWDoSpinBatchResponse>(user_ext_id, ClassId.SAW_DO_SPIN_BATCH_REQUEST, { spins });
+		const spinAttemptResponse = await this.send<SAWDoSpinBatchResponse>(message, ClassId.SAW_DO_SPIN_BATCH_RESPONSE);
+
+		// If one response is 'OK' we consider that whole result is 'OK'
+		const result = spinAttemptResponse.results.find((res) => res.errCode === 0);
+
+		let status = 'OK';
+		if (!result) {
+			status = 'BATCH FAIL';
+		}
+
+		await this.coreReportCustomEvent(user_ext_id, 'minigame_attempt', {
+			saw_template_id,
+			status,
+			spins_count,
+		});
+
+		return { ...spinAttemptResponse };
 	}
 
 	public async missionOptIn(user_ext_id: string, mission_id: number) {
