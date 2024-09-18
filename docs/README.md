@@ -32,6 +32,7 @@
 - [JackpotsOptoutResponse](interfaces/JackpotsOptoutResponse.md)
 - [TMiniGamePrize](interfaces/TMiniGamePrize.md)
 - [TMiniGamePlayResult](interfaces/TMiniGamePlayResult.md)
+- [TMiniGamePlayBatchResult](interfaces/TMiniGamePlayBatchResult.md)
 - [TMiniGameTemplate](interfaces/TMiniGameTemplate.md)
 - [TUserProfile](interfaces/TUserProfile.md)
 - [TLevel](interfaces/TLevel.md)

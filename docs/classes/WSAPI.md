@@ -435,6 +435,27 @@ Plays the specified by template_id mini-game on behalf of user and returns prize
 
 ___
 
+### playMiniGameBatch
+
+▸ **playMiniGameBatch**(`template_id`, `spin_count`): `Promise`\<[`TMiniGamePlayBatchResult`](../interfaces/TMiniGamePlayBatchResult.md)[]\>
+
+Plays the specified by template_id mini-game on behalf of user {count} times and returns prizes or err_code
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `template_id` | `number` |
+| `spin_count` | `number` |
+
+#### Returns
+
+`Promise`\<[`TMiniGamePlayBatchResult`](../interfaces/TMiniGamePlayBatchResult.md)[]\>
+
+___
+
 ### requestMissionOptIn
 
 ▸ **requestMissionOptIn**(`mission_id`): `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
