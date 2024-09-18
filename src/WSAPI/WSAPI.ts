@@ -1,6 +1,6 @@
 import { ClassId } from '../Base/ClassId';
 import { CoreUtils } from '../Core';
-import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWSpinErrorCode, SAWSpinsCountPush } from '../MiniGames';
+import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWGetTemplatesResponse, SAWSpinErrorCode, SAWSpinsCountPush } from '../MiniGames';
 import { ECacheContext, OCache } from '../OCache';
 import { SmarticoAPI } from '../SmarticoAPI';
 import {
@@ -37,6 +37,8 @@ import {
 	JackpotsOptoutRequest,
 	JackpotsOptoutResponse,
 } from '../Jackpots';
+import { GetTournamentsResponse } from 'src/Tournaments';
+import { GetAchievementMapResponse } from 'src/Missions';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -202,6 +204,9 @@ export class WSAPI {
 
 	/**
 	 * Returns all the bonuses for the current user
+	 * The returned bonuss are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+	 * Note that each time you call getBonuses with a new onUpdate callback, the old one will be overwritten by the new one.
+	 * The onUpdate callback will be called on bonus claimed and the updated bonuses will be passed to it.
 	 *
 	 * **Visitor mode: not supported**
 	 */
@@ -889,5 +894,16 @@ export class WSAPI {
 		const result = await this.api.jackpotOptOut(null, filter);
 
 		return result;
+	}
+	/**
+	 * Returns all the related items for the provided game id for the current user
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getRelatedItemsForGame(related_game_id: string): Promise<GetAchievementMapResponse> {
+
+		const result = await this.api.getRelatedGamesById(null, related_game_id);
+        return result;
+		
 	}
 }

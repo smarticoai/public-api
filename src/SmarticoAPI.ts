@@ -109,6 +109,8 @@ import {
 import { GetCustomSectionsRequest, GetCustomSectionsResponse, UICustomSectionTransform } from './CustomSections';
 import { BonusItemsTransform, ClaimBonusRequest, ClaimBonusResponse, GetBonusesResponse } from './Bonuses';
 import { GetBonusesRequest } from './Bonuses/GetBonusesRequest';
+import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
+import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -1026,6 +1028,19 @@ class SmarticoAPI {
 
 	public getWSCalls(): WSAPI {
 		return new WSAPI(this);
+	}
+
+	public async getRelatedGamesById(user_ext_id: string, related_game_id: string,): Promise<GetRelatedAchTourResponse> {
+		const message = this.buildMessage< GetRelatedAchTourRequest, GetRelatedAchTourResponse>(
+			user_ext_id,
+			ClassId.GET_RELATED_ACH_N_TOURNAMENTS_REQUEST,
+			{
+				related_game_id: related_game_id
+			}
+		);
+		
+		return await this.send<GetRelatedAchTourResponse>(message, ClassId.GET_RELATED_ACH_N_TOURNAMENTS_RESPONSE);
+
 	}
 }
 
