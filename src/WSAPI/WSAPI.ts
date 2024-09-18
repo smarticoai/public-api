@@ -896,13 +896,26 @@ export class WSAPI {
 		return result;
 	}
 	/**
-	 * Returns all the related items for the provided game id for the current user
+	 * Returns all the related tournaments and missions for the provided game id for the current user
+	 * The provided Game ID should correspond to the ID from the Games Catalog - https://help.smartico.ai/welcome/technical-guides/games-catalog-api
+	 * 
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getRelatedItemsForGame('gold-slot2').then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 *
-	 * **Visitor mode: not supported**
+	 * **Example in the Visitor mode**:
+	 * ```
+	 * _smartico.vapi('EN').getRelatedItemsForGame('gold-slot2').then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 */
 	public async getRelatedItemsForGame(related_game_id: string): Promise<GetAchievementMapResponse> {
 
-		const result = await this.api.getRelatedGamesById(null, related_game_id);
+		const result = await this.api.getRelatedItemsForGame(null, related_game_id);
         return result;
 		
 	}

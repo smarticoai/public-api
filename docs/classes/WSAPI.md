@@ -861,9 +861,22 @@ ___
 
 ▸ **getRelatedItemsForGame**(`related_game_id`): `Promise`\<`GetAchievementMapResponse`\>
 
-Returns all the related items for the provided game id for the current user
+Returns all the related tournaments and missions for the provided game id for the current user
+The provided Game ID should correspond to the ID from the Games Catalog - https://help.smartico.ai/welcome/technical-guides/games-catalog-api
 
-**Visitor mode: not supported**
+**Example**:
+```
+_smartico.api.getRelatedItemsForGame('gold-slot2').then((result) => {
+     console.log(result);
+});
+```
+
+**Example in the Visitor mode**:
+```
+_smartico.vapi('EN').getRelatedItemsForGame('gold-slot2').then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 

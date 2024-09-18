@@ -1030,7 +1030,7 @@ class SmarticoAPI {
 		return new WSAPI(this);
 	}
 
-	public async getRelatedGamesById(user_ext_id: string, related_game_id: string,): Promise<GetRelatedAchTourResponse> {
+	public async getRelatedItemsForGame(user_ext_id: string, related_game_id: string,): Promise<GetRelatedAchTourResponse> {
 		const message = this.buildMessage< GetRelatedAchTourRequest, GetRelatedAchTourResponse>(
 			user_ext_id,
 			ClassId.GET_RELATED_ACH_N_TOURNAMENTS_REQUEST,
