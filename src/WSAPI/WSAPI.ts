@@ -456,6 +456,13 @@ export class WSAPI {
 
 	/**
 	 * Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
+	 * 
+	 * **Example**:
+	 * ```
+	 * _smartico.api.playMiniGame(55).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 *
 	 * **Visitor mode: not supported**
 	 */
@@ -473,8 +480,14 @@ export class WSAPI {
 	}
 
 	/**
-	 * Plays the specified by template_id mini-game on behalf of user {count} times and returns prizes or err_code
-	 *
+	 * Plays the specified by template_id mini-game on behalf of user spin_count times and returns array of the prizes
+	 * 
+	 * **Example**:
+	 * ```
+	 * _smartico.api.playMiniGameBatch(55, 10).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 * **Visitor mode: not supported**
 	 */
 	public async playMiniGameBatch(template_id: number, spin_count: number): Promise<TMiniGamePlayBatchResult[]> {
