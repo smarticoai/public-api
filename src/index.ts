@@ -4,6 +4,7 @@ export * from './SmarticoAPI';
 export * from './CookieStore';
 
 export * from './Core';
+export * from './UserProfile';
 export * from './Inbox';
 export * from './Leaderboard';
 export * from './MiniGames';
