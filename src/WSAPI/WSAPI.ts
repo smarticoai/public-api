@@ -38,8 +38,8 @@ import {
 	JackpotsOptoutRequest,
 	JackpotsOptoutResponse,
 } from '../Jackpots';
-import { GetTournamentsResponse } from 'src/Tournaments';
-import { GetAchievementMapResponse } from 'src/Missions';
+import { GetTournamentsResponse } from '../Tournaments';
+import { GetAchievementMapResponse } from '../Missions';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
