@@ -93,6 +93,7 @@ export class WSAPI {
 			on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache());
 			on(ClassId.JP_OPTOUT_RESPONSE, (data: JackpotsOptoutRequest) => this.jackpotClearCache());
 			on(ClassId.CLAIM_BONUS_RESPONSE, () => this.updateBonuses());
+			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, () => this.updateOnAddSpin());
 		}
 	}
 
@@ -456,7 +457,9 @@ export class WSAPI {
 
 	/**
 	 * Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
-	 * 
+ 	 * After playMiniGame is called, you can call getMiniGames to get the list of mini-games.The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGame with a new onUpdate callback, the old one will be overwritten by the new one.
+	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
+	 *
 	 * **Example**:
 	 * ```
 	 * _smartico.api.playMiniGame(55).then((result) => {
@@ -466,7 +469,12 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async playMiniGame(template_id: number): Promise<TMiniGamePlayResult> {
+	public async playMiniGame(template_id: number, { onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMiniGamePlayResult> {
+
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
+		}
+
 		const r = await this.api.sawSpinRequest(null, template_id);
 		this.api.doAcknowledgeRequest(null, r.request_id);
 
@@ -481,7 +489,9 @@ export class WSAPI {
 
 	/**
 	 * Plays the specified by template_id mini-game on behalf of user spin_count times and returns array of the prizes
-	 * 
+	 * After playMiniGameBatch is called, you can call getMiniGames to get the list of mini-games. The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGameBatch with a new onUpdate callback, the old one will be overwritten by the new one.
+	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
+	 *
 	 * **Example**:
 	 * ```
 	 * _smartico.api.playMiniGameBatch(55, 10).then((result) => {
@@ -490,7 +500,12 @@ export class WSAPI {
 	 * ```
 	 * **Visitor mode: not supported**
 	 */
-	public async playMiniGameBatch(template_id: number, spin_count: number): Promise<TMiniGamePlayBatchResult[]> {
+	public async playMiniGameBatch(template_id: number, spin_count: number, { onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMiniGamePlayBatchResult[]> {
+		
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
+		}
+
 		const response = await this.api.sawSpinBatchRequest(null, template_id, spin_count);
 
 		const request_ids = response.results.map((result) => result.request_id);
