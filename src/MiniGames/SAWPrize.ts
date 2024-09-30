@@ -12,4 +12,7 @@ export interface SAWPrize {
 	pool?: number;
 	pool_initial?: number;
 	wins_count?: number;
+	weekdays?: number[];
+	active_from_ts?: number;
+	active_till_ts?: number;
 }

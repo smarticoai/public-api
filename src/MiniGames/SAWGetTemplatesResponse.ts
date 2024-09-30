@@ -52,6 +52,9 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					pool: p.pool,
 					pool_initial: p.pool_initial,
 					wins_count: p.wins_count,
+					weekdays: p.weekdays,
+					active_from_ts: p.active_from_ts,
+					active_till_ts: p.active_till_ts,
 				};
 				return y;
 			}),

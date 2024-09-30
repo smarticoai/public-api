@@ -41,6 +41,12 @@ export interface TMiniGamePrize {
 	pool_initial?: number;
 	/* Number of wins in game */
 	wins_count?: number;
+	/* Number of days of week, when the prize can be available */
+	weekdays?: number[];
+	/* Holds time from which prize will become available, for the prizes that are targeted to be available from specific date/time */
+	active_from_ts?: number;
+	/* Holds time till which prize will become available, for the prizes that are targeted to be available from specific date/time */
+	active_till_ts?: number;
 }
 
 /**
