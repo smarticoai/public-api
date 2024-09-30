@@ -60,6 +60,7 @@
 - [TUICustomSection](interfaces/TUICustomSection.md)
 - [TBonus](interfaces/TBonus.md)
 - [TClaimBonusResult](interfaces/TClaimBonusResult.md)
+- [TSawHistory](interfaces/TSawHistory.md)
 
 ## General API
 
