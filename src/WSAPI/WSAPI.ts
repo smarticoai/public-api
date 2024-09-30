@@ -964,9 +964,9 @@ export class WSAPI {
 	 * });
 	 * ```
 	 */
-	public async getRelatedItemsForGame(related_game_id: string): Promise<GetAchievementMapResponse> {
+	public async getRelatedItemsForGame(related_game_id: string, force_language?: string): Promise<GetAchievementMapResponse> {
 
-		const result = await this.api.getRelatedItemsForGame(null, related_game_id);
+		const result = await this.api.getRelatedItemsForGame(null, related_game_id, force_language);
         return result;
 		
 	}
