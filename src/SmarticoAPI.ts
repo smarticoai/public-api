@@ -10,8 +10,13 @@ import {
 	SAWDoAknowledgeResponse,
 	SAWDoSpinRequest,
 	SAWDoSpinResponse,
+	SAWHistoryTransform,
+	SAWPrizesHistory,
 	SAWSpinErrorCode,
+	SAWTemplate,
 	SAWTemplatesTransform,
+	SAWWinningHistoryRequest,
+	SAWWinningHistoryResponse,
 } from './MiniGames';
 import { ECacheContext, OCache } from './OCache';
 import {
@@ -89,6 +94,7 @@ import {
 	TSegmentCheckResult,
 	TUICustomSection,
 	TBonus,
+	TSawHistory,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -584,6 +590,18 @@ class SmarticoAPI {
 		return { ...spinAttemptResponse };
 	}
 
+	public async getSawWinningHistory(user_ext_id: string, limit: number = 20, offset: number = 0, saw_template_id: number): Promise<SAWWinningHistoryResponse> {
+		const message = this.buildMessage<SAWWinningHistoryRequest, SAWWinningHistoryResponse>(user_ext_id, ClassId.GET_SAW_HISTORY_REQUEST, {
+			limit, offset, saw_template_id
+		})
+
+		return await this.send<SAWWinningHistoryResponse>(message, ClassId.GET_SAW_HISTORY_RESPONSE);
+	}
+
+	public async getSawWinningHistoryT(user_ext_id: string, limit?: number, offset?: number, saw_template_id?: number): Promise<SAWPrizesHistory[]> {
+		return SAWHistoryTransform((await this.getSawWinningHistory(user_ext_id, limit, offset, saw_template_id)).prizes);
+	}
+	
 	public async missionOptIn(user_ext_id: string, mission_id: number) {
 		if (!mission_id) {
 			throw new Error('Missing mission id');

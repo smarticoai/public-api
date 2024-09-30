@@ -1,5 +1,5 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode } from '../MiniGames';
+import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchCategory } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -752,4 +752,19 @@ export interface TClaimBonusResult {
 	err_message: string;
 	/** If the bonus was claimed successfully, then success is true */
 	success?: boolean;
+}
+
+export interface TSawHistory {
+	/** The initial information about mini-game */
+	template: SAWTemplate,
+	/** ID of the mini-game template */
+	saw_template_id: number,
+	/** The saw_prize_id that user won, details of the prize can be found in the mini-game definition */
+	saw_prize_id: number,
+	/** Amount of prizes in stock */
+	prize_amount: number,
+	/** Request ID that client is sending to show history*/
+	client_request_id: string,
+	/** Flag indicating to show whether prize in the mini-game claimed or not */
+	is_claimed: boolean,
 }

@@ -126,6 +126,9 @@ export enum ClassId {
 	SAW_AKNOWLEDGE_BATCH_REQUEST = 714,
 	SAW_AKNOWLEDGE_BATCH_RESPONSE = 715,
 
+	GET_SAW_HISTORY_REQUEST = 716,
+	GET_SAW_HISTORY_RESPONSE = 717,
+
 	/*
         !Important, if adding new messages that are 'acting' on behalf of the client,
         you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION

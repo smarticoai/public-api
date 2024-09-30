@@ -22,3 +22,5 @@ export * from './SAWPrizeDropAknowledgeRequest';
 export * from './SAWPrizeDropAknowledgeResponse';
 export * from './SAWEventSawPush';
 export * from './SAWAcknowledgeSpinPushRequest';
+export * from './SAWWinningHistoryRequest';
+export * from './SAWWinningHistoryResponse';
