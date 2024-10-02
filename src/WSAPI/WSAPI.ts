@@ -93,6 +93,7 @@ export class WSAPI {
 			on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
 			on(ClassId.JP_WIN_PUSH, (data: JackpotWinPush) => this.jackpotClearCache());
 			on(ClassId.JP_OPTOUT_RESPONSE, (data: JackpotsOptoutRequest) => this.jackpotClearCache());
+			on(ClassId.JP_OPTIN_RESPONSE, (data: JackpotsOptinResponse) => this.jackpotClearCache());
 			on(ClassId.CLAIM_BONUS_RESPONSE, () => this.updateBonuses());
 			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, () => this.updateOnAddSpin());
 		}
