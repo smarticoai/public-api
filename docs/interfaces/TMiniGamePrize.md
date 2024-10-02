@@ -99,3 +99,21 @@ ___
 ### wins\_count
 
 • `Optional` **wins\_count**: `number`
+
+___
+
+### weekdays
+
+• `Optional` **weekdays**: `number`[]
+
+___
+
+### active\_from\_ts
+
+• `Optional` **active\_from\_ts**: `number`
+
+___
+
+### active\_till\_ts
+
+• `Optional` **active\_till\_ts**: `number`

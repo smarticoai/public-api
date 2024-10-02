@@ -1,53 +1,49 @@
 # Interface: TSawHistory
 
-TSawHistory describes the information of the history of mini-games.
-
 ## Properties
 
 ### template
 
 • **template**: `SAWTemplate`
 
-The initial information about mini-game.
+The initial information about mini-game
 
 ___
 
-### saw_template_id
+### saw\_template\_id
 
-• **saw_template_id**: `number`
+• **saw\_template\_id**: `number`
 
-ID of the mini-game template.
-
-___
-
-### saw_prize_id
-
-• **saw_prize_id**: `number`
-
-The saw_prize_id that user won, details of the prize can be found in the mini-game definition.
+ID of the mini-game template
 
 ___
 
-### prize_amount
+### saw\_prize\_id
 
-• **prize_amount**: `number`
+• **saw\_prize\_id**: `number`
 
-Amount of prizes in stock.
-
-___
-
-### client_request_id
-
-• **client_request_id**: `string`
-
-Request ID that client is sending to show history.
+The saw_prize_id that user won, details of the prize can be found in the mini-game definition
 
 ___
 
-### is_claimed
+### prize\_amount
 
-• **is_claimed**: `boolean`
+• **prize\_amount**: `number`
 
-Flag indicating to show whether prize in the mini-game claimed or not.
+Amount of prizes in stock
 
 ___
+
+### client\_request\_id
+
+• **client\_request\_id**: `string`
+
+Request ID that client is sending to show history
+
+___
+
+### is\_claimed
+
+• **is\_claimed**: `boolean`
+
+Flag indicating to show whether prize in the mini-game claimed or not

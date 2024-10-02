@@ -417,7 +417,7 @@ ___
 
 ### getMiniGamesHistory
 
-▸ **getMiniGamesHistory**(`«destructured»?`): `Promise`\<[`TSawHistory`](../interfaces/TSawHistory.md)[]\>
+▸ **getMiniGamesHistory**(`«destructured»`): `Promise`\<[`TSawHistory`](../interfaces/TSawHistory.md)[]\>
 
 Returns the list of mini-games based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched.
 The maximum number of items per request is limited to 20.
@@ -441,7 +441,7 @@ _smartico.api.getMiniGamesHistory().then((result) => {
 | `«destructured»` | `Object` |
 | › `limit?` | `number` |
 | › `offset?` | `number` |
-| › `saw_template_id?` | `number` |
+| › `saw_template_id?` | `number` |
 | › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
 
 #### Returns
@@ -449,7 +449,6 @@ _smartico.api.getMiniGamesHistory().then((result) => {
 `Promise`\<[`TSawHistory`](../interfaces/TSawHistory.md)[]\>
 
 ___
-
 
 ### playMiniGame
 

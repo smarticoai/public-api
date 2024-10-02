@@ -16,7 +16,7 @@ ___
 
 ### jp\_type\_id
 
-• **jp\_type\_id**: [`Main`](../enums/JackpotType.md#main)
+• **jp\_type\_id**: [`JackpotType`](../enums/JackpotType.md)
 
 type of jackpot logic
 
