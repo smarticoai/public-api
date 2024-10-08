@@ -67,6 +67,7 @@ enum onUpdateContextKey {
 	Pots = 'Pots',
 	CustomSections = 'customSections',
 	Bonuses = 'bonuses',
+	SAWHistory = 'sawHistory'
 }
 
 /** @group General API */
@@ -482,11 +483,11 @@ export class WSAPI {
 	} : { limit?: number, offset?: number, saw_template_id?: number, onUpdate?: (data: TMiniGameTemplate[]) => void }): Promise<TSawHistory[]> {
 
 		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
+			this.onUpdateCallback.set(onUpdateContextKey.SAWHistory, onUpdate);
 		}
 		
 		return OCache.use(
-			onUpdateContextKey.Saw,
+			onUpdateContextKey.SAWHistory,
 			ECacheContext.WSAPI,
 			() => this.api.getSawWinningHistoryT(null, limit, offset, saw_template_id),
 			CACHE_DATA_SEC,
