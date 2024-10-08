@@ -81,10 +81,15 @@ export class WSAPI {
 		if (this.api.tracker) {
 			const on = this.api.tracker.on;
 			on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
-			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.updateOnAddSpin());
-			on(ClassId.SAW_DO_SPIN_RESPONSE, (data: SAWDoSpinResponse) =>
-				on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => this.updateOnPrizeWin(data)),
-			);
+			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.reloadMiniGameTemplate());
+			on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => {
+				this.reloadMiniGameTemplate();
+				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
+			});
+			on(ClassId.SAW_DO_SPIN_RESPONSE, () => {
+				this.reloadMiniGameTemplate();
+				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
+			});
 			on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissions());
 			on(ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE, () => this.updateMissions());
 			on(ClassId.RELOAD_ACHIEVEMENTS_EVENT, () => this.updateMissions());
@@ -96,7 +101,10 @@ export class WSAPI {
 			on(ClassId.JP_OPTOUT_RESPONSE, (data: JackpotsOptoutRequest) => this.jackpotClearCache());
 			on(ClassId.JP_OPTIN_RESPONSE, (data: JackpotsOptinResponse) => this.jackpotClearCache());
 			on(ClassId.CLAIM_BONUS_RESPONSE, () => this.updateBonuses());
-			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, () => this.updateOnAddSpin());
+			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, () => {
+				this.reloadMiniGameTemplate();
+				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
+			});
 		}
 	}
 
@@ -462,8 +470,7 @@ export class WSAPI {
 	 * Returns the list of mini-games based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched.
 	 * The maximum number of items per request is limited to 20.
 	 * You can leave this params empty and by default it will return list of mini-games ranging from 0 to 20.
-	 * The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGamesHistory with a new onUpdate callback, the old one will be overwritten by the new one.
-	 * Updated templates will be passed to onUpdate callback.
+	 * The returned list of mini-games history is cached for 30 seconds.
 	 *
 	 * **Example**:
 	 * ```
@@ -478,13 +485,8 @@ export class WSAPI {
 	public async getMiniGamesHistory({
 		limit,
 		offset,
-		saw_template_id,
-		onUpdate
-	} : { limit?: number, offset?: number, saw_template_id?: number, onUpdate?: (data: TMiniGameTemplate[]) => void }): Promise<TSawHistory[]> {
-
-		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.SAWHistory, onUpdate);
-		}
+		saw_template_id
+	} : { limit?: number, offset?: number, saw_template_id?: number): Promise<TSawHistory[]> {
 		
 		return OCache.use(
 			onUpdateContextKey.SAWHistory,
@@ -827,17 +829,9 @@ export class WSAPI {
 		this.updateEntity(onUpdateContextKey.Saw, templates);
 	}
 
-	private async updateOnAddSpin() {
-		const payload = await this.api.sawGetTemplatesT(null);
-		this.updateEntity(onUpdateContextKey.Saw, payload);
-	}
-
-	private async updateOnPrizeWin(data: SAWDoSpinResponse) {
-		if (data.errCode === SAWSpinErrorCode.SAW_OK) {
-
-				const updatedTemplates = await this.api.sawGetTemplatesT(null);
-				this.updateEntity(onUpdateContextKey.Saw, updatedTemplates);
-		}
+	private async reloadMiniGameTemplate() {
+		const updatedTemplates = await this.api.sawGetTemplatesT(null);
+		this.updateEntity(onUpdateContextKey.Saw, updatedTemplates);
 	}
 
 	private async updateMissions() {
