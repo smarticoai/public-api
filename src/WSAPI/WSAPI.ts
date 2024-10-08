@@ -486,7 +486,7 @@ export class WSAPI {
 		limit,
 		offset,
 		saw_template_id
-	} : { limit?: number, offset?: number, saw_template_id?: number): Promise<TSawHistory[]> {
+	} : { limit?: number, offset?: number, saw_template_id?: number } ): Promise<TSawHistory[]> {
 		
 		return OCache.use(
 			onUpdateContextKey.SAWHistory,

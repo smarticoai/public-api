@@ -422,8 +422,7 @@ ___
 Returns the list of mini-games based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched.
 The maximum number of items per request is limited to 20.
 You can leave this params empty and by default it will return list of mini-games ranging from 0 to 20.
-The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGamesHistory with a new onUpdate callback, the old one will be overwritten by the new one.
-Updated templates will be passed to onUpdate callback.
+The returned list of mini-games history is cached for 30 seconds.
 
 **Example**:
 ```
@@ -442,7 +441,6 @@ _smartico.api.getMiniGamesHistory().then((result) => {
 | › `limit?` | `number` |
 | › `offset?` | `number` |
 | › `saw_template_id?` | `number` |
-| › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
 
 #### Returns
 
