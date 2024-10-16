@@ -1,11 +1,11 @@
 import { IntUtils } from '../IntUtils';
 import { TMiniGamePrize, TMiniGameTemplate } from '../WSAPI/WSAPITypes';
 import { ProtocolResponse } from './../Base/ProtocolResponse';
+import { SAWAcknowledgeTypeNamed } from './SAWAcknowledgeType';
 import { SAWBuyInTypeNamed } from './SAWBuyInType';
 import { SAWGameTypeNamed } from './SAWGameType';
 import { MiniGamePrizeTypeName, MiniGamePrizeTypeNamed } from './SAWPrizeType';
 import { SAWTemplate } from './SAWTemplate';
-import { SAWUtils } from './SAWUtils';
 
 export interface SAWGetTemplatesResponse extends ProtocolResponse {
 	templates: SAWTemplate[];
@@ -46,9 +46,12 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					font_size_mobile: p.saw_prize_ui_definition.font_size_mobile,
 					icon: p.saw_prize_ui_definition.icon,
 					position: p.saw_prize_ui_definition.position,
+					acknowledge_type: SAWAcknowledgeTypeNamed(p.saw_prize_ui_definition.acknowledge_type),
 					aknowledge_message: p.saw_prize_ui_definition.aknowledge_message,
 					acknowledge_dp: p.saw_prize_ui_definition.acknowledge_dp,
 					acknowledge_action_title: p.saw_prize_ui_definition.acknowledge_action_title,
+					acknowledge_dp_additional: p.saw_prize_ui_definition.acknowledge_dp_additional,
+					acknowledge_action_title_additional: p.saw_prize_ui_definition.acknowledge_action_title_additional,
 					pool: p.pool,
 					pool_initial: p.pool_initial,
 					wins_count: p.wins_count,

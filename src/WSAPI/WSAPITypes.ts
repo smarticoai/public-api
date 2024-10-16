@@ -1,5 +1,5 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { MiniGamePrizeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate } from '../MiniGames';
+import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchCategory } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -29,12 +29,18 @@ export interface TMiniGamePrize {
 	icon?: string;
 	/* for scratch card defines position of prize in the list */
 	position: number;
+	/* Type of acknowledge message for users */
+	acknowledge_type: SAWAcknowledgeTypeName;
 	/* Message that will be shown to user in modal pop-up */
 	aknowledge_message: string;
 	/* Deep link that will trigger some action in modal pop-up */
 	acknowledge_dp: string;
 	/* The name of the action button in modal pop-up */
 	acknowledge_action_title: string;
+	/* Deep link that will trigger some action in modal pop-up (additional) */
+	acknowledge_dp_additional?: string;
+	/* The name of the action button in modal pop-up (additional) */
+	acknowledge_action_title_additional?: string;
 	/* Number of items in stock */
 	pool?: number;
 	/* Initial number of items in stock */
