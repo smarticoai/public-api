@@ -29,6 +29,7 @@ export const quizNoReplacementText = '{no}';
 export const quizOddReplacementText = '{odd}';
 export const quizEvenReplacementText = '{even}';
 export const quizOrReplacementText = '{or}';
+export const quizNoGoalsReplacementText = '{quiz_no_goals}';
 
 export const quizAnswersTrKeys = {
 	[quizDrawReplacementText]: 'quizAnswer_draw',
@@ -37,4 +38,5 @@ export const quizAnswersTrKeys = {
 	[quizOddReplacementText]: 'quizAnswer_odd',
 	[quizEvenReplacementText]: 'quizAnswer_even',
 	[quizOrReplacementText]: 'quizAnswer_or',
+	[quizNoGoalsReplacementText]: 'quizAnswer_no_goals',
 };

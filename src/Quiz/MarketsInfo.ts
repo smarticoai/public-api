@@ -4,6 +4,7 @@ import {
 	quizAnswerHomeTeamReplacementText,
 	quizDrawReplacementText,
 	quizEvenReplacementText,
+	quizNoGoalsReplacementText,
 	quizNoReplacementText,
 	quizOddReplacementText,
 	quizOrReplacementText,
@@ -22,6 +23,7 @@ const homeAwayAnswers = [
 ];
 
 const homeAwayDrawAnswers = [...homeAwayAnswers, { text: quizDrawReplacementText, value: QuizAnswersValueType.Draw }];
+const homeAwayNoGoalsAnswers = [...homeAwayAnswers, { text: quizNoGoalsReplacementText, value: QuizAnswersValueType.Draw }];
 
 export const marketsInfo = [
 	{
@@ -80,13 +82,13 @@ export const marketsInfo = [
 		type: SAWGPMarketType.FirstGoal,
 		name: 'First Goal',
 		question: { text: 'Who will score the first goal ?', trKey: 'quizQuestion_firstGoal' },
-		answers: homeAwayDrawAnswers,
+		answers: homeAwayNoGoalsAnswers,
 	},
 	{
 		type: SAWGPMarketType.LastGoal,
 		name: 'Last Goal',
 		question: { text: 'Who will score the last goal ?', trKey: 'quizQuestion_lastGoal' },
-		answers: homeAwayAnswers,
+		answers: homeAwayNoGoalsAnswers,
 	},
 	{
 		type: SAWGPMarketType.DoubleChance,
