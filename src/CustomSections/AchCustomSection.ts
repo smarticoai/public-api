@@ -6,6 +6,10 @@ export enum AchCustomSectionType {
 	MINI_GAMES = 5,
 	MISSION_CUSTOM_LAYOUT = 6,
 	MATCH_X = 7,
+	QUIZ = 8,
+	REDIRECT_LINK = 9,
+	LOOTBOX_WEEKLY = 10,
+	LOOTBOX_CALENDAR_DAYS = 11,
 }
 
 export enum AchCustomLayoutTheme {
