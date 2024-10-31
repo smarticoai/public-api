@@ -53,10 +53,6 @@ export interface TMiniGamePrize {
 	active_from_ts?: number;
 	/* Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
 	active_till_ts?: number;
-	/* Holds time from which prize will become available, for the prizes that are targeted to be available from specific date */
-	active_from?: string;
-	/* Holds time till which prize will become available, for the prizes that are targeted to be available from specific date */
-    active_till?: string;
 }
 
 /**

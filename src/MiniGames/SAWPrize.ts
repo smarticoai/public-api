@@ -15,6 +15,4 @@ export interface SAWPrize {
 	weekdays?: number[];
 	active_from_ts?: number;
 	active_till_ts?: number;
-	active_from?: string;
-    active_till?: string;
 }

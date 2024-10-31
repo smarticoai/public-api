@@ -4,7 +4,7 @@ import { SAWWinSoundType } from './SAWWinSoundType';
 export interface SAWPrizeUI {
 	position?: number; // for scratch card defines position of prize in the list
 	name: string;
-	name_original: string; // keeps original name, how it came from the servers. This is needed for the Jackpot value replacemenet
+	name_original?: string; // keeps original name, how it came from the servers. This is needed for the Jackpot value replacemenet
 	aknowledge_message?: string;
 	sectors?: number[];
 	acknowledge_type?: SAWAcknowledgeType;
