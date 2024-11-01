@@ -10,7 +10,7 @@ Returns information about current user
 
 **Example**:
 ```
-_smartico.api.getUserProfile().then((result) => {
+_smartico.api.getUserProfile(result => {
  console.log(result);
 });
 ```

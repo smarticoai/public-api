@@ -112,7 +112,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getUserProfile().then((result) => {
+	 * _smartico.api.getUserProfile(result => {
 	 *  console.log(result);
 	 * });
 	 * ```

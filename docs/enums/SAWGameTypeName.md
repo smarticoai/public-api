@@ -38,6 +38,18 @@ ___
 
 ___
 
+### LootboxWeekdays
+
+• **LootboxWeekdays** = ``"lootbox_weekdays"``
+
+___
+
+### LootboxCalendarDays
+
+• **LootboxCalendarDays** = ``"lootbox_calendar_days"``
+
+___
+
 ### Unknown
 
 • **Unknown** = ``"unknown"``

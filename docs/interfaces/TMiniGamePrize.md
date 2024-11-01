@@ -66,6 +66,12 @@ ___
 
 ___
 
+### acknowledge\_type
+
+• **acknowledge\_type**: `SAWAcknowledgeTypeName`
+
+___
+
 ### aknowledge\_message
 
 • **aknowledge\_message**: `string`
@@ -81,6 +87,18 @@ ___
 ### acknowledge\_action\_title
 
 • **acknowledge\_action\_title**: `string`
+
+___
+
+### acknowledge\_dp\_additional
+
+• `Optional` **acknowledge\_dp\_additional**: `string`
+
+___
+
+### acknowledge\_action\_title\_additional
+
+• `Optional` **acknowledge\_action\_title\_additional**: `string`
 
 ___
 
