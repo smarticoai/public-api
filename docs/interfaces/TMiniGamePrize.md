@@ -135,3 +135,9 @@ ___
 ### active\_till\_ts
 
 • `Optional` **active\_till\_ts**: `number`
+
+___
+
+### relative\_period\_timezone
+
+• `Optional` **relative\_period\_timezone**: `number`

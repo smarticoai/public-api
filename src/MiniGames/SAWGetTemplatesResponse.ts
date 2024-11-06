@@ -60,6 +60,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					weekdays: p.weekdays,
 					active_from_ts: p.active_from_ts,
 					active_till_ts: p.active_till_ts,
+					relative_period_timezone: p.relative_period_timezone,
 				};
 				return y;
 			}),

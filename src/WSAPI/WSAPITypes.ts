@@ -53,6 +53,8 @@ export interface TMiniGamePrize {
 	active_from_ts?: number;
 	/* Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
 	active_till_ts?: number;
+	/* Time zone to ensure each day aligns with your local midnight. */
+	relative_period_timezone?: number;
 }
 
 /**

@@ -15,4 +15,5 @@ export interface SAWPrize {
 	weekdays?: number[];
 	active_from_ts?: number;
 	active_till_ts?: number;
+	relative_period_timezone?: number;
 }
