@@ -1,4 +1,5 @@
 import { SAWAskForUsername } from './SAWAskForUsername';
+import { SAWGameLayout } from './SAWGameLayout';
 
 export interface SAWTemplateUI {
 	skin: string;
@@ -48,4 +49,5 @@ export interface SAWTemplateUI {
 		id: string;
 		content: string;
 	};
+	game_layout?: SAWGameLayout;
 }
