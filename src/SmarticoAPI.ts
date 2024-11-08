@@ -868,7 +868,7 @@ class SmarticoAPI {
 			response.userPosition.avatar_url = CoreUtils.avatarUrl(response.userPosition.avatar_id, this.avatarDomain);
 		}
 
-		if (response.tournamentInfo.players?.length) {
+		if (response.tournamentInfo?.players?.length) {
 			response.tournamentInfo.players.forEach((p) => {
 				p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain);
 			});
