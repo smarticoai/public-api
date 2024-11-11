@@ -47,3 +47,19 @@ ___
 • **is\_claimed**: `boolean`
 
 Flag indicating to show whether prize in the mini-game claimed or not
+
+___
+
+### create\_date\_ts
+
+• **create\_date\_ts**: `number`
+
+Win prize date in milliseconds
+
+___
+
+### acknowledge\_date\_ts
+
+• **acknowledge\_date\_ts**: `number`
+
+Claim prize date in milliseconds
