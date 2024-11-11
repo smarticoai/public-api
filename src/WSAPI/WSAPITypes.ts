@@ -775,4 +775,8 @@ export interface TSawHistory {
 	client_request_id: string,
 	/** Flag indicating to show whether prize in the mini-game claimed or not */
 	is_claimed: boolean,
+	/** Win prize date in milliseconds */
+	create_date_ts: number;
+	/** Claimed prize date in milliseconds */
+	acknowledge_date_ts: number;
 }
