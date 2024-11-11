@@ -30,6 +30,7 @@ export interface UserAchievement {
 	scheduledMissionType?: ScheduledMissionType;
 	related_games?: AchRelatedGame[];
 	active_from_ts?: number; // indicates when 'scheduled' mission is active from,
+	active_till_ts?: number; // indicates when 'scheduled' mission is active till,
 	ach_categories?: number[];
 
 	ach_completed_id?: number; // ID of the completion fact from ach_completed or ach_completed_recurring tables
@@ -63,6 +64,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				is_opted_in: r.isOptedIn,
 				time_limit_ms: r.time_limit_ms,
 				active_from_ts: r.active_from_ts,
+				active_till_ts: r.active_from_ts,
 				dt_start: r.start_date_ts,
 				reward: r.ach_public_meta.reward,
 				progress: r.progress,

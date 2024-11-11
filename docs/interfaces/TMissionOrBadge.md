@@ -109,6 +109,14 @@ Holds time from which mission will become available, for the missions that are t
 
 ___
 
+### active\_till\_ts
+
+• **active\_till\_ts**: `number`
+
+Holds time till mission will become unavailable, for the missions that are targeted to be available from specific date/time
+
+___
+
 ### dt\_start
 
 • **dt\_start**: `number`

@@ -471,6 +471,9 @@ export interface TMissionOrBadge {
 
 	/** Holds time from which mission will become available, for the missions that are targeted to be available from specific date/time */
 	active_from_ts: number;
+	
+	/** Holds time till mission will become unavailable, for the missions that are targeted to be available from specific date/time */
+	active_till_ts: number;
 
 	/** The date when the mission was started, relevant for the time limited missions */
 	dt_start: number;
