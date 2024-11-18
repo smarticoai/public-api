@@ -1,3 +1,4 @@
+import { IntUtils } from '../IntUtils';
 import { TStoreItem } from '../WSAPI/WSAPITypes';
 import { StoreItemPublicMeta } from './StoreItemPublicMeta';
 import { StoreItemType, StoreItemTypeNamed } from './StoreItemType';
@@ -30,6 +31,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				can_buy: r.canBuy,
 				category_ids: r.categoryIds ?? [],
 				pool: r.shopPool,
+				custom_data: IntUtils.JsonOrText(r.itemPublicMeta.custom_data),
 			};
 			return x;
 		});

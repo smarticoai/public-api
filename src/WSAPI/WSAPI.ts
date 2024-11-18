@@ -510,7 +510,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async playMiniGame(template_id: number, { onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMiniGamePlayResult> {
+	public async playMiniGame(template_id: number, { onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<TMiniGamePlayResult> {
 
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);

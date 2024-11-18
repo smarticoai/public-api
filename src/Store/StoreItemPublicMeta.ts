@@ -9,4 +9,5 @@ export interface StoreItemPublicMeta {
 	priority: number;
 	related_items: number[];
 	hint_text: string;
+	custom_data: string;
 }

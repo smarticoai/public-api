@@ -412,6 +412,8 @@ export interface TStoreItem {
 	category_ids: number[];
 	/** Number of items in the pool avaliable for the purchase.*/
 	pool?: number;
+	/** The custom data of the store item defined by operator. Can be a JSON object, string or number */
+	custom_data: any;
 	/** The T&C text for the store item */
 	hint_text?: string;
 	/** Purchase time to show in purchase history screen */
@@ -494,6 +496,7 @@ export interface TMissionOrBadge {
 	custom_section_id: number;
 	/** The indicator if the mission or badge is visible only in the custom section and should be hidden from the main overview of missions/badges */
 	only_in_custom_section: boolean;
+
 	/** The custom data of the mission or badge defined by operator. Can be a JSON object, string or number */
 	custom_data: any;
 
