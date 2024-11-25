@@ -141,3 +141,19 @@ ___
 ### relative\_period\_timezone
 
 • `Optional` **relative\_period\_timezone**: `number`
+
+___
+
+### out\_of\_stock\_message
+
+• `Optional` **out\_of\_stock\_message**: `string`
+
+Message when the prize pool is empty for that specific prize
+
+___
+
+### is\_surcharge
+
+• `Optional` **is\_surcharge**: `boolean`
+
+Flag indicating that the prize is surcharged (available all the time, despite pool numbers)
