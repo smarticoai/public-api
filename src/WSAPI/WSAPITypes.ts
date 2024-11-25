@@ -140,6 +140,9 @@ export interface TMiniGameTemplate {
 
 	/* When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets */
 	expose_game_stat_on_api?: boolean;
+	
+	/* Time zone to ensure each day aligns with your local midnight. */
+	relative_period_timezone?: number;
 }
 
 /**

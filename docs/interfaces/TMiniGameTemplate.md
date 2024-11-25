@@ -151,3 +151,13 @@ ___
 ### expose\_game\_stat\_on\_api
 
 • `Optional` **expose\_game\_stat\_on\_api**: `boolean`
+
+When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets
+
+___
+
+### relative\_period\_timezone
+
+• `Optional` **relative\_period\_timezone**: `number`
+
+Time zone to ensure each day aligns with your local midnight.

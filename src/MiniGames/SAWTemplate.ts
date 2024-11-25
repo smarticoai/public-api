@@ -38,4 +38,5 @@ export interface SAWTemplate {
 
 	// AA: releavnt only in the context of the SAWPrizeDropWinPush
 	requires_prize_claim?: boolean;
+relative_period_timezone?: number;
 }
