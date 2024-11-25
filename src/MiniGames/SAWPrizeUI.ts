@@ -18,4 +18,5 @@ export interface SAWPrizeUI {
 	replace_name_with_image?: boolean;
 	acknowledge_action_title?: string;
 	custom_win_sound?: string;
+	out_of_stock_message?: string;
 }

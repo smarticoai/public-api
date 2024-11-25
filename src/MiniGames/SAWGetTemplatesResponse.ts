@@ -54,6 +54,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					acknowledge_action_title: p.saw_prize_ui_definition.acknowledge_action_title,
 					acknowledge_dp_additional: p.saw_prize_ui_definition.acknowledge_dp_additional,
 					acknowledge_action_title_additional: p.saw_prize_ui_definition.acknowledge_action_title_additional,
+					out_of_stock_message: p.saw_prize_ui_definition.out_of_stock_message,
 					pool: p.pool,
 					pool_initial: p.pool_initial,
 					wins_count: p.wins_count,
@@ -61,6 +62,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					active_from_ts: p.active_from_ts,
 					active_till_ts: p.active_till_ts,
 					relative_period_timezone: p.relative_period_timezone,
+					is_surcharge: p.is_surcharge,
 				};
 				return y;
 			}),

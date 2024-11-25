@@ -41,6 +41,8 @@ export interface TMiniGamePrize {
 	acknowledge_dp_additional?: string;
 	/* The name of the action button in modal pop-up (additional) */
 	acknowledge_action_title_additional?: string;
+	/* Message when the prize pool is empty for that specific prize */
+	out_of_stock_message?: string;
 	/* Number of items in stock */
 	pool?: number;
 	/* Initial number of items in stock */
@@ -55,6 +57,8 @@ export interface TMiniGamePrize {
 	active_till_ts?: number;
 	/* Time zone to ensure each day aligns with your local midnight. */
 	relative_period_timezone?: number;
+	/* Flag indicating that the prize is surcharged (available all the time, despite pool numbers) */
+	is_surcharge?: boolean;
 }
 
 /**
