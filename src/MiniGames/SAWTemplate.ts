@@ -18,6 +18,9 @@ export interface SAWTemplate {
 
 	is_visible: boolean;
 
+	activeFromDate: number;
+	activeTillDate: number;
+
 	jackpot_add_on_attempt: number;
 	jackpot_current: number;
 	jackpot_guaranteed: number;
@@ -38,5 +41,5 @@ export interface SAWTemplate {
 
 	// AA: releavnt only in the context of the SAWPrizeDropWinPush
 	requires_prize_claim?: boolean;
-relative_period_timezone?: number;
+	relative_period_timezone?: number;
 }

@@ -538,6 +538,7 @@ class SmarticoAPI {
 				[SAWSpinErrorCode.SAW_PRIZE_POOL_EMPTY]: 'PRIZE POOL IS EMPTY',
 				[SAWSpinErrorCode.SAW_NOT_ENOUGH_POINTS]: 'NOT ENOUGH POINTS',
 				[SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED]: 'MAX SPIN ATTEMPTS REACHED',
+				[SAWSpinErrorCode.SAW_TEMPLATE_NOT_ACTIVE]: "MINIGAME IS NOT IN ACTIVE PERIOD",
 			}[spinAttemptResponse.errCode] || 'OTHER';
 
 		await this.coreReportCustomEvent(user_ext_id, 'minigame_attempt', {

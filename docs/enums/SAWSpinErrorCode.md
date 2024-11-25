@@ -42,6 +42,14 @@ User reached max number of game attempts defined in the BackOffice
 
 ___
 
+### SAW\_TEMPLATE\_NOT\_ACTIVE
+
+• **SAW\_TEMPLATE\_NOT\_ACTIVE** = ``40007``
+
+User tries to play a template that is restricted by date
+
+___
+
 ### SAW\_VISITOR\_STOP\_SPIN\_REQUEST
 
 • **SAW\_VISITOR\_STOP\_SPIN\_REQUEST** = ``-40001``

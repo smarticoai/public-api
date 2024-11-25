@@ -12,6 +12,8 @@ export enum SAWSpinErrorCode {
 	SAW_NOT_ENOUGH_POINTS = 40003,
 	/** User reached max number of game attempts defined in the BackOffice */
 	SAW_FAILED_MAX_SPINS_REACHED = 40004,
+	/** User tries to play a template that is restricted by date */
+	SAW_TEMPLATE_NOT_ACTIVE = 40007,
 	/** Special code for the 'visitor' mode */
 	SAW_VISITOR_STOP_SPIN_REQUEST = -40001,
 }
