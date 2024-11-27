@@ -63,6 +63,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					active_till_ts: p.active_till_ts,
 					relative_period_timezone: p.relative_period_timezone,
 					is_surcharge: p.is_surcharge,
+					custom_data: IntUtils.JsonOrText(r.saw_template_ui_definition.custom_data),
 				};
 				return y;
 			}),

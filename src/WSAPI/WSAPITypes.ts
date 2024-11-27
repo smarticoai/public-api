@@ -59,6 +59,8 @@ export interface TMiniGamePrize {
 	relative_period_timezone?: number;
 	/* Flag indicating that the prize is surcharged (available all the time, despite pool numbers) */
 	is_surcharge?: boolean;
+	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
+	custom_data: any;
 }
 
 /**

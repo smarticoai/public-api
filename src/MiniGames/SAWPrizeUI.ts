@@ -19,4 +19,5 @@ export interface SAWPrizeUI {
 	acknowledge_action_title?: string;
 	custom_win_sound?: string;
 	out_of_stock_message?: string;
+	custom_data?: any;
 }
