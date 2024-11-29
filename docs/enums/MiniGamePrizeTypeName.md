@@ -38,6 +38,18 @@ ___
 
 ___
 
+### CHANGE_LEVEL
+
+• **CHANGE_LEVEL** = ``"change-level"``
+
+___
+
+### MISSION
+
+• **MISSION** = ``"mission"``
+
+___
+
 ### UNKNOWN
 
 • **UNKNOWN** = ``"unknown"``

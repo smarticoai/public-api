@@ -6,6 +6,8 @@ export enum SAWPrizeType {
 	MANUAL = 4,
 	SPIN = 5,
 	JACKPOT = 6,
+	CHANGE_LEVEL = 7,
+	MISSION = 8,
 }
 
 export enum MiniGamePrizeTypeName {
@@ -15,6 +17,8 @@ export enum MiniGamePrizeTypeName {
 	MANUAL = 'manual',
 	SPIN = 'spin',
 	JACKPOT = 'jackpot',
+	CHANGE_LEVEL = 'change-level',
+	MISSION = 'mission',
 	UNKNOWN = 'unknown',
 }
 
@@ -28,6 +32,8 @@ export const MiniGamePrizeTypeNamed = (type: SAWPrizeType): MiniGamePrizeTypeNam
 			[SAWPrizeType.MANUAL]: MiniGamePrizeTypeName.MANUAL,
 			[SAWPrizeType.SPIN]: MiniGamePrizeTypeName.SPIN,
 			[SAWPrizeType.JACKPOT]: MiniGamePrizeTypeName.JACKPOT,
+			[SAWPrizeType.CHANGE_LEVEL]: MiniGamePrizeTypeName.CHANGE_LEVEL,
+			[SAWPrizeType.MISSION]: MiniGamePrizeTypeName.MISSION,
 		}[type] || MiniGamePrizeTypeName.UNKNOWN
 	);
 };
