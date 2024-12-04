@@ -34,6 +34,7 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 				enabled: g.game_public_meta.enabled,
 				game_categories: g.game_public_meta.game_categories,
 				game_provider: g.game_public_meta.game_provider,
+				mobile_spec_link: g.game_public_meta.mobile_spec_link,
 			},
 		})),
 		players: t.tournamentInfo.players.map((p) => TournamentUtils.getPlayerTransformed(p)),

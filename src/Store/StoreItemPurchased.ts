@@ -39,6 +39,7 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
 				purchased_today: purchasedToday,
 				purchased_this_week: purchasedThisWeek,
 				purchased_this_month: purchasedThisMonth,
+				custom_data: r.itemPublicMeta.custom_data
 			};
 
 			return x;
