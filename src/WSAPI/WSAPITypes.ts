@@ -572,6 +572,8 @@ export interface AchRelatedGame {
 		game_categories: string[];
 		/** The name of the game provider */
 		game_provider: string;
+		/** The URL to the mobile game */
+		mobile_spec_link: string;
 	};
 }
 
