@@ -6,4 +6,5 @@ export enum AchievementStatus {
 	FeaturedManually = 5,
 	FeaturedAI = 6,
 	Recurring = 7,
+	RecurringUponCompletion = 8
 }
