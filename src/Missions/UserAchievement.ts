@@ -26,6 +26,7 @@ export interface UserAchievement {
 	milliseconds_till_available?: number;
 	completed_tasks?: number;
 	achievementTasks?: UserAchievementTask[];
+	next_recurrence_date_ts?: number;
 	ach_status_id?: AchievementStatus;
 	scheduledMissionType?: ScheduledMissionType;
 	related_games?: AchRelatedGame[];
