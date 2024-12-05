@@ -111,6 +111,14 @@ Number of items in the pool avaliable for the purchase.
 
 ___
 
+### custom\_data
+
+• **custom\_data**: `any`
+
+The custom data of the store item defined by operator. Can be a JSON object, string or number
+
+___
+
 ### hint\_text
 
 • `Optional` **hint\_text**: `string`

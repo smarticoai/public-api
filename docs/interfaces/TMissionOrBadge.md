@@ -293,3 +293,19 @@ ___
 • `Optional` **custom\_section\_type\_id**: `number`
 
 ID of specific Custom Section type
+
+___
+
+### max\_completion\_count
+
+• `Optional` **max\_completion\_count**: `number`
+
+Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite.
+
+___
+
+### completion\_count
+
+• `Optional` **completion\_count**: `number`
+
+Current completion count for Recurring upon completion missions

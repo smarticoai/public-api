@@ -62,4 +62,4 @@ ___
 
 • **acknowledge\_date\_ts**: `number`
 
-Claim prize date in milliseconds
+Claimed prize date in milliseconds

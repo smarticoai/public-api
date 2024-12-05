@@ -26,3 +26,4 @@ Game public meta information
 | `enabled` | `boolean` | The indicator if the game is enabled |
 | `game_categories` | `string`[] | The list of categories of the game |
 | `game_provider` | `string` | The name of the game provider |
+| `mobile_spec_link` | `string` | The URL to the mobile game |
