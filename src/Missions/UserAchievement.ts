@@ -33,6 +33,8 @@ export interface UserAchievement {
 	active_from_ts?: number; // indicates when 'scheduled' mission is active from,
 	active_till_ts?: number; // indicates when 'scheduled' mission is active till,
 	ach_categories?: number[];
+	recurring_quantity?: number; // max completion count for Recurring upon completion
+	completed_count?: number; // completion count for Recurring upon completion
 
 	ach_completed_id?: number; // ID of the completion fact from ach_completed or ach_completed_recurring tables
 	requires_prize_claim?: boolean; // flag from achievement if the mission prize will be given only after user claims it
@@ -113,6 +115,11 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				completed_this_month: completedThisMonth,
 				custom_section_type_id: r.ach_public_meta.custom_section_type_id,
 			};
+
+			if (r.ach_status_id === AchievementStatus.RecurringUponCompletion) {
+				x.completion_count = r.completed_count;
+				x.max_completion_count = r.recurring_quantity;
+			}
 			return x;
 		});
 };

@@ -553,6 +553,12 @@ export interface TMissionOrBadge {
 
 	/** ID of specific Custom Section type */
 	custom_section_type_id?: number;
+
+	/** Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite. */
+	max_completion_count?: number;
+
+	/** Current completion count for Recurring upon completion missions */
+	completion_count?: number;
 }
 
 export interface AchRelatedGame {
