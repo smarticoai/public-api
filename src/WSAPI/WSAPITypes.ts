@@ -327,6 +327,10 @@ export interface TTournament {
 	is_in_progress: boolean;
 	/** Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER) */
 	is_upcoming: boolean;
+	/* The minimum amount of score points that the user should get in order to be qualified for the prize */
+	min_scores_win?: number;
+	/* When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard */
+	hide_leaderboard_min_scores?: boolean;
 }
 
 /**

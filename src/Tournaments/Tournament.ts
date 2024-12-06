@@ -62,6 +62,10 @@ export interface Tournament {
 
 	/** List of casino games (or other types of entities) related to the tournament */
 	related_games?: AchRelatedGame[];
+	/* The minimum amount of score points that the user should get in order to be qualified for the prize */
+	minScoreToWin?: number;
+	/* When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard. */
+	hideLeaderboardsMinScores?: boolean;
 }
 
 export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => {
@@ -103,6 +107,9 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
 				is_finished: TournamentUtils.isFinished(r),
 				is_in_progress: TournamentUtils.isInProgress(r),
 				is_upcoming: TournamentUtils.isUpcoming(r),
+
+				min_scores_win: r.minScoreToWin,
+				hide_leaderboard_min_scores: r.hideLeaderboardsMinScores,
 			};
 
 			if (r.prizeStructure) {
