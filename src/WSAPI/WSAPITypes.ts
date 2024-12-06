@@ -51,7 +51,7 @@ export interface TMiniGamePrize {
 	wins_count?: number;
 	/* Number of days of week, when the prize can be available */
 	weekdays?: number[];
-	/* Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp)*/
+	/* Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
 	active_from_ts?: number;
 	/* Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
 	active_till_ts?: number;
@@ -145,6 +145,10 @@ export interface TMiniGameTemplate {
 	
 	/* Time zone to ensure each day aligns with your local midnight. */
 	relative_period_timezone?: number;
+	/* Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp) */
+	activeFromDate?: number;
+	/* Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp) */
+	activeTillDate?: number;
 }
 
 /**

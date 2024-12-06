@@ -35,7 +35,9 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			promo_text: r.saw_template_ui_definition.promo_text,
 			custom_data: IntUtils.JsonOrText(r.saw_template_ui_definition.custom_data),
 			expose_game_stat_on_api: r.expose_game_stat_on_api,
-
+			relative_period_timezone: r.relative_period_timezone,
+			activeFromDate: r.activeFromDate,
+			activeTillDate: r.activeTillDate,
 			next_available_spin_ts: r.next_available_spin_ts,
 
 			prizes: r.prizes.map((p) => {

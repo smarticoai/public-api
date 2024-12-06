@@ -161,3 +161,19 @@ ___
 • `Optional` **relative\_period\_timezone**: `number`
 
 Time zone to ensure each day aligns with your local midnight.
+
+___
+
+### activeFromDate
+
+• `Optional` **activeFromDate**: `number`
+
+Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp)
+
+___
+
+### activeTillDate
+
+• `Optional` **activeTillDate**: `number`
+
+Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp)
