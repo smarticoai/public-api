@@ -1,5 +1,6 @@
 import { TInboxMessageBody } from '../WSAPI/WSAPITypes';
 import { InboxMessageType } from './InboxMessageType';
+import { OpenLinksType } from './OpenLinksType';
 
 export interface InboxMessageBody {
 	// URL or deep-link that neeed to be executed when user clicks on the message
@@ -21,6 +22,11 @@ export interface InboxMessageBody {
 	show_preview?: boolean;
 	// duration in seconds for how long to show preview, default is 7 seconds
 	show_duration_sec?: number;
+	// indicator if the image in html_body can be zoomed out
+	// default is 'false'
+	enable_zoom_mode?: boolean;
+	// options that allows to open links in buttons either in new window or in the current one
+	open_links?: OpenLinksType;
 }
 
 export interface InboxMessage {

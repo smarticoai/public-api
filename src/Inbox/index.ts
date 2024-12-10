@@ -8,3 +8,4 @@ export * from './MarkInboxMessageStarredRequest';
 export * from './MarkInboxMessageStarredResponse';
 export * from './MarkInboxMessageDeletedRequest';
 export * from './MarkInboxMessageDeletedResponse';
+export * from './OpenLinksType';
