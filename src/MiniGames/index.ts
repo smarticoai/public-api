@@ -24,3 +24,4 @@ export * from './SAWEventSawPush';
 export * from './SAWAcknowledgeSpinPushRequest';
 export * from './SAWWinningHistoryRequest';
 export * from './SAWWinningHistoryResponse';
+export * from './SAWGameLayout';
