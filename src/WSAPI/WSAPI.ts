@@ -108,6 +108,13 @@ export class WSAPI {
 		}
 	}
 
+	/** @private */
+	// AA: this method is used from the _smartico script to clear cache when the context is changed,
+	// e.g. when user is changed or language is changed
+	public clearCaches() {
+		OCache.clearAll();
+	}
+
 	/** Returns information about current user
 	 *
 	 * **Example**:
