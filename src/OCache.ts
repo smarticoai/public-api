@@ -63,6 +63,11 @@ export class OCache {
 	}
 
 	public static async clearAll() {
+		for (const cacheContext in this.cache) {
+			if (this.cache.hasOwnProperty(cacheContext)) {
+				this.cache[cacheContext].flushAll();
+			}
+		}
 		this.cache = {};
 	}
 }

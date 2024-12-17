@@ -41,6 +41,10 @@ class NodeCache {
 
 	public flushAll() {
 		this.cache = {};
+		if (this.ttlChecker) {
+			clearInterval(this.ttlChecker);
+			this.ttlChecker = undefined
+		}
 	}
 }
 
