@@ -50,6 +50,12 @@ ___
 
 ___
 
+### TreasureHunt
+
+• **TreasureHunt** = ``"treasure_hunt"``
+
+___
+
 ### Unknown
 
 • **Unknown** = ``"unknown"``

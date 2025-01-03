@@ -10,6 +10,7 @@ export enum AchCustomSectionType {
 	REDIRECT_LINK = 9,
 	LOOTBOX_WEEKLY = 10,
 	LOOTBOX_CALENDAR_DAYS = 11,
+	TREASURE_HUNT = 12,
 }
 
 export enum AchCustomLayoutTheme {
