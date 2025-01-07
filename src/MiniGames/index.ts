@@ -25,3 +25,4 @@ export * from './SAWAcknowledgeSpinPushRequest';
 export * from './SAWWinningHistoryRequest';
 export * from './SAWWinningHistoryResponse';
 export * from './SAWGameLayout';
+export * from './PrizeModifiers';
