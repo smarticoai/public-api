@@ -165,3 +165,13 @@ ___
 • **custom\_data**: `any`
 
 The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number
+
+___
+
+### prize\_modifiers
+
+• `Optional` **prize\_modifiers**: `PrizeModifiers`
+
+Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded.
+
+___

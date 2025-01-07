@@ -177,3 +177,13 @@ ___
 • `Optional` **activeTillDate**: `number`
 
 Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp)
+
+___
+
+### steps\_to\_finish\_game
+
+• `Optional` **steps\_to\_finish\_game**: `number`
+
+The amount of steps to complete the game and gather the prize
+
+___
