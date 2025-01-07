@@ -39,6 +39,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			activeFromDate: r.activeFromDate,
 			activeTillDate: r.activeTillDate,
 			next_available_spin_ts: r.next_available_spin_ts,
+			steps_to_finish_game: r.saw_template_ui_definition.steps_to_finish_game,
 
 			prizes: r.prizes.map((p) => {
 				const y: TMiniGamePrize = {
@@ -66,6 +67,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					relative_period_timezone: p.relative_period_timezone,
 					is_surcharge: p.is_surcharge,
 					custom_data: IntUtils.JsonOrText(r.saw_template_ui_definition.custom_data),
+					prize_modifiers: p.saw_prize_ui_definition.prize_modifiers,
 				};
 				return y;
 			}),

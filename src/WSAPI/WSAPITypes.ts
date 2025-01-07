@@ -5,6 +5,7 @@ import { AchCategory } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from '../CustomSections';
 import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
+import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
@@ -60,7 +61,9 @@ export interface TMiniGamePrize {
 	/* Flag indicating that the prize is surcharged (available all the time, despite pool numbers) */
 	is_surcharge?: boolean;
 	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
-	custom_data: any;
+	custom_data?: any;
+	/** Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded. */
+	prize_modifiers?: PrizeModifiers;
 }
 
 /**
@@ -149,6 +152,8 @@ export interface TMiniGameTemplate {
 	activeFromDate?: number;
 	/* Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp) */
 	activeTillDate?: number;
+	/* The amount of steps to complete the game and gather the prize */
+	steps_to_finish_game?: number;
 }
 
 /**

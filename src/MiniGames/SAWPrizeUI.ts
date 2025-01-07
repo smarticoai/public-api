@@ -1,3 +1,4 @@
+import { PrizeModifiers } from './PrizeModifiers';
 import { SAWAcknowledgeType } from './SAWAcknowledgeType';
 import { SAWWinSoundType } from './SAWWinSoundType';
 
@@ -20,4 +21,5 @@ export interface SAWPrizeUI {
 	custom_win_sound?: string;
 	out_of_stock_message?: string;
 	custom_data?: any;
+	prize_modifiers?: PrizeModifiers;
 }

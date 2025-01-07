@@ -49,5 +49,10 @@ export interface SAWTemplateUI {
 		id: string;
 		content: string;
 	};
+
+	// lootbox specific
 	game_layout?: SAWGameLayout;
+
+	// treasure hunt specific
+	steps_to_finish_game?: number;
 }
