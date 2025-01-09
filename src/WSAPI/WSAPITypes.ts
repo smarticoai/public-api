@@ -64,6 +64,8 @@ export interface TMiniGamePrize {
 	custom_data?: any;
 	/** Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded. */
 	prize_modifiers?: PrizeModifiers;
+	/** When enabled, you can split prize value by decimal values */
+	allow_split_decimal?: boolean;
 }
 
 /**

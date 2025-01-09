@@ -21,5 +21,6 @@ export interface SAWPrizeUI {
 	custom_win_sound?: string;
 	out_of_stock_message?: string;
 	custom_data?: any;
-	prize_modifiers?: PrizeModifiers;
+	prize_modifiers?: PrizeModifiers; // treasure hunt specific
+	allow_split_decimal?: boolean; // treasure hunt specific
 }

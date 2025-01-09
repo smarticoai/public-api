@@ -68,6 +68,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					is_surcharge: p.is_surcharge,
 					custom_data: IntUtils.JsonOrText(r.saw_template_ui_definition.custom_data),
 					prize_modifiers: p.saw_prize_ui_definition.prize_modifiers,
+					allow_split_decimal: p.saw_prize_ui_definition.allow_split_decimal,
 				};
 				return y;
 			}),

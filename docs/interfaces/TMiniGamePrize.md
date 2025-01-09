@@ -175,3 +175,11 @@ ___
 Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded.
 
 ___
+
+### allow\_split\_decimal
+
+• `Optional` **allow\_split\_decimal**: `boolean`
+
+When enabled, you can split prize value by decimal values
+
+___
