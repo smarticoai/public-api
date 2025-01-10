@@ -1,11 +1,12 @@
 export enum PrizeModifiers {
-    '2x' = 2,
-    '5x' = 5,
-    '10x' = 10,
-    '/2' = -2,
-    '/5' = -5,
-    '/10' = -10,
-    Reset = 0,
+    '2x' = 1,
+    '5x' = 2,
+    '10x' = 3,
+    '/2' = 4,
+    '/5' = 5,
+    '/10' = 6,
+    '0x' = 7,
+    "reset" = 8,
 }
 
 export const PrizeModifiersKeysNames = {
@@ -15,5 +16,6 @@ export const PrizeModifiersKeysNames = {
     [PrizeModifiers['/2']]: '/2',
     [PrizeModifiers['/5']]: '/5',
     [PrizeModifiers['/10']]: '/10',
-    [PrizeModifiers['Reset']]: 'Reset to 0',
+    [PrizeModifiers['0x']]: '0',
+    [PrizeModifiers['reset']]: 'Reset to 0',
 };
