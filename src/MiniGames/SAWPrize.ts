@@ -17,4 +17,5 @@ export interface SAWPrize {
 	active_till_ts?: number;
 	relative_period_timezone?: number;
 	is_surcharge?: boolean;
+	is_deleted?: boolean;
 }

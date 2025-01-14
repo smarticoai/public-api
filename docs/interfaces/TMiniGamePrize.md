@@ -160,6 +160,15 @@ Flag indicating that the prize is surcharged (available all the time, despite po
 
 ___
 
+
+### is\_deleted
+
+• `Optional` **is\_deleted**: `boolean`
+
+Flag indicating the state of the prize
+
+___
+
 ### custom\_data
 
 • **custom\_data**: `any`
