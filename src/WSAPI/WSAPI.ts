@@ -41,6 +41,7 @@ import {
 } from '../Jackpots';
 import { GetTournamentsResponse } from '../Tournaments';
 import { GetAchievementMapResponse } from '../Missions';
+import { GetRelatedAchTourResponse } from 'src/Missions/GetRelatedAchTourResponse';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -1004,7 +1005,7 @@ export class WSAPI {
 	 * });
 	 * ```
 	 */
-	public async getRelatedItemsForGame(related_game_id: string): Promise<GetAchievementMapResponse> {
+	public async getRelatedItemsForGame(related_game_id: string): Promise<GetRelatedAchTourResponse> {
 
 		const result = await this.api.getRelatedItemsForGame(null, related_game_id);
         return result;
