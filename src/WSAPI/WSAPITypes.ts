@@ -65,7 +65,7 @@ export interface TMiniGamePrize {
 	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
 	custom_data?: any;
 	/** Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded. */
-	prize_modifiers?: PrizeModifiers;
+	prize_modifiers?: PrizeModifiers[];
 	/** When enabled, you can split prize value by decimal values */
 	allow_split_decimal?: boolean;
 }
@@ -158,6 +158,8 @@ export interface TMiniGameTemplate {
 	activeTillDate?: number;
 	/* The amount of steps to complete the game and gather the prize */
 	steps_to_finish_game?: number;
+	/* Hold the id of the custom section */
+	custom_section_id?: number;
 }
 
 /**
