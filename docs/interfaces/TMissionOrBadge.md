@@ -121,7 +121,7 @@ ___
 
 • **dt\_start**: `number`
 
-The date when the mission was started, relevant for the time limited missions
+The date when the mission was started, relevant for the time limited missions, also indicating opt-it date for mission that requires opt-in and unlock date for Locked mission.
 
 ___
 
@@ -309,3 +309,20 @@ ___
 • `Optional` **completion\_count**: `number`
 
 Current completion count for Recurring upon completion missions
+
+___
+
+### next\_recurrence\_date\_ts
+
+• `Optional` **next\_recurrence\_date\_ts**: `number`
+
+The date/timestamp for recurring missions, which indicating the time remaining until the next recurrence of the mission.
+Note that if a mission has an "Active till" date defined, this field is not relevant after that date.
+
+___
+
+### availability\_status
+
+• `Optional` **availability\_status**: [`AchievementAvailabilityStatus`](../enums/AchievementAvailabilityStatus.md)
+
+Availability status of the mission depends on the defined time limits

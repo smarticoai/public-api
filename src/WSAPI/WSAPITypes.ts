@@ -1,7 +1,7 @@
 import { BuyStoreItemErrorCode } from '../Store';
 import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
-import { AchCategory } from '../Missions';
+import { AchCategory, AchievementAvailabilityStatus } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from '../CustomSections';
 import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
@@ -505,7 +505,7 @@ export interface TMissionOrBadge {
 	/** Holds time till mission will become unavailable, for the missions that are targeted to be available from specific date/time */
 	active_till_ts: number;
 
-	/** The date when the mission was started, relevant for the time limited missions */
+	/** The date when the mission was started, relevant for the time limited missions, also indicating opt-it date for mission that requires opt-in and unlock date for Locked mission. */
 	dt_start: number;
 	/** The progress of the mission in percents calculated as the aggregated relative percentage of all tasks */
 	progress: number;
@@ -578,6 +578,14 @@ export interface TMissionOrBadge {
 
 	/** Current completion count for Recurring upon completion missions */
 	completion_count?: number;
+
+	/** The date/timestamp for recurring missions, which indicating the time remaining until the next recurrence of the mission.
+	 * Note that if a mission has an "Active till" date defined, this field is not relevant after that date.
+	*/
+	next_recurrence_date_ts?: number;
+
+	/** Availability status of the mission depends on the defined time limits */
+	availability_status?: AchievementAvailabilityStatus
 }
 
 export interface AchRelatedGame {

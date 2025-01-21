@@ -5,6 +5,7 @@ import { AchievementPublicMeta } from './AchievementPublicMeta';
 import { AchievementStatus } from './AchievementStatus';
 import { AchievementTaskType } from './AchievementTaskType';
 import { AchievementType } from './AchievementType';
+import { MissionUtils } from './MissionsUtils';
 import { ScheduledMissionType } from './ScheduledMissionType';
 import { UserAchievementTask } from './UserAchievementTask';
 
@@ -67,7 +68,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				is_opted_in: r.isOptedIn,
 				time_limit_ms: r.time_limit_ms,
 				active_from_ts: r.active_from_ts,
-				active_till_ts: r.active_from_ts,
+				active_till_ts: r.active_till_ts,
 				dt_start: r.start_date_ts,
 				reward: r.ach_public_meta.reward,
 				progress: r.progress,
@@ -114,7 +115,12 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				completed_this_week: completedThisWeek,
 				completed_this_month: completedThisMonth,
 				custom_section_type_id: r.ach_public_meta.custom_section_type_id,
+				availability_status: MissionUtils.getAvailabilityStatus(r),
 			};
+
+			if (r.ach_status_id === AchievementStatus.Recurring) {
+				x.next_recurrence_date_ts = r.next_recurrence_date_ts;
+			}
 
 			if (r.ach_status_id === AchievementStatus.RecurringUponCompletion) {
 				x.completion_count = r.completed_count;

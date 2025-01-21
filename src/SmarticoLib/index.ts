@@ -1500,23 +1500,34 @@ export interface UserAchievement {
 	isLocked?: boolean;
 	requiresOptin?: boolean;
 	isOptedIn?: boolean;
-	start_date?: string;
+	start_date?: string; // time when mission unlocked or opted-in. Needed to calculated "remaining time" in case time_limit_ms is set
 	start_date_ts?: number;
 	time_limit_ms?: number;
 	progress?: number;
 	complete_date?: string;
+	complete_date_ts?: number;
 	unlock_date?: string;
 	milliseconds_till_available?: number;
 	completed_tasks?: number;
 	achievementTasks?: UserAchievementTask[];
+	next_recurrence_date_ts?: number;
 	ach_status_id?: AchievementStatus;
 	scheduledMissionType?: ScheduledMissionType;
 	related_games?: AchRelatedGame[];
-	active_from_ts?: number;
+	active_from_ts?: number; // indicates when 'scheduled' mission is active from,
+	active_till_ts?: number; // indicates when 'scheduled' mission is active till,
 	ach_categories?: number[];
-	ach_completed_id?: number;
-	requires_prize_claim?: boolean;
-	prize_claimed_date_ts?: number;
+	recurring_quantity?: number; // max completion count for Recurring upon completion
+	completed_count?: number; // completion count for Recurring upon completion
+
+	ach_completed_id?: number; // ID of the completion fact from ach_completed or ach_completed_recurring tables
+	requires_prize_claim?: boolean; // flag from achievement if the mission prize will be given only after user claims it
+	prize_claimed_date_ts?: number; // the date/timestamp indicating when the prize was claimed by the user
+
+	completed_today?: boolean;
+	completed_this_week?: boolean;
+	completed_this_month?: boolean;
+	custom_section_type_id?: number;
 }
 export interface GetAchievementMapResponse extends ProtocolResponse {
 	achievements?: UserAchievement[];

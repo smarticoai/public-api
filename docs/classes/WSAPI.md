@@ -471,7 +471,7 @@ _smartico.api.playMiniGame(55).then((result) => {
 | :------ | :------ |
 | `template_id` | `number` |
 | `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]) => `void` |
+| › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
 
 #### Returns
 
@@ -934,7 +934,7 @@ ___
 
 ### getRelatedItemsForGame
 
-▸ **getRelatedItemsForGame**(`related_game_id`): `Promise`\<`GetAchievementMapResponse`\>
+▸ **getRelatedItemsForGame**(`related_game_id`): `Promise`\<`GetRelatedAchTourResponse`\>
 
 Returns all the related tournaments and missions for the provided game id for the current user
 The provided Game ID should correspond to the ID from the Games Catalog - https://help.smartico.ai/welcome/technical-guides/games-catalog-api
@@ -961,4 +961,4 @@ _smartico.vapi('EN').getRelatedItemsForGame('gold-slot2').then((result) => {
 
 #### Returns
 
-`Promise`\<`GetAchievementMapResponse`\>
+`Promise`\<`GetRelatedAchTourResponse`\>

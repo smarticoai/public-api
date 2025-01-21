@@ -373,6 +373,26 @@ Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER)
 
 ___
 
+### min\_scores\_win
+
+• `Optional` **min\_scores\_win**: `number`
+
+#### Inherited from
+
+[TTournament](TTournament.md).[min_scores_win](TTournament.md#min_scores_win)
+
+___
+
+### hide\_leaderboard\_min\_scores
+
+• `Optional` **hide\_leaderboard\_min\_scores**: `boolean`
+
+#### Inherited from
+
+[TTournament](TTournament.md).[hide_leaderboard_min_scores](TTournament.md#hide_leaderboard_min_scores)
+
+___
+
 ### related\_games
 
 • `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame-1.md)[]

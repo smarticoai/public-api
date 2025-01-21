@@ -26,7 +26,8 @@
 			"src/Store/BuyStoreItemErrorCode.ts",
 			"src/Leaderboard/LeaderBoardPeriodType.ts",
 			"src/Base/AchRelatedGame.ts",
-			"src/Jackpots/index.ts"
+			"src/Jackpots/index.ts",
+			"src/Missions/AchievementAvailabilityStatus.ts"
 		],
 		"out": "docs",
 		"plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],
