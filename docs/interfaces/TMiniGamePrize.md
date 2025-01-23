@@ -192,3 +192,11 @@ ___
 When enabled, you can split prize value by decimal values
 
 ___
+
+### hide\_prize\_from\_history
+
+• `Optional` **hide\_prize\_from\_history**: `boolean`
+
+When enabled, you can hide prize from prize history
+
+___

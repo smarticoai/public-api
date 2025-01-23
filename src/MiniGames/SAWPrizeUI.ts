@@ -23,4 +23,7 @@ export interface SAWPrizeUI {
 	custom_data?: any;
 	prize_modifiers?: PrizeModifiers[]; // treasure hunt specific
 	allow_split_decimal?: boolean; // treasure hunt specific
+	hide_prize_from_history?: boolean;
+
+	
 }

@@ -71,6 +71,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					custom_data: IntUtils.JsonOrText(r.saw_template_ui_definition.custom_data),
 					prize_modifiers: p.saw_prize_ui_definition.prize_modifiers,
 					allow_split_decimal: p.saw_prize_ui_definition.allow_split_decimal,
+					hide_prize_from_history: p.saw_prize_ui_definition.hide_prize_from_history
 				};
 				return y;
 			}),
