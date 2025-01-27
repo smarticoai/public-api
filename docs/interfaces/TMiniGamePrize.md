@@ -68,6 +68,14 @@ for scratch card defines position of prize in the list
 
 ___
 
+### sectors
+
+• **sectors**: `number`[]
+
+List of sectors for the prize
+
+___
+
 ### acknowledge\_type
 
 • **acknowledge\_type**: `SAWAcknowledgeTypeName`
