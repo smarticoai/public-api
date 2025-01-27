@@ -62,9 +62,9 @@ export interface Tournament {
 
 	/** List of casino games (or other types of entities) related to the tournament */
 	related_games?: AchRelatedGame[];
-	/* The minimum amount of score points that the user should get in order to be qualified for the prize */
+	/** The minimum amount of score points that the user should get in order to be qualified for the prize */
 	minScoreToWin?: number;
-	/* When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard. */
+	/** When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard. */
 	hideLeaderboardsMinScores?: boolean;
 }
 

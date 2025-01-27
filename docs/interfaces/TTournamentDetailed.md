@@ -62,6 +62,8 @@ ___
 
 • **image1**: `string`
 
+1st image URL representing the tournament
+
 #### Inherited from
 
 [TTournament](TTournament.md).[image1](TTournament.md#image1)
@@ -71,6 +73,8 @@ ___
 ### image2
 
 • **image2**: `string`
+
+2nd image URL representing the tournament
 
 #### Inherited from
 
@@ -82,6 +86,8 @@ ___
 
 • **image2\_mobile**: `string`
 
+2nd image URL representing the tournament for mobile
+
 #### Inherited from
 
 [TTournament](TTournament.md).[image2_mobile](TTournament.md#image2_mobile)
@@ -92,6 +98,8 @@ ___
 
 • **prize\_pool\_short**: `string`
 
+The message indicating the prize pool of the tournament
+
 #### Inherited from
 
 [TTournament](TTournament.md).[prize_pool_short](TTournament.md#prize_pool_short)
@@ -101,6 +109,8 @@ ___
 ### custom\_price\_text
 
 • **custom\_price\_text**: `string`
+
+The message indicating the price to register in the tournament
 
 #### Inherited from
 
@@ -377,6 +387,8 @@ ___
 
 • `Optional` **min\_scores\_win**: `number`
 
+The minimum amount of score points that the user should get in order to be qualified for the prize
+
 #### Inherited from
 
 [TTournament](TTournament.md).[min_scores_win](TTournament.md#min_scores_win)
@@ -386,6 +398,8 @@ ___
 ### hide\_leaderboard\_min\_scores
 
 • `Optional` **hide\_leaderboard\_min\_scores**: `boolean`
+
+When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard
 
 #### Inherited from
 

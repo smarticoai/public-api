@@ -46,11 +46,15 @@ ___
 
 • **image1**: `string`
 
+1st image URL representing the tournament
+
 ___
 
 ### image2
 
 • **image2**: `string`
+
+2nd image URL representing the tournament
 
 ___
 
@@ -58,17 +62,23 @@ ___
 
 • **image2\_mobile**: `string`
 
+2nd image URL representing the tournament for mobile
+
 ___
 
 ### prize\_pool\_short
 
 • **prize\_pool\_short**: `string`
 
+The message indicating the prize pool of the tournament
+
 ___
 
 ### custom\_price\_text
 
 • **custom\_price\_text**: `string`
+
+The message indicating the price to register in the tournament
 
 ___
 
@@ -278,8 +288,12 @@ ___
 
 • `Optional` **min\_scores\_win**: `number`
 
+The minimum amount of score points that the user should get in order to be qualified for the prize
+
 ___
 
 ### hide\_leaderboard\_min\_scores
 
 • `Optional` **hide\_leaderboard\_min\_scores**: `boolean`
+
+When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard

@@ -152,11 +152,15 @@ ___
 
 • `Optional` **expose\_game\_stat\_on\_api**: `boolean`
 
+When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets
+
 ___
 
 ### relative\_period\_timezone
 
 • `Optional` **relative\_period\_timezone**: `number`
+
+Time zone to ensure each day aligns with your local midnight.
 
 ___
 
@@ -164,11 +168,15 @@ ___
 
 • `Optional` **activeFromDate**: `number`
 
+Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp)
+
 ___
 
 ### activeTillDate
 
 • `Optional` **activeTillDate**: `number`
+
+Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp)
 
 ___
 
@@ -176,11 +184,15 @@ ___
 
 • `Optional` **steps\_to\_finish\_game**: `number`
 
+The amount of steps to complete the game and gather the prize
+
 ___
 
 ### custom\_section\_id
 
 • `Optional` **custom\_section\_id**: `number`
+
+Hold the id of the custom section
 
 ___
 

@@ -1,7 +1,7 @@
 interface AchRelatedGame {
-	/* ID of the game on Smartico side */
+	/** ID of the game on Smartico side */
 	ach_game_id: number;
-	/* ID of the game on operator side */
+	/** ID of the game on operator side */
 	ext_game_id: string;
 	game_public_meta: {
 		name: string;

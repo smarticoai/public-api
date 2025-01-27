@@ -28,39 +28,39 @@ export interface TMiniGamePrize {
 	font_size_mobile?: number;
 	/** The URL of the icon of the prize */
 	icon?: string;
-	/* for scratch card defines position of prize in the list */
+	/** for scratch card defines position of prize in the list */
 	position: number;
-	/* Type of acknowledge message for users */
+	/** Type of acknowledge message for users */
 	acknowledge_type: SAWAcknowledgeTypeName;
-	/* Message that will be shown to user in modal pop-up */
+	/** Message that will be shown to user in modal pop-up */
 	aknowledge_message: string;
-	/* Deep link that will trigger some action in modal pop-up */
+	/** Deep link that will trigger some action in modal pop-up */
 	acknowledge_dp: string;
-	/* The name of the action button in modal pop-up */
+	/** The name of the action button in modal pop-up */
 	acknowledge_action_title: string;
-	/* Deep link that will trigger some action in modal pop-up (additional) */
+	/** Deep link that will trigger some action in modal pop-up (additional) */
 	acknowledge_dp_additional?: string;
-	/* The name of the action button in modal pop-up (additional) */
+	/** The name of the action button in modal pop-up (additional) */
 	acknowledge_action_title_additional?: string;
-	/* Message when the prize pool is empty for that specific prize */
+	/** Message when the prize pool is empty for that specific prize */
 	out_of_stock_message?: string;
-	/* Number of items in stock */
+	/** Number of items in stock */
 	pool?: number;
-	/* Initial number of items in stock */
+	/** Initial number of items in stock */
 	pool_initial?: number;
-	/* Number of wins in game */
+	/** Number of wins in game */
 	wins_count?: number;
-	/* Number of days of week, when the prize can be available */
+	/** Number of days of week, when the prize can be available */
 	weekdays?: number[];
-	/* Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
+	/** Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
 	active_from_ts?: number;
-	/* Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
+	/** Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
 	active_till_ts?: number;
-	/* Time zone to ensure each day aligns with your local midnight. */
+	/** Time zone to ensure each day aligns with your local midnight. */
 	relative_period_timezone?: number;
-	/* Flag indicating that the prize is surcharged (available all the time, despite pool numbers) */
+	/** Flag indicating that the prize is surcharged (available all the time, despite pool numbers) */
 	is_surcharge?: boolean;
-	/* Flag indicating the state of the prize */
+	/** Flag indicating the state of the prize */
 	is_deleted?: boolean;
 	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
 	custom_data?: any;
@@ -149,18 +149,18 @@ export interface TMiniGameTemplate {
 	/** List of prizes for mini-games */
 	prizes: TMiniGamePrize[];
 
-	/* When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets */
+	/** When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets */
 	expose_game_stat_on_api?: boolean;
 	
-	/* Time zone to ensure each day aligns with your local midnight. */
+	/** Time zone to ensure each day aligns with your local midnight. */
 	relative_period_timezone?: number;
-	/* Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp) */
+	/** Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp) */
 	activeFromDate?: number;
-	/* Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp) */
+	/** Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp) */
 	activeTillDate?: number;
-	/* The amount of steps to complete the game and gather the prize */
+	/** The amount of steps to complete the game and gather the prize */
 	steps_to_finish_game?: number;
-	/* Hold the id of the custom section */
+	/** Hold the id of the custom section */
 	custom_section_id?: number;
 
 	/** The UI definition of the mini-game */
@@ -251,15 +251,15 @@ export interface TTournament {
 	name: string;
 	/** Description of the tournament, translated to the user language */
 	description: string;
-	/* 1st image URL representing the tournament */
+	/** 1st image URL representing the tournament */
 	image1: string;
-	/* 2nd image URL representing the tournament */
+	/** 2nd image URL representing the tournament */
 	image2: string;
-	/* 2nd image URL representing the tournament for mobile */
+	/** 2nd image URL representing the tournament for mobile */
 	image2_mobile: string;
-	/* The message indicating the prize pool of the tournament */
+	/** The message indicating the prize pool of the tournament */
 	prize_pool_short: string;
-	/* The message indicating the price to register in the tournament */
+	/** The message indicating the price to register in the tournament */
 	custom_price_text: string;
 
 	/** The message that should be shown to the user when the user cannot register in tournament with error code TOURNAMENT_USER_DONT_MATCH_CONDITIONS  */
@@ -343,9 +343,9 @@ export interface TTournament {
 	is_in_progress: boolean;
 	/** Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER) */
 	is_upcoming: boolean;
-	/* The minimum amount of score points that the user should get in order to be qualified for the prize */
+	/** The minimum amount of score points that the user should get in order to be qualified for the prize */
 	min_scores_win?: number;
-	/* When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard */
+	/** When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard */
 	hide_leaderboard_min_scores?: boolean;
 }
 
@@ -694,7 +694,8 @@ export interface TInboxMessageBody {
 	/** The action that should be performed when user clicks on the message.
 	 * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
 	 * The 'dp' function will handle the CTA and will execute it in the most safe way.
-	 * If the message has a rich html body - the action will always be 'dp:inbox' which will open the inbox widget when triggered. */
+	 * If the message has a rich html body - the action will always be 'dp:inbox' which will open the inbox widget when triggered. 
+	*/
 	action: string;
 	/** Rich HTML body of the message. */
 	html_body?: string;

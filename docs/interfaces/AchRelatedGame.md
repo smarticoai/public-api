@@ -6,11 +6,15 @@
 
 • **ach\_game\_id**: `number`
 
+ID of the game on Smartico side
+
 ___
 
 ### ext\_game\_id
 
 • **ext\_game\_id**: `string`
+
+ID of the game on operator side
 
 ___
 

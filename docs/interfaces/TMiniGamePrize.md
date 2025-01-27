@@ -64,11 +64,15 @@ ___
 
 • **position**: `number`
 
+for scratch card defines position of prize in the list
+
 ___
 
 ### acknowledge\_type
 
 • **acknowledge\_type**: `SAWAcknowledgeTypeName`
+
+Type of acknowledge message for users
 
 ___
 
@@ -76,11 +80,15 @@ ___
 
 • **aknowledge\_message**: `string`
 
+Message that will be shown to user in modal pop-up
+
 ___
 
 ### acknowledge\_dp
 
 • **acknowledge\_dp**: `string`
+
+Deep link that will trigger some action in modal pop-up
 
 ___
 
@@ -88,11 +96,15 @@ ___
 
 • **acknowledge\_action\_title**: `string`
 
+The name of the action button in modal pop-up
+
 ___
 
 ### acknowledge\_dp\_additional
 
 • `Optional` **acknowledge\_dp\_additional**: `string`
+
+Deep link that will trigger some action in modal pop-up (additional)
 
 ___
 
@@ -100,11 +112,15 @@ ___
 
 • `Optional` **acknowledge\_action\_title\_additional**: `string`
 
+The name of the action button in modal pop-up (additional)
+
 ___
 
 ### out\_of\_stock\_message
 
 • `Optional` **out\_of\_stock\_message**: `string`
+
+Message when the prize pool is empty for that specific prize
 
 ___
 
@@ -112,11 +128,15 @@ ___
 
 • `Optional` **pool**: `number`
 
+Number of items in stock
+
 ___
 
 ### pool\_initial
 
 • `Optional` **pool\_initial**: `number`
+
+Initial number of items in stock
 
 ___
 
@@ -124,11 +144,15 @@ ___
 
 • `Optional` **wins\_count**: `number`
 
+Number of wins in game
+
 ___
 
 ### weekdays
 
 • `Optional` **weekdays**: `number`[]
+
+Number of days of week, when the prize can be available
 
 ___
 
@@ -136,11 +160,15 @@ ___
 
 • `Optional` **active\_from\_ts**: `number`
 
+Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp)
+
 ___
 
 ### active\_till\_ts
 
 • `Optional` **active\_till\_ts**: `number`
+
+Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp)
 
 ___
 
@@ -148,17 +176,23 @@ ___
 
 • `Optional` **relative\_period\_timezone**: `number`
 
+Time zone to ensure each day aligns with your local midnight.
+
 ___
 
 ### is\_surcharge
 
 • `Optional` **is\_surcharge**: `boolean`
 
+Flag indicating that the prize is surcharged (available all the time, despite pool numbers)
+
 ___
 
 ### is\_deleted
 
 • `Optional` **is\_deleted**: `boolean`
+
+Flag indicating the state of the prize
 
 ___
 
