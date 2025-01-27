@@ -278,12 +278,8 @@ ___
 
 • `Optional` **min\_scores\_win**: `number`
 
-The minimum amount of score points that the user should get in order to be qualified for the prize
-
 ___
 
 ### hide\_leaderboard\_min\_scores
 
 • `Optional` **hide\_leaderboard\_min\_scores**: `boolean`
-
-When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard

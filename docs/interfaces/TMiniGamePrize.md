@@ -102,6 +102,12 @@ ___
 
 ___
 
+### out\_of\_stock\_message
+
+• `Optional` **out\_of\_stock\_message**: `string`
+
+___
+
 ### pool
 
 • `Optional` **pool**: `number`
@@ -144,34 +150,21 @@ ___
 
 ___
 
-### out\_of\_stock\_message
-
-• `Optional` **out\_of\_stock\_message**: `string`
-
-Message when the prize pool is empty for that specific prize
-
-___
-
 ### is\_surcharge
 
 • `Optional` **is\_surcharge**: `boolean`
 
-Flag indicating that the prize is surcharged (available all the time, despite pool numbers)
-
 ___
-
 
 ### is\_deleted
 
 • `Optional` **is\_deleted**: `boolean`
 
-Flag indicating the state of the prize
-
 ___
 
 ### custom\_data
 
-• **custom\_data**: `any`
+• `Optional` **custom\_data**: `any`
 
 The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number
 
@@ -179,7 +172,7 @@ ___
 
 ### prize\_modifiers
 
-• `Optional` **prize\_modifiers**: `PrizeModifiers`
+• `Optional` **prize\_modifiers**: `PrizeModifiers`[]
 
 Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded.
 
@@ -198,5 +191,3 @@ ___
 • `Optional` **hide\_prize\_from\_history**: `boolean`
 
 When enabled, you can hide prize from prize history
-
-___
