@@ -1,5 +1,5 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate } from '../MiniGames';
+import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWBuyInTypeName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchCategory, AchievementAvailabilityStatus } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -162,6 +162,9 @@ export interface TMiniGameTemplate {
 	steps_to_finish_game?: number;
 	/* Hold the id of the custom section */
 	custom_section_id?: number;
+
+	/** The UI definition of the mini-game */
+	saw_template_ui_definition: SAWTemplateUI;
 }
 
 /**

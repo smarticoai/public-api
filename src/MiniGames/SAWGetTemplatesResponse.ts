@@ -41,6 +41,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			next_available_spin_ts: r.next_available_spin_ts,
 			steps_to_finish_game: r.saw_template_ui_definition.steps_to_finish_game,
 			custom_section_id: r.saw_template_ui_definition.custom_section_id,
+			saw_template_ui_definition: r.saw_template_ui_definition,
 
 			prizes: r.prizes.map((p) => {
 				const y: TMiniGamePrize = {
