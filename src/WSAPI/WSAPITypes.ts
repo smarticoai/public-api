@@ -30,7 +30,9 @@ export interface TMiniGamePrize {
 	icon?: string;
 	/** for scratch card defines position of prize in the list */
 	position: number;
-	/** Type of acknowledge message for users */
+	/* List of sectors for the prize */
+	sectors: number[];
+	/* Type of acknowledge message for users */
 	acknowledge_type: SAWAcknowledgeTypeName;
 	/** Message that will be shown to user in modal pop-up */
 	aknowledge_message: string;

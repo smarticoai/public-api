@@ -53,6 +53,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					font_size_mobile: p.saw_prize_ui_definition.font_size_mobile,
 					icon: p.saw_prize_ui_definition.icon,
 					position: p.saw_prize_ui_definition.position,
+					sectors: p.saw_prize_ui_definition.sectors,
 					acknowledge_type: SAWAcknowledgeTypeNamed(p.saw_prize_ui_definition.acknowledge_type),
 					aknowledge_message: p.saw_prize_ui_definition.aknowledge_message,
 					acknowledge_dp: p.saw_prize_ui_definition.acknowledge_dp,
