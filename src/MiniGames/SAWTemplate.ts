@@ -43,4 +43,5 @@ export interface SAWTemplate {
 	requires_prize_claim?: boolean;
 	
 	relative_period_timezone?: number;
+	show_prize_history?:boolean;
 }

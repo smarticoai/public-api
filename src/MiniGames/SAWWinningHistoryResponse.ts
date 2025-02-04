@@ -4,6 +4,7 @@ import { SAWTemplate } from "./SAWTemplate";
 
 export interface SAWWinningHistoryResponse extends ProtocolResponse {
 	prizes: SAWPrizesHistory[];
+	hasMore: boolean;
 }
 
 export interface SAWPrizesHistory {

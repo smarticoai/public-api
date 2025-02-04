@@ -167,6 +167,8 @@ export interface TMiniGameTemplate {
 
 	/** The UI definition of the mini-game */
 	saw_template_ui_definition: SAWTemplateUI;
+	/* When enabled the prize history icon is visible on a certain template */
+	show_prize_history?:boolean;
 }
 
 /**
