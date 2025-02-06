@@ -178,7 +178,7 @@ ___
 
 Claim the bonus by bonus_id. Returns the err_code in case of success or error.
 Note that this method can be used only on integrations where originally failed bonus can be claimed again.
-For example, user won a bonus in the mini-game, but Operator rejected this bonus. 
+For example, user won a bonus in the mini-game, but Operator rejected this bonus.
 This bonus will be available for the user to claim again.
 
 **Visitor mode: not supported**
@@ -453,7 +453,7 @@ ___
 ▸ **playMiniGame**(`template_id`, `«destructured»?`): `Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
- * After playMiniGame is called, you can call getMiniGames to get the list of mini-games.The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGame with a new onUpdate callback, the old one will be overwritten by the new one.
+After playMiniGame is called, you can call getMiniGames to get the list of mini-games.The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGame with a new onUpdate callback, the old one will be overwritten by the new one.
 The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
 
 **Example**:
@@ -479,14 +479,15 @@ _smartico.api.playMiniGame(55).then((result) => {
 
 ___
 
- **miniGameWinAcknowledgeRequest**(`request_id`,): `Promise`\<[`<SAWDoAknowledgeResponse>`]\>
+### miniGameWinAcknowledgeRequest
 
-* Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize
- 
+▸ **miniGameWinAcknowledgeRequest**(`request_id`): `Promise`\<`SAWDoAknowledgeResponse`\>
+
+Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize 
 **Example**:
 ```
 _smartico.api.miniGameWinAcknowledgeRequest('12dvq1r24b6h').then((result) => {
-    console.log(result);
+     console.log(result);
 });
 ```
 
@@ -498,7 +499,7 @@ _smartico.api.miniGameWinAcknowledgeRequest('12dvq1r24b6h').then((result) => {
 
 #### Returns
 
-`Promise`\<[`SAWDoAknowledgeResponse`]\>
+`Promise`\<`SAWDoAknowledgeResponse`\>
 
 ___
 

@@ -201,3 +201,9 @@ ___
 • **saw\_template\_ui\_definition**: `SAWTemplateUI`
 
 The UI definition of the mini-game
+
+___
+
+### show\_prize\_history
+
+• `Optional` **show\_prize\_history**: `boolean`
