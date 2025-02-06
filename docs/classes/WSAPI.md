@@ -486,8 +486,8 @@ ___
 Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize 
 **Example**:
 ```
-_smartico.api.miniGameWinAcknowledgeRequest('12dvq1r24b6h').then((result) => {
-     console.log(result);
+_smartico.api.miniGameWinAcknowledgeRequest('2a189322-31bb-4119-b943-bx7868ff8dc3').then((result) => {
+    console.log(result);
 });
 ```
 
