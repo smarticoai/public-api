@@ -479,6 +479,29 @@ _smartico.api.playMiniGame(55).then((result) => {
 
 ___
 
+ **miniGameWinAcknowledgeRequest**(`request_id`,): `Promise`\<[`<SAWDoAknowledgeResponse>`]\>
+
+* Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize
+ 
+**Example**:
+```
+_smartico.api.miniGameWinAcknowledgeRequest('12dvq1r24b6h').then((result) => {
+    console.log(result);
+});
+```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `request_id` | `string` |
+
+#### Returns
+
+`Promise`\<[`SAWDoAknowledgeResponse`]\>
+
+___
+
 ### playMiniGameBatch
 
 ▸ **playMiniGameBatch**(`template_id`, `spin_count`, `«destructured»?`): `Promise`\<[`TMiniGamePlayBatchResult`](../interfaces/TMiniGamePlayBatchResult.md)[]\>

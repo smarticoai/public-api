@@ -1,6 +1,14 @@
 import { ClassId } from '../Base/ClassId';
 import { CoreUtils } from '../Core';
-import { MiniGamePrizeTypeName, SAWDoSpinResponse, SAWGetTemplatesResponse, SAWSpinErrorCode, SAWSpinsCountPush, SAWWinningHistoryRequest, SAWWinningHistoryResponse } from '../MiniGames';
+import {
+	MiniGamePrizeTypeName,
+	SAWDoSpinResponse,
+	SAWGetTemplatesResponse,
+	SAWSpinErrorCode,
+	SAWSpinsCountPush,
+	SAWWinningHistoryRequest,
+	SAWWinningHistoryResponse,
+} from '../MiniGames';
 import { ECacheContext, OCache } from '../OCache';
 import { SmarticoAPI } from '../SmarticoAPI';
 import {
@@ -25,10 +33,11 @@ import {
 	TTournamentRegistrationResult,
 	TUICustomSection,
 	TUserProfile,
-	UserLevelExtraCountersT,TBonus,
+	UserLevelExtraCountersT,
+	TBonus,
 	TClaimBonusResult,
 	TMiniGamePlayBatchResult,
-	TSawHistory
+	TSawHistory,
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -68,7 +77,7 @@ enum onUpdateContextKey {
 	Pots = 'Pots',
 	CustomSections = 'customSections',
 	Bonuses = 'bonuses',
-	SAWHistory = 'sawHistory'
+	SAWHistory = 'sawHistory',
 }
 
 /** @group General API */
@@ -211,7 +220,12 @@ export class WSAPI {
 			this.onUpdateCallback.set(onUpdateContextKey.Missions, onUpdate);
 		}
 
-		return OCache.use(onUpdateContextKey.Missions, ECacheContext.WSAPI, () => this.api.missionsGetItemsT(null), CACHE_DATA_SEC);
+		return OCache.use(
+			onUpdateContextKey.Missions,
+			ECacheContext.WSAPI,
+			() => this.api.missionsGetItemsT(null),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	/**
@@ -242,11 +256,11 @@ export class WSAPI {
 	/**
 	 * Claim the bonus by bonus_id. Returns the err_code in case of success or error.
 	 * Note that this method can be used only on integrations where originally failed bonus can be claimed again.
-	 * For example, user won a bonus in the mini-game, but Operator rejected this bonus. 
+	 * For example, user won a bonus in the mini-game, but Operator rejected this bonus.
 	 * This bonus will be available for the user to claim again.
 	 *
 	 * **Visitor mode: not supported**
-	 */	
+	 */
 	public async claimBonus(bonus_id: number): Promise<TClaimBonusResult> {
 		const r = await this.api.bonusClaimItem(null, bonus_id);
 
@@ -258,7 +272,6 @@ export class WSAPI {
 
 		return o;
 	}
-
 
 	/**
 	 * Returns the extra counters for the current user level.
@@ -488,14 +501,17 @@ export class WSAPI {
 	 * ```
 	 *
 	 * **Visitor mode: not supported**
-	*/	
+	 */
 
 	public async getMiniGamesHistory({
 		limit,
 		offset,
-		saw_template_id
-	} : { limit?: number, offset?: number, saw_template_id?: number } ): Promise<TSawHistory[]> {
-		
+		saw_template_id,
+	}: {
+		limit?: number;
+		offset?: number;
+		saw_template_id?: number;
+	}): Promise<TSawHistory[]> {
 		return OCache.use(
 			onUpdateContextKey.SAWHistory,
 			ECacheContext.WSAPI,
@@ -506,7 +522,7 @@ export class WSAPI {
 
 	/**
 	 * Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
- 	 * After playMiniGame is called, you can call getMiniGames to get the list of mini-games.The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGame with a new onUpdate callback, the old one will be overwritten by the new one.
+	 * After playMiniGame is called, you can call getMiniGames to get the list of mini-games.The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGame with a new onUpdate callback, the old one will be overwritten by the new one.
 	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
 	 *
 	 * **Example**:
@@ -518,8 +534,10 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async playMiniGame(template_id: number, { onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<TMiniGamePlayResult> {
-
+	public async playMiniGame(
+		template_id: number,
+		{ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {},
+	): Promise<TMiniGamePlayResult> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
@@ -536,6 +554,20 @@ export class WSAPI {
 		return o;
 	}
 
+
+	/**
+	 * Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize 
+	 * **Example**:
+	 * ```
+	 * _smartico.api.miniGameWinAcknowledgeRequest('12dvq1r24b6h').then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 */
+	 public async  miniGameWinAcknowledgeRequest (request_id: string) {
+		return this.api.doAcknowledgeRequest(null, request_id);
+	}
+
 	/**
 	 * Plays the specified by template_id mini-game on behalf of user spin_count times and returns array of the prizes
 	 * After playMiniGameBatch is called, you can call getMiniGames to get the list of mini-games. The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGameBatch with a new onUpdate callback, the old one will be overwritten by the new one.
@@ -549,8 +581,11 @@ export class WSAPI {
 	 * ```
 	 * **Visitor mode: not supported**
 	 */
-	public async playMiniGameBatch(template_id: number, spin_count: number, { onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMiniGamePlayBatchResult[]> {
-		
+	public async playMiniGameBatch(
+		template_id: number,
+		spin_count: number,
+		{ onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {},
+	): Promise<TMiniGamePlayBatchResult[]> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
@@ -851,7 +886,7 @@ export class WSAPI {
 		const payload = await this.api.bonusesGetItemsT(null);
 		this.updateEntity(onUpdateContextKey.Bonuses, payload);
 	}
-	
+
 	private async updateTournaments() {
 		const payload = await this.api.tournamentsGetLobbyT(null);
 		this.updateEntity(onUpdateContextKey.TournamentList, payload);
@@ -990,7 +1025,7 @@ export class WSAPI {
 	/**
 	 * Returns all the related tournaments and missions for the provided game id for the current user
 	 * The provided Game ID should correspond to the ID from the Games Catalog - https://help.smartico.ai/welcome/technical-guides/games-catalog-api
-	 * 
+	 *
 	 * **Example**:
 	 * ```
 	 * _smartico.api.getRelatedItemsForGame('gold-slot2').then((result) => {
@@ -1006,9 +1041,7 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getRelatedItemsForGame(related_game_id: string): Promise<GetRelatedAchTourResponse> {
-
 		const result = await this.api.getRelatedItemsForGame(null, related_game_id);
-        return result;
-		
+		return result;
 	}
 }
