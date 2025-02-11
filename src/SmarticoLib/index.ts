@@ -348,6 +348,7 @@ export interface SAWPrizeUI {
 	position?: number;
 	name: string;
 	name_original: string;
+	hide_prize_popup: boolean;
 	aknowledge_message: string;
 	sectors: number[];
 	acknowledge_type: SAWAcknowledgeType;

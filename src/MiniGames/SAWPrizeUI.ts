@@ -6,6 +6,7 @@ export interface SAWPrizeUI {
 	position?: number; // for scratch card defines position of prize in the list
 	name: string;
 	name_original?: string; // keeps original name, how it came from the servers. This is needed for the Jackpot value replacemenet
+	hide_prize_popup: boolean; // if true, prize popup on Prize Drop will not be shown
 	aknowledge_message?: string;
 	sectors?: number[];
 	acknowledge_type?: SAWAcknowledgeType;
