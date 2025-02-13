@@ -27,6 +27,7 @@
 			"src/Leaderboard/LeaderBoardPeriodType.ts",
 			"src/Base/AchRelatedGame.ts",
 			"src/Jackpots/index.ts",
+			"src/Raffle/index.ts",
 			"src/Missions/AchievementAvailabilityStatus.ts"
 		],
 		"out": "docs",

@@ -1,6 +1,6 @@
 import { ProtocolResponse } from '../Base/ProtocolResponse';
 import { RaffleDraw } from './RaffleDraw';
 
-export interface GetDrawResponse extends ProtocolResponse {
+export interface GetDrawRunResponse extends ProtocolResponse {
 	draw: RaffleDraw;
 }

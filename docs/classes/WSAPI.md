@@ -986,3 +986,13 @@ _smartico.vapi('EN').getRelatedItemsForGame('gold-slot2').then((result) => {
 #### Returns
 
 `Promise`\<`GetRelatedAchTourResponse`\>
+
+___
+
+### getRaffles
+
+▸ **getRaffles**(): `Promise`\<[`GetRafflesResponse`](../interfaces/GetRafflesResponse.md)\>
+
+#### Returns
+
+`Promise`\<[`GetRafflesResponse`](../interfaces/GetRafflesResponse.md)\>

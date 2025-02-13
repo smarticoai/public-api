@@ -1,0 +1,124 @@
+# Interface: RaffleDraw
+
+## Properties
+
+### draw\_definition\_id
+
+• **draw\_definition\_id**: `number`
+
+Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
+(internal name: schedule_id)
+
+___
+
+### public\_meta
+
+• **public\_meta**: `RaffleDrawPublicMeta`
+
+Meta information of the Draw for the presentaiton in UI
+
+___
+
+### prizes
+
+• **prizes**: [`RafflePrize`](RafflePrize.md)[]
+
+Information about prizes in the draw
+
+___
+
+### current\_state
+
+• **current\_state**: `RaffleDrawInstanceState`
+
+State of current instance of Draw
+
+___
+
+### current\_instance\_id
+
+• `Optional` **current\_instance\_id**: `number`
+
+If current draw is in State Executed, this field will contain the ID of instance
+If current draw is in State Open or WinnerSelection, this field will be undefined
+
+___
+
+### current\_execution\_ts
+
+• `Optional` **current\_execution\_ts**: `number`
+
+Date/time of the draw execution if the draw is in the State Executed
+
+___
+
+### previous\_execution\_ts
+
+• `Optional` **previous\_execution\_ts**: `number`
+
+Date of the previously executed draw (if there is such)
+
+___
+
+### previous\_execution\_instance\_id
+
+• `Optional` **previous\_execution\_instance\_id**: `number`
+
+Unique ID of the previusly executed draw (if there is such)
+
+___
+
+### next\_execution\_ts
+
+• `Optional` **next\_execution\_ts**: `number`
+
+Date/time of the next draw (if there is such)
+
+___
+
+### tickets\_time\_back\_ts
+
+• `Optional` **tickets\_time\_back\_ts**: `number`
+
+Date/time starting from which the tickets will participate in the upcoming draw
+ This value need to be taken into account with next_execute_ts field value, for example
+ Next draw is at 10:00, tickets_time_back_ts is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
+ If this value is not present, then all tickets that are collected ever for this raffle will participate in the next draw.
+ (internally this value is calculated as next_execute_ts - time_back_period_ms)
+
+___
+
+### allow\_multi\_prize\_per\_ticket
+
+• **allow\_multi\_prize\_per\_ticket**: `boolean`
+
+Field is indicating if same ticket can win multiple prizes in the same draw 
+ For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook
+ If this field is true, then one ticket can win all 3 prizes (depending on the chances of course), 
+ if false, then one ticket can win only one prize. 
+ The distribution of the prizes is start from top (assuming on top are the most valuable prizes) to bottom (less valuable prizes)
+ If specific prize has multiple values, e.g. we have 3 iPhones, 
+ then the same ticket can win only one prize of a kind, but can win multiple prizes of different kind (if allow_multi_prize_per_ticket is true)
+
+___
+
+### total\_tickets\_count
+
+• **total\_tickets\_count**: `number`
+
+The number of tickets that are already given to all users for this instance of draw.
+In other words tickets that are collected between tickets_time_back_ts and current time (or till current_execution_ts is the instance is executed).
+
+___
+
+### my\_tickets\_count
+
+• **my\_tickets\_count**: `number`
+
+The number of tickets collected by current user for this instance of draw.
+
+___
+
+### my\_last\_tickets
+
+• **my\_last\_tickets**: [`RaffleTicket`](RaffleTicket.md)[]

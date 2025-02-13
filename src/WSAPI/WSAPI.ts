@@ -51,6 +51,7 @@ import {
 import { GetTournamentsResponse } from '../Tournaments';
 import { GetAchievementMapResponse } from '../Missions';
 import { GetRelatedAchTourResponse } from 'src/Missions/GetRelatedAchTourResponse';
+import { GetRafflesResponse } from '../Raffle/GetRafflesResponse';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -1044,4 +1045,9 @@ export class WSAPI {
 		const result = await this.api.getRelatedItemsForGame(null, related_game_id);
 		return result;
 	}
+
+
+	public async getRaffles(): Promise<GetRafflesResponse> {
+		return await this.api.getRaffles(null);
+	}	
 }

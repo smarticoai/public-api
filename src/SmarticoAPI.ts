@@ -121,6 +121,8 @@ import { SAWDoAcknowledgeBatchRequest } from './MiniGames/SAWDoAcknowledgeBatchR
 import { SAWDoAcknowledgeBatchResponse } from './MiniGames/SAWDoAcknowledgeBatchResponse';
 import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
 import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
+import { GetRafflesResponse } from './Raffle/GetRafflesResponse';
+import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -1106,6 +1108,15 @@ class SmarticoAPI {
 		return await this.send<GetRelatedAchTourResponse>(message, ClassId.GET_RELATED_ACH_N_TOURNAMENTS_RESPONSE);
 
 	}
+
+	public async getRaffles(user_ext_id: string): Promise<GetRafflesResponse> {
+		const message = this.buildMessage< GetRafflesRequest, GetRafflesResponse>(
+			user_ext_id,
+			ClassId.RAF_GET_RAFFLES_REQUEST
+		);
+		
+		return await this.send<GetRafflesResponse>(message, ClassId.RAF_GET_DRAW_RESPONSE);
+	}	
 }
 
 export { SmarticoAPI, MessageSender };
