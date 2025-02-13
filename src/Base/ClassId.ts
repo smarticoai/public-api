@@ -148,6 +148,19 @@ export enum ClassId {
 
 	JP_WIN_PUSH = 808,
 
+
+	RAF_GET_RAFFLES_REQUEST = 900,
+	RAF_GET_RAFFLES_RESPONSE = 901,
+	RAF_GET_DRAW_REQUEST = 904,
+	RAF_GET_DRAW_RESPONSE = 905,
+
+	/*
+	RAF_GET_TICKETS_REQUEST = 902,
+	RAF_GET_TICKETS_RESPONSE = 903,
+
+	RAF_CLAIM_PRIZE_REQUEST = 906,
+	*/
+
 	/*
         !Important, if adding new messages that are 'acting' on behalf of the client,
         you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
