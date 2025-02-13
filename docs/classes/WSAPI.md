@@ -487,7 +487,7 @@ Sends the acknowledge request with specific client_request_id from minigame hist
 **Example**:
 ```
 _smartico.api.miniGameWinAcknowledgeRequest('2a189322-31bb-4119-b943-bx7868ff8dc3').then((result) => {
-    console.log(result);
+     console.log(result);
 });
 ```
 
