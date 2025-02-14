@@ -25,7 +25,7 @@ interface RaffleDraw {
      * Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
      * (internal name: schedule_id)
      */
-    draw_definition_id: number;
+    draw_id: number;
 
     /** Meta information of the Draw for the presentaiton in UI */
     public_meta: RaffleDrawPublicMeta;
@@ -42,19 +42,16 @@ interface RaffleDraw {
      * If current draw is in State Executed, this field will contain the ID of instance
      * If current draw is in State Open or WinnerSelection, this field will be undefined
     */
-    current_instance_id?: number;    
+    run_id?: number;    
 
     /** Date/time of the draw execution if the draw is in the State Executed */
-    current_execution_ts?: number;
+    execution_ts?: number;
     
     /** Date of the previously executed draw (if there is such) */
-    previous_execution_ts?: number;
+    previous_run_ts?: number;
 
     /** Unique ID of the previusly executed draw (if there is such) */
-    previous_execution_instance_id?: number;    
-
-    /** Date/time of the next draw (if there is such) */
-    next_execution_ts?: number;
+    previous_run_id?: number;    
 
     /**
      *  Date/time starting from which the tickets will participate in the upcoming draw
