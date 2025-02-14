@@ -39,13 +39,12 @@ interface RaffleDraw {
     current_state: RaffleDrawInstanceState;
 
     /** 
-     * If current draw is in State Executed, this field will contain the ID of instance
-     * If current draw is in State Open or WinnerSelection, this field will be undefined
+     * Field indicates the ID of the latest instance/run of draw
     */
-    run_id?: number;    
+    run_id: number;    
 
-    /** Date/time of the draw execution if the draw is in the State Executed */
-    execution_ts?: number;
+    /** Date/time of the draw execution */
+    execution_ts: number;
     
     /** Date of the previously executed draw (if there is such) */
     previous_run_ts?: number;
@@ -57,10 +56,9 @@ interface RaffleDraw {
      *  Date/time starting from which the tickets will participate in the upcoming draw
      *  This value need to be taken into account with next_execute_ts field value, for example
      *  Next draw is at 10:00, tickets_time_back_ts is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
-     *  If this value is not present, then all tickets that are collected ever for this raffle will participate in the next draw.
      *  (internally this value is calculated as next_execute_ts - time_back_period_ms)
      */
-    tickets_time_back_ts?: number;
+    tickets_time_back_ts: number;
 
     /** Field is indicating if same ticket can win multiple prizes in the same draw 
      *  For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook
