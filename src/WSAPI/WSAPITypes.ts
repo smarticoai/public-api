@@ -6,6 +6,7 @@ import { LeaderBoardPeriodType } from '../Leaderboard';
 import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from '../CustomSections';
 import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
+import { InboxCategories } from '../Inbox/InboxCategories';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
@@ -686,6 +687,8 @@ export interface TInboxMessage {
 	read: boolean;
 	/** Indicator if a message is added to favorites */
 	favorite: boolean;
+	/** Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages */
+	category_id?: InboxCategories;
 }
 
 export interface TInboxMessageBody {

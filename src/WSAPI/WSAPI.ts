@@ -52,6 +52,7 @@ import { GetTournamentsResponse } from '../Tournaments';
 import { GetAchievementMapResponse } from '../Missions';
 import { GetRelatedAchTourResponse } from 'src/Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse } from '../Raffle/GetRafflesResponse';
+import { InboxCategories } from '../Inbox/InboxCategories';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -758,15 +759,15 @@ export class WSAPI {
 		from,
 		to,
 		onlyFavorite,
+		categoryId,
 		onUpdate,
-	}: { from?: number; to?: number; onlyFavorite?: boolean; onUpdate?: (data: TInboxMessage[]) => void } = {}): Promise<
+	}: { from?: number; to?: number; onlyFavorite?: boolean; categoryId?: InboxCategories, onUpdate?: (data: TInboxMessage[]) => void } = {}): Promise<
 		TInboxMessage[]
 	> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate);
 		}
-
-		return await this.api.getInboxMessagesT(null, from, to, onlyFavorite);
+		return await this.api.getInboxMessagesT(null, from, to, onlyFavorite, categoryId);
 	}
 
 	/**

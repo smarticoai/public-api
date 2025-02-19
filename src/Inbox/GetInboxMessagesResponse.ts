@@ -13,6 +13,7 @@ export const InboxMessagesTransform = (items: InboxMessage[]): TInboxMessage[] =
 			message_guid: item.engagement_uid,
 			read: item.is_read,
 			favorite: item.is_starred,
+			category_id: item.category_id
 		};
 		return x;
 	});

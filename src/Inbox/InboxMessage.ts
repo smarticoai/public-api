@@ -1,4 +1,5 @@
 import { TInboxMessageBody } from '../WSAPI/WSAPITypes';
+import { InboxCategories } from './InboxCategories';
 import { InboxMessageType } from './InboxMessageType';
 import { OpenLinksType } from './OpenLinksType';
 
@@ -42,6 +43,8 @@ export interface InboxMessage {
 	is_starred: boolean;
 	// flag that indicates if the message was deleted by the user. Such messages are not returned in the response and property is used only internaly in Smartico
 	is_deleted?: boolean;
+	// category id of the inbox message, could be categorized as System/Personal/General messages in mentioned tabs
+	category_id?: InboxCategories;
 }
 
 export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessageBody => {

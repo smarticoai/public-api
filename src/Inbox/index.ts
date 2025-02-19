@@ -9,3 +9,4 @@ export * from './MarkInboxMessageStarredResponse';
 export * from './MarkInboxMessageDeletedRequest';
 export * from './MarkInboxMessageDeletedResponse';
 export * from './OpenLinksType';
+export * from './InboxCategories';

@@ -123,6 +123,7 @@ import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
 import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
+import { InboxCategories } from './Inbox/InboxCategories';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -971,6 +972,7 @@ class SmarticoAPI {
 		limit: number = 20,
 		offset: number = 0,
 		starred_only: boolean,
+		category_id?: InboxCategories,
 	): Promise<GetInboxMessagesResponse> {
 		const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(
 			user_ext_id,
@@ -979,6 +981,7 @@ class SmarticoAPI {
 				limit,
 				offset,
 				starred_only,
+				category_id,
 			},
 		);
 		return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE);
@@ -989,11 +992,12 @@ class SmarticoAPI {
 		from: number = 0,
 		to: number = 20,
 		favoriteOnly: boolean = false,
+		categoryId?: InboxCategories,
 	): Promise<TInboxMessage[]> {
 		const limit = to - from > 20 ? 20 : to - from;
 		const offset = from;
 
-		return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly)).log);
+		return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly, categoryId)).log);
 	}
 
 	public async getInboxMessageBody(messageGuid: string): Promise<InboxMessageBody> {
