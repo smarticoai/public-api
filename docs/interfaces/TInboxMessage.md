@@ -31,3 +31,11 @@ ___
 • **favorite**: `boolean`
 
 Indicator if a message is added to favorites
+
+___
+
+### category_id
+
+• **category_id**: `InboxCategories`
+
+Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages
