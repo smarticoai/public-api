@@ -16,6 +16,7 @@ export interface SAWTemplateUI {
 	background_image_mobile?: string;
 	background_sound?: string;
 	spin_animation_duration?: number;
+	wheel_pointer_rotation?: number;
 	scratch_logo?: string;
 	scratch_cover?: string;
 	scratch_bg_desktop?: string;
