@@ -207,7 +207,12 @@ class SmarticoAPI {
 	}
 
 	public static getAvatarUrl(label_api_key: string): string {
-		return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
+		const envId = SmarticoAPI.getEnvDnsSuffix(label_api_key);
+		if (envId === '4') {
+			return 'https://dvm0p9vsezqr2.cloudfront.net';
+		} else {
+			return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
+		}
 	}
 
 	private async send<T>(message: any, expectCID?: ClassId, force_language?: string): Promise<T> {
