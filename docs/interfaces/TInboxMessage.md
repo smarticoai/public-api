@@ -38,4 +38,4 @@ ___
 
 • **category_id**: `InboxCategories`
 
-Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages
+Category id per inbox message, can be part of System inboxes (1), Personal inboxes (2) or General inbox messages (null/undefined)
