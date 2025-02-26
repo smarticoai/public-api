@@ -50,7 +50,7 @@ import {
 } from '../Jackpots';
 import { GetTournamentsResponse } from '../Tournaments';
 import { GetAchievementMapResponse } from '../Missions';
-import { GetRelatedAchTourResponse } from 'src/Missions/GetRelatedAchTourResponse';
+import { GetRelatedAchTourResponse } from '../Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse } from '../Raffle/GetRafflesResponse';
 import { InboxCategories } from '../Inbox/InboxCategories';
 

@@ -190,6 +190,30 @@ class SmarticoAPI {
 		return ENV_ID;
 	}
 
+	private replaceDomains(obj: any) {
+		const domains = {
+			'static4.smr.vc': 'd146b4m7rkvjkw.cloudfront.net',
+			'img4.smr.vc': 'dvm0p9vsezqr2.cloudfront.net',
+		}
+
+		let newObject = obj;
+
+		const oldDomains = Object.keys(domains);
+
+		for (const oldDomain of oldDomains) {
+			const stringified = JSON.stringify(newObject);
+
+			try {
+				const replacedString = stringified.replace(new RegExp(oldDomain, 'g'), domains[oldDomain]);
+				newObject = JSON.parse(replacedString);
+			} catch (error) {
+				console.error(error)
+			}
+		}
+
+		return newObject
+	}
+
 	public static getEnvId(label_api_key: string): number {
 		return label_api_key.length === 38 ? parseInt(label_api_key.substring(37, 38), 10) : 2;
 	}
@@ -230,6 +254,10 @@ class SmarticoAPI {
 			const timeStart = new Date().getTime();
 			result = await this.messageSender(message, this.publicUrl, expectCID);
 			const timeEnd = new Date().getTime();
+
+			if (this.label_api_key === 'a6e7ac26-c368-4892-9380-96e7ff82cf3e-4' && result) {
+				result = this.replaceDomains(result);
+			}
 
 			if (this.logHTTPTiming) {
 				this.logger.always('HTTP time, ms:' + (timeEnd - timeStart));
