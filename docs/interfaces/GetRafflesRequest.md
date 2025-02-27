@@ -35,3 +35,9 @@ ___
 #### Inherited from
 
 ProtocolMessage.uuid
+
+___
+
+### skip\_public\_meta
+
+• `Optional` **skip\_public\_meta**: `boolean`

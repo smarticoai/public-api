@@ -36,14 +36,14 @@ ___
 The actual number of prizes for the current instance.
 This value is taking into account follwing values:
  - min_required_total_tickets, 
- - multiply_prizes_per_each_x_tickets
+ - add_one_prize_per_each_x_tickets
  - stock_items_per_draw
  - total_tickets_count (from Draw instance)
  - cap_prizes_per_run
 For example:
  - prizes_per_run = 1
  - min_required_total_tickets = 1000
- - multiply_prizes_per_each_x_tickets = 1000
+ - add_one_prize_per_each_x_tickets = 1000
  - stock_items_per_draw = 5
  - total_tickets_count = 7000
  - cap_prizes_per_run = 6
@@ -73,11 +73,11 @@ The 'draw period' is the time between the tickets_time_back_ts value of the draw
 
 ___
 
-### multiply\_prizes\_per\_each\_x\_tickets
+### add\_one\_prize\_per\_each\_x\_tickets
 
-• `Optional` **multiply\_prizes\_per\_each\_x\_tickets**: `number`
+• `Optional` **add\_one\_prize\_per\_each\_x\_tickets**: `number`
 
-The number of additional prizes awarded for each multiple of a certain number of tickets.
+One additional prize will be awarded for each X tickets.
 E.g. if the prize is 1 iPhone and the value is set to 1000, then for every 1000 tickets collected, an additional iPhone is awarded.
 If min_required_total_tickets is set to 1000, then next iPhone is awarded when 2000 tickets are collected, and so on.
 If min_required_total_tickets is not set, then the next iPhone will be awarded when 1000 tickets are collected.
@@ -107,7 +107,7 @@ ___
 • `Optional` **cap\_prizes\_per\_run**: `number`
 
 The maximum number of prizes that can be given withing one instance/run of draw.
-For example the prize is iPhone and multiply_prizes_per_each_x_tickets is set to 1000, 
+For example the prize is iPhone and add_one_prize_per_each_x_tickets is set to 1000, 
 cap_prizes_per_run is set to 3, and the total number of tickets collected is 7000.
 In this case, the prizes_per_run_actual will be limitted by 3
 

@@ -34,8 +34,8 @@ Indicator if a message is added to favorites
 
 ___
 
-### category_id
+### category\_id
 
-• **category_id**: `InboxCategories`
+• `Optional` **category\_id**: `InboxCategories`
 
-Category id per inbox message, can be part of System inboxes (1), Personal inboxes (2) or General inbox messages (null/undefined)
+Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages

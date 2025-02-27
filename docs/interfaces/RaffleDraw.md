@@ -2,9 +2,9 @@
 
 ## Properties
 
-### draw\_definition\_id
+### draw\_id
 
-• **draw\_definition\_id**: `number`
+• **draw\_id**: `number`
 
 Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
 (internal name: schedule_id)
@@ -35,55 +35,45 @@ State of current instance of Draw
 
 ___
 
-### current\_instance\_id
+### run\_id
 
-• `Optional` **current\_instance\_id**: `number`
+• **run\_id**: `number`
 
-If current draw is in State Executed, this field will contain the ID of instance
-If current draw is in State Open or WinnerSelection, this field will be undefined
-
-___
-
-### current\_execution\_ts
-
-• `Optional` **current\_execution\_ts**: `number`
-
-Date/time of the draw execution if the draw is in the State Executed
+Field indicates the ID of the latest instance/run of draw
 
 ___
 
-### previous\_execution\_ts
+### execution\_ts
 
-• `Optional` **previous\_execution\_ts**: `number`
+• **execution\_ts**: `number`
+
+Date/time of the draw execution
+
+___
+
+### previous\_run\_ts
+
+• `Optional` **previous\_run\_ts**: `number`
 
 Date of the previously executed draw (if there is such)
 
 ___
 
-### previous\_execution\_instance\_id
+### previous\_run\_id
 
-• `Optional` **previous\_execution\_instance\_id**: `number`
+• `Optional` **previous\_run\_id**: `number`
 
 Unique ID of the previusly executed draw (if there is such)
 
 ___
 
-### next\_execution\_ts
-
-• `Optional` **next\_execution\_ts**: `number`
-
-Date/time of the next draw (if there is such)
-
-___
-
 ### tickets\_time\_back\_ts
 
-• `Optional` **tickets\_time\_back\_ts**: `number`
+• **tickets\_time\_back\_ts**: `number`
 
 Date/time starting from which the tickets will participate in the upcoming draw
  This value need to be taken into account with next_execute_ts field value, for example
  Next draw is at 10:00, tickets_time_back_ts is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
- If this value is not present, then all tickets that are collected ever for this raffle will participate in the next draw.
  (internally this value is calculated as next_execute_ts - time_back_period_ms)
 
 ___
