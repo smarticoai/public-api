@@ -1152,7 +1152,7 @@ class SmarticoAPI {
 			ClassId.RAF_GET_RAFFLES_REQUEST
 		);
 		
-		return await this.send<GetRafflesResponse>(message, ClassId.RAF_GET_DRAW_RESPONSE);
+		return await this.send<GetRafflesResponse>(message, ClassId.RAF_GET_RAFFLES_RESPONSE);
 	}	
 }
 
