@@ -50,6 +50,12 @@ ___
 
 ___
 
+### RAFFLE\_TICKET
+
+• **RAFFLE\_TICKET** = ``"raffle-ticket"``
+
+___
+
 ### UNKNOWN
 
 • **UNKNOWN** = ``"unknown"``
