@@ -4,6 +4,7 @@ export enum StoreItemType {
 	MiniGameSpin = 3,
 	ChangeLevel = 4,
 	PrizeDrop = 5,
+	RaffleTicket = 6,
 }
 
 export enum StoreItemTypeName {
@@ -12,6 +13,7 @@ export enum StoreItemTypeName {
 	MiniGameSpin = 'minigamespin',
 	ChangeLevel = 'changelevel',
 	PrizeDrop = 'prizedrop',
+	RaffleTicket = 'raffleticket',
 	Unknown = 'unknown',
 }
 
@@ -23,6 +25,7 @@ export const StoreItemTypeNamed = (type: StoreItemType): StoreItemTypeName => {
 			[StoreItemType.MiniGameSpin]: StoreItemTypeName.MiniGameSpin,
 			[StoreItemType.ChangeLevel]: StoreItemTypeName.ChangeLevel,
 			[StoreItemType.PrizeDrop]: StoreItemTypeName.PrizeDrop,
+			[StoreItemType.RaffleTicket]: StoreItemTypeName.RaffleTicket,
 		}[type] || StoreItemTypeName.Unknown
 	);
 };

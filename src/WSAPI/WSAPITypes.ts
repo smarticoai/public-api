@@ -427,7 +427,7 @@ export interface TStoreItem {
 	/** URL of the image of the store item */
 	image: string;
 	/** Type of the store item. Can be 'bonus' or 'tangible' or different others. */
-	type: 'bonus' | 'tangible' | 'minigamespin' | 'changelevel' | 'prizedrop' | 'unknown';
+	type: 'bonus' | 'tangible' | 'minigamespin' | 'changelevel' | 'prizedrop' | 'unknown' | 'raffleticket';
 	/** The price of the store item in the gamification points */
 	price: number;
 	/** The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
