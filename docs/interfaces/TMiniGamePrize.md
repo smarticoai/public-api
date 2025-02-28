@@ -32,7 +32,7 @@ ___
 
 • `Optional` **prize\_value**: `number`
 
-Numeric value of the prize in case it's pints or spin type
+Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant.
 
 ___
 
