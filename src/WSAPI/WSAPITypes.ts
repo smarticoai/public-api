@@ -21,7 +21,7 @@ export interface TMiniGamePrize {
 	name: string;
 	/** The type of the prize,  no-prize, points, bonus, manual, spin, jackpot */
 	prize_type: MiniGamePrizeTypeName;
-	/** Numeric value of the prize in case it's pints or spin type */
+	/** Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant. */
 	prize_value?: number;
 	/** Custom font size for the prize (desktop) */
 	font_size?: number;
