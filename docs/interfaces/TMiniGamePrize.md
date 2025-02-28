@@ -32,7 +32,8 @@ ___
 
 • `Optional` **prize\_value**: `number`
 
-Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant.
+Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant. 
+For example for prize  '100 points' the prize_value will be 100. For '100 free spins' the prize_value will be 100.
 
 ___
 
