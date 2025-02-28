@@ -67,14 +67,14 @@ Unique ID of the previusly executed draw (if there is such)
 
 ___
 
-### tickets\_time\_back\_ts
+### ticket\_start\_date
 
-• **tickets\_time\_back\_ts**: `number`
+• **ticket\_start\_date**: `number`
 
 Date/time starting from which the tickets will participate in the upcoming draw
  This value need to be taken into account with next_execute_ts field value, for example
- Next draw is at 10:00, tickets_time_back_ts is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
- (internally this value is calculated as next_execute_ts - time_back_period_ms)
+ Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
+ (internally this value is calculated as next_execute_ts - ticket_start_date)
 
 ___
 
@@ -97,7 +97,7 @@ ___
 • **total\_tickets\_count**: `number`
 
 The number of tickets that are already given to all users for this instance of draw.
-In other words tickets that are collected between tickets_time_back_ts and current time (or till current_execution_ts is the instance is executed).
+In other words tickets that are collected between ticket_start_date and current time (or till current_execution_ts is the instance is executed).
 
 ___
 
