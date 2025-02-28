@@ -64,7 +64,7 @@ interface RafflePrize {
      * The minimum number of total tickets collected during draw period required to unlock the prize.
      * If the number of tickets collected is less than this value, the prize is not available.
      * Under total tickets we understand the number of tickets collected by all users.
-     * The 'draw period' is the time between the tickets_time_back_ts value of the draw and the current time.
+     * The 'draw period' is the time between the ticket_start_date value of the draw and the current time.
      */
     min_required_total_tickets?: number;
 
