@@ -29,6 +29,7 @@ export interface SAWTemplateUI {
 	promo_image?: string;
 	promo_text?: string;
 	matchx_banner?: string;
+	matchx_banner_mobile?: string;
 	matchx_seasonal_ranking?: boolean;
 	matchx_is_completed?: boolean;
 	matchx_general_board_users_count?: number;
