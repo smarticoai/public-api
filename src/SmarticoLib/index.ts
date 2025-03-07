@@ -475,6 +475,13 @@ declare enum TournamentRegistrationType {
 	MANUAL_APPROVAL = 4,
 	REQUIRES_QUALIFICATION = 5,
 }
+/*
+AUTO – The user is automatically registered upon their first qualifying action; no manual action is required.
+OPT_IN – Free registration; the user simply needs to click "Join."
+BUY_IN_POINTS – Registration requires points; the required amount is specified in the registration_cost_points field.
+MANUAL_APPROVAL – The user must join, but the operator must approve the registration from the back office.
+REQUIRES_QUALIFICATION – The user must join and complete the required qualification action specified for the tournament.
+*/
 export type TournamentRegistrationTypeName =
 	| 'AUTO'
 	| 'OPT_IN'
