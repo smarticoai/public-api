@@ -43,6 +43,17 @@ Field indicates the ID of the latest instance/run of draw
 
 ___
 
+### execution\_type
+
+• **execution\_type**: `RaffleDrawTypeExecution`
+
+Type of the draw execution, indicating how and when the draw is executed.
+- ExecDate: Draw is executed only once at a specific date and time.
+- Recurring: Draw is executed on a recurring basis (e.g., daily, weekly).
+- Grand: Draw is executed once and is marked as grand, often with larger prizes or more importance.
+
+___
+
 ### execution\_ts
 
 • **execution\_ts**: `number`
