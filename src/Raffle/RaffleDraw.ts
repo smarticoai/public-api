@@ -12,6 +12,8 @@ interface RaffleDrawPublicMeta {
     icon_url: string;
     /** URL of the background image that will be used in the draw list item */
     background_image_url: string;
+    /** Show if the draw is grand and is marked as special */
+    is_grand: boolean;
 }
 
 enum RaffleDrawInstanceState {
@@ -21,6 +23,19 @@ enum RaffleDrawInstanceState {
     WinnerSelection = 2,
     /** Draw is executed and the winners are selected */
     Executed = 3,
+}
+
+enum RaffleDrawTypeExecution {
+    /** Draw is executed only once */
+    ExecDate = 0,
+    /** Draw is executed on a recurring basis */
+    Recurring = 1,
+    /** 
+     * Draw is executed once and is marked as grand.
+     * This means it is a special or significant draw,
+     * often with larger prizes or more importance.
+     */
+    Grand = 2,
 }
 
 
@@ -45,7 +60,15 @@ interface RaffleDraw {
     /** 
      * Field indicates the ID of the latest instance/run of draw
     */
-    run_id: number;    
+    run_id: number;
+
+    /** 
+     * Type of the draw execution, indicating how and when the draw is executed.
+     * - ExecDate: Draw is executed only once at a specific date and time.
+     * - Recurring: Draw is executed on a recurring basis (e.g., daily, weekly).
+     * - Grand: Draw is executed once and is marked as grand, often with larger prizes or more importance.
+     */
+    execution_type: RaffleDrawTypeExecution;
 
     /** Date/time of the draw execution */
     execution_ts: number;
