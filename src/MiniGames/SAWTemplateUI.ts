@@ -1,5 +1,6 @@
 import { SAWAskForUsername } from './SAWAskForUsername';
 import { SAWGameLayout } from './SAWGameLayout';
+import { SAWWheelLayout } from './SAWWheelLayout';
 
 export interface SAWTemplateUI {
 	skin: string;
@@ -58,4 +59,6 @@ export interface SAWTemplateUI {
 
 	// treasure hunt specific
 	steps_to_finish_game?: number;
+
+	wheel_layout?: SAWWheelLayout;
 }
