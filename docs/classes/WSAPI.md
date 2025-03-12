@@ -997,3 +997,35 @@ ___
 #### Returns
 
 `Promise`\<[`GetRafflesResponse`](../interfaces/GetRafflesResponse.md)\>
+
+___
+
+### getDrawRun
+
+▸ **getDrawRun**(`payload`): `Promise`\<[`GetDrawRunResponse`](../interfaces/GetDrawRunResponse.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `payload` | [`GetDrawRunRequest`](../interfaces/GetDrawRunRequest.md) |
+
+#### Returns
+
+`Promise`\<[`GetDrawRunResponse`](../interfaces/GetDrawRunResponse.md)\>
+
+___
+
+### getRaffleDrawRunsHistory
+
+▸ **getRaffleDrawRunsHistory**(`payload`): `Promise`\<[`GetRaffleDrawRunsHistoryResponse`](../interfaces/GetRaffleDrawRunsHistoryResponse.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `payload` | [`GetRaffleDrawRunsHistoryRequest`](../interfaces/GetRaffleDrawRunsHistoryRequest.md) |
+
+#### Returns
+
+`Promise`\<[`GetRaffleDrawRunsHistoryResponse`](../interfaces/GetRaffleDrawRunsHistoryResponse.md)\>

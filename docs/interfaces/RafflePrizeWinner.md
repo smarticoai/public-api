@@ -29,3 +29,9 @@ ___
 ### ticket
 
 • **ticket**: [`RaffleTicket`](RaffleTicket.md)
+
+___
+
+### won\_ids
+
+• **won\_ids**: `number`[]

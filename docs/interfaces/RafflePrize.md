@@ -132,6 +132,14 @@ the stock_items_per_draw will be decreasing by 1 each day (assuming there is eno
 
 ___
 
+### is\_claimed
+
+• **is\_claimed**: `boolean`
+
+Shows if the prize has been claimed
+
+___
+
 ### winners
 
 • **winners**: [`RafflePrizeWinner`](RafflePrizeWinner.md)[]
