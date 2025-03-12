@@ -124,6 +124,7 @@ import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse'
 import { GetRafflesResponse } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { InboxCategories } from './Inbox/InboxCategories';
+import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse } from './Raffle';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -1153,6 +1154,27 @@ class SmarticoAPI {
 		);
 		
 		return await this.send<GetRafflesResponse>(message, ClassId.RAF_GET_RAFFLES_RESPONSE);
+	}	
+
+
+	public async getDrawRun(user_ext_id: string, payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
+		const message = this.buildMessage<GetDrawRunRequest, GetDrawRunResponse>(
+			user_ext_id,
+			ClassId.RAF_GET_DRAW_RUN_REQUEST ,
+			payload,
+		);
+		
+		return await this.send<GetDrawRunResponse>(message, ClassId.RAF_GET_DRAW_RUN_RESPONSE);
+	}	
+
+	public async getRaffleDrawRunsHistory(user_ext_id: string, payload: GetRaffleDrawRunsHistoryRequest): Promise<GetRaffleDrawRunsHistoryResponse> {
+		const message = this.buildMessage<GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse>(
+			user_ext_id,
+			ClassId.RAF_GET_DRAW_HISTORY_REQUEST ,
+			payload,
+		);
+		
+		return await this.send<GetRaffleDrawRunsHistoryResponse>(message, ClassId.RAF_GET_DRAW_HISTORY_RESPONSE);
 	}	
 }
 

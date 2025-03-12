@@ -111,7 +111,12 @@ interface RafflePrize {
      */
     stock_items_per_draw?: number;
 
-    winners: RafflePrizeWinner[]
+	/**
+	 * Shows if the prize has been claimed
+	 */
+	is_claimed: boolean;
+
+	winners: RafflePrizeWinner[];
 }
 
 export { RafflePrize }
