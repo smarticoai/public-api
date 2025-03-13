@@ -1,4 +1,4 @@
-import { ProtocolMessage } from "src/Base/ProtocolMessage";
+import { ProtocolMessage } from "../Base/ProtocolMessage";
 
 export interface GetRaffleDrawRunsHistoryRequest extends ProtocolMessage {
     raffle_id: number;

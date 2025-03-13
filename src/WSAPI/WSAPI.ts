@@ -53,7 +53,7 @@ import { GetAchievementMapResponse } from '../Missions';
 import { GetRelatedAchTourResponse } from '../Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse } from '../Raffle/GetRafflesResponse';
 import { InboxCategories } from '../Inbox/InboxCategories';
-import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse } from 'src/Raffle';
+import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse } from '../Raffle';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;

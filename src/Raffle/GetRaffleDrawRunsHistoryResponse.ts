@@ -1,4 +1,4 @@
-import { ProtocolResponse } from 'src/Base/ProtocolResponse';
+import { ProtocolResponse } from '../Base/ProtocolResponse';
 import { RaffleDrawRun } from './RaffleDraw';
 
 export interface GetRaffleDrawRunsHistoryResponse extends ProtocolResponse {
