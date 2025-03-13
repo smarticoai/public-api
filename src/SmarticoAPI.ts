@@ -191,28 +191,38 @@ class SmarticoAPI {
 		return ENV_ID;
 	}
 
-	private replaceDomains(obj: any) {
+	private static replaceSmrDomainsWithCloudfront<T>(value: string | {[key: string]: any}): T {
+		if (!value) {
+			return value as T;
+		}
+
 		const domains = {
-			'static4.smr.vc': 'd146b4m7rkvjkw.cloudfront.net',
+			'img.smr.vc': 'd1am61onjxtys8.cloudfront.net',
+			'img3.smr.vc': 'd3dubbodzd2q05.cloudfront.net',
 			'img4.smr.vc': 'dvm0p9vsezqr2.cloudfront.net',
+			'img5.smr.vc': 'd3gen1ksvxhac8.cloudfront.net',
+			'img6.smr.vc': 'db1kmyg7iufeo.cloudfront.net',
+
+			'static.smr.vc': 'dtt380pweilws.cloudfront.net',
+			'static3.smr.vc': 'd1qt8ake8g4imn.cloudfront.net',
+			'static4.smr.vc': 'd146b4m7rkvjkw.cloudfront.net',
+			'static5.smr.vc': 'd121pfj16xdfcq.cloudfront.net',
+			'static6.smr.vc': 'd21deilz814qgl.cloudfront.net',
 		}
 
-		let newObject = obj;
+		const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-		const oldDomains = Object.keys(domains);
+		let replacedValue = typeof value === 'string' ? value : JSON.stringify(value);
 
-		for (const oldDomain of oldDomains) {
-			const stringified = JSON.stringify(newObject);
-
-			try {
-				const replacedString = stringified.replace(new RegExp(oldDomain, 'g'), domains[oldDomain]);
-				newObject = JSON.parse(replacedString);
-			} catch (error) {
-				console.error(error)
-			}
+		for (const [oldDomain, newDomain] of Object.entries(domains)) {
+			replacedValue = replacedValue.replace(new RegExp(escapeRegExp(oldDomain), 'g'), newDomain);
 		}
 
-		return newObject
+		try {
+			return typeof value === 'string' ? replacedValue as T : JSON.parse(replacedValue)
+		} catch (err) {
+			return value as T;
+		}
 	}
 
 	public static getEnvId(label_api_key: string): number {
@@ -233,10 +243,12 @@ class SmarticoAPI {
 
 	public static getAvatarUrl(label_api_key: string): string {
 		const envId = SmarticoAPI.getEnvDnsSuffix(label_api_key);
+		const avatarUrl = AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
+
 		if (envId === '4') {
-			return 'https://dvm0p9vsezqr2.cloudfront.net';
+			return SmarticoAPI.replaceSmrDomainsWithCloudfront(avatarUrl);
 		} else {
-			return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
+			return avatarUrl;
 		}
 	}
 
@@ -256,8 +268,8 @@ class SmarticoAPI {
 			result = await this.messageSender(message, this.publicUrl, expectCID);
 			const timeEnd = new Date().getTime();
 
-			if (this.label_api_key === 'a6e7ac26-c368-4892-9380-96e7ff82cf3e-4' && result) {
-				result = this.replaceDomains(result);
+			if (SmarticoAPI.getEnvDnsSuffix(this.label_api_key)  === 'a6e7ac26-c368-4892-9380-96e7ff82cf3e-4' && result) {
+				result = SmarticoAPI.replaceSmrDomainsWithCloudfront(result);
 			}
 
 			if (this.logHTTPTiming) {
