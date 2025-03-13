@@ -191,7 +191,7 @@ class SmarticoAPI {
 		return ENV_ID;
 	}
 
-	private static replaceSmrDomainsWithCloudfront<T>(value: string | {[key: string]: any}): T {
+	public static replaceSmrDomainsWithCloudfront<T>(value: string | {[key: string]: any}): T {
 		if (!value) {
 			return value as T;
 		}
