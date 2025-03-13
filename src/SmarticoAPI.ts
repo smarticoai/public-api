@@ -268,7 +268,7 @@ class SmarticoAPI {
 			result = await this.messageSender(message, this.publicUrl, expectCID);
 			const timeEnd = new Date().getTime();
 
-			if (SmarticoAPI.getEnvDnsSuffix(this.label_api_key)  === 'a6e7ac26-c368-4892-9380-96e7ff82cf3e-4' && result) {
+			if (SmarticoAPI.getEnvDnsSuffix(this.label_api_key)  === '4' && result) {
 				result = SmarticoAPI.replaceSmrDomainsWithCloudfront(result);
 			}
 
