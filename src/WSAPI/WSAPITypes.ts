@@ -74,7 +74,7 @@ export interface TMiniGamePrize {
 	/** When enabled, you can split prize value by decimal values */
 	allow_split_decimal?: boolean;
 	/** When enabled, you can hide prize from prize history */
-	hide_prize_from_history?:boolean;
+	hide_prize_from_history?: boolean;
 }
 
 /**
