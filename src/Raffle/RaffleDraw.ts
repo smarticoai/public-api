@@ -136,7 +136,7 @@ interface RaffleDrawRun {
 	execution_ts: number;
 
     /** Actual Date/time of the draw execution */
-    actual_execution_date:number;
+    actual_execution_ts: number;
 
 	/**
 	 *  Date/time starting from which the tickets will participate in the upcoming draw
