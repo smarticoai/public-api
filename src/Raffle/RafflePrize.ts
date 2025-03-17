@@ -114,7 +114,7 @@ interface RafflePrize {
 	/**
 	 * Shows if the prize has been claimed
 	 */
-	is_claimed: boolean;
+	should_claim: boolean;
 
 	winners: RafflePrizeWinner[];
 }
