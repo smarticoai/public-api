@@ -85,7 +85,7 @@ interface RaffleDraw {
      *  Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
      *  (internally this value is calculated as next_execute_ts - ticket_start_date)
      */
-    ticket_start_date: number;
+    ticket_start_ts: number;
 
     /** Field is indicating if same ticket can win multiple prizes in the same draw 
      *  For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook
@@ -144,7 +144,7 @@ interface RaffleDrawRun {
 	 *  Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
 	 *  (internally this value is calculated as next_execute_ts - ticket_start_date)
 	 */
-	ticket_start_date: number;
+	ticket_start_ts: number;
 
 	/**
 	 * Shows if user has won a prize in a current run
