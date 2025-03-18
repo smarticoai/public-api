@@ -32,6 +32,6 @@ ___
 
 ___
 
-### won\_ids
+### won\_id
 
-• **won\_ids**: `number`[]
+• **won\_id**: `number`

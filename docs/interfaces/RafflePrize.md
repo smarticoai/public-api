@@ -132,9 +132,9 @@ the stock_items_per_draw will be decreasing by 1 each day (assuming there is eno
 
 ___
 
-### is\_claimed
+### should\_claim
 
-• **is\_claimed**: `boolean`
+• **should\_claim**: `boolean`
 
 Shows if the prize has been claimed
 

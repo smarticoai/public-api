@@ -78,9 +78,9 @@ Unique ID of the previusly executed draw (if there is such)
 
 ___
 
-### ticket\_start\_date
+### ticket\_start\_ts
 
-• **ticket\_start\_date**: `number`
+• **ticket\_start\_ts**: `number`
 
 Date/time starting from which the tickets will participate in the upcoming draw
  This value need to be taken into account with next_execute_ts field value, for example
