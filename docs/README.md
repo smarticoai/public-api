@@ -38,6 +38,8 @@
 - [GetRafflesRequest](interfaces/GetRafflesRequest.md)
 - [GetRafflesResponse](interfaces/GetRafflesResponse.md)
 - [Raffle](interfaces/Raffle.md)
+- [RaffleClaimPrizeRequest](interfaces/RaffleClaimPrizeRequest.md)
+- [RaffleClaimPrizeResponse](interfaces/RaffleClaimPrizeResponse.md)
 - [RaffleDraw](interfaces/RaffleDraw.md)
 - [RaffleDrawRun](interfaces/RaffleDrawRun.md)
 - [RafflePrize](interfaces/RafflePrize.md)
