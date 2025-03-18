@@ -4,6 +4,7 @@ export * from './GetRafflesRequest';
 export * from './GetRafflesResponse';
 export * from './Raffle';
 export * from './RaffleDraw';
+export * from './RaffleDrawRun';
 export * from './RafflePrize';
 export * from './RafflePrizeWinner';
 export * from './RaffleTicket';
