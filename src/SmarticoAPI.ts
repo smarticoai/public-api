@@ -244,8 +244,8 @@ class SmarticoAPI {
 	public static getAvatarUrl(label_api_key: string): string {
 		const envId = SmarticoAPI.getEnvDnsSuffix(label_api_key);
 		const avatarUrl = AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
-
-		if (envId === '4') {
+		const envs = ['4', '5', '6', '7'];
+		if (envs.includes(envId)) {
 			return SmarticoAPI.replaceSmrDomainsWithCloudfront(avatarUrl);
 		} else {
 			return avatarUrl;
@@ -267,8 +267,9 @@ class SmarticoAPI {
 			const timeStart = new Date().getTime();
 			result = await this.messageSender(message, this.publicUrl, expectCID);
 			const timeEnd = new Date().getTime();
+			const envs = ['4', '5', '6', '7'];
 
-			if (SmarticoAPI.getEnvDnsSuffix(this.label_api_key)  === '4' && result) {
+			if (envs.includes(SmarticoAPI.getEnvDnsSuffix(this.label_api_key)) && result) {
 				result = SmarticoAPI.replaceSmrDomainsWithCloudfront(result);
 			}
 
