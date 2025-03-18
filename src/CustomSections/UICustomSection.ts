@@ -5,6 +5,7 @@ import {
 	AchMissionsTabsOptions,
 	AchOverviewMissionsFilter,
 } from './AchCustomSection';
+import { GetCustomSectionsResponse } from './GetCustomSectionsResponse';
 
 export interface UICustomSection {
 	body?: string;
@@ -19,11 +20,16 @@ export interface UICustomSection {
 	overview_missions_count?: number;
 }
 
-export const UICustomSectionTransform = (items: UICustomSection[]): TUICustomSection[] => {
-	return items
-		.filter((r) => r.section_type_id !== undefined && r.section_type_id >= 1)
-		.map((r) => {
+export const UICustomSectionTransform = (response: GetCustomSectionsResponse): TUICustomSection[] => {
+
+	const items: TUICustomSection[] = [];
+
+	Object.keys(response.customSections).forEach((key: string) => {
+		const r = response.customSections[key];
+		const id = parseInt(key);
+		if (r.section_type_id !== undefined && r.section_type_id >= 1) {
 			const x: TUICustomSection = {
+				id: id,
 				body: r.body,
 				menu_img: r.menu_img,
 				menu_name: r.menu_name,
@@ -35,6 +41,10 @@ export const UICustomSectionTransform = (items: UICustomSection[]): TUICustomSec
 				overview_missions_filter: r.overview_missions_filter,
 				theme: r.theme,
 			};
-			return x;
-		});
+
+			items.push(x);
+		}
+	});
+
+	return items;
 };

@@ -1001,7 +1001,7 @@ class SmarticoAPI {
 	}
 
 	public async getCustomSectionsT(user_ext_id: string): Promise<TUICustomSection[]> {
-		return UICustomSectionTransform(Object.values((await this.getCustomSections(user_ext_id)).customSections));
+		return UICustomSectionTransform(await this.getCustomSections(user_ext_id));
 	}
 
 	public async getTranslationsT(

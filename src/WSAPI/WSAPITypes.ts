@@ -774,6 +774,8 @@ export interface TSegmentCheckResult {
 }
 
 export interface TUICustomSection {
+	/** The ID of the custom section */
+	id: number;
 	/** The body of the custom section */
 	body?: string;
 	/** The image of the custom section */
