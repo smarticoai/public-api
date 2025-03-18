@@ -10,3 +10,5 @@ export * from './RafflePrizeWinner';
 export * from './RaffleTicket';
 export * from './GetRaffleDrawRunsHistoryRequest';
 export * from './GetRaffleDrawRunsHistoryResponse';
+export * from './RaffleClaimPrizeRequest';
+export * from './RaffleClaimPrizeResponse';
