@@ -61,4 +61,5 @@ export interface SAWTemplateUI {
 	steps_to_finish_game?: number;
 
 	wheel_layout?: SAWWheelLayout;
+	background_music_volume?: number;
 }
