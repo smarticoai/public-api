@@ -2,6 +2,14 @@
 
 ## Properties
 
+### id
+
+• **id**: `number`
+
+The ID of the custom section
+
+___
+
 ### body
 
 • `Optional` **body**: `string`
