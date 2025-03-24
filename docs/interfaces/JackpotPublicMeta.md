@@ -55,3 +55,11 @@ ___
 • **placeholder2**: `string`
 
 custom value of placeholder2 defined by operator and can be used in the HTML templates
+
+___
+
+### custom\_data
+
+• **custom\_data**: `string`
+
+custom data as string or JSON string that can be used in UIWidget
