@@ -10,6 +10,8 @@ interface RafflePublicMeta {
     custom_section_id: number;
     /** URL of the image that represents the raffle */
     image_url: string;
+    /** Custom data as string or JSON string that can be used in UIWidget */
+	custom_data: string;
 }
 
 

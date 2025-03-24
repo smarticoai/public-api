@@ -14,6 +14,8 @@ interface JackpotPublicMeta {
 	placeholder1: string;
 	/** custom value of placeholder2 defined by operator and can be used in the HTML templates */
 	placeholder2: string;
+	/** custom data as string or JSON string that can be used in UIWidget */
+	custom_data: string;
 }
 
 export { JackpotPublicMeta };
