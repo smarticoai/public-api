@@ -40,7 +40,7 @@ class IntUtils {
 				return str;
 			}
 		}
-		return str;
+		return str || {};
 	};
 
 	// public static wsTimeToEpoch = (time: string): number => {

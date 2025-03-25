@@ -14,7 +14,11 @@ interface JackpotPublicMeta {
 	placeholder1: string;
 	/** custom value of placeholder2 defined by operator and can be used in the HTML templates */
 	placeholder2: string;
-	/** custom data as string or JSON string that can be used in UIWidget */
+	/**
+	 * Custom data as string or JSON string that can be used in API to build custom UI
+	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
+	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+	*/
 	custom_data: string;
 }
 

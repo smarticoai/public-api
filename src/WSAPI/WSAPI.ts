@@ -54,6 +54,7 @@ import { GetRelatedAchTourResponse } from '../Missions/GetRelatedAchTourResponse
 import { GetRafflesResponse } from '../Raffle/GetRafflesResponse';
 import { InboxCategories } from '../Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse } from '../Raffle';
+import { IntUtils } from '../IntUtils';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -950,6 +951,10 @@ export class WSAPI {
 			async () => {
 				const _jackpots = await this.api.jackpotGet(null, filter);
 				const _pots = _jackpots.items.map((jp) => jp.pot);
+
+				_jackpots.items.forEach((jp) => {
+					jp.jp_public_meta.custom_data = IntUtils.JsonOrText(jp.jp_public_meta.custom_data);
+				});
 
 				OCache.set(onUpdateContextKey.Pots, _pots, ECacheContext.WSAPI, JACKPOT_POT_CACHE_SEC);
 				return _jackpots.items;

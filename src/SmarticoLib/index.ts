@@ -851,7 +851,11 @@ export interface TLevel {
 	 *
 	 */
 	required_level_counter_2: number;
-	/** The custom data of the Level defined by operator in the BackOffice. Can be a JSON object, string or number */
+	/** 
+	 * Custom data as string or JSON string that can be used in API to build custom UI
+	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
+	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+	 */
 	custom_data: string;
 }
 /**
