@@ -2,9 +2,9 @@
 
 ## Enumeration Members
 
-### Main
+### MultiUser
 
-• **Main** = ``1``
+• **MultiUser** = ``1``
 
 ___
 

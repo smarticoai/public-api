@@ -1,5 +1,5 @@
 enum JackpotType {
-	Main = 1,
+	MultiUser = 1,
 	Personal = 2,
 }
 
