@@ -35,6 +35,7 @@ export interface SAWTemplate {
 	saw_skin_ui_definition: {
 		skin_folder: string;
 		skin_css: string;
+		use_new_popups?: boolean;
 	};
 
 	expose_game_stat_on_api?: boolean;
