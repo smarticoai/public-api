@@ -11,3 +11,4 @@ export * from './StoreItemType';
 export * from './StoreItemPurchased';
 export * from './GetStoreHistoryRequest';
 export * from './GetStoreHistoryResponse';
+export * from './StoreItemPurchaseType';

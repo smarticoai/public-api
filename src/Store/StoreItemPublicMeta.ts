@@ -1,6 +1,9 @@
+import { StoreItemPurchaseType } from "./StoreItemPurchaseType";
+
 export interface StoreItemPublicMeta {
 	price: string;
 	image_url: string;
+	purchase_type: StoreItemPurchaseType;
 	name: string;
 	description: string;
 	label_tag: string;

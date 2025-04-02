@@ -470,6 +470,8 @@ export interface TStoreItem {
 	purchased_this_week?: boolean;
 	/** Flag for store item indicating that it was purchased this month  */
 	purchased_this_month?: boolean;
+	/** The type of the purchase */
+	purchase_type: 'points' | 'gems' | 'diamonds';
 }
 
 /**

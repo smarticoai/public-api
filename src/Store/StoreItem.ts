@@ -1,6 +1,7 @@
 import { IntUtils } from '../IntUtils';
 import { TStoreItem } from '../WSAPI/WSAPITypes';
 import { StoreItemPublicMeta } from './StoreItemPublicMeta';
+import { StoreItemPurchaseType } from './StoreItemPurchaseType';
 import { StoreItemType, StoreItemTypeNamed } from './StoreItemType';
 
 export interface StoreItem {
@@ -12,13 +13,27 @@ export interface StoreItem {
 	shopPool: number;
 }
 
+const mapPurchaseType = (purchaseType: StoreItemPurchaseType) => {
+	if (purchaseType === StoreItemPurchaseType.Points) {
+		return 'points';
+	} else if (purchaseType === StoreItemPurchaseType.Gems) {
+		return 'gems';
+	} else if (purchaseType === StoreItemPurchaseType.Diamonds) {
+		return 'diamonds';
+	}
+
+	return 'points';
+};
+
 export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
+	
 	return items
 		.filter((r) => r.id >= 1)
 		.map((r) => {
 			const x: TStoreItem = {
 				id: r.id,
 				name: r.itemPublicMeta.name,
+				purchase_type: mapPurchaseType(r.itemPublicMeta.purchase_type),
 				price: r.itemPublicMeta.price as any as number, // AA: strange why it's string
 				image: r.itemPublicMeta.image_url,
 				description: r.itemPublicMeta.description,
