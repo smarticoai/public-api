@@ -1,6 +1,7 @@
 import { IntUtils } from '../IntUtils';
 import { TStoreItem } from '../WSAPI/WSAPITypes';
 import { StoreItem } from './StoreItem';
+import { StoreItemPurchaseType } from './StoreItemPurchaseType';
 import { StoreItemTypeNamed } from './StoreItemType';
 
 interface StoreItemPurchased extends StoreItem {
@@ -10,6 +11,18 @@ interface StoreItemPurchased extends StoreItem {
 	purchased_this_week?: boolean;
 	purchased_this_month?: boolean;
 }
+
+const mapPurchaseType = (purchaseType: StoreItemPurchaseType) => {
+	if (purchaseType === StoreItemPurchaseType.Points) {
+		return 'points';
+	} else if (purchaseType === StoreItemPurchaseType.Gems) {
+		return 'gems';
+	} else if (purchaseType === StoreItemPurchaseType.Diamonds) {
+		return 'diamonds';
+	}
+
+	return 'points';
+};
 
 export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStoreItem[] => {
 	return items
@@ -23,6 +36,7 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
 				id: r.id,
 				name: r.itemPublicMeta.name,
 				price: r.itemPublicMeta.price as any as number, // AA: strange why it's string
+				purchase_type: mapPurchaseType(r.itemPublicMeta.purchase_type),
 				image: r.itemPublicMeta.image_url,
 				description: r.itemPublicMeta.description,
 				ribbon: r.itemPublicMeta.label_tag === 'custom' ? r.itemPublicMeta.custom_label_tag : r.itemPublicMeta.label_tag,
