@@ -124,7 +124,7 @@ import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse'
 import { GetRafflesResponse } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { InboxCategories } from './Inbox/InboxCategories';
-import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse } from './Raffle';
+import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse } from './Raffle';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -1190,6 +1190,16 @@ class SmarticoAPI {
 		
 		return await this.send<GetRaffleDrawRunsHistoryResponse>(message, ClassId.RAF_GET_DRAW_HISTORY_RESPONSE);
 	}	
+
+	public async claimRafflePrize (user_ext_id:string, payload: RaffleClaimPrizeRequest):Promise <RaffleClaimPrizeResponse>{
+		const message = this.buildMessage<RaffleClaimPrizeRequest,RaffleClaimPrizeResponse>(
+			user_ext_id,
+			ClassId.RAF_CLAIM_PRIZE_REQUEST ,
+			payload
+		);
+
+		return await this.send<RaffleClaimPrizeResponse>(message,ClassId.RAF_CLAIM_PRIZE_RESPONSE);
+	}
 }
 
 export { SmarticoAPI, MessageSender };

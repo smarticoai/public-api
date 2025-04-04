@@ -6,7 +6,7 @@ interface RafflePrizeWinner {
 	avatar_id: string;
 	avatar_url?: string;
 	ticket: RaffleTicket;
-	won_id: number;
+	raf_won_id: number;
 }
 
 export { RafflePrizeWinner }

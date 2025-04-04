@@ -53,7 +53,14 @@ import { GetAchievementMapResponse } from '../Missions';
 import { GetRelatedAchTourResponse } from '../Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse } from '../Raffle/GetRafflesResponse';
 import { InboxCategories } from '../Inbox/InboxCategories';
-import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse } from '../Raffle';
+import {
+	GetDrawRunRequest,
+	GetDrawRunResponse,
+	GetRaffleDrawRunsHistoryRequest,
+	GetRaffleDrawRunsHistoryResponse,
+	RaffleClaimPrizeRequest,
+	RaffleClaimPrizeResponse,
+} from '../Raffle';
 import { IntUtils } from '../IntUtils';
 
 /** @hidden */
@@ -558,9 +565,8 @@ export class WSAPI {
 		return o;
 	}
 
-
 	/**
-	 * Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize 
+	 * Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize
 	 * **Example**:
 	 * ```
 	 * _smartico.api.miniGameWinAcknowledgeRequest('2a189322-31bb-4119-b943-bx7868ff8dc3').then((result) => {
@@ -568,7 +574,7 @@ export class WSAPI {
 	 * });
 	 * ```
 	 */
-	 public async  miniGameWinAcknowledgeRequest (request_id: string) {
+	public async miniGameWinAcknowledgeRequest(request_id: string) {
 		return this.api.doAcknowledgeRequest(null, request_id);
 	}
 
@@ -763,9 +769,13 @@ export class WSAPI {
 		onlyFavorite,
 		categoryId,
 		onUpdate,
-	}: { from?: number; to?: number; onlyFavorite?: boolean; categoryId?: InboxCategories, onUpdate?: (data: TInboxMessage[]) => void } = {}): Promise<
-		TInboxMessage[]
-	> {
+	}: {
+		from?: number;
+		to?: number;
+		onlyFavorite?: boolean;
+		categoryId?: InboxCategories;
+		onUpdate?: (data: TInboxMessage[]) => void;
+	} = {}): Promise<TInboxMessage[]> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate);
 		}
@@ -1053,16 +1063,19 @@ export class WSAPI {
 		return result;
 	}
 
-
 	public async getRaffles(): Promise<GetRafflesResponse> {
 		return await this.api.getRaffles(null);
 	}
 
-	public async getDrawRun(payload: GetDrawRunRequest): Promise<GetDrawRunResponse>{
+	public async getDrawRun(payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
 		return await this.api.getDrawRun(null, payload);
 	}
-	
-	public async getRaffleDrawRunsHistory(payload: GetRaffleDrawRunsHistoryRequest): Promise<GetRaffleDrawRunsHistoryResponse>{
+
+	public async getRaffleDrawRunsHistory(payload: GetRaffleDrawRunsHistoryRequest): Promise<GetRaffleDrawRunsHistoryResponse> {
 		return await this.api.getRaffleDrawRunsHistory(null, payload);
+	}
+
+	public async claimRafflePrize(payload: RaffleClaimPrizeRequest): Promise<RaffleClaimPrizeResponse> {
+		return await this.api.claimRafflePrize(null, payload);
 	}
 }
