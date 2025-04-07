@@ -483,7 +483,7 @@ ___
 
 ▸ **miniGameWinAcknowledgeRequest**(`request_id`): `Promise`\<`SAWDoAknowledgeResponse`\>
 
-Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize 
+Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize
 **Example**:
 ```
 _smartico.api.miniGameWinAcknowledgeRequest('2a189322-31bb-4119-b943-bx7868ff8dc3').then((result) => {
@@ -1029,3 +1029,19 @@ ___
 #### Returns
 
 `Promise`\<[`GetRaffleDrawRunsHistoryResponse`](../interfaces/GetRaffleDrawRunsHistoryResponse.md)\>
+
+___
+
+### claimRafflePrize
+
+▸ **claimRafflePrize**(`payload`): `Promise`\<[`RaffleClaimPrizeResponse`](../interfaces/RaffleClaimPrizeResponse.md)\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `payload` | [`RaffleClaimPrizeRequest`](../interfaces/RaffleClaimPrizeRequest.md) |
+
+#### Returns
+
+`Promise`\<[`RaffleClaimPrizeResponse`](../interfaces/RaffleClaimPrizeResponse.md)\>

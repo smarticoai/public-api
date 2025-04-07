@@ -164,3 +164,11 @@ ___
 • `Optional` **purchased\_this\_month**: `boolean`
 
 Flag for store item indicating that it was purchased this month
+
+___
+
+### purchase\_type
+
+• **purchase\_type**: ``"points"`` \| ``"gems"`` \| ``"diamonds"``
+
+The type of the purchase
