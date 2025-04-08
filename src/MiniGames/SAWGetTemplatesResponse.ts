@@ -75,6 +75,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					prize_modifiers: p.saw_prize_ui_definition.prize_modifiers,
 					allow_split_decimal: p.saw_prize_ui_definition.allow_split_decimal,
 					hide_prize_from_history: p.saw_prize_ui_definition.hide_prize_from_history,
+					requirements_to_get_prize: p.saw_prize_ui_definition.requirements_to_get_prize,
 				};
 				return y;
 			}),

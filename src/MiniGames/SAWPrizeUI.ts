@@ -26,4 +26,5 @@ export interface SAWPrizeUI {
 	allow_split_decimal?: boolean; // treasure hunt specific
 	hide_prize_from_history?: boolean;
 	hide_prize_till_won?: boolean;
+	requirements_to_get_prize?: string;
 }

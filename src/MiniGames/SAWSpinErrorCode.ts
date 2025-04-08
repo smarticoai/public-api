@@ -16,4 +16,6 @@ export enum SAWSpinErrorCode {
 	SAW_TEMPLATE_NOT_ACTIVE = 40007,
 	/** Special code for the 'visitor' mode */
 	SAW_VISITOR_STOP_SPIN_REQUEST = -40001,
+	/** User is not in the segment */
+	SAW_NOT_IN_SEGMENT = 40009,
 }
