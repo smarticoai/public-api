@@ -7,6 +7,7 @@ interface RafflePrizeWinner {
 	avatar_url?: string;
 	ticket: RaffleTicket;
 	raf_won_id: number;
+	claimed_date: number
 }
 
 export { RafflePrizeWinner }

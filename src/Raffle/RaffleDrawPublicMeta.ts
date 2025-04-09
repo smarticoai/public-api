@@ -9,6 +9,8 @@ export interface RaffleDrawPublicMeta {
     icon_url: string;
     /** URL of the background image that will be used in the draw list item */
     background_image_url: string;
+    /** URL of the moible background image that will be used in the draw list item */
+    background_image_url_mobile: string;
     /** Show if the draw is grand and is marked as special */
     is_grand: boolean;
 }
