@@ -245,12 +245,7 @@ class SmarticoAPI {
 	public static getAvatarUrl(label_api_key: string): string {
 		const envId = SmarticoAPI.getEnvDnsSuffix(label_api_key);
 		const avatarUrl = AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
-		const envs = ['4', '5', '6', '7'];
-		if (envs.includes(envId)) {
-			return SmarticoAPI.replaceSmrDomainsWithCloudfront(avatarUrl);
-		} else {
-			return avatarUrl;
-		}
+		return SmarticoAPI.replaceSmrDomainsWithCloudfront(avatarUrl);
 	}
 
 	private async send<T>(message: any, expectCID?: ClassId, force_language?: string): Promise<T> {
@@ -267,12 +262,8 @@ class SmarticoAPI {
 		try {
 			const timeStart = new Date().getTime();
 			result = await this.messageSender(message, this.publicUrl, expectCID);
+			result = SmarticoAPI.replaceSmrDomainsWithCloudfront(result);
 			const timeEnd = new Date().getTime();
-			const envs = ['4', '5', '6', '7'];
-
-			if (envs.includes(SmarticoAPI.getEnvDnsSuffix(this.label_api_key)) && result) {
-				result = SmarticoAPI.replaceSmrDomainsWithCloudfront(result);
-			}
 
 			if (this.logHTTPTiming) {
 				this.logger.always('HTTP time, ms:' + (timeEnd - timeStart));
