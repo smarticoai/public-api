@@ -11,6 +11,7 @@ export interface StoreItem {
 	categoryIds?: number[];
 	canBuy?: boolean;
 	shopPool: number;
+	activeTillDate?: number;
 }
 
 const mapPurchaseType = (purchaseType: StoreItemPurchaseType) => {
@@ -47,6 +48,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				category_ids: r.categoryIds ?? [],
 				pool: r.shopPool,
 				custom_data: IntUtils.JsonOrText(r.itemPublicMeta.custom_data),
+				active_till_date: r.activeTillDate 
 			};
 			return x;
 		});

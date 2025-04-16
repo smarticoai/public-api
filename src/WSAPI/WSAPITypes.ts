@@ -474,6 +474,8 @@ export interface TStoreItem {
 	purchased_this_month?: boolean;
 	/** The type of the purchase */
 	purchase_type: 'points' | 'gems' | 'diamonds';
+	/** The date when the store item will be available till */
+	active_till_date?: number;
 }
 
 /**

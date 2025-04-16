@@ -13,4 +13,9 @@ export interface StoreItemPublicMeta {
 	related_items: number[];
 	hint_text: string;
 	custom_data: string;
+	show_timer: boolean;
+	cant_buy_message: string;
+	discount_prize: number;
+	discount_prize_ribbon: string;
+	custom_ribbon_image: string;
 }
