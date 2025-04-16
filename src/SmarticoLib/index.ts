@@ -265,6 +265,11 @@ export interface StoreItemPublicMeta {
 	priority: number;
 	related_items: number[];
 	hint_text: string;
+	show_timer?: boolean;
+	cant_buy_message?: string;
+	discount_prize?: number;
+	discount_prize_ribbon?: string;
+	custom_ribbon_image?: string;
 }
 declare enum StoreItemType {
 	Bonus = 1,
@@ -277,6 +282,7 @@ export interface StoreItem {
 	categoryIds?: number[];
 	canBuy?: boolean;
 	shopPool: number;
+	activeTillDate?: number;
 }
 export interface GetStoreItemsResponse extends ProtocolResponse {
 	items: StoreItem[];
