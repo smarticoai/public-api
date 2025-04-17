@@ -35,3 +35,9 @@ ___
 ### raf\_won\_id
 
 • **raf\_won\_id**: `number`
+
+___
+
+### claimed\_date
+
+• **claimed\_date**: `number`

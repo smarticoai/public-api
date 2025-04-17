@@ -234,3 +234,11 @@ ___
 • `Optional` **hide\_prize\_from\_history**: `boolean`
 
 When enabled, you can hide prize from prize history
+
+___
+
+### requirements\_to\_get\_prize
+
+• `Optional` **requirements\_to\_get\_prize**: `string`
+
+Requirements to claim the prize  (lootbox specific)

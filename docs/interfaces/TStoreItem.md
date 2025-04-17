@@ -172,3 +172,11 @@ ___
 • **purchase\_type**: ``"points"`` \| ``"gems"`` \| ``"diamonds"``
 
 The type of the purchase
+
+___
+
+### active\_till\_date
+
+• `Optional` **active\_till\_date**: `number`
+
+The date when the store item will be available till

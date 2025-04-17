@@ -55,3 +55,11 @@ ___
 • **SAW\_VISITOR\_STOP\_SPIN\_REQUEST** = ``-40001``
 
 Special code for the 'visitor' mode
+
+___
+
+### SAW\_NOT\_IN\_SEGMENT
+
+• **SAW\_NOT\_IN\_SEGMENT** = ``40009``
+
+User is not in the segment
