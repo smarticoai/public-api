@@ -1067,8 +1067,8 @@ export class WSAPI {
 		return await this.api.getRaffles(null);
 	}
 
-	public async getDrawRun(payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
-		return await this.api.getDrawRun(null, payload);
+	public async getRaffleDrawRun(payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
+		return await this.api.getRaffleDrawRun(null, payload);
 	}
 
 	public async getRaffleDrawRunsHistory(payload: GetRaffleDrawRunsHistoryRequest): Promise<GetRaffleDrawRunsHistoryResponse> {

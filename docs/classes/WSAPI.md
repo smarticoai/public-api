@@ -1000,9 +1000,9 @@ ___
 
 ___
 
-### getDrawRun
+### getRaffleDrawRun
 
-▸ **getDrawRun**(`payload`): `Promise`\<[`GetDrawRunResponse`](../interfaces/GetDrawRunResponse.md)\>
+▸ **getRaffleDrawRun**(`payload`): `Promise`\<[`GetDrawRunResponse`](../interfaces/GetDrawRunResponse.md)\>
 
 #### Parameters
 

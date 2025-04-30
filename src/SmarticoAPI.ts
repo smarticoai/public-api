@@ -1162,7 +1162,7 @@ class SmarticoAPI {
 	}	
 
 
-	public async getDrawRun(user_ext_id: string, payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
+	public async getRaffleDrawRun(user_ext_id: string, payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
 		const message = this.buildMessage<GetDrawRunRequest, GetDrawRunResponse>(
 			user_ext_id,
 			ClassId.RAF_GET_DRAW_RUN_REQUEST ,
