@@ -7,6 +7,7 @@ import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, Ach
 import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
+import { JackPotWinner } from 'src/Jackpots/JackPotWinner';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;

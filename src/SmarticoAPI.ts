@@ -105,8 +105,6 @@ import {
 	GetJackpotsPotsResponse,
 	GetJackpotsRequest,
 	GetJackpotsResponse,
-	JackpotDetails,
-	JackpotPot,
 	JackpotsOptinRequest,
 	JackpotsOptinResponse,
 	JackpotsOptoutRequest,
@@ -125,6 +123,8 @@ import { GetRafflesResponse } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse } from './Raffle';
+import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
+import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -485,6 +485,23 @@ class SmarticoAPI {
 			payload,
 		);
 		return await this.send<JackpotsOptoutResponse>(message, ClassId.JP_OPTOUT_RESPONSE);
+	}
+
+	public async getJackpotWinners(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number ): Promise<GetJackpotWinnersResponse> {
+		const message = this.buildMessage<GetJackpotWinnersRequest, GetJackpotWinnersResponse>(
+			user_ext_id,
+			ClassId.JP_GET_WINNERS_REQUEST,
+			{
+				limit,
+				offset,
+				jp_template_id,
+			},
+		);
+		return await this.send<GetJackpotWinnersResponse>(message, ClassId.JP_GET_WINNERS_RESPONSE);
+	}
+
+	public async getJackpotWinnersT(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number ): Promise<JackpotWinnerHistory[]> {
+		return GetJackpotWinnersResponseTransform((await this.getJackpotWinners(user_ext_id, limit, offset, jp_template_id)).winners);
 	}
 
 	public async sawGetTemplates(

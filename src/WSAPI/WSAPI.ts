@@ -44,6 +44,7 @@ import {
 	JackpotDetails,
 	JackpotPot,
 	JackpotWinPush,
+	JackpotWinnerHistory,
 	JackpotsOptinResponse,
 	JackpotsOptoutRequest,
 	JackpotsOptoutResponse,
@@ -68,6 +69,7 @@ const CACHE_DATA_SEC = 30;
 
 const JACKPOT_TEMPLATE_CACHE_SEC = 30;
 const JACKPOT_POT_CACHE_SEC = 1;
+const JACKPOT_WINNERS_CACHE_SEC = 30;
 
 /** @hidden */
 enum onUpdateContextKey {
@@ -89,6 +91,7 @@ enum onUpdateContextKey {
 	CustomSections = 'customSections',
 	Bonuses = 'bonuses',
 	SAWHistory = 'sawHistory',
+	JackpotWinners = 'jackpotWinners',
 }
 
 /** @group General API */
@@ -923,6 +926,7 @@ export class WSAPI {
 	private async jackpotClearCache() {
 		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Jackpots);
 		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Pots);
+		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.JackpotWinners);
 	}
 
 	/** Returns list of Jackpots that are active in the systen and matching to the filter definition.
@@ -1040,6 +1044,40 @@ export class WSAPI {
 
 		return result;
 	}
+
+	/**
+	 * Returns the winners of the jackpot with the specified jp_template_id.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getJackpotWinners({
+	 *      jp_template_id: 123,
+	 * }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 * 
+	 * **Visitor mode: not supported**
+	 * 
+	 */
+
+	public async getJackpotWinners({
+		limit,
+		offset,
+		jp_template_id,
+	} : {
+		limit?: number;
+		offset?: number;
+		jp_template_id?: number;
+	}): Promise<JackpotWinnerHistory[]> {
+		return OCache.use(
+			onUpdateContextKey.JackpotWinners,
+			ECacheContext.WSAPI,
+			() => this.api.getJackpotWinnersT(null, limit, offset, jp_template_id),
+			JACKPOT_WINNERS_CACHE_SEC,
+		);
+	}
+
 	/**
 	 * Returns all the related tournaments and missions for the provided game id for the current user
 	 * The provided Game ID should correspond to the ID from the Games Catalog - https://help.smartico.ai/welcome/technical-guides/games-catalog-api
