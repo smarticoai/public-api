@@ -957,6 +957,38 @@ _smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
 
 ___
 
+### getJackpotWinners
+
+▸ **getJackpotWinners**(`«destructured»`): `Promise`\<[`JackpotWinnerHistory`](../interfaces/JackpotWinnerHistory.md)[]\>
+
+Returns the winners of the jackpot with the specified jp_template_id.
+
+**Example**:
+```
+_smartico.api.getJackpotWinners({
+     jp_template_id: 123,
+}).then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `limit?` | `number` |
+| › `offset?` | `number` |
+| › `jp_template_id?` | `number` |
+
+#### Returns
+
+`Promise`\<[`JackpotWinnerHistory`](../interfaces/JackpotWinnerHistory.md)[]\>
+
+___
+
 ### getRelatedItemsForGame
 
 ▸ **getRelatedItemsForGame**(`related_game_id`): `Promise`\<`GetRelatedAchTourResponse`\>
