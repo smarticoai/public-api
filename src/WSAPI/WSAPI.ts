@@ -38,6 +38,10 @@ import {
 	TClaimBonusResult,
 	TMiniGamePlayBatchResult,
 	TSawHistory,
+	TRaffle,
+	TRaffleDraw,
+	TRaffleDrawRun,
+	TransformedRaffleClaimPrizeResponse,
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -52,15 +56,18 @@ import {
 import { GetTournamentsResponse } from '../Tournaments';
 import { GetAchievementMapResponse } from '../Missions';
 import { GetRelatedAchTourResponse } from '../Missions/GetRelatedAchTourResponse';
-import { GetRafflesResponse } from '../Raffle/GetRafflesResponse';
+import { drawTransform, GetRafflesResponse, prizeTransform, ticketsTransform } from '../Raffle/GetRafflesResponse';
 import { InboxCategories } from '../Inbox/InboxCategories';
 import {
+	drawRunHistoryTransform,
+	drawRunTransform,
 	GetDrawRunRequest,
 	GetDrawRunResponse,
 	GetRaffleDrawRunsHistoryRequest,
 	GetRaffleDrawRunsHistoryResponse,
 	RaffleClaimPrizeRequest,
 	RaffleClaimPrizeResponse,
+	raffleClaimPrizeResponseTransform,
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
 
@@ -92,6 +99,7 @@ enum onUpdateContextKey {
 	Bonuses = 'bonuses',
 	SAWHistory = 'sawHistory',
 	JackpotWinners = 'jackpotWinners',
+	Raffles = 'raffles',
 }
 
 /** @group General API */
@@ -128,6 +136,10 @@ export class WSAPI {
 			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, () => {
 				this.reloadMiniGameTemplate();
 				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
+			});
+			on(ClassId.RAF_CLAIM_PRIZE_RESPONSE, () => {
+				this.updateRaffles();
+				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Raffles);
 			});
 		}
 	}
@@ -914,6 +926,11 @@ export class WSAPI {
 		this.updateEntity(onUpdateContextKey.InboxMessages, payload);
 	}
 
+	private async updateRaffles() {
+		const payload = await this.api.getRafflesT(null);
+		this.updateEntity(onUpdateContextKey.Raffles, payload);
+	}
+
 	private async updateEntity(contextKey: onUpdateContextKey, payload: any) {
 		OCache.set(contextKey, payload, ECacheContext.WSAPI);
 
@@ -1101,19 +1118,99 @@ export class WSAPI {
 		return result;
 	}
 
-	public async getRaffles(): Promise<GetRafflesResponse> {
-		return await this.api.getRaffles(null);
+	/**
+	 * Returns the list of Raffles available for user
+	 * The returned list of Raffles is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getRaffles with a new onUpdate callback, the old one will be overwritten by the new one.
+	 * The onUpdate callback will be called on claiming prize.  Updated Raffles will be passed to onUpdate callback.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getRaffles().then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 *
+	 */
+
+	public async getRaffles({ onUpdate }: { onUpdate?: (data: TRaffle[]) => void } = {}): Promise<TRaffle[]> {
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.Raffles, onUpdate);
+		}
+
+		return OCache.use(onUpdateContextKey.Raffles, ECacheContext.WSAPI, () => this.api.getRafflesT(null), CACHE_DATA_SEC);
 	}
 
-	public async getRaffleDrawRun(payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
-		return await this.api.getRaffleDrawRun(null, payload);
+	/**
+	 * Returns draw run for provided raffle_id and run_id
+	 *
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getDrawRun({raffle_id:156, run_id: 145}).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 *
+	 */
+
+	public async getDrawRun(props: { raffle_id: number; run_id: number }): Promise<TRaffleDraw> {
+		const res = await this.api.getDrawRun(null, props);
+
+		if (!props.raffle_id || !props.run_id) {
+			throw new Error('both raffle_id and run_id are required');
+		}
+
+		return drawRunTransform(res);
 	}
 
-	public async getRaffleDrawRunsHistory(payload: GetRaffleDrawRunsHistoryRequest): Promise<GetRaffleDrawRunsHistoryResponse> {
-		return await this.api.getRaffleDrawRunsHistory(null, payload);
+	/**
+	 * Returns history of draw runs for the provided raffle_id and draw_id, if the draw_id is not provided will return history of all the draws for the provided raffle_id
+	 *
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getRaffleDrawRunHistory({raffle_id:156, draw_id: 432}).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 *
+	 */
+
+	public async getRaffleDrawRunsHistory(props: { raffle_id: number; draw_id?: number }): Promise<TRaffleDrawRun[]> {
+		const res = await this.api.getRaffleDrawRunsHistory(null, props);
+
+		if (!props.raffle_id) {
+			throw new Error('raffle_id is required');
+		}
+
+		return drawRunHistoryTransform(res);
 	}
 
-	public async claimRafflePrize(payload: RaffleClaimPrizeRequest): Promise<RaffleClaimPrizeResponse> {
-		return await this.api.claimRafflePrize(null, payload);
+	/**
+	 * Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
+	 *
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.claimRafflePrize({won_id:251}).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 *
+	 */
+	public async claimRafflePrize(props: { won_id: number }): Promise<TransformedRaffleClaimPrizeResponse> {
+		if (!props.won_id) {
+			throw new Error('won_id is required');
+		}
+		const res = await this.api.claimRafflePrize(null, { won_id: props.won_id });
+		return raffleClaimPrizeResponseTransform(res);
 	}
 }

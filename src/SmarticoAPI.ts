@@ -95,6 +95,7 @@ import {
 	TUICustomSection,
 	TBonus,
 	TSawHistory,
+	TRaffle,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -119,7 +120,7 @@ import { SAWDoAcknowledgeBatchRequest } from './MiniGames/SAWDoAcknowledgeBatchR
 import { SAWDoAcknowledgeBatchResponse } from './MiniGames/SAWDoAcknowledgeBatchResponse';
 import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
 import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
-import { GetRafflesResponse } from './Raffle/GetRafflesResponse';
+import { GetRafflesResponse, raffleTransform } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse } from './Raffle';
@@ -1166,47 +1167,50 @@ class SmarticoAPI {
 		);
 		
 		return await this.send<GetRelatedAchTourResponse>(message, ClassId.GET_RELATED_ACH_N_TOURNAMENTS_RESPONSE);
+	}
 
+	public async getRafflesT(user_ext_id: string): Promise<TRaffle[]> {
+		return raffleTransform((await this.getRaffles(user_ext_id)).items);
 	}
 
 	public async getRaffles(user_ext_id: string): Promise<GetRafflesResponse> {
-		const message = this.buildMessage< GetRafflesRequest, GetRafflesResponse>(
-			user_ext_id,
-			ClassId.RAF_GET_RAFFLES_REQUEST
-		);
-		
+		const message = this.buildMessage<GetRafflesRequest, GetRafflesResponse>(user_ext_id, ClassId.RAF_GET_RAFFLES_REQUEST);
+
 		return await this.send<GetRafflesResponse>(message, ClassId.RAF_GET_RAFFLES_RESPONSE);
-	}	
+	}
 
-
-	public async getRaffleDrawRun(user_ext_id: string, payload: GetDrawRunRequest): Promise<GetDrawRunResponse> {
+	public async getDrawRun(user_ext_id: string, payload: { raffle_id: number; run_id: number }): Promise<GetDrawRunResponse> {
 		const message = this.buildMessage<GetDrawRunRequest, GetDrawRunResponse>(
 			user_ext_id,
-			ClassId.RAF_GET_DRAW_RUN_REQUEST ,
+			ClassId.RAF_GET_DRAW_RUN_REQUEST,
 			payload,
 		);
-		
-		return await this.send<GetDrawRunResponse>(message, ClassId.RAF_GET_DRAW_RUN_RESPONSE);
-	}	
 
-	public async getRaffleDrawRunsHistory(user_ext_id: string, payload: GetRaffleDrawRunsHistoryRequest): Promise<GetRaffleDrawRunsHistoryResponse> {
+		return await this.send<GetDrawRunResponse>(message, ClassId.RAF_GET_DRAW_RUN_RESPONSE);
+	}
+
+	public async getRaffleDrawRunsHistory(
+		user_ext_id: string,
+		props: { raffle_id: number; draw_id?: number },
+	): Promise<GetRaffleDrawRunsHistoryResponse> {
 		const message = this.buildMessage<GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse>(
 			user_ext_id,
-			ClassId.RAF_GET_DRAW_HISTORY_REQUEST ,
-			payload,
+			ClassId.RAF_GET_DRAW_HISTORY_REQUEST,
+			props,
 		);
-		
+
 		return await this.send<GetRaffleDrawRunsHistoryResponse>(message, ClassId.RAF_GET_DRAW_HISTORY_RESPONSE);
-	}	
+	}
 
-	public async claimRafflePrize (user_ext_id:string, payload: RaffleClaimPrizeRequest):Promise <RaffleClaimPrizeResponse>{
-		const message = this.buildMessage<RaffleClaimPrizeRequest,RaffleClaimPrizeResponse>(
+	public async claimRafflePrize(user_ext_id: string, props: { won_id: number }): Promise<RaffleClaimPrizeResponse> {
+		const message = this.buildMessage<RaffleClaimPrizeRequest, RaffleClaimPrizeResponse>(
 			user_ext_id,
-			ClassId.RAF_CLAIM_PRIZE_REQUEST ,
-			payload
+			ClassId.RAF_CLAIM_PRIZE_REQUEST,
+			props,
 		);
 
-		return await this.send<RaffleClaimPrizeResponse>(message,ClassId.RAF_CLAIM_PRIZE_RESPONSE);
+		return await this.send<RaffleClaimPrizeResponse>(message, ClassId.RAF_CLAIM_PRIZE_RESPONSE);
+
 	}
 }
 

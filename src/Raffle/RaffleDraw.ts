@@ -2,7 +2,7 @@ import { RaffleDrawPublicMeta } from "./RaffleDrawPublicMeta";
 import { RafflePrize } from "./RafflePrize";
 import { RaffleTicket } from "./RaffleTicket";
 
-enum RaffleDrawInstanceState {
+export enum RaffleDrawInstanceState {
     /** Draw is open for the tickets collection */
     Open = 1,
     /** Winner selection is in progress */
@@ -11,7 +11,7 @@ enum RaffleDrawInstanceState {
     Executed = 3,
 }
 
-enum RaffleDrawTypeExecution {
+export enum RaffleDrawTypeExecution {
     /** Draw is executed only once */
     ExecDate = 0,
     /** Draw is executed on a recurring basis */

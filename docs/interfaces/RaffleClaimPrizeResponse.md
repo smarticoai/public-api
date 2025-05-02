@@ -40,9 +40,9 @@ ___
 
 ### errCode
 
-• `Optional` **errCode**: `number`
+• **errCode**: `number`
 
-#### Inherited from
+#### Overrides
 
 ProtocolResponse.errCode
 
@@ -52,6 +52,6 @@ ___
 
 • `Optional` **errMsg**: `string`
 
-#### Inherited from
+#### Overrides
 
 ProtocolResponse.errMsg

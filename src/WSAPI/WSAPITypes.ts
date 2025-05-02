@@ -7,7 +7,7 @@ import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, Ach
 import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
-import { JackPotWinner } from 'src/Jackpots/JackPotWinner';
+import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from 'src/Raffle';import { JackPotWinner } from 'src/Jackpots/JackPotWinner';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
@@ -868,3 +868,309 @@ export interface TSawHistory {
 	/** Claimed prize date in milliseconds */
 	acknowledge_date_ts: number;
 }
+
+export interface TRaffle {
+	/** ID of the Raffle template */
+	id: number;
+	/** Name of the raffle */
+	name: string;
+	/** Description of the raffle */
+	description: string;
+	/** ID of the custom section that is linked to the raffle in the Gamification widget */
+	custom_section_id: number;
+	/** URL of the image that represents the raffle */
+	image_url: string;
+	/** URL of the mobile image that represents the raffle */
+	image_url_mobile: string;
+	/**
+	 * Custom data as string or JSON string that can be used in API to build custom UI
+	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
+	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+	 */
+	custom_data: string;
+	/** Date of start */
+	start_date: number;
+	/** Date of end */
+	end_date: number;
+	/** Maximum numer of tickets that can be given to all users for the whole period of raffle */
+	max_tickets_count: number;
+	/**
+	 * Number of tickets that are already given to all users for this raffle
+	 */
+	current_tickets_count: number;
+	/**
+	 * List of draws that are available for this raffle.
+	 * For example, if the raffle is containg one hourly draw, one daily draw and one draw on fixed date like 01/01/2022,
+	 * Then the list will always return 3 draws, no matter if the draws are already executed or they are in the future.
+	 */
+	draws: TRaffleDraw[];
+}
+
+export interface TRaffleTicket {
+	/* int presentation of the ticket */
+	ticekt_id: number;
+	/* String presentation of ticket */
+	ticket_id_string: string;
+}
+
+export interface TRafflePrize {
+	/**
+	 * The unique identifier for the prize definition
+	 */
+	id: string;
+
+	/** Name of the prize */
+	name: string;
+	/** Description of the prize */
+	description: string;
+	/** URL of the image that represents the prize */
+	image_url: string;
+	/**
+	 * The number of prizes available per run of the draw.
+	 * E.g. if the draw is run daily, this is the number of prizes available each day, for example 3 iPhones.
+	 */
+	prizes_per_run: number;
+
+	/**
+	 * The actual number of prizes for the current instance.
+	 * This value is taking into account follwing values:
+	 *  - min_required_total_tickets,
+	 *  - add_one_prize_per_each_x_tickets
+	 *  - stock_items_per_draw
+	 *  - total_tickets_count (from Draw instance)
+	 *  - cap_prizes_per_run
+	 * For example:
+	 *  - prizes_per_run = 1
+	 *  - min_required_total_tickets = 1000
+	 *  - add_one_prize_per_each_x_tickets = 1000
+	 *  - stock_items_per_draw = 5
+	 *  - total_tickets_count = 7000
+	 *  - cap_prizes_per_run = 6
+	 *  prizes_per_run_actual will be 5, because
+	 *  7000 tickets are collected, so 7 iPhones are available, but the cap is 6 and the stock is 5.
+	 */
+	prizes_per_run_actual: number;
+
+	/**
+	 *
+	 * The chances to win the prize by current player.
+	 * Calculated as the ratio of the number of tickets collected by the current player to the
+	 * total number of tickets collected by all players and multiplied by number of actual prizes of this kind.
+	 */
+	chances_to_win_perc: number;
+
+	/**
+	 * The minimum number of total tickets collected during draw period required to unlock the prize.
+	 * If the number of tickets collected is less than this value, the prize is not available.
+	 * Under total tickets we understand the number of tickets collected by all users.
+	 * The 'draw period' is the time between the ticket_start_date value of the draw and the current time.
+	 */
+	min_required_total_tickets?: number;
+
+	/**
+	 * One additional prize will be awarded for each X tickets.
+	 * E.g. if the prize is 1 iPhone and the value is set to 1000, then for every 1000 tickets collected, an additional iPhone is awarded.
+	 * If min_required_total_tickets is set to 1000, then next iPhone is awarded when 2000 tickets are collected, and so on.
+	 * If min_required_total_tickets is not set, then the next iPhone will be awarded when 1000 tickets are collected.
+	 */
+	add_one_prize_per_each_x_tickets?: number;
+
+	/**
+	 * Indicates whether the prize requires a claim action from the user.
+	 */
+	requires_claim: boolean;
+
+	/**
+	 * The minimum number of tickets a user must have to be eligible for the prize.
+	 * For example iPhone prize may require 10 tickets to be collected, only users with 10 or more tickets will be eligible for the prize.
+	 * More tickets are better, as they increase the chances of winning.
+	 */
+	min_required_tickets_for_user: number;
+
+	/**
+	 * The maximum number of prizes that can be given withing one instance/run of draw.
+	 * For example the prize is iPhone and add_one_prize_per_each_x_tickets is set to 1000,
+	 * cap_prizes_per_run is set to 3, and the total number of tickets collected is 7000.
+	 * In this case, the prizes_per_run_actual will be limitted by 3
+	 */
+	cap_prizes_per_run?: number;
+
+	/**
+	 * The priority of the prize. The low number means higher priority (e.g. 1 is higher priority than 2).
+	 * If there are multiple prizes available, the prize with the highest priority (lowest number) will be awarded first.
+	 */
+	priority: number;
+
+	/**
+	 * Optional field that indicates total remaining number of the prize for all draws of the type.
+	 * For example, the Daily draw has 1 iPhone daily, and the total number of iPhones is 10.
+	 * the stock_items_per_draw will be decreasing by 1 each day (assuming there is enough tickets and it is won every day), and when it reaches 0, the prize is not available anymore.
+	 */
+	stock_items_per_draw?: number;
+
+	/**
+	 * Shows if the prize has been claimed
+	 */
+	should_claim: boolean;
+
+	winners: TRafflePrizeWinner[];
+}
+
+export interface TRafflePrizeWinner {
+	/**
+	 * Id of the winner definition, for the repetative winners (e.g. same winner won two prizes), this number will be the same for all winner that are repeating
+	 * (internal name: schedule_id)
+	 */
+	id: number;
+	/** Winner user name */
+	username?: string;
+	/** URL of the image of user avatar*/
+	avatar_url?: string;
+	/** Ticket information (number string and integer)*/
+	ticket: TRaffleTicket;
+	/** Unique ID of winning*/
+	raf_won_id: number;
+	/** Date when the prize was claimed*/
+	claimed_date: number;
+}
+
+export interface TRaffleDraw {
+	/**
+	 * Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
+	 * (internal name: schedule_id)
+	 */
+	id: number;
+	/** Name of the draw, e.g. 'Daily draw' */
+	name: string;
+	/** Description of the draw */
+	description: string;
+	/** URL of the image that represents the draw */
+	image_url: string;
+	/** URL of the moible image that represents the draw */
+	image_url_mobile: string;
+	/** URL of the icon that represents the draw */
+	icon_url: string;
+	/** URL of the background image that will be used in the draw list item */
+	background_image_url: string;
+	/** URL of the moible background image that will be used in the draw list item */
+	background_image_url_mobile: string;
+	/** Show if the draw is grand and is marked as special */
+	is_grand: boolean;
+
+	/** Information about prizes in the draw */
+	prizes: TRafflePrize[];
+
+	/**
+	 * State of current instance of Draw
+	 */
+	current_state: RaffleDrawInstanceState;
+
+	/**
+	 * Field indicates the ID of the latest instance/run of draw
+	 */
+	run_id: number;
+
+	/**
+	 * Type of the draw execution, indicating how and when the draw is executed.
+	 * - ExecDate: Draw is executed only once at a specific date and time.
+	 * - Recurring: Draw is executed on a recurring basis (e.g., daily, weekly).
+	 * - Grand: Draw is executed once and is marked as grand, often with larger prizes or more importance.
+	 */
+	execution_type: RaffleDrawTypeExecution;
+
+	/** Date/time of the draw execution */
+	execution_ts: number;
+
+	/** Date of the previously executed draw (if there is such) */
+	previous_run_ts?: number;
+
+	/** Unique ID of the previusly executed draw (if there is such) */
+	previous_run_id?: number;
+
+	/**
+	 *  Date/time starting from which the tickets will participate in the upcoming draw
+	 *  This value need to be taken into account with next_execute_ts field value, for example
+	 *  Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
+	 *  (internally this value is calculated as next_execute_ts - ticket_start_date)
+	 */
+	ticket_start_ts: number;
+	/** Field is indicating if same ticket can win multiple prizes in the same draw
+	 *  For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook
+	 *  If this field is true, then one ticket can win all 3 prizes (depending on the chances of course),
+	 *  if false, then one ticket can win only one prize.
+	 *  The distribution of the prizes is start from top (assuming on top are the most valuable prizes) to bottom (less valuable prizes)
+	 *  If specific prize has multiple values, e.g. we have 3 iPhones,
+	 *  then the same ticket can win only one prize of a kind, but can win multiple prizes of different kind (if allow_multi_prize_per_ticket is true)
+	 */
+	allow_multi_prize_per_ticket: boolean;
+	/**
+	 * The number of tickets that are already given to all users for this instance of draw.
+	 * In other words tickets that are collected between ticket_start_date and current time (or till current_execution_ts is the instance is executed).
+	 */
+	total_tickets_count: number;
+	/**
+	 * The number of tickets collected by current user for this instance of draw.
+	 */
+	my_tickets_count: number;
+	/*
+	 * List of last 5 tickets are collected by current user for this instance of draw.
+	 */
+	my_last_tickets: TRaffleTicket[];
+}
+
+export interface TRaffleDrawRun {
+	/**
+     * Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
+     * (internal name: schedule_id)
+     */
+	id: number;
+	 /**
+     * Field indicates the ID of the latest instance/run of draw
+     */
+	run_id:number;
+	/** Name of the draw, e.g. 'Daily draw' */
+	name: string;
+	/** Description of the draw */
+	description: string;
+	/** URL of the image that represents the draw */
+	image_url: string;
+	/** URL of the moible image that represents the draw */
+	image_url_mobile: string;
+	/** URL of the icon that represents the draw */
+	icon_url: string;
+	/** URL of the background image that will be used in the draw list item */
+	background_image_url: string;
+	/** URL of the moible background image that will be used in the draw list item */
+	background_image_url_mobile: string;
+	/** Show if the draw is grand and is marked as special */
+	is_grand: boolean;
+	/** Date/time of the draw execution */
+	execution_ts: number;
+	/** Actual Date/time of the draw execution */
+    actual_execution_ts: number;
+	  /**
+     *  Date/time starting from which the tickets will participate in the upcoming draw
+     *  This value need to be taken into account with next_execute_ts field value, for example
+     *  Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
+     *  (internally this value is calculated as next_execute_ts - ticket_start_date)
+     */
+	ticket_start_ts: number;
+    /**
+     * Shows if user has won a prize in a current run
+     */
+    is_winner: boolean;
+	/**
+     * Shows if user has unclaimed prize
+     */
+    has_unclaimed_prize: boolean;
+
+}
+
+export interface TransformedRaffleClaimPrizeResponse {
+	/** Error code, 0 means no error */
+    errorCode: number
+	/** Error message, will be exposed only if ErrorCode is not 0 */
+    errorMessage?: string
+}
+
+

@@ -1024,56 +1024,114 @@ ___
 
 ### getRaffles
 
-▸ **getRaffles**(): `Promise`\<[`GetRafflesResponse`](../interfaces/GetRafflesResponse.md)\>
+▸ **getRaffles**(`«destructured»?`): `Promise`\<[`TRaffle`](../interfaces/TRaffle.md)[]\>
+
+Returns the list of Raffles available for user
+The returned list of Raffles is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getRaffles with a new onUpdate callback, the old one will be overwritten by the new one.
+The onUpdate callback will be called on claiming prize.  Updated Raffles will be passed to onUpdate callback.
+
+**Example**:
+```
+_smartico.api.getRaffles().then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `onUpdate?` | (`data`: [`TRaffle`](../interfaces/TRaffle.md)[]) => `void` |
 
 #### Returns
 
-`Promise`\<[`GetRafflesResponse`](../interfaces/GetRafflesResponse.md)\>
+`Promise`\<[`TRaffle`](../interfaces/TRaffle.md)[]\>
 
 ___
 
 ### getRaffleDrawRun
 
-▸ **getRaffleDrawRun**(`payload`): `Promise`\<[`GetDrawRunResponse`](../interfaces/GetDrawRunResponse.md)\>
+▸ **getDrawRun**(`props`): `Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
+
+Returns draw run for provided raffle_id and run_id
+
+**Example**:
+```
+_smartico.api.getDrawRun({raffle_id:156, run_id: 145}).then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `payload` | [`GetDrawRunRequest`](../interfaces/GetDrawRunRequest.md) |
+| `props` | `Object` |
+| `props.raffle_id` | `number` |
+| `props.run_id` | `number` |
 
 #### Returns
 
-`Promise`\<[`GetDrawRunResponse`](../interfaces/GetDrawRunResponse.md)\>
+`Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
 
 ___
 
 ### getRaffleDrawRunsHistory
 
-▸ **getRaffleDrawRunsHistory**(`payload`): `Promise`\<[`GetRaffleDrawRunsHistoryResponse`](../interfaces/GetRaffleDrawRunsHistoryResponse.md)\>
+▸ **getRaffleDrawRunsHistory**(`props`): `Promise`\<[`TRaffleDrawRun`](../interfaces/TRaffleDrawRun.md)[]\>
+
+Returns history of draw runs for the provided raffle_id and draw_id, if the draw_id is not provided will return history of all the draws for the provided raffle_id
+
+**Example**:
+```
+_smartico.api.getRaffleDrawRunHistory({raffle_id:156, draw_id: 432}).then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `payload` | [`GetRaffleDrawRunsHistoryRequest`](../interfaces/GetRaffleDrawRunsHistoryRequest.md) |
+| `props` | `Object` |
+| `props.raffle_id` | `number` |
+| `props.draw_id?` | `number` |
 
 #### Returns
 
-`Promise`\<[`GetRaffleDrawRunsHistoryResponse`](../interfaces/GetRaffleDrawRunsHistoryResponse.md)\>
+`Promise`\<[`TRaffleDrawRun`](../interfaces/TRaffleDrawRun.md)[]\>
 
 ___
 
 ### claimRafflePrize
 
-▸ **claimRafflePrize**(`payload`): `Promise`\<[`RaffleClaimPrizeResponse`](../interfaces/RaffleClaimPrizeResponse.md)\>
+▸ **claimRafflePrize**(`props`): `Promise`\<[`TransformedRaffleClaimPrizeResponse`](../interfaces/TransformedRaffleClaimPrizeResponse.md)\>
+
+Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
+
+**Example**:
+```
+_smartico.api.claimRafflePrize({won_id:251}).then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `payload` | [`RaffleClaimPrizeRequest`](../interfaces/RaffleClaimPrizeRequest.md) |
+| `props` | `Object` |
+| `props.won_id` | `number` |
 
 #### Returns
 
-`Promise`\<[`RaffleClaimPrizeResponse`](../interfaces/RaffleClaimPrizeResponse.md)\>
+`Promise`\<[`TransformedRaffleClaimPrizeResponse`](../interfaces/TransformedRaffleClaimPrizeResponse.md)\>

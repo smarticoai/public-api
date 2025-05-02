@@ -1,27 +1,83 @@
-# Interface: RaffleDraw
+# Interface: TRaffleDraw
 
 ## Properties
 
-### draw\_id
+### id
 
-• **draw\_id**: `number`
+• **id**: `number`
 
 Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
 (internal name: schedule_id)
 
 ___
 
-### public\_meta
+### name
 
-• **public\_meta**: `RaffleDrawPublicMeta`
+• **name**: `string`
 
-Meta information of the Draw for the presentaiton in UI
+Name of the draw, e.g. 'Daily draw'
+
+___
+
+### description
+
+• **description**: `string`
+
+Description of the draw
+
+___
+
+### image\_url
+
+• **image\_url**: `string`
+
+URL of the image that represents the draw
+
+___
+
+### image\_url\_mobile
+
+• **image\_url\_mobile**: `string`
+
+URL of the moible image that represents the draw
+
+___
+
+### icon\_url
+
+• **icon\_url**: `string`
+
+URL of the icon that represents the draw
+
+___
+
+### background\_image\_url
+
+• **background\_image\_url**: `string`
+
+URL of the background image that will be used in the draw list item
+
+___
+
+### background\_image\_url\_mobile
+
+• **background\_image\_url\_mobile**: `string`
+
+URL of the moible background image that will be used in the draw list item
+
+___
+
+### is\_grand
+
+• **is\_grand**: `boolean`
+
+Show if the draw is grand and is marked as special
 
 ___
 
 ### prizes
 
-• **prizes**: [`RafflePrize`](RafflePrize.md)[]
+• **prizes**: [`TRafflePrize`](TRafflePrize.md)[]
 
 Information about prizes in the draw
 
@@ -93,12 +149,12 @@ ___
 
 • **allow\_multi\_prize\_per\_ticket**: `boolean`
 
-Field is indicating if same ticket can win multiple prizes in the same draw 
+Field is indicating if same ticket can win multiple prizes in the same draw
  For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook
- If this field is true, then one ticket can win all 3 prizes (depending on the chances of course), 
- if false, then one ticket can win only one prize. 
+ If this field is true, then one ticket can win all 3 prizes (depending on the chances of course),
+ if false, then one ticket can win only one prize.
  The distribution of the prizes is start from top (assuming on top are the most valuable prizes) to bottom (less valuable prizes)
- If specific prize has multiple values, e.g. we have 3 iPhones, 
+ If specific prize has multiple values, e.g. we have 3 iPhones,
  then the same ticket can win only one prize of a kind, but can win multiple prizes of different kind (if allow_multi_prize_per_ticket is true)
 
 ___
@@ -122,4 +178,4 @@ ___
 
 ### my\_last\_tickets
 
-• **my\_last\_tickets**: [`RaffleTicket`](RaffleTicket.md)[]
+• **my\_last\_tickets**: [`TRaffleTicket`](TRaffleTicket.md)[]

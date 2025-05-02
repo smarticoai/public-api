@@ -10,6 +10,8 @@
 - [MiniGamePrizeTypeName](enums/MiniGamePrizeTypeName.md)
 - [SAWSpinErrorCode](enums/SAWSpinErrorCode.md)
 - [AchievementAvailabilityStatus](enums/AchievementAvailabilityStatus.md)
+- [RaffleDrawInstanceState](enums/RaffleDrawInstanceState.md)
+- [RaffleDrawTypeExecution](enums/RaffleDrawTypeExecution.md)
 - [BuyStoreItemErrorCode](enums/BuyStoreItemErrorCode.md)
 - [TournamentRegistrationError](enums/TournamentRegistrationError.md)
 - [TournamentRegistrationStatusName](enums/TournamentRegistrationStatusName.md)
@@ -79,6 +81,13 @@
 - [TBonus](interfaces/TBonus.md)
 - [TClaimBonusResult](interfaces/TClaimBonusResult.md)
 - [TSawHistory](interfaces/TSawHistory.md)
+- [TRaffle](interfaces/TRaffle.md)
+- [TRaffleTicket](interfaces/TRaffleTicket.md)
+- [TRafflePrize](interfaces/TRafflePrize.md)
+- [TRafflePrizeWinner](interfaces/TRafflePrizeWinner.md)
+- [TRaffleDraw](interfaces/TRaffleDraw.md)
+- [TRaffleDrawRun](interfaces/TRaffleDrawRun.md)
+- [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
 
 ## General API
 
@@ -89,3 +98,131 @@
 ### TournamentRegistrationTypeName
 
 Ƭ **TournamentRegistrationTypeName**: ``"AUTO"`` \| ``"OPT_IN"`` \| ``"BUY_IN_POINTS"`` \| ``"MANUAL_APPROVAL"`` \| ``"REQUIRES_QUALIFICATION"`` \| ``"UNKNOWN"``
+
+## Functions
+
+### drawRunTransform
+
+▸ **drawRunTransform**(`res`): [`TRaffleDraw`](interfaces/TRaffleDraw.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `res` | [`GetDrawRunResponse`](interfaces/GetDrawRunResponse.md) |
+
+#### Returns
+
+[`TRaffleDraw`](interfaces/TRaffleDraw.md)
+
+___
+
+### drawRunHistoryTransform
+
+▸ **drawRunHistoryTransform**(`res`): [`TRaffleDrawRun`](interfaces/TRaffleDrawRun.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `res` | [`GetRaffleDrawRunsHistoryResponse`](interfaces/GetRaffleDrawRunsHistoryResponse.md) |
+
+#### Returns
+
+[`TRaffleDrawRun`](interfaces/TRaffleDrawRun.md)[]
+
+___
+
+### ticketsTransform
+
+▸ **ticketsTransform**(`items`): [`TRaffleTicket`](interfaces/TRaffleTicket.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `items` | [`RaffleTicket`](interfaces/RaffleTicket.md)[] |
+
+#### Returns
+
+[`TRaffleTicket`](interfaces/TRaffleTicket.md)[]
+
+___
+
+### winnersTransform
+
+▸ **winnersTransform**(`items`): [`TRafflePrizeWinner`](interfaces/TRafflePrizeWinner.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `items` | [`RafflePrizeWinner`](interfaces/RafflePrizeWinner.md)[] |
+
+#### Returns
+
+[`TRafflePrizeWinner`](interfaces/TRafflePrizeWinner.md)[]
+
+___
+
+### prizeTransform
+
+▸ **prizeTransform**(`items`): [`TRafflePrize`](interfaces/TRafflePrize.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `items` | [`RafflePrize`](interfaces/RafflePrize.md)[] |
+
+#### Returns
+
+[`TRafflePrize`](interfaces/TRafflePrize.md)[]
+
+___
+
+### drawTransform
+
+▸ **drawTransform**(`items`): [`TRaffleDraw`](interfaces/TRaffleDraw.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `items` | [`RaffleDraw`](interfaces/RaffleDraw.md)[] |
+
+#### Returns
+
+[`TRaffleDraw`](interfaces/TRaffleDraw.md)[]
+
+___
+
+### raffleTransform
+
+▸ **raffleTransform**(`items`): [`TRaffle`](interfaces/TRaffle.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `items` | [`Raffle`](interfaces/Raffle.md)[] |
+
+#### Returns
+
+[`TRaffle`](interfaces/TRaffle.md)[]
+
+___
+
+### raffleClaimPrizeResponseTransform
+
+▸ **raffleClaimPrizeResponseTransform**(`info`): [`TransformedRaffleClaimPrizeResponse`](interfaces/TransformedRaffleClaimPrizeResponse.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `info` | [`RaffleClaimPrizeResponse`](interfaces/RaffleClaimPrizeResponse.md) |
+
+#### Returns
+
+[`TransformedRaffleClaimPrizeResponse`](interfaces/TransformedRaffleClaimPrizeResponse.md)
