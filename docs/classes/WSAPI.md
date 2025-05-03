@@ -1054,13 +1054,13 @@ ___
 
 ### getRaffleDrawRun
 
-▸ **getDrawRun**(`props`): `Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
+▸ **getRaffleDrawRun**(`props`): `Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
 
 Returns draw run for provided raffle_id and run_id
 
 **Example**:
 ```
-_smartico.api.getDrawRun({raffle_id:156, run_id: 145}).then((result) => {
+_smartico.api.getRaffleDrawRun({raffle_id:156, run_id: 145}).then((result) => {
      console.log(result);
 });
 ```

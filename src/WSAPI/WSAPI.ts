@@ -1148,7 +1148,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getDrawRun({raffle_id:156, run_id: 145}).then((result) => {
+	 * _smartico.api.getRaffleDrawRun({raffle_id:156, run_id: 145}).then((result) => {
 	 *      console.log(result);
 	 * });
 	 * ```
@@ -1157,8 +1157,8 @@ export class WSAPI {
 	 *
 	 */
 
-	public async getDrawRun(props: { raffle_id: number; run_id: number }): Promise<TRaffleDraw> {
-		const res = await this.api.getDrawRun(null, props);
+	public async getRaffleDrawRun(props: { raffle_id: number; run_id: number }): Promise<TRaffleDraw> {
+		const res = await this.api.getRaffleDrawRun(null, props);
 
 		if (!props.raffle_id || !props.run_id) {
 			throw new Error('both raffle_id and run_id are required');

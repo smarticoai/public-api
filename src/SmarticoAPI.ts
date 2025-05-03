@@ -1179,7 +1179,7 @@ class SmarticoAPI {
 		return await this.send<GetRafflesResponse>(message, ClassId.RAF_GET_RAFFLES_RESPONSE);
 	}
 
-	public async getDrawRun(user_ext_id: string, payload: { raffle_id: number; run_id: number }): Promise<GetDrawRunResponse> {
+	public async getRaffleDrawRun(user_ext_id: string, payload: { raffle_id: number; run_id: number }): Promise<GetDrawRunResponse> {
 		const message = this.buildMessage<GetDrawRunRequest, GetDrawRunResponse>(
 			user_ext_id,
 			ClassId.RAF_GET_DRAW_RUN_REQUEST,
