@@ -505,18 +505,18 @@ class SmarticoAPI {
 		return GetJackpotWinnersResponseTransform((await this.getJackpotWinners(user_ext_id, limit, offset, jp_template_id)).winners);
 	}
 
-	public async getJackpotEligibleGames(user_ext_id: string, jp_template_id: number): Promise<GetJackpotEligibleGamesResponse> {
+	public async getJackpotEligibleGames(user_ext_id: string, { jp_template_id } : { jp_template_id: number }): Promise<GetJackpotEligibleGamesResponse> {
 		const message = this.buildMessage<GetJackpotEligibleGamesRequest, GetJackpotEligibleGamesResponse>(
 			user_ext_id,
 			ClassId.JP_GET_ELIGIBLE_GAMES_REQUEST,
 			{ jp_template_id },
 		);
 
-		return await this.send<GetJackpotEligibleGamesResponse>(message, ClassId.JP_GET_ELIGIBLE_GAMES_RESPONSE);
+		return await this.send<GetJackpotEligibleGamesResponse>(message, ClassId.JP_GET_ELIGIBLE_GAMES_RESPONSE);;
 	}
 
-	public async getJackpotEligibleGamesT(user_ext_id: string, jp_template_id: number ): Promise<TGetJackpotEligibleGamesResponse> {
-		return GetJackpotEligibleGamesResponseTransform((await this.getJackpotEligibleGames(user_ext_id, jp_template_id)));
+	public async getJackpotEligibleGamesT(user_ext_id: string, { jp_template_id } : { jp_template_id: number }): Promise<TGetJackpotEligibleGamesResponse> {
+		return GetJackpotEligibleGamesResponseTransform(await this.getJackpotEligibleGames(user_ext_id, { jp_template_id }));
 	}
 
 	public async sawGetTemplates(

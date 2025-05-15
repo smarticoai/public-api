@@ -1112,15 +1112,15 @@ export class WSAPI {
 	 * 
 	 */
 
-	public async getJackpotEligibleGames({ jp_template_id, onUpdate }: { jp_template_id: number, onUpdate?: () => void }): Promise<TGetJackpotEligibleGamesResponse> {
+	public async getJackpotEligibleGames({ jp_template_id, onUpdate } : { jp_template_id: number, onUpdate?: () => void }): Promise<TGetJackpotEligibleGamesResponse> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.JackpotEligibleGames, onUpdate);
 		}
 
 		return OCache.use(
-			onUpdateContextKey.JackpotEligibleGames,
+			onUpdateContextKey.JackpotEligibleGames + jp_template_id,
 			ECacheContext.WSAPI,
-			() => this.api.getJackpotEligibleGamesT(null, jp_template_id),
+			() => this.api.getJackpotEligibleGamesT(null, { jp_template_id }),
 			JACKPOT_ELIGIBLE_GAMES_CACHE_SEC,
 		);
 	}
