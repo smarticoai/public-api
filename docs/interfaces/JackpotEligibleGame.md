@@ -69,3 +69,5 @@ ___
 ### mobile\_spec\_link
 
 • **mobile\_spec\_link**: `string`
+
+The link to the mobile game
