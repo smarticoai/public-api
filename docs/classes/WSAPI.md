@@ -989,6 +989,35 @@ _smartico.api.getJackpotWinners({
 
 ___
 
+### getJackpotEligibleGames
+
+▸ **getJackpotEligibleGames**(`«destructured»`): `Promise`\<[`TGetJackpotEligibleGamesResponse`](../interfaces/TGetJackpotEligibleGamesResponse.md)\>
+
+Returns the eligible games for the jackpot with the specified jp_template_id.
+
+**Example**:
+```
+_smartico.api.getJackpotEligibleGames({ jp_template_id: 123 }).then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `jp_template_id` | `number` |
+| › `onUpdate?` | () => `void` |
+
+#### Returns
+
+`Promise`\<[`TGetJackpotEligibleGamesResponse`](../interfaces/TGetJackpotEligibleGamesResponse.md)\>
+
+___
+
 ### getRelatedItemsForGame
 
 ▸ **getRelatedItemsForGame**(`related_game_id`): `Promise`\<`GetRelatedAchTourResponse`\>

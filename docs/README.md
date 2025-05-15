@@ -19,6 +19,10 @@
 ## Interfaces
 
 - [AchRelatedGame](interfaces/AchRelatedGame.md)
+- [GetJackpotEligibleGamesRequest](interfaces/GetJackpotEligibleGamesRequest.md)
+- [GetJackpotEligibleGamesResponse](interfaces/GetJackpotEligibleGamesResponse.md)
+- [TGetJackpotEligibleGamesResponse](interfaces/TGetJackpotEligibleGamesResponse.md)
+- [JackpotEligibleGame](interfaces/JackpotEligibleGame.md)
 - [GetJackpotWinnersRequest](interfaces/GetJackpotWinnersRequest.md)
 - [GetJackpotWinnersResponse](interfaces/GetJackpotWinnersResponse.md)
 - [JackpotWinnerHistory](interfaces/JackpotWinnerHistory.md)
