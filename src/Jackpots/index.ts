@@ -16,3 +16,5 @@ export * from './JackpotsOptoutResponse';
 export * from './JackpotHtmlTemplate';
 export * from './GetJackpotWinnersRequest';
 export * from './GetJackpotWinnersResponse';
+export * from './GetJackpotEligibleGamesRequest';
+export * from './GetJackpotEligibleGamesResponse';

@@ -70,6 +70,7 @@ import {
 	raffleClaimPrizeResponseTransform,
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
+import { JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from 'src/Jackpots/GetJackpotEligibleGamesResponse';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -77,6 +78,7 @@ const CACHE_DATA_SEC = 30;
 const JACKPOT_TEMPLATE_CACHE_SEC = 30;
 const JACKPOT_POT_CACHE_SEC = 1;
 const JACKPOT_WINNERS_CACHE_SEC = 30;
+const JACKPOT_ELIGIBLE_GAMES_CACHE_SEC = 30;
 
 /** @hidden */
 enum onUpdateContextKey {
@@ -100,6 +102,7 @@ enum onUpdateContextKey {
 	SAWHistory = 'sawHistory',
 	JackpotWinners = 'jackpotWinners',
 	Raffles = 'raffles',
+	JackpotEligibleGames = 'jackpotEligibleGames',
 }
 
 /** @group General API */
@@ -1092,6 +1095,33 @@ export class WSAPI {
 			ECacheContext.WSAPI,
 			() => this.api.getJackpotWinnersT(null, limit, offset, jp_template_id),
 			JACKPOT_WINNERS_CACHE_SEC,
+		);
+	}
+
+	/**
+	 * Returns the eligible games for the jackpot with the specified jp_template_id.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getJackpotEligibleGames({ jp_template_id: 123 }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 * 
+	 * **Visitor mode: not supported**
+	 * 
+	 */
+
+	public async getJackpotEligibleGames({ jp_template_id, onUpdate }: { jp_template_id: number, onUpdate?: () => void }): Promise<TGetJackpotEligibleGamesResponse> {
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.JackpotEligibleGames, onUpdate);
+		}
+
+		return OCache.use(
+			onUpdateContextKey.JackpotEligibleGames,
+			ECacheContext.WSAPI,
+			() => this.api.getJackpotEligibleGamesT(null, jp_template_id),
+			JACKPOT_ELIGIBLE_GAMES_CACHE_SEC,
 		);
 	}
 

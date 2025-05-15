@@ -13,7 +13,6 @@ import {
 	SAWHistoryTransform,
 	SAWPrizesHistory,
 	SAWSpinErrorCode,
-	SAWTemplate,
 	SAWTemplatesTransform,
 	SAWWinningHistoryRequest,
 	SAWWinningHistoryResponse,
@@ -94,7 +93,6 @@ import {
 	TSegmentCheckResult,
 	TUICustomSection,
 	TBonus,
-	TSawHistory,
 	TRaffle,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
@@ -126,6 +124,8 @@ import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse } from './Raffle';
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
+import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
+import { GetJackpotEligibleGamesResponse, GetJackpotEligibleGamesResponseTransform, JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from './Jackpots/GetJackpotEligibleGamesResponse';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -503,6 +503,20 @@ class SmarticoAPI {
 
 	public async getJackpotWinnersT(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number ): Promise<JackpotWinnerHistory[]> {
 		return GetJackpotWinnersResponseTransform((await this.getJackpotWinners(user_ext_id, limit, offset, jp_template_id)).winners);
+	}
+
+	public async getJackpotEligibleGames(user_ext_id: string, jp_template_id: number): Promise<GetJackpotEligibleGamesResponse> {
+		const message = this.buildMessage<GetJackpotEligibleGamesRequest, GetJackpotEligibleGamesResponse>(
+			user_ext_id,
+			ClassId.JP_GET_ELIGIBLE_GAMES_REQUEST,
+			{ jp_template_id },
+		);
+
+		return await this.send<GetJackpotEligibleGamesResponse>(message, ClassId.JP_GET_ELIGIBLE_GAMES_RESPONSE);
+	}
+
+	public async getJackpotEligibleGamesT(user_ext_id: string, jp_template_id: number ): Promise<TGetJackpotEligibleGamesResponse> {
+		return GetJackpotEligibleGamesResponseTransform((await this.getJackpotEligibleGames(user_ext_id, jp_template_id)));
 	}
 
 	public async sawGetTemplates(
