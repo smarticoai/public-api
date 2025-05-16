@@ -3,10 +3,12 @@ import { AchRelatedGame } from '../Base/AchRelatedGame';
 
 export interface GetJackpotEligibleGamesResponse extends ProtocolResponse {
 	eligible_games: AchRelatedGame[];
+    jp_template_id: number;
 }
 
 export interface TGetJackpotEligibleGamesResponse {
-	eligible_games: JackpotEligibleGame[];
+	eligible_games: AchRelatedGame[];
+    jp_template_id: number;
 }
 
 export interface JackpotEligibleGame {
@@ -29,22 +31,3 @@ export interface JackpotEligibleGame {
     /** The link to the mobile game */
     mobile_spec_link: string;
 }
-
-/**
- * @ignore
- */
-export const GetJackpotEligibleGamesResponseTransform = ({ eligible_games } : { eligible_games: AchRelatedGame[]}): TGetJackpotEligibleGamesResponse => {
-	const games = eligible_games.map((game: AchRelatedGame) => ({
-		game_id: game.ach_game_id,
-		ext_game_id: game.ext_game_id,
-		name: game.game_public_meta.name,
-		link: game.game_public_meta.link,
-		image: game.game_public_meta.image,
-		enabled: game.game_public_meta.enabled,
-		game_categories: game.game_public_meta.game_categories,
-		game_provider: game.game_public_meta.game_provider,
-		mobile_spec_link: game.game_public_meta.mobile_spec_link,
-	}));
-
-	return { eligible_games: games };
-};

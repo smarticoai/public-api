@@ -125,7 +125,7 @@ import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest,
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
-import { GetJackpotEligibleGamesResponse, GetJackpotEligibleGamesResponseTransform, JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from './Jackpots/GetJackpotEligibleGamesResponse';
+import { GetJackpotEligibleGamesResponse, TGetJackpotEligibleGamesResponse } from './Jackpots/GetJackpotEligibleGamesResponse';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
@@ -516,7 +516,8 @@ class SmarticoAPI {
 	}
 
 	public async getJackpotEligibleGamesT(user_ext_id: string, { jp_template_id } : { jp_template_id: number }): Promise<TGetJackpotEligibleGamesResponse> {
-		return GetJackpotEligibleGamesResponseTransform(await this.getJackpotEligibleGames(user_ext_id, { jp_template_id }));
+		const response = await this.getJackpotEligibleGames(user_ext_id, { jp_template_id });
+		return { eligible_games: response.eligible_games, jp_template_id };
 	}
 
 	public async sawGetTemplates(

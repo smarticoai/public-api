@@ -71,6 +71,7 @@ import {
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
 import { JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from 'src/Jackpots/GetJackpotEligibleGamesResponse';
+import { AchRelatedGame } from 'src/Base/AchRelatedGame';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -978,6 +979,7 @@ export class WSAPI {
 
 		let jackpots: JackpotDetails[] = [];
 		let pots: JackpotPot[] = [];
+		let eligibleGames: { [jp_template_id: number]: AchRelatedGame[] } = {};
 
 		jackpots = await OCache.use<JackpotDetails[]>(
 			onUpdateContextKey.Jackpots,
@@ -1008,10 +1010,28 @@ export class WSAPI {
 			);
 		}
 
+		if (jackpots.length > 0) {
+			eligibleGames = await OCache.use<{ [jp_template_id: number]: AchRelatedGame[] }>(
+				onUpdateContextKey.JackpotEligibleGames,
+				ECacheContext.WSAPI,
+				async () => {
+					const jp_template_ids = jackpots.map((jp) => jp.jp_template_id);
+
+					for (const jp_template_id of jp_template_ids) {
+						const result = await this.api.getJackpotEligibleGamesT(null, { jp_template_id });
+						eligibleGames[jp_template_id] = result.eligible_games;
+					}
+
+					return eligibleGames;
+				},
+				JACKPOT_ELIGIBLE_GAMES_CACHE_SEC,
+			);
+		}
 		return jackpots.map((jp) => {
 			let _jp: JackpotDetails = {
 				...jp,
 				pot: pots.find((p) => p.jp_template_id === jp.jp_template_id),
+				related_games: eligibleGames[jp.jp_template_id],
 			};
 			return _jp;
 		});
@@ -1091,7 +1111,7 @@ export class WSAPI {
 		jp_template_id?: number;
 	}): Promise<JackpotWinnerHistory[]> {
 		return OCache.use(
-			onUpdateContextKey.JackpotWinners,
+			onUpdateContextKey.JackpotWinners + jp_template_id,
 			ECacheContext.WSAPI,
 			() => this.api.getJackpotWinnersT(null, limit, offset, jp_template_id),
 			JACKPOT_WINNERS_CACHE_SEC,
