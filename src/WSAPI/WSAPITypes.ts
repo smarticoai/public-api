@@ -477,6 +477,12 @@ export interface TStoreItem {
 	purchase_type: 'points' | 'gems' | 'diamonds';
 	/** The date when the store item will be available till */
 	active_till_date?: number;
+	/** The discounted price of the store item */
+	discounted_price?: number;
+	/** The ribbon of the discounted price. */
+	discount_price_ribbon?: string;
+	/** The custom ribbon image of the discounted price. */
+	custom_ribbon_image?: string;
 }
 
 /**

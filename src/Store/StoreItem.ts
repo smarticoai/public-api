@@ -48,7 +48,10 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				category_ids: r.categoryIds ?? [],
 				pool: r.shopPool,
 				custom_data: IntUtils.JsonOrText(r.itemPublicMeta.custom_data),
-				active_till_date: r.activeTillDate 
+				active_till_date: r.activeTillDate,
+				discounted_price: r.itemPublicMeta.discount_prize,
+				discount_price_ribbon: r.itemPublicMeta.discount_prize_ribbon,
+				custom_ribbon_image: r.itemPublicMeta.custom_ribbon_image,
 			};
 			return x;
 		});
