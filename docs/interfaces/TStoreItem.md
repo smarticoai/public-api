@@ -180,3 +180,27 @@ ___
 • `Optional` **active\_till\_date**: `number`
 
 The date when the store item will be available till
+
+___
+
+### discounted\_price
+
+• `Optional` **discounted\_price**: `number`
+
+The discounted price of the store item
+
+___
+
+### discount\_price\_ribbon
+
+• `Optional` **discount\_price\_ribbon**: `string`
+
+The ribbon of the discounted price.
+
+___
+
+### custom\_ribbon\_image
+
+• `Optional` **custom\_ribbon\_image**: `string`
+
+The custom ribbon image of the discounted price.
