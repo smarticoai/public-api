@@ -1091,7 +1091,7 @@ export class WSAPI {
 		jp_template_id?: number;
 	}): Promise<JackpotWinnerHistory[]> {
 		return OCache.use(
-			onUpdateContextKey.JackpotWinners,
+			onUpdateContextKey.JackpotWinners + jp_template_id,
 			ECacheContext.WSAPI,
 			() => this.api.getJackpotWinnersT(null, limit, offset, jp_template_id),
 			JACKPOT_WINNERS_CACHE_SEC,
