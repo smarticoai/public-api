@@ -23,3 +23,15 @@ ___
 ### Unknown
 
 • **Unknown** = ``"unknown"``
+
+___
+
+### Gems
+
+• **Gems** = ``"gems"``
+
+___
+
+### Diamonds
+
+• **Diamonds** = ``"diamonds"``

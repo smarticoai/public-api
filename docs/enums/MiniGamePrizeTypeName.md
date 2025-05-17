@@ -56,6 +56,12 @@ ___
 
 ___
 
+### GEMS\_AND\_DIAMONDS
+
+• **GEMS\_AND\_DIAMONDS** = ``"gems-and-diamonds"``
+
+___
+
 ### UNKNOWN
 
 • **UNKNOWN** = ``"unknown"``

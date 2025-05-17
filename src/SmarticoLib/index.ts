@@ -299,11 +299,15 @@ declare enum SAWBuyInType {
 	Free = 1,
 	Points = 2,
 	Spins = 3,
+	Gems = 4,
+	Diamonds = 5,
 }
 declare enum SAWBuyInTypeName {
 	Free = 'free',
 	Points = 'points',
 	Spins = 'spins',
+	Gems = 'gems',
+	Diamonds = 'diamonds',
 	Unknown = 'unknown',
 }
 declare enum SAWGameType {
