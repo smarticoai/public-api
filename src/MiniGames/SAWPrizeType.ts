@@ -9,6 +9,7 @@ export enum SAWPrizeType {
 	CHANGE_LEVEL = 7,
 	MISSION = 8,
 	RAFFLE_TICKET = 9,
+	GEMS_AND_DIAMONDS = 10,
 }
 
 export enum MiniGamePrizeTypeName {
@@ -21,6 +22,7 @@ export enum MiniGamePrizeTypeName {
 	CHANGE_LEVEL = 'change-level',
 	MISSION = 'mission',
 	RAFFLE_TICKET = 'raffle-ticket',
+	GEMS_AND_DIAMONDS = 'gems-and-diamonds',
 	UNKNOWN = 'unknown',
 }
 
@@ -37,6 +39,7 @@ export const MiniGamePrizeTypeNamed = (type: SAWPrizeType): MiniGamePrizeTypeNam
 			[SAWPrizeType.CHANGE_LEVEL]: MiniGamePrizeTypeName.CHANGE_LEVEL,
 			[SAWPrizeType.MISSION]: MiniGamePrizeTypeName.MISSION,
 			[SAWPrizeType.RAFFLE_TICKET]: MiniGamePrizeTypeName.RAFFLE_TICKET,
+			[SAWPrizeType.GEMS_AND_DIAMONDS]: MiniGamePrizeTypeName.GEMS_AND_DIAMONDS,
 		}[type] || MiniGamePrizeTypeName.UNKNOWN
 	);
 };
