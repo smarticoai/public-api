@@ -301,13 +301,37 @@ ___
 
 ### registration\_cost\_points
 
-• **registration\_cost\_points**: `number`
+• `Optional` **registration\_cost\_points**: `number`
 
 Cost of registration in the tournament in gamification points
 
 #### Inherited from
 
 [TTournament](TTournament.md).[registration_cost_points](TTournament.md#registration_cost_points)
+
+___
+
+### registration\_cost\_gems
+
+• `Optional` **registration\_cost\_gems**: `number`
+
+Cost of registration in the tournament in gems
+
+#### Inherited from
+
+[TTournament](TTournament.md).[registration_cost_gems](TTournament.md#registration_cost_gems)
+
+___
+
+### registration\_cost\_diamonds
+
+• `Optional` **registration\_cost\_diamonds**: `number`
+
+Cost of registration in the tournament in diamonds
+
+#### Inherited from
+
+[TTournament](TTournament.md).[registration_cost_diamonds](TTournament.md#registration_cost_diamonds)
 
 ___
 

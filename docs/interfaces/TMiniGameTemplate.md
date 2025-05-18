@@ -54,9 +54,25 @@ ___
 
 ### buyin\_cost\_points
 
-• **buyin\_cost\_points**: `number`
+• `Optional` **buyin\_cost\_points**: `number`
 
 in case of charging type 'Points', what is the points amount will be deducted from user balance
+
+___
+
+### buyin\_cost\_gems
+
+• `Optional` **buyin\_cost\_gems**: `number`
+
+in case of charging type 'Gems', what is the gems amount will be deducted from user balance
+
+___
+
+### buyin\_cost\_diamonds
+
+• `Optional` **buyin\_cost\_diamonds**: `number`
+
+in case of charging type 'Diamonds', what is the diamonds amount will be deducted from user balance
 
 ___
 

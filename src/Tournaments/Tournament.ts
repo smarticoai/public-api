@@ -98,7 +98,9 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
 				registration_status: TournamentRegistrationStatusNamed(r.tournamentRegistrationStatus),
 
 				registration_type: TournamentRegistrationTypeGetName(r.registrationType),
-				registration_cost_points: r.buyInAmount,
+				...(r.registrationType === TournamentRegistrationType.BUY_IN_POINTS ? { registration_cost_points: r.buyInAmount } : {}),
+				...(r.registrationType === TournamentRegistrationType.BUY_IN_GEMS ? { registration_cost_gems: r.buyInAmount } : {}),
+				...(r.registrationType === TournamentRegistrationType.BUY_IN_DIAMONDS ? { registration_cost_diamonds: r.buyInAmount } : {}),
 				duration_ms: r.durationMs,
 
 				is_active: TournamentUtils.isActive(r),

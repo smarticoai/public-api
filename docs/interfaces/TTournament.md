@@ -230,9 +230,25 @@ ___
 
 ### registration\_cost\_points
 
-• **registration\_cost\_points**: `number`
+• `Optional` **registration\_cost\_points**: `number`
 
 Cost of registration in the tournament in gamification points
+
+___
+
+### registration\_cost\_gems
+
+• `Optional` **registration\_cost\_gems**: `number`
+
+Cost of registration in the tournament in gems
+
+___
+
+### registration\_cost\_diamonds
+
+• `Optional` **registration\_cost\_diamonds**: `number`
+
+Cost of registration in the tournament in diamonds
 
 ___
 

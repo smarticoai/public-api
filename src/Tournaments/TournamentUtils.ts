@@ -24,14 +24,16 @@ export class TournamentUtils {
 				return true;
 			}
 			return (
-				!tournament.isUserRegistered &&
-				(tournament.playersMaxCount !== tournament.registrationCount ||
+				!tournament.isUserRegistered && (
+					tournament.playersMaxCount !== tournament.registrationCount ||
 					tournament.playersMaxCount === null ||
-					tournament.playersMaxCount === 0) &&
-				tournament.registrationType !== TournamentRegistrationType.AUTO &&
-				(tournament.tournamentInstanceStatus === TournamentInstanceStatus.REGISTER ||
-					(tournament.tournamentInstanceStatus === TournamentInstanceStatus.STARTED &&
-						tournament.allowLateRegistration))
+					tournament.playersMaxCount === 0
+				) &&
+				tournament.registrationType !== TournamentRegistrationType.AUTO && (
+					tournament.tournamentInstanceStatus === TournamentInstanceStatus.REGISTER || (
+						tournament.tournamentInstanceStatus === TournamentInstanceStatus.STARTED && tournament.allowLateRegistration
+					)
+				)
 			);
 		}
 		return false;

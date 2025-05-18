@@ -484,6 +484,8 @@ declare enum TournamentRegistrationType {
 	BUY_IN_POINTS = 3,
 	MANUAL_APPROVAL = 4,
 	REQUIRES_QUALIFICATION = 5,
+	BUY_IN_GEMS = 15,
+	BUY_IN_DIAMONDS = 16,
 }
 /*
 AUTO – The user is automatically registered upon their first qualifying action; no manual action is required.
@@ -498,6 +500,8 @@ export type TournamentRegistrationTypeName =
 	| 'BUY_IN_POINTS'
 	| 'MANUAL_APPROVAL'
 	| 'REQUIRES_QUALIFICATION'
+	| 'BUY_IN_GEMS'
+	| 'BUY_IN_DIAMONDS'
 	| 'UNKNOWN';
 declare enum TournamentInstanceStatus {
 	PUBLISHED = 1,
@@ -774,6 +778,10 @@ export interface TMiniGameTemplate {
 	saw_buyin_type: SAWBuyInTypeName;
 	/** in case of charging type 'Points', what is the points amount will be deducted from user balance */
 	buyin_cost_points: number;
+	/** in case of charging type 'Gems', what is the gems amount will be deducted from user balance */
+	buyin_cost_gems: number;
+	/** in case of charging type 'Diamonds', what is the diamonds amount will be deducted from user balance */
+	buyin_cost_diamonds: number;
 	/** in case of charging type 'Spin attempts', shows the current number of spin attempts that user has */
 	spin_count?: number;
 	/** if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available */
@@ -945,7 +953,11 @@ export interface TTournament {
 	/** Tournament duration in millisecnnds */
 	duration_ms: number;
 	/** Cost of registration in the tournament in gamification points */
-	registration_cost_points: number;
+	registration_cost_points?: number;
+	/** Cost of registration in the tournament in gems */
+	registration_cost_gems?: number;
+	/** Cost of registration in the tournament in diamonds */
+	registration_cost_diamonds?: number;
 	/** Indicator if tournament instance is active, means in one of the statues -  PUBLISHED, REGISTED, STARTED */
 	is_active: boolean;
 	/** Indicator if user can register in this tournament instance, e.g tournament is active, max users is not reached, user is not registered yet */

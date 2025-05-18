@@ -127,7 +127,11 @@ export interface TMiniGameTemplate {
 	saw_buyin_type: SAWBuyInTypeName;
 
 	/** in case of charging type 'Points', what is the points amount will be deducted from user balance */
-	buyin_cost_points: number;
+	buyin_cost_points?: number;
+	/** in case of charging type 'Gems', what is the gems amount will be deducted from user balance */
+	buyin_cost_gems?: number;
+	/** in case of charging type 'Diamonds', what is the diamonds amount will be deducted from user balance */
+	buyin_cost_diamonds?: number;
 	/** in case of charging type 'Spin attempts', shows the current number of spin attempts that user has */
 	spin_count?: number;
 
@@ -342,7 +346,11 @@ export interface TTournament {
 	duration_ms: number;
 
 	/** Cost of registration in the tournament in gamification points */
-	registration_cost_points: number;
+	registration_cost_points?: number;
+	/** Cost of registration in the tournament in gems */
+	registration_cost_gems?: number;
+	/** Cost of registration in the tournament in diamonds */
+	registration_cost_diamonds?: number;
 
 	/** Indicator if tournament instance is active, means in one of the statues -  PUBLISHED, REGISTED, STARTED */
 	is_active: boolean;

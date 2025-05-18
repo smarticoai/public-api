@@ -2,7 +2,7 @@ import { IntUtils } from '../IntUtils';
 import { TMiniGamePrize, TMiniGameTemplate } from '../WSAPI/WSAPITypes';
 import { ProtocolResponse } from './../Base/ProtocolResponse';
 import { SAWAcknowledgeTypeNamed } from './SAWAcknowledgeType';
-import { SAWBuyInTypeNamed } from './SAWBuyInType';
+import { SAWBuyInType, SAWBuyInTypeNamed } from './SAWBuyInType';
 import { SAWGameTypeNamed } from './SAWGameType';
 import { MiniGamePrizeTypeName, MiniGamePrizeTypeNamed } from './SAWPrizeType';
 import { SAWTemplate } from './SAWTemplate';
@@ -27,7 +27,9 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			jackpot_symbol: r.saw_template_ui_definition.jackpot_symbol,
 			saw_game_type: SAWGameTypeNamed(r.saw_game_type_id),
 			saw_buyin_type: SAWBuyInTypeNamed(r.saw_buyin_type_id),
-			buyin_cost_points: r.buyin_cost_points,
+			...(r.saw_buyin_type_id === SAWBuyInType.Points ? { buyin_cost_points: r.buyin_cost_points } : {}),
+			...(r.saw_buyin_type_id === SAWBuyInType.Gems ? { buyin_cost_gems: r.buyin_cost_points } : {}),
+			...(r.saw_buyin_type_id === SAWBuyInType.Diamonds ? { buyin_cost_diamonds: r.buyin_cost_points } : {}),
 			jackpot_add_on_attempt: r.jackpot_add_on_attempt,
 			jackpot_current: r.jackpot_current,
 			spin_count: r.spin_count,
