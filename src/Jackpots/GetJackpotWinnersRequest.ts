@@ -1,4 +1,4 @@
-import { ProtocolRequest } from "src/Base/ProtocolRequest";
+import { ProtocolRequest } from "../Base/ProtocolRequest";
 
 interface GetJackpotWinnersRequest extends ProtocolRequest {
 	/** The ID of the jackpot template */

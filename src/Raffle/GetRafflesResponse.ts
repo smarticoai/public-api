@@ -1,10 +1,9 @@
-import { TRaffle, TRaffleDraw, TRafflePrize, TRafflePrizeWinner, TRaffleTicket } from 'src/WSAPI/WSAPITypes';
+import { TRaffle, TRaffleDraw, TRafflePrize, TRafflePrizeWinner, TRaffleTicket } from '../WSAPI/WSAPITypes';
 import { ProtocolResponse } from '../Base/ProtocolResponse';
 import { Raffle } from './Raffle';
 import { RaffleDraw } from './RaffleDraw';
 import { RafflePrize } from './RafflePrize';
 import { RafflePrizeWinner } from './RafflePrizeWinner';
-import { CoreUtils } from 'src/Core';
 import { RaffleTicket } from './RaffleTicket';
 
 export interface GetRafflesResponse extends ProtocolResponse {

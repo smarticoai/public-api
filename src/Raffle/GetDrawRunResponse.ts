@@ -1,4 +1,4 @@
-import { TRaffleDraw } from 'src/WSAPI/WSAPITypes';
+import { TRaffleDraw } from '../WSAPI/WSAPITypes';
 import { ProtocolResponse } from '../Base/ProtocolResponse';
 import { RaffleDraw } from './RaffleDraw';
 import { prizeTransform, ticketsTransform } from './GetRafflesResponse';

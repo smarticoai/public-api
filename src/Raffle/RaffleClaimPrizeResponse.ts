@@ -1,4 +1,4 @@
-import { TransformedRaffleClaimPrizeResponse } from "src/WSAPI/WSAPITypes";
+import { TransformedRaffleClaimPrizeResponse } from "../WSAPI/WSAPITypes";
 import { ProtocolResponse } from "../Base/ProtocolResponse";
 
 export interface RaffleClaimPrizeResponse extends ProtocolResponse { 

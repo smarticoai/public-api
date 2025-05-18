@@ -70,7 +70,7 @@ import {
 	raffleClaimPrizeResponseTransform,
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
-import { JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from 'src/Jackpots/GetJackpotEligibleGamesResponse';
+import { JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from '../Jackpots/GetJackpotEligibleGamesResponse';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;

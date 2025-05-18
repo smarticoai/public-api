@@ -7,7 +7,8 @@ import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, Ach
 import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
-import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from 'src/Raffle';import { JackPotWinner } from 'src/Jackpots/JackPotWinner';
+import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from '../Raffle';
+import { JackPotWinner } from '../Jackpots/JackPotWinner';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
