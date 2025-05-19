@@ -18,7 +18,7 @@ ___
 
 • **jp\_type\_id**: [`JackpotType`](../enums/JackpotType.md)
 
-type of jackpot logic
+Type of jackpot logic
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 • **jp\_currency**: `string`
 
-base currency of the jackpot
+Base currency of the jackpot
 
 ___
 
@@ -42,15 +42,7 @@ ___
 
 • **user\_currency**: `string`
 
-wallet currency of currently logged in user
-
-___
-
-### related\_games
-
-• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
-
-list of related games that are eligible for the jackpot
+Wallet currency of currently logged in user
 
 ___
 
@@ -58,7 +50,7 @@ ___
 
 • **contribution\_type**: [`JackpotContributionType`](../enums/JackpotContributionType.md)
 
-type of the user contribution to the jackpot
+Type of the user contribution to the jackpot
 
 ___
 
@@ -66,7 +58,7 @@ ___
 
 • **contribution\_value**: `number`
 
-value of the user contribution. Fixed amount or percentage of bet depending on the contribution type
+Value of the user contribution. Fixed amount or percentage of bet depending on the contribution type
 
 ___
 
@@ -74,7 +66,7 @@ ___
 
 • **pot**: [`JackpotPot`](JackpotPot.md)
 
-information of current value of the jackpot
+Information of current value of the jackpot
 
 ___
 
@@ -82,7 +74,7 @@ ___
 
 • **is\_opted\_in**: `boolean`
 
-indication if the current user is opted in to the jackpot
+Indication if the current user is opted in to the jackpot
 
 ___
 
@@ -90,7 +82,7 @@ ___
 
 • **ach\_related\_game\_allow\_all**: `boolean`
 
-indicates whether all games are eligible for the jackpot
+Indicates whether all games are eligible for the jackpot
 
 ___
 
