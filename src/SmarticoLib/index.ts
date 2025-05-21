@@ -484,8 +484,8 @@ declare enum TournamentRegistrationType {
 	BUY_IN_POINTS = 3,
 	MANUAL_APPROVAL = 4,
 	REQUIRES_QUALIFICATION = 5,
-	BUY_IN_GEMS = 15,
-	BUY_IN_DIAMONDS = 16,
+	BUY_IN_GEMS = 6,
+	BUY_IN_DIAMONDS = 7,
 }
 /*
 AUTO – The user is automatically registered upon their first qualifying action; no manual action is required.
