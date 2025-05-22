@@ -1,6 +1,6 @@
 {
 	"name": "@smartico/public-api",
-	"version": "0.0.266",
+	"version": "0.0.267",
 	"description": "Smartico public API",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
