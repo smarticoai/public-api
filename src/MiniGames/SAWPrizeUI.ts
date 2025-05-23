@@ -14,6 +14,8 @@ export interface SAWPrizeUI {
 	font_size?: number;
 	font_size_mobile?: number;
 	sound_type?: SAWWinSoundType;
+	second_btn?: string
+	second_btn_action_title?: string
 	acknowledge_dp_additional?: string;
 	acknowledge_action_title_additional?: string;
 	icon?: string;

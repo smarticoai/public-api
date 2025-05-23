@@ -9,7 +9,8 @@ export interface GetDrawRunResponse extends ProtocolResponse {
 
 
 export const drawRunTransform = (res: GetDrawRunResponse): TRaffleDraw => {
-	return {id: res.draw.draw_id,
+	return {
+		id: res.draw.draw_id,
 		name: res.draw.public_meta.name,
 		description: res.draw.public_meta.description,
 		image_url:res.draw.public_meta.image_url,
@@ -29,8 +30,6 @@ export const drawRunTransform = (res: GetDrawRunResponse): TRaffleDraw => {
 		allow_multi_prize_per_ticket: res.draw.allow_multi_prize_per_ticket,
 		total_tickets_count: res.draw.total_tickets_count,
 		my_tickets_count: res.draw.my_tickets_count,
-		my_last_tickets: ticketsTransform(res.draw.my_last_tickets)} 
-		
-			
-	
+		my_last_tickets: ticketsTransform(res.draw.my_last_tickets)
+	} 	
 };
