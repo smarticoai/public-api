@@ -12,7 +12,8 @@ interface RafflePublicMeta {
     image_url: string;
     /** URL of the mobile image that represents the raffle */
     image_url_mobile: string;
-   
+     /** Text for Terms and Conditions */
+    hint_text:string;
     /** 
 	 * Custom data as string or JSON string that can be used in API to build custom UI
 	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
