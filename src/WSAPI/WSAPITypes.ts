@@ -255,6 +255,10 @@ export interface TLevel {
 	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
 	 */
 	custom_data: string;
+	/** Indicator if the user is on the first level */
+	is_first_level: boolean;
+	/** General level progress of the user */
+	general_level_progress: number;
 }
 
 /**

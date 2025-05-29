@@ -19,5 +19,5 @@ export interface LevelPublicMeta {
 	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
 	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
 	*/
-	custom_data: string;
+	custom_data?: string;
 }
