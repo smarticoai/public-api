@@ -18,7 +18,5 @@ export const GetLevelMapResponseTransform = (levels: GetLevelMapResponse): TLeve
 		required_level_counter_1: l.required_level_counter_1,
 		required_level_counter_2: l.required_level_counter_2,
 		custom_data: IntUtils.JsonOrText(l.level_public_meta?.custom_data),
-		general_level_progress: l.general_level_progress,
-		is_first_level: l.is_first_level,
 	}));
 };
