@@ -91,3 +91,11 @@ ___
 • **registration\_count**: `number`
 
 The number of users who have opted in to participate in the jackpot
+
+___
+
+### expose\_winners\_over\_api
+
+• **expose\_winners\_over\_api**: `boolean`
+
+Show winners in widget and over API

@@ -39,3 +39,11 @@ ___
 • **winning\_position**: `number`
 
 Position of the winner. Relevant for jackpots where there could be multiple winners
+
+___
+
+### avatar\_id
+
+• **avatar\_id**: `string`
+
+Avatar of the winner
