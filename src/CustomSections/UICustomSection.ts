@@ -24,7 +24,7 @@ export const UICustomSectionTransform = (response: GetCustomSectionsResponse): T
 
 	const items: TUICustomSection[] = [];
 
-	Object.keys(response.customSections).forEach((key: string) => {
+	Object.keys(response.customSections || []).forEach((key: string) => {
 		const r = response.customSections[key];
 		const id = parseInt(key);
 		if (r.section_type_id !== undefined && r.section_type_id >= 1) {

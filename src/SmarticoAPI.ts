@@ -1017,16 +1017,16 @@ class SmarticoAPI {
 		return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id));
 	}
 
-	public async getCustomSections(user_ext_id: string): Promise<GetCustomSectionsResponse> {
+	public async customSectionsGet(user_ext_id: string, force_language?: string): Promise<GetCustomSectionsResponse> {
 		const message = this.buildMessage<GetCustomSectionsRequest, GetCustomSectionsResponse>(
 			user_ext_id,
 			ClassId.GET_CUSTOM_SECTIONS_REQUEST,
 		);
-		return await this.send<GetCustomSectionsResponse>(message, ClassId.GET_CUSTOM_SECTIONS_RESPONSE);
+		return await this.send<GetCustomSectionsResponse>(message, ClassId.GET_CUSTOM_SECTIONS_RESPONSE, force_language);
 	}
 
-	public async getCustomSectionsT(user_ext_id: string): Promise<TUICustomSection[]> {
-		return UICustomSectionTransform(await this.getCustomSections(user_ext_id));
+	public async customSectionsGetT(user_ext_id: string): Promise<TUICustomSection[]> {
+		return UICustomSectionTransform(await this.customSectionsGet(user_ext_id));
 	}
 
 	public async getTranslationsT(

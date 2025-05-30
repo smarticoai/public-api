@@ -481,7 +481,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.CustomSections,
 			ECacheContext.WSAPI,
-			() => this.api.getCustomSectionsT(null),
+			() => this.api.customSectionsGetT(null),
 			CACHE_DATA_SEC,
 		);
 	}
