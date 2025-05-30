@@ -1,4 +1,3 @@
-import { AchRelatedGame } from '../Base/AchRelatedGame';
 import { JackpotContributionType } from './JackpotContributionType';
 import { JackpotPot } from './JackpotPot';
 import { JackpotPublicMeta } from './JackpotPublicMeta';
@@ -32,6 +31,8 @@ interface JackpotDetails {
 	ach_related_game_allow_all: boolean;
 	/** The number of users who have opted in to participate in the jackpot */
 	registration_count: number;
+	/** Show winners in widget and over API */
+	expose_winners_over_api: boolean;
 }
 
 export { JackpotDetails };
