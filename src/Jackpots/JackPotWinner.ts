@@ -9,6 +9,8 @@ interface JackPotWinner {
 	winning_amount_wallet_currency: number;
 	/** Position of the winner. Relevant for jackpots where there could be multiple winners */
 	winning_position: number;
+	/** Avatar of the winner */
+	avatar_id: string;
 }
 
 export { JackPotWinner };
