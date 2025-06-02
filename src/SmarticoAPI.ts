@@ -263,6 +263,11 @@ class SmarticoAPI {
 		try {
 			const timeStart = new Date().getTime();
 			result = await this.messageSender(message, this.publicUrl, expectCID);
+
+			if (result.errCode && result.errSetup) {
+				throw new Error(result.errMessage);
+			}
+
 			result = SmarticoAPI.replaceSmrDomainsWithCloudfront(result);
 			const timeEnd = new Date().getTime();
 
