@@ -412,7 +412,7 @@ class SmarticoAPI {
 			`${this.label_api_key} - ${this.brand_api_key}`,
 			ECacheContext.LabelInfo,
 			async () => {
-				const message = this.buildMessage<GetLabelInfoResponse, GetLabelInfoRequest>(user_ext_id, ClassId.INIT);
+				const message = this.buildMessage<GetLabelInfoRequest, GetLabelInfoResponse>(user_ext_id, ClassId.INIT);
 
 				return this.send<GetLabelInfoResponse>(message, ClassId.INIT_RESPONSE);
 			},
