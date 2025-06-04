@@ -106,10 +106,10 @@ ___
 
 • `Optional` **cap\_prizes\_per\_run**: `number`
 
-The maximum number of prizes that can be given withing one instance/run of draw.
+The maximum number of prizes that can be given within one instance/run of draw.
 For example the prize is iPhone and add_one_prize_per_each_x_tickets is set to 1000, 
 cap_prizes_per_run is set to 3, and the total number of tickets collected is 7000.
-In this case, the prizes_per_run_actual will be limitted by 3
+In this case, the prizes_per_run_actual will be limited by 3
 
 ___
 
