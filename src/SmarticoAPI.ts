@@ -203,6 +203,8 @@ class SmarticoAPI {
 			'img4.smr.vc': 'dvm0p9vsezqr2.cloudfront.net',
 			'img5.smr.vc': 'd3gen1ksvxhac8.cloudfront.net',
 			'img6.smr.vc': 'db1kmyg7iufeo.cloudfront.net',
+			'img7.smr.vc': 'd36om2g86xefo6.cloudfront.net',
+			'img8.smr.vc': 'd2zme31v54n5pb.cloudfront.net',
 
 			'static.smr.vc': 'dtt380pweilws.cloudfront.net',
 			'static3.smr.vc': 'd1qt8ake8g4imn.cloudfront.net',
@@ -210,6 +212,7 @@ class SmarticoAPI {
 			'static5.smr.vc': 'd3l7suk1kl9rwh.cloudfront.net',
 			'static6.smr.vc': 'd121pfj16xdfcq.cloudfront.net',
 			'static7.smr.vc': 'd21deilz814qgl.cloudfront.net',
+			'static8.smr.vc': 'd1uffsroxjy2ku.cloudfront.net',
 		}
 
 		const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
