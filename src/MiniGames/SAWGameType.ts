@@ -9,7 +9,8 @@ export enum SAWGameType {
 	Quiz = 6,
 	LootboxWeekdays = 7,
 	LootboxCalendarDays = 8,
-	TreasureHunt = 9
+	TreasureHunt = 9,
+	Mario = 10
 }
 
 export enum SAWGameTypeName {
@@ -22,6 +23,7 @@ export enum SAWGameTypeName {
 	LootboxWeekdays = 'lootbox_weekdays',
 	LootboxCalendarDays = 'lootbox_calendar_days',
 	TreasureHunt = 'treasure_hunt',
+	Mario = 'mario',
 	Unknown = 'unknown',
 }
 
@@ -38,6 +40,7 @@ export const SAWGameTypeNamed = (type: SAWGameType): SAWGameTypeName => {
 			[SAWGameType.LootboxWeekdays]: SAWGameTypeName.LootboxWeekdays,
 			[SAWGameType.LootboxCalendarDays]: SAWGameTypeName.LootboxCalendarDays,
 			[SAWGameType.TreasureHunt]: SAWGameTypeName.TreasureHunt,
+			[SAWGameType.Mario]: SAWGameTypeName.Mario,
 		}[type] || SAWGameTypeName.Unknown
 	);
 };
