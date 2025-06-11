@@ -63,3 +63,19 @@ ___
 • **SAW\_NOT\_IN\_SEGMENT** = ``40009``
 
 User is not in the segment
+
+___
+
+### SAW\_NO\_BALANCE\_GEMS
+
+• **SAW\_NO\_BALANCE\_GEMS** = ``40011``
+
+Not enough gems to spin
+
+___
+
+### SAW\_NO\_BALANCE\_DIAMONDS
+
+• **SAW\_NO\_BALANCE\_DIAMONDS** = ``40012``
+
+Not enough diamonds to spin

@@ -18,4 +18,8 @@ export enum SAWSpinErrorCode {
 	SAW_VISITOR_STOP_SPIN_REQUEST = -40001,
 	/** User is not in the segment */
 	SAW_NOT_IN_SEGMENT = 40009,
+	/** User doesn't have enough gems to play. In case buy in type for the game is 'gems' based */
+	SAW_NO_BALANCE_GEMS = 40011,
+	/** User doesn't have enough diamonds to play. In case buy in type for the game is 'diamonds' based */
+	SAW_NO_BALANCE_DIAMONDS = 40012,
 }
