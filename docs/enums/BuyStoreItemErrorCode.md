@@ -63,3 +63,19 @@ ___
 • **SHOP\_FAILED\_POOL\_EMPTY** = ``11009``
 
 Failed to buy item because no more items are available
+
+___
+
+### SHOP\_NO\_BALANCE\_GEMS
+
+• **SHOP\_NO\_BALANCE\_GEMS** = ``11011``
+
+Not enough gems to purchase this item.
+
+___
+
+### SHOP\_NO\_BALANCE\_DIAMONDS
+
+• **SHOP\_NO\_BALANCE\_DIAMONDS** = ``11012``
+
+Not enough diamonds to purchase this item.

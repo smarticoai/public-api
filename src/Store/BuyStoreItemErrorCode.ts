@@ -15,4 +15,8 @@ export enum BuyStoreItemErrorCode {
 	SHOP_FAILED_MAX_BOUGHT_ITEMS_REACHED = 11006,
 	/** Failed to buy item because no more items are available */
 	SHOP_FAILED_POOL_EMPTY = 11009,
+	/** User don't have enough gems on balance */
+	SHOP_NO_BALANCE_GEMS = 11011,
+	/** User don't have enough diamonds on balance */
+	SHOP_NO_BALANCE_DIAMONDS = 11012,
 }
