@@ -47,6 +47,3 @@ ___
 • **current\_pot\_temperature**: `JackPotTemparature`
 
 current pot temperature
-0 - cold. seed amount < current pot < (min amount - seed amount)/2
-1 - warm. (min amount - seed amount)/2 < current pot < min amount
-2 - hot.  current pot > min amount

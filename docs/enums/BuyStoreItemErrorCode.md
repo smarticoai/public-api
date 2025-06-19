@@ -70,7 +70,7 @@ ___
 
 • **SHOP\_NO\_BALANCE\_GEMS** = ``11011``
 
-Not enough gems to purchase this item.
+User doesn't have enough gems on balance
 
 ___
 
@@ -78,4 +78,4 @@ ___
 
 • **SHOP\_NO\_BALANCE\_DIAMONDS** = ``11012``
 
-Not enough diamonds to purchase this item.
+User doesn't have enough diamonds on balance

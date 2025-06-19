@@ -70,7 +70,7 @@ ___
 
 • **SAW\_NO\_BALANCE\_GEMS** = ``40011``
 
-Not enough gems to spin
+User doesn't have enough gems to play. In case buy in type for the game is 'gems' based
 
 ___
 
@@ -78,4 +78,4 @@ ___
 
 • **SAW\_NO\_BALANCE\_DIAMONDS** = ``40012``
 
-Not enough diamonds to spin
+User doesn't have enough diamonds to play. In case buy in type for the game is 'diamonds' based
