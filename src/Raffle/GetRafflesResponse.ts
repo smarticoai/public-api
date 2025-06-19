@@ -10,6 +10,7 @@ export interface GetRafflesResponse extends ProtocolResponse {
 	items: Raffle[];
 }
 
+/** @hidden */
 export const ticketsTransform = (items: RaffleTicket[]): TRaffleTicket[] => {
 	return items.map((item) => {
 		return {
@@ -19,6 +20,7 @@ export const ticketsTransform = (items: RaffleTicket[]): TRaffleTicket[] => {
 	});
 };
 
+/** @hidden */
 export const winnersTransform = (items: RafflePrizeWinner[]): TRafflePrizeWinner[] => {
 	return items.map((item) => {
 		return {
@@ -32,6 +34,7 @@ export const winnersTransform = (items: RafflePrizeWinner[]): TRafflePrizeWinner
 	});
 };
 
+/** @hidden */
 export const prizeTransform = (items: RafflePrize[]): TRafflePrize[] => {
 	return items.map((item) => {
 		return {
@@ -54,6 +57,7 @@ export const prizeTransform = (items: RafflePrize[]): TRafflePrize[] => {
 	});
 };
 
+/** @hidden */
 export const drawTransform = (items: RaffleDraw[]): TRaffleDraw[] => {
 	return items.map((item) => {
 		return {
@@ -82,6 +86,7 @@ export const drawTransform = (items: RaffleDraw[]): TRaffleDraw[] => {
 	});
 };
 
+/** @hidden */
 export const raffleTransform = (items: Raffle[]): TRaffle[] => {
 	return items.map((item) => {
 		return {

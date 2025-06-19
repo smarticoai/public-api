@@ -6,6 +6,7 @@ export interface GetRaffleDrawRunsHistoryResponse extends ProtocolResponse {
 	draw_runs: RaffleDrawRun[];
 }
 
+/** @hidden */
 export const drawRunHistoryTransform = (res: GetRaffleDrawRunsHistoryResponse): TRaffleDrawRun[] => {
 	return res.draw_runs.map((item) => {
 		return {

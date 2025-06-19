@@ -6,7 +6,7 @@ export interface RaffleClaimPrizeResponse extends ProtocolResponse {
     errMsg?: string
 }
 
-
+/** @hidden */
 export const raffleClaimPrizeResponseTransform = (info: RaffleClaimPrizeResponse): TransformedRaffleClaimPrizeResponse => {
     return {
         errorCode: info.errCode,

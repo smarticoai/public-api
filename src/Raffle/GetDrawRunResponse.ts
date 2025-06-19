@@ -7,7 +7,7 @@ export interface GetDrawRunResponse extends ProtocolResponse {
 	draw: RaffleDraw;
 }
 
-
+/** @hidden */
 export const drawRunTransform = (res: GetDrawRunResponse): TRaffleDraw => {
 	return {
 		id: res.draw.draw_id,
