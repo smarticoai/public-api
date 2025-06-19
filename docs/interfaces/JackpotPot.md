@@ -44,6 +44,6 @@ ___
 
 ### current\_pot\_temperature
 
-• **current\_pot\_temperature**: `JackPotTemparature`
+• **current\_pot\_temperature**: [`JackPotTemparature`](../enums/JackPotTemparature.md)
 
 current pot temperature

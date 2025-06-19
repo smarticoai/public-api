@@ -13,7 +13,7 @@ ___
 
 ### public\_meta
 
-• **public\_meta**: `RaffleDrawPublicMeta`
+• **public\_meta**: [`RaffleDrawPublicMeta`](RaffleDrawPublicMeta.md)
 
 Meta information of the Draw for the presentaiton in UI
 

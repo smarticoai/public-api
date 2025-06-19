@@ -44,7 +44,7 @@ ___
 
 ### section\_type\_id
 
-• `Optional` **section\_type\_id**: `AchCustomSectionType`
+• `Optional` **section\_type\_id**: [`AchCustomSectionType`](../enums/AchCustomSectionType.md)
 
 The particular type of custom section, can be Missions, Tournaments, Lootbox and etc
 

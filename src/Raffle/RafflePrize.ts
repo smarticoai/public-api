@@ -119,4 +119,4 @@ interface RafflePrize {
 	winners: RafflePrizeWinner[];
 }
 
-export { RafflePrize }
+export { RafflePrize, RafflePrizePublicMeta, RafflePrizeWinner }

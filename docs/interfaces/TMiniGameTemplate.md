@@ -214,7 +214,7 @@ ___
 
 ### saw\_template\_ui\_definition
 
-• **saw\_template\_ui\_definition**: `SAWTemplateUI`
+• **saw\_template\_ui\_definition**: [`SAWTemplateUI`](SAWTemplateUI.md)
 
 The UI definition of the mini-game
 

@@ -726,7 +726,7 @@ The "onUpdate" callback will be triggered when the user receives a new message. 
 | `params.from?` | `number` |
 | `params.to?` | `number` |
 | `params.onlyFavorite?` | `boolean` |
-| `params.categoryId?` | `InboxCategories` |
+| `params.categoryId?` | [`InboxCategories`](../enums/InboxCategories.md) |
 | `params.onUpdate?` | (`data`: [`TInboxMessage`](../interfaces/TInboxMessage.md)[]) => `void` |
 
 #### Returns

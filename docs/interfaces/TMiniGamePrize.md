@@ -79,7 +79,7 @@ ___
 
 ### acknowledge\_type
 
-• **acknowledge\_type**: `SAWAcknowledgeTypeName`
+• **acknowledge\_type**: [`SAWAcknowledgeTypeName`](../enums/SAWAcknowledgeTypeName.md)
 
 Type of acknowledge message for users
 
@@ -215,7 +215,7 @@ ___
 
 ### prize\_modifiers
 
-• `Optional` **prize\_modifiers**: `PrizeModifiers`[]
+• `Optional` **prize\_modifiers**: [`PrizeModifiers`](../enums/PrizeModifiers.md)[]
 
 Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded.
 

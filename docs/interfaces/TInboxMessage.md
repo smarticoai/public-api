@@ -36,6 +36,6 @@ ___
 
 ### category\_id
 
-• `Optional` **category\_id**: `InboxCategories`
+• `Optional` **category\_id**: [`InboxCategories`](../enums/InboxCategories.md)
 
 Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages

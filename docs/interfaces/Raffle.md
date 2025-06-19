@@ -12,7 +12,7 @@ ___
 
 ### public\_meta
 
-• **public\_meta**: `RafflePublicMeta`
+• **public\_meta**: [`RafflePublicMeta`](RafflePublicMeta.md)
 
 Meta information about raffle for the presentation on UI
 

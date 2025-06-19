@@ -48,4 +48,4 @@ interface Raffle {
 
 }
 
-export { Raffle };
+export { Raffle, RafflePublicMeta };

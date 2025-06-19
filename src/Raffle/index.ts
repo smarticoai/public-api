@@ -12,3 +12,4 @@ export * from './GetRaffleDrawRunsHistoryRequest';
 export * from './GetRaffleDrawRunsHistoryResponse';
 export * from './RaffleClaimPrizeRequest';
 export * from './RaffleClaimPrizeResponse';
+export * from './RaffleDrawPublicMeta';

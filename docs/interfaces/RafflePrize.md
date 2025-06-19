@@ -14,7 +14,7 @@ ___
 
 ### public\_meta
 
-• **public\_meta**: `RafflePrizePublicMeta`
+• **public\_meta**: [`RafflePrizePublicMeta`](RafflePrizePublicMeta.md)
 
 Meta information about the prize for presentation in the UI.
 

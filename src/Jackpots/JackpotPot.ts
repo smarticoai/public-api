@@ -24,4 +24,4 @@ interface JackpotPot {
 	current_pot_temperature: JackPotTemparature;
 }
 
-export { JackpotPot };
+export { JackpotPot, JackPotTemparature };
