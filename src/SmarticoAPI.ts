@@ -377,7 +377,7 @@ class SmarticoAPI {
 					ClassId.GET_TRANSLATIONS_REQUEST,
 					{
 						lang_code: DEFAULT_LANG_EN,
-						hash_code: 0,
+						hash_code: null,
 						areas,
 					},
 				);
@@ -390,7 +390,7 @@ class SmarticoAPI {
 						ClassId.GET_TRANSLATIONS_REQUEST,
 						{
 							lang_code,
-							hash_code: 0,
+							hash_code: null,
 							areas,
 						},
 					);
