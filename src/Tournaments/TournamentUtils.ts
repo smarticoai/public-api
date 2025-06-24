@@ -14,6 +14,9 @@ const tournamentPrizeTypeToPrizeName = (type: ActivityTypeLimited) => {
 		[ActivityTypeLimited.ResetPoints]: 'POINTS_RESET',
 		[ActivityTypeLimited.MiniGameAttempt]: 'MINI_GAME_ATTEMPT',
 		[ActivityTypeLimited.Bonus]: 'BONUS',
+		[ActivityTypeLimited.AddGemsAndDiamonds]: 'GEMS_AND_DIAMONDS_ADD',
+		[ActivityTypeLimited.DeductGemsAndDiamonds]: 'GEMS_AND_DIAMONDS_DEDUCT',
+		[ActivityTypeLimited.ResetGemsAndDiamonds]: 'GEMS_AND_DIAMONDS_RESET',
 	}[type];
 };
 

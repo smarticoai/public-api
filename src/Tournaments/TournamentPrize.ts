@@ -8,4 +8,6 @@ export interface TournamentPrize {
 	place_to: number;
 	type: ActivityTypeLimited;
 	points: number;
+	gems: number;
+	diamonds: number;
 }

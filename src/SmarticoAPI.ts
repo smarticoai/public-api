@@ -621,6 +621,9 @@ class SmarticoAPI {
 				[SAWSpinErrorCode.SAW_NOT_ENOUGH_POINTS]: 'NOT ENOUGH POINTS',
 				[SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED]: 'MAX SPIN ATTEMPTS REACHED',
 				[SAWSpinErrorCode.SAW_TEMPLATE_NOT_ACTIVE]: "MINIGAME IS NOT IN ACTIVE PERIOD",
+				[SAWSpinErrorCode.SAW_NOT_IN_SEGMENT]: "USER IS NOT IN SEGMENT",
+				[SAWSpinErrorCode.SAW_NO_BALANCE_GEMS]: "NOT ENOUGH GEMS",
+				[SAWSpinErrorCode.SAW_NO_BALANCE_DIAMONDS]: "NOT ENOUGH DIAMONDS",
 			}[spinAttemptResponse.errCode] || 'OTHER';
 
 		await this.coreReportCustomEvent(user_ext_id, 'minigame_attempt', {

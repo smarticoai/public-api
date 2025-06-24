@@ -18,4 +18,5 @@ export interface SAWPrize {
 	relative_period_timezone?: number;
 	is_surcharge?: boolean;
 	is_deleted?: boolean;
+	prize_details_json?: {[key: string]: any};
 }
