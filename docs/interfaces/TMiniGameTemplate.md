@@ -88,7 +88,10 @@ ___
 
 • **next\_available\_spin\_ts**: `number`
 
-if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available
+if the game is limit to the number of spins that user can do during period of time,
+this property shows the epoch time in UTC when the next attempt will be available.
+Note that you need to enable 'Show time to the next available spin' setting on mini-game template in the backoffice
+Important: this field will not be populated if “Max number of attempts a user can do” is set to value different from 1
 
 ___
 
