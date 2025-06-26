@@ -989,7 +989,7 @@ class SmarticoAPI {
 
 		const response = await this.send<GetLeaderBoardsResponse>(message, ClassId.GET_LEADERS_BOARD_RESPONSE, force_language);
 
-		const boardKey = Object.keys(response.map).find((k) => period_type_id === undefined || k === period_type_id?.toString());
+		const boardKey = Object.keys(response.map || {}).find((k) => period_type_id === undefined || k === period_type_id?.toString());
 
 		if (boardKey === undefined) {
 			return undefined;
