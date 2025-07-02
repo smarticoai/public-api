@@ -36,6 +36,7 @@ export interface SAWTemplate {
 		skin_folder: string;
 		skin_css: string;
 		use_new_popups?: boolean;
+		lottie_animation_speed?: number;
 	};
 
 	expose_game_stat_on_api?: boolean;
