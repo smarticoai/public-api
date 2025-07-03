@@ -1,4 +1,3 @@
-/** @hidden */
 export enum TournamentRegistrationStatus {
 	NOT_REGISTERED = 0,
 	REGISTERED = 1,

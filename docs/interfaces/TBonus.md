@@ -44,7 +44,7 @@ ___
 
 ### bonus\_status\_id
 
-• `Optional` **bonus\_status\_id**: `BonusStatus`
+• `Optional` **bonus\_status\_id**: [`BonusStatus`](../enums/BonusStatus-1.md)
 
 ID of the bonus status
 
@@ -52,7 +52,7 @@ ___
 
 ### label\_bonus\_template\_meta\_map
 
-• `Optional` **label\_bonus\_template\_meta\_map**: `BonusTemplateMetaMap`
+• `Optional` **label\_bonus\_template\_meta\_map**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap.md)
 
 Additional information about the bonus(edscription, image,name, acknowledge)
 
@@ -60,6 +60,6 @@ ___
 
 ### bonus\_meta\_map
 
-• `Optional` **bonus\_meta\_map**: `BonusMetaMap`
+• `Optional` **bonus\_meta\_map**: [`BonusMetaMap`](BonusMetaMap.md)
 
 Additional information presented to the player when the bonus is redeemed

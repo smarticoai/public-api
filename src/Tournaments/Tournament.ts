@@ -8,7 +8,9 @@ import {
 import { TournamentType } from './TournamentType';
 import { TournamentPublicMeta } from './TournamentPublicMeta';
 import { TTournament } from '../WSAPI/WSAPITypes';
-import { TournamentPlayer, TournamentPrize, TournamentUtils } from '.';
+import { TournamentPlayer } from './TournamentPlayer';
+import { TournamentPrize } from './TournamentPrize';
+import { TournamentUtils } from './TournamentUtils';
 import { IntUtils } from '../IntUtils';
 import { AchRelatedGame } from '../Base/AchRelatedGame';
 
@@ -64,7 +66,7 @@ export interface Tournament {
 	related_games?: AchRelatedGame[];
 	/** The minimum amount of score points that the user should get in order to be qualified for the prize */
 	minScoreToWin?: number;
-	/** When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard. */
+	/** When enabled, users who don't meet the minimum qualifying score will be hidden from the Leaderboard. */
 	hideLeaderboardsMinScores?: boolean;
 }
 

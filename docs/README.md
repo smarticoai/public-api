@@ -2,26 +2,43 @@
 
 ## Enumerations
 
+- [BonusStatus](enums/BonusStatus.md)
 - [AchCustomSectionType](enums/AchCustomSectionType.md)
+- [AchCustomLayoutTheme](enums/AchCustomLayoutTheme.md)
+- [AchMissionsTabsOptions](enums/AchMissionsTabsOptions.md)
+- [AchOverviewMissionsFilter](enums/AchOverviewMissionsFilter.md)
 - [InboxCategories](enums/InboxCategories.md)
 - [JackpotContributionType](enums/JackpotContributionType.md)
 - [JackPotTemparature](enums/JackPotTemparature.md)
 - [JackpotType](enums/JackpotType.md)
 - [LeaderBoardPeriodType](enums/LeaderBoardPeriodType.md)
 - [PrizeModifiers](enums/PrizeModifiers.md)
+- [SAWAcknowledgeType](enums/SAWAcknowledgeType.md)
 - [SAWAcknowledgeTypeName](enums/SAWAcknowledgeTypeName.md)
 - [SAWAskForUsername](enums/SAWAskForUsername.md)
+- [SAWBuyInType](enums/SAWBuyInType.md)
 - [SAWBuyInTypeName](enums/SAWBuyInTypeName.md)
 - [SAWGameLayout](enums/SAWGameLayout.md)
+- [SAWGameType](enums/SAWGameType.md)
 - [SAWGameTypeName](enums/SAWGameTypeName.md)
+- [SAWPrizeType](enums/SAWPrizeType.md)
 - [MiniGamePrizeTypeName](enums/MiniGamePrizeTypeName.md)
 - [SAWSpinErrorCode](enums/SAWSpinErrorCode.md)
+- [SAWWheelLayout](enums/SAWWheelLayout.md)
+- [SAWWinSoundType](enums/SAWWinSoundType.md)
 - [AchievementAvailabilityStatus](enums/AchievementAvailabilityStatus.md)
 - [RaffleDrawInstanceState](enums/RaffleDrawInstanceState.md)
 - [RaffleDrawTypeExecution](enums/RaffleDrawTypeExecution.md)
 - [BuyStoreItemErrorCode](enums/BuyStoreItemErrorCode.md)
 - [TournamentRegistrationError](enums/TournamentRegistrationError.md)
+- [TournamentRegistrationStatus](enums/TournamentRegistrationStatus.md)
 - [TournamentRegistrationStatusName](enums/TournamentRegistrationStatusName.md)
+- [TournamentRegistrationType](enums/TournamentRegistrationType.md)
+- [BonusStatus](enums/BonusStatus-1.md)
+
+## Classes
+
+- [SAWUtils](classes/SAWUtils.md)
 
 ## Interfaces
 
@@ -47,7 +64,25 @@
 - [JackpotsOptinResponse](interfaces/JackpotsOptinResponse.md)
 - [JackpotsOptoutRequest](interfaces/JackpotsOptoutRequest.md)
 - [JackpotsOptoutResponse](interfaces/JackpotsOptoutResponse.md)
+- [SAWAcknowledgeSpinPushRequest](interfaces/SAWAcknowledgeSpinPushRequest.md)
+- [SAWDoAknowledgeRequest](interfaces/SAWDoAknowledgeRequest.md)
+- [SAWDoAknowledgeResponse](interfaces/SAWDoAknowledgeResponse.md)
+- [SAWDoSpinRequest](interfaces/SAWDoSpinRequest.md)
+- [SAWDoSpinResponse](interfaces/SAWDoSpinResponse.md)
+- [SAWEventSawPush](interfaces/SAWEventSawPush.md)
+- [SAWGetTemplatesRequest](interfaces/SAWGetTemplatesRequest.md)
+- [SAWGetTemplatesResponse](interfaces/SAWGetTemplatesResponse.md)
+- [SAWPrize](interfaces/SAWPrize.md)
+- [SAWPrizeDropAknowledgeRequest](interfaces/SAWPrizeDropAknowledgeRequest.md)
+- [SAWPrizeDropAknowledgeResponse](interfaces/SAWPrizeDropAknowledgeResponse.md)
+- [SAWPrizeDropWinPush](interfaces/SAWPrizeDropWinPush.md)
+- [SAWPrizeUI](interfaces/SAWPrizeUI.md)
+- [SAWSpinsCountPush](interfaces/SAWSpinsCountPush.md)
+- [SAWTemplate](interfaces/SAWTemplate.md)
 - [SAWTemplateUI](interfaces/SAWTemplateUI.md)
+- [SAWWinningHistoryRequest](interfaces/SAWWinningHistoryRequest.md)
+- [SAWWinningHistoryResponse](interfaces/SAWWinningHistoryResponse.md)
+- [SAWPrizesHistory](interfaces/SAWPrizesHistory.md)
 - [GetDrawRunRequest](interfaces/GetDrawRunRequest.md)
 - [GetDrawRunResponse](interfaces/GetDrawRunResponse.md)
 - [GetRaffleDrawRunsHistoryRequest](interfaces/GetRaffleDrawRunsHistoryRequest.md)
@@ -94,6 +129,8 @@
 - [TSegmentCheckResult](interfaces/TSegmentCheckResult.md)
 - [TUICustomSection](interfaces/TUICustomSection.md)
 - [TBonus](interfaces/TBonus.md)
+- [BonusTemplateMetaMap](interfaces/BonusTemplateMetaMap.md)
+- [BonusMetaMap](interfaces/BonusMetaMap.md)
 - [TClaimBonusResult](interfaces/TClaimBonusResult.md)
 - [TSawHistory](interfaces/TSawHistory.md)
 - [TRaffle](interfaces/TRaffle.md)
@@ -113,3 +150,69 @@
 ### TournamentRegistrationTypeName
 
 Ƭ **TournamentRegistrationTypeName**: ``"AUTO"`` \| ``"OPT_IN"`` \| ``"BUY_IN_POINTS"`` \| ``"MANUAL_APPROVAL"`` \| ``"REQUIRES_QUALIFICATION"`` \| ``"BUY_IN_GEMS"`` \| ``"BUY_IN_DIAMONDS"`` \| ``"UNKNOWN"``
+
+## Variables
+
+### PrizeModifiersKeysNames
+
+• `Const` **PrizeModifiersKeysNames**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `1` | `string` |
+| `2` | `string` |
+| `3` | `string` |
+| `4` | `string` |
+| `5` | `string` |
+| `6` | `string` |
+| `7` | `string` |
+| `8` | `string` |
+
+___
+
+### SAWWinSoundFiles
+
+• `Const` **SAWWinSoundFiles**: `Object`
+
+#### Type declaration
+
+| Name | Type |
+| :------ | :------ |
+| `4` | `any` |
+| `1` | `string` |
+| `2` | `string` |
+| `3` | `string` |
+
+## Functions
+
+### SAWTemplatesTransform
+
+▸ **SAWTemplatesTransform**(`items`): [`TMiniGameTemplate`](interfaces/TMiniGameTemplate.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `items` | [`SAWTemplate`](interfaces/SAWTemplate.md)[] |
+
+#### Returns
+
+[`TMiniGameTemplate`](interfaces/TMiniGameTemplate.md)[]
+
+___
+
+### SAWHistoryTransform
+
+▸ **SAWHistoryTransform**(`items`): [`TSawHistory`](interfaces/TSawHistory.md)[]
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `items` | [`SAWPrizesHistory`](interfaces/SAWPrizesHistory.md)[] |
+
+#### Returns
+
+[`TSawHistory`](interfaces/TSawHistory.md)[]

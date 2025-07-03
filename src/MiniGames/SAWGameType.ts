@@ -1,5 +1,3 @@
-/** @hidden */
-
 export enum SAWGameType {
 	SpinAWheel = 1,
 	ScratchCard = 2,

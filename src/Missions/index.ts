@@ -18,3 +18,4 @@ export * from './GetAchCategoriesRequest';
 export * from './AchClaimPrizeRequest';
 export * from './AchClaimPrizeResponse';
 export * from './AchievementAvailabilityStatus';
+export * from './GetRelatedAchTourResponse';

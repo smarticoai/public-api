@@ -1,4 +1,3 @@
-/** @hidden */
 export enum TournamentRegistrationType {
 	AUTO = 1,
 	OPT_IN = 2,

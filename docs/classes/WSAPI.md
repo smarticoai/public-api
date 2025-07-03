@@ -303,6 +303,9 @@ ___
 Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched.
 The maximum number of items per request is limited to 20.
 You can leave this params empty and by default it will return list of purchased items ranging from 0 to 20.
+The returned store items are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+Note that each time you call getStorePurchasedItems with a new onUpdate callback, the old one will be overwritten by the new one.
+The onUpdate callback will be called on purchase of the store item and the last 20 items will be passed to it.
 
 **Example**:
 ```
@@ -481,7 +484,7 @@ ___
 
 ### miniGameWinAcknowledgeRequest
 
-▸ **miniGameWinAcknowledgeRequest**(`request_id`): `Promise`\<`SAWDoAknowledgeResponse`\>
+▸ **miniGameWinAcknowledgeRequest**(`request_id`): `Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
 
 Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize
 **Example**:
@@ -499,7 +502,7 @@ _smartico.api.miniGameWinAcknowledgeRequest('2a189322-31bb-4119-b943-bx7868ff8dc
 
 #### Returns
 
-`Promise`\<`SAWDoAknowledgeResponse`\>
+`Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
 
 ___
 

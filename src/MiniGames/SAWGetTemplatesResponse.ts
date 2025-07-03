@@ -4,7 +4,7 @@ import { ProtocolResponse } from './../Base/ProtocolResponse';
 import { SAWAcknowledgeTypeNamed } from './SAWAcknowledgeType';
 import { SAWBuyInType, SAWBuyInTypeNamed } from './SAWBuyInType';
 import { SAWGameTypeNamed } from './SAWGameType';
-import { MiniGamePrizeTypeName, MiniGamePrizeTypeNamed } from './SAWPrizeType';
+import { MiniGamePrizeTypeNamed } from './SAWPrizeType';
 import { SAWTemplate } from './SAWTemplate';
 
 export interface SAWGetTemplatesResponse extends ProtocolResponse {

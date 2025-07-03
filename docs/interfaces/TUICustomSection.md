@@ -52,7 +52,7 @@ ___
 
 ### theme
 
-• `Optional` **theme**: `AchCustomLayoutTheme`
+• `Optional` **theme**: [`AchCustomLayoutTheme`](../enums/AchCustomLayoutTheme.md)
 
 Theme of the custom section
 
@@ -68,7 +68,7 @@ ___
 
 ### mission\_tabs\_options
 
-• `Optional` **mission\_tabs\_options**: `AchMissionsTabsOptions`
+• `Optional` **mission\_tabs\_options**: [`AchMissionsTabsOptions`](../enums/AchMissionsTabsOptions.md)
 
 Tabs that can be shown in custom section, e.g Overview, No Overview, All tabs
 
@@ -76,7 +76,7 @@ ___
 
 ### overview\_missions\_filter
 
-• `Optional` **overview\_missions\_filter**: `AchOverviewMissionsFilter`
+• `Optional` **overview\_missions\_filter**: [`AchOverviewMissionsFilter`](../enums/AchOverviewMissionsFilter.md)
 
 Filter that allow to show missions by criteria
 

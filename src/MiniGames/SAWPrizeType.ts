@@ -1,4 +1,3 @@
-/** @hidden */
 export enum SAWPrizeType {
 	NO_PRIZE = 1,
 	POINTS = 2,

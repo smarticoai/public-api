@@ -275,7 +275,7 @@ ___
 
 ### wheel\_layout
 
-• `Optional` **wheel\_layout**: `SAWWheelLayout`
+• `Optional` **wheel\_layout**: [`SAWWheelLayout`](../enums/SAWWheelLayout.md)
 
 ___
 

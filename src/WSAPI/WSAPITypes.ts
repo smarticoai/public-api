@@ -1,15 +1,12 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInType, SAWBuyInTypeName, SAWDoAknowledgeResponse, SAWGameLayout, SAWGameType, SAWGameTypeName, SAWPrize, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI, SAWWheelLayout } from '../MiniGames';
-import { Tournament, TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
-import { AchCategory, AchievementAvailabilityStatus, UserAchievement } from '../Missions';
+import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWGameLayout, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
+import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
+import { AchievementAvailabilityStatus } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from '../CustomSections';
-import { BonusStatus , BonusTemplateMetaMap, BonusMetaMap} from '../Bonuses';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
 import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from '../Raffle';
-import { JackPotWinner } from '../Jackpots/JackPotWinner';
-import { GetRelatedAchTourResponse } from '../Missions/GetRelatedAchTourResponse';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
@@ -857,6 +854,33 @@ export interface TBonus {
 	label_bonus_template_meta_map?: BonusTemplateMetaMap;
 	/** Additional information presented to the player when the bonus is redeemed */
 	bonus_meta_map?: BonusMetaMap;
+}
+
+export enum BonusStatus {
+    /** The bonus is newly created (shouldn't be shown to the client) */
+    New = 1, 
+    /** The bonus is issued and available for redemption but has not been redeemed yet */
+    COUPON_ISSUED = 2,
+    /** The bonus has been successfully redeemed */
+    REDEEMED = 3,
+    /** The bonus is still valid, but a previous redemption attempt failed */
+    REDEEM_FAILED = 4, 
+    /** Failed to issue the bonus (shouldn't be shown to the client) */
+    COUPON_ISSUE_FAILED = 5, 
+    /** The bonus was issued but has expired and can no longer be redeemed (shouldn't be shown to the client) */
+    EXPIRED = 6, 
+}
+export interface BonusTemplateMetaMap {
+	/** Description of the bonus template*/
+	description: string;
+	/** Acknowledge message setup in the bonus template*/
+	acknowledge: string;
+	/** Image URL of the bonus template*/
+	image_url: string;
+}
+export interface BonusMetaMap {
+	/** Label and description of the bonus sent to the player*/
+	uiAmount?: string;
 }
 
 /**
