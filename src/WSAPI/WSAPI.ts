@@ -129,6 +129,7 @@ export class WSAPI {
 			on(ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE, () => this.updateMissions());
 			on(ClassId.RELOAD_ACHIEVEMENTS_EVENT, () => this.updateMissions());
 			on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournaments());
+			on(ClassId.BUY_SHOP_ITEM_RESPONSE, () => this.updateStorePurchasedItems());
 			on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
 			on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
 			on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
@@ -405,6 +406,9 @@ export class WSAPI {
 	 * Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched.
 	 * The maximum number of items per request is limited to 20.
 	 * You can leave this params empty and by default it will return list of purchased items ranging from 0 to 20.
+	 * The returned store items are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+	 * Note that each time you call getStorePurchasedItems with a new onUpdate callback, the old one will be overwritten by the new one.
+	 * The onUpdate callback will be called on purchase of the store item and the last 20 items will be passed to it.
 	 *
 	 * **Example**:
 	 * ```
@@ -922,6 +926,11 @@ export class WSAPI {
 	private async updateTournaments() {
 		const payload = await this.api.tournamentsGetLobbyT(null);
 		this.updateEntity(onUpdateContextKey.TournamentList, payload);
+	}
+
+	private async updateStorePurchasedItems() {
+		const payload = await this.api.storeGetPurchasedItemsT(null, 20, 0);
+		this.updateEntity(onUpdateContextKey.StoreHistory, payload);
 	}
 
 	private async updateInboxMessages() {
