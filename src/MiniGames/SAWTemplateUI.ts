@@ -35,6 +35,7 @@ export interface SAWTemplateUI {
 	matchx_is_completed?: boolean;
 	matchx_general_board_users_count?: number;
 	matchx_hide_ranking?: boolean;
+	prize_pool_image?: string;
 	ask_for_username?: SAWAskForUsername;
 	show_prize_board?: boolean;
 
