@@ -188,6 +188,12 @@ ___
 
 ___
 
+### prize\_pool\_image
+
+• `Optional` **prize\_pool\_image**: `string`
+
+___
+
 ### ask\_for\_username
 
 • `Optional` **ask\_for\_username**: [`SAWAskForUsername`](../enums/SAWAskForUsername.md)
