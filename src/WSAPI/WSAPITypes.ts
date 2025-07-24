@@ -261,6 +261,17 @@ export interface TLevel {
 }
 
 /**
+ * TLevelCurrent describes the information of each level defined in the system along with ordinal position and progress of the current level
+ */
+
+export interface TLevelCurrent extends TLevel {
+	/** The ordinal position of the level */
+	ordinal_position: number;
+	/** The progress of the level */
+	progress: number;
+}
+
+/**
  * TTournament describes the general information of the tournament item
  */
 

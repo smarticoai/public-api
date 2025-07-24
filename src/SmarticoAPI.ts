@@ -94,6 +94,7 @@ import {
 	TUICustomSection,
 	TBonus,
 	TRaffle,
+	TLevelCurrent,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -1026,6 +1027,35 @@ class SmarticoAPI {
 
 	public async levelsGetT(user_ext_id: string): Promise<TLevel[]> {
 		return GetLevelMapResponseTransform(await this.levelsGet(user_ext_id));
+	}
+
+	public async getLevelCurrent(user_ext_id: string): Promise<TLevelCurrent> {
+		const levels = await this.levelsGetT(user_ext_id);
+		const userInfo = await this.getUserGamificationInfo(user_ext_id);
+		if (!levels || levels.length === 0) return null;
+
+		const userPoints = userInfo.points_balance;
+
+		const sortedLevels = levels.sort((a, b) => a.required_points - b.required_points);
+
+		let currentLevelIndex = sortedLevels.findIndex((level, index) => {
+			const nextLevel = sortedLevels[index + 1];
+			return userPoints >= level.required_points && (!nextLevel || userPoints < nextLevel.required_points);
+		});
+
+		if (currentLevelIndex === -1) {
+			currentLevelIndex = sortedLevels.length - 1;
+		}
+
+		const currentLevel = sortedLevels[currentLevelIndex];
+		const nextLevel = sortedLevels[currentLevelIndex + 1];
+		const progress = nextLevel ? ((userPoints - currentLevel.required_points) / (nextLevel.required_points - currentLevel.required_points)) * 100 : 100;
+
+		return {
+			...currentLevel,
+			ordinal_position: currentLevelIndex + 1,
+			progress: Math.min(Math.max(progress, 0), 100)
+		};
 	}
 
 	public async customSectionsGet(user_ext_id: string, force_language?: string): Promise<GetCustomSectionsResponse> {

@@ -36,6 +36,7 @@ import {
 	TRaffleDraw,
 	TRaffleDrawRun,
 	TransformedRaffleClaimPrizeResponse,
+	TLevelCurrent
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -209,6 +210,22 @@ export class WSAPI {
 	 */
 	public async getLevels(): Promise<TLevel[]> {
 		return OCache.use(onUpdateContextKey.Levels, ECacheContext.WSAPI, () => this.api.levelsGetT(null), CACHE_DATA_SEC);
+	}
+
+	/**
+	 * Returns the current level of the user with extended information including ordinal position and progress.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getCurrentLevel().then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getCurrentLevel(): Promise<TLevelCurrent> {
+		return this.api.getLevelCurrent(null);
 	}
 
 	/** Returns all the missions available the current user.
