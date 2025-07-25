@@ -89,6 +89,7 @@ enum onUpdateContextKey {
 	JackpotWinners = 'jackpotWinners',
 	Raffles = 'raffles',
 	JackpotEligibleGames = 'jackpotEligibleGames',
+	CurrentLevel = 'currentLevel',
 }
 
 /** @group General API */
@@ -225,7 +226,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async getCurrentLevel(): Promise<TLevelCurrent> {
-		return this.api.getLevelCurrent(null);
+		return OCache.use(onUpdateContextKey.CurrentLevel, ECacheContext.WSAPI, () => this.api.getLevelCurrent(null), CACHE_DATA_SEC);
 	}
 
 	/** Returns all the missions available the current user.
