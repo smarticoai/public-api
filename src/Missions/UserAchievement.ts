@@ -92,6 +92,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 						execution_count_expected: t.executionCount,
 						execution_count_actual: t.userExecutedCount,
 						display_progress_as_count: t.task_public_meta.display_progress_as_count,
+						stage_image: t.task_public_meta.stage_image,
 					})),
 				related_games: (r.related_games || []).map((g) => ({
 					ext_game_id: g.ext_game_id,
