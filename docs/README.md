@@ -106,6 +106,7 @@
 - [TMiniGameTemplate](interfaces/TMiniGameTemplate.md)
 - [TUserProfile](interfaces/TUserProfile.md)
 - [TLevel](interfaces/TLevel.md)
+- [TLevelCurrent](interfaces/TLevelCurrent.md)
 - [TTournament](interfaces/TTournament.md)
 - [TTournamentDetailed](interfaces/TTournamentDetailed.md)
 - [TStoreCategory](interfaces/TStoreCategory.md)

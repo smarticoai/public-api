@@ -98,6 +98,27 @@ _smartico.vapi('EN').getLevels().then((result) => {
 
 ___
 
+### getCurrentLevel
+
+▸ **getCurrentLevel**(): `Promise`\<[`TLevelCurrent`](../interfaces/TLevelCurrent.md)\>
+
+Returns the current level of the user with extended information including ordinal position and progress.
+
+**Example**:
+```
+_smartico.api.getCurrentLevel().then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Returns
+
+`Promise`\<[`TLevelCurrent`](../interfaces/TLevelCurrent.md)\>
+
+___
+
 ### getMissions
 
 ▸ **getMissions**(`«destructured»?`): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
