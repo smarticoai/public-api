@@ -183,6 +183,10 @@ export interface TMiniGameTemplate {
 	saw_template_ui_definition: SAWTemplateUI;
 	/* When enabled the prize history icon is visible on a certain template */
 	show_prize_history?:boolean;
+	/** The maximum number of attempts that user can do during period of time */
+	max_number_of_attempts?: number;
+	/** The period of time in milliseconds during which the user can do the maximum number of attempts */
+	max_spins_period_ms?: number;
 }
 
 /**
