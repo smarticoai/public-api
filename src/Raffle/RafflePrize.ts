@@ -34,28 +34,29 @@ interface RafflePrize {
     /**
      * The actual number of prizes for the current instance.
      * This value is taking into account follwing values:
-     *  - min_required_total_tickets, 
-     *  - add_one_prize_per_each_x_tickets
-     *  - stock_items_per_draw
-     *  - total_tickets_count (from Draw instance)
-     *  - cap_prizes_per_run
+     * 
+     * - min_required_total_tickets,
+     * - add_one_prize_per_each_x_tickets
+     * - stock_items_per_draw
+     * - total_tickets_count (from Draw instance)
+     * - cap_prizes_per_run
      * For example:
-     *  - prizes_per_run = 1
-     *  - min_required_total_tickets = 1000
-     *  - add_one_prize_per_each_x_tickets = 1000
-     *  - stock_items_per_draw = 5
-     *  - total_tickets_count = 7000
-     *  - cap_prizes_per_run = 6
-     *  prizes_per_run_actual will be 5, because
-     *  7000 tickets are collected, so 7 iPhones are available, but the cap is 6 and the stock is 5.
+     * 
+     * - prizes_per_run = 1
+     * - min_required_total_tickets = 1000
+     * - add_one_prize_per_each_x_tickets = 1000
+     * - stock_items_per_draw = 5
+     * - total_tickets_count = 7000
+     * - cap_prizes_per_run = 6
+     * prizes_per_run_actual will be 5, because
+     * 7000 tickets are collected, so 7 iPhones are available, but the cap is 6 and the stock is 5.
     */
     prizes_per_run_actual: number;
 
 
     /**
-     * 
-     * The chances to win the prize by current player. 
-     * Calculated as the ratio of the number of tickets collected by the current player to the 
+     * The chances to win the prize by current player.
+     * Calculated as the ratio of the number of tickets collected by the current player to the
      * total number of tickets collected by all players and multiplied by number of actual prizes of this kind.
      */
     chances_to_win_perc: number;
@@ -91,7 +92,7 @@ interface RafflePrize {
 
     /**
      * The maximum number of prizes that can be given within one instance/run of draw.
-     * For example the prize is iPhone and add_one_prize_per_each_x_tickets is set to 1000, 
+     * For example the prize is iPhone and add_one_prize_per_each_x_tickets is set to 1000,
      * cap_prizes_per_run is set to 3, and the total number of tickets collected is 7000.
      * In this case, the prizes_per_run_actual will be limited by 3
      */ 

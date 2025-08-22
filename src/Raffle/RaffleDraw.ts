@@ -50,6 +50,7 @@ interface RaffleDraw {
 
     /** 
      * Type of the draw execution, indicating how and when the draw is executed.
+     * 
      * - ExecDate: Draw is executed only once at a specific date and time.
      * - Recurring: Draw is executed on a recurring basis (e.g., daily, weekly).
      * - Grand: Draw is executed once and is marked as grand, often with larger prizes or more importance.
@@ -65,21 +66,22 @@ interface RaffleDraw {
     /** Unique ID of the previusly executed draw (if there is such) */
     previous_run_id?: number;    
 
-    /**
-     *  Date/time starting from which the tickets will participate in the upcoming draw
-     *  This value need to be taken into account with next_execute_ts field value, for example
-     *  Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
-     *  (internally this value is calculated as next_execute_ts - ticket_start_date)
+    /** 
+     * Date/time starting from which the tickets will participate in the upcoming draw
+     * This value need to be taken into account with next_execute_ts field value, for example
+     * Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
+     * (internally this value is calculated as next_execute_ts - ticket_start_date)
      */
     ticket_start_ts: number;
 
-    /** Field is indicating if same ticket can win multiple prizes in the same draw 
-     *  For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook
-     *  If this field is true, then one ticket can win all 3 prizes (depending on the chances of course), 
-     *  if false, then one ticket can win only one prize. 
-     *  The distribution of the prizes is start from top (assuming on top are the most valuable prizes) to bottom (less valuable prizes)
-     *  If specific prize has multiple values, e.g. we have 3 iPhones, 
-     *  then the same ticket can win only one prize of a kind, but can win multiple prizes of different kind (if allow_multi_prize_per_ticket is true) 
+    /** 
+     * Field is indicating if same ticket can win multiple prizes in the same draw
+     * For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook
+     * If this field is true, then one ticket can win all 3 prizes (depending on the chances of course),
+     * if false, then one ticket can win only one prize.
+     * The distribution of the prizes is start from top (assuming on top are the most valuable prizes) to bottom (less valuable prizes)
+     * If specific prize has multiple values, e.g. we have 3 iPhones,
+     * then the same ticket can win only one prize of a kind, but can win multiple prizes of different kind (if allow_multi_prize_per_ticket is true)
     */
     allow_multi_prize_per_ticket: boolean;
 
@@ -95,9 +97,9 @@ interface RaffleDraw {
      */
     my_tickets_count: number;
 
-    /*
-    * List of last 5 tickets are collected by current user for this instance of draw.
-    */
+    /**
+     * List of last 5 tickets are collected by current user for this instance of draw.
+     */
     my_last_tickets: RaffleTicket[];
 }
 

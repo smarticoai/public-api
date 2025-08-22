@@ -226,3 +226,21 @@ ___
 ### show\_prize\_history
 
 • `Optional` **show\_prize\_history**: `boolean`
+
+When enabled the prize history icon is visible on a certain template
+
+___
+
+### max\_number\_of\_attempts
+
+• `Optional` **max\_number\_of\_attempts**: `number`
+
+The maximum number of attempts that user can do during period of time
+
+___
+
+### max\_spins\_period\_ms
+
+• `Optional` **max\_spins\_period\_ms**: `number`
+
+The period of time in milliseconds during which the user can do the maximum number of attempts

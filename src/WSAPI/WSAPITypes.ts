@@ -181,7 +181,7 @@ export interface TMiniGameTemplate {
 
 	/** The UI definition of the mini-game */
 	saw_template_ui_definition: SAWTemplateUI;
-	/* When enabled the prize history icon is visible on a certain template */
+	/** When enabled the prize history icon is visible on a certain template */
 	show_prize_history?:boolean;
 	/** The maximum number of attempts that user can do during period of time */
 	max_number_of_attempts?: number;
@@ -967,9 +967,13 @@ export interface TRaffle {
 }
 
 export interface TRaffleTicket {
-	/* int presentation of the ticket */
+	/**
+	 * Int presentation of the ticket
+	 */
 	ticekt_id: number;
-	/* String presentation of ticket */
+	/**
+	 * String presentation of the ticket
+	 */
 	ticket_id_string: string;
 }
 

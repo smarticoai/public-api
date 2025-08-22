@@ -1,8 +1,12 @@
 
 interface RaffleTicket {
-    /* int presentation of the ticket */
+    /**
+     * Int presentation of the ticket
+     */
     id: number;
-    /* String presentation of ticket */
+    /**
+     * String presentation of the ticket
+     */
     s: string;
 }
 
