@@ -32,6 +32,12 @@ ___
 
 ___
 
+### aknowledge\_message\_lose
+
+• `Optional` **aknowledge\_message\_lose**: `string`
+
+___
+
 ### sectors
 
 • `Optional` **sectors**: `number`[]
