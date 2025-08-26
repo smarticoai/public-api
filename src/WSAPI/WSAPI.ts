@@ -1166,13 +1166,20 @@ export class WSAPI {
 	 * The onUpdate callback will be called on claiming prize.  Updated Raffles will be passed to onUpdate callback.
 	 *
 	 * **Example**:
+	 * 
 	 * ```
 	 * _smartico.api.getRaffles().then((result) => {
 	 *      console.log(result);
 	 * });
 	 * ```
 	 *
-	 * **Visitor mode: not supported**
+	 * **Example in the Visitor mode**:
+	 * 
+	 * ```
+	 * _smartico.vapi('EN').getRaffles().then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 *
 	 */
 
@@ -1189,13 +1196,21 @@ export class WSAPI {
 	 *
 	 *
 	 * **Example**:
-	 * ```
-	 * _smartico.api.getRaffleDrawRun({raffle_id:156, run_id: 145}).then((result) => {
+	 * 
+	 * ```javascript
+	 * _smartico.api.getRaffleDrawRun({raffle_id: 156, run_id: 145}).then((result) => {
 	 *      console.log(result);
 	 * });
 	 * ```
 	 *
-	 * **Visitor mode: not supported**
+	 * **Example in the Visitor mode**:
+	 * 
+	 * 
+	 * ```javascript
+	 * _smartico.vapi('EN').getRaffleDrawRun({ raffle_id: 156, run_id: 145 }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 *
 	 */
 
@@ -1214,13 +1229,20 @@ export class WSAPI {
 	 *
 	 *
 	 * **Example**:
-	 * ```
+	 * 
+	 * ```javascript
 	 * _smartico.api.getRaffleDrawRunHistory({raffle_id:156, draw_id: 432}).then((result) => {
 	 *      console.log(result);
 	 * });
 	 * ```
 	 *
-	 * **Visitor mode: not supported**
+	 * **Example in the Visitor mode**:
+	 * 
+	 * ```javascript
+	 * _smartico.vapi('EN').getRaffleDrawRunHistory({ raffle_id: 156, draw_id: 432 }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 *
 	 */
 
@@ -1239,19 +1261,27 @@ export class WSAPI {
 	 *
 	 *
 	 * **Example**:
-	 * ```
+	 * 
+	 * ```javascript
 	 * _smartico.api.claimRafflePrize({won_id:251}).then((result) => {
 	 *      console.log(result);
 	 * });
 	 * ```
 	 *
-	 * **Visitor mode: not supported**
+	 * **Example in the Visitor mode**:
+	 * 
+	 * ```javascript
+	 * _smartico.vapi('EN').claimRafflePrize({ won_id: 251 }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
 	 *
 	 */
 	public async claimRafflePrize(props: { won_id: number }): Promise<TransformedRaffleClaimPrizeResponse> {
 		if (!props.won_id) {
 			throw new Error('won_id is required');
 		}
+
 		const res = await this.api.claimRafflePrize(null, { won_id: props.won_id });
 		return raffleClaimPrizeResponseTransform(res);
 	}

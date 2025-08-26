@@ -1084,13 +1084,20 @@ The returned list of Raffles is cached for 30 seconds. But you can pass the onUp
 The onUpdate callback will be called on claiming prize.  Updated Raffles will be passed to onUpdate callback.
 
 **Example**:
+
 ```
 _smartico.api.getRaffles().then((result) => {
      console.log(result);
 });
 ```
 
-**Visitor mode: not supported**
+**Example in the Visitor mode**:
+
+```
+_smartico.vapi('EN').getRaffles().then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 
@@ -1112,13 +1119,20 @@ ___
 Returns draw run for provided raffle_id and run_id
 
 **Example**:
-```
-_smartico.api.getRaffleDrawRun({raffle_id:156, run_id: 145}).then((result) => {
+
+```javascript
+_smartico.api.getRaffleDrawRun({raffle_id: 156, run_id: 145}).then((result) => {
      console.log(result);
 });
 ```
 
-**Visitor mode: not supported**
+**Example in the Visitor mode**:
+
+```javascript
+_smartico.vapi('EN').getRaffleDrawRun({ raffle_id: 156, run_id: 145 }).then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 
@@ -1141,13 +1155,20 @@ ___
 Returns history of draw runs for the provided raffle_id and draw_id, if the draw_id is not provided will return history of all the draws for the provided raffle_id
 
 **Example**:
-```
+
+```javascript
 _smartico.api.getRaffleDrawRunHistory({raffle_id:156, draw_id: 432}).then((result) => {
      console.log(result);
 });
 ```
 
-**Visitor mode: not supported**
+**Example in the Visitor mode**:
+
+```javascript
+_smartico.vapi('EN').getRaffleDrawRunHistory({ raffle_id: 156, draw_id: 432 }).then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 
@@ -1170,13 +1191,20 @@ ___
 Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
 
 **Example**:
-```
+
+```javascript
 _smartico.api.claimRafflePrize({won_id:251}).then((result) => {
      console.log(result);
 });
 ```
 
-**Visitor mode: not supported**
+**Example in the Visitor mode**:
+
+```javascript
+_smartico.vapi('EN').claimRafflePrize({ won_id: 251 }).then((result) => {
+     console.log(result);
+});
+```
 
 #### Parameters
 
