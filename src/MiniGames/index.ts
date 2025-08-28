@@ -27,3 +27,4 @@ export * from './SAWWinningHistoryResponse';
 export * from './SAWGameLayout';
 export * from './PrizeModifiers';
 export * from './SAWWheelLayout';
+export * from './SAWGameDifficulty'
