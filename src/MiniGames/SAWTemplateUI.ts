@@ -64,6 +64,6 @@ export interface SAWTemplateUI {
 
 	wheel_layout?: SAWWheelLayout;
 	background_music_volume?: number;
-	// Voyager specific
+	/**  Voyager specific */
 	game_difficulty?: SAWGameDifficultyType;
 }
