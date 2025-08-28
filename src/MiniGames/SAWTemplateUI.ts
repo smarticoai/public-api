@@ -1,4 +1,5 @@
 import { SAWAskForUsername } from './SAWAskForUsername';
+import { SAWGameDifficultyType } from './SAWGameDifficulty';
 import { SAWGameLayout } from './SAWGameLayout';
 import { SAWWheelLayout } from './SAWWheelLayout';
 
@@ -63,4 +64,5 @@ export interface SAWTemplateUI {
 
 	wheel_layout?: SAWWheelLayout;
 	background_music_volume?: number;
+	game_difficulty: SAWGameDifficultyType;
 }
