@@ -203,6 +203,10 @@ export interface TUserProfile {
 	ach_points_balance: number;
 	/** The amount of points that user collected in total */
 	ach_points_ever: number;
+	/** The current gems balance */
+	ach_gems_balance: number;
+	/** The current diamonds balance */
+	ach_diamonds_balance: number;
 	/**
 	 * The array of the public tags set on the user object.
 	 * They can be treated as server-based cookies.

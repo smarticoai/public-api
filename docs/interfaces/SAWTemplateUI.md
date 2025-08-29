@@ -288,3 +288,11 @@ ___
 ### background\_music\_volume
 
 • `Optional` **background\_music\_volume**: `number`
+
+___
+
+### game\_difficulty
+
+• `Optional` **game\_difficulty**: [`SAWGameDifficultyType`](../enums/SAWGameDifficultyType.md)
+
+Voyager specific

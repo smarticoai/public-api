@@ -103,6 +103,8 @@ declare enum ClientActivityRequestId {
 export interface PublicProperties {
 	core_user_language?: string;
 	ach_points_balance?: number;
+	ach_gems_balance?: number;
+	ach_diamonds_balance?: number;
 	ach_points_ever?: number;
 	core_public_tags?: string[];
 	ach_level_current_id?: number;

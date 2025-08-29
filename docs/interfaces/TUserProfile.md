@@ -31,6 +31,22 @@ The amount of points that user collected in total
 
 ___
 
+### ach\_gems\_balance
+
+• **ach\_gems\_balance**: `number`
+
+The current gems balance
+
+___
+
+### ach\_diamonds\_balance
+
+• **ach\_diamonds\_balance**: `number`
+
+The current diamonds balance
+
+___
+
 ### core\_public\_tags
 
 • **core\_public\_tags**: `string`[]
