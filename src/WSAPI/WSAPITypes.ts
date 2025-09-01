@@ -331,6 +331,12 @@ export interface TTournament {
 		position: number;
 		/** The scores of the participant in the tournament */
 		scores: number;
+		/** The external user id of the participant */
+		user_ext_id: string;
+		/** The crm brand id of the participant */
+		crm_brand_id: number;
+		/** The user id of the participant */
+		user_id: number;
 	};
 	/** Prize structure */
 	prizes?: {
@@ -412,6 +418,12 @@ export interface TTournamentDetailed extends TTournament {
 		scores: number;
 		/** The indicator if the participant is current user */
 		is_me: boolean;
+		/** The external user id of the participant */
+		user_ext_id: string;
+		/** The crm brand id of the participant */
+		crm_brand_id: number;
+		/** The user id of the participant */
+		user_id: number;
 	}[];
 	/** The information about current user in the tournament if he is registered in the tournamnet */
 	me?: {
@@ -423,6 +435,12 @@ export interface TTournamentDetailed extends TTournament {
 		position: number;
 		/** The scores of the current user in the tournament */
 		scores: number;
+		/** The external user id of the current user */
+		user_ext_id: string;
+		/** The crm brand id of the current user */
+		crm_brand_id: number;
+		/** The user id of the current user */
+		user_id: number;
 	};
 
 	prizes?: {

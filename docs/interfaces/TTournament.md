@@ -145,6 +145,9 @@ Info about current player in tournament
 | `avatar_url` | `string` | The URL to the avatar of the participant |
 | `position` | `number` | The position of the participant in the tournament |
 | `scores` | `number` | The scores of the participant in the tournament |
+| `user_ext_id` | `string` | The external user id of the participant |
+| `crm_brand_id` | `number` | The crm brand id of the participant |
+| `user_id` | `number` | The user id of the participant |
 
 ___
 

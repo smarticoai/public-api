@@ -96,6 +96,9 @@ export class TournamentUtils {
 				position: player.position,
 				scores: player.scores,
 				is_me: player.isMe,
+				user_ext_id: player.cleanExtUserId,
+				crm_brand_id: player.crmBrandId,
+				user_id: player.userId,
 			};
 
 			if (isMe) {

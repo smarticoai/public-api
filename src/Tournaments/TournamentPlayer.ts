@@ -1,5 +1,7 @@
 export interface TournamentPlayer {
 	userAltName: string;
+	cleanExtUserId: string;
+	crmBrandId: number;
 	position: number;
 	scores: number;
 	isMe: boolean;

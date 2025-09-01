@@ -441,7 +441,7 @@ ___
 
 ### players
 
-• `Optional` **players**: \{ `public_username`: `string` ; `avatar_url`: `string` ; `position`: `number` ; `scores`: `number` ; `is_me`: `boolean`  }[]
+• `Optional` **players**: \{ `public_username`: `string` ; `avatar_url`: `string` ; `position`: `number` ; `scores`: `number` ; `is_me`: `boolean` ; `user_ext_id`: `string` ; `crm_brand_id`: `number` ; `user_id`: `number`  }[]
 
 The list of the tournament participants
 
@@ -461,6 +461,9 @@ The information about current user in the tournament if he is registered in the 
 | `avatar_url` | `string` | The URL to the avatar of the current user |
 | `position` | `number` | The position of the current user in the tournament |
 | `scores` | `number` | The scores of the current user in the tournament |
+| `user_ext_id` | `string` | The external user id of the current user |
+| `crm_brand_id` | `number` | The crm brand id of the current user |
+| `user_id` | `number` | The user id of the current user |
 
 #### Overrides
 
