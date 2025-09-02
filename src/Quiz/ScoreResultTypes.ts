@@ -1,5 +1,5 @@
 type TeamType = 'Home' | 'Away';
-type CardType = 'Yellow' | 'Red';
+type CardType = 'Yellow' | 'Red' | 'YellowRed';
 type TimeType = 'FT' | '1st Half' | '2nd Half';
 
 export type OverHalfFullTimeScoreType = {
