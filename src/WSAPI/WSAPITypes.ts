@@ -3,7 +3,7 @@ import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBu
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchievementAvailabilityStatus } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
-import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter } from '../CustomSections';
+import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter, LiquidEntityData } from '../CustomSections';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
 import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from '../Raffle';
@@ -872,6 +872,14 @@ export interface TUICustomSection {
 	overview_missions_filter?: AchOverviewMissionsFilter;
 	/** Quantity of missions to be shown in overview */
 	overview_missions_count?: number;
+	/** Data to be used for Liquid templates */
+	liquid_entity_data?: LiquidEntityData[];
+	/** Tournament ID to be used for Liquid templates */
+	ach_tournament_id?: number;
+	/** Indicates if the data should be shown as raw data (for Liquid templates) */
+	show_raw_data?: boolean;
+	/** Liquid template id to be used for Liquid templates */
+	liquid_template?: number;
 }
 
 export interface TBonus {

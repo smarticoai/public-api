@@ -10,6 +10,7 @@ export enum AchCustomSectionType {
 	LOOTBOX_WEEKLY = 10,
 	LOOTBOX_CALENDAR_DAYS = 11,
 	TREASURE_HUNT = 12,
+	RAFFLE = 13,
 }
 
 export enum AchCustomLayoutTheme {
@@ -31,4 +32,17 @@ export enum AchOverviewMissionsFilter {
 	ALL_EXCEPT_COMPLETED = 3,
 	ALL_EXCEPT_LOCKED = 4,
 	ALL_EXCEPT_COMPLETED_AND_LOCKED = 5,
+}
+
+export enum LiquidEntityData {
+	Missions = 1,
+	Store = 2,
+	Tournaments = 3,
+	MiniGames = 4,
+	Levels = 5,
+	Jackpots = 6,
+	Bonus = 7,
+	Leaderboard = 8,
+	Badges = 9,
+	Tournament = 10,
 }

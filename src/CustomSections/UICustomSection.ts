@@ -4,6 +4,7 @@ import {
 	AchCustomSectionType,
 	AchMissionsTabsOptions,
 	AchOverviewMissionsFilter,
+	LiquidEntityData,
 } from './AchCustomSection';
 import { GetCustomSectionsResponse } from './GetCustomSectionsResponse';
 
@@ -18,6 +19,10 @@ export interface UICustomSection {
 	mission_tabs_options?: AchMissionsTabsOptions;
 	overview_missions_filter?: AchOverviewMissionsFilter;
 	overview_missions_count?: number;
+	liquid_entity_data?: LiquidEntityData[];
+	ach_tournament_id?: number;
+	show_raw_data?: boolean;
+	liquid_template?: number;
 }
 
 export const UICustomSectionTransform = (response: GetCustomSectionsResponse): TUICustomSection[] => {
@@ -40,6 +45,15 @@ export const UICustomSectionTransform = (response: GetCustomSectionsResponse): T
 				overview_missions_count: r.overview_missions_count,
 				overview_missions_filter: r.overview_missions_filter,
 				theme: r.theme,
+				...(r.section_type_id === AchCustomSectionType.LEVELS
+					? {
+						liquid_entity_data: r.liquid_entity_data,
+						ach_tournament_id: r.ach_tournament_id,
+						show_raw_data: r.show_raw_data,
+						liquid_template: r.liquid_template,
+					}
+					: {}
+				),
 			};
 
 			items.push(x);

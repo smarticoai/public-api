@@ -17,3 +17,4 @@ export * from './Jackpots';
 
 export * from './OCache';
 export * from './Bonuses';
+export * from './CustomSections';
