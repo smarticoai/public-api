@@ -116,7 +116,10 @@ export class WSAPI {
 			on(ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE, () => this.updateMissions());
 			on(ClassId.RELOAD_ACHIEVEMENTS_EVENT, () => this.updateMissions());
 			on(ClassId.TOURNAMENT_REGISTER_RESPONSE, () => this.updateTournaments());
-			on(ClassId.BUY_SHOP_ITEM_RESPONSE, () => this.updateStorePurchasedItems());
+			on(ClassId.BUY_SHOP_ITEM_RESPONSE, () => {
+				this.updateStorePurchasedItems();
+				this.updateStoreItems();
+			});
 			on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
 			on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
 			on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
@@ -332,6 +335,9 @@ export class WSAPI {
 	/**
 	 *
 	 * Returns all the store items available the current user
+	 * The returned store items are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+	 * Note that each time you call getStoreItems with a new onUpdate callback, the old one will be overwritten by the new one.
+	 * The onUpdate callback will be called on purchase of the store item.
 	 *
 	 * **Example**:
 	 * ```
@@ -348,7 +354,10 @@ export class WSAPI {
 	 * ```
 	 */
 
-	public async getStoreItems(): Promise<TStoreItem[]> {
+	public async getStoreItems({ onUpdate }: { onUpdate?: (data: TStoreItem[]) => void } = {}): Promise<TStoreItem[]> {
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.StoreItems, onUpdate);
+		}
 		return OCache.use(
 			onUpdateContextKey.StoreItems,
 			ECacheContext.WSAPI,
@@ -934,6 +943,11 @@ export class WSAPI {
 	private async updateStorePurchasedItems() {
 		const payload = await this.api.storeGetPurchasedItemsT(null, 20, 0);
 		this.updateEntity(onUpdateContextKey.StoreHistory, payload);
+	}
+
+	private async updateStoreItems() {
+		const payload = await this.api.storeGetItemsT(null);
+		this.updateEntity(onUpdateContextKey.StoreItems, payload);
 	}
 
 	private async updateInboxMessages() {
