@@ -87,3 +87,35 @@ ___
 • `Optional` **overview\_missions\_count**: `number`
 
 Quantity of missions to be shown in overview
+
+___
+
+### liquid\_entity\_data
+
+• `Optional` **liquid\_entity\_data**: [`LiquidEntityData`](../enums/LiquidEntityData.md)[]
+
+Data to be used for Liquid templates
+
+___
+
+### ach\_tournament\_id
+
+• `Optional` **ach\_tournament\_id**: `number`
+
+Tournament ID to be used for Liquid templates
+
+___
+
+### show\_raw\_data
+
+• `Optional` **show\_raw\_data**: `boolean`
+
+Indicates if the data should be shown as raw data (for Liquid templates)
+
+___
+
+### liquid\_template
+
+• `Optional` **liquid\_template**: `number`
+
+Liquid template id to be used for Liquid templates

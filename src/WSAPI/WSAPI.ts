@@ -352,6 +352,8 @@ export class WSAPI {
 	 *      console.log(result);
 	 * });
 	 * ```
+	 *  @param params
+	 *  @param params.onUpdate - callback function that will be called when the store items are updated
 	 */
 
 	public async getStoreItems({ onUpdate }: { onUpdate?: (data: TStoreItem[]) => void } = {}): Promise<TStoreItem[]> {

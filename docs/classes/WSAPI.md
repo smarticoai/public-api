@@ -241,9 +241,12 @@ ___
 
 ### getStoreItems
 
-▸ **getStoreItems**(): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+▸ **getStoreItems**(`params?`): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns all the store items available the current user
+The returned store items are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+Note that each time you call getStoreItems with a new onUpdate callback, the old one will be overwritten by the new one.
+The onUpdate callback will be called on purchase of the store item.
 
 **Example**:
 ```
@@ -258,6 +261,13 @@ _smartico.vapi('EN').getStoreItems().then((result) => {
      console.log(result);
 });
 ```
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `params` | `Object` |
+| `params.onUpdate?` | (`data`: [`TStoreItem`](../interfaces/TStoreItem.md)[]) => `void` |
 
 #### Returns
 

@@ -65,3 +65,9 @@ ___
 ### TREASURE\_HUNT
 
 • **TREASURE\_HUNT** = ``12``
+
+___
+
+### RAFFLE
+
+• **RAFFLE** = ``13``
