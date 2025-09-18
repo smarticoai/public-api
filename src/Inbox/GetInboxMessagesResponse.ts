@@ -4,6 +4,7 @@ import { InboxMessage } from './InboxMessage';
 
 export interface GetInboxMessagesResponse extends ProtocolResponse {
 	log: InboxMessage[];
+	unread_count: number;
 }
 
 export const InboxMessagesTransform = (items: InboxMessage[]): TInboxMessage[] => {
