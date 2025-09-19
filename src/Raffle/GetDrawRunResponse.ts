@@ -26,7 +26,7 @@ export const drawRunTransform = (res: GetDrawRunResponse): TRaffleDraw => {
 		execution_ts: res.draw.execution_ts,
 		previous_run_ts: res.draw.previous_run_ts,
 		previous_run_id: res.draw.previous_run_id,
-		ticket_start_ts: res.draw.ticket_start_ts,
+		ticket_start_ts: res.draw.ticket_start_ts ?? res.draw['ticket_start_date'],
 		allow_multi_prize_per_ticket: res.draw.allow_multi_prize_per_ticket,
 		total_tickets_count: res.draw.total_tickets_count,
 		my_tickets_count: res.draw.my_tickets_count,
