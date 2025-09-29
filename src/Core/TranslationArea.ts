@@ -6,6 +6,7 @@ enum TranslationArea {
 	Affiliation = 5,
 	RetentionGames = 6,
 	AffIliateAdminNew = 7,
+	Academy = 8,
 }
 
 export { TranslationArea };
