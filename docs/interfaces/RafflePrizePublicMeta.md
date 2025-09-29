@@ -23,3 +23,11 @@ ___
 • **image\_url**: `string`
 
 URL of the image that represents the prize
+
+___
+
+### hide\_chance\_to\_win
+
+• **hide\_chance\_to\_win**: `boolean`
+
+Indicates whether the chance to win should be hidden in the UI.
