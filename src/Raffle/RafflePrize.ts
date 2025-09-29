@@ -8,6 +8,10 @@ interface RafflePrizePublicMeta {
     description: string;
     /** URL of the image that represents the prize */
     image_url: string;
+    /**
+     * Indicates whether the chance to win should be hidden in the UI.
+     */
+    hide_chance_to_win: boolean;
 }
 
 /**
