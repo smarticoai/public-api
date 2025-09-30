@@ -138,6 +138,7 @@ interface Tracker {
 	userPublicProps: any;
 	on: (callBackKey: ClassId, func: (data: any) => void) => void;
 	getLabelSetting: (key: PublicLabelSettings) => any;
+	triggerExternalCallBack: (callBackKey: string, payload: any) => void;
 }
 interface IOptions {
 	logger?: ILogger;

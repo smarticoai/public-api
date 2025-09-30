@@ -102,6 +102,8 @@ export class WSAPI {
 		OCache.clearAll();
 		if (this.api.tracker) {
 			const on = this.api.tracker.on;
+			const triggerExternalCallback = this.api.tracker.triggerExternalCallBack;
+
 			on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
 			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.reloadMiniGameTemplate());
 			on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => {
@@ -135,6 +137,13 @@ export class WSAPI {
 				this.updateRaffles();
 				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Raffles);
 			});
+			on(ClassId.GET_INBOX_MESSAGES_RESPONSE, (res) => {
+				if (res.unread_count && triggerExternalCallback) {
+					triggerExternalCallback('props_change', {
+						core_inbox_unread_count: res.unread_count,
+					});
+				}
+			})
 		}
 	}
 
