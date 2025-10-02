@@ -769,6 +769,27 @@ The "onUpdate" callback will be triggered when the user receives a new message. 
 
 ___
 
+### getInboxUnreadCount
+
+▸ **getInboxUnreadCount**(`params?`): `Promise`\<`number`\>
+
+Returns inbox unread count.
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `params` | `Object` |
+| `params.onUpdate?` | (`unread_count`: `number`) => `void` |
+
+#### Returns
+
+`Promise`\<`number`\>
+
+___
+
 ### getInboxMessageBody
 
 ▸ **getInboxMessageBody**(`messageGuid`): `Promise`\<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
