@@ -90,6 +90,7 @@ enum onUpdateContextKey {
 	Raffles = 'raffles',
 	JackpotEligibleGames = 'jackpotEligibleGames',
 	CurrentLevel = 'currentLevel',
+	InboxUnreadCount = 'inboxUnreadCount',
 }
 
 /** @group General API */
@@ -102,7 +103,6 @@ export class WSAPI {
 		OCache.clearAll();
 		if (this.api.tracker) {
 			const on = this.api.tracker.on;
-			const triggerExternalCallback = this.api.tracker.triggerExternalCallBack;
 
 			on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
 			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.reloadMiniGameTemplate());
@@ -138,14 +138,15 @@ export class WSAPI {
 				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Raffles);
 			});
 			on(ClassId.GET_INBOX_MESSAGES_RESPONSE, (res) => {
-				const unreadCountInProfile = this.api.tracker?.userPublicProps?.core_inbox_unread_count;
-
-				if (res.unread_count && triggerExternalCallback && unreadCountInProfile !== res.unread_count) {
-					triggerExternalCallback('props_change', {
-						core_inbox_unread_count: res.unread_count,
-					});
+				if (res.unread_count !== undefined && res.unread_count !== null) {
+					this.updateInboxUnreadCount(res.unread_count);
 				}
-			})
+			});
+			on(ClassId.CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT, (data: { core_inbox_unread_count: number }) => {
+				if (data.core_inbox_unread_count !== undefined && data.core_inbox_unread_count !== null) {
+					this.updateInboxUnreadCount(data.core_inbox_unread_count);
+				}
+			});
 		}
 	}
 
@@ -830,6 +831,24 @@ export class WSAPI {
 	}
 
 	/**
+	 * Returns inbox unread count.
+	 *
+	 * **Visitor mode: not supported**
+	 * @param params
+	 */
+	public async getInboxUnreadCount({ onUpdate }: { onUpdate?: (unread_count: number) => void } = {}): Promise<number> {
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.InboxUnreadCount, onUpdate);
+		}
+		return OCache.use(
+			onUpdateContextKey.InboxUnreadCount,
+			ECacheContext.WSAPI,
+			() => this.api.getInboxUnreadCountT(null),
+			CACHE_DATA_SEC,
+		);
+	}
+
+	/**
 	 * Returns the message body of the specified message guid.
 	 *
 	 * **Visitor mode: not supported**
@@ -961,6 +980,10 @@ export class WSAPI {
 	private async updateStoreItems() {
 		const payload = await this.api.storeGetItemsT(null);
 		this.updateEntity(onUpdateContextKey.StoreItems, payload);
+	}
+
+	private async updateInboxUnreadCount(count: number) {
+		this.updateEntity(onUpdateContextKey.InboxUnreadCount, count);
 	}
 
 	private async updateInboxMessages() {

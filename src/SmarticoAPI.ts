@@ -1118,6 +1118,15 @@ class SmarticoAPI {
 		return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly, categoryId)).log);
 	}
 
+	public async getInboxUnreadCountT(
+		user_ext_id: string,
+	): Promise<number> {
+		const limit = 1;
+		const offset = 0;
+
+		return (await this.getInboxMessages(user_ext_id, limit, offset, false, null)).unread_count;
+	}
+
 	public async getInboxMessageBody(messageGuid: string): Promise<InboxMessageBody> {
 		const getMessageBody = async (messageGuid: string): Promise<InboxMessageBody> => {
 			const inboxCdnUrl = this.tracker.getLabelSetting(PublicLabelSettings.INBOX_PUBLIC_CDN);
