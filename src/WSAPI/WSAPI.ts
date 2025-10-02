@@ -138,7 +138,9 @@ export class WSAPI {
 				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Raffles);
 			});
 			on(ClassId.GET_INBOX_MESSAGES_RESPONSE, (res) => {
-				if (res.unread_count && triggerExternalCallback) {
+				const unreadCountInProfile = this.api.tracker?.userPublicProps?.core_inbox_unread_count;
+
+				if (res.unread_count && triggerExternalCallback && unreadCountInProfile !== res.unread_count) {
 					triggerExternalCallback('props_change', {
 						core_inbox_unread_count: res.unread_count,
 					});
