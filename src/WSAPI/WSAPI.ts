@@ -142,9 +142,9 @@ export class WSAPI {
 					this.updateInboxUnreadCount(res.unread_count);
 				}
 			});
-			on(ClassId.CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT, (data: { core_inbox_unread_count: number }) => {
-				if (data.core_inbox_unread_count !== undefined && data.core_inbox_unread_count !== null) {
-					this.updateInboxUnreadCount(data.core_inbox_unread_count);
+			on(ClassId.CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT, (data: { props: { core_inbox_unread_count: number } }) => {
+				if (data?.props?.core_inbox_unread_count !== undefined && data?.props?.core_inbox_unread_count !== null) {
+					this.updateInboxUnreadCount(data.props.core_inbox_unread_count);
 				}
 			});
 		}
