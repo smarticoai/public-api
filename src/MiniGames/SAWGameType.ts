@@ -8,7 +8,8 @@ export enum SAWGameType {
 	LootboxWeekdays = 7,
 	LootboxCalendarDays = 8,
 	TreasureHunt = 9,
-	Voyager = 10
+	Voyager = 10,
+	Plinko = 11,
 }
 
 export enum SAWGameTypeName {
@@ -22,6 +23,7 @@ export enum SAWGameTypeName {
 	LootboxCalendarDays = 'lootbox_calendar_days',
 	TreasureHunt = 'treasure_hunt',
 	Voyager = 'voyager',
+	Plinko = 'plinko',
 	Unknown = 'unknown',
 }
 
