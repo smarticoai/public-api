@@ -41,6 +41,7 @@ export const SAWGameTypeNamed = (type: SAWGameType): SAWGameTypeName => {
 			[SAWGameType.LootboxCalendarDays]: SAWGameTypeName.LootboxCalendarDays,
 			[SAWGameType.TreasureHunt]: SAWGameTypeName.TreasureHunt,
 			[SAWGameType.Voyager]: SAWGameTypeName.Voyager,
+			[SAWGameType.Plinko]: SAWGameTypeName.Plinko,
 		}[type] || SAWGameTypeName.Unknown
 	);
 };
