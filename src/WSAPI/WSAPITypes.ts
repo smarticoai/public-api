@@ -275,7 +275,7 @@ export interface TLevel {
 export interface TLevelCurrent extends TLevel {
 	/** The ordinal position of the level */
 	ordinal_position: number;
-	/** The progress of the level */
+	/** The progress of the user towards next level in the percents to complete */
 	progress: number;
 }
 

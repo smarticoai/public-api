@@ -59,3 +59,9 @@ ___
 ### Voyager
 
 • **Voyager** = ``10``
+
+___
+
+### Plinko
+
+• **Plinko** = ``11``

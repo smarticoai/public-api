@@ -62,6 +62,12 @@ ___
 
 ___
 
+### Plinko
+
+• **Plinko** = ``"plinko"``
+
+___
+
 ### Unknown
 
 • **Unknown** = ``"unknown"``

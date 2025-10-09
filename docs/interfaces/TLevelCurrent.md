@@ -136,4 +136,4 @@ ___
 
 • **progress**: `number`
 
-The progress of the level
+The progress of the user towards next level in the percents to complete
