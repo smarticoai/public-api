@@ -496,6 +496,11 @@ export interface TStoreItem {
         **Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
     */
 	limit_message: string;
+	/** The message that should be shown to the user if they are not eligible to buy it because of purchase limitation. This message can be used to explain the reason why user cannot buy the item, e.g. 'Item is no more available today. Come back Friday'.
+		The message is translated to the user language.
+		**Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
+	*/
+	purchase_limit_message: string;
 	/** The priority of the store item. Can be used to sort the items in the store */
 	priority: number;
 	/** The list of IDs of the related items. Can be used to show the related items in the store */

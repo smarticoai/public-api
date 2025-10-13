@@ -18,4 +18,5 @@ export interface StoreItemPublicMeta {
 	discount_prize?: number;
 	discount_prize_ribbon?: string;
 	custom_ribbon_image?: string;
+	purchase_limit_message?: string;
 }
