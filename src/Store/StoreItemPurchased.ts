@@ -41,6 +41,7 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
 				description: r.itemPublicMeta.description,
 				ribbon: r.itemPublicMeta.label_tag === 'custom' ? r.itemPublicMeta.custom_label_tag : r.itemPublicMeta.label_tag,
 				limit_message: r.itemPublicMeta.limit_message,
+				purchase_limit_message: r.itemPublicMeta.purchase_limit_message,
 				priority: r.itemPublicMeta.priority ?? 0,
 				related_item_ids: r.itemPublicMeta.related_items,
 				hint_text: r.itemPublicMeta.hint_text,

@@ -70,6 +70,16 @@ The message that should be shown to the user if he is not eligible to buy it. th
 
 ___
 
+### purchase\_limit\_message
+
+• **purchase\_limit\_message**: `string`
+
+The message that should be shown to the user if they are not eligible to buy it because of purchase limitation. This message can be used to explain the reason why user cannot buy the item, e.g. 'Item is no more available today. Come back Friday'.
+The message is translated to the user language.
+**Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
+
+___
+
 ### priority
 
 • **priority**: `number`
