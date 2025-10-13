@@ -19,4 +19,6 @@ export enum BuyStoreItemErrorCode {
 	SHOP_NO_BALANCE_GEMS = 11011,
 	/** User doesn't have enough diamonds on balance */
 	SHOP_NO_BALANCE_DIAMONDS = 11012,
+	/** Failed to buy item because of purchase limitation */
+	SHOP_FAILED_PURCHASE_LIMITATION = 11014,
 }
