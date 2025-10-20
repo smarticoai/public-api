@@ -668,7 +668,13 @@ export interface TMissionOrBadge {
 	next_recurrence_date_ts?: number;
 
 	/** Availability status of the mission depends on the defined time limits */
-	availability_status?: AchievementAvailabilityStatus
+	availability_status?: AchievementAvailabilityStatus;
+
+	/** Title for the claim reward button */
+	claim_button_title?: string;
+
+	/** Action for the claim reward button */
+	claim_button_action?: string;
 }
 
 export interface AchRelatedGame {

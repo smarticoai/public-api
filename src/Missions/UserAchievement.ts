@@ -117,6 +117,8 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				completed_this_month: completedThisMonth,
 				custom_section_type_id: r.ach_public_meta.custom_section_type_id,
 				availability_status: MissionUtils.getAvailabilityStatus(r),
+				claim_button_title: r.ach_public_meta.claim_button_title,
+				claim_button_action: r.ach_public_meta.claim_button_action,
 			};
 
 			if (r.ach_status_id === AchievementStatus.Recurring) {

@@ -18,4 +18,6 @@ export interface AchievementPublicMeta {
 	hide_badge_from_ui?: boolean;
 	show_badge_first_task_completed?: boolean;
 	custom_section_type_id?: number;
+	claim_button_title?: string;
+	claim_button_action?: string;
 }
