@@ -79,3 +79,11 @@ ___
 • **SHOP\_NO\_BALANCE\_DIAMONDS** = ``11012``
 
 User doesn't have enough diamonds on balance
+
+___
+
+### SHOP\_FAILED\_PURCHASE\_LIMITATION
+
+• **SHOP\_FAILED\_PURCHASE\_LIMITATION** = ``11014``
+
+Failed to buy item because of purchase limitation

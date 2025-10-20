@@ -326,3 +326,19 @@ ___
 • `Optional` **availability\_status**: [`AchievementAvailabilityStatus`](../enums/AchievementAvailabilityStatus.md)
 
 Availability status of the mission depends on the defined time limits
+
+___
+
+### claim\_button\_title
+
+• `Optional` **claim\_button\_title**: `string`
+
+Title for the claim reward button
+
+___
+
+### claim\_button\_action
+
+• `Optional` **claim\_button\_action**: `string`
+
+Action for the claim reward button
