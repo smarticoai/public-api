@@ -23,3 +23,11 @@ ___
 • **image\_url**: `string`
 
 Image URL of the bonus template
+
+___
+
+### redirect\_url
+
+• `Optional` **redirect\_url**: `string`
+
+Redirect URL of the bonus template
