@@ -933,6 +933,8 @@ export interface BonusTemplateMetaMap {
 	acknowledge: string;
 	/** Image URL of the bonus template*/
 	image_url: string;
+	/** Redirect URL of the bonus template*/
+	redirect_url?: string;
 }
 export interface BonusMetaMap {
 	/** Label and description of the bonus sent to the player*/
