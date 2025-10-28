@@ -122,7 +122,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 			};
 
 			if (r.ach_status_id === AchievementStatus.Recurring) {
-				x.next_recurrence_date_ts = r.next_recurrence_date_ts;
+				x.next_recurrence_date_ts = Date.now() + r?.milliseconds_till_available;
 			}
 
 			if (r.ach_status_id === AchievementStatus.RecurringUponCompletion) {
