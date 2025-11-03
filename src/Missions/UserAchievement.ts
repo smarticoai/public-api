@@ -83,17 +83,21 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 					r.ach_public_meta.label_tag === 'custom' ? r.ach_public_meta.custom_label_tag : r.ach_public_meta.label_tag,
 				tasks: (r.achievementTasks || [])
 					.filter((t) => t.task_type_id === AchievementTaskType.CompleteAchievement)
-					.map((t) => ({
-						id: t.task_id,
-						name: t.task_public_meta?.name,
-						points_reward: t.points_reward,
-						is_completed: t.isCompleted,
-						progress: t.userProgress,
-						execution_count_expected: t.executionCount,
-						execution_count_actual: t.userExecutedCount,
-						display_progress_as_count: t.task_public_meta.display_progress_as_count,
-						stage_image: t.task_public_meta.stage_image,
-					})),
+					.map((t) => {
+						MissionUtils.replaceFavGameNameTag(t);
+
+						return ({
+							id: t.task_id,
+							name: t.task_public_meta?.name,
+							points_reward: t.points_reward,
+							is_completed: t.isCompleted,
+							progress: t.userProgress,
+							execution_count_expected: t.executionCount,
+							execution_count_actual: t.userExecutedCount,
+							display_progress_as_count: t.task_public_meta.display_progress_as_count,
+							stage_image: t.task_public_meta.stage_image,
+						})
+					}),
 				related_games: (r.related_games || []).map((g) => ({
 					ext_game_id: g.ext_game_id,
 					game_public_meta: {

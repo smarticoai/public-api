@@ -1,6 +1,8 @@
+import { IntUtils } from "src/IntUtils";
 import { AchievementAvailabilityStatus } from "./AchievementAvailabilityStatus";
 import { AchievementStatus } from "./AchievementStatus";
 import { UserAchievement } from "./UserAchievement";
+import { UserAchievementTask } from "./UserAchievementTask";
 
 export class MissionUtils {
 
@@ -162,5 +164,50 @@ export class MissionUtils {
 
     public static getMs = (ts: number): number => {
         return new Date(ts).getTime();
+    }
+
+    public static replaceFavGameNameTag = (task: UserAchievementTask) => {
+        if (!task) {
+            return task;
+        }
+    
+        const userStateParams = (task.user_state_params?.map || {});
+        const userStateOperator = task.task_public_meta?.user_state_operations;
+        const userStateParamsKeys = Object.keys(userStateParams);
+    
+        if (userStateParamsKeys.length === 0 || !userStateOperator) {
+            return task;
+        }
+    
+        const operatorsMulti = ['has', '!has'];
+        const operatorsPos = ['pos1', 'pos2', 'pos3'];
+    
+        let replacementValue: string = '';
+    
+        userStateParamsKeys.forEach((k: 'core_fav_game_top3' | 'core_fav_game_type_top3') => {
+            const operator = userStateOperator[k]?.op;
+    
+            if (operatorsMulti.includes(operator)) {
+                const value = userStateParams[k];
+                if (value && value.length > 0) {
+                    replacementValue = value.join(' ,');
+                }
+            }
+    
+            if (operatorsPos.includes(operator)) {
+                const value = userStateParams[k];
+                const pos = Number(operator.replace('pos', '')) - 1;
+    
+                if (IntUtils.isNotNull(pos) && value && value[pos]) {
+                    replacementValue = value[pos];
+                }
+            }
+        });
+    
+        if (replacementValue) {
+            task.task_public_meta.name =task.task_public_meta.name.replace('{{suggested_games}}', replacementValue);
+        }   
+    
+        return task;
     }
 }

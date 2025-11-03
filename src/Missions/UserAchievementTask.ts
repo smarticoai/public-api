@@ -13,4 +13,9 @@ export interface UserAchievementTask {
 	lastExecutionDate: string;
 	unlocked_by_mission_id?: number;
 	unlocked_by_level_id?: number;
+	user_state_params?: {
+		map: {
+			[key: string]: any;
+		}
+	}
 }
