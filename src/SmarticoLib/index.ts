@@ -1401,6 +1401,7 @@ declare enum PublicLabelSettings$1 {
 	AVATAR_CUSTOM_IMAGE_FOLDER = 'AVATAR_CUSTOM_IMAGE_FOLDER',
 	GAMIFICATION_SHOW_POWERED_BY = 'GAMIFICATION_SHOW_POWERED_BY',
 	_system_leader_board_mask_username = '_system_leader_board_mask_username',
+	_system_gamification_mask_username = '_system_gamification_mask_username',
 	INBOX_PUBLIC_CDN = 'INBOX_PUBLIC_CDN',
 }
 interface PublicProperties$1 {
