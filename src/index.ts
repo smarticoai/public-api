@@ -3,6 +3,7 @@ export * from './ILogger';
 export * from './SmarticoAPI';
 export * from './CookieStore';
 
+export * from './Analytics';
 export * from './Core';
 export * from './UserProfile';
 export * from './Inbox';
