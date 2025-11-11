@@ -30,10 +30,10 @@ export enum AnalyticsScreenNameId {
 	LiquidSection = 23,
 
 	ModalMission = 31,
-	ModalLevel = 33,
+	ModalLevel = 32,
 	ModalBadge = 33,
 	ModalStore = 34,
-	ModalBonus = 33,
+	ModalBonus = 35,
 	ModalJackpot = 36,
 	ModalUsername = 37,
 	ModalAvatar = 38,

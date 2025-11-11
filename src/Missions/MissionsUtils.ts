@@ -205,7 +205,7 @@ export class MissionUtils {
         });
     
         if (replacementValue) {
-            task.task_public_meta.name =task.task_public_meta.name.replace('{{suggested_games}}', replacementValue);
+            task.task_public_meta.name = task.task_public_meta.name.replace('{{suggested_games}}', replacementValue);
         }   
     
         return task;
