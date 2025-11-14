@@ -171,7 +171,7 @@ export class MissionUtils {
             return task;
         }
     
-        const userStateParams = (task.user_state_params?.map || {});
+        const userStateParams = (task.user_state_params || {});
         const userStateOperator = task.task_public_meta?.user_state_operations;
         const userStateParamsKeys = Object.keys(userStateParams);
     
@@ -190,7 +190,10 @@ export class MissionUtils {
             if (operatorsMulti.includes(operator)) {
                 const value = userStateParams[k];
                 if (value && value.length > 0) {
-                    replacementValue = value.join(' ,');
+                    replacementValue = value.map((v: string) => {
+                        const cleaned = v.replace(/_/g, ' ').toLowerCase();
+                        return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+                    }).join(' ,');
                 }
             }
     
@@ -200,6 +203,12 @@ export class MissionUtils {
     
                 if (IntUtils.isNotNull(pos) && value && value[pos]) {
                     replacementValue = value[pos];
+
+                    if (replacementValue) {
+                        replacementValue = replacementValue.replace('_', ' ').toLowerCase();
+                        replacementValue = replacementValue.charAt(0).toUpperCase() + replacementValue.slice(1);
+                    }
+
                 }
             }
         });
