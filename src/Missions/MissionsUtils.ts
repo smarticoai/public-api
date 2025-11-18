@@ -188,7 +188,7 @@ export class MissionUtils {
             const operator = userStateOperator[k]?.op;
     
             if (operatorsMulti.includes(operator)) {
-                const value = userStateParams[k];
+                const value = userStateParams[k]?.filter(v => Boolean(v));
                 if (value && value.length > 0) {
                     replacementValue = value.map((v: string) => {
                         const cleaned = v.replace(/_/g, ' ').toLowerCase();
