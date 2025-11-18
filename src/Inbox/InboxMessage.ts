@@ -1,3 +1,4 @@
+import { IntUtils } from '../IntUtils';
 import { TInboxMessageBody } from '../WSAPI/WSAPITypes';
 import { InboxCategories } from './InboxCategories';
 import { InboxMessageType } from './InboxMessageType';
@@ -28,6 +29,8 @@ export interface InboxMessageBody {
 	enable_zoom_mode?: boolean;
 	// options that allows to open links in buttons either in new window or in the current one
 	open_links?: OpenLinksType;
+	// The custom data of the inbox message defined by operator. Can be a JSON object, string or number
+	custom_data?: string;
 }
 
 export interface InboxMessage {
@@ -45,6 +48,8 @@ export interface InboxMessage {
 	is_deleted?: boolean;
 	// category id of the inbox message, could be categorized as System/Personal/General messages in mentioned tabs
 	category_id?: InboxCategories;
+	// The epoch timestamp, with milliseconds, when the message is going to be expired 
+	expire_on_dt?: number;
 }
 
 export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessageBody => {
@@ -64,6 +69,7 @@ export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessage
 		}
 
 		x.html_body = item?.html_body || null;
+		x.custom_data = IntUtils.JsonOrText(item?.custom_data);
 	}
 
 	return x;

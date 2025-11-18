@@ -778,6 +778,8 @@ export interface TInboxMessage {
 	favorite: boolean;
 	/** Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages */
 	category_id?: InboxCategories;
+	/** The epoch timestamp, with milliseconds, when the message is going to be expired  */
+	expire_on_dt?: number;
 }
 
 export interface TInboxMessageBody {
@@ -802,6 +804,8 @@ export interface TInboxMessageBody {
 		/** Button text */
 		text: string;
 	}[];
+	/** The custom data of the inbox message defined by operator. Can be a JSON object, string or number */
+	custom_data?: string;
 }
 
 export interface InboxMarkMessageAction {
