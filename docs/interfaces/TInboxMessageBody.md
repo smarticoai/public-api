@@ -50,3 +50,11 @@ ___
 • `Optional` **buttons**: \{ `action`: `string` ; `text`: `string`  }[]
 
 Optional additional buttons to show in the message, available only if message has rich HTML body. Max count - 2.
+
+___
+
+### custom\_data
+
+• `Optional` **custom\_data**: `string`
+
+The custom data of the inbox message defined by operator. Can be a JSON object, string or number

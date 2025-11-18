@@ -39,3 +39,11 @@ ___
 • `Optional` **category\_id**: [`InboxCategories`](../enums/InboxCategories.md)
 
 Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages
+
+___
+
+### expire\_on\_dt
+
+• `Optional` **expire\_on\_dt**: `number`
+
+The epoch timestamp, with milliseconds, when the message is going to be expired
