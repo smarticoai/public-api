@@ -21,3 +21,4 @@ export * from './AchievementAvailabilityStatus';
 export * from './GetRelatedAchTourResponse';
 export * from './MissionsUtils';
 export * from './MissionCategory';
+export * from './UserAchievementTaskAffectsProgress'

@@ -1,5 +1,6 @@
 import { AchievementTaskPublicMeta } from './AchievementTaskPublicMeta';
 import { AchievementTaskType } from './AchievementTaskType';
+import { AffectsProgress } from './UserAchievementTaskAffectsProgress';
 
 export interface UserAchievementTask {
 	task_id?: number;
@@ -14,4 +15,5 @@ export interface UserAchievementTask {
 	unlocked_by_mission_id?: number;
 	unlocked_by_level_id?: number;
 	user_state_params?: { [key: string]: any };
+	affects_progress?: AffectsProgress | null
 }
