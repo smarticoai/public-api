@@ -166,9 +166,11 @@ export class MissionUtils {
         return new Date(ts).getTime();
     }
 
-    public static replaceFavGameNameTag = (task: UserAchievementTask) => {
+    public static replaceTagsFavMissionTask = (task: UserAchievementTask, valueToReplace: string): string => {
+        let result = valueToReplace || '';
+
         if (!task) {
-            return task;
+            return result;
         }
     
         const userStateParams = (task.user_state_params || {});
@@ -176,7 +178,7 @@ export class MissionUtils {
         const userStateParamsKeys = Object.keys(userStateParams);
     
         if (userStateParamsKeys.length === 0 || !userStateOperator) {
-            return task;
+            return result;
         }
     
         const operatorsMulti = ['has', '!has'];
@@ -213,10 +215,18 @@ export class MissionUtils {
             }
         });
     
-        if (replacementValue) {
-            task.task_public_meta.name = task.task_public_meta.name.replace('{{suggested_games}}', replacementValue);
-        }   
+        if (replacementValue && result) {
+            result = result.replace('{{suggested_games}}', replacementValue);
+        }
     
+        return result;
+    }
+
+    public static replaceFavGameNameTag = (task: UserAchievementTask): UserAchievementTask => {
+        if (task && task.task_public_meta && task.task_public_meta.name) {
+            task.task_public_meta.name = MissionUtils.replaceTagsFavMissionTask(task, task.task_public_meta.name);
+        }
+
         return task;
     }
 }
