@@ -58,6 +58,7 @@ export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessage
 		icon: item.image,
 		title: item.title,
 		preview_body: item.body,
+		custom_data: IntUtils.JsonOrText(item?.custom_data),
 	};
 
 	if (item.action === 'dp:inbox') {
@@ -69,7 +70,6 @@ export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessage
 		}
 
 		x.html_body = item?.html_body || null;
-		x.custom_data = IntUtils.JsonOrText(item?.custom_data);
 	}
 
 	return x;
