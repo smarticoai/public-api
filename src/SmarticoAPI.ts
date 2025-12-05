@@ -34,6 +34,7 @@ import {
 	InboxMessageBody,
 	InboxMessageBodyTransform,
 	InboxMessagesTransform,
+	InboxReadStatus,
 	MarkInboxMessageDeletedRequest,
 	MarkInboxMessageDeletedResponse,
 	MarkInboxMessageReadRequest,
@@ -1091,6 +1092,7 @@ class SmarticoAPI {
 		offset: number = 0,
 		starred_only: boolean,
 		category_id?: InboxCategories,
+		read_status?: InboxReadStatus,
 	): Promise<GetInboxMessagesResponse> {
 		const message = this.buildMessage<GetInboxMessagesRequest, GetInboxMessagesResponse>(
 			user_ext_id,
@@ -1100,6 +1102,7 @@ class SmarticoAPI {
 				offset,
 				starred_only,
 				category_id,
+				read_status,
 			},
 		);
 		return await this.send<GetInboxMessagesResponse>(message, ClassId.GET_INBOX_MESSAGES_RESPONSE);
@@ -1111,11 +1114,12 @@ class SmarticoAPI {
 		to: number = 20,
 		favoriteOnly: boolean = false,
 		categoryId?: InboxCategories,
+		read_status?: InboxReadStatus,
 	): Promise<TInboxMessage[]> {
 		const limit = to - from > 20 ? 20 : to - from;
 		const offset = from;
 
-		return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly, categoryId)).log);
+		return InboxMessagesTransform((await this.getInboxMessages(user_ext_id, limit, offset, favoriteOnly, categoryId, read_status)).log);
 	}
 
 	public async getInboxUnreadCountT(

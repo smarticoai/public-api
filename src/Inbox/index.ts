@@ -10,3 +10,4 @@ export * from './MarkInboxMessageDeletedRequest';
 export * from './MarkInboxMessageDeletedResponse';
 export * from './OpenLinksType';
 export * from './InboxCategories';
+export * from './InboxReadStatus';

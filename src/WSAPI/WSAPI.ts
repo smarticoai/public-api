@@ -57,6 +57,7 @@ import {
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
 import { TGetJackpotEligibleGamesResponse } from '../Jackpots/GetJackpotEligibleGamesResponse';
+import { InboxReadStatus } from '../Inbox/InboxReadStatus';
 
 /** @hidden */
 const CACHE_DATA_SEC = 30;
@@ -816,18 +817,20 @@ export class WSAPI {
 		to,
 		onlyFavorite,
 		categoryId,
+		read_status,
 		onUpdate,
 	}: {
 		from?: number;
 		to?: number;
 		onlyFavorite?: boolean;
 		categoryId?: InboxCategories;
+		read_status?: InboxReadStatus;
 		onUpdate?: (data: TInboxMessage[]) => void;
 	} = {}): Promise<TInboxMessage[]> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate);
 		}
-		return await this.api.getInboxMessagesT(null, from, to, onlyFavorite, categoryId);
+		return await this.api.getInboxMessagesT(null, from, to, onlyFavorite, categoryId, read_status);
 	}
 
 	/**
