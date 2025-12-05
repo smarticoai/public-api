@@ -801,7 +801,9 @@ export class WSAPI {
 	}
 
 	/** Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched.
-	 * The maximum number of messages per request is limited to 20. An indicator "onlyFavorite" can be passed to get only messages marked as favorites.
+	 * The maximum number of messages per request is limited to 20. 
+	 * An indicator "onlyFavorite" can be passed to get only messages marked as favorites.
+	 * An indicator "read_status" can be passed to get only messages marked as read or unread.
 	 * You can leave this params empty and by default it will return list of messages ranging from 0 to 20.
 	 * This functions return list of messages without the body of the message.
 	 * To get the body of the message you need to call getInboxMessageBody function and pass the message guid contained in each message of this request.
