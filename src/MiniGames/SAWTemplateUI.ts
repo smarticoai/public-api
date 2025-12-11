@@ -9,7 +9,7 @@ export interface SAWTemplateUI {
 	name: string;
 	description?: string;
 	over_limit_message?: string;
-	hide_prize_names?: string;
+	hide_prize_names?: boolean;
 	no_attempts_message?: string;
 	thumbnail?: string;
 	sectors_count: number;
