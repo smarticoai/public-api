@@ -28,7 +28,7 @@ ___
 
 ### hide\_prize\_names
 
-• `Optional` **hide\_prize\_names**: `string`
+• `Optional` **hide\_prize\_names**: `boolean`
 
 ___
 
