@@ -105,10 +105,6 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 					.map((t) => {
 						MissionUtils.replaceFavGameNameTag({ task: t });
 
-						x.name = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: x.name });
-						x.sub_header = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: x.sub_header });
-						x.description = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: x.description });
-
 						return ({
 							id: t.task_id,
 							name: t.task_public_meta?.name,
