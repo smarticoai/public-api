@@ -236,6 +236,12 @@ ___
 
 ___
 
+### expose\_user\_spin\_id
+
+• `Optional` **expose\_user\_spin\_id**: [`SAWExposeUserSpinId`](../enums/SAWExposeUserSpinId.md)
+
+___
+
 ### custom\_data
 
 • **custom\_data**: `any`

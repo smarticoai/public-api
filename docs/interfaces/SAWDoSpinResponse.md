@@ -85,3 +85,9 @@ ___
 ### visitor\_win\_uuid
 
 • `Optional` **visitor\_win\_uuid**: `string`
+
+___
+
+### spin\_id
+
+• `Optional` **spin\_id**: `number`

@@ -19,6 +19,7 @@
 - [SAWAskForUsername](enums/SAWAskForUsername.md)
 - [SAWBuyInType](enums/SAWBuyInType.md)
 - [SAWBuyInTypeName](enums/SAWBuyInTypeName.md)
+- [SAWExposeUserSpinId](enums/SAWExposeUserSpinId.md)
 - [SAWGameDifficultyType](enums/SAWGameDifficultyType.md)
 - [SAWGameDifficultyTypeName](enums/SAWGameDifficultyTypeName.md)
 - [SAWGameLayout](enums/SAWGameLayout.md)
