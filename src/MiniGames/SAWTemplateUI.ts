@@ -1,4 +1,5 @@
 import { SAWAskForUsername } from './SAWAskForUsername';
+import { SAWExposeUserSpinId } from './SAWExposeUserSpinId';
 import { SAWGameDifficultyType } from './SAWGameDifficulty';
 import { SAWGameLayout } from './SAWGameLayout';
 import { SAWWheelLayout } from './SAWWheelLayout';
@@ -45,6 +46,7 @@ export interface SAWTemplateUI {
 	disable_background_music?: boolean;
 	custom_section_id?: number;
 	only_in_custom_section?: boolean;
+	expose_user_spin_id?: SAWExposeUserSpinId;
 
 	custom_data: any;
 
