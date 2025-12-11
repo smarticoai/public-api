@@ -55,11 +55,29 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 			const completedThisWeek = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisWeek') : false;
 			const completedThisMonth = r.complete_date_ts ? IntUtils.isWithinPeriod(r.complete_date_ts, 'thisMonth') : false;
 
+			let missionName = r.ach_public_meta.name;
+			let missionSubHeader = r.ach_public_meta.sub_header;
+			let missionDescription = r.ach_public_meta.description;
+
+			if (missionName?.includes('{{suggested_') || missionSubHeader?.includes('{{suggested_') || missionDescription?.includes('{{suggested_')) {
+				r.achievementTasks.forEach(t => {
+					if (r.ach_public_meta.name?.includes('{{suggested_')) {
+						missionName = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: r.ach_public_meta.name });
+					}
+					if (r.ach_public_meta.sub_header?.includes('{{suggested_')) {
+						missionSubHeader = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: r.ach_public_meta.sub_header });
+					}
+					if (r.ach_public_meta.description?.includes('{{suggested_')) {
+						missionDescription = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: r.ach_public_meta.description });
+					}
+				});
+			}
+
 			const x: TMissionOrBadge = {
 				id: r.ach_id,
-				name: r.ach_public_meta.name,
-				sub_header: r.ach_public_meta.sub_header,
-				description: r.ach_public_meta.description,
+				name: missionName,
+				sub_header: missionSubHeader,
+				description: missionDescription,
 				hint_text: r.ach_public_meta.hint_text,
 				unlock_mission_description: r.ach_public_meta.unlock_mission_description,
 				image: r.ach_public_meta.image_url,
@@ -86,6 +104,10 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 					.filter((t) => t.task_type_id === AchievementTaskType.CompleteAchievement)
 					.map((t) => {
 						MissionUtils.replaceFavGameNameTag({ task: t });
+
+						x.name = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: x.name });
+						x.sub_header = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: x.sub_header });
+						x.description = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: x.description });
 
 						return ({
 							id: t.task_id,
