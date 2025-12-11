@@ -58,6 +58,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 			const x: TMissionOrBadge = {
 				id: r.ach_id,
 				name: r.ach_public_meta.name,
+				sub_header: r.ach_public_meta.sub_header,
 				description: r.ach_public_meta.description,
 				hint_text: r.ach_public_meta.hint_text,
 				unlock_mission_description: r.ach_public_meta.unlock_mission_description,
@@ -84,7 +85,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				tasks: (r.achievementTasks || [])
 					.filter((t) => t.task_type_id === AchievementTaskType.CompleteAchievement)
 					.map((t) => {
-						MissionUtils.replaceFavGameNameTag(t);
+						MissionUtils.replaceFavGameNameTag({ task: t });
 
 						return ({
 							id: t.task_id,

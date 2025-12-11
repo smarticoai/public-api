@@ -743,7 +743,7 @@ ___
 ▸ **getInboxMessages**(`params?`): `Promise`\<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
 
 Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched.
-The maximum number of messages per request is limited to 20.
+The maximum number of messages per request is limited to 20. 
 An indicator "onlyFavorite" can be passed to get only messages marked as favorites.
 An indicator "read_status" can be passed to get only messages marked as read or unread.
 You can leave this params empty and by default it will return list of messages ranging from 0 to 20.

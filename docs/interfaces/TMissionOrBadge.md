@@ -28,6 +28,14 @@ Name of the mission or badge, translated to the user language
 
 ___
 
+### sub\_header
+
+• **sub\_header**: `string`
+
+Sub-header of the mission, translated to the user language
+
+___
+
 ### description
 
 • **description**: `string`

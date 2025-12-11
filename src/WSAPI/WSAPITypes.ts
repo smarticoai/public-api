@@ -561,6 +561,8 @@ export interface TMissionOrBadge {
 	type: 'mission' | 'badge';
 	/** Name of the mission or badge, translated to the user language */
 	name: string;
+	/** Sub-header of the mission, translated to the user language */
+	sub_header: string;
 	/** Description of the mission or badge, translated to the user language */
 	description: string;
 	/** Description of the mission reward if defined */

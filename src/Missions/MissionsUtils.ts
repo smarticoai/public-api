@@ -166,65 +166,82 @@ export class MissionUtils {
         return new Date(ts).getTime();
     }
 
-    public static replaceTagsFavMissionTask = (task: UserAchievementTask, valueToReplace: string): string => {
+    public static replaceTagsFavMissionTask = ({ task, valueToReplace, currencySymbol }: { task: UserAchievementTask, valueToReplace: string, currencySymbol?: string }): string => {
         let result = valueToReplace || '';
 
         if (!task) {
             return result;
         }
-    
+
         const userStateParams = (task.user_state_params || {});
         const userStateOperator = task.task_public_meta?.user_state_operations;
         const userStateParamsKeys = Object.keys(userStateParams);
-    
+
         if (userStateParamsKeys.length === 0 || !userStateOperator) {
             return result;
         }
-    
+
         const operatorsMulti = ['has', '!has'];
         const operatorsPos = ['pos1', 'pos2', 'pos3'];
-    
-        let replacementValue: string = '';
-    
-        userStateParamsKeys.forEach((k: 'core_fav_game_top3' | 'core_fav_game_type_top3') => {
+
+        let suggestedGames: string = '';
+        let suggestedValue: string = '';
+
+        userStateParamsKeys.forEach((k: 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount') => {
             const operator = userStateOperator[k]?.op;
-    
-            if (operatorsMulti.includes(operator)) {
-                const value = userStateParams[k]?.filter(v => Boolean(v));
-                if (value && value.length > 0) {
-                    replacementValue = value.map((v: string) => {
-                        const cleaned = v.replace(/_/g, ' ').toLowerCase();
-                        return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
-                    }).join(' ,');
+
+            if (k === 'core_fav_game_top3' || k === 'core_fav_game_type_top3' || k === 'core_fav_game_provider_top3') {
+                if (operatorsMulti.includes(operator)) {
+                    const value = userStateParams[k]?.filter(v => Boolean(v));
+                    if (value && value.length > 0) {
+                        suggestedGames = value.map((v: string) => {
+                            const cleaned = v.replace(/_/g, ' ').toLowerCase();
+                            return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+                        }).join(' ,');
+                    }
+                }
+
+                if (operatorsPos.includes(operator)) {
+                    const value = userStateParams[k];
+                    const pos = Number(operator.replace('pos', '')) - 1;
+
+                    if (IntUtils.isNotNull(pos) && value && value[pos]) {
+                        suggestedGames = value[pos];
+
+                        if (suggestedGames) {
+                            suggestedGames = suggestedGames.replace('_', ' ').toLowerCase();
+                            suggestedGames = suggestedGames.charAt(0).toUpperCase() + suggestedGames.slice(1);
+                        }
+
+                    }
                 }
             }
-    
-            if (operatorsPos.includes(operator)) {
-                const value = userStateParams[k];
-                const pos = Number(operator.replace('pos', '')) - 1;
-    
-                if (IntUtils.isNotNull(pos) && value && value[pos]) {
-                    replacementValue = value[pos];
 
-                    if (replacementValue) {
-                        replacementValue = replacementValue.replace('_', ' ').toLowerCase();
-                        replacementValue = replacementValue.charAt(0).toUpperCase() + replacementValue.slice(1);
-                    }
+            if (k === 'core_recommended_deposit_amount' || k === 'core_recommended_casino_bet_amount') {
+                suggestedValue = userStateParams[k];
 
+                if (suggestedValue) {
+                    const currencyFromTheTask = userStateParams?.core_wallet_currency;
+
+                    suggestedValue = `${suggestedValue} ${currencySymbol || currencyFromTheTask || ''}`;
                 }
             }
         });
-    
-        if (replacementValue && result) {
-            result = result.replace('{{suggested_games}}', replacementValue);
+
+        if (suggestedGames && result) {
+            result = result.replace('{{suggested_games}}', suggestedGames);
         }
-    
+
+        if (suggestedValue && result) {
+            result = result.replace('{{suggested_value}}', suggestedValue);
+        }
+
         return result;
     }
 
-    public static replaceFavGameNameTag = (task: UserAchievementTask): UserAchievementTask => {
+    public static replaceFavGameNameTag = ({ task, currencySymbol }: { task: UserAchievementTask, currencySymbol?: string }): UserAchievementTask => {
         if (task && task.task_public_meta && task.task_public_meta.name) {
-            task.task_public_meta.name = MissionUtils.replaceTagsFavMissionTask(task, task.task_public_meta.name);
+            task.task_public_meta.name = MissionUtils.replaceTagsFavMissionTask({ task, valueToReplace: task.task_public_meta.name, currencySymbol });
         }
 
         return task;

@@ -1,4 +1,5 @@
 export interface AchievementPublicMeta {
+	sub_header?: string;
 	description?: string;
 	unlock_mission_description?: string;
 	custom_data?: string;
