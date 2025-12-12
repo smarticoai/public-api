@@ -1,7 +1,7 @@
 import { BuyStoreItemErrorCode } from '../Store';
 import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWGameLayout, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
-import { AchievementAvailabilityStatus } from '../Missions';
+import { AchievementAvailabilityStatus, BadgesTimeLimitStates } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter, LiquidEntityData } from '../CustomSections';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
@@ -677,6 +677,9 @@ export interface TMissionOrBadge {
 
 	/** Action for the claim reward button */
 	claim_button_action?: string;
+
+	/** Badge time limit state for badges with time restrictions */
+	badgeTimeLimitState?: BadgesTimeLimitStates;
 }
 
 export interface AchRelatedGame {

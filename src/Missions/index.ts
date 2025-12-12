@@ -9,6 +9,7 @@ export * from './GetAchievementMapRequest';
 export * from './GetAchievementMapResponse';
 export * from './ReloadAchievementsEvent';
 export * from './UserAchievement';
+export { enrichUserAchievementsWithBadgeState } from './UserAchievement';
 export * from './UserAchievementTask';
 export * from './ScheduledMissionType';
 export * from './AchCategoryPublicMeta';
@@ -21,4 +22,5 @@ export * from './AchievementAvailabilityStatus';
 export * from './GetRelatedAchTourResponse';
 export * from './MissionsUtils';
 export * from './MissionCategory';
-export * from './UserAchievementTaskAffectsProgress'
+export * from './UserAchievementTaskAffectsProgress';
+export * from './BadgesTimeLimitStates';

@@ -3,6 +3,7 @@ import { AchievementAvailabilityStatus } from "./AchievementAvailabilityStatus";
 import { AchievementStatus } from "./AchievementStatus";
 import { UserAchievement } from "./UserAchievement";
 import { UserAchievementTask } from "./UserAchievementTask";
+import { BadgesTimeLimitStates } from "./BadgesTimeLimitStates";
 
 export class MissionUtils {
 
@@ -245,5 +246,42 @@ export class MissionUtils {
         }
 
         return task;
+    }
+
+    public static determineBadgeState = (badge: UserAchievement): BadgesTimeLimitStates => {
+        const now = Date.now();
+        const { active_from_ts, active_till_ts, progress } = badge;
+      
+        // 1. BEFORE START
+        if (active_from_ts > now) {
+            return BadgesTimeLimitStates.BeforeStartDate;
+        }
+      
+        // 2. AFTER START, NO END DATE (infinite badge)
+        //    → grey, no locked, no date chip
+        if (!active_till_ts) {
+            if (progress === 0) {
+                return BadgesTimeLimitStates.AfterStartDateNoProgress;
+            }
+            // If infinite and with progress → this state does not exist in enum
+            // (but if needed we can add one)
+        }
+      
+        // 3. AFTER START, BEFORE END DATE
+        if (now < active_till_ts) {
+            if (progress === 0) {
+                // now < end + has end date → must show chip
+                return BadgesTimeLimitStates.AfterStartDateNoProgressAndEndDate;
+            }
+        
+            return BadgesTimeLimitStates.AfterStartDateWithProgressAndEndDate;
+        }
+      
+        // 4. AFTER END DATE
+        if (progress === 0) {
+            return BadgesTimeLimitStates.AfterEndDateNotStarted;
+        }
+      
+        return BadgesTimeLimitStates.AfterEndDateWithProgress;
     }
 }

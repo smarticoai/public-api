@@ -8,6 +8,7 @@ import { AchievementType } from './AchievementType';
 import { MissionUtils } from './MissionsUtils';
 import { ScheduledMissionType } from './ScheduledMissionType';
 import { UserAchievementTask } from './UserAchievementTask';
+import { BadgesTimeLimitStates } from './BadgesTimeLimitStates';
 
 export interface UserAchievement {
 	ach_id?: number;
@@ -45,7 +46,17 @@ export interface UserAchievement {
 	completed_this_week?: boolean;
 	completed_this_month?: boolean;
 	custom_section_type_id?: number;
+	badgeTimeLimitState?: BadgesTimeLimitStates;
 }
+
+export const enrichUserAchievementsWithBadgeState = (items: UserAchievement[]): UserAchievement[] => {
+	return items.map((item) => {
+		if (item.ach_type_id === AchievementType.Badge && (item.active_from_ts || item.active_till_ts)) {
+			item.badgeTimeLimitState = MissionUtils.determineBadgeState(item);
+		}
+		return item;
+	});
+};
 
 export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBadge[] => {
 	return items
@@ -142,6 +153,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				availability_status: MissionUtils.getAvailabilityStatus(r),
 				claim_button_title: r.ach_public_meta.claim_button_title,
 				claim_button_action: r.ach_public_meta.claim_button_action,
+				badgeTimeLimitState: r.badgeTimeLimitState,
 			};
 
 			if (r.ach_status_id === AchievementStatus.Recurring) {

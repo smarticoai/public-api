@@ -64,6 +64,7 @@ import {
 	GetAchievementMapRequest,
 	GetAchievementMapResponse,
 	UserAchievementTransform,
+	enrichUserAchievementsWithBadgeState,
 } from './Missions';
 import {
 	GetTournamentInfoRequest,
@@ -878,6 +879,7 @@ class SmarticoAPI {
 
 		if (responseClone.achievements) {
 			responseClone.achievements = responseClone.achievements.filter((a) => a.ach_type_id === AchievementType.Badge);
+			responseClone.achievements = enrichUserAchievementsWithBadgeState(responseClone.achievements);
 		}
 		return responseClone;
 	}
