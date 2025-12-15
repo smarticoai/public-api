@@ -350,3 +350,19 @@ ___
 • `Optional` **claim\_button\_action**: `string`
 
 Action for the claim reward button
+
+___
+
+### badgeTimeLimitState
+
+• `Optional` **badgeTimeLimitState**: `BadgesTimeLimitStates`
+
+Badge time limit state for badges with time restrictions
+
+___
+
+### hide\_locked\_mission
+
+• `Optional` **hide\_locked\_mission**: `boolean`
+
+Flag from achievement if the mission should be hidden when it is locked, until it's unlocked
