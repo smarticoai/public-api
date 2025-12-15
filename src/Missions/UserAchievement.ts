@@ -154,6 +154,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				claim_button_title: r.ach_public_meta.claim_button_title,
 				claim_button_action: r.ach_public_meta.claim_button_action,
 				badgeTimeLimitState: r.badgeTimeLimitState,
+				hide_locked_mission: r.ach_public_meta.hide_locked_mission,
 			};
 
 			if (r.ach_status_id === AchievementStatus.Recurring) {

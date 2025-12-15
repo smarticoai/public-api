@@ -680,6 +680,9 @@ export interface TMissionOrBadge {
 
 	/** Badge time limit state for badges with time restrictions */
 	badgeTimeLimitState?: BadgesTimeLimitStates;
+
+	/** Flag from achievement if the mission should be hidden when it is locked, until it's unlocked */
+	hide_locked_mission?: boolean;
 }
 
 export interface AchRelatedGame {
