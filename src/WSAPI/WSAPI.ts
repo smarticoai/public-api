@@ -1,5 +1,5 @@
 import { ClassId } from '../Base/ClassId';
-import { CoreUtils } from '../Core';
+import { ActivityTypeLimited, CoreUtils } from '../Core';
 import {
 	SAWSpinsCountPush,
 } from '../MiniGames';
@@ -943,6 +943,64 @@ export class WSAPI {
 		return {
 			translations: r.translations,
 		};
+	}
+
+	/**
+	 * Reports an impression event for an engagement (when engagement content is displayed to the user).
+	 * Use this method to track when users view engagement content such as inbox messages, popups.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.reportImpressionEvent({
+	 *      engagement_uid: 'abc123-def456',
+	 *      activityType: 31 // Inbox
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 *
+	 * @param params.engagement_uid - Unique identifier for the engagement
+	 * @param params.activityType - Type of engagement activity (Popup=30, Inbox=31)
+	 */
+	public reportImpressionEvent({
+		engagement_uid,
+		activityType,
+	}: {
+		engagement_uid: string;
+		activityType: ActivityTypeLimited | number;
+	}): void {
+		this.api.reportEngagementImpression(null, engagement_uid, activityType);
+	}
+
+	/**
+	 * Reports a click/action event for an engagement (when user interacts with engagement content).
+	 * Use this method to track when users click on or interact with engagement content such as inbox messages, popups.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.reportClickEvent({
+	 *      engagement_uid: 'abc123-def456',
+	 *      activityType: 31 // Inbox,
+	 *      action: 'dp:gf_missions'
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 *
+	 * @param params.engagement_uid - Unique identifier for the engagement
+	 * @param params.activityType - Type of engagement activity (Popup=30, Inbox=31)
+	 * @param params.action - Optional action/deeplink that was triggered by the user interaction
+	 */
+	public reportClickEvent({
+		engagement_uid,
+		activityType,
+		action,
+	}: {
+		engagement_uid: string;
+		activityType: ActivityTypeLimited | number;
+		action?: string;
+	}): void {
+		this.api.reportEngagementAction(null, engagement_uid, activityType, action);
 	}
 
 	private async updateOnSpin(data: SAWSpinsCountPush) {

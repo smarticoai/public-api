@@ -19,6 +19,7 @@ import {
 } from './MiniGames';
 import { ECacheContext, OCache } from './OCache';
 import {
+	ActivityTypeLimited,
 	CoreUtils,
 	GetTranslationsRequest,
 	GetTranslationsResponse,
@@ -458,6 +459,40 @@ class SmarticoAPI {
 		const results = await this.send<CheckSegmentMatchResponse>(message, ClassId.CHECK_SEGMENT_MATCH_RESPONSE);
 
 		return results.segments || [];
+	}
+
+	/**
+	 * Reports an engagement impression event (when engagement content is displayed to the user).
+	 */
+	public reportEngagementImpression(
+		user_ext_id: string,
+		engagement_uid: string,
+		activityType: ActivityTypeLimited | number,
+	): void {
+		const message = this.buildMessage<any, any>(user_ext_id, ClassId.CLIENT_ENGAGEMENT_IMPRESSION_REQUEST, {
+			engagement_uid,
+			activityType,
+		});
+
+		this.send(message).catch(() => {});
+	}
+
+	/**
+	 * Reports an engagement action event (when user clicks/interacts with engagement content).
+	 */
+	public reportEngagementAction(
+		user_ext_id: string,
+		engagement_uid: string,
+		activityType: ActivityTypeLimited | number,
+		action?: string,
+	): void {
+		const message = this.buildMessage<any, any>(user_ext_id, ClassId.CLIENT_ENGAGEMENT_ACTION_REQUEST, {
+			engagement_uid,
+			activityType,
+			...(action && { action }),
+		});
+
+		this.send(message).catch(() => {});
 	}
 
 	public async jackpotGet(
