@@ -920,6 +920,70 @@ Requests translations for the given language. Returns the object including trans
 
 ___
 
+### reportImpressionEvent
+
+▸ **reportImpressionEvent**(`«destructured»`): `void`
+
+Reports an impression event for an engagement (when engagement content is displayed to the user).
+Use this method to track when users view engagement content such as inbox messages, popups.
+
+**Example**:
+```
+_smartico.api.reportImpressionEvent({
+     engagement_uid: 'abc123-def456',
+     activityType: 31 // Inbox
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `engagement_uid` | `string` |
+| › `activityType` | `number` |
+
+#### Returns
+
+`void`
+
+___
+
+### reportClickEvent
+
+▸ **reportClickEvent**(`«destructured»`): `void`
+
+Reports a click/action event for an engagement (when user interacts with engagement content).
+Use this method to track when users click on or interact with engagement content such as inbox messages, popups.
+
+**Example**:
+```
+_smartico.api.reportClickEvent({
+     engagement_uid: 'abc123-def456',
+     activityType: 31 // Inbox,
+     action: 'dp:gf_missions'
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `engagement_uid` | `string` |
+| › `activityType` | `number` |
+| › `action?` | `string` |
+
+#### Returns
+
+`void`
+
+___
+
 ### jackpotGet
 
 ▸ **jackpotGet**(`filter?`): `Promise`\<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
