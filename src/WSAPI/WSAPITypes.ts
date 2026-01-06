@@ -1292,5 +1292,58 @@ export interface TransformedRaffleClaimPrizeResponse {
     errorMessage?: string
 }
 
+/**
+ * TPointsLog describes points change history log entry
+ */
+export interface TPointsLog {
+	/** Date when the points change was created (epoch timestamp in seconds) */
+	create_date: number;
+	/** External user ID */
+	user_ext_id: string;
+	/** CRM brand ID */
+	crm_brand_id: number;
+	/** Amount of points collected (positive or negative) */
+	points_collected: number;
+	/** Total points user ever collected */
+	user_points_ever: number;
+	/** Current points balance after this change */
+	user_points_balance: number;
+	/** Source type ID indicating what triggered this points change */
+	source_type_id: number;
+}
+
+/**
+ * TGemsDiamondsLog describes gems or diamonds change history log entry
+ */
+export interface TGemsDiamondsLog {
+	/** Date when the change was created (epoch timestamp in seconds) */
+	create_date: number;
+	/** External user ID */
+	user_ext_id: string;
+	/** CRM brand ID */
+	crm_brand_id: number;
+	/** Type of currency: 'gems' or 'diamonds' */
+	type: string;
+	/** Amount changed (positive or negative) */
+	amount: number;
+	/** Current balance after this change */
+	balance: number;
+	/** Source type ID indicating what triggered this change */
+	source_type_id: number;
+}
+
+/**
+ * TPointsHistoryLog is a union type that can be either a points log or a gems/diamonds log
+ */
+export type TPointsHistoryLog = TPointsLog | TGemsDiamondsLog;
+
 
 export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout }
+
+export const isPointsLog = (log: TPointsHistoryLog): log is TPointsLog => {
+	return 'points_collected' in log;
+};
+
+export const isGemsDiamondsLog = (log: TPointsHistoryLog): log is TGemsDiamondsLog => {
+	return 'type' in log && 'amount' in log;
+};

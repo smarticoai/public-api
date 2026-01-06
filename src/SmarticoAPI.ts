@@ -98,6 +98,7 @@ import {
 	TBonus,
 	TRaffle,
 	TLevelCurrent,
+	TPointsHistoryLog,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -124,6 +125,7 @@ import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
 import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse, raffleTransform } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
+import { GetPointsHistoryRequest, GetPointsHistoryResponse, PointsHistoryTransform } from './PointsHistory';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse } from './Raffle';
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
@@ -1322,6 +1324,33 @@ class SmarticoAPI {
 
 		return await this.send<RaffleClaimPrizeResponse>(message, ClassId.RAF_CLAIM_PRIZE_RESPONSE);
 
+	}
+
+	public async getPointsHistory(
+		user_ext_id: string,
+		startTimeSeconds: number,
+		endTimeSeconds: number,
+	): Promise<GetPointsHistoryResponse> {
+		const message = this.buildMessage<GetPointsHistoryRequest, GetPointsHistoryResponse>(
+			user_ext_id,
+			ClassId.GET_POINT_HISTORY_REQUEST,
+			{
+				startTimeSeconds,
+				endTimeSeconds,
+			},
+		);
+
+		return await this.send<GetPointsHistoryResponse>(message, ClassId.GET_POINT_HISTORY_RESPONSE);
+	}
+
+	public async getPointsHistoryT(
+		user_ext_id: string,
+		startTimeSeconds: number,
+		endTimeSeconds: number,
+	): Promise<TPointsHistoryLog[]> {
+		return PointsHistoryTransform(
+			(await this.getPointsHistory(user_ext_id, startTimeSeconds, endTimeSeconds)).logHistory,
+		);
 	}
 }
 
