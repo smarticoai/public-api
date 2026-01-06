@@ -926,6 +926,7 @@ ___
 
 Reports an impression event for an engagement (when engagement content is displayed to the user).
 Use this method to track when users view engagement content such as inbox messages, popups.
+When using for Inbox cases, you need to use message guid as engagement_uid, and pass 31 as activityType.
 
 **Example**:
 ```
@@ -957,6 +958,7 @@ ___
 
 Reports a click/action event for an engagement (when user interacts with engagement content).
 Use this method to track when users click on or interact with engagement content such as inbox messages, popups.
+When using for Inbox cases, you need to use message guid as engagement_uid, and pass 31 as activityType, and pass the action/deeplink that was triggered by the user interaction as action.
 
 **Example**:
 ```
