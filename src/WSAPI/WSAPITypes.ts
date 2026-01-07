@@ -7,6 +7,8 @@ import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, Ach
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
 import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from '../Raffle';
+import { PointChangeSourceType } from '../PointsHistory/PointChangeSourceType';
+import { UserBalanceType } from '../PointsHistory/UserBalanceType';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
@@ -1309,7 +1311,7 @@ export interface TPointsLog {
 	/** Current points balance after this change */
 	user_points_balance: number;
 	/** Source type ID indicating what triggered this points change */
-	source_type_id: number;
+	source_type_id: PointChangeSourceType;
 }
 
 /**
@@ -1323,13 +1325,13 @@ export interface TGemsDiamondsLog {
 	/** CRM brand ID */
 	crm_brand_id: number;
 	/** Type of currency: 'gems' or 'diamonds' */
-	type: string;
+	type: UserBalanceType;
 	/** Amount changed (positive or negative) */
 	amount: number;
 	/** Current balance after this change */
 	balance: number;
 	/** Source type ID indicating what triggered this change */
-	source_type_id: number;
+	source_type_id: PointChangeSourceType;
 }
 
 /**
@@ -1338,7 +1340,7 @@ export interface TGemsDiamondsLog {
 export type TPointsHistoryLog = TPointsLog | TGemsDiamondsLog;
 
 
-export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout }
+export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout, PointChangeSourceType, UserBalanceType }
 
 export const isPointsLog = (log: TPointsHistoryLog): log is TPointsLog => {
 	return 'points_collected' in log;

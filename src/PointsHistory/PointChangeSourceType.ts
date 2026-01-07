@@ -1,0 +1,20 @@
+export enum PointChangeSourceType {
+	Journey = 1,
+	AchievementTaskCompletion = 2,
+	AchievementCompletion = 3,
+	LevelsStructureChange = 4,
+	StorePurchase = 5,
+	ManualAdjustment = 6,
+	Leaderboard = 7,
+	Tournament = 11,
+	AutomationRule = 12,
+	TournamentRegistration = 13,
+	TournamentRegistrationCancellation = 14,
+	RefundPoints = 15,
+	PlayMiniGame = 16,
+	WinMiniGame = 17,
+	API = 18,
+	DynamicFormula = 19,
+	Raffle = 21,
+}
+
