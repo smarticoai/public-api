@@ -242,3 +242,11 @@ ___
 • `Optional` **requirements\_to\_get\_prize**: `string`
 
 Requirements to claim the prize  (lootbox specific)
+
+___
+
+### max\_give\_period\_type\_id
+
+• `Optional` **max\_give\_period\_type\_id**: [`AttemptPeriodType`](../enums/AttemptPeriodType.md)
+
+The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime

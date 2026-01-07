@@ -105,3 +105,9 @@ ___
 #### Index signature
 
 ▪ [key: `string`]: `any`
+
+___
+
+### max\_give\_period\_type\_id
+
+• `Optional` **max\_give\_period\_type\_id**: [`AttemptPeriodType`](../enums/AttemptPeriodType.md)

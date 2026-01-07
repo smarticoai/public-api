@@ -986,6 +986,44 @@ _smartico.api.reportClickEvent({
 
 ___
 
+### getPointsHistory
+
+▸ **getPointsHistory**(`«destructured»`): `Promise`\<[`TPointsHistoryLog`](../README.md#tpointshistorylog)[]\>
+
+Returns the points history for a user within a specified time range.
+The response includes both points changes and gems/diamonds changes.
+Each log entry contains information about the change amount, balance, and source.
+
+**Example**:
+```
+const startTime = Math.floor(Date.now() / 1000) - 86400 * 30; // 30 days ago
+const endTime = Math.floor(Date.now() / 1000); // now
+_smartico.api.getPointsHistory({
+     userId: 12345,
+     startTimeSeconds: startTime,
+     endTimeSeconds: endTime
+}).then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `«destructured»` | `Object` |
+| › `userId` | `number` |
+| › `startTimeSeconds` | `number` |
+| › `endTimeSeconds` | `number` |
+
+#### Returns
+
+`Promise`\<[`TPointsHistoryLog`](../README.md#tpointshistorylog)[]\>
+
+___
+
 ### jackpotGet
 
 ▸ **jackpotGet**(`filter?`): `Promise`\<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
