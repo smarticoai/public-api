@@ -1,3 +1,4 @@
+import { AttemptPeriodType } from './AttemptPeriodType';
 import { SAWPrizeType } from './SAWPrizeType';
 import { SAWPrizeUI } from './SAWPrizeUI';
 
@@ -19,4 +20,5 @@ export interface SAWPrize {
 	is_surcharge?: boolean;
 	is_deleted?: boolean;
 	prize_details_json?: {[key: string]: any};
+	max_give_period_type_id?: AttemptPeriodType;
 }

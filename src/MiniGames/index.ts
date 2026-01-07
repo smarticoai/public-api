@@ -29,3 +29,4 @@ export * from './PrizeModifiers';
 export * from './SAWWheelLayout';
 export * from './SAWGameDifficulty'
 export * from './SAWExposeUserSpinId';
+export * from './AttemptPeriodType';

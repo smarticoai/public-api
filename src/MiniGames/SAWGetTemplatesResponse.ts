@@ -80,6 +80,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					allow_split_decimal: p.saw_prize_ui_definition.allow_split_decimal,
 					hide_prize_from_history: p.saw_prize_ui_definition.hide_prize_from_history,
 					requirements_to_get_prize: p.saw_prize_ui_definition.requirements_to_get_prize,
+					max_give_period_type_id: p.max_give_period_type_id,
 				};
 				return y;
 			}),
