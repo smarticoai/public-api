@@ -1015,14 +1015,15 @@ export class WSAPI {
 	 * Returns the points history for a user within a specified time range.
 	 * The response includes both points changes and gems/diamonds changes.
 	 * Each log entry contains information about the change amount, balance, and source.
-	 * The returned list is cached for 30 seconds. You can pass the onUpdate callback as a parameter.
+	 * The returned list is cached for 30 seconds. 
+	 * You can pass the onUpdate callback as a parameter, it will be called every time the points history is updated and will provide the updated list of points history logs for the last 10 minutes.
 	 *
 	 * **Example**:
 	 * ```
 	 * const startTime = Math.floor(Date.now() / 1000) - 86400 * 30; // 30 days ago
 	 * const endTime = Math.floor(Date.now() / 1000); // now
+	 *
 	 * _smartico.api.getPointsHistory({
-	 *      userId: 12345,
 	 *      startTimeSeconds: startTime,
 	 *      endTimeSeconds: endTime,
 	 *      onUpdate: (data) => console.log('Updated:', data)
@@ -1033,26 +1034,30 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 *
-	 * @param params.userId - The user ID to get the points history for
 	 * @param params.startTimeSeconds - Start time in seconds (epoch timestamp)
 	 * @param params.endTimeSeconds - End time in seconds (epoch timestamp)
 	 * @param params.onUpdate - Optional callback function that will be called when the points history is updated
 	 */
 	public async getPointsHistory({
-		userId,
 		startTimeSeconds,
 		endTimeSeconds,
 		onUpdate,
 	}: {
-		userId: number;
 		startTimeSeconds: number;
 		endTimeSeconds: number;
 		onUpdate?: (data: TPointsHistoryLog[]) => void;
 	}): Promise<TPointsHistoryLog[]> {
+
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.PointsHistory, onUpdate);
 		}
-		return await this.api.getPointsHistoryT(null, startTimeSeconds, endTimeSeconds);
+
+		return await OCache.use(
+			onUpdateContextKey.PointsHistory,
+			ECacheContext.WSAPI,
+			() => this.api.getPointsHistoryT(null, startTimeSeconds, endTimeSeconds),
+			CACHE_DATA_SEC,
+		);
 	}
 
 	private async updateOnSpin(data: SAWSpinsCountPush) {
@@ -1111,12 +1116,12 @@ export class WSAPI {
 		this.updateEntity(onUpdateContextKey.Raffles, payload);
 	}
 
-	private notifyPointsHistoryUpdate() {
-		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.PointsHistory);
-		const onUpdate = this.onUpdateCallback.get(onUpdateContextKey.PointsHistory);
-		if (onUpdate) {
-			onUpdate(null);
-		}
+	private async notifyPointsHistoryUpdate() {
+		const startSeconds = Date.now() / 1000 - 600;
+		const endSeconds = Date.now() / 1000;
+		const payload = await this.api.getPointsHistoryT(null, startSeconds , endSeconds);
+
+		this.updateEntity(onUpdateContextKey.PointsHistory, payload);
 	}
 
 	private async updateEntity(contextKey: onUpdateContextKey, payload: any) {

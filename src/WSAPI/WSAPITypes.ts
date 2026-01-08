@@ -1313,8 +1313,8 @@ export interface TPointsHistoryLog {
 	amount: number;
 	/** Current balance after this change */
 	balance: number;
-	/** Total ever collected (only relevant for points, will be 0 for gems/diamonds) */
-	total_ever: number;
+	/** Total ever collected (only relevant for type points) */
+	total_ever?: number;
 	/** Source type ID indicating what triggered this change */
 	source_type_id: PointChangeSourceType;
 }
