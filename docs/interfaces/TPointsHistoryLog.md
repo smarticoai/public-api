@@ -1,6 +1,7 @@
-# Interface: TGemsDiamondsLog
+# Interface: TPointsHistoryLog
 
-TGemsDiamondsLog describes gems or diamonds change history log entry
+TPointsHistoryLog describes a unified history log entry for points, gems, or diamonds changes.
+The structure is the same regardless of balance type, making it easy to iterate and display.
 
 ## Properties
 
@@ -32,7 +33,7 @@ ___
 
 • **type**: [`UserBalanceType`](../enums/UserBalanceType.md)
 
-Type of currency: 'gems' or 'diamonds'
+Type of balance: Points = 0, Gems = 1, Diamonds = 2
 
 ___
 
@@ -49,6 +50,14 @@ ___
 • **balance**: `number`
 
 Current balance after this change
+
+___
+
+### total\_ever
+
+• `Optional` **total\_ever**: `number`
+
+Total ever collected (only relevant for type points)
 
 ___
 

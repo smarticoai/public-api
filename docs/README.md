@@ -148,8 +148,7 @@
 - [TRaffleDraw](interfaces/TRaffleDraw.md)
 - [TRaffleDrawRun](interfaces/TRaffleDrawRun.md)
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
-- [TPointsLog](interfaces/TPointsLog.md)
-- [TGemsDiamondsLog](interfaces/TGemsDiamondsLog.md)
+- [TPointsHistoryLog](interfaces/TPointsHistoryLog.md)
 
 ## General API
 
@@ -160,14 +159,6 @@
 ### TournamentRegistrationTypeName
 
 Ƭ **TournamentRegistrationTypeName**: ``"AUTO"`` \| ``"OPT_IN"`` \| ``"BUY_IN_POINTS"`` \| ``"MANUAL_APPROVAL"`` \| ``"REQUIRES_QUALIFICATION"`` \| ``"BUY_IN_GEMS"`` \| ``"BUY_IN_DIAMONDS"`` \| ``"UNKNOWN"``
-
-___
-
-### TPointsHistoryLog
-
-Ƭ **TPointsHistoryLog**: [`TPointsLog`](interfaces/TPointsLog.md) \| [`TGemsDiamondsLog`](interfaces/TGemsDiamondsLog.md)
-
-TPointsHistoryLog is a union type that can be either a points log or a gems/diamonds log
 
 ## Variables
 
@@ -234,35 +225,3 @@ ___
 #### Returns
 
 [`TSawHistory`](interfaces/TSawHistory.md)[]
-
-___
-
-### isPointsLog
-
-▸ **isPointsLog**(`log`): log is TPointsLog
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `log` | [`TPointsHistoryLog`](README.md#tpointshistorylog) |
-
-#### Returns
-
-log is TPointsLog
-
-___
-
-### isGemsDiamondsLog
-
-▸ **isGemsDiamondsLog**(`log`): log is TGemsDiamondsLog
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `log` | [`TPointsHistoryLog`](README.md#tpointshistorylog) |
-
-#### Returns
-
-log is TGemsDiamondsLog

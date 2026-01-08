@@ -988,20 +988,23 @@ ___
 
 ### getPointsHistory
 
-▸ **getPointsHistory**(`«destructured»`): `Promise`\<[`TPointsHistoryLog`](../README.md#tpointshistorylog)[]\>
+▸ **getPointsHistory**(`«destructured»`): `Promise`\<[`TPointsHistoryLog`](../interfaces/TPointsHistoryLog.md)[]\>
 
 Returns the points history for a user within a specified time range.
 The response includes both points changes and gems/diamonds changes.
 Each log entry contains information about the change amount, balance, and source.
+The returned list is cached for 30 seconds. 
+You can pass the onUpdate callback as a parameter, it will be called every time the points history is updated and will provide the updated list of points history logs for the last 10 minutes.
 
 **Example**:
 ```
 const startTime = Math.floor(Date.now() / 1000) - 86400 * 30; // 30 days ago
 const endTime = Math.floor(Date.now() / 1000); // now
+
 _smartico.api.getPointsHistory({
-     userId: 12345,
      startTimeSeconds: startTime,
-     endTimeSeconds: endTime
+     endTimeSeconds: endTime,
+     onUpdate: (data) => console.log('Updated:', data)
 }).then((result) => {
      console.log(result);
 });
@@ -1014,13 +1017,13 @@ _smartico.api.getPointsHistory({
 | Name | Type |
 | :------ | :------ |
 | `«destructured»` | `Object` |
-| › `userId` | `number` |
 | › `startTimeSeconds` | `number` |
 | › `endTimeSeconds` | `number` |
+| › `onUpdate?` | (`data`: [`TPointsHistoryLog`](../interfaces/TPointsHistoryLog.md)[]) => `void` |
 
 #### Returns
 
-`Promise`\<[`TPointsHistoryLog`](../README.md#tpointshistorylog)[]\>
+`Promise`\<[`TPointsHistoryLog`](../interfaces/TPointsHistoryLog.md)[]\>
 
 ___
 
