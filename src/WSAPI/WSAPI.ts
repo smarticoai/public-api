@@ -93,6 +93,7 @@ enum onUpdateContextKey {
 	JackpotEligibleGames = 'jackpotEligibleGames',
 	CurrentLevel = 'currentLevel',
 	InboxUnreadCount = 'inboxUnreadCount',
+	PointsHistory = 'pointsHistory',
 }
 
 /** @group General API */
@@ -144,9 +145,12 @@ export class WSAPI {
 					this.updateInboxUnreadCount(res.unread_count);
 				}
 			});
-			on(ClassId.CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT, (data: { props: { core_inbox_unread_count: number } }) => {
+			on(ClassId.CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT, (data: { props: { core_inbox_unread_count?: number; ach_points_balance?: number; ach_gems_balance?: number; ach_diamonds_balance?: number } }) => {
 				if (data?.props?.core_inbox_unread_count !== undefined && data?.props?.core_inbox_unread_count !== null) {
 					this.updateInboxUnreadCount(data.props.core_inbox_unread_count);
+				}
+				if (data?.props?.ach_points_balance !== undefined || data?.props?.ach_gems_balance !== undefined || data?.props?.ach_diamonds_balance !== undefined) {
+					this.notifyPointsHistoryUpdate();
 				}
 			});
 		}
@@ -1011,6 +1015,7 @@ export class WSAPI {
 	 * Returns the points history for a user within a specified time range.
 	 * The response includes both points changes and gems/diamonds changes.
 	 * Each log entry contains information about the change amount, balance, and source.
+	 * The returned list is cached for 30 seconds. You can pass the onUpdate callback as a parameter.
 	 *
 	 * **Example**:
 	 * ```
@@ -1019,7 +1024,8 @@ export class WSAPI {
 	 * _smartico.api.getPointsHistory({
 	 *      userId: 12345,
 	 *      startTimeSeconds: startTime,
-	 *      endTimeSeconds: endTime
+	 *      endTimeSeconds: endTime,
+	 *      onUpdate: (data) => console.log('Updated:', data)
 	 * }).then((result) => {
 	 *      console.log(result);
 	 * });
@@ -1030,15 +1036,22 @@ export class WSAPI {
 	 * @param params.userId - The user ID to get the points history for
 	 * @param params.startTimeSeconds - Start time in seconds (epoch timestamp)
 	 * @param params.endTimeSeconds - End time in seconds (epoch timestamp)
+	 * @param params.onUpdate - Optional callback function that will be called when the points history is updated
 	 */
 	public async getPointsHistory({
+		userId,
 		startTimeSeconds,
 		endTimeSeconds,
+		onUpdate,
 	}: {
 		userId: number;
 		startTimeSeconds: number;
 		endTimeSeconds: number;
+		onUpdate?: (data: TPointsHistoryLog[]) => void;
 	}): Promise<TPointsHistoryLog[]> {
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.PointsHistory, onUpdate);
+		}
 		return await this.api.getPointsHistoryT(null, startTimeSeconds, endTimeSeconds);
 	}
 
@@ -1096,6 +1109,14 @@ export class WSAPI {
 	private async updateRaffles() {
 		const payload = await this.api.getRafflesT(null);
 		this.updateEntity(onUpdateContextKey.Raffles, payload);
+	}
+
+	private notifyPointsHistoryUpdate() {
+		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.PointsHistory);
+		const onUpdate = this.onUpdateCallback.get(onUpdateContextKey.PointsHistory);
+		if (onUpdate) {
+			onUpdate(null);
+		}
 	}
 
 	private async updateEntity(contextKey: onUpdateContextKey, payload: any) {

@@ -1,5 +1,5 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { AttemptPeriodType, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWGameLayout, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
+import { MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWGameLayout, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchievementAvailabilityStatus, BadgesTimeLimitStates } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -79,8 +79,6 @@ export interface TMiniGamePrize {
 	hide_prize_from_history?: boolean;
 	/** Requirements to claim the prize  (lootbox specific)*/
 	requirements_to_get_prize?: string;
-	/** The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime */
-	max_give_period_type_id?: AttemptPeriodType;
 }
 
 /**
@@ -1297,57 +1295,26 @@ export interface TransformedRaffleClaimPrizeResponse {
 }
 
 /**
- * TPointsLog describes points change history log entry
+ * TPointsHistoryLog describes a unified history log entry for points, gems, or diamonds changes.
+ * The structure is the same regardless of balance type, making it easy to iterate and display.
  */
-export interface TPointsLog {
-	/** Date when the points change was created (epoch timestamp in seconds) */
-	create_date: number;
-	/** External user ID */
-	user_ext_id: string;
-	/** CRM brand ID */
-	crm_brand_id: number;
-	/** Amount of points collected (positive or negative) */
-	points_collected: number;
-	/** Total points user ever collected */
-	user_points_ever: number;
-	/** Current points balance after this change */
-	user_points_balance: number;
-	/** Source type ID indicating what triggered this points change */
-	source_type_id: PointChangeSourceType;
-}
-
-/**
- * TGemsDiamondsLog describes gems or diamonds change history log entry
- */
-export interface TGemsDiamondsLog {
+export interface TPointsHistoryLog {
 	/** Date when the change was created (epoch timestamp in seconds) */
 	create_date: number;
 	/** External user ID */
 	user_ext_id: string;
 	/** CRM brand ID */
 	crm_brand_id: number;
-	/** Type of currency: 'gems' or 'diamonds' */
+	/** Type of balance: Points = 0, Gems = 1, Diamonds = 2 */
 	type: UserBalanceType;
 	/** Amount changed (positive or negative) */
 	amount: number;
 	/** Current balance after this change */
 	balance: number;
+	/** Total ever collected (only relevant for points, will be 0 for gems/diamonds) */
+	total_ever: number;
 	/** Source type ID indicating what triggered this change */
 	source_type_id: PointChangeSourceType;
 }
 
-/**
- * TPointsHistoryLog is a union type that can be either a points log or a gems/diamonds log
- */
-export type TPointsHistoryLog = TPointsLog | TGemsDiamondsLog;
-
-
 export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout, PointChangeSourceType, UserBalanceType }
-
-export const isPointsLog = (log: TPointsHistoryLog): log is TPointsLog => {
-	return 'points_collected' in log;
-};
-
-export const isGemsDiamondsLog = (log: TPointsHistoryLog): log is TGemsDiamondsLog => {
-	return 'type' in log && 'amount' in log;
-};
