@@ -23,6 +23,7 @@ export interface UICustomSection {
 	ach_tournament_id?: number;
 	show_raw_data?: boolean;
 	liquid_template?: number;
+	ach_category_ids?: number[];
 }
 
 export const UICustomSectionTransform = (response: GetCustomSectionsResponse): TUICustomSection[] => {
@@ -51,6 +52,12 @@ export const UICustomSectionTransform = (response: GetCustomSectionsResponse): T
 						ach_tournament_id: r.ach_tournament_id,
 						show_raw_data: r.show_raw_data,
 						liquid_template: r.liquid_template,
+					}
+					: {}
+				),
+				...(r.section_type_id === AchCustomSectionType.BADGES
+					? {
+						ach_category_ids: r.ach_category_ids,
 					}
 					: {}
 				),

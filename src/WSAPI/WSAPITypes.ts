@@ -907,6 +907,8 @@ export interface TUICustomSection {
 	show_raw_data?: boolean;
 	/** Liquid template id to be used for Liquid templates */
 	liquid_template?: number;
+	/** List of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method */
+	ach_category_ids?: number[];
 }
 
 export interface TBonus {

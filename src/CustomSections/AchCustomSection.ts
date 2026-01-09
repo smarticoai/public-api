@@ -11,6 +11,7 @@ export enum AchCustomSectionType {
 	LOOTBOX_CALENDAR_DAYS = 11,
 	TREASURE_HUNT = 12,
 	RAFFLE = 13,
+	BADGES = 14,
 }
 
 export enum AchCustomLayoutTheme {
