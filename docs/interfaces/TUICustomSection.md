@@ -119,3 +119,11 @@ ___
 • `Optional` **liquid\_template**: `number`
 
 Liquid template id to be used for Liquid templates
+
+___
+
+### ach\_category\_ids
+
+• `Optional` **ach\_category\_ids**: `number`[]
+
+List of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method
