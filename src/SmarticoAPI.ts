@@ -127,7 +127,7 @@ import { GetRafflesResponse, raffleTransform } from './Raffle/GetRafflesResponse
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { GetPointsHistoryRequest, GetPointsHistoryResponse, PointsHistoryTransform } from './PointsHistory';
 import { InboxCategories } from './Inbox/InboxCategories';
-import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse } from './Raffle';
+import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse } from './Raffle';
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
@@ -1323,6 +1323,17 @@ class SmarticoAPI {
 		);
 
 		return await this.send<RaffleClaimPrizeResponse>(message, ClassId.RAF_CLAIM_PRIZE_RESPONSE);
+
+	}
+
+	public async raffleOptin(user_ext_id: string, props: RaffleOptinRequest): Promise<RaffleOptinResponse> {
+		const message = this.buildMessage<RaffleOptinRequest, RaffleOptinResponse>(
+			user_ext_id,
+			ClassId.RAF_OPTIN_REQUEST,
+			props,
+		);
+
+		return await this.send<RaffleOptinResponse>(message, ClassId.RAF_OPTIN_RESPONSE);
 
 	}
 

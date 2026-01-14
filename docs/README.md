@@ -147,6 +147,7 @@
 - [TRafflePrizeWinner](interfaces/TRafflePrizeWinner.md)
 - [TRaffleDraw](interfaces/TRaffleDraw.md)
 - [TRaffleDrawRun](interfaces/TRaffleDrawRun.md)
+- [TRaffleOptin](interfaces/TRaffleOptin.md)
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
 - [TPointsHistoryLog](interfaces/TPointsHistoryLog.md)
 
