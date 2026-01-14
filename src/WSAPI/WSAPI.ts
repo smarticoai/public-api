@@ -38,7 +38,6 @@ import {
 	TransformedRaffleClaimPrizeResponse,
 	TLevelCurrent,
 	TPointsHistoryLog,
-	TRaffleOptin,
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -57,7 +56,7 @@ import {
 	drawRunTransform,
 	raffleClaimPrizeResponseTransform,
 	RaffleOptinRequest,
-	raffleOptinResponseTransform,
+	RaffleOptinResponse,
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
 import { TGetJackpotEligibleGamesResponse } from '../Jackpots/GetJackpotEligibleGamesResponse';
@@ -1483,7 +1482,7 @@ export class WSAPI {
 	 * });
 	 * ```
 	 */
-	public async raffleOptin(props: RaffleOptinRequest): Promise<TRaffleOptin> {
+	public async raffleOptin(props: RaffleOptinRequest): Promise<RaffleOptinResponse> {
 		if (!props.raffle_id) {
 			throw new Error('raffle_id is required');
 		}
@@ -1494,8 +1493,8 @@ export class WSAPI {
 			throw new Error('raffle_run_id is required');
 		}
 
-		const res = await this.api.raffleOptin(null, props);
+		const result = await this.api.raffleOptin(null, props);
 
-		return raffleOptinResponseTransform(res);
+		return result;
 	}
 }

@@ -1362,7 +1362,7 @@ ___
 
 ### raffleOptin
 
-▸ **raffleOptin**(`props`): `Promise`\<[`TRaffleOptin`](../interfaces/TRaffleOptin.md)\>
+▸ **raffleOptin**(`props`): `Promise`\<[`RaffleOptinResponse`](../interfaces/RaffleOptinResponse.md)\>
 
 Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
 
@@ -1401,4 +1401,4 @@ _smartico.vapi('EN').raffleOptin({
 
 #### Returns
 
-`Promise`\<[`TRaffleOptin`](../interfaces/TRaffleOptin.md)\>
+`Promise`\<[`RaffleOptinResponse`](../interfaces/RaffleOptinResponse.md)\>

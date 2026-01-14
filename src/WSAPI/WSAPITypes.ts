@@ -1297,24 +1297,6 @@ export interface TransformedRaffleClaimPrizeResponse {
 	/** Error message, will be exposed only if ErrorCode is not 0 */
     errorMessage?: string
 }
-
-export interface TRaffleOptin {
-	/** Error code, 0 means no error */
-    errorCode: number
-	/** Error message, will be exposed only if ErrorCode is not 0 */
-    errorMessage?: string
-	/** Class ID that was used to receive the response */
-    cid: number
-	/** Timestamp of the response */
-    ts: number
-	/** UUID of the response */
-    uuid: string
-	/** Payload of the response */
-    payload?: null | Record<string, unknown>
-	/** Duration of the response */
-    duration?: null | number
-}
-
 /**
  * TPointsHistoryLog describes a unified history log entry for points, gems, or diamonds changes.
  * The structure is the same regardless of balance type, making it easy to iterate and display.

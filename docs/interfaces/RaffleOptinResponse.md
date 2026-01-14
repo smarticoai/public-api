@@ -1,18 +1,18 @@
-# Interface: TransformedRaffleClaimPrizeResponse
+# Interface: RaffleOptinResponse
 
 ## Properties
 
-### errorCode
+### errCode
 
-• **errorCode**: `number`
+• **errCode**: `number`
 
 Error code, 0 means no error
 
 ___
 
-### errorMessage
+### errMsg
 
-• `Optional` **errorMessage**: `string`
+• **errMsg**: `string`
 
 Error message, will be exposed only if ErrorCode is not 0
 
