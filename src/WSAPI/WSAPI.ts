@@ -38,6 +38,7 @@ import {
 	TransformedRaffleClaimPrizeResponse,
 	TLevelCurrent,
 	TPointsHistoryLog,
+	TRaffleOptin,
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -55,6 +56,8 @@ import {
 	drawRunHistoryTransform,
 	drawRunTransform,
 	raffleClaimPrizeResponseTransform,
+	RaffleOptinRequest,
+	raffleOptinResponseTransform,
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
 import { TGetJackpotEligibleGamesResponse } from '../Jackpots/GetJackpotEligibleGamesResponse';
@@ -1462,5 +1465,37 @@ export class WSAPI {
 
 		const res = await this.api.claimRafflePrize(null, { won_id: props.won_id });
 		return raffleClaimPrizeResponseTransform(res);
+	}
+
+	/**
+	 * Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
+	 *
+	 *
+	 * **Example**:
+	 * 
+	 * ```javascript
+	 * _smartico.api.raffleOptin({
+	 * 	raffle_id: 295,
+	 * 	draw_id: 3444,
+	 * 	raffle_run_id: 232323
+	 * }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 */
+	public async raffleOptin(props: RaffleOptinRequest): Promise<TRaffleOptin> {
+		if (!props.raffle_id) {
+			throw new Error('raffle_id is required');
+		}
+		if (!props.draw_id) {
+			throw new Error('draw_id is required');
+		}
+		if (!props.raffle_run_id) {
+			throw new Error('raffle_run_id is required');
+		}
+
+		const res = await this.api.raffleOptin(null, props);
+
+		return raffleOptinResponseTransform(res);
 	}
 }
