@@ -1020,6 +1020,14 @@ export interface TRaffle {
 	 */
 	current_tickets_count: number;
 	/**
+	 * If true, the user has opted-in to the raffle.
+	 */
+	user_opted_in: boolean;
+	/**
+	 * If true, the user needs to opt-in to the raffle before they can participate.
+	 */
+	requires_optin: boolean;
+	/**
 	 * List of draws that are available for this raffle.
 	 * For example, if the raffle is containg one hourly draw, one daily draw and one draw on fixed date like 01/01/2022,
 	 * Then the list will always return 3 draws, no matter if the draws are already executed or they are in the future.

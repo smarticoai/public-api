@@ -15,6 +15,7 @@ export * from './Tournaments';
 export * from './Level';
 export * from './Quiz';
 export * from './Jackpots';
+export * from './Raffle';
 
 export * from './OCache';
 export * from './Bonuses';

@@ -101,6 +101,8 @@ export const raffleTransform = (items: Raffle[]): TRaffle[] => {
 			end_date: item.end_date_ts,
 			max_tickets_count: item.max_tickets_count,
 			current_tickets_count: item.current_tickets_count,
+			user_opted_in: item.user_opted_in,
+			requires_optin: item.requires_optin,
 			draws: drawTransform(item.draws),
 		};
 	});
