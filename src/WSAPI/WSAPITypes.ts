@@ -171,7 +171,7 @@ export interface TMiniGameTemplate {
 
 	/** When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets */
 	expose_game_stat_on_api?: boolean;
-	
+
 	/** Time zone to ensure each day aligns with your local midnight. */
 	relative_period_timezone?: number;
 	/** Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp) */
@@ -186,7 +186,7 @@ export interface TMiniGameTemplate {
 	/** The UI definition of the mini-game */
 	saw_template_ui_definition: SAWTemplateUI;
 	/** When enabled the prize history icon is visible on a certain template */
-	show_prize_history?:boolean;
+	show_prize_history?: boolean;
 	/** The maximum number of attempts that user can do during period of time */
 	max_number_of_attempts?: number;
 	/** The period of time in milliseconds during which the user can do the maximum number of attempts */
@@ -495,10 +495,10 @@ export interface TStoreItem {
 	/** The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
 	ribbon: TRibbon;
 	/** 
-     *  The message that should be shown to the user if he is not eligible to buy it. this message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item' and can be used in case can_buy property is false.
-        The message is translated to the user language.
-        **Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
-    */
+	 *  The message that should be shown to the user if he is not eligible to buy it. this message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item' and can be used in case can_buy property is false.
+		The message is translated to the user language.
+		**Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
+	*/
 	limit_message: string;
 	/** The message that should be shown to the user if they are not eligible to buy it because of purchase limitation. This message can be used to explain the reason why user cannot buy the item, e.g. 'Item is no more available today. Come back Friday'.
 		The message is translated to the user language.
@@ -590,7 +590,7 @@ export interface TMissionOrBadge {
 
 	/** Holds time from which mission will become available, for the missions that are targeted to be available from specific date/time */
 	active_from_ts: number;
-	
+
 	/** Holds time till mission will become unavailable, for the missions that are targeted to be available from specific date/time */
 	active_till_ts: number;
 
@@ -931,18 +931,18 @@ export interface TBonus {
 }
 
 export enum BonusStatus {
-    /** The bonus is newly created (shouldn't be shown to the client) */
-    New = 1, 
-    /** The bonus is issued and available for redemption but has not been redeemed yet */
-    COUPON_ISSUED = 2,
-    /** The bonus has been successfully redeemed */
-    REDEEMED = 3,
-    /** The bonus is still valid, but a previous redemption attempt failed */
-    REDEEM_FAILED = 4, 
-    /** Failed to issue the bonus (shouldn't be shown to the client) */
-    COUPON_ISSUE_FAILED = 5, 
-    /** The bonus was issued but has expired and can no longer be redeemed (shouldn't be shown to the client) */
-    EXPIRED = 6, 
+	/** The bonus is newly created (shouldn't be shown to the client) */
+	New = 1,
+	/** The bonus is issued and available for redemption but has not been redeemed yet */
+	COUPON_ISSUED = 2,
+	/** The bonus has been successfully redeemed */
+	REDEEMED = 3,
+	/** The bonus is still valid, but a previous redemption attempt failed */
+	REDEEM_FAILED = 4,
+	/** Failed to issue the bonus (shouldn't be shown to the client) */
+	COUPON_ISSUE_FAILED = 5,
+	/** The bonus was issued but has expired and can no longer be redeemed (shouldn't be shown to the client) */
+	EXPIRED = 6,
 }
 export interface BonusTemplateMetaMap {
 	/** Description of the bonus template*/
@@ -1245,14 +1245,14 @@ export interface TRaffleDraw {
 
 export interface TRaffleDrawRun {
 	/**
-     * Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
-     * (internal name: schedule_id)
-     */
+	 * Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily
+	 * (internal name: schedule_id)
+	 */
 	id: number;
-	 /**
-     * Field indicates the ID of the latest instance/run of draw
-     */
-	run_id:number;
+	/**
+	* Field indicates the ID of the latest instance/run of draw
+	*/
+	run_id: number;
 	/** Name of the draw, e.g. 'Daily draw' */
 	name: string;
 	/** Description of the draw */
@@ -1272,30 +1272,30 @@ export interface TRaffleDrawRun {
 	/** Date/time of the draw execution */
 	execution_ts: number;
 	/** Actual Date/time of the draw execution */
-    actual_execution_ts: number;
-	  /**
-     *  Date/time starting from which the tickets will participate in the upcoming draw
-     *  This value need to be taken into account with next_execute_ts field value, for example
-     *  Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
-     *  (internally this value is calculated as next_execute_ts - ticket_start_date)
-     */
-	ticket_start_ts: number;
-    /**
-     * Shows if user has won a prize in a current run
-     */
-    is_winner: boolean;
+	actual_execution_ts: number;
 	/**
-     * Shows if user has unclaimed prize
-     */
-    has_unclaimed_prize: boolean;
+   *  Date/time starting from which the tickets will participate in the upcoming draw
+   *  This value need to be taken into account with next_execute_ts field value, for example
+   *  Next draw is at 10:00, ticket_start_date is 9:00, so all tickets that are collected after 9:00 will participate in the draw at 10:00
+   *  (internally this value is calculated as next_execute_ts - ticket_start_date)
+   */
+	ticket_start_ts: number;
+	/**
+	 * Shows if user has won a prize in a current run
+	 */
+	is_winner: boolean;
+	/**
+	 * Shows if user has unclaimed prize
+	 */
+	has_unclaimed_prize: boolean;
 
 }
 
 export interface TransformedRaffleClaimPrizeResponse {
 	/** Error code, 0 means no error */
-    errorCode: number
+	errorCode: number
 	/** Error message, will be exposed only if ErrorCode is not 0 */
-    errorMessage?: string
+	errorMessage?: string
 }
 /**
  * TPointsHistoryLog describes a unified history log entry for points, gems, or diamonds changes.
@@ -1318,6 +1318,13 @@ export interface TPointsHistoryLog {
 	total_ever?: number;
 	/** Source type ID indicating what triggered this change */
 	source_type_id: PointChangeSourceType;
+}
+
+export interface TRaffleOptinResponse {
+	/** Error code that represents outcome of the opt-in attempt. Opt-in succeed in case err_code is 0 */
+	err_code: number;
+	/** Optional error message */
+	err_message?: string;
 }
 
 export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout, PointChangeSourceType, UserBalanceType }

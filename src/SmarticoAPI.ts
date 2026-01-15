@@ -1326,7 +1326,7 @@ class SmarticoAPI {
 
 	}
 
-	public async raffleOptin(user_ext_id: string, props: RaffleOptinRequest): Promise<RaffleOptinResponse> {
+	public async raffleOptin(user_ext_id: string, props: { raffle_id: number; draw_id: number; raffle_run_id: number }): Promise<RaffleOptinResponse> {
 		const message = this.buildMessage<RaffleOptinRequest, RaffleOptinResponse>(
 			user_ext_id,
 			ClassId.RAF_OPTIN_REQUEST,

@@ -1,50 +1,57 @@
 # Interface: RaffleOptinResponse
 
+## Hierarchy
+
+- `ProtocolResponse`
+
+  ↳ **`RaffleOptinResponse`**
+
 ## Properties
-
-### errCode
-
-• **errCode**: `number`
-
-Error code, 0 means no error
-
-___
-
-### errMsg
-
-• **errMsg**: `string`
-
-Error message, will be exposed only if ErrorCode is not 0
-
-___
 
 ### cid
 
 • **cid**: `number`
 
-Class ID
+#### Inherited from
+
+ProtocolResponse.cid
+
 ___
 
 ### ts
 
-• **ts**: `number`
+• `Optional` **ts**: `number`
 
-Timestamp 
+#### Inherited from
+
+ProtocolResponse.ts
+
 ___
 
 ### uuid
 
-• **uuid**: `string`
+• `Optional` **uuid**: `string`
 
-UUID of the operation
-___
+#### Inherited from
 
-### payload
-
-• `Optional` **payload**: `null` \| `Record`\<`string`, `unknown`\>
+ProtocolResponse.uuid
 
 ___
 
-### duration
+### errCode
 
-• `Optional` **duration**: `null` \| `number`
+• `Optional` **errCode**: `number`
+
+#### Inherited from
+
+ProtocolResponse.errCode
+
+___
+
+### errMsg
+
+• `Optional` **errMsg**: `string`
+
+#### Inherited from
+
+ProtocolResponse.errMsg

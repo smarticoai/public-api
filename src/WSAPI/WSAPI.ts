@@ -38,6 +38,7 @@ import {
 	TransformedRaffleClaimPrizeResponse,
 	TLevelCurrent,
 	TPointsHistoryLog,
+	TRaffleOptinResponse,
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -138,10 +139,7 @@ export class WSAPI {
 				this.reloadMiniGameTemplate();
 				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
 			});
-			on(ClassId.RAF_CLAIM_PRIZE_RESPONSE, () => {
-				this.updateRaffles();
-				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Raffles);
-			});
+			on(ClassId.RAF_CLAIM_PRIZE_RESPONSE, () => this.updateRaffles());
 			on(ClassId.GET_INBOX_MESSAGES_RESPONSE, (res) => {
 				if (res.unread_count !== undefined && res.unread_count !== null) {
 					this.updateInboxUnreadCount(res.unread_count);
@@ -155,6 +153,7 @@ export class WSAPI {
 					this.notifyPointsHistoryUpdate();
 				}
 			});
+			on(ClassId.RAF_OPTIN_RESPONSE, () => this.updateRaffles());
 		}
 	}
 
@@ -1467,22 +1466,11 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
+	 * Requests an opt-in for the specified raffle. Returns the err_code.
 	 *
-	 *
-	 * **Example**:
-	 * 
-	 * ```javascript
-	 * _smartico.api.raffleOptin({
-	 * 	raffle_id: 295,
-	 * 	draw_id: 3444,
-	 * 	raffle_run_id: 232323
-	 * }).then((result) => {
-	 *      console.log(result);
-	 * });
-	 * ```
+	 * **Visitor mode: not supported**
 	 */
-	public async raffleOptin(props: RaffleOptinRequest): Promise<RaffleOptinResponse> {
+	public async requestRaffleOptin(props: { raffle_id: number; draw_id: number; raffle_run_id: number }): Promise<TRaffleOptinResponse> {
 		if (!props.raffle_id) {
 			throw new Error('raffle_id is required');
 		}
@@ -1493,8 +1481,11 @@ export class WSAPI {
 			throw new Error('raffle_run_id is required');
 		}
 
-		const result = await this.api.raffleOptin(null, props);
+		const r = await this.api.raffleOptin(null, props);
 
-		return result;
+		return {
+			err_code: r.errCode,
+			err_message: r.errMsg,
+		};;
 	}
 }

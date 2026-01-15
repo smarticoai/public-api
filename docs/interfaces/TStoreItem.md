@@ -65,8 +65,8 @@ ___
 • **limit\_message**: `string`
 
 The message that should be shown to the user if he is not eligible to buy it. this message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item' and can be used in case can_buy property is false.
-   The message is translated to the user language.
-   **Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
+The message is translated to the user language.
+*Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
 
 ___
 

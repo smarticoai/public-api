@@ -100,11 +100,11 @@
 - [Raffle](interfaces/Raffle.md)
 - [RaffleClaimPrizeRequest](interfaces/RaffleClaimPrizeRequest.md)
 - [RaffleClaimPrizeResponse](interfaces/RaffleClaimPrizeResponse.md)
-- [RaffleOptinRequest](interfaces/RaffleOptinRequest.md)
-- [RaffleOptinResponse](interfaces/RaffleOptinResponse.md)
 - [RaffleDraw](interfaces/RaffleDraw.md)
 - [RaffleDrawPublicMeta](interfaces/RaffleDrawPublicMeta.md)
 - [RaffleDrawRun](interfaces/RaffleDrawRun.md)
+- [RaffleOptinRequest](interfaces/RaffleOptinRequest.md)
+- [RaffleOptinResponse](interfaces/RaffleOptinResponse.md)
 - [RafflePrizePublicMeta](interfaces/RafflePrizePublicMeta.md)
 - [RafflePrize](interfaces/RafflePrize.md)
 - [RafflePrizeWinner](interfaces/RafflePrizeWinner.md)
@@ -151,6 +151,7 @@
 - [TRaffleDrawRun](interfaces/TRaffleDrawRun.md)
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
 - [TPointsHistoryLog](interfaces/TPointsHistoryLog.md)
+- [TRaffleOptinResponse](interfaces/TRaffleOptinResponse.md)
 
 ## General API
 

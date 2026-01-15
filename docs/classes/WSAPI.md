@@ -1360,35 +1360,13 @@ _smartico.vapi('EN').claimRafflePrize({ won_id: 251 }).then((result) => {
 
 ___
 
-### raffleOptin
+### requestRaffleOptin
 
-▸ **raffleOptin**(`props`): `Promise`\<[`RaffleOptinResponse`](../interfaces/RaffleOptinResponse.md)\>
+▸ **requestRaffleOptin**(`props`): `Promise`\<[`TRaffleOptinResponse`](../interfaces/TRaffleOptinResponse.md)\>
 
-Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
+Requests an opt-in for the specified raffle. Returns the err_code.
 
-**Example**:
-
-```javascript
-_smartico.api.raffleOptin({ 
-     raffle_id: 295,
-     draw_id: 3444,
-     raffle_run_id: 232323
- }).then((result) => {
-     console.log(result);
-});
-```
-
-**Example in the Visitor mode**:
-
-```javascript
-_smartico.vapi('EN').raffleOptin({ 
-     raffle_id: 295,
-     draw_id: 3444,
-     raffle_run_id: 232323
- }).then((result) => {
-     console.log(result);
-});
-```
+**Visitor mode: not supported**
 
 #### Parameters
 
@@ -1401,4 +1379,4 @@ _smartico.vapi('EN').raffleOptin({
 
 #### Returns
 
-`Promise`\<[`RaffleOptinResponse`](../interfaces/RaffleOptinResponse.md)\>
+`Promise`\<[`TRaffleOptinResponse`](../interfaces/TRaffleOptinResponse.md)\>
