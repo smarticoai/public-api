@@ -101,6 +101,14 @@ interface RaffleDraw {
      * List of last 5 tickets are collected by current user for this instance of draw.
      */
     my_last_tickets: RaffleTicket[];
+	/**
+	 * If true, the user has opted-in to the raffle.
+	 */
+	user_opted_in: boolean;
+	/**
+	 * If true, the user needs to opt-in to the raffle before they can participate.
+	 */
+	requires_optin: boolean;
 }
 
 export { RaffleDraw };
