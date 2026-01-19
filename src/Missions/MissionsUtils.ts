@@ -198,7 +198,7 @@ export class MissionUtils {
                         suggestedGames = value.map((v: string) => {
                             const cleaned = v.replace(/_/g, ' ').toLowerCase();
                             return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
-                        }).join(' ,');
+                        }).join(', ');
                     }
                 }
 
