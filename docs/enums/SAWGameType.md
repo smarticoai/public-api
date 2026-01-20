@@ -65,3 +65,9 @@ ___
 ### Plinko
 
 • **Plinko** = ``11``
+
+___
+
+### CoinFlip
+
+• **CoinFlip** = ``12``

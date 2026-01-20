@@ -71,3 +71,11 @@ ___
 • **mobile\_spec\_link**: `string`
 
 The link to the mobile game
+
+___
+
+### priority
+
+• **priority**: `number`
+
+The priority of the game

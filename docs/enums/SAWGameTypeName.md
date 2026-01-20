@@ -68,6 +68,12 @@ ___
 
 ___
 
+### CoinFlip
+
+• **CoinFlip** = ``"coin_flip"``
+
+___
+
 ### Unknown
 
 • **Unknown** = ``"unknown"``
