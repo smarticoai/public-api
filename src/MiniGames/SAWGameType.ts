@@ -10,6 +10,7 @@ export enum SAWGameType {
 	TreasureHunt = 9,
 	Voyager = 10,
 	Plinko = 11,
+	СoinFlip = 12,
 }
 
 export enum SAWGameTypeName {
@@ -24,6 +25,7 @@ export enum SAWGameTypeName {
 	TreasureHunt = 'treasure_hunt',
 	Voyager = 'voyager',
 	Plinko = 'plinko',
+	СoinFlip = 'coin_flip',
 	Unknown = 'unknown',
 }
 
@@ -42,6 +44,7 @@ export const SAWGameTypeNamed = (type: SAWGameType): SAWGameTypeName => {
 			[SAWGameType.TreasureHunt]: SAWGameTypeName.TreasureHunt,
 			[SAWGameType.Voyager]: SAWGameTypeName.Voyager,
 			[SAWGameType.Plinko]: SAWGameTypeName.Plinko,
+			[SAWGameType.СoinFlip]: SAWGameTypeName.СoinFlip,
 		}[type] || SAWGameTypeName.Unknown
 	);
 };
