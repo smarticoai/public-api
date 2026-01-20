@@ -11,6 +11,7 @@ interface AchRelatedGame {
 		game_categories?: string[];
 		game_provider?: string;
 		mobile_spec_link?: string;
+		priority?: number;
 	};
 }
 

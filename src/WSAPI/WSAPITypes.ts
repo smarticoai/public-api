@@ -708,6 +708,8 @@ export interface AchRelatedGame {
 		game_provider: string;
 		/** The URL to the mobile game */
 		mobile_spec_link: string;
+		/** The priority of the game */
+		priority?: number;
 	};
 }
 

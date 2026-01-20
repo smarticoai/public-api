@@ -128,7 +128,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 							stage_image: t.task_public_meta.stage_image,
 						})
 					}),
-				related_games: (r.related_games || []).map((g) => ({
+				related_games: (r.related_games || []).map((g, i) => ({
 					ext_game_id: g.ext_game_id,
 					game_public_meta: {
 						name: g.game_public_meta.name,
@@ -137,7 +137,8 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 						enabled: g.game_public_meta.enabled,
 						game_categories: g.game_public_meta.game_categories,
 						game_provider: g.game_public_meta.game_provider,
-						mobile_spec_link: g.game_public_meta.mobile_spec_link
+						mobile_spec_link: g.game_public_meta.mobile_spec_link,
+						priority: i + 1,
 					},
 				})),
 				category_ids: r.ach_categories ?? [],
