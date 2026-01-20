@@ -179,3 +179,19 @@ ___
 ### my\_last\_tickets
 
 • **my\_last\_tickets**: [`TRaffleTicket`](TRaffleTicket.md)[]
+
+___
+
+### user\_opted\_in
+
+• **user\_opted\_in**: `boolean`
+
+If true, the user has opted-in to the raffle.
+
+___
+
+### requires\_optin
+
+• **requires\_optin**: `boolean`
+
+If true, the user needs to opt-in to the raffle before they can participate.

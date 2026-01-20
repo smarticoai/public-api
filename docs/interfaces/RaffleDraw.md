@@ -126,3 +126,19 @@ ___
 • **my\_last\_tickets**: [`RaffleTicket`](RaffleTicket.md)[]
 
 List of last 5 tickets are collected by current user for this instance of draw.
+
+___
+
+### user\_opted\_in
+
+• **user\_opted\_in**: `boolean`
+
+If true, the user has opted-in to the raffle.
+
+___
+
+### requires\_optin
+
+• **requires\_optin**: `boolean`
+
+If true, the user needs to opt-in to the raffle before they can participate.
