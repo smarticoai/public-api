@@ -1346,8 +1346,8 @@ class SmarticoAPI {
 			user_ext_id,
 			ClassId.GET_POINT_HISTORY_REQUEST,
 			{
-				startTimeSeconds,
-				endTimeSeconds,
+				startTimeSeconds: Math.floor(startTimeSeconds),
+				endTimeSeconds: Math.floor(endTimeSeconds),
 			},
 		);
 
