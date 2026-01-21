@@ -228,6 +228,10 @@ export interface TUserProfile {
 	public_username?: string;
 	/** THe number of unread inbox messages */
 	core_inbox_unread_count?: number;
+	/** The recommended deposit amount for the user */
+	core_recommended_deposit_amount?: number;
+	/** The recommended casino bet amount for the user */
+	core_recommended_casino_bet_amount?: number;
 }
 
 /**

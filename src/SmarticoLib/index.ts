@@ -116,6 +116,8 @@ export interface PublicProperties {
 	core_inbox_unread_count?: number;
 	is_visitor?: boolean;
 	core_registration_date?: number;
+	core_recommended_deposit_amount?: number;
+	core_recommended_casino_bet_amount?: number;
 }
 declare enum ClassId {
 	PING = 1,
@@ -837,7 +839,12 @@ export interface TUserProfile {
 	public_username?: string;
 	/** THe number of unread inbox messages */
 	core_inbox_unread_count?: number;
+	/** The recommended deposit amount for the user */
+	core_recommended_deposit_amount?: number;
+	/** The recommended casino bet amount for the user */
+	core_recommended_casino_bet_amount?: number;
 }
+
 /**
  * TLevel describes the information of each level defined in the system
  * There is no order of the levels, but it can be calculated using required_points property

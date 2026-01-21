@@ -95,3 +95,19 @@ ___
 • `Optional` **core\_inbox\_unread\_count**: `number`
 
 THe number of unread inbox messages
+
+___
+
+### core\_recommended\_deposit\_amount
+
+• `Optional` **core\_recommended\_deposit\_amount**: `number`
+
+The recommended deposit amount for the user
+
+___
+
+### core\_recommended\_casino\_bet\_amount
+
+• `Optional` **core\_recommended\_casino\_bet\_amount**: `number`
+
+The recommended casino bet amount for the user
