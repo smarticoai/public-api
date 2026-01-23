@@ -248,9 +248,14 @@ export class MissionUtils {
         return task;
     }
 
-    public static determineBadgeState = (badge: UserAchievement): BadgesTimeLimitStates => {
+    public static determineBadgeState = (badge: UserAchievement): BadgesTimeLimitStates | null => {
         const now = Date.now();
-        const { active_from_ts, active_till_ts, progress } = badge;
+        const { active_from_ts, active_till_ts, progress, isCompleted, complete_date_ts } = badge;
+
+        // If badge is completed before active till date, return null
+        if (isCompleted && (!active_till_ts || complete_date_ts < active_till_ts)) {
+            return null;
+        }
       
         // 1. BEFORE START
         if (active_from_ts > now) {
