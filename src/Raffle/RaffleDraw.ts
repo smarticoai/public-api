@@ -109,6 +109,21 @@ interface RaffleDraw {
 	 * If true, the user needs to opt-in to the raffle before they can participate.
 	 */
 	requires_optin: boolean;
+
+    /**
+     * The number of winners to return
+     */
+	winners_limit?: number;
+
+    /**
+     * The offset of the winners to return
+     */
+	winners_offset?: number;
+
+    /**
+     * The total number of winners
+     */
+	winners_total?: number;
 }
 
 export { RaffleDraw };

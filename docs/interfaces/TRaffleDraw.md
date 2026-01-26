@@ -195,3 +195,27 @@ ___
 • **requires\_optin**: `boolean`
 
 If true, the user needs to opt-in to the raffle before they can participate.
+
+___
+
+### winners\_limit
+
+• `Optional` **winners\_limit**: `number`
+
+The number of winners to return
+
+___
+
+### winners\_offset
+
+• `Optional` **winners\_offset**: `number`
+
+The offset of the winners to return
+
+___
+
+### winners\_total
+
+• `Optional` **winners\_total**: `number`
+
+The total number of winners

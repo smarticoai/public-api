@@ -84,6 +84,9 @@ export const drawTransform = (items: RaffleDraw[]): TRaffleDraw[] => {
 			my_last_tickets: ticketsTransform(item.my_last_tickets),
 			user_opted_in: Boolean(item.user_opted_in),
 			requires_optin: Boolean(item.requires_optin),
+			winners_limit: item.winners_limit,
+			winners_offset: item.winners_offset,
+			winners_total: item.winners_total,
 		};
 	});
 };

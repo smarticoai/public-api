@@ -33,5 +33,8 @@ export const drawRunTransform = (res: GetDrawRunResponse): TRaffleDraw => {
 		my_last_tickets: ticketsTransform(res.draw.my_last_tickets),
 		user_opted_in: Boolean(res.draw.user_opted_in),
 		requires_optin: Boolean(res.draw.requires_optin),
+		winners_limit: res.draw.winners_limit,
+		winners_offset: res.draw.winners_offset,
+		winners_total: res.draw.winners_total,
 	} 	
 };

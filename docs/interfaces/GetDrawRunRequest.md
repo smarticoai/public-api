@@ -47,3 +47,15 @@ ___
 ### run\_id
 
 • **run\_id**: `number`
+
+___
+
+### winners\_limit
+
+• `Optional` **winners\_limit**: `number`
+
+___
+
+### winners\_offset
+
+• `Optional` **winners\_offset**: `number`
