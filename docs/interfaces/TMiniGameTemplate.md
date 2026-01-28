@@ -36,6 +36,14 @@ URL of the icon of the mini-game template
 
 ___
 
+### visibile\_when\_can\_spin
+
+• `Optional` **visibile\_when\_can\_spin**: `boolean`
+
+Indicates if the mini-game is visible when the user have attempts/points/gems/diamonds to play
+
+___
+
 ### saw\_game\_type
 
 • **saw\_game\_type**: [`SAWGameTypeName`](../enums/SAWGameTypeName.md)

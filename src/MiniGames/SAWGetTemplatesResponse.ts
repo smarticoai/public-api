@@ -22,6 +22,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			: r.saw_skin_ui_definition?.skin_folder
 				? `${r.saw_skin_ui_definition.skin_folder}/ico.png`
 				: `https://d312ucx3huj7iy.cloudfront.net/gf/images/saw/${r.saw_skin_key}/ico.png`,
+			visibile_when_can_spin: r.visibile_when_can_spin,
 			over_limit_message: r.saw_template_ui_definition.over_limit_message,
 			no_attempts_message: r.saw_template_ui_definition.no_attempts_message,
 			jackpot_symbol: r.saw_template_ui_definition.jackpot_symbol,

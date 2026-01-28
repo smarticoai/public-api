@@ -38,7 +38,7 @@ ___
 
 ### type
 
-• **type**: ``"bonus"`` \| ``"tangible"`` \| ``"minigamespin"`` \| ``"changelevel"`` \| ``"prizedrop"`` \| ``"raffleticket"`` \| ``"unknown"``
+• **type**: ``"unknown"`` \| ``"bonus"`` \| ``"tangible"`` \| ``"minigamespin"`` \| ``"changelevel"`` \| ``"prizedrop"`` \| ``"raffleticket"``
 
 Type of the store item. Can be 'bonus' or 'tangible' or different others.
 

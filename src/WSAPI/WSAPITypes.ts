@@ -124,6 +124,9 @@ export interface TMiniGameTemplate {
 	/** URL of the icon of the mini-game template */
 	thumbnail: string;
 
+	/** Indicates if the mini-game is visible when the user have attempts/points/gems/diamonds to play */
+	visibile_when_can_spin?: boolean;
+
 	/** The type of the game, e.g. Spin the Wheel, Gift Box, Scratch card, MatchX etc */
 	saw_game_type: SAWGameTypeName;
 	/** How the user is charged for each game attempt e.g. Free, Points or Spin attempts */
