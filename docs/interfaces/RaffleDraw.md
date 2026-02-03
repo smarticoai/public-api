@@ -145,6 +145,14 @@ If true, the user needs to opt-in to the raffle before they can participate.
 
 ___
 
+### is\_active
+
+• **is\_active**: `boolean`
+
+If true, the draw is active and can be participated in.
+
+___
+
 ### winners\_limit
 
 • `Optional` **winners\_limit**: `number`

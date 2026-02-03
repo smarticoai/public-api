@@ -1259,6 +1259,10 @@ export interface TRaffleDraw {
 	 */
 	requires_optin: boolean;
 	/**
+	 * If true, the draw is active and can be participated in.
+	 */
+	is_active: boolean;
+	/**
 	 * The number of winners to return
 	 */
 	winners_limit?: number;
