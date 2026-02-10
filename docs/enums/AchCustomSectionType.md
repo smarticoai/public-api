@@ -62,9 +62,9 @@ ___
 
 ___
 
-### TREASURE\_HUNT
+### STORE
 
-• **TREASURE\_HUNT** = ``12``
+• **STORE** = ``12``
 
 ___
 

@@ -38,7 +38,7 @@ ___
 
 ### type
 
-• **type**: ``"bonus"`` \| ``"tangible"`` \| ``"minigamespin"`` \| ``"changelevel"`` \| ``"prizedrop"`` \| ``"raffleticket"`` \| ``"unknown"``
+• **type**: ``"unknown"`` \| ``"bonus"`` \| ``"tangible"`` \| ``"minigamespin"`` \| ``"changelevel"`` \| ``"prizedrop"`` \| ``"raffleticket"``
 
 Type of the store item. Can be 'bonus' or 'tangible' or different others.
 
@@ -214,3 +214,27 @@ ___
 • `Optional` **custom\_ribbon\_image**: `string`
 
 The custom ribbon image of the discounted price.
+
+___
+
+### custom\_section\_id
+
+• `Optional` **custom\_section\_id**: `number`
+
+The ID of the custom section where the store item is assigned
+
+___
+
+### only\_in\_custom\_section
+
+• `Optional` **only\_in\_custom\_section**: `boolean`
+
+The indicator if the store item is visible only in the custom section and should be hidden from the main overview of store items
+
+___
+
+### custom\_section\_type\_id
+
+• `Optional` **custom\_section\_type\_id**: `number`
+
+ID of specific Custom Section type

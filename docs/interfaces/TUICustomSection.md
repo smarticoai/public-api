@@ -127,3 +127,11 @@ ___
 • `Optional` **ach\_category\_ids**: `number`[]
 
 List of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method
+
+___
+
+### shop\_category\_ids
+
+• `Optional` **shop\_category\_ids**: `number`[]
+
+List of IDs of the categories where the store item is assigned, information about categories can be retrieved with getShopCategories method
