@@ -24,6 +24,7 @@ export interface UICustomSection {
 	show_raw_data?: boolean;
 	liquid_template?: number;
 	ach_category_ids?: number[];
+	shop_category_ids?: number[];
 }
 
 export const UICustomSectionTransform = (response: GetCustomSectionsResponse): TUICustomSection[] => {
@@ -58,6 +59,12 @@ export const UICustomSectionTransform = (response: GetCustomSectionsResponse): T
 				...(r.section_type_id === AchCustomSectionType.BADGES
 					? {
 						ach_category_ids: r.ach_category_ids,
+					}
+					: {}
+				),
+				...(r.section_type_id === AchCustomSectionType.STORE
+					? {
+						shop_category_ids: r.shop_category_ids,
 					}
 					: {}
 				),

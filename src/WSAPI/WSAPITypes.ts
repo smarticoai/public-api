@@ -548,6 +548,12 @@ export interface TStoreItem {
 	discount_price_ribbon?: string;
 	/** The custom ribbon image of the discounted price. */
 	custom_ribbon_image?: string;
+	/** The ID of the custom section where the store item is assigned */
+	custom_section_id?: number;
+	/** The indicator if the store item is visible only in the custom section and should be hidden from the main overview of store items */
+	only_in_custom_section?: boolean;
+	/** ID of specific Custom Section type */
+	custom_section_type_id?: number;
 }
 
 /**
@@ -918,6 +924,8 @@ export interface TUICustomSection {
 	liquid_template?: number;
 	/** List of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method */
 	ach_category_ids?: number[];
+	/** List of IDs of the categories where the store item is assigned, information about categories can be retrieved with getShopCategories method */
+	shop_category_ids?: number[];
 }
 
 export interface TBonus {

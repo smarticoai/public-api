@@ -19,4 +19,7 @@ export interface StoreItemPublicMeta {
 	discount_prize_ribbon?: string;
 	custom_ribbon_image?: string;
 	purchase_limit_message?: string;
+	custom_section_id?: number;
+	only_in_custom_section?: boolean;
+	custom_section_type_id?: number;
 }

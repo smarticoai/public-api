@@ -53,6 +53,9 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				discounted_price: r.itemPublicMeta.discount_prize,
 				discount_price_ribbon: r.itemPublicMeta.discount_prize_ribbon,
 				custom_ribbon_image: r.itemPublicMeta.custom_ribbon_image,
+				custom_section_id: r.itemPublicMeta.custom_section_id,
+				only_in_custom_section: r.itemPublicMeta.only_in_custom_section,
+				custom_section_type_id: r.itemPublicMeta.custom_section_type_id,
 			};
 			return x;
 		});
