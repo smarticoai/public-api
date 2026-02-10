@@ -21,4 +21,5 @@ export interface GemsDiamondsLog {
 	source_type_id: PointChangeSourceType;
 }
 
-export type PointsHistoryLog = PointsLog | GemsDiamondsLog;
+export type ActivityLogEntry = PointsLog | GemsDiamondsLog;
+

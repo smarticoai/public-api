@@ -1,19 +1,19 @@
 import { ProtocolResponse } from '../Base/ProtocolResponse';
-import { PointsHistoryLog } from './PointsHistoryLog';
-import { TPointsHistoryLog } from '../WSAPI/WSAPITypes';
+import { ActivityLogEntry } from './ActivityLogEntry';
+import { TActivityLog } from '../WSAPI/WSAPITypes';
 import { UserBalanceType } from './UserBalanceType';
 
-export interface GetPointsHistoryResponse extends ProtocolResponse {
-	logHistory: PointsHistoryLog[];
+export interface GetActivityLogResponse extends ProtocolResponse {
+	logHistory: ActivityLogEntry[];
 }
 
-export const PointsHistoryTransform = (items: PointsHistoryLog[]): TPointsHistoryLog[] => {
+export const ActivityLogTransform = (items: ActivityLogEntry[]): TActivityLog[] => {
 	if (!items) {
 		return [];
 	}
 
-	return items.map((item: any): TPointsHistoryLog => {
-		const itemTransformed: Partial<TPointsHistoryLog> = {
+	return items.map((item: any): TActivityLog => {
+		const itemTransformed: Partial<TActivityLog> = {
 			create_date: item.create_date,
 			user_ext_id: item.user_ext_id,
 			crm_brand_id: item.crm_brand_id,
@@ -33,7 +33,8 @@ export const PointsHistoryTransform = (items: PointsHistoryLog[]): TPointsHistor
 			itemTransformed.total_ever = item.user_points_ever;
 		}
 
-		return itemTransformed as TPointsHistoryLog;
+		return itemTransformed as TActivityLog;
 	});
 };
+
 

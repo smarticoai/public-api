@@ -28,7 +28,7 @@ export enum AnalyticsScreenNameId {
 	LootboxCalendarDays = 21,
 	TreasureHunt = 22,
 	LiquidSection = 23,
-	PointsHistory = 24,
+	ActivityLog = 24,
 
 	ModalMission = 31,
 	ModalLevel = 32,

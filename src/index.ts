@@ -20,4 +20,4 @@ export * from './Raffle';
 export * from './OCache';
 export * from './Bonuses';
 export * from './CustomSections';
-export * from './PointsHistory';
+export * from './ActivityLog';

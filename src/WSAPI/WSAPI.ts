@@ -37,7 +37,7 @@ import {
 	TRaffleDrawRun,
 	TransformedRaffleClaimPrizeResponse,
 	TLevelCurrent,
-	TPointsHistoryLog,
+	TActivityLog,
 	TRaffleOptinResponse,
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -96,7 +96,7 @@ enum onUpdateContextKey {
 	JackpotEligibleGames = 'jackpotEligibleGames',
 	CurrentLevel = 'currentLevel',
 	InboxUnreadCount = 'inboxUnreadCount',
-	PointsHistory = 'pointsHistory',
+	ActivityLog = 'activityLog',
 }
 
 /** @group General API */
@@ -150,7 +150,7 @@ export class WSAPI {
 					this.updateInboxUnreadCount(data.props.core_inbox_unread_count);
 				}
 				if (data?.props?.ach_points_balance !== undefined || data?.props?.ach_gems_balance !== undefined || data?.props?.ach_diamonds_balance !== undefined) {
-					this.notifyPointsHistoryUpdate();
+					this.notifyActivityLogUpdate();
 				}
 			});
 			on(ClassId.RAF_OPTIN_RESPONSE, () => this.updateRaffles());
@@ -1013,18 +1013,18 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns the points history for a user within a specified time range.
+	 * Returns the activity log for a user within a specified time range.
 	 * The response includes both points changes and gems/diamonds changes.
 	 * Each log entry contains information about the change amount, balance, and source.
 	 * The returned list is cached for 30 seconds. 
-	 * You can pass the onUpdate callback as a parameter, it will be called every time the points history is updated and will provide the updated list of points history logs for the last 10 minutes.
+	 * You can pass the onUpdate callback as a parameter, it will be called every time the activity log is updated and will provide the updated list of activity logs for the last 10 minutes.
 	 *
 	 * **Example**:
 	 * ```
 	 * const startTime = Math.floor(Date.now() / 1000) - 86400 * 30; // 30 days ago
 	 * const endTime = Math.floor(Date.now() / 1000); // now
 	 *
-	 * _smartico.api.getPointsHistory({
+	 * _smartico.api.getActivityLog({
 	 *      startTimeSeconds: startTime,
 	 *      endTimeSeconds: endTime,
 	 *      onUpdate: (data) => console.log('Updated:', data)
@@ -1037,26 +1037,26 @@ export class WSAPI {
 	 *
 	 * @param params.startTimeSeconds - Start time in seconds (epoch timestamp)
 	 * @param params.endTimeSeconds - End time in seconds (epoch timestamp)
-	 * @param params.onUpdate - Optional callback function that will be called when the points history is updated
+	 * @param params.onUpdate - Optional callback function that will be called when the activity log is updated
 	 */
-	public async getPointsHistory({
+	public async getActivityLog({
 		startTimeSeconds,
 		endTimeSeconds,
 		onUpdate,
 	}: {
 		startTimeSeconds: number;
 		endTimeSeconds: number;
-		onUpdate?: (data: TPointsHistoryLog[]) => void;
-	}): Promise<TPointsHistoryLog[]> {
+		onUpdate?: (data: TActivityLog[]) => void;
+	}): Promise<TActivityLog[]> {
 
 		if (onUpdate) {
-			this.onUpdateCallback.set(onUpdateContextKey.PointsHistory, onUpdate);
+			this.onUpdateCallback.set(onUpdateContextKey.ActivityLog, onUpdate);
 		}
 
 		return await OCache.use(
-			onUpdateContextKey.PointsHistory,
+			onUpdateContextKey.ActivityLog,
 			ECacheContext.WSAPI,
-			() => this.api.getPointsHistoryT(null, startTimeSeconds, endTimeSeconds),
+			() => this.api.getActivityLogT(null, startTimeSeconds, endTimeSeconds),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -1117,12 +1117,12 @@ export class WSAPI {
 		this.updateEntity(onUpdateContextKey.Raffles, payload);
 	}
 
-	private async notifyPointsHistoryUpdate() {
+	private async notifyActivityLogUpdate() {
 		const startSeconds = Date.now() / 1000 - 600;
 		const endSeconds = Date.now() / 1000;
-		const payload = await this.api.getPointsHistoryT(null, startSeconds , endSeconds);
+		const payload = await this.api.getActivityLogT(null, startSeconds , endSeconds);
 
-		this.updateEntity(onUpdateContextKey.PointsHistory, payload);
+		this.updateEntity(onUpdateContextKey.ActivityLog, payload);
 	}
 
 	private async updateEntity(contextKey: onUpdateContextKey, payload: any) {

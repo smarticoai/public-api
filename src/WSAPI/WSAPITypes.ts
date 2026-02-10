@@ -7,8 +7,8 @@ import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, Ach
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
 import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from '../Raffle';
-import { PointChangeSourceType } from '../PointsHistory/PointChangeSourceType';
-import { UserBalanceType } from '../PointsHistory/UserBalanceType';
+import { PointChangeSourceType } from '../ActivityLog/PointChangeSourceType';
+import { UserBalanceType } from '../ActivityLog/UserBalanceType';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
@@ -1339,10 +1339,10 @@ export interface TransformedRaffleClaimPrizeResponse {
 	errorMessage?: string
 }
 /**
- * TPointsHistoryLog describes a unified history log entry for points, gems, or diamonds changes.
+ * TActivityLog describes a unified history log entry for points, gems, or diamonds changes.
  * The structure is the same regardless of balance type, making it easy to iterate and display.
  */
-export interface TPointsHistoryLog {
+export interface TActivityLog {
 	/** Date when the change was created (epoch timestamp in seconds) */
 	create_date: number;
 	/** External user ID */
@@ -1360,6 +1360,7 @@ export interface TPointsHistoryLog {
 	/** Source type ID indicating what triggered this change */
 	source_type_id: PointChangeSourceType;
 }
+
 
 export interface TRaffleOptinResponse {
 	/** Error code that represents outcome of the opt-in attempt. Opt-in succeed in case err_code is 0 */
