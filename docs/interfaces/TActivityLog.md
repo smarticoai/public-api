@@ -1,6 +1,6 @@
-# Interface: TPointsHistoryLog
+# Interface: TActivityLog
 
-TPointsHistoryLog describes a unified history log entry for points, gems, or diamonds changes.
+TActivityLog describes a unified history log entry for points, gems, or diamonds changes.
 The structure is the same regardless of balance type, making it easy to iterate and display.
 
 ## Properties
