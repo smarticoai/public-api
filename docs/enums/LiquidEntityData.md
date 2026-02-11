@@ -59,3 +59,15 @@ ___
 ### Tournament
 
 • **Tournament** = ``10``
+
+___
+
+### Raffles
+
+• **Raffles** = ``11``
+
+___
+
+### SingleRaffle
+
+• **SingleRaffle** = ``12``
