@@ -21,6 +21,7 @@ export interface UICustomSection {
 	overview_missions_count?: number;
 	liquid_entity_data?: LiquidEntityData[];
 	ach_tournament_id?: number;
+	raffle_id?: number;
 	show_raw_data?: boolean;
 	liquid_template?: number;
 	ach_category_ids?: number[];
@@ -51,6 +52,7 @@ export const UICustomSectionTransform = (response: GetCustomSectionsResponse): T
 					? {
 						liquid_entity_data: r.liquid_entity_data,
 						ach_tournament_id: r.ach_tournament_id,
+						raffle_id: r.raffle_id,
 						show_raw_data: r.show_raw_data,
 						liquid_template: r.liquid_template,
 					}
