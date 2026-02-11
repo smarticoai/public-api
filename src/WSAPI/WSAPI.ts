@@ -1027,8 +1027,8 @@ export class WSAPI {
 	 * _smartico.api.getActivityLog({
 	 *      startTimeSeconds: startTime,
 	 *      endTimeSeconds: endTime,
-	 *      limit: 50,
-	 *      offset: 0,
+	 *      from: 0,
+	 *      to: 50,
 	 *      onUpdate: (data) => console.log('Updated:', data)
 	 * }).then((result) => {
 	 *      console.log(result);
@@ -1039,21 +1039,21 @@ export class WSAPI {
 	 *
 	 * @param params.startTimeSeconds - Start time in seconds (epoch timestamp)
 	 * @param params.endTimeSeconds - End time in seconds (epoch timestamp)
-	 * @param params.limit - Number of records to return
-	 * @param params.offset - Number of records to skip
+	 * @param params.from - Start index of records to return
+	 * @param params.to - End index of records to return
 	 * @param params.onUpdate - Optional callback function that will be called when the activity log is updated
 	 */
 	public async getActivityLog({
 		startTimeSeconds,
 		endTimeSeconds,
-		limit,
-		offset,
+		from,
+		to,
 		onUpdate,
 	}: {
 		startTimeSeconds: number;
 		endTimeSeconds: number;
-		limit: number;
-		offset: number;
+		from: number;
+		to: number;
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]> {
 
@@ -1064,7 +1064,7 @@ export class WSAPI {
 		return await OCache.use(
 			onUpdateContextKey.ActivityLog,
 			ECacheContext.WSAPI,
-			() => this.api.getActivityLogT(null, startTimeSeconds, endTimeSeconds, limit, offset),
+			() => this.api.getActivityLogT(null, startTimeSeconds, endTimeSeconds, from, to),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -1128,7 +1128,7 @@ export class WSAPI {
 	private async notifyActivityLogUpdate() {
 		const startSeconds = Date.now() / 1000 - 600;
 		const endSeconds = Date.now() / 1000;
-		const payload = await this.api.getActivityLogT(null, startSeconds, endSeconds, 50, 0);
+		const payload = await this.api.getActivityLogT(null, startSeconds, endSeconds, 0, 50);
 
 		this.updateEntity(onUpdateContextKey.ActivityLog, payload);
 	}

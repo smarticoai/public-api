@@ -1362,9 +1362,12 @@ class SmarticoAPI {
 		user_ext_id: string,
 		startTimeSeconds: number,
 		endTimeSeconds: number,
-		limit: number,
-		offset: number,
+		from: number = 0,
+		to: number = 50,
 	): Promise<TActivityLog[]> {
+		const limit = to - from > 50 ? 50 : to - from;
+		const offset = from;
+
 		return ActivityLogTransform(
 			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset)).logHistory,
 		);
