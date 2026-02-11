@@ -1341,6 +1341,8 @@ class SmarticoAPI {
 		user_ext_id: string,
 		startTimeSeconds: number,
 		endTimeSeconds: number,
+		limit: number,
+		offset: number,
 	): Promise<GetActivityLogResponse> {
 		const message = this.buildMessage<GetActivityLogRequest, GetActivityLogResponse>(
 			user_ext_id,
@@ -1348,6 +1350,8 @@ class SmarticoAPI {
 			{
 				startTimeSeconds: Math.floor(startTimeSeconds),
 				endTimeSeconds: Math.floor(endTimeSeconds),
+				limit,
+				offset,
 			},
 		);
 
@@ -1358,9 +1362,11 @@ class SmarticoAPI {
 		user_ext_id: string,
 		startTimeSeconds: number,
 		endTimeSeconds: number,
+		limit: number,
+		offset: number,
 	): Promise<TActivityLog[]> {
 		return ActivityLogTransform(
-			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds)).logHistory,
+			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset)).logHistory,
 		);
 	}
 }
