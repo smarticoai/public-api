@@ -34,5 +34,5 @@ Document method `getUserLevelExtraCounters` in docs/native/PROTOCOL.md for nativ
 or shorter:
 
 ```
-Document method `myNewMethod` in PROTOCOL.md. Raw types, ClassId from code. New interfaces in docs/interfaces/ — follow typedoc style like existing files there.
+Document method `myNewMethod` in PROTOCOL.md. Raw types, ClassId from code. New interfaces in docs/api/interfaces/ — follow typedoc style like existing files there.
 ```

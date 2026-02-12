@@ -38,7 +38,7 @@ _smartico.api.getMiniGames( { onUpdate: miniGamesUpdates} ).then( games => {
 
 ```
 
-See the [API documentation](docs/classes/WSAPI.md) for all available methods and returning data.
+See the [API documentation](docs/api/classes/WSAPI.md) for all available methods and returning data.
 
 ## Visitor mode
 
