@@ -1,14 +1,10 @@
 # Interface: TournamentPlayer
 
-Tournament player/participant object (raw, non-transformed).
-
 ## Properties
 
 ### userAltName
 
 • **userAltName**: `string`
-
-User's display name (public username)
 
 ___
 
@@ -16,15 +12,11 @@ ___
 
 • **cleanExtUserId**: `string`
 
-Clean external user ID
-
 ___
 
 ### crmBrandId
 
 • **crmBrandId**: `number`
-
-CRM brand ID
 
 ___
 
@@ -32,15 +24,11 @@ ___
 
 • **position**: `number`
 
-User's position in the tournament leaderboard
-
 ___
 
 ### scores
 
 • **scores**: `number`
-
-User's score in the tournament
 
 ___
 
@@ -48,15 +36,11 @@ ___
 
 • **isMe**: `boolean`
 
-Whether this is the current user
-
 ___
 
 ### userId
 
 • **userId**: `number`
-
-Internal user ID
 
 ___
 
@@ -64,12 +48,8 @@ ___
 
 • **avatar\_id**: `string`
 
-Avatar ID
-
 ___
 
 ### avatar\_url
 
-• **avatar\_url**: `string`
-
-Avatar URL (optional)
+• `Optional` **avatar\_url**: `string`

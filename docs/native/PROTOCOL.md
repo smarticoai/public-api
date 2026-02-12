@@ -276,8 +276,8 @@ Sent when a jackpot is won (can be the current user or another player).
 | Field | Type | Description |
 |-------|------|-------------|
 | `cid` | `number` | Message type identifier |
-| `jackpot` | [`JackpotDetails`](../interfaces/JackpotDetails.md) | Jackpot information |
-| `winners` | [`JackPotWinner[]`](../interfaces/JackPotWinner.md) | Array of winners |
+| `jackpot` | [`JackpotDetails`](../api/interfaces/JackpotDetails.md) | Jackpot information |
+| `winners` | [`JackPotWinner[]`](../api/interfaces/JackPotWinner.md) | Array of winners |
 
 **Recommended action:** Show jackpot win notification/celebration. Re-fetch jackpot data to update UI.
 
@@ -408,7 +408,7 @@ Check if the current user belongs to a specific segment.
 | `cid` | `number` | Message type identifier |
 | `errCode` | `number` | Error code. `0` = success |
 | `errMsg` | `string` | Error message (if any) |
-| `segments` | [`TSegmentCheckResult[]`](../interfaces/TSegmentCheckResult.md) | Array of segment check results |
+| `segments` | [`TSegmentCheckResult[]`](../api/interfaces/TSegmentCheckResult.md) | Array of segment check results |
 
 ---
 
@@ -468,7 +468,7 @@ Check if the current user belongs to multiple segments.
 | `cid` | `number` | Message type identifier |
 | `errCode` | `number` | Error code. `0` = success |
 | `errMsg` | `string` | Error message (if any) |
-| `segments` | [`TSegmentCheckResult[]`](../interfaces/TSegmentCheckResult.md) | Array of segment check results |
+| `segments` | [`TSegmentCheckResult[]`](../api/interfaces/TSegmentCheckResult.md) | Array of segment check results |
 
 ---
 
@@ -551,7 +551,7 @@ Get list of all levels defined in the system.
 | `cid` | `number` | Message type identifier |
 | `errCode` | `number` | Error code. `0` = success |
 | `errMsg` | `string` | Error message (if any) |
-| `levels` | [`Level[]`](../interfaces/Level.md) | Array of level objects |
+| `levels` | [`Level[]`](../api/interfaces/Level.md) | Array of level objects |
 
 ---
 
@@ -593,7 +593,7 @@ Get all missions and badges for the current user.
 | `uuid` | `string` | Request identifier (matches request) |
 | `errCode` | `number` | Error code (`0` = success) |
 | `errMsg` | `string` | Error message (if any) |
-| `achievements` | [`UserAchievement[]`](../interfaces/UserAchievement.md) | Array of achievements (missions + badges) |
+| `achievements` | [`UserAchievement[]`](../api/interfaces/UserAchievement.md) | Array of achievements (missions + badges) |
 
 **Example:**
 
@@ -715,7 +715,7 @@ Get mission and badge categories.
 | `cid` | `number` | `538` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `categories` | [`AchCategory[]`](../interfaces/AchCategory.md) | Array of categories |
+| `categories` | [`AchCategory[]`](../api/interfaces/AchCategory.md) | Array of categories |
 
 ---
 
@@ -744,7 +744,7 @@ Get custom UI sections.
 | `cid` | `number` | `524` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `customSections` | `object` | Map of section ID to [`UICustomSection`](../interfaces/UICustomSection.md) |
+| `customSections` | `object` | Map of section ID to [`UICustomSection`](../api/interfaces/UICustomSection.md) |
 
 ---
 
@@ -784,7 +784,7 @@ Get all bonuses for the current user.
 | `uuid` | `string` | Request identifier (matches request) |
 | `errCode` | `number` | Error code (`0` = success) |
 | `errMsg` | `string` | Error message (if any) |
-| `bonuses` | [`Bonus[]`](../interfaces/Bonus.md) | Array of bonus objects |
+| `bonuses` | [`Bonus[]`](../api/interfaces/Bonus.md) | Array of bonus objects |
 
 **Example:**
 
@@ -890,7 +890,7 @@ Get all available store items.
 | `cid` | `number` | `510` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `items` | [`StoreItem[]`](../interfaces/StoreItem.md) | Array of store items |
+| `items` | [`StoreItem[]`](../api/interfaces/StoreItem.md) | Array of store items |
 
 ---
 
@@ -945,7 +945,7 @@ Get store categories.
 | `cid` | `number` | `516` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `categories` | [`StoreCategory[]`](../interfaces/StoreCategory.md) | Array of categories |
+| `categories` | [`StoreCategory[]`](../api/interfaces/StoreCategory.md) | Array of categories |
 
 ---
 
@@ -974,7 +974,7 @@ Get user's purchase history.
 | `cid` | `number` | `542` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `items` | [`StoreItem[]`](../interfaces/StoreItem.md) | Array of purchased items |
+| `items` | [`StoreItem[]`](../api/interfaces/StoreItem.md) | Array of purchased items |
 
 ---
 
@@ -1003,7 +1003,7 @@ Get all available mini-games (spin wheels, scratch cards, etc.).
 | `cid` | `number` | `701` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `templates` | [`SAWTemplate[]`](../interfaces/SAWTemplate.md) | Array of mini-game templates |
+| `templates` | [`SAWTemplate[]`](../api/interfaces/SAWTemplate.md) | Array of mini-game templates |
 
 ---
 
@@ -1147,7 +1147,7 @@ Get mini-game play history.
 | `cid` | `number` | `717` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `history` | [`SAWPrizesHistory[]`](../interfaces/SAWPrizesHistory.md) | Array of history items |
+| `history` | [`SAWPrizesHistory[]`](../api/interfaces/SAWPrizesHistory.md) | Array of history items |
 
 ---
 
@@ -1176,7 +1176,7 @@ Get all active tournament instances.
 | `cid` | `number` | `518` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `tournaments` | [`Tournament[]`](../interfaces/Tournament.md) | Array of tournaments |
+| `tournaments` | [`Tournament[]`](../api/interfaces/Tournament.md) | Array of tournaments |
 
 ---
 
@@ -1204,8 +1204,8 @@ Get detailed information about a tournament instance including leaderboard.
 | `cid` | `number` | `520` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `tournamentInfo` | [`GetTournamentInfoResponse.tournamentInfo`](../interfaces/GetTournamentInfoResponse.md) | Tournament info with players |
-| `userPosition` | [`TournamentPlayer`](../interfaces/TournamentPlayer.md) | Current user's position |
+| `tournamentInfo` | [`GetTournamentInfoResponse.tournamentInfo`](../api/interfaces/GetTournamentInfoResponse.md) | Tournament info with players |
+| `userPosition` | [`TournamentPlayer`](../api/interfaces/TournamentPlayer.md) | Current user's position |
 | `prizeStructure` | `object` | Prize structure with `prizes` array |
 
 ---
@@ -1265,7 +1265,7 @@ Get leaderboard for a specific period type.
 | `cid` | `number` | `506` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `leaders` | [`LeaderBoardUserT[]`](../interfaces/LeaderBoardUserT.md) | Array of leaderboard entries |
+| `leaders` | [`LeaderBoardUserT[]`](../api/interfaces/LeaderBoardUserT.md) | Array of leaderboard entries |
 | `user_position` | `number` | Current user's position |
 | `user_points` | `number` | Current user's points |
 
@@ -1301,7 +1301,7 @@ Get user's inbox messages.
 | `cid` | `number` | `514` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `messages` | [`InboxMessage[]`](../interfaces/InboxMessage.md) | Array of messages |
+| `messages` | [`InboxMessage[]`](../api/interfaces/InboxMessage.md) | Array of messages |
 | `unread_count` | `number` | Total unread count |
 
 ---
@@ -1517,7 +1517,7 @@ Get all available jackpots.
 | `cid` | `number` | `801` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `items` | [`JackpotDetails[]`](../interfaces/JackpotDetails.md) | Array of jackpots |
+| `items` | [`JackpotDetails[]`](../api/interfaces/JackpotDetails.md) | Array of jackpots |
 
 ---
 
@@ -1601,7 +1601,7 @@ Get jackpot winners history.
 | `cid` | `number` | `810` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `winners` | [`JackpotWinnerHistory[]`](../interfaces/JackpotWinnerHistory.md) | Array of winners |
+| `winners` | [`JackpotWinnerHistory[]`](../api/interfaces/JackpotWinnerHistory.md) | Array of winners |
 
 ---
 
@@ -1748,7 +1748,7 @@ Get list of Raffles available for user.
 | `cid` | `number` | Message type identifier |
 | `errCode` | `number` | Error code. `0` = success |
 | `errMsg` | `string` | Error message (if any) |
-| `items` | [`Raffle[]`](../interfaces/Raffle.md) | Array of raffles |
+| `items` | [`Raffle[]`](../api/interfaces/Raffle.md) | Array of raffles |
 
 ---
 
@@ -1869,7 +1869,7 @@ Get detailed information about a specific draw run, including winners.
 | `cid` | `number` | Message type identifier |
 | `errCode` | `number` | Error code. `0` = success |
 | `errMsg` | `string` | Error message (if any) |
-| `draw` | [`RaffleDraw`](../interfaces/RaffleDraw.md) | Draw run details with winners |
+| `draw` | [`RaffleDraw`](../api/interfaces/RaffleDraw.md) | Draw run details with winners |
 
 ---
 
@@ -1966,7 +1966,7 @@ Get history of completed draw runs for a specific raffle. Useful for displaying 
 | `cid` | `number` | Message type identifier |
 | `errCode` | `number` | Error code. `0` = success |
 | `errMsg` | `string` | Error message (if any) |
-| `draw_runs` | [`RaffleDrawRun[]`](../interfaces/RaffleDrawRun.md) | Array of historical draw runs |
+| `draw_runs` | [`RaffleDrawRun[]`](../api/interfaces/RaffleDrawRun.md) | Array of historical draw runs |
 
 ---
 
@@ -2179,7 +2179,7 @@ Get user's points history.
 | `cid` | `number` | `546` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `history` | `array` | Array of points history entries |
+| `logHistory` | [`ActivityLogEntry[]`](../api/interfaces/ActivityLogEntry.md) | Array of points history entries (PointsLog or GemsDiamondsLog) |
 
 #### Example
 
@@ -2200,9 +2200,16 @@ Get user's points history.
   "cid": 546,
   "uuid": "hist-123",
   "errCode": 0,
-  "history": [
-    { "ts": 1699950000, "points": 100, "action": "mission_complete" },
-    { "ts": 1699960000, "points": 50, "action": "daily_login" }
+  "logHistory": [
+    {
+      "create_date": 1699950000,
+      "user_ext_id": "user123",
+      "crm_brand_id": 1,
+      "points_collected": 100,
+      "user_points_ever": 5000,
+      "user_points_balance": 1500,
+      "source_type_id": 1
+    }
   ]
 }
 ```
