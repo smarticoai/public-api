@@ -2,6 +2,8 @@
 
 ## Enumerations
 
+- [PointChangeSourceType](enums/PointChangeSourceType.md)
+- [UserBalanceType](enums/UserBalanceType.md)
 - [BonusStatus](enums/BonusStatus.md)
 - [AchCustomSectionType](enums/AchCustomSectionType.md)
 - [AchCustomLayoutTheme](enums/AchCustomLayoutTheme.md)
@@ -32,8 +34,6 @@
 - [SAWWheelLayout](enums/SAWWheelLayout.md)
 - [SAWWinSoundType](enums/SAWWinSoundType.md)
 - [AchievementAvailabilityStatus](enums/AchievementAvailabilityStatus.md)
-- [PointChangeSourceType](enums/PointChangeSourceType.md)
-- [UserBalanceType](enums/UserBalanceType.md)
 - [RaffleDrawInstanceState](enums/RaffleDrawInstanceState.md)
 - [RaffleDrawTypeExecution](enums/RaffleDrawTypeExecution.md)
 - [BuyStoreItemErrorCode](enums/BuyStoreItemErrorCode.md)
@@ -48,6 +48,8 @@
 
 ## Interfaces
 
+- [PointsLog](interfaces/PointsLog.md)
+- [GemsDiamondsLog](interfaces/GemsDiamondsLog.md)
 - [AchRelatedGame](interfaces/AchRelatedGame.md)
 - [Bonus](interfaces/Bonus.md)
 - [UICustomSection](interfaces/UICustomSection.md)
@@ -167,7 +169,7 @@
 - [TRaffleDraw](interfaces/TRaffleDraw.md)
 - [TRaffleDrawRun](interfaces/TRaffleDrawRun.md)
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
-- [TPointsHistoryLog](interfaces/TPointsHistoryLog.md)
+- [TActivityLog](interfaces/TActivityLog.md)
 - [TRaffleOptinResponse](interfaces/TRaffleOptinResponse.md)
 
 ## General API
@@ -175,6 +177,12 @@
 - [WSAPI](classes/WSAPI.md)
 
 ## Type Aliases
+
+### ActivityLogEntry
+
+Ƭ **ActivityLogEntry**: [`PointsLog`](interfaces/PointsLog.md) \| [`GemsDiamondsLog`](interfaces/GemsDiamondsLog.md)
+
+___
 
 ### TournamentRegistrationTypeName
 

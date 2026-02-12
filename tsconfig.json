@@ -44,8 +44,7 @@
 			"src/Missions/AchievementPublicMeta.ts",
 			"src/Level/Level.ts",
 			"src/Level/LevelPublicMeta.ts",
-			"src/Inbox/InboxMessage.ts",
-			"src/ActivityLog/ActivityLogEntry.ts"
+			"src/Inbox/InboxMessage.ts"
 		],
 		"out": "docs/api",
 		"plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],

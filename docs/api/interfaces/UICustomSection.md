@@ -74,6 +74,12 @@ ___
 
 ___
 
+### raffle\_id
+
+• `Optional` **raffle\_id**: `number`
+
+___
+
 ### show\_raw\_data
 
 • `Optional` **show\_raw\_data**: `boolean`
@@ -89,3 +95,9 @@ ___
 ### ach\_category\_ids
 
 • `Optional` **ach\_category\_ids**: `number`[]
+
+___
+
+### shop\_category\_ids
+
+• `Optional` **shop\_category\_ids**: `number`[]

@@ -2179,7 +2179,7 @@ Get user's points history.
 | `cid` | `number` | `546` |
 | `uuid` | `string` | Request identifier |
 | `errCode` | `number` | Error code (`0` = success) |
-| `logHistory` | [`ActivityLogEntry[]`](../api/interfaces/ActivityLogEntry.md) | Array of points history entries (PointsLog or GemsDiamondsLog) |
+| `logHistory` | [`PointsLog[]`](../api/interfaces/PointsLog.md) \| [`GemsDiamondsLog[]`](../api/interfaces/GemsDiamondsLog.md) | Array of points history entries |
 
 #### Example
 
