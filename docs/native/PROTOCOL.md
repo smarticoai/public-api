@@ -8,6 +8,8 @@ This document describes the low-level protocol for communicating with Smartico b
 
 ## Table of Contents
 
+- [Common Message Fields](#common-message-fields)
+
 ### Server Initiated Messages
 - [Overview](#server-initiated-messages)
 - [CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT](#client_public_properties_changed_event)
@@ -21,7 +23,6 @@ This document describes the low-level protocol for communicating with Smartico b
 
 #### User
 - [getUserGamificationInfo](#getusergamificationinfo)
-- [checkSegmentMatch](#checksegmentmatch)
 - [checkSegmentListMatch](#checksegmentlistmatch)
 
 #### Levels
@@ -89,6 +90,29 @@ This document describes the low-level protocol for communicating with Smartico b
 - [getRaffleDrawRunsHistory](#getraffledrawrunshistory)
 - [claimRafflePrize](#claimraffleprize)
 - [requestRaffleOptin](#requestraffleoptin)
+
+---
+
+## Common Message Fields
+
+All **request** messages must include the following base fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | ClassId — message type identifier |
+| `uuid` | `string` | Unique request identifier (used to match request with response) |
+| `ts` | `number` | Timestamp in milliseconds |
+
+All **response** messages include the following base fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | ClassId — message type identifier |
+| `uuid` | `string` | Same identifier from the request |
+| `errCode` | `number` | Error code (`0` = success) |
+| `errMsg` | `string` | Error message (optional, present when `errCode` != 0) |
+
+> **Note:** These common fields are omitted from individual method descriptions below to avoid duplication. Only method-specific fields are listed.
 
 ---
 
@@ -223,25 +247,31 @@ Sent when the user's available spin count changes.
 
 ## SAW_SHOW_SPIN_PUSH
 
-Sent as a trigger to display a mini-game to the user (Spin-A-Wheel, Scratch Card, Slot, etc.).
+Sent as a trigger to display a mini-game to the user (Spin-A-Wheel, Scratch Card, Gift Box, etc.).
 
 **ClassId:** `707`
-
-**Example:**
-
-```json
-{
-  "cid": 707
-}
-```
 
 **Fields:**
 
 | Field | Type | Description |
 |-------|------|-------------|
 | `cid` | `number` | Message type identifier |
+| `pending_message_id` | `number` | ID of the pending message that triggered this push |
+| `saw_template_id` | `number` | ID of the mini-game template to display |
+| `saw_game_type_id` | `number` | Game type: `1` = SpinAWheel, `2` = ScratchCard, `3` = MatchX, `4` = GiftBox, `5` = PrizeDrop, `6` = Quiz, `7` = LootboxWeekdays, `8` = LootboxCalendarDays, `9` = TreasureHunt, `10` = Voyager, `11` = Plinko, `12` = CoinFlip |
 
-**Recommended action:** Fetch mini-game templates and display the appropriate game modal/screen.
+**Example:**
+
+```json
+{
+  "cid": 707,
+  "pending_message_id": 456,
+  "saw_template_id": 123,
+  "saw_game_type_id": 1
+}
+```
+
+**Recommended action:** Use `saw_template_id` and `saw_game_type_id` to display the appropriate mini-game UI to the user.
 
 ---
 
@@ -295,11 +325,7 @@ Get user's gamification data including points, level, balances and counters.
 
 **ClassId:** `527` (GET_ACHIEVEMENT_USER_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `527` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 **Example:**
 
@@ -317,10 +343,6 @@ Get user's gamification data including points, level, balances and counters.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `528` |
-| `uuid` | `string` | Request identifier (matches request) |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
 | `points_balance` | `number` | Current points balance |
 | `gems_balance` | `number` | Current gems balance |
 | `diamonds_balance` | `number` | Current diamonds balance |
@@ -354,71 +376,17 @@ Get user's gamification data including points, level, balances and counters.
 
 ---
 
-### checkSegmentMatch
+### checkSegmentListMatch
 
-Check if the current user belongs to a specific segment.
+Check if the current user belongs to one or more segments. Pass a single ID or multiple IDs in the array.
 
 #### Request
 
 **ClassId:** `161`
-
-**Example:**
-
-```json
-{
-  "cid": 161,
-  "uuid": "550e8400-e29b-41d4-a716-446655440000",
-  "ts": 1704067200000,
-  "segment_id": [42]
-}
-```
-
-**Fields:**
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
-| `segment_id` | `number[]` | ✓ | Array with single segment ID |
-
----
-
-#### Response
-
-**ClassId:** `162`
-
-**Example:**
-
-```json
-{
-  "cid": 162,
-  "errCode": 0,
-  "errMsg": null,
-  "segments": [
-    { "segment_id": 42, "is_matching": true }
-  ]
-}
-```
-
-**Fields:**
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
-| `segments` | [`TSegmentCheckResult[]`](../api/interfaces/TSegmentCheckResult.md) | Array of segment check results |
-
----
-
-### checkSegmentListMatch
-
-Check if the current user belongs to multiple segments.
-
-#### Request
-
-**ClassId:** `161`
+| `segment_id` | `number[]` | ✓ | Array of segment IDs to check |
 
 **Example:**
 
@@ -431,20 +399,13 @@ Check if the current user belongs to multiple segments.
 }
 ```
 
-**Fields:**
-
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
-| `segment_id` | `number[]` | ✓ | Array of segment IDs to check |
-
----
-
 #### Response
 
 **ClassId:** `162`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `segments` | [`TSegmentCheckResult[]`](../api/interfaces/TSegmentCheckResult.md) | Array of segment check results |
 
 **Example:**
 
@@ -460,15 +421,6 @@ Check if the current user belongs to multiple segments.
   ]
 }
 ```
-
-**Fields:**
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
-| `segments` | [`TSegmentCheckResult[]`](../api/interfaces/TSegmentCheckResult.md) | Array of segment check results |
 
 ---
 
@@ -494,11 +446,7 @@ Get list of all levels defined in the system.
 
 **Fields:**
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -548,9 +496,6 @@ Get list of all levels defined in the system.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
 | `levels` | [`Level[]`](../api/interfaces/Level.md) | Array of level objects |
 
 ---
@@ -567,11 +512,7 @@ Get all missions and badges for the current user.
 
 **ClassId:** `502` (GET_ACHIEVEMENT_MAP_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `502` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 **Example:**
 
@@ -589,10 +530,6 @@ Get all missions and badges for the current user.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `503` |
-| `uuid` | `string` | Request identifier (matches request) |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
 | `achievements` | [`UserAchievement[]`](../api/interfaces/UserAchievement.md) | Array of achievements (missions + badges) |
 
 **Example:**
@@ -632,6 +569,7 @@ Get all missions and badges for the current user.
     }
   ]
 }
+```
 
 ---
 
@@ -645,21 +583,13 @@ Opt-in to a mission that requires opt-in.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `525` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `ach_id` | `number` | Mission ID |
 
 #### Response
 
 **ClassId:** `526` (MISSION_OPTIN_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `526` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -673,9 +603,6 @@ Claim reward for a completed mission.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `539` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `ach_id` | `number` | Mission ID |
 | `ach_completed_id` | `number` | Completion record ID |
 
@@ -683,12 +610,7 @@ Claim reward for a completed mission.
 
 **ClassId:** `540` (ACHIEVEMENT_CLAIM_PRIZE_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `540` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -700,11 +622,7 @@ Get mission and badge categories.
 
 **ClassId:** `537` (GET_ACH_CATEGORIES_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `537` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 #### Response
 
@@ -712,9 +630,6 @@ Get mission and badge categories.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `538` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `categories` | [`AchCategory[]`](../api/interfaces/AchCategory.md) | Array of categories |
 
 ---
@@ -729,11 +644,7 @@ Get custom UI sections.
 
 **ClassId:** `523` (GET_CUSTOM_SECTIONS_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `523` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 #### Response
 
@@ -741,9 +652,6 @@ Get custom UI sections.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `524` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `customSections` | `object` | Map of section ID to [`UICustomSection`](../api/interfaces/UICustomSection.md) |
 
 ---
@@ -758,11 +666,7 @@ Get all bonuses for the current user.
 
 **ClassId:** `600` (GET_BONUSES_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `600` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 **Example:**
 
@@ -780,10 +684,6 @@ Get all bonuses for the current user.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `601` |
-| `uuid` | `string` | Request identifier (matches request) |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
 | `bonuses` | [`Bonus[]`](../api/interfaces/Bonus.md) | Array of bonus objects |
 
 **Example:**
@@ -824,9 +724,6 @@ Claim a bonus by its ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `602` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `bonusId` | `number` | ID of the bonus to claim |
 
 **Example:**
@@ -846,10 +743,6 @@ Claim a bonus by its ID.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `603` |
-| `uuid` | `string` | Request identifier (matches request) |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
 | `success` | `boolean` | Whether the claim was successful |
 
 **Example:**
@@ -875,11 +768,7 @@ Get all available store items.
 
 **ClassId:** `509` (GET_SHOP_ITEMS_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `509` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 #### Response
 
@@ -887,9 +776,6 @@ Get all available store items.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `510` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `items` | [`StoreItem[]`](../api/interfaces/StoreItem.md) | Array of store items |
 
 ---
@@ -904,21 +790,13 @@ Purchase a store item.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `511` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `itemId` | `number` | ID of the item to buy |
 
 #### Response
 
 **ClassId:** `512` (BUY_SHOP_ITEM_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `512` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -930,11 +808,7 @@ Get store categories.
 
 **ClassId:** `515` (GET_SHOP_CATEGORIES_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `515` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 #### Response
 
@@ -942,9 +816,6 @@ Get store categories.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `516` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `categories` | [`StoreCategory[]`](../api/interfaces/StoreCategory.md) | Array of categories |
 
 ---
@@ -959,9 +830,6 @@ Get user's purchase history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `541` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `limit` | `number` | Max items to return (default 20) |
 | `offset` | `number` | Offset for pagination |
 
@@ -971,9 +839,6 @@ Get user's purchase history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `542` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `items` | [`StoreItem[]`](../api/interfaces/StoreItem.md) | Array of purchased items |
 
 ---
@@ -988,11 +853,7 @@ Get all available mini-games (spin wheels, scratch cards, etc.).
 
 **ClassId:** `700` (SAW_GET_SPINS_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `700` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 #### Response
 
@@ -1000,9 +861,6 @@ Get all available mini-games (spin wheels, scratch cards, etc.).
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `701` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `templates` | [`SAWTemplate[]`](../api/interfaces/SAWTemplate.md) | Array of mini-game templates |
 
 ---
@@ -1017,9 +875,6 @@ Play a mini-game and get prize.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `702` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `saw_template_id` | `number` | Mini-game template ID |
 
 #### Response
@@ -1028,9 +883,6 @@ Play a mini-game and get prize.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `703` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `saw_prize_id` | `number` | Won prize ID |
 | `request_id` | `string` | Request ID for acknowledgement |
 
@@ -1046,9 +898,6 @@ Play a mini-game multiple times in a single request.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `712` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `spins` | `array` | Array of spin objects with `request_id` (string) and `saw_template_id` (number) |
 
 #### Response
@@ -1057,9 +906,6 @@ Play a mini-game multiple times in a single request.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `713` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `spins` | `array` | Array of spin results, each containing prize information |
 
 #### Example
@@ -1104,20 +950,13 @@ Acknowledge a mini-game win. Should be called after displaying the win result to
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `704` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `request_id` | `string` | Request ID from the spin response |
 
 #### Response
 
 **ClassId:** `705` (SAW_AKNOWLEDGE_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `705` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1131,9 +970,6 @@ Get mini-game play history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `716` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `limit` | `number` | Max items to return |
 | `offset` | `number` | Offset for pagination |
 | `saw_template_id` | `number` | Filter by template ID (optional) |
@@ -1144,9 +980,6 @@ Get mini-game play history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `717` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `history` | [`SAWPrizesHistory[]`](../api/interfaces/SAWPrizesHistory.md) | Array of history items |
 
 ---
@@ -1161,11 +994,7 @@ Get all active tournament instances.
 
 **ClassId:** `517` (GET_TOURNAMENT_LOBBY_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `517` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
 
 #### Response
 
@@ -1173,9 +1002,6 @@ Get all active tournament instances.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `518` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `tournaments` | [`Tournament[]`](../api/interfaces/Tournament.md) | Array of tournaments |
 
 ---
@@ -1190,9 +1016,6 @@ Get detailed information about a tournament instance including leaderboard.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `519` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `tournament_instance_id` | `number` | Tournament instance ID |
 
 #### Response
@@ -1201,9 +1024,6 @@ Get detailed information about a tournament instance including leaderboard.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `520` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `tournamentInfo` | [`GetTournamentInfoResponse.tournamentInfo`](../api/interfaces/GetTournamentInfoResponse.md) | Tournament info with players |
 | `userPosition` | [`TournamentPlayer`](../api/interfaces/TournamentPlayer.md) | Current user's position |
 | `prizeStructure` | `object` | Prize structure with `prizes` array |
@@ -1220,21 +1040,13 @@ Register user in a tournament.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `521` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `tournament_instance_id` | `number` | Tournament instance ID |
 
 #### Response
 
 **ClassId:** `522` (TOURNAMENT_REGISTER_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `522` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
-| `errMsg` | `string` | Error message (if any) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1250,9 +1062,6 @@ Get leaderboard for a specific period type.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `505` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `period_type` | `number` | Period type: `1` = Daily, `2` = Weekly, `3` = Monthly |
 | `get_previous_period` | `boolean` | Get previous period instead of current |
 
@@ -1262,9 +1071,6 @@ Get leaderboard for a specific period type.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `506` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `leaders` | [`LeaderBoardUserT[]`](../api/interfaces/LeaderBoardUserT.md) | Array of leaderboard entries |
 | `user_position` | `number` | Current user's position |
 | `user_points` | `number` | Current user's points |
@@ -1283,9 +1089,6 @@ Get user's inbox messages.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `513` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `from` | `number` | Start index (default 0) |
 | `to` | `number` | End index (default 20) |
 | `only_favorite` | `boolean` | Filter favorites only |
@@ -1298,9 +1101,6 @@ Get user's inbox messages.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `514` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `messages` | [`InboxMessage[]`](../api/interfaces/InboxMessage.md) | Array of messages |
 | `unread_count` | `number` | Total unread count |
 
@@ -1316,20 +1116,13 @@ Mark an inbox message as read.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `529` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `message_guid` | `string` | Message GUID |
 
 #### Response
 
 **ClassId:** `530` (MARK_INBOX_READ_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `530` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1343,9 +1136,6 @@ Mark/unmark an inbox message as favorite.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `531` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `message_guid` | `string` | Message GUID |
 | `mark` | `boolean` | `true` to add, `false` to remove |
 
@@ -1353,11 +1143,7 @@ Mark/unmark an inbox message as favorite.
 
 **ClassId:** `532` (MARK_INBOX_STARRED_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `532` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1371,20 +1157,13 @@ Delete an inbox message.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `535` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `message_guid` | `string` | Message GUID |
 
 #### Response
 
 **ClassId:** `536` (MARK_INBOX_DELETED_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `536` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1400,9 +1179,6 @@ Get unread inbox message count.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `513` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `limit` | `number` | Set to `1` (minimal fetch) |
 | `offset` | `number` | Set to `0` |
 
@@ -1412,9 +1188,6 @@ Get unread inbox message count.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `514` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `unread_count` | `number` | Number of unread messages |
 
 ---
@@ -1447,20 +1220,13 @@ Mark all inbox messages as read.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `529` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `all_read` | `boolean` | Set to `true` |
 
 #### Response
 
 **ClassId:** `530` (MARK_INBOX_READ_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `530` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1474,20 +1240,13 @@ Delete all inbox messages.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `535` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `all_deleted` | `boolean` | Set to `true` |
 
 #### Response
 
 **ClassId:** `536` (MARK_INBOX_DELETED_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `536` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1503,9 +1262,6 @@ Get all available jackpots.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `800` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `jp_template_id` | `number` | Filter by template ID (optional) |
 
 #### Response
@@ -1514,9 +1270,6 @@ Get all available jackpots.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `801` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `items` | [`JackpotDetails[]`](../api/interfaces/JackpotDetails.md) | Array of jackpots |
 
 ---
@@ -1531,20 +1284,13 @@ Opt-in to a jackpot.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `804` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `jp_template_id` | `number` | Jackpot template ID |
 
 #### Response
 
 **ClassId:** `805` (JP_OPTIN_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `805` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1558,20 +1304,13 @@ Opt-out from a jackpot.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `806` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `jp_template_id` | `number` | Jackpot template ID |
 
 #### Response
 
 **ClassId:** `807` (JP_OPTOUT_RESPONSE)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | `807` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1585,9 +1324,6 @@ Get jackpot winners history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `809` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `jp_template_id` | `number` | Jackpot template ID |
 | `limit` | `number` | Max items to return |
 | `offset` | `number` | Offset for pagination |
@@ -1598,9 +1334,6 @@ Get jackpot winners history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `810` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `winners` | [`JackpotWinnerHistory[]`](../api/interfaces/JackpotWinnerHistory.md) | Array of winners |
 
 ---
@@ -1615,9 +1348,6 @@ Get games eligible for a specific jackpot.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `811` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `jp_template_id` | `number` | Jackpot template ID |
 
 #### Response
@@ -1626,9 +1356,6 @@ Get games eligible for a specific jackpot.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `812` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `games` | `array` | Array of eligible game IDs |
 
 ---
@@ -1658,9 +1385,6 @@ Get list of Raffles available for user.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
 | `skip_public_meta` | `boolean` | - | If `true`, response will not include `public_meta` objects (reduces payload size) |
 
 ---
@@ -1745,9 +1469,6 @@ Get list of Raffles available for user.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
 | `items` | [`Raffle[]`](../api/interfaces/Raffle.md) | Array of raffles |
 
 ---
@@ -1786,9 +1507,6 @@ Get detailed information about a specific draw run, including winners.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
 | `raffle_id` | `number` | ✓ | ID of the raffle |
 | `run_id` | `number` | ✓ | ID of the specific draw run |
 | `winners_limit` | `number` | - | Maximum number of winners to return |
@@ -1866,9 +1584,6 @@ Get detailed information about a specific draw run, including winners.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
 | `draw` | [`RaffleDraw`](../api/interfaces/RaffleDraw.md) | Draw run details with winners |
 
 ---
@@ -1905,9 +1620,6 @@ Get history of completed draw runs for a specific raffle. Useful for displaying 
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
 | `raffle_id` | `number` | ✓ | ID of the raffle |
 | `draw_id` | `number` | - | ID of specific draw. If not passed, all draw runs for the raffle will be returned |
 
@@ -1963,9 +1675,6 @@ Get history of completed draw runs for a specific raffle. Useful for displaying 
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
 | `draw_runs` | [`RaffleDrawRun[]`](../api/interfaces/RaffleDrawRun.md) | Array of historical draw runs |
 
 ---
@@ -2001,9 +1710,6 @@ Claim a prize won in a raffle draw.
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
 | `won_id` | `number` | ✓ | ID of the won prize (from `raf_won_id` in RafflePrizeWinner) |
 
 ---
@@ -2024,11 +1730,7 @@ Claim a prize won in a raffle draw.
 
 **Fields:**
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -2065,9 +1767,6 @@ Request opt-in for a specific raffle draw run. Used when a raffle requires expli
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `cid` | `number` | ✓ | Message type identifier |
-| `uuid` | `string` | ✓ | Unique request identifier |
-| `ts` | `number` | ✓ | Timestamp in milliseconds |
 | `raffle_id` | `number` | ✓ | ID of the raffle |
 | `draw_id` | `number` | ✓ | ID of the draw |
 | `raffle_run_id` | `number` | ✓ | ID of the specific draw run |
@@ -2090,11 +1789,7 @@ Request opt-in for a specific raffle draw run. Used when a raffle requires expli
 
 **Fields:**
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `errCode` | `number` | Error code. `0` = success |
-| `errMsg` | `string` | Error message (if any) |
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -2110,9 +1805,6 @@ Get UI translations for a specific language.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `13` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `lang_code` | `string` | Language code (e.g., "en", "de", "fr") |
 
 #### Response
@@ -2121,9 +1813,6 @@ Get UI translations for a specific language.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `14` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `translations` | `object` | Key-value map of translation strings |
 
 #### Example
@@ -2164,9 +1853,6 @@ Get user's points history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `545` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `startTimeSeconds` | `number` | Start time (Unix timestamp in seconds) |
 | `endTimeSeconds` | `number` | End time (Unix timestamp in seconds) |
 
@@ -2176,9 +1862,6 @@ Get user's points history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `546` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `logHistory` | [`PointsLog[]`](../api/interfaces/PointsLog.md) \| [`GemsDiamondsLog[]`](../api/interfaces/GemsDiamondsLog.md) | Array of points history entries |
 
 #### Example
@@ -2226,9 +1909,6 @@ Get missions and tournaments related to a specific game.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `543` |
-| `uuid` | `string` | Unique request identifier |
-| `ts` | `number` | Timestamp (ms) |
 | `related_game_id` | `string` | Game ID to find related items for |
 
 #### Response
@@ -2237,9 +1917,6 @@ Get missions and tournaments related to a specific game.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `cid` | `number` | `544` |
-| `uuid` | `string` | Request identifier |
-| `errCode` | `number` | Error code (`0` = success) |
 | `achievements` | `array` | Related missions/achievements |
 | `tournaments` | `array` | Related tournaments |
 
