@@ -1,9 +1,12 @@
 import { IntUtils } from '../IntUtils';
 import { TMiniGamePrize, TMiniGameTemplate } from '../WSAPI/WSAPITypes';
 import { ProtocolResponse } from './../Base/ProtocolResponse';
+import { AttemptPeriodTypeNamed } from './AttemptPeriodType';
 import { SAWAcknowledgeTypeNamed } from './SAWAcknowledgeType';
 import { SAWBuyInType, SAWBuyInTypeNamed } from './SAWBuyInType';
-import { SAWGameTypeNamed } from './SAWGameType';
+import { SAWExposeUserSpinIdNamed } from './SAWExposeUserSpinId';
+import { SAWGameLayoutNamed } from './SAWGameLayout';
+import { SAWGameType, SAWGameTypeNamed } from './SAWGameType';
 import { MiniGamePrizeTypeNamed } from './SAWPrizeType';
 import { SAWTemplate } from './SAWTemplate';
 
@@ -45,9 +48,16 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			steps_to_finish_game: r.saw_template_ui_definition.steps_to_finish_game,
 			custom_section_id: r.saw_template_ui_definition.custom_section_id,
 			saw_template_ui_definition: r.saw_template_ui_definition,
+			...(r.saw_game_type_id === SAWGameType.LootboxCalendarDays || r.saw_game_type_id === SAWGameType.LootboxWeekdays
+				? { game_layout: SAWGameLayoutNamed(r.saw_template_ui_definition.game_layout) }
+				: {}
+			),
 			show_prize_history: r.show_prize_history,
 			max_number_of_attempts: r.maxSpinsCount,
 			max_spins_period_ms: r.maxSpinsPediodMs,
+			...(r.saw_template_ui_definition.expose_user_spin_id
+				? { expose_user_spin_id: SAWExposeUserSpinIdNamed(r.saw_template_ui_definition.expose_user_spin_id) } 
+				: {}),
 
 			prizes: r.prizes.map((p) => {
 				const y: TMiniGamePrize = {
@@ -81,7 +91,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					allow_split_decimal: p.saw_prize_ui_definition.allow_split_decimal,
 					hide_prize_from_history: p.saw_prize_ui_definition.hide_prize_from_history,
 					requirements_to_get_prize: p.saw_prize_ui_definition.requirements_to_get_prize,
-					max_give_period_type_id: p.max_give_period_type_id,
+					max_give_period_type_id: AttemptPeriodTypeNamed(p.max_give_period_type_id),
 				};
 				return y;
 			}),

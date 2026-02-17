@@ -1,5 +1,5 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { AttemptPeriodType, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWGameLayout, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
+import { AttemptPeriodTypeName, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWExposeUserSpinIdName, SAWGameLayout, SAWGameLayoutName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchievementAvailabilityStatus, BadgesTimeLimitStates } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -80,7 +80,7 @@ export interface TMiniGamePrize {
 	/** Requirements to claim the prize  (lootbox specific)*/
 	requirements_to_get_prize?: string;
 	/** The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime */
-	max_give_period_type_id?: AttemptPeriodType;
+	max_give_period_type_id?: AttemptPeriodTypeName;
 }
 
 /**
@@ -188,12 +188,16 @@ export interface TMiniGameTemplate {
 
 	/** The UI definition of the mini-game */
 	saw_template_ui_definition: SAWTemplateUI;
+	/** The layout of the game */
+	game_layout?: SAWGameLayoutName;
 	/** When enabled the prize history icon is visible on a certain template */
 	show_prize_history?: boolean;
 	/** The maximum number of attempts that user can do during period of time */
 	max_number_of_attempts?: number;
 	/** The period of time in milliseconds during which the user can do the maximum number of attempts */
 	max_spins_period_ms?: number;
+	/** The ID of the user spin id to expose on the game */
+	expose_user_spin_id?: SAWExposeUserSpinIdName;
 }
 
 /**
