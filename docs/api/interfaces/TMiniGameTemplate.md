@@ -231,6 +231,14 @@ The UI definition of the mini-game
 
 ___
 
+### game\_layout
+
+• `Optional` **game\_layout**: [`SAWGameLayoutName`](../enums/SAWGameLayoutName.md)
+
+The layout of the game
+
+___
+
 ### show\_prize\_history
 
 • `Optional` **show\_prize\_history**: `boolean`
@@ -252,3 +260,11 @@ ___
 • `Optional` **max\_spins\_period\_ms**: `number`
 
 The period of time in milliseconds during which the user can do the maximum number of attempts
+
+___
+
+### expose\_user\_spin\_id
+
+• `Optional` **expose\_user\_spin\_id**: [`SAWExposeUserSpinIdName`](../enums/SAWExposeUserSpinIdName.md)
+
+The ID of the user spin id to expose on the game

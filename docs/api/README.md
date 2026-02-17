@@ -16,6 +16,7 @@
 - [JackpotType](enums/JackpotType.md)
 - [LeaderBoardPeriodType](enums/LeaderBoardPeriodType.md)
 - [AttemptPeriodType](enums/AttemptPeriodType.md)
+- [AttemptPeriodTypeName](enums/AttemptPeriodTypeName.md)
 - [PrizeModifiers](enums/PrizeModifiers.md)
 - [SAWAcknowledgeType](enums/SAWAcknowledgeType.md)
 - [SAWAcknowledgeTypeName](enums/SAWAcknowledgeTypeName.md)
@@ -23,9 +24,11 @@
 - [SAWBuyInType](enums/SAWBuyInType.md)
 - [SAWBuyInTypeName](enums/SAWBuyInTypeName.md)
 - [SAWExposeUserSpinId](enums/SAWExposeUserSpinId.md)
+- [SAWExposeUserSpinIdName](enums/SAWExposeUserSpinIdName.md)
 - [SAWGameDifficultyType](enums/SAWGameDifficultyType.md)
 - [SAWGameDifficultyTypeName](enums/SAWGameDifficultyTypeName.md)
 - [SAWGameLayout](enums/SAWGameLayout.md)
+- [SAWGameLayoutName](enums/SAWGameLayoutName.md)
 - [SAWGameType](enums/SAWGameType.md)
 - [SAWGameTypeName](enums/SAWGameTypeName.md)
 - [SAWPrizeType](enums/SAWPrizeType.md)
@@ -48,8 +51,6 @@
 
 ## Interfaces
 
-- [PointsLog](interfaces/PointsLog.md)
-- [GemsDiamondsLog](interfaces/GemsDiamondsLog.md)
 - [AchRelatedGame](interfaces/AchRelatedGame.md)
 - [Bonus](interfaces/Bonus.md)
 - [UICustomSection](interfaces/UICustomSection.md)
@@ -177,12 +178,6 @@
 - [WSAPI](classes/WSAPI.md)
 
 ## Type Aliases
-
-### ActivityLogEntry
-
-Ƭ **ActivityLogEntry**: [`PointsLog`](interfaces/PointsLog.md) \| [`GemsDiamondsLog`](interfaces/GemsDiamondsLog.md)
-
-___
 
 ### TournamentRegistrationTypeName
 
