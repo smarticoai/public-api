@@ -1,5 +1,5 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { AttemptPeriodTypeName, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWExposeUserSpinIdName, SAWGameLayout, SAWGameLayoutName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
+import { AttemptPeriodType, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWExposeUserSpinIdName, SAWGameLayout, SAWGameLayoutName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchievementAvailabilityStatus, BadgesTimeLimitStates } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -80,7 +80,7 @@ export interface TMiniGamePrize {
 	/** Requirements to claim the prize  (lootbox specific)*/
 	requirements_to_get_prize?: string;
 	/** The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime */
-	max_give_period_type_id?: AttemptPeriodTypeName;
+	max_give_period_type_id?: AttemptPeriodType;
 }
 
 /**

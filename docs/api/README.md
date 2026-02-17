@@ -16,7 +16,6 @@
 - [JackpotType](enums/JackpotType.md)
 - [LeaderBoardPeriodType](enums/LeaderBoardPeriodType.md)
 - [AttemptPeriodType](enums/AttemptPeriodType.md)
-- [AttemptPeriodTypeName](enums/AttemptPeriodTypeName.md)
 - [PrizeModifiers](enums/PrizeModifiers.md)
 - [SAWAcknowledgeType](enums/SAWAcknowledgeType.md)
 - [SAWAcknowledgeTypeName](enums/SAWAcknowledgeTypeName.md)

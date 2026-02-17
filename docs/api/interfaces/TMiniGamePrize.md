@@ -247,6 +247,6 @@ ___
 
 ### max\_give\_period\_type\_id
 
-• `Optional` **max\_give\_period\_type\_id**: [`AttemptPeriodTypeName`](../enums/AttemptPeriodTypeName.md)
+• `Optional` **max\_give\_period\_type\_id**: [`AttemptPeriodType`](../enums/AttemptPeriodType.md)
 
 The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime
