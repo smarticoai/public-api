@@ -8,6 +8,12 @@ This document describes the low-level protocol for communicating with Smartico b
 
 ## Table of Contents
 
+- [Connection Lifecycle](#connection-lifecycle)
+  - [Ping / Pong](#ping--pong)
+  - [Init](#init)
+  - [Identify](#identify)
+  - [Login](#login)
+  - [Logout](#logout)
 - [Common Message Fields](#common-message-fields)
 
 ### Server Initiated Messages
@@ -18,12 +24,17 @@ This document describes the low-level protocol for communicating with Smartico b
 - [SAW_SPINS_COUNT_PUSH](#saw_spins_count_push)
 - [SAW_SHOW_SPIN_PUSH](#saw_show_spin_push)
 - [JP_WIN_PUSH](#jp_win_push)
+- [SAW_PRIZE_DROP_WIN_PUSH](#saw_prize_drop_win_push)
+- [CLIENT_EXECUTE_DEEPLINK_EVENT](#client_execute_deeplink_event)
+- [CLIENT_EXECUTE_JS_EVENT](#client_execute_js_event)
 
 ### API Methods
 
 #### User
 - [getUserGamificationInfo](#getusergamificationinfo)
 - [checkSegmentListMatch](#checksegmentlistmatch)
+- [setAvatar](#setavatar)
+- [setCustomUsername](#setcustomusername)
 
 #### Levels
 - [getLevels](#getlevels)
@@ -53,6 +64,9 @@ This document describes the low-level protocol for communicating with Smartico b
 - [playMiniGameBatch](#playminigamebatch)
 - [miniGameWinAcknowledge](#minigamewinacknowledge)
 - [getMiniGamesHistory](#getminigameshistory)
+- [acknowledgeMiniGameSpinPush](#acknowledgeminigamespinpush)
+- [miniGameWinAcknowledgeBatch](#minigamewinacknowledgebatch)
+- [prizeDropWinAcknowledge](#prizedropwinacknowledge)
 
 #### Tournaments
 - [getTournamentsList](#gettournamentslist)
@@ -78,6 +92,16 @@ This document describes the low-level protocol for communicating with Smartico b
 - [jackpotOptOut](#jackpotoptout)
 - [getJackpotWinners](#getjackpotwinners)
 - [getJackpotEligibleGames](#getjackpoteligiblegames)
+- [getJackpotLatestPots](#getjackpotlatestpots)
+
+#### Engagement Tracking
+- [reportEngagementImpression](#reportengagementimpression)
+- [reportEngagementAction](#reportengagementaction)
+- [reportEngagementFailed](#reportengagementfailed)
+- [trackActivity](#trackactivity)
+
+#### Push Notifications
+- [registerPushNotificationsToken](#registerpushnotificationstoken)
 
 #### Other
 - [getTranslations](#gettranslations)
@@ -90,6 +114,246 @@ This document describes the low-level protocol for communicating with Smartico b
 - [getRaffleDrawRunsHistory](#getraffledrawrunshistory)
 - [claimRafflePrize](#claimraffleprize)
 - [requestRaffleOptin](#requestraffleoptin)
+
+---
+
+# Connection Lifecycle
+
+This section describes the mandatory sequence of messages required to establish a session with the Smartico backend. Native clients **must** implement this flow before calling any API methods.
+
+**Connection flow:**
+
+```
+1. Connect to WebSocket
+2. Send INIT (cid: 3)       → Receive INIT_RESPONSE (cid: 4)
+3. Send IDENTIFY (cid: 5)   → Receive IDENTIFY_RESPONSE (cid: 6)
+4. Send LOGIN (cid: 7)      → Receive LOGIN_RESPONSE (cid: 11)
+5. Session is now active — API methods can be called
+6. Maintain connection with PING/PONG keepalive
+7. When user logs out: Send LOGOUT (cid: 8) → Receive LOGOUT_RESPONSE (cid: 12)
+```
+
+---
+
+## Ping / Pong
+
+WebSocket keepalive mechanism. The server sends `PING` (cid: 1), the client must respond with `PONG` (cid: 2). Additionally, the client should send a proactive `PING` if no messages are received within **29 seconds** to prevent the connection from being dropped.
+
+**Server → Client:**
+
+```json
+{"cid": 1}
+```
+
+**Client → Server (response):**
+
+```json
+{"cid": 2}
+```
+
+> **Implementation note:** When any message is received from the server, reset the keepalive timer. If no messages arrive within 29 seconds, send `{"cid": 1}` proactively.
+
+---
+
+## Init
+
+First message after WebSocket connection is established. Identifies the label (operator) and brand.
+
+### Request
+
+**ClassId:** `3` (INIT)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `label_key` | `string` | Public API key for the label |
+| `brand_key` | `string` | Brand key (optional, `null` if not used) |
+| `device_id` | `string` | Unique device identifier (persisted across sessions) |
+
+**Example:**
+
+```json
+{
+  "cid": 3,
+  "label_key": "your_label_api_key",
+  "brand_key": null,
+  "device_id": "550e8400-e29b-41d4-a716-446655440000"
+}
+```
+
+### Response
+
+**ClassId:** `4` (INIT_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `errCode` | `number` | Error code (`0` = success) |
+| `errMsg` | `string` | Error message (optional) |
+| `settings` | `object` | Label settings (key-value map) |
+| `products` | `number[]` | Enabled product types for this label |
+| `label_id` | `number` | Internal label ID |
+
+**Example:**
+
+```json
+{
+  "cid": 4,
+  "errCode": 0,
+  "settings": {
+    "PUBLIC_API_URL": "https://api.smartico.ai"
+  },
+  "products": [1, 2],
+  "label_id": 123
+}
+```
+
+> **Important:** Wait for a successful `INIT_RESPONSE` (errCode: 0) before sending `IDENTIFY`.
+
+---
+
+## Identify
+
+Identifies (authenticates) the user. Must be sent after a successful `INIT`.
+
+### Request
+
+**ClassId:** `5` (IDENTIFY)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `ext_user_id` | `string` | External user ID (your system's user identifier) |
+| `hash` | `string` | HMAC authentication hash |
+| `ua` | `object` | User agent / device information (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 5,
+  "ext_user_id": "user_12345",
+  "hash": "a1b2c3d4e5f6..."
+}
+```
+
+### Response
+
+**ClassId:** `6` (IDENTIFY_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `errCode` | `number` | Error code (`0` = success) |
+| `errMsg` | `string` | Error message (optional) |
+| `user_id` | `number` | Smartico internal user ID |
+| `ext_user_id` | `string` | External user ID (echoed back) |
+| `public_username` | `string` | User's display name |
+| `avatar_id` | `string` | User's current avatar ID |
+| `props` | `object` | User's public properties (points, level, balances) |
+| `pubic_username_set` | `boolean` | Whether the user has set a custom username |
+
+**Example:**
+
+```json
+{
+  "cid": 6,
+  "errCode": 0,
+  "user_id": 98765,
+  "ext_user_id": "user_12345",
+  "public_username": "Player123",
+  "avatar_id": "av_001",
+  "props": {
+    "ach_points_balance": 1500,
+    "ach_level_current": "Silver",
+    "ach_points_ever": 5000
+  },
+  "pubic_username_set": false
+}
+```
+
+> **Important:** Wait for a successful `IDENTIFY_RESPONSE` (errCode: 0) before sending `LOGIN` or any API methods.
+
+---
+
+## Login
+
+Sent after a successful `IDENTIFY` to report a user login event. Contains optional user-agent metadata.
+
+### Request
+
+**ClassId:** `7` (LOGIN)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `payload` | `object` | Optional metadata (user agent info, custom data) |
+
+**Example:**
+
+```json
+{
+  "cid": 7,
+  "payload": {
+    "ua_os_name": "iOS",
+    "ua_device_type": "mobile",
+    "ua_browser": "native"
+  }
+}
+```
+
+### Response
+
+**ClassId:** `11` (LOGIN_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `errCode` | `number` | Error code (`0` = success) |
+| `errMsg` | `string` | Error message (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 11,
+  "errCode": 0
+}
+```
+
+---
+
+## Logout
+
+Logs the user out. After receiving a successful response, the client should forget user data and reconnect if needed.
+
+### Request
+
+**ClassId:** `8` (LOGOUT)
+
+No method-specific fields required.
+
+**Example:**
+
+```json
+{
+  "cid": 8
+}
+```
+
+### Response
+
+**ClassId:** `12` (LOGOUT_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `errCode` | `number` | Error code (`0` = success) |
+| `errMsg` | `string` | Error message (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 12,
+  "errCode": 0
+}
+```
+
+> **Recommended action:** On successful logout, clear cached user data and reconnect the WebSocket to start a fresh session.
 
 ---
 
@@ -132,6 +396,9 @@ Unlike request/response methods, server initiated messages can arrive at any tim
 | `706` | SAW_SPINS_COUNT_PUSH | Spin count updated |
 | `707` | SAW_SHOW_SPIN_PUSH | Trigger to show mini-game |
 | `808` | JP_WIN_PUSH | Jackpot win notification |
+| `708` | SAW_PRIZE_DROP_WIN_PUSH | Prize drop win notification |
+| `105` | CLIENT_EXECUTE_DEEPLINK_EVENT | Execute deep link on client |
+| `107` | CLIENT_EXECUTE_JS_EVENT | Execute JavaScript on client |
 
 ---
 
@@ -313,6 +580,104 @@ Sent when a jackpot is won (can be the current user or another player).
 
 ---
 
+## SAW_PRIZE_DROP_WIN_PUSH
+
+Sent when a prize drop is won by the user.
+
+**ClassId:** `708`
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | Message type identifier |
+| `request_id` | `string` | Unique request ID (GUID) |
+| `saw_template_id` | `number` | Mini-game template ID |
+| `saw_prize` | `object` | Prize details (SAWPrize object) |
+| `saw_template` | `object` | Template details (SAWTemplate object) |
+| `pending_message_id` | `number` | ID of the pending message |
+
+**Example:**
+
+```json
+{
+  "cid": 708,
+  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+  "saw_template_id": 123,
+  "saw_prize": { "saw_prize_id": 1, "prize_value": 100 },
+  "saw_template": { "saw_template_id": 123, "saw_game_type_id": 5 },
+  "pending_message_id": 456
+}
+```
+
+**Recommended action:** Display prize drop win notification and call `prizeDropWinAcknowledge` to acknowledge.
+
+---
+
+## CLIENT_EXECUTE_DEEPLINK_EVENT
+
+Server-initiated event to execute a deep link on the client.
+
+**ClassId:** `105`
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | Message type identifier |
+| `engagement_uid` | `string` | Engagement unique ID |
+| `engagement_id` | `number` | Engagement ID |
+| `root_audience_id` | `number` | Root audience ID |
+| `payload` | `object` | Contains `dp` field with the deep link URL |
+
+**Example:**
+
+```json
+{
+  "cid": 105,
+  "engagement_uid": "eng-001",
+  "engagement_id": 1,
+  "root_audience_id": 1,
+  "payload": { "dp": "myapp://promotions/summer" }
+}
+```
+
+**Recommended action:** Report impression via ClassId 103, then navigate to the deep link URL.
+
+---
+
+## CLIENT_EXECUTE_JS_EVENT
+
+Server-initiated event to execute JavaScript code on the client. Native clients should handle this appropriately or ignore.
+
+**ClassId:** `107`
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | Message type identifier |
+| `engagement_uid` | `string` | Engagement unique ID |
+| `engagement_id` | `number` | Engagement ID |
+| `root_audience_id` | `number` | Root audience ID |
+| `script` | `string` | JavaScript code to execute |
+
+**Example:**
+
+```json
+{
+  "cid": 107,
+  "engagement_uid": "eng-001",
+  "engagement_id": 1,
+  "root_audience_id": 1,
+  "script": "console.log('hello')"
+}
+```
+
+**Recommended action:** Report impression via ClassId 103. For native clients, evaluate if the script can be handled natively or ignore.
+
+---
+
 # API Methods
 
 ## User
@@ -419,6 +784,95 @@ Check if the current user belongs to one or more segments. Pass a single ID or m
     { "segment_id": 2, "is_matching": false },
     { "segment_id": 3, "is_matching": true }
   ]
+}
+```
+
+---
+
+### setAvatar
+
+Set user's avatar.
+
+#### Request
+
+**ClassId:** `157`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `avatar_id` | `string` | Avatar ID to set |
+| `skip_change_event` | `boolean` | If true, skips the avatar changed event (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 157,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "avatar_id": "av_001"
+}
+```
+
+#### Response
+
+**ClassId:** `158`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `avatar_id` | `string` | Updated avatar ID |
+
+**Example:**
+
+```json
+{
+  "cid": 158,
+  "uuid": "abc-123",
+  "errCode": 0,
+  "avatar_id": "av_001"
+}
+```
+
+---
+
+### setCustomUsername
+
+Set user's custom display name.
+
+#### Request
+
+**ClassId:** `159`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `public_username_custom` | `string` | Custom username to set |
+
+**Example:**
+
+```json
+{
+  "cid": 159,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "public_username_custom": "SuperPlayer"
+}
+```
+
+#### Response
+
+**ClassId:** `160`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `public_username_custom` | `string` | Updated custom username |
+
+**Example:**
+
+```json
+{
+  "cid": 160,
+  "uuid": "abc-123",
+  "errCode": 0,
+  "public_username_custom": "SuperPlayer"
 }
 ```
 
@@ -583,7 +1037,7 @@ Opt-in to a mission that requires opt-in.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `ach_id` | `number` | Mission ID |
+| `achievementId` | `number` | Mission ID |
 
 #### Response
 
@@ -875,7 +1329,20 @@ Play a mini-game and get prize.
 
 | Field | Type | Description |
 |-------|------|-------------|
+| `request_id` | `string` | Client-generated unique request ID (GUID) |
 | `saw_template_id` | `number` | Mini-game template ID |
+
+**Example:**
+
+```json
+{
+  "cid": 702,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+  "saw_template_id": 123
+}
+```
 
 #### Response
 
@@ -906,7 +1373,18 @@ Play a mini-game multiple times in a single request.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `spins` | `array` | Array of spin results, each containing prize information |
+| `results` | `SAWDoSpinResponse[]` | Array of spin results |
+
+Each item in `results`:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `request_id` | `string` | Request ID matching the request |
+| `saw_prize_id` | `number` | Won prize ID |
+| `errCode` | `number` | Error code for this spin (`0` = success) |
+| `errMsg` | `string` | Error message (if any) |
+| `jackpot_amount` | `number` | Jackpot amount if won jackpot prize (optional) |
+| `first_spin_in_period` | `number` | Whether this is the first spin in the period |
 
 #### Example
 
@@ -930,10 +1408,10 @@ Play a mini-game multiple times in a single request.
   "cid": 713,
   "uuid": "batch-123",
   "errCode": 0,
-  "spins": [
-    { "request_id": "spin-1", "prize_type": 1, "prize_value": 100 },
-    { "request_id": "spin-2", "prize_type": 2, "prize_value": 50 },
-    { "request_id": "spin-3", "prize_type": 1, "prize_value": 200 }
+  "results": [
+    { "request_id": "spin-1", "saw_prize_id": 10, "errCode": 0, "first_spin_in_period": 1 },
+    { "request_id": "spin-2", "saw_prize_id": 5, "errCode": 0, "first_spin_in_period": 0 },
+    { "request_id": "spin-3", "saw_prize_id": 10, "errCode": 0, "first_spin_in_period": 0 }
   ]
 }
 ```
@@ -980,7 +1458,126 @@ Get mini-game play history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `history` | [`SAWPrizesHistory[]`](../api/interfaces/SAWPrizesHistory.md) | Array of history items |
+| `prizes` | [`SAWPrizesHistory[]`](../api/interfaces/SAWPrizesHistory.md) | Array of history items |
+| `hasMore` | `boolean` | Whether more items are available for pagination |
+
+---
+
+### acknowledgeMiniGameSpinPush
+
+Acknowledge a mini-game spin push. Sent after handling `SAW_SHOW_SPIN_PUSH` (707) to confirm the spin push was processed. Fire-and-forget, no response expected.
+
+#### Request
+
+**ClassId:** `711`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `saw_template_id` | `number` | Mini-game template ID |
+| `pending_message_id` | `number` | Pending message ID from the push |
+
+**Example:**
+
+```json
+{
+  "cid": 711,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "saw_template_id": 123,
+  "pending_message_id": 456
+}
+```
+
+---
+
+### miniGameWinAcknowledgeBatch
+
+Acknowledge multiple mini-game wins at once. Used after `playMiniGameBatch`.
+
+#### Request
+
+**ClassId:** `714`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `request_ids` | `string[]` | Array of request IDs to acknowledge |
+
+**Example:**
+
+```json
+{
+  "cid": 714,
+  "uuid": "ack-batch-123",
+  "ts": 1699999999999,
+  "request_ids": ["spin-1", "spin-2", "spin-3"]
+}
+```
+
+#### Response
+
+**ClassId:** `715`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `results` | `array` | Array of acknowledgement results |
+
+Each item in `results`:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `request_id` | `string` | Request ID |
+| `errCode` | `number` | Error code for this acknowledgement |
+| `errMessage` | `string` | Error message (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 715,
+  "uuid": "ack-batch-123",
+  "errCode": 0,
+  "results": [
+    { "request_id": "spin-1", "errCode": 0 },
+    { "request_id": "spin-2", "errCode": 0 },
+    { "request_id": "spin-3", "errCode": 0 }
+  ]
+}
+```
+
+---
+
+### prizeDropWinAcknowledge
+
+Acknowledge a prize drop win. Should be called after receiving `SAW_PRIZE_DROP_WIN_PUSH` (708).
+
+#### Request
+
+**ClassId:** `709`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `request_id` | `string` | Request ID from the prize drop push (GUID) |
+| `pending_message_id` | `number` | Pending message ID from the push |
+| `claim_required` | `boolean` | Whether claim is required |
+
+**Example:**
+
+```json
+{
+  "cid": 709,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "request_id": "550e8400-e29b-41d4-a716-446655440000",
+  "pending_message_id": 456,
+  "claim_required": false
+}
+```
+
+#### Response
+
+**ClassId:** `710`
+
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
 
 ---
 
@@ -1016,7 +1613,7 @@ Get detailed information about a tournament instance including leaderboard.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `tournament_instance_id` | `number` | Tournament instance ID |
+| `tournamentInstanceId` | `number` | Tournament instance ID |
 
 #### Response
 
@@ -1040,7 +1637,7 @@ Register user in a tournament.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `tournament_instance_id` | `number` | Tournament instance ID |
+| `tournamentInstanceId` | `number` | Tournament instance ID |
 
 #### Response
 
@@ -1062,8 +1659,9 @@ Get leaderboard for a specific period type.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `period_type` | `number` | Period type: `1` = Daily, `2` = Weekly, `3` = Monthly |
-| `get_previous_period` | `boolean` | Get previous period instead of current |
+| `period_type_id` | `number` | Period type: `1` = Daily, `2` = Weekly, `3` = Monthly (optional, if not set returns all boards) |
+| `snapshot_offset` | `number` | `0` = current period, `1` = previous period, `2` = period before previous, etc. |
+| `include_users` | `boolean` | Whether to include user details (optional) |
 
 #### Response
 
@@ -1089,9 +1687,9 @@ Get user's inbox messages.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `from` | `number` | Start index (default 0) |
-| `to` | `number` | End index (default 20) |
-| `only_favorite` | `boolean` | Filter favorites only |
+| `limit` | `number` | Max messages to return (default 20) |
+| `offset` | `number` | Offset for pagination (default 0) |
+| `starred_only` | `boolean` | Filter favorites only |
 | `category_id` | `number` | Filter by category |
 | `read_status` | `number` | Filter by read status |
 
@@ -1101,7 +1699,7 @@ Get user's inbox messages.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `messages` | [`InboxMessage[]`](../api/interfaces/InboxMessage.md) | Array of messages |
+| `log` | [`InboxMessage[]`](../api/interfaces/InboxMessage.md) | Array of messages |
 | `unread_count` | `number` | Total unread count |
 
 ---
@@ -1116,7 +1714,7 @@ Mark an inbox message as read.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `message_guid` | `string` | Message GUID |
+| `engagement_uid` | `string` | Message engagement UID |
 
 #### Response
 
@@ -1136,8 +1734,8 @@ Mark/unmark an inbox message as favorite.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `message_guid` | `string` | Message GUID |
-| `mark` | `boolean` | `true` to add, `false` to remove |
+| `engagement_uid` | `string` | Message engagement UID |
+| `is_starred` | `boolean` | `true` to add, `false` to remove |
 
 #### Response
 
@@ -1157,7 +1755,7 @@ Delete an inbox message.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `message_guid` | `string` | Message GUID |
+| `engagement_uid` | `string` | Message engagement UID |
 
 #### Response
 
@@ -1171,7 +1769,7 @@ No method-specific fields. Returns only the common response fields (see [Common 
 
 Get unread inbox message count.
 
-> **Note:** This uses the same ClassId as `getInboxMessages`. The unread count is returned in the `unread_count` field of the response.
+> **Note:** This uses the same ClassId as `getInboxMessages`. The unread count is returned in the `unread_count` field of the response. Send a minimal request with `limit: 1` to get the count without fetching all messages.
 
 #### Request
 
@@ -1356,7 +1954,71 @@ Get games eligible for a specific jackpot.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `games` | `array` | Array of eligible game IDs |
+| `eligible_games` | [`AchRelatedGame[]`](../api/interfaces/AchRelatedGame.md) | Array of eligible games |
+
+---
+
+### getJackpotLatestPots
+
+Get latest jackpot pot values for specified templates.
+
+#### Request
+
+**ClassId:** `802`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `jp_template_ids` | `number[]` | Array of jackpot template IDs |
+
+**Example:**
+
+```json
+{
+  "cid": 802,
+  "uuid": "pot-123",
+  "ts": 1699999999999,
+  "jp_template_ids": [1, 2, 3]
+}
+```
+
+#### Response
+
+**ClassId:** `803`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `items` | `JackpotPot[]` | Array of jackpot pot objects |
+
+Each `JackpotPot`:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `jp_template_id` | `number` | Jackpot template ID |
+| `jp_pot_id` | `number` | Jackpot pot ID |
+| `current_pot_amount` | `number` | Current pot amount in base currency |
+| `current_pot_amount_user_currency` | `number` | Current pot amount in user's currency |
+| `explode_date_ts` | `number` | Timestamp when pot exploded (0 if not yet) |
+| `current_pot_temperature` | `number` | Temperature: 0=Cold, 1=Warm, 2=Hot, 3=Burning |
+
+**Example:**
+
+```json
+{
+  "cid": 803,
+  "uuid": "pot-123",
+  "errCode": 0,
+  "items": [
+    {
+      "jp_template_id": 1,
+      "jp_pot_id": 100,
+      "current_pot_amount": 50000,
+      "current_pot_amount_user_currency": 50000,
+      "explode_date_ts": 0,
+      "current_pot_temperature": 2
+    }
+  ]
+}
+```
 
 ---
 
@@ -1793,6 +2455,160 @@ No method-specific fields. Returns only the common response fields (see [Common 
 
 ---
 
+## Engagement Tracking
+
+### reportEngagementImpression
+
+Report that an engagement message was displayed to the user (impression event). Fire-and-forget, no response expected.
+
+#### Request
+
+**ClassId:** `103`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `engagement_uid` | `string` | Engagement unique ID |
+| `activityType` | `number` | Activity type from CJMActivityType enum: `20`=Banner, `30`=Popup, `31`=Inbox, `40`=Push |
+
+**Example:**
+
+```json
+{
+  "cid": 103,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "engagement_uid": "eng-001",
+  "activityType": 30
+}
+```
+
+---
+
+### reportEngagementAction
+
+Report that a user interacted with an engagement message (click/action event). Fire-and-forget, no response expected.
+
+#### Request
+
+**ClassId:** `104`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `engagement_uid` | `string` | Engagement unique ID |
+| `activityType` | `number` | Activity type from CJMActivityType enum |
+| `action` | `string` | Action identifier (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 104,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "engagement_uid": "eng-001",
+  "activityType": 30,
+  "action": "cta_click"
+}
+```
+
+---
+
+### reportEngagementFailed
+
+Report that an engagement message failed to display. Fire-and-forget, no response expected.
+
+#### Request
+
+**ClassId:** `106`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `engagement_uid` | `string` | Engagement unique ID |
+| `activityType` | `number` | Activity type from CJMActivityType enum |
+| `action` | `string` | Action that failed (optional) |
+| `reason` | `string` | Failure reason (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 106,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "engagement_uid": "eng-001",
+  "activityType": 30,
+  "reason": "render_error"
+}
+```
+
+---
+
+### trackActivity
+
+Track a client-side analytics activity. Fire-and-forget, no response expected.
+
+#### Request
+
+**ClassId:** `155`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `activity_id` | `number` | Activity identifier |
+| `view_time_sec` | `number` | View time in seconds (optional) |
+
+**Example:**
+
+```json
+{
+  "cid": 155,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "activity_id": 1,
+  "view_time_sec": 30
+}
+```
+
+---
+
+## Push Notifications
+
+### registerPushNotificationsToken
+
+Register a push notifications token for the current user. Required for receiving push notifications on native platforms.
+
+#### Request
+
+**ClassId:** `1003`
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `token` | `string` | Push notification token (FCM token for Android, APNs token for iOS). Set to `null` to unregister. |
+| `platform` | `number` | Platform: `6`=NATIVE_IOS, `7`=NATIVE_ANDROID |
+| `pushNotificationUserStatus` | `number` | Status: `0`=ALLOWED, `1`=ASK, `2`=BLOCKED, `3`=SUSPENDED |
+| `app_package_id` | `string` | Application package ID (e.g. "com.example.app") |
+
+**Example:**
+
+```json
+{
+  "cid": 1003,
+  "uuid": "push-123",
+  "ts": 1699999999999,
+  "token": "fMI-qkT3...",
+  "platform": 7,
+  "pushNotificationUserStatus": 0,
+  "app_package_id": "com.example.app"
+}
+```
+
+#### Response
+
+**ClassId:** `2003`
+
+No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
+
+---
+
 ## Other
 
 ### getTranslations
@@ -1805,6 +2621,8 @@ Get UI translations for a specific language.
 
 | Field | Type | Description |
 |-------|------|-------------|
+| `hash_code` | `number` | Hash code for caching (send `0` on first request) |
+| `areas` | `number[]` | Translation areas to fetch (send `[]` for all) |
 | `lang_code` | `string` | Language code (e.g., "en", "de", "fr") |
 
 #### Response
@@ -1813,6 +2631,7 @@ Get UI translations for a specific language.
 
 | Field | Type | Description |
 |-------|------|-------------|
+| `hash_code` | `number` | Hash code (use for subsequent requests to enable caching) |
 | `translations` | `object` | Key-value map of translation strings |
 
 #### Example
@@ -1823,6 +2642,8 @@ Get UI translations for a specific language.
   "cid": 13,
   "uuid": "trans-123",
   "ts": 1699999999999,
+  "hash_code": 0,
+  "areas": [],
   "lang_code": "en"
 }
 ```
@@ -1833,6 +2654,7 @@ Get UI translations for a specific language.
   "cid": 14,
   "uuid": "trans-123",
   "errCode": 0,
+  "hash_code": 12345,
   "translations": {
     "button.spin": "Spin Now",
     "label.points": "Points",
@@ -1855,6 +2677,8 @@ Get user's points history.
 |-------|------|-------------|
 | `startTimeSeconds` | `number` | Start time (Unix timestamp in seconds) |
 | `endTimeSeconds` | `number` | End time (Unix timestamp in seconds) |
+| `limit` | `number` | Max items to return |
+| `offset` | `number` | Offset for pagination |
 
 #### Response
 
