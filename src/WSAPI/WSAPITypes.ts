@@ -558,6 +558,8 @@ export interface TStoreItem {
 	only_in_custom_section?: boolean;
 	/** ID of specific Custom Section type */
 	custom_section_type_id?: number;
+	/** The message that should be shown to the user if they are not eligible to buy it. This message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item'. */
+	cant_buy_message?: string;
 }
 
 /**

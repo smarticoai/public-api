@@ -56,6 +56,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				custom_section_id: r.itemPublicMeta.custom_section_id,
 				only_in_custom_section: r.itemPublicMeta.only_in_custom_section,
 				custom_section_type_id: r.itemPublicMeta.custom_section_type_id,
+				...(r.itemPublicMeta.cant_buy_message ? { cant_buy_message: r.itemPublicMeta.cant_buy_message } : {}),
 			};
 			return x;
 		});

@@ -238,3 +238,11 @@ ___
 • `Optional` **custom\_section\_type\_id**: `number`
 
 ID of specific Custom Section type
+
+___
+
+### cant\_buy\_message
+
+• `Optional` **cant\_buy\_message**: `string`
+
+The message that should be shown to the user if they are not eligible to buy it. This message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item'.
