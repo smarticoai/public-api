@@ -99,6 +99,7 @@ import {
 	TRaffle,
 	TLevelCurrent,
 	TActivityLog,
+	TRaffleDraw,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -127,7 +128,7 @@ import { GetRafflesResponse, raffleTransform } from './Raffle/GetRafflesResponse
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform } from './ActivityLog';
 import { InboxCategories } from './Inbox/InboxCategories';
-import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse } from './Raffle';
+import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform } from './Raffle';
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
@@ -1292,7 +1293,7 @@ class SmarticoAPI {
 		return await this.send<GetRafflesResponse>(message, ClassId.RAF_GET_RAFFLES_RESPONSE);
 	}
 
-	public async getRaffleDrawRun(user_ext_id: string, payload: { raffle_id: number; run_id: number }): Promise<GetDrawRunResponse> {
+	public async getRaffleDrawRun(user_ext_id: string, payload: { raffle_id: number; run_id: number; winners_limit?: number; winners_offset?: number }): Promise<GetDrawRunResponse> {
 		const message = this.buildMessage<GetDrawRunRequest, GetDrawRunResponse>(
 			user_ext_id,
 			ClassId.RAF_GET_DRAW_RUN_REQUEST,
@@ -1300,6 +1301,19 @@ class SmarticoAPI {
 		);
 
 		return await this.send<GetDrawRunResponse>(message, ClassId.RAF_GET_DRAW_RUN_RESPONSE);
+	}
+
+	public async getRaffleDrawRunT(
+		user_ext_id: string,
+		raffle_id: number,
+		run_id: number,
+		winners_from: number = 0,
+		winners_to: number = 20,
+	): Promise<TRaffleDraw> {
+		const winners_limit = winners_to - winners_from > 50 ? 50 : winners_to - winners_from;
+		const winners_offset = winners_from;
+
+		return drawRunTransform(await this.getRaffleDrawRun(user_ext_id, { raffle_id, run_id, winners_limit, winners_offset }),);
 	}
 
 	public async getRaffleDrawRunsHistory(

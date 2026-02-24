@@ -54,7 +54,6 @@ import { GetRelatedAchTourResponse } from '../Missions/GetRelatedAchTourResponse
 import { InboxCategories } from '../Inbox/InboxCategories';
 import {
 	drawRunHistoryTransform,
-	drawRunTransform,
 	raffleClaimPrizeResponseTransform,
 	RaffleOptinRequest,
 	RaffleOptinResponse,
@@ -1379,7 +1378,8 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns draw run for provided raffle_id and run_id
+	 * Returns draw run for provided raffle_id and run_id.
+	 * You can pass winners_from and winners_to parameters to get a specific range of winners. Default is 0-20.
 	 *
 	 *
 	 * **Example**:
@@ -1401,14 +1401,12 @@ export class WSAPI {
 	 *
 	 */
 
-	public async getRaffleDrawRun(props: { raffle_id: number; run_id: number }): Promise<TRaffleDraw> {
-		const res = await this.api.getRaffleDrawRun(null, props);
-
+	public async getRaffleDrawRun(props: { raffle_id: number; run_id: number; winners_from?: number; winners_to?: number }): Promise<TRaffleDraw> {
 		if (!props.raffle_id || !props.run_id) {
 			throw new Error('both raffle_id and run_id are required');
 		}
 
-		return drawRunTransform(res);
+		return await this.api.getRaffleDrawRunT(null, props.raffle_id, props.run_id, props.winners_from, props.winners_to);
 	}
 
 	/**

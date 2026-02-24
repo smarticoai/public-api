@@ -1261,7 +1261,8 @@ ___
 
 ▸ **getRaffleDrawRun**(`props`): `Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
 
-Returns draw run for provided raffle_id and run_id
+Returns draw run for provided raffle_id and run_id.
+You can pass winners_from and winners_to parameters to get a specific range of winners. Default is 0-20.
 
 **Example**:
 
@@ -1286,6 +1287,8 @@ _smartico.vapi('EN').getRaffleDrawRun({ raffle_id: 156, run_id: 145 }).then((res
 | `props` | `Object` |
 | `props.raffle_id` | `number` |
 | `props.run_id` | `number` |
+| `props.winners_from?` | `number` |
+| `props.winners_to?` | `number` |
 
 #### Returns
 
