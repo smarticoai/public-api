@@ -250,7 +250,7 @@ export class WSAPI {
 		return OCache.use(onUpdateContextKey.CurrentLevel, ECacheContext.WSAPI, () => this.api.getLevelCurrent(null), CACHE_DATA_SEC);
 	}
 
-	/** Returns all the missions available the current user.
+	/** Returns all the missions configured for the current user (server-side scoped, not filtered by Widget visibility).
 	 * The returned missions are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
 	 * Note that each time you call getMissions with a new onUpdate callback, the old one will be overwritten by the new one.
 	 * The onUpdate callback will be called on mission OptIn and the updated missions will be passed to it.
@@ -523,7 +523,7 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns the list of mini-games available for user
+	 * Returns the list of mini-games configured for the current user (not filtered by spin availability or Widget visibility).
 	 * The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one.
 	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
 	 *
