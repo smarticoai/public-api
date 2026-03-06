@@ -10,4 +10,6 @@ export interface Level {
 	required_level_counter_1: number;
 	required_level_counter_2: number;
 	general_level_progress: number;
+	/** The ordinal position of the level */
+	ordinal_position?: number;
 }

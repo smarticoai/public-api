@@ -281,6 +281,8 @@ export interface TLevel {
 	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
 	 */
 	custom_data: string;
+	/** The ordinal position of the level */
+	ordinal_position: number;
 }
 
 /**
@@ -288,8 +290,6 @@ export interface TLevel {
  */
 
 export interface TLevelCurrent extends TLevel {
-	/** The ordinal position of the level */
-	ordinal_position: number;
 	/** The progress of the user towards next level in the percents to complete */
 	progress: number;
 }
