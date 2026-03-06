@@ -10,9 +10,7 @@ export interface GetLevelMapResponse extends ProtocolResponse {
 export const GetLevelMapResponseTransform = (levels: GetLevelMapResponse): TLevel[] => {
 	if (!levels?.levels) return [];
 
-	const sorted = [...levels.levels].sort((a, b) => a.required_points - b.required_points);
-
-	return sorted.map((l, index) => ({
+	const mapped = levels.levels.map((l) => ({
 		id: l.level_id,
 		name: l.level_public_meta.name,
 		description: l.level_public_meta.description,
@@ -22,6 +20,13 @@ export const GetLevelMapResponseTransform = (levels: GetLevelMapResponse): TLeve
 		required_level_counter_1: l.required_level_counter_1,
 		required_level_counter_2: l.required_level_counter_2,
 		custom_data: IntUtils.JsonOrText(l.level_public_meta?.custom_data),
-		ordinal_position: index + 1,
+		ordinal_position: 0,
 	}));
+
+	const ordinalById = new Map<number, number>();
+	[...mapped]
+		.sort((a, b) => a.required_points - b.required_points)
+		.forEach((l, index) => ordinalById.set(l.id, index + 1));
+
+	return mapped.map((l) => ({ ...l, ordinal_position: ordinalById.get(l.id) }));
 };

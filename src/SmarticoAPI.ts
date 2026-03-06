@@ -1076,21 +1076,23 @@ class SmarticoAPI {
 		const userInfo = await this.getUserGamificationInfo(user_ext_id);
 		if (!levels || levels.length === 0) return null;
 
-		let currentLevelIndex = levels.findIndex((level) => level.id === userInfo.current_level);
+		const sortedLevels = [...levels].sort((a, b) => a.required_points - b.required_points);
+
+		let currentLevelIndex = sortedLevels.findIndex((level) => level.id === userInfo.current_level);
 
 		if (currentLevelIndex === -1) {
 			const userPointsEver = userInfo.points_ever ?? 0;
-			currentLevelIndex = levels.findIndex((level, index) => {
-				const nextLevel = levels[index + 1];
+			currentLevelIndex = sortedLevels.findIndex((level, index) => {
+				const nextLevel = sortedLevels[index + 1];
 				return userPointsEver >= level.required_points && (!nextLevel || userPointsEver < nextLevel.required_points);
 			});
 			if (currentLevelIndex === -1) {
-				currentLevelIndex = levels.length - 1;
+				currentLevelIndex = sortedLevels.length - 1;
 			}
 		}
 
-		const currentLevel = levels[currentLevelIndex];
-		const nextLevel = levels[currentLevelIndex + 1];
+		const currentLevel = sortedLevels[currentLevelIndex];
+		const nextLevel = sortedLevels[currentLevelIndex + 1];
 		const userPointsEver = userInfo.points_ever ?? 0;
 		const progress = nextLevel
 			? ((userPointsEver - currentLevel.required_points) / (nextLevel.required_points - currentLevel.required_points)) * 100
