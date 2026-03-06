@@ -49,3 +49,11 @@ ___
 ### general\_level\_progress
 
 • **general\_level\_progress**: `number`
+
+___
+
+### ordinal\_position
+
+• `Optional` **ordinal\_position**: `number`
+
+The ordinal position of the level

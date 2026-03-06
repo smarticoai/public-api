@@ -130,6 +130,10 @@ ___
 
 The ordinal position of the level
 
+#### Inherited from
+
+[TLevel](TLevel.md).[ordinal_position](TLevel.md#ordinal_position)
+
 ___
 
 ### progress
