@@ -164,12 +164,11 @@ export class WSAPI {
 	}
 
 	/** Returns information about current user
-	 *
+	 * Pay attention that this method is synchronous and returns the user profile object immediately, not a promise.
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getUserProfile(result => {
-	 *  console.log(result);
-	 * });
+	 * var p = _smartico.api.getUserProfile);
+	 * console.log(p);
 	 * ```
 	 * **Visitor mode: not supported**
 	 * */
