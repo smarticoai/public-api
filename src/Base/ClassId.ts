@@ -102,6 +102,11 @@ export enum ClassId {
 	GET_POINT_HISTORY_REQUEST = 545,
 	GET_POINT_HISTORY_RESPONSE = 546,
 
+	GET_AVATARS_LIST_REQUEST = 560,
+	GET_AVATARS_LIST_RESPONSE = 561,
+	GET_AVATAR_PROMPTS_REQUEST = 564,
+	GET_AVATAR_PROMPTS_RESPONSE = 565,
+
 	/*
         !Important, if adding new messages that are 'acting' on behalf of the client,
         you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION
