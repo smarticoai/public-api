@@ -20,6 +20,8 @@ export const ActivityLogTransform = (items: ActivityLogEntry[]): TActivityLog[] 
 			source_type_id: item.source_type_id,
 		}
 
+		item.type = item.type ?? UserBalanceType.Points;
+
 		if (item.type === UserBalanceType.Diamonds || item.type === UserBalanceType.Gems) {
 			itemTransformed.type = item.type;
 			itemTransformed.amount = item.amount;
