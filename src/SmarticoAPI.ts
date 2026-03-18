@@ -133,9 +133,17 @@ import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotW
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
 import { GetJackpotEligibleGamesResponse, GetJackpotEligibleGamesResponseTransform, JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from './Jackpots/GetJackpotEligibleGamesResponse';
+import {
+	GamesApiResponse,
+	GamePickRound,
+	GamePickRoundBoard,
+	GamePickUserInfo,
+	GamePickGameInfo,
+} from './GamePick';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
+const GAMES_API_URL = 'https://r-games-api{ENV_ID}.smr.vc';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
 const DEFAULT_LANG_EN = 'EN';
 
@@ -160,7 +168,10 @@ class SmarticoAPI {
 	private wsUrl: string;
 	private inboxCdnUrl: string;
 	private partnerUrl: string;
+	public gamesApiUrl: string;
 	public avatarDomain: string;
+	private envId: number;
+	private full_label_api_key: string;
 
 	private logger: ILogger;
 	private logCIDs: ClassId[];
@@ -183,12 +194,16 @@ class SmarticoAPI {
 		this.logHTTPTiming = options.logHTTPTiming || false;
 		this.tracker = options.tracker;
 
+		this.envId = SmarticoAPI.getEnvId(label_api_key);
+
 		this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
 		this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key);
+		this.gamesApiUrl = SmarticoAPI.getGamesApiUrl(label_api_key);
 
 		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
 
 		this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key);
+		this.full_label_api_key = label_api_key;
 	}
 
 	public static getEnvDnsSuffix(label_api_key: string): string {
@@ -252,6 +267,10 @@ class SmarticoAPI {
 
 	public static getPublicWsUrl(label_api_key: string): string {
 		return C_SOCKET_PROD.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
+	}
+
+	public static getGamesApiUrl(label_api_key: string): string {
+		return GAMES_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 	}
 
 	public static getAvatarUrl(label_api_key: string): string {
@@ -1264,6 +1283,115 @@ class SmarticoAPI {
 		);
 
 		return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
+	}
+
+	private static gpHash32a(str: string): string {
+		let hval = 0x811c9dc5;
+		for (let i = 0; i < str.length; ++i) {
+			hval ^= str.charCodeAt(i);
+			hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
+		}
+		return ('0000000' + (hval >>> 0).toString(16)).substr(-8);
+	}
+
+	private static gpBuildHash(ext_user_id: string, smartico_ext_user_id: string, ext_game_id: number, env_id: number): string {
+		const toHash = `${ext_user_id}|${smartico_ext_user_id}|${ext_game_id}|${env_id}:xxx`;
+		return SmarticoAPI.gpHash32a(toHash);
+	}
+
+	private buildGamesApiParams(ext_user_id: string, smartico_ext_user_id: string, ext_game_id: number, lang: string): Record<string, string> {
+		const params: Record<string, string> = {
+			ext_user_id,
+			smartico_ext_user_id,
+			ext_game_id: String(ext_game_id),
+			lang,
+			env_id: String(this.envId),
+			label_api_key: this.label_api_key,
+			hash: SmarticoAPI.gpBuildHash(ext_user_id, smartico_ext_user_id, ext_game_id, this.envId),
+		};
+
+		if (this.brand_api_key) {
+			params.brand_key = this.brand_api_key;
+		}
+
+		return params;
+	}
+
+	private async sendGamesApi<T>(method: string, ext_user_id: string, smartico_ext_user_id: string, ext_game_id: number, lang: string, extraParams?: Record<string, any>, usePost: boolean = false): Promise<GamesApiResponse<T>> {
+		const baseParams = this.buildGamesApiParams(ext_user_id, smartico_ext_user_id, ext_game_id, lang);
+		const queryString = Object.entries(baseParams).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
+		let url = `${this.gamesApiUrl}/${method}?${queryString}`;
+
+		let fetchOptions: RequestInit = {
+			method: 'GET',
+			headers: { 'Accept': 'application/json' },
+		};
+
+		if (usePost && extraParams) {
+			fetchOptions = {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(extraParams),
+			};
+		} else if (extraParams) {
+			const extraQuery = Object.entries(extraParams)
+				.map(([k, v]) => `${k}=${encodeURIComponent(JSON.stringify(v))}`)
+				.join('&');
+			url += `&${extraQuery}`;
+		}
+
+		try {
+			const response = await fetch(url, fetchOptions);
+			const data = await response.json();
+			return SmarticoAPI.replaceSmrDomainsWithCloudfront<GamesApiResponse<T>>(data);
+		} catch (e) {
+			this.logger.error(`Failed to call games API: ${method}`, { url, error: e.message });
+			throw new Error(`Failed to call games API: ${method}. ${e.message}`);
+		}
+	}
+
+	public async gpGetActiveRounds(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound[]>> {
+		return this.sendGamesApi<GamePickRound[]>('active-rounds', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	}
+
+	public async gpGetActiveRound(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN, round_id?: number): Promise<GamesApiResponse<GamePickRound>> {
+		const extraParams: Record<string, any> = {};
+		if (round_id !== undefined) {
+			extraParams.round_id = round_id;
+		}
+		return this.sendGamesApi<GamePickRound>('active-round', ext_user_id, smartico_ext_user_id, saw_template_id, lang, Object.keys(extraParams).length > 0 ? extraParams : undefined);
+	}
+
+	public async gpGetGamesHistory(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound[]>> {
+		return this.sendGamesApi<GamePickRound[]>('games-history', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	}
+
+	public async gpGetGameBoard(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, round_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRoundBoard>> {
+		return this.sendGamesApi<GamePickRoundBoard>('game-board', ext_user_id, smartico_ext_user_id, saw_template_id, lang, { round_id });
+	}
+
+	public async gpSubmitSelection(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, round: any, isQuiz: boolean, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound>> {
+		const method = isQuiz ? 'submit-selection-quiz' : 'submit-selection';
+		return this.sendGamesApi<GamePickRound>(method, ext_user_id, smartico_ext_user_id, saw_template_id, lang, { round }, true);
+	}
+
+	public async gpGetUserInfo(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickUserInfo>> {
+		return this.sendGamesApi<GamePickUserInfo>('user-info', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	}
+
+	public async gpGetGameInfo(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickGameInfo>> {
+		return this.sendGamesApi<GamePickGameInfo>('game-info', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	}
+
+	public async gpGetTranslations(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<any>> {
+		return this.sendGamesApi<any>('translations', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	}
+
+	public async gpGetRoundInfoForUser(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, round_id: number, int_user_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound>> {
+		return this.sendGamesApi<GamePickRound>('game-round-info-for-user', ext_user_id, smartico_ext_user_id, saw_template_id, lang, { round_id, int_user_id });
 	}
 
 	public getWSCalls(): WSAPI {

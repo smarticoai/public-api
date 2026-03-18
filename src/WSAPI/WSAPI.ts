@@ -40,6 +40,14 @@ import {
 	TActivityLog,
 	TRaffleOptinResponse,
 } from './WSAPITypes';
+import {
+	GamesApiResponse,
+	GamePickRound,
+	GamePickRoundBoard,
+	GamePickUserInfo,
+	GamePickGameInfo,
+	GamePickRequestParams,
+} from '../GamePick';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
 	JackpotDetails,
@@ -1065,6 +1073,274 @@ export class WSAPI {
 			() => this.api.getActivityLogT(null, startTimeSeconds, endTimeSeconds, from, to),
 			CACHE_DATA_SEC,
 		);
+	}
+
+	/**
+	 * Returns the active rounds for the specified MatchX or Quiz game (identified by saw_template_id).
+	 * Each round contains events (matches/questions) with user selections.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickActiveRounds({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 *      lang: 'EN'
+	 * }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickActiveRounds(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickRound[]>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpGetActiveRounds(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+	}
+
+	/**
+	 * Returns a single active round (the "home" round or a specific round by ID) for the specified MatchX or Quiz game.
+	 * If round_id is not provided, returns the most relevant active round.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickActiveRound({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 * }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickActiveRound(props: GamePickRequestParams & { round_id?: number }): Promise<GamesApiResponse<GamePickRound>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpGetActiveRound(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang, props.round_id);
+	}
+
+	/**
+	 * Returns the history of all rounds (including resolved) for the specified MatchX or Quiz game.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickHistory({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 * }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickHistory(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickRound[]>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpGetGamesHistory(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+	}
+
+	/**
+	 * Returns the leaderboard for a specific round within a MatchX or Quiz game.
+	 * Use round_id = -1 (AllRoundsGameBoardID) for the season/overall leaderboard.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickBoard({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 *      round_id: 456
+	 * }).then((result) => {
+	 *      console.log(result.data.users, result.data.my_user);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickBoard(props: GamePickRequestParams & { round_id: number }): Promise<GamesApiResponse<GamePickRoundBoard>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		if (props.round_id === undefined || props.round_id === null) {
+			throw new Error('round_id is required');
+		}
+		return this.api.gpGetGameBoard(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round_id, props.lang);
+	}
+
+	/**
+	 * Submits picks for a round in a MatchX game.
+	 * Sends the entire round with user selections for all events at once.
+	 * Each event should have team1_user_selection and team2_user_selection (predicted scores).
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.submitGamePickSelection({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 *      round: {
+	 *          round_id: 456,
+	 *          events: [
+	 *              { gp_event_id: 789, team1_user_selection: 2, team2_user_selection: 1 },
+	 *              { gp_event_id: 790, team1_user_selection: 0, team2_user_selection: 3 }
+	 *          ]
+	 *      }
+	 * }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async submitGamePickSelection(props: GamePickRequestParams & { round: any }): Promise<GamesApiResponse<GamePickRound>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpSubmitSelection(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round, false, props.lang);
+	}
+
+	/**
+	 * Submits answers for a round in a Quiz game.
+	 * Sends the entire round with user answers for all events at once.
+	 * Each event should have user_selection (answer value from QuizAnswersValueType).
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.submitGamePickSelectionQuiz({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 *      round: {
+	 *          round_id: 456,
+	 *          events: [
+	 *              { gp_event_id: 789, user_selection: '1' },
+	 *              { gp_event_id: 790, user_selection: 'x' }
+	 *          ]
+	 *      }
+	 * }).then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async submitGamePickSelectionQuiz(props: GamePickRequestParams & { round: any }): Promise<GamesApiResponse<GamePickRound>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpSubmitSelection(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round, true, props.lang);
+	}
+
+	/**
+	 * Returns the current user's profile information within the specified MatchX or Quiz game.
+	 * Includes username, avatar, position, scores, and balances.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickUserInfo({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 * }).then((result) => {
+	 *      console.log(result.data.public_username, result.data.gp_position);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickUserInfo(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickUserInfo>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpGetUserInfo(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+	}
+
+	/**
+	 * Returns the game configuration (template, label info) and the list of all rounds for the specified MatchX or Quiz game.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickGameInfo({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 * }).then((result) => {
+	 *      console.log(result.data.sawTemplate, result.data.allRounds);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickGameInfo(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickGameInfo>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpGetGameInfo(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+	}
+
+	/**
+	 * Returns translations for the MatchX/Quiz game UI.
+	 * Translations are returned as a key-value map based on the user's language.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickTranslations({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 *      lang: 'EN'
+	 * }).then((result) => {
+	 *      console.log(result.data);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickTranslations(props: GamePickRequestParams): Promise<GamesApiResponse<any>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		return this.api.gpGetTranslations(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+	}
+
+	/**
+	 * Returns round data with events and picks for a specific user (identified by their internal user ID).
+	 * Useful for showing another user's predictions from the leaderboard.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getGamePickRoundInfoForUser({
+	 *      saw_template_id: 123,
+	 *      ext_user_id: '149598632',
+	 *      smartico_ext_user_id: 'user@example.com',
+	 *      round_id: 456,
+	 *      int_user_id: 789
+	 * }).then((result) => {
+	 *      console.log(result.data.events);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getGamePickRoundInfoForUser(props: GamePickRequestParams & { round_id: number; int_user_id: number }): Promise<GamesApiResponse<GamePickRound>> {
+		if (!props.saw_template_id) {
+			throw new Error('saw_template_id is required');
+		}
+		if (!props.round_id) {
+			throw new Error('round_id is required');
+		}
+		if (!props.int_user_id) {
+			throw new Error('int_user_id is required');
+		}
+		return this.api.gpGetRoundInfoForUser(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round_id, props.int_user_id, props.lang);
 	}
 
 	private async updateOnSpin(data: SAWSpinsCountPush) {

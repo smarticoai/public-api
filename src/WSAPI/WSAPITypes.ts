@@ -9,6 +9,8 @@ import { InboxCategories } from '../Inbox/InboxCategories';
 import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from '../Raffle';
 import { PointChangeSourceType } from '../ActivityLog/PointChangeSourceType';
 import { UserBalanceType } from '../ActivityLog/UserBalanceType';
+import { SAWGPMarketType } from '../Quiz/MarketsType';
+import { QuizAnswersValueType } from '../Quiz/MarketsAnswers';
 
 
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
@@ -1377,4 +1379,4 @@ export interface TRaffleOptinResponse {
 	err_message?: string;
 }
 
-export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout, PointChangeSourceType, UserBalanceType }
+export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout, PointChangeSourceType, UserBalanceType, SAWGPMarketType, QuizAnswersValueType }
