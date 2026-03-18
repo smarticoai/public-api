@@ -316,3 +316,11 @@ ___
 • `Optional` **hide\_leaderboard\_min\_scores**: `boolean`
 
 When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard
+
+___
+
+### total\_scores
+
+• `Optional` **total\_scores**: `number`
+
+Total scores across all participants in the tournament

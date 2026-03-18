@@ -431,6 +431,18 @@ When enabled, users who don’t meet the minimum qualifying score will be hidden
 
 ___
 
+### total\_scores
+
+• `Optional` **total\_scores**: `number`
+
+Total scores across all participants in the tournament
+
+#### Inherited from
+
+[TTournament](TTournament.md).[total_scores](TTournament.md#total_scores)
+
+___
+
 ### related\_games
 
 • `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame-1.md)[]

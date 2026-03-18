@@ -68,6 +68,8 @@ export interface Tournament {
 	minScoreToWin?: number;
 	/** When enabled, users who don't meet the minimum qualifying score will be hidden from the Leaderboard. */
 	hideLeaderboardsMinScores?: boolean;
+	/** Total scores across all participants in the tournament */
+	totalScores?: number;
 }
 
 export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => {
@@ -112,8 +114,9 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
 				is_in_progress: TournamentUtils.isInProgress(r),
 				is_upcoming: TournamentUtils.isUpcoming(r),
 
-				min_scores_win: r.minScoreToWin,
-				hide_leaderboard_min_scores: r.hideLeaderboardsMinScores,
+			min_scores_win: r.minScoreToWin,
+			hide_leaderboard_min_scores: r.hideLeaderboardsMinScores,
+			total_scores: r.totalScores,
 			};
 
 			if (r.prizeStructure) {

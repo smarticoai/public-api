@@ -415,6 +415,8 @@ export interface TTournament {
 	min_scores_win?: number;
 	/** When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard */
 	hide_leaderboard_min_scores?: boolean;
+	/** Total scores across all participants in the tournament */
+	total_scores?: number;
 }
 
 /**
