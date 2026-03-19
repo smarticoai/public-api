@@ -1,5 +1,13 @@
 import { RaffleDraw } from "./RaffleDraw";
 
+export enum RaffleTicketCapVisualization {
+	/** Show nothing */
+	Empty = 0,
+	/** Show ticket counter */
+	Counter = 1,
+	/** Show message when ticket cap is reached */
+	Message = 2,
+}
 
 interface RafflePublicMeta {
     /** Name of the raffle */
@@ -20,6 +28,12 @@ interface RafflePublicMeta {
 	 * Read more here - <https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes>
      */
 	custom_data: string;
+
+    /**
+     * - Value 1 (Counter): Shows a real-time "Tickets Remaining" display available during the whole Raffle activity.
+     * - Value 2 (Message): Will show a specific message that triggers only when the cap is reached and inform users that tickets will be no longer be issued.
+     */
+    ticket_cap_visualization?: RaffleTicketCapVisualization;
 }
 
 
