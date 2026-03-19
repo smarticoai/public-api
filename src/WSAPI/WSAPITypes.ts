@@ -6,7 +6,7 @@ import { LeaderBoardPeriodType } from '../Leaderboard';
 import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, AchOverviewMissionsFilter, LiquidEntityData } from '../CustomSections';
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
-import { RaffleDrawInstanceState, RaffleDrawTypeExecution } from '../Raffle';
+import { RaffleDrawInstanceState, RaffleDrawTypeExecution, RaffleTicketCapVisualization } from '../Raffle';
 import { PointChangeSourceType } from '../ActivityLog/PointChangeSourceType';
 import { UserBalanceType } from '../ActivityLog/UserBalanceType';
 import { SAWGPMarketType } from '../Quiz/MarketsType';
@@ -1054,6 +1054,10 @@ export interface TRaffle {
 	 * Then the list will always return 3 draws, no matter if the draws are already executed or they are in the future.
 	 */
 	draws: TRaffleDraw[];
+	/**
+	 * Ticket cap visualization
+	 */
+	ticket_cap_visualization: RaffleTicketCapVisualization;
 }
 
 export interface TRaffleTicket {

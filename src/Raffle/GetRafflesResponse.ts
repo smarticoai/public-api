@@ -108,6 +108,7 @@ export const raffleTransform = (items: Raffle[]): TRaffle[] => {
 			max_tickets_count: item.max_tickets_count,
 			current_tickets_count: item.current_tickets_count,
 			draws: drawTransform(item.draws),
+			ticket_cap_visualization: item.public_meta.ticket_cap_visualization,
 		};
 	});
 };
