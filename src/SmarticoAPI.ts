@@ -171,7 +171,6 @@ class SmarticoAPI {
 	public gamesApiUrl: string;
 	public avatarDomain: string;
 	private envId: number;
-	private full_label_api_key: string;
 
 	private logger: ILogger;
 	private logCIDs: ClassId[];
@@ -194,8 +193,6 @@ class SmarticoAPI {
 		this.logHTTPTiming = options.logHTTPTiming || false;
 		this.tracker = options.tracker;
 
-		this.envId = SmarticoAPI.getEnvId(label_api_key);
-
 		this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
 		this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key);
 		this.gamesApiUrl = SmarticoAPI.getGamesApiUrl(label_api_key);
@@ -203,7 +200,6 @@ class SmarticoAPI {
 		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
 
 		this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key);
-		this.full_label_api_key = label_api_key;
 	}
 
 	public static getEnvDnsSuffix(label_api_key: string): string {
@@ -274,7 +270,6 @@ class SmarticoAPI {
 	}
 
 	public static getAvatarUrl(label_api_key: string): string {
-		const envId = SmarticoAPI.getEnvDnsSuffix(label_api_key);
 		const avatarUrl = AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 		return SmarticoAPI.replaceSmrDomainsWithCloudfront(avatarUrl);
 	}
@@ -1285,29 +1280,15 @@ class SmarticoAPI {
 		return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
 	}
 
-	private static gpHash32a(str: string): string {
-		let hval = 0x811c9dc5;
-		for (let i = 0; i < str.length; ++i) {
-			hval ^= str.charCodeAt(i);
-			hval += (hval << 1) + (hval << 4) + (hval << 7) + (hval << 8) + (hval << 24);
-		}
-		return ('0000000' + (hval >>> 0).toString(16)).substr(-8);
-	}
-
-	private static gpBuildHash(ext_user_id: string, smartico_ext_user_id: string, ext_game_id: number, env_id: number): string {
-		const toHash = `${ext_user_id}|${smartico_ext_user_id}|${ext_game_id}|${env_id}:xxx`;
-		return SmarticoAPI.gpHash32a(toHash);
-	}
-
 	private buildGamesApiParams(ext_user_id: string, smartico_ext_user_id: string, ext_game_id: number, lang: string): Record<string, string> {
 		const params: Record<string, string> = {
 			ext_user_id,
 			smartico_ext_user_id,
 			ext_game_id: String(ext_game_id),
 			lang,
-			env_id: String(this.envId),
+			env_id: String(SmarticoAPI.getEnvId(this.label_api_key)),
 			label_api_key: this.label_api_key,
-			hash: SmarticoAPI.gpBuildHash(ext_user_id, smartico_ext_user_id, ext_game_id, this.envId),
+			hash: '',
 		};
 
 		if (this.brand_api_key) {
