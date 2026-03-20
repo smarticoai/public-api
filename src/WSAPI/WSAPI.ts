@@ -1097,7 +1097,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpGetActiveRounds(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+		return this.api.gpGetActiveRounds(props.saw_template_id);
 	}
 
 	/**
@@ -1121,7 +1121,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpGetActiveRound(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang, props.round_id);
+		return this.api.gpGetActiveRound(props.saw_template_id, props.round_id);
 	}
 
 	/**
@@ -1144,7 +1144,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpGetGamesHistory(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+		return this.api.gpGetGamesHistory(props.saw_template_id);
 	}
 
 	/**
@@ -1172,7 +1172,7 @@ export class WSAPI {
 		if (props.round_id === undefined || props.round_id === null) {
 			throw new Error('round_id is required');
 		}
-		return this.api.gpGetGameBoard(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round_id, props.lang);
+		return this.api.gpGetGameBoard(props.saw_template_id, props.round_id);
 	}
 
 	/**
@@ -1204,7 +1204,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpSubmitSelection(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round, false, props.lang);
+		return this.api.gpSubmitSelection(props.saw_template_id, props.round, false);
 	}
 
 	/**
@@ -1236,7 +1236,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpSubmitSelection(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round, true, props.lang);
+		return this.api.gpSubmitSelection(props.saw_template_id, props.round, true);
 	}
 
 	/**
@@ -1260,7 +1260,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpGetUserInfo(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+		return this.api.gpGetUserInfo(props.saw_template_id);
 	}
 
 	/**
@@ -1283,7 +1283,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpGetGameInfo(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+		return this.api.gpGetGameInfo(props.saw_template_id);
 	}
 
 	/**
@@ -1308,7 +1308,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		return this.api.gpGetTranslations(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.lang);
+		return this.api.gpGetTranslations(props.saw_template_id);
 	}
 
 	/**
@@ -1340,7 +1340,7 @@ export class WSAPI {
 		if (!props.int_user_id) {
 			throw new Error('int_user_id is required');
 		}
-		return this.api.gpGetRoundInfoForUser(props.ext_user_id, props.smartico_ext_user_id, props.saw_template_id, props.round_id, props.int_user_id, props.lang);
+		return this.api.gpGetRoundInfoForUser(props.saw_template_id, props.round_id, props.int_user_id);
 	}
 
 	private async updateOnSpin(data: SAWSpinsCountPush) {

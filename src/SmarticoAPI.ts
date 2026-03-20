@@ -143,7 +143,7 @@ import {
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
-const GAMES_API_URL = 'https://r-games-api{ENV_ID}.smr.vc';
+const GAMES_API_URL = 'https://r-games-api.smr.vc';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
 const DEFAULT_LANG_EN = 'EN';
 
@@ -153,12 +153,14 @@ interface Tracker {
 	on: (callBackKey: ClassId, func: (data: any) => void) => void;
 	getLabelSetting: (key: PublicLabelSettings) => any;
 	triggerExternalCallBack: (callBackKey: string, payload: any) => void;
+	getExtUserId: () => string;
 }
 interface IOptions {
 	logger?: ILogger;
 	logCIDs?: ClassId[];
 	logHTTPTiming?: boolean;
 	tracker?: Tracker;
+	brand_api_key?: string;
 }
 
 type MessageSender = (message: any, publicApuUrl?: string, expectCID?: ClassId) => Promise<any>;
@@ -168,7 +170,8 @@ class SmarticoAPI {
 	private wsUrl: string;
 	private inboxCdnUrl: string;
 	private partnerUrl: string;
-	public gamesApiUrl: string;
+	private gamesApiUrl: string;
+	private baseRgApiParams: Record<string, string>;
 	public avatarDomain: string;
 	private envId: number;
 
@@ -195,7 +198,13 @@ class SmarticoAPI {
 
 		this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
 		this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key);
-		this.gamesApiUrl = SmarticoAPI.getGamesApiUrl(label_api_key);
+
+		this.baseRgApiParams = {
+			env_id: String(SmarticoAPI.getEnvId(label_api_key)),
+			label_api_key: label_api_key,
+			brand_key: options.brand_api_key,
+			hash: IntUtils.uuid(),
+		}
 
 		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
 
@@ -211,7 +220,7 @@ class SmarticoAPI {
 		return ENV_ID;
 	}
 
-	public static replaceSmrDomainsWithCloudfront<T>(value: string | {[key: string]: any}): T {
+	public static replaceSmrDomainsWithCloudfront<T>(value: string | { [key: string]: any }): T {
 		if (!value) {
 			return value as T;
 		}
@@ -263,10 +272,6 @@ class SmarticoAPI {
 
 	public static getPublicWsUrl(label_api_key: string): string {
 		return C_SOCKET_PROD.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
-	}
-
-	public static getGamesApiUrl(label_api_key: string): string {
-		return GAMES_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 	}
 
 	public static getAvatarUrl(label_api_key: string): string {
@@ -491,7 +496,7 @@ class SmarticoAPI {
 			activityType,
 		});
 
-		this.send(message).catch(() => {});
+		this.send(message).catch(() => { });
 	}
 
 	/**
@@ -509,7 +514,7 @@ class SmarticoAPI {
 			...(action && { action }),
 		});
 
-		this.send(message).catch(() => {});
+		this.send(message).catch(() => { });
 	}
 
 	public async jackpotGet(
@@ -552,7 +557,7 @@ class SmarticoAPI {
 		return await this.send<JackpotsOptoutResponse>(message, ClassId.JP_OPTOUT_RESPONSE);
 	}
 
-	public async getJackpotWinners(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number ): Promise<GetJackpotWinnersResponse> {
+	public async getJackpotWinners(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number): Promise<GetJackpotWinnersResponse> {
 		const message = this.buildMessage<GetJackpotWinnersRequest, GetJackpotWinnersResponse>(
 			user_ext_id,
 			ClassId.JP_GET_WINNERS_REQUEST,
@@ -565,11 +570,11 @@ class SmarticoAPI {
 		return await this.send<GetJackpotWinnersResponse>(message, ClassId.JP_GET_WINNERS_RESPONSE);
 	}
 
-	public async getJackpotWinnersT(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number ): Promise<JackpotWinnerHistory[]> {
+	public async getJackpotWinnersT(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number): Promise<JackpotWinnerHistory[]> {
 		return GetJackpotWinnersResponseTransform((await this.getJackpotWinners(user_ext_id, limit, offset, jp_template_id)).winners);
 	}
 
-	public async getJackpotEligibleGames(user_ext_id: string, { jp_template_id } : { jp_template_id: number }): Promise<GetJackpotEligibleGamesResponse> {
+	public async getJackpotEligibleGames(user_ext_id: string, { jp_template_id }: { jp_template_id: number }): Promise<GetJackpotEligibleGamesResponse> {
 		const message = this.buildMessage<GetJackpotEligibleGamesRequest, GetJackpotEligibleGamesResponse>(
 			user_ext_id,
 			ClassId.JP_GET_ELIGIBLE_GAMES_REQUEST,
@@ -579,7 +584,7 @@ class SmarticoAPI {
 		return await this.send<GetJackpotEligibleGamesResponse>(message, ClassId.JP_GET_ELIGIBLE_GAMES_RESPONSE);;
 	}
 
-	public async getJackpotEligibleGamesT(user_ext_id: string, { jp_template_id } : { jp_template_id: number }): Promise<TGetJackpotEligibleGamesResponse> {
+	public async getJackpotEligibleGamesT(user_ext_id: string, { jp_template_id }: { jp_template_id: number }): Promise<TGetJackpotEligibleGamesResponse> {
 		return GetJackpotEligibleGamesResponseTransform(await this.getJackpotEligibleGames(user_ext_id, { jp_template_id }));
 	}
 
@@ -743,7 +748,7 @@ class SmarticoAPI {
 	public async getSawWinningHistoryT(user_ext_id: string, limit?: number, offset?: number, saw_template_id?: number): Promise<SAWPrizesHistory[]> {
 		return SAWHistoryTransform((await this.getSawWinningHistory(user_ext_id, limit, offset, saw_template_id)).prizes);
 	}
-	
+
 	public async missionOptIn(user_ext_id: string, mission_id: number) {
 		if (!mission_id) {
 			throw new Error('Missing mission id');
@@ -946,7 +951,7 @@ class SmarticoAPI {
 			ClassId.GET_BONUSES_RESPONSE,
 			force_language,
 		);
-		
+
 		const responseClone = { ...response };
 
 		return responseClone;
@@ -963,7 +968,7 @@ class SmarticoAPI {
 			ClassId.CLAIM_BONUS_RESPONSE,
 
 		);
-		
+
 		const responseClone = { ...response };
 
 		return responseClone;
@@ -1280,45 +1285,37 @@ class SmarticoAPI {
 		return await this.send<MarkInboxMessageDeletedResponse>(message, ClassId.MARK_INBOX_DELETED_RESPONSE);
 	}
 
-	private buildGamesApiParams(ext_user_id: string, smartico_ext_user_id: string, ext_game_id: number, lang: string): Record<string, string> {
-		const params: Record<string, string> = {
-			ext_user_id,
-			smartico_ext_user_id,
-			ext_game_id: String(ext_game_id),
-			lang,
-			env_id: String(SmarticoAPI.getEnvId(this.label_api_key)),
-			label_api_key: this.label_api_key,
-			hash: '',
-		};
-
-		if (this.brand_api_key) {
-			params.brand_key = this.brand_api_key;
-		}
+	private buildGamesApiParams(): Record<string, string> {
+		const params: Record<string, string> = Object.assign({}, this.baseRgApiParams, {
+			ext_user_id: this.tracker.userPublicProps?.user_id,
+			smartico_ext_user_id: this.tracker.getExtUserId(),
+			lang: this.tracker.userPublicProps?.core_user_language,
+		});
 
 		return params;
 	}
 
-	private async sendGamesApi<T>(method: string, ext_user_id: string, smartico_ext_user_id: string, ext_game_id: number, lang: string, extraParams?: Record<string, any>, usePost: boolean = false): Promise<GamesApiResponse<T>> {
-		const baseParams = this.buildGamesApiParams(ext_user_id, smartico_ext_user_id, ext_game_id, lang);
+	private async sendGamesApi<T>({ method, params, usePost = false }: { method: string, params: Record<string, any>, usePost?: boolean }): Promise<GamesApiResponse<T>> {
+		const baseParams = this.buildGamesApiParams();
 		const queryString = Object.entries(baseParams).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
-		let url = `${this.gamesApiUrl}/${method}?${queryString}`;
+		let url = `${GAMES_API_URL}/${method}?${queryString}`;
 
 		let fetchOptions: RequestInit = {
 			method: 'GET',
 			headers: { 'Accept': 'application/json' },
 		};
 
-		if (usePost && extraParams) {
+		if (usePost && params) {
 			fetchOptions = {
 				method: 'POST',
 				headers: {
 					'Accept': 'application/json',
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(extraParams),
+				body: JSON.stringify(params),
 			};
-		} else if (extraParams) {
-			const extraQuery = Object.entries(extraParams)
+		} else if (params) {
+			const extraQuery = Object.entries(params)
 				.map(([k, v]) => `${k}=${encodeURIComponent(JSON.stringify(v))}`)
 				.join('&');
 			url += `&${extraQuery}`;
@@ -1326,6 +1323,7 @@ class SmarticoAPI {
 
 		try {
 			const response = await fetch(url, fetchOptions);
+
 			const data = await response.json();
 			return SmarticoAPI.replaceSmrDomainsWithCloudfront<GamesApiResponse<T>>(data);
 		} catch (e) {
@@ -1334,45 +1332,82 @@ class SmarticoAPI {
 		}
 	}
 
-	public async gpGetActiveRounds(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound[]>> {
-		return this.sendGamesApi<GamePickRound[]>('active-rounds', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	public async gpGetActiveRounds(saw_template_id: number): Promise<GamesApiResponse<GamePickRound[]>> {
+		const params = {
+			ext_game_id: saw_template_id,
+		};
+
+		return this.sendGamesApi<GamePickRound[]>({ method: 'active-rounds', params });
 	}
 
-	public async gpGetActiveRound(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN, round_id?: number): Promise<GamesApiResponse<GamePickRound>> {
-		const extraParams: Record<string, any> = {};
-		if (round_id !== undefined) {
-			extraParams.round_id = round_id;
-		}
-		return this.sendGamesApi<GamePickRound>('active-round', ext_user_id, smartico_ext_user_id, saw_template_id, lang, Object.keys(extraParams).length > 0 ? extraParams : undefined);
+	public async gpGetActiveRound(saw_template_id: number, round_id?: number): Promise<GamesApiResponse<GamePickRound>> {
+		const params = {
+			ext_game_id: saw_template_id,
+			round_id: round_id,
+		};	
+		
+		return this.sendGamesApi<GamePickRound>({ method: 'active-round', params });
 	}
 
-	public async gpGetGamesHistory(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound[]>> {
-		return this.sendGamesApi<GamePickRound[]>('games-history', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	public async gpGetGamesHistory(saw_template_id: number): Promise<GamesApiResponse<GamePickRound[]>> {
+		const params = {
+			ext_game_id: saw_template_id,
+		};
+
+		return this.sendGamesApi<GamePickRound[]>({ method: 'games-history', params });
 	}
 
-	public async gpGetGameBoard(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, round_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRoundBoard>> {
-		return this.sendGamesApi<GamePickRoundBoard>('game-board', ext_user_id, smartico_ext_user_id, saw_template_id, lang, { round_id });
+	public async gpGetGameBoard(saw_template_id: number, round_id: number): Promise<GamesApiResponse<GamePickRoundBoard>> {
+		const params = {
+			ext_game_id: saw_template_id,
+			round_id: round_id,
+		};
+
+		return this.sendGamesApi<GamePickRoundBoard>({ method: 'game-board', params });
 	}
 
-	public async gpSubmitSelection(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, round: any, isQuiz: boolean, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound>> {
+	public async gpSubmitSelection(saw_template_id: number, round: any, isQuiz: boolean): Promise<GamesApiResponse<GamePickRound>> {
 		const method = isQuiz ? 'submit-selection-quiz' : 'submit-selection';
-		return this.sendGamesApi<GamePickRound>(method, ext_user_id, smartico_ext_user_id, saw_template_id, lang, { round }, true);
+		const params = {
+			ext_game_id: saw_template_id,
+			round: round,
+		};
+
+		return this.sendGamesApi<GamePickRound>({ method, params, usePost: true });
 	}
 
-	public async gpGetUserInfo(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickUserInfo>> {
-		return this.sendGamesApi<GamePickUserInfo>('user-info', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	public async gpGetUserInfo(saw_template_id: number): Promise<GamesApiResponse<GamePickUserInfo>> {
+		const params = {
+			ext_game_id: saw_template_id,
+		};
+
+		return this.sendGamesApi<GamePickUserInfo>({ method: 'user-info', params });
 	}
 
-	public async gpGetGameInfo(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickGameInfo>> {
-		return this.sendGamesApi<GamePickGameInfo>('game-info', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	public async gpGetGameInfo(saw_template_id: number): Promise<GamesApiResponse<GamePickGameInfo>> {
+		const params = {
+			ext_game_id: saw_template_id,
+		};
+
+		return this.sendGamesApi<GamePickGameInfo>({ method: 'game-info', params });
 	}
 
-	public async gpGetTranslations(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<any>> {
-		return this.sendGamesApi<any>('translations', ext_user_id, smartico_ext_user_id, saw_template_id, lang);
+	public async gpGetTranslations(saw_template_id: number): Promise<GamesApiResponse<any>> {
+		const params = {
+			ext_game_id: saw_template_id,
+		};
+
+		return this.sendGamesApi<any>({ method: 'translations', params });
 	}
 
-	public async gpGetRoundInfoForUser(ext_user_id: string, smartico_ext_user_id: string, saw_template_id: number, round_id: number, int_user_id: number, lang: string = DEFAULT_LANG_EN): Promise<GamesApiResponse<GamePickRound>> {
-		return this.sendGamesApi<GamePickRound>('game-round-info-for-user', ext_user_id, smartico_ext_user_id, saw_template_id, lang, { round_id, int_user_id });
+	public async gpGetRoundInfoForUser(saw_template_id: number, round_id: number, int_user_id: number): Promise<GamesApiResponse<GamePickRound>> {
+		const params = {
+			ext_game_id: saw_template_id,
+			round_id: round_id,
+			int_user_id: int_user_id,
+		};
+
+		return this.sendGamesApi<GamePickRound>({ method: 'game-round-info-for-user', params });
 	}
 
 	public getWSCalls(): WSAPI {
@@ -1380,14 +1415,14 @@ class SmarticoAPI {
 	}
 
 	public async getRelatedItemsForGame(user_ext_id: string, related_game_id: string,): Promise<GetRelatedAchTourResponse> {
-		const message = this.buildMessage< GetRelatedAchTourRequest, GetRelatedAchTourResponse>(
+		const message = this.buildMessage<GetRelatedAchTourRequest, GetRelatedAchTourResponse>(
 			user_ext_id,
 			ClassId.GET_RELATED_ACH_N_TOURNAMENTS_REQUEST,
 			{
 				related_game_id: related_game_id
 			}
 		);
-		
+
 		return await this.send<GetRelatedAchTourResponse>(message, ClassId.GET_RELATED_ACH_N_TOURNAMENTS_RESPONSE);
 	}
 
