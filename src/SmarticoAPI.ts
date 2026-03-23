@@ -150,6 +150,7 @@ const DEFAULT_LANG_EN = 'EN';
 interface Tracker {
 	label_api_key: string;
 	userPublicProps: any;
+	params: { brand_key?: string };
 	on: (callBackKey: ClassId, func: (data: any) => void) => void;
 	getLabelSetting: (key: PublicLabelSettings) => any;
 	triggerExternalCallBack: (callBackKey: string, payload: any) => void;
@@ -202,7 +203,7 @@ class SmarticoAPI {
 		this.baseRgApiParams = {
 			env_id: String(SmarticoAPI.getEnvId(label_api_key)),
 			label_api_key: label_api_key,
-			brand_key: options.brand_api_key,
+			brand_key: options.brand_api_key || this.tracker.params.brand_key,
 			hash: IntUtils.uuid(),
 		}
 
