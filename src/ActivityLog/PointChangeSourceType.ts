@@ -16,6 +16,7 @@ export enum PointChangeSourceType {
 	API = 18,
 	DynamicFormula = 19,
 	Raffle = 21,
+	Avatars = 22,
 }
 
 
