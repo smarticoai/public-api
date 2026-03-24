@@ -1117,9 +1117,12 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickActiveRound(props: GamePickRequestParams & { round_id?: number }): Promise<GamesApiResponse<GamePickRound>> {
+	public async getGamePickActiveRound(props: GamePickRequestParams & { round_id: number }): Promise<GamesApiResponse<GamePickRound>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
+		}
+		if (!props.round_id) {
+			throw new Error('round_id is required');
 		}
 		return this.api.gpGetActiveRound(props.saw_template_id, props.round_id);
 	}
@@ -1169,7 +1172,7 @@ export class WSAPI {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
-		if (props.round_id === undefined || props.round_id === null) {
+		if (!props.round_id) {
 			throw new Error('round_id is required');
 		}
 		return this.api.gpGetGameBoard(props.saw_template_id, props.round_id);
@@ -1200,9 +1203,12 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async submitGamePickSelection(props: GamePickRequestParams & { round: any }): Promise<GamesApiResponse<GamePickRound>> {
+	public async submitGamePickSelection(props: GamePickRequestParams & { round: Partial<GamePickRound> }): Promise<GamesApiResponse<GamePickRound>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
+		}
+		if (!props.round?.round_id) {
+			throw new Error('round is required');
 		}
 		return this.api.gpSubmitSelection(props.saw_template_id, props.round, false);
 	}
@@ -1232,9 +1238,12 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async submitGamePickSelectionQuiz(props: GamePickRequestParams & { round: any }): Promise<GamesApiResponse<GamePickRound>> {
+	public async submitGamePickSelectionQuiz(props: GamePickRequestParams & { round: Partial<GamePickRound> }): Promise<GamesApiResponse<GamePickRound>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
+		}
+		if (!props.round?.round_id) {
+			throw new Error('round is required');
 		}
 		return this.api.gpSubmitSelection(props.saw_template_id, props.round, true);
 	}
