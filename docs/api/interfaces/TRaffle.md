@@ -99,3 +99,11 @@ ___
 List of draws that are available for this raffle.
 For example, if the raffle is containg one hourly draw, one daily draw and one draw on fixed date like 01/01/2022,
 Then the list will always return 3 draws, no matter if the draws are already executed or they are in the future.
+
+___
+
+### ticket\_cap\_visualization
+
+• **ticket\_cap\_visualization**: [`RaffleTicketCapVisualization`](../enums/RaffleTicketCapVisualization.md)
+
+Ticket cap visualization

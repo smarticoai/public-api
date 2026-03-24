@@ -1,10 +1,14 @@
 # Enumeration: RaffleTicketCapVisualization
 
+## Enumeration Members
+
 ### Empty
 
 • **Empty** = ``0``
 
-Don’t show anything
+Show nothing
+
+___
 
 ### Counter
 

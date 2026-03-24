@@ -271,3 +271,7 @@ export interface GamePickRequestParams {
 	smartico_ext_user_id: string;
 	lang?: string;
 }
+
+export interface GamePickRoundRequestParams extends GamePickRequestParams {
+	round_id: number;
+}

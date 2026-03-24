@@ -62,6 +62,7 @@ ___
 
 ### ticket\_cap\_visualization
 
-• **ticket\_cap\_visualization**: [`RaffleTicketCapVisualization`](../enums/RaffleTicketCapVisualization.md)
+• `Optional` **ticket\_cap\_visualization**: [`RaffleTicketCapVisualization`](../enums/RaffleTicketCapVisualization.md)
 
-Ticket cap visualization
+- Value 1 (Counter): Shows a real-time "Tickets Remaining" display available during the whole Raffle activity.
+- Value 2 (Message): Will show a specific message that triggers only when the cap is reached and inform users that tickets will be no longer be issued.
