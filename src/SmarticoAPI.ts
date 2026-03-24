@@ -150,7 +150,7 @@ const DEFAULT_LANG_EN = 'EN';
 interface Tracker {
 	label_api_key: string;
 	userPublicProps: any;
-	params: { brand_key?: string };
+	params?: { brand_key?: string };
 	on: (callBackKey: ClassId, func: (data: any) => void) => void;
 	getLabelSetting: (key: PublicLabelSettings) => any;
 	triggerExternalCallBack: (callBackKey: string, payload: any) => void;
@@ -200,11 +200,14 @@ class SmarticoAPI {
 		this.publicUrl = SmarticoAPI.getPublicUrl(label_api_key);
 		this.wsUrl = SmarticoAPI.getPublicWsUrl(label_api_key);
 
-		this.baseRgApiParams = {
-			env_id: String(SmarticoAPI.getEnvId(label_api_key)),
-			label_api_key: label_api_key,
-			brand_key: options.brand_api_key || this.tracker.params.brand_key,
-			hash: IntUtils.uuid(),
+		if (this.tracker) {
+			// available only for real users
+			this.baseRgApiParams = {
+				env_id: String(SmarticoAPI.getEnvId(label_api_key)),
+				label_api_key: label_api_key,
+				brand_key: options.brand_api_key || this.tracker.params.brand_key,
+				hash: IntUtils.uuid(),
+			}
 		}
 
 		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
@@ -1297,6 +1300,11 @@ class SmarticoAPI {
 	}
 
 	private async sendGamesApi<T>({ method, params, usePost = false }: { method: string, params: Record<string, any>, usePost?: boolean }): Promise<GamesApiResponse<T>> {
+
+		if (!this.tracker) {
+			throw new Error(`MatchX and Quiz APIs are not available in the visitor mode`);
+		}
+
 		const baseParams = this.buildGamesApiParams();
 		const queryString = Object.entries(baseParams).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
 		let url = `${GAMES_API_URL}/${method}?${queryString}`;
