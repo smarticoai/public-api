@@ -111,9 +111,11 @@ enum onUpdateContextKey {
 export class WSAPI {
 	private onUpdateCallback: Map<onUpdateContextKey, (data: any) => void> = new Map();
 	private jackpotGetSignature: string = '';
+	private userExtId: string = null;
 
 	/** @private */
-	constructor(private api: SmarticoAPI) {
+	constructor(private api: SmarticoAPI, userExtId: string = null) {
+		this.userExtId = userExtId;
 		OCache.clearAll();
 		if (this.api.tracker) {
 			const on = this.api.tracker.on;
@@ -202,7 +204,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async checkSegmentMatch(segment_id: number): Promise<boolean> {
-		const r = await this.api.coreCheckSegments(null, [segment_id]);
+		const r = await this.api.coreCheckSegments(this.userExtId, [segment_id]);
 		if (r && r.find((s) => s.segment_id === segment_id && s.is_matching)) {
 			return true;
 		} else {
@@ -220,7 +222,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentCheckResult[]> {
-		return await this.api.coreCheckSegments(null, Array.isArray(segment_ids) ? segment_ids : [segment_ids]);
+		return await this.api.coreCheckSegments(this.userExtId, Array.isArray(segment_ids) ? segment_ids : [segment_ids]);
 	}
 
 	/** Returns all the levels available the current user
@@ -239,7 +241,7 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getLevels(): Promise<TLevel[]> {
-		return OCache.use(onUpdateContextKey.Levels, ECacheContext.WSAPI, () => this.api.levelsGetT(null), CACHE_DATA_SEC);
+		return OCache.use(onUpdateContextKey.Levels, ECacheContext.WSAPI, () => this.api.levelsGetT(this.userExtId), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -255,7 +257,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async getCurrentLevel(): Promise<TLevelCurrent> {
-		return OCache.use(onUpdateContextKey.CurrentLevel, ECacheContext.WSAPI, () => this.api.getLevelCurrent(null), CACHE_DATA_SEC);
+		return OCache.use(onUpdateContextKey.CurrentLevel, ECacheContext.WSAPI, () => this.api.getLevelCurrent(this.userExtId), CACHE_DATA_SEC);
 	}
 
 	/** Returns all the missions configured for the current user (server-side scoped, not filtered by Widget visibility).
@@ -285,7 +287,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.Missions,
 			ECacheContext.WSAPI,
-			() => this.api.missionsGetItemsT(null),
+			() => this.api.missionsGetItemsT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -296,7 +298,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async getBadges(): Promise<TMissionOrBadge[]> {
-		return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(null), CACHE_DATA_SEC);
+		return OCache.use(onUpdateContextKey.Badges, ECacheContext.WSAPI, () => this.api.badgetsGetItemsT(this.userExtId), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -312,7 +314,7 @@ export class WSAPI {
 			this.onUpdateCallback.set(onUpdateContextKey.Bonuses, onUpdate);
 		}
 
-		return OCache.use(onUpdateContextKey.Bonuses, ECacheContext.WSAPI, () => this.api.bonusesGetItemsT(null), CACHE_DATA_SEC);
+		return OCache.use(onUpdateContextKey.Bonuses, ECacheContext.WSAPI, () => this.api.bonusesGetItemsT(this.userExtId), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -324,7 +326,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async claimBonus(bonus_id: number): Promise<TClaimBonusResult> {
-		const r = await this.api.bonusClaimItem(null, bonus_id);
+		const r = await this.api.bonusClaimItem(this.userExtId, bonus_id);
 
 		const o: TClaimBonusResult = {
 			err_code: r.errCode,
@@ -353,7 +355,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.LevelExtraCounters,
 			ECacheContext.WSAPI,
-			() => this.api.getUserGamificationInfoT(null),
+			() => this.api.getUserGamificationInfoT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -389,7 +391,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.StoreItems,
 			ECacheContext.WSAPI,
-			() => this.api.storeGetItemsT(null),
+			() => this.api.storeGetItemsT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -405,7 +407,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async buyStoreItem(item_id: number): Promise<TBuyStoreItemResult> {
-		const r = await this.api.buyStoreItem(null, item_id);
+		const r = await this.api.buyStoreItem(this.userExtId, item_id);
 
 		const o: TBuyStoreItemResult = {
 			err_code: r.errCode,
@@ -437,7 +439,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.StoreCategories,
 			ECacheContext.WSAPI,
-			() => this.api.storeGetCategoriesT(null),
+			() => this.api.storeGetCategoriesT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -471,7 +473,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.StoreHistory,
 			ECacheContext.WSAPI,
-			() => this.api.storeGetPurchasedItemsT(null, limit, offset),
+			() => this.api.storeGetPurchasedItemsT(this.userExtId, limit, offset),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -498,7 +500,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.AchCategories,
 			ECacheContext.WSAPI,
-			() => this.api.achGetCategoriesT(null),
+			() => this.api.achGetCategoriesT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -525,7 +527,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.CustomSections,
 			ECacheContext.WSAPI,
-			() => this.api.customSectionsGetT(null),
+			() => this.api.customSectionsGetT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -557,7 +559,7 @@ export class WSAPI {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 
-		return OCache.use(onUpdateContextKey.Saw, ECacheContext.WSAPI, () => this.api.sawGetTemplatesT(null), CACHE_DATA_SEC);
+		return OCache.use(onUpdateContextKey.Saw, ECacheContext.WSAPI, () => this.api.sawGetTemplatesT(this.userExtId), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -588,7 +590,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.SAWHistory,
 			ECacheContext.WSAPI,
-			() => this.api.getSawWinningHistoryT(null, limit, offset, saw_template_id),
+			() => this.api.getSawWinningHistoryT(this.userExtId, limit, offset, saw_template_id),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -615,8 +617,8 @@ export class WSAPI {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 
-		const r = await this.api.sawSpinRequest(null, template_id);
-		this.api.doAcknowledgeRequest(null, r.request_id);
+		const r = await this.api.sawSpinRequest(this.userExtId, template_id);
+		this.api.doAcknowledgeRequest(this.userExtId, r.request_id);
 
 		const o: TMiniGamePlayResult = {
 			err_code: r.errCode,
@@ -637,7 +639,7 @@ export class WSAPI {
 	 * ```
 	 */
 	public async miniGameWinAcknowledgeRequest(request_id: string) {
-		return this.api.doAcknowledgeRequest(null, request_id);
+		return this.api.doAcknowledgeRequest(this.userExtId, request_id);
 	}
 
 	/**
@@ -662,10 +664,10 @@ export class WSAPI {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 
-		const response = await this.api.sawSpinBatchRequest(null, template_id, spin_count);
+		const response = await this.api.sawSpinBatchRequest(this.userExtId, template_id, spin_count);
 
 		const request_ids = response.results.map((result) => result.request_id);
-		this.api.doAcknowledgeBatchRequest(null, request_ids);
+		this.api.doAcknowledgeBatchRequest(this.userExtId, request_ids);
 
 		const o: TMiniGamePlayBatchResult[] = response.results.map((result) => ({
 			errCode: result.errCode,
@@ -684,7 +686,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async requestMissionOptIn(mission_id: number): Promise<TMissionOptInResult> {
-		const r = await this.api.missionOptIn(null, mission_id);
+		const r = await this.api.missionOptIn(this.userExtId, mission_id);
 
 		const o: TMissionOptInResult = {
 			err_code: r.errCode,
@@ -700,7 +702,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async requestMissionClaimReward(mission_id: number, ach_completed_id: number): Promise<TMissionClaimRewardResult> {
-		const r = await this.api.missionClaimPrize(null, mission_id, ach_completed_id);
+		const r = await this.api.missionClaimPrize(this.userExtId, mission_id, ach_completed_id);
 
 		const o: TMissionClaimRewardResult = {
 			err_code: r.errCode,
@@ -736,7 +738,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.TournamentList,
 			ECacheContext.WSAPI,
-			() => this.api.tournamentsGetLobbyT(null),
+			() => this.api.tournamentsGetLobbyT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -767,7 +769,7 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed> {
-		return this.api.tournamentsGetInfoT(null, tournamentInstanceId);
+		return this.api.tournamentsGetInfoT(this.userExtId, tournamentInstanceId);
 	}
 
 	/**
@@ -776,7 +778,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async registerInTournament(tournamentInstanceId: number): Promise<TTournamentRegistrationResult> {
-		const r = await this.api.registerInTournament(null, tournamentInstanceId);
+		const r = await this.api.registerInTournament(this.userExtId, tournamentInstanceId);
 
 		const o: TTournamentRegistrationResult = {
 			err_code: r.errCode,
@@ -808,7 +810,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.LeaderBoards,
 			ECacheContext.WSAPI,
-			() => this.api.leaderboardsGetT(null, periodType, getPreviousPeriod),
+			() => this.api.leaderboardsGetT(this.userExtId, periodType, getPreviousPeriod),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -845,7 +847,7 @@ export class WSAPI {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate);
 		}
-		return await this.api.getInboxMessagesT(null, from, to, onlyFavorite, categoryId, read_status);
+		return await this.api.getInboxMessagesT(this.userExtId, from, to, onlyFavorite, categoryId, read_status);
 	}
 
 	/**
@@ -861,7 +863,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.InboxUnreadCount,
 			ECacheContext.WSAPI,
-			() => this.api.getInboxUnreadCountT(null),
+			() => this.api.getInboxUnreadCountT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -881,7 +883,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async markInboxMessageAsRead(messageGuid: string): Promise<InboxMarkMessageAction> {
-		const r = await this.api.markInboxMessageRead(null, messageGuid);
+		const r = await this.api.markInboxMessageRead(this.userExtId, messageGuid);
 
 		return {
 			err_code: r.errCode,
@@ -895,7 +897,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async markAllInboxMessagesAsRead(): Promise<InboxMarkMessageAction> {
-		const r = await this.api.markAllInboxMessageRead(null);
+		const r = await this.api.markAllInboxMessageRead(this.userExtId);
 
 		return {
 			err_code: r.errCode,
@@ -909,7 +911,7 @@ export class WSAPI {
 	 * **Visitor mode: not supported**
 	 */
 	public async markUnmarkInboxMessageAsFavorite(messageGuid: string, mark: boolean): Promise<InboxMarkMessageAction> {
-		const r = await this.api.markUnmarkInboxMessageAsFavorite(null, messageGuid, mark);
+		const r = await this.api.markUnmarkInboxMessageAsFavorite(this.userExtId, messageGuid, mark);
 
 		return {
 			err_code: r.errCode,
@@ -924,7 +926,7 @@ export class WSAPI {
 	 */
 
 	public async deleteInboxMessage(messageGuid: string): Promise<InboxMarkMessageAction> {
-		const r = await this.api.deleteInboxMessage(null, messageGuid);
+		const r = await this.api.deleteInboxMessage(this.userExtId, messageGuid);
 
 		return {
 			err_code: r.errCode,
@@ -939,7 +941,7 @@ export class WSAPI {
 	 */
 
 	public async deleteAllInboxMessages(): Promise<InboxMarkMessageAction> {
-		const r = await this.api.deleteAllInboxMessages(null);
+		const r = await this.api.deleteAllInboxMessages(this.userExtId);
 
 		return {
 			err_code: r.errCode,
@@ -951,7 +953,7 @@ export class WSAPI {
 	 * Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office.
 	 */
 	public async getTranslations(lang_code: string): Promise<TGetTranslations> {
-		const r = await this.api.getTranslationsT(null, lang_code, []);
+		const r = await this.api.getTranslationsT(this.userExtId, lang_code, []);
 
 		return {
 			translations: r.translations,
@@ -983,7 +985,7 @@ export class WSAPI {
 		engagement_uid: string;
 		activityType: ActivityTypeLimited | number;
 	}): void {
-		this.api.reportEngagementImpression(null, engagement_uid, activityType);
+		this.api.reportEngagementImpression(this.userExtId, engagement_uid, activityType);
 	}
 
 	/**
@@ -1016,7 +1018,7 @@ export class WSAPI {
 		activityType: ActivityTypeLimited | number;
 		action?: string;
 	}): void {
-		this.api.reportEngagementAction(null, engagement_uid, activityType, action);
+		this.api.reportEngagementAction(this.userExtId, engagement_uid, activityType, action);
 	}
 
 	/**
@@ -1071,7 +1073,7 @@ export class WSAPI {
 		return await OCache.use(
 			onUpdateContextKey.ActivityLog,
 			ECacheContext.WSAPI,
-			() => this.api.getActivityLogT(null, startTimeSeconds, endTimeSeconds, from, to),
+			() => this.api.getActivityLogT(this.userExtId, startTimeSeconds, endTimeSeconds, from, to),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -1483,7 +1485,7 @@ export class WSAPI {
 		const templates: TMiniGameTemplate[] = await OCache.use(
 			onUpdateContextKey.Saw,
 			ECacheContext.WSAPI,
-			() => this.api.sawGetTemplatesT(null),
+			() => this.api.sawGetTemplatesT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 		const index = templates.findIndex((t) => t.id === data.saw_template_id);
@@ -1492,32 +1494,32 @@ export class WSAPI {
 	}
 
 	private async reloadMiniGameTemplate() {
-		const updatedTemplates = await this.api.sawGetTemplatesT(null);
+		const updatedTemplates = await this.api.sawGetTemplatesT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.Saw, updatedTemplates);
 	}
 
 	private async updateMissions() {
-		const payload = await this.api.missionsGetItemsT(null);
+		const payload = await this.api.missionsGetItemsT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.Missions, payload);
 	}
 
 	private async updateBonuses() {
-		const payload = await this.api.bonusesGetItemsT(null);
+		const payload = await this.api.bonusesGetItemsT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.Bonuses, payload);
 	}
 
 	private async updateTournaments() {
-		const payload = await this.api.tournamentsGetLobbyT(null);
+		const payload = await this.api.tournamentsGetLobbyT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.TournamentList, payload);
 	}
 
 	private async updateStorePurchasedItems() {
-		const payload = await this.api.storeGetPurchasedItemsT(null, 20, 0);
+		const payload = await this.api.storeGetPurchasedItemsT(this.userExtId, 20, 0);
 		this.updateEntity(onUpdateContextKey.StoreHistory, payload);
 	}
 
 	private async updateStoreItems() {
-		const payload = await this.api.storeGetItemsT(null);
+		const payload = await this.api.storeGetItemsT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.StoreItems, payload);
 	}
 
@@ -1526,19 +1528,19 @@ export class WSAPI {
 	}
 
 	private async updateInboxMessages() {
-		const payload = await this.api.getInboxMessagesT(null);
+		const payload = await this.api.getInboxMessagesT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.InboxMessages, payload);
 	}
 
 	private async updateRaffles() {
-		const payload = await this.api.getRafflesT(null);
+		const payload = await this.api.getRafflesT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.Raffles, payload);
 	}
 
 	private async notifyActivityLogUpdate() {
 		const startSeconds = Date.now() / 1000 - 600;
 		const endSeconds = Date.now() / 1000;
-		const payload = await this.api.getActivityLogT(null, startSeconds, endSeconds, 0, 50);
+		const payload = await this.api.getActivityLogT(this.userExtId, startSeconds, endSeconds, 0, 50);
 
 		this.updateEntity(onUpdateContextKey.ActivityLog, payload);
 	}
@@ -1592,7 +1594,7 @@ export class WSAPI {
 			onUpdateContextKey.Jackpots,
 			ECacheContext.WSAPI,
 			async () => {
-				const _jackpots = await this.api.jackpotGet(null, filter);
+				const _jackpots = await this.api.jackpotGet(this.userExtId, filter);
 				const _pots = _jackpots.items.map((jp) => jp.pot);
 
 				_jackpots.items.forEach((jp) => {
@@ -1611,7 +1613,7 @@ export class WSAPI {
 				ECacheContext.WSAPI,
 				async () => {
 					const jp_template_ids = jackpots.map((jp) => jp.jp_template_id);
-					return (await this.api.potGet(null, { jp_template_ids })).items;
+					return (await this.api.potGet(this.userExtId, { jp_template_ids })).items;
 				},
 				JACKPOT_POT_CACHE_SEC,
 			);
@@ -1645,7 +1647,7 @@ export class WSAPI {
 			throw new Error('jp_template_id is required in jackpotOptIn');
 		}
 
-		const result = await this.api.jackpotOptIn(null, filter);
+		const result = await this.api.jackpotOptIn(this.userExtId, filter);
 
 		return result;
 	}
@@ -1669,7 +1671,7 @@ export class WSAPI {
 			throw new Error('jp_template_id is required in jackpotOptOut');
 		}
 
-		const result = await this.api.jackpotOptOut(null, filter);
+		const result = await this.api.jackpotOptOut(this.userExtId, filter);
 
 		return result;
 	}
@@ -1702,7 +1704,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.JackpotWinners + jp_template_id,
 			ECacheContext.WSAPI,
-			() => this.api.getJackpotWinnersT(null, limit, offset, jp_template_id),
+			() => this.api.getJackpotWinnersT(this.userExtId, limit, offset, jp_template_id),
 			JACKPOT_WINNERS_CACHE_SEC,
 		);
 	}
@@ -1729,7 +1731,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.JackpotEligibleGames + jp_template_id,
 			ECacheContext.WSAPI,
-			() => this.api.getJackpotEligibleGamesT(null, { jp_template_id }),
+			() => this.api.getJackpotEligibleGamesT(this.userExtId, { jp_template_id }),
 			JACKPOT_ELIGIBLE_GAMES_CACHE_SEC,
 		);
 	}
@@ -1753,7 +1755,7 @@ export class WSAPI {
 	 * ```
 	 */
 	public async getRelatedItemsForGame(related_game_id: string): Promise<GetRelatedAchTourResponse> {
-		const result = await this.api.getRelatedItemsForGame(null, related_game_id);
+		const result = await this.api.getRelatedItemsForGame(this.userExtId, related_game_id);
 		return result;
 	}
 
@@ -1785,7 +1787,7 @@ export class WSAPI {
 			this.onUpdateCallback.set(onUpdateContextKey.Raffles, onUpdate);
 		}
 
-		return OCache.use(onUpdateContextKey.Raffles, ECacheContext.WSAPI, () => this.api.getRafflesT(null), CACHE_DATA_SEC);
+		return OCache.use(onUpdateContextKey.Raffles, ECacheContext.WSAPI, () => this.api.getRafflesT(this.userExtId), CACHE_DATA_SEC);
 	}
 
 	/**
@@ -1817,7 +1819,7 @@ export class WSAPI {
 			throw new Error('both raffle_id and run_id are required');
 		}
 
-		return await this.api.getRaffleDrawRunT(null, props.raffle_id, props.run_id, props.winners_from, props.winners_to);
+		return await this.api.getRaffleDrawRunT(this.userExtId, props.raffle_id, props.run_id, props.winners_from, props.winners_to);
 	}
 
 	/**
@@ -1843,7 +1845,7 @@ export class WSAPI {
 	 */
 
 	public async getRaffleDrawRunsHistory(props: { raffle_id: number; draw_id?: number }): Promise<TRaffleDrawRun[]> {
-		const res = await this.api.getRaffleDrawRunsHistory(null, props);
+		const res = await this.api.getRaffleDrawRunsHistory(this.userExtId, props);
 
 		if (!props.raffle_id) {
 			throw new Error('raffle_id is required');
@@ -1878,7 +1880,7 @@ export class WSAPI {
 			throw new Error('won_id is required');
 		}
 
-		const res = await this.api.claimRafflePrize(null, { won_id: props.won_id });
+		const res = await this.api.claimRafflePrize(this.userExtId, { won_id: props.won_id });
 		return raffleClaimPrizeResponseTransform(res);
 	}
 
@@ -1898,7 +1900,7 @@ export class WSAPI {
 			throw new Error('raffle_run_id is required');
 		}
 
-		const r = await this.api.raffleOptin(null, props);
+		const r = await this.api.raffleOptin(this.userExtId, props);
 
 		return {
 			err_code: r.errCode,
