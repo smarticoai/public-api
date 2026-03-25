@@ -101,3 +101,9 @@ ___
 ### Raffle
 
 • **Raffle** = ``21``
+
+___
+
+### Avatars
+
+• **Avatars** = ``22``

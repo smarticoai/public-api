@@ -57,7 +57,7 @@ ___
 
 • `Optional` **icon**: `string`
 
-The URL of the icon of the prize
+The URL of the icon of the prize, aspect ratio 1:1
 
 ___
 

@@ -22,7 +22,7 @@ Game public meta information
 | :------ | :------ | :------ |
 | `name` | `string` | The name of the game |
 | `link` | `string` | The URL to the game |
-| `image` | `string` | The URL to the image of the game |
+| `image` | `string` | The URL to the image of the game, 1:1 aspect ratio |
 | `enabled` | `boolean` | The indicator if the game is enabled |
 | `game_categories` | `string`[] | The list of categories of the game |
 | `game_provider` | `string` | The name of the game provider |

@@ -46,7 +46,7 @@ ___
 
 • **image1**: `string`
 
-1st image URL representing the tournament
+1st image URL representing the tournament, 544×216px
 
 ___
 
@@ -54,7 +54,7 @@ ___
 
 • **image2**: `string`
 
-2nd image URL representing the tournament
+2nd image URL representing the tournament, 920x200px
 
 ___
 
@@ -62,7 +62,7 @@ ___
 
 • **image2\_mobile**: `string`
 
-2nd image URL representing the tournament for mobile
+2nd image URL representing the tournament for mobile, 720x400px
 
 ___
 
@@ -119,7 +119,7 @@ ___
 
 • **ribbon**: `string`
 
-The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon
+The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250×300px
 
 ___
 

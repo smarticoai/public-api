@@ -38,7 +38,7 @@ ___
 
 • **image\_url**: `string`
 
-URL of the image that represents the raffle
+URL of the image that represents the raffle, 890x193px
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 • **image\_url\_mobile**: `string`
 
-URL of the mobile image that represents the raffle
+URL of the mobile image that represents the raffle, 300x142px
 
 ___
 

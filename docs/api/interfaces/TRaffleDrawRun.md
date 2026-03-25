@@ -41,6 +41,10 @@ ___
 
 URL of the image that represents the draw
 
+**`Remarks`**
+
+Same as [image_url](TRaffleDraw.md#image_url): **365×175 px** desktop promo.
+
 ___
 
 ### image\_url\_mobile
@@ -48,6 +52,10 @@ ___
 • **image\_url\_mobile**: `string`
 
 URL of the moible image that represents the draw
+
+**`Remarks`**
+
+Same as [image_url_mobile](TRaffleDraw.md#image_url_mobile): **300×145 px** mobile promo.
 
 ___
 
@@ -57,6 +65,10 @@ ___
 
 URL of the icon that represents the draw
 
+**`Remarks`**
+
+Same as [icon_url](TRaffleDraw.md#icon_url): **256×256 px** square.
+
 ___
 
 ### background\_image\_url
@@ -65,6 +77,10 @@ ___
 
 URL of the background image that will be used in the draw list item
 
+**`Remarks`**
+
+Same as [background_image_url](TRaffleDraw.md#background_image_url): **900×85 px**.
+
 ___
 
 ### background\_image\_url\_mobile
@@ -72,6 +88,10 @@ ___
 • **background\_image\_url\_mobile**: `string`
 
 URL of the moible background image that will be used in the draw list item
+
+**`Remarks`**
+
+Same as [background_image_url_mobile](TRaffleDraw.md#background_image_url_mobile): **1328×240 px**.
 
 ___
 

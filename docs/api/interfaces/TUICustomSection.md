@@ -22,7 +22,7 @@ ___
 
 • `Optional` **menu\_img**: `string`
 
-The image of the custom section
+The image of the custom section, 64x64px
 
 ___
 

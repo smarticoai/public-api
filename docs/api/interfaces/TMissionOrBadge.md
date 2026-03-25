@@ -56,7 +56,7 @@ ___
 
 • **image**: `string`
 
-URL of the image of the mission or badge
+URL of the image of the mission or badge, 256x256px
 
 ___
 
@@ -228,7 +228,7 @@ ___
 
 • `Optional` **ribbon**: `string`
 
-The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon
+The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px
 
 ___
 

@@ -31,7 +31,7 @@ ___
 
 • **image\_url**: `string`
 
-URL of the image that represents the draw
+URL of the image that represents the draw, 365x175px
 
 ___
 
@@ -39,7 +39,7 @@ ___
 
 • **image\_url\_mobile**: `string`
 
-URL of the moible image that represents the draw
+URL of the moible image that represents the draw, 300x145px
 
 ___
 
@@ -49,6 +49,10 @@ ___
 
 URL of the icon that represents the draw
 
+**`Remarks`**
+
+Square icon target **256×256 px**
+
 ___
 
 ### background\_image\_url
@@ -57,6 +61,10 @@ ___
 
 URL of the background image that will be used in the draw list item
 
+**`Remarks`**
+
+Desktop draw list strip: **900×85 px**.
+
 ___
 
 ### background\_image\_url\_mobile
@@ -64,6 +72,10 @@ ___
 • **background\_image\_url\_mobile**: `string`
 
 URL of the moible background image that will be used in the draw list item
+
+**`Remarks`**
+
+Mobile draw list background: **1328×240 px**.
 
 ___
 

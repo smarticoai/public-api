@@ -41,7 +41,7 @@ ___
 
 • **image**: `string`
 
-The URL of the image of the Level
+The URL of the image of the Level, 256x256px
 
 ___
 

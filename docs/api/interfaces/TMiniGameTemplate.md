@@ -32,7 +32,7 @@ ___
 
 • **thumbnail**: `string`
 
-URL of the icon of the mini-game template
+URL of the icon of the mini-game template, 256x256px
 
 ___
 
@@ -147,7 +147,7 @@ ___
 
 • **promo\_image**: `string`
 
-The promo image
+The promo image, 500x240px
 
 ___
 

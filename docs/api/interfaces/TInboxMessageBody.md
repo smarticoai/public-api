@@ -22,7 +22,7 @@ ___
 
 • **icon**: `string`
 
-Message icon
+Message icon, 128x128px
 
 ___
 

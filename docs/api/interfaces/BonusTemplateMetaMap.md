@@ -22,7 +22,7 @@ ___
 
 • **image\_url**: `string`
 
-Image URL of the bonus template
+Image URL of the bonus template, 1:1 aspect ratio
 
 ___
 

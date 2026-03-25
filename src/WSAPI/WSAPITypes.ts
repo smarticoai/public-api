@@ -13,6 +13,7 @@ import { SAWGPMarketType } from '../Quiz/MarketsType';
 import { QuizAnswersValueType } from '../Quiz/MarketsAnswers';
 
 
+/** Preset ribbon keys or a custom image URL. For custom images **250×300 px** */
 type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
 
 /**
@@ -33,7 +34,7 @@ export interface TMiniGamePrize {
 	font_size?: number;
 	/** Custom font size for the prize (mobile) */
 	font_size_mobile?: number;
-	/** The URL of the icon of the prize */
+	/** The URL of the icon of the prize, aspect ratio 1:1 */
 	icon?: string;
 	/** for scratch card defines position of prize in the list */
 	position: number;
@@ -123,7 +124,7 @@ export interface TMiniGameTemplate {
 	name: string;
 	/** Description of the mini-game template, translated to the user language */
 	description: string;
-	/** URL of the icon of the mini-game template */
+	/** URL of the icon of the mini-game template, 256x256px */
 	thumbnail: string;
 
 	/** Indicates if the mini-game is visible when the user have attempts/points/gems/diamonds to play */
@@ -164,7 +165,7 @@ export interface TMiniGameTemplate {
 	 */
 	jackpot_symbol: string;
 
-	/** The promo image  */
+	/** The promo image, 500x240px */
 	promo_image: string;
 	/** The promo text  */
 	promo_text: string;
@@ -256,7 +257,7 @@ export interface TLevel {
 	name: string;
 	/** The description of the Level, translated to the user language */
 	description: string;
-	/** The URL of the image of the Level */
+	/** The URL of the image of the Level, 256x256px */
 	image: string;
 	/** The amount of points required to reach the Level */
 	required_points: number;
@@ -309,11 +310,11 @@ export interface TTournament {
 	name: string;
 	/** Description of the tournament, translated to the user language */
 	description: string;
-	/** 1st image URL representing the tournament */
+	/** 1st image URL representing the tournament, 544×216px */
 	image1: string;
-	/** 2nd image URL representing the tournament */
+	/** 2nd image URL representing the tournament, 920x200px */
 	image2: string;
-	/** 2nd image URL representing the tournament for mobile */
+	/** 2nd image URL representing the tournament for mobile, 720x400px */
 	image2_mobile: string;
 	/** The message indicating the prize pool of the tournament */
 	prize_pool_short: string;
@@ -333,7 +334,7 @@ export interface TTournament {
 	/** The indicator if the tournament is 'Featured' */
 	is_featured: boolean;
 
-	/** The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
+	/** The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250×300px */
 	ribbon: TRibbon;
 
 	/** A number is used to order the tournaments, representing their priority in the list  */
@@ -361,7 +362,7 @@ export interface TTournament {
 		name: string;
 		/** The description of the prize */
 		description: string;
-		/** The image of the prize */
+		/** The image of the prize, 1:1 aspect ratio */
 		image_url: string;
 		/** from-to range of the places to which this prize */
 		place_from: number;
@@ -467,7 +468,7 @@ export interface TTournamentDetailed extends TTournament {
 		name: string;
 		/** The description of the prize */
 		description: string;
-		/** The image of the prize */
+		/** The image of the prize, 1:1 aspect ratio */
 		image_url: string;
 		/** from-to range of the places to which this prize */
 		place_from: number;
@@ -501,13 +502,13 @@ export interface TStoreItem {
 	name: string;
 	/** Description of the store item, translated to the user language */
 	description: string;
-	/** URL of the image of the store item */
+	/** URL of the image of the store item, 256x256px */
 	image: string;
 	/** Type of the store item. Can be 'bonus' or 'tangible' or different others. */
 	type: 'bonus' | 'tangible' | 'minigamespin' | 'changelevel' | 'prizedrop' | 'unknown' | 'raffleticket';
 	/** The price of the store item in the gamification points */
 	price: number;
-	/** The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
+	/** The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px */
 	ribbon: TRibbon;
 	/** 
 	 *  The message that should be shown to the user if he is not eligible to buy it. this message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item' and can be used in case can_buy property is false.
@@ -554,7 +555,7 @@ export interface TStoreItem {
 	discounted_price?: number;
 	/** The ribbon of the discounted price. */
 	discount_price_ribbon?: string;
-	/** The custom ribbon image of the discounted price. */
+	/** The custom ribbon image of the discounted price, 250x300px */
 	custom_ribbon_image?: string;
 	/** The ID of the custom section where the store item is assigned */
 	custom_section_id?: number;
@@ -594,7 +595,7 @@ export interface TMissionOrBadge {
 	description: string;
 	/** Description of the mission reward if defined */
 	reward: string;
-	/** URL of the image of the mission or badge */
+	/** URL of the image of the mission or badge, 256x256px */
 	image: string;
 	/** Indicator if the mission is completed or badge is granted */
 	is_completed: boolean;
@@ -655,7 +656,7 @@ export interface TMissionOrBadge {
 	/** Priority (or position) of the mission in the UI. Low value indicates higher position in the UI */
 	position?: number;
 
-	/** The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon */
+	/** The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px */
 	ribbon?: TRibbon;
 
 	/** ID of the completion fact from ach_completed or ach_completed_recurring tables */
@@ -721,7 +722,7 @@ export interface AchRelatedGame {
 		name: string;
 		/** The URL to the game */
 		link: string;
-		/** The URL to the image of the game */
+		/** The URL to the image of the game, 1:1 aspect ratio */
 		image: string;
 		/** The indicator if the game is enabled */
 		enabled: boolean;
@@ -824,7 +825,7 @@ export interface TInboxMessageBody {
 	title: string;
 	/** Short preview body of the message */
 	preview_body: string;
-	/** Message icon */
+	/** Message icon, 128x128px */
 	icon: string;
 	/** The action that should be performed when user clicks on the message.
 	 * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
@@ -906,7 +907,7 @@ export interface TUICustomSection {
 	id: number;
 	/** The body of the custom section */
 	body?: string;
-	/** The image of the custom section */
+	/** The image of the custom section, 64x64px */
 	menu_img?: string;
 	/** The name of the custom section */
 	menu_name?: string;
@@ -978,7 +979,7 @@ export interface BonusTemplateMetaMap {
 	description: string;
 	/** Acknowledge message setup in the bonus template*/
 	acknowledge: string;
-	/** Image URL of the bonus template*/
+	/** Image URL of the bonus template, 1:1 aspect ratio */
 	image_url: string;
 	/** Redirect URL of the bonus template*/
 	redirect_url?: string;
@@ -1028,9 +1029,9 @@ export interface TRaffle {
 	description: string;
 	/** ID of the custom section that is linked to the raffle in the Gamification widget */
 	custom_section_id: number;
-	/** URL of the image that represents the raffle */
+	/** URL of the image that represents the raffle, 890x193px */
 	image_url: string;
-	/** URL of the mobile image that represents the raffle */
+	/** URL of the mobile image that represents the raffle, 300x142px */
 	image_url_mobile: string;
 	/**
 	 * Custom data as string or JSON string that can be used in API to build custom UI
@@ -1081,7 +1082,7 @@ export interface TRafflePrize {
 	name: string;
 	/** Description of the prize */
 	description: string;
-	/** URL of the image that represents the prize */
+	/** URL of the image that represents the prize, 256x256px */
 	image_url: string;
 	/**
 	 * The number of prizes available per run of the draw.
@@ -1202,15 +1203,24 @@ export interface TRaffleDraw {
 	name: string;
 	/** Description of the draw */
 	description: string;
-	/** URL of the image that represents the draw */
+	/** URL of the image that represents the draw, 365x175px */
 	image_url: string;
-	/** URL of the moible image that represents the draw */
+	/** URL of the moible image that represents the draw, 300x145px */
 	image_url_mobile: string;
-	/** URL of the icon that represents the draw */
+	/**
+	 * URL of the icon that represents the draw
+	 * @remarks Square icon target **256×256 px**
+	 */
 	icon_url: string;
-	/** URL of the background image that will be used in the draw list item */
+	/**
+	 * URL of the background image that will be used in the draw list item
+	 * @remarks Desktop draw list strip: **900×85 px**.
+	 */
 	background_image_url: string;
-	/** URL of the moible background image that will be used in the draw list item */
+	/**
+	 * URL of the moible background image that will be used in the draw list item
+	 * @remarks Mobile draw list background: **1328×240 px**.
+	 */
 	background_image_url_mobile: string;
 	/** Show if the draw is grand and is marked as special */
 	is_grand: boolean;
@@ -1314,15 +1324,30 @@ export interface TRaffleDrawRun {
 	name: string;
 	/** Description of the draw */
 	description: string;
-	/** URL of the image that represents the draw */
+	/**
+	 * URL of the image that represents the draw
+	 * @remarks Same as {@link TRaffleDraw.image_url}: **365×175 px** desktop promo.
+	 */
 	image_url: string;
-	/** URL of the moible image that represents the draw */
+	/**
+	 * URL of the moible image that represents the draw
+	 * @remarks Same as {@link TRaffleDraw.image_url_mobile}: **300×145 px** mobile promo.
+	 */
 	image_url_mobile: string;
-	/** URL of the icon that represents the draw */
+	/**
+	 * URL of the icon that represents the draw
+	 * @remarks Same as {@link TRaffleDraw.icon_url}: **256×256 px** square.
+	 */
 	icon_url: string;
-	/** URL of the background image that will be used in the draw list item */
+	/**
+	 * URL of the background image that will be used in the draw list item
+	 * @remarks Same as {@link TRaffleDraw.background_image_url}: **900×85 px**.
+	 */
 	background_image_url: string;
-	/** URL of the moible background image that will be used in the draw list item */
+	/**
+	 * URL of the moible background image that will be used in the draw list item
+	 * @remarks Same as {@link TRaffleDraw.background_image_url_mobile}: **1328×240 px**.
+	 */
 	background_image_url_mobile: string;
 	/** Show if the draw is grand and is marked as special */
 	is_grand: boolean;

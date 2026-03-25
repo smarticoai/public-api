@@ -32,7 +32,7 @@ ___
 
 • **image**: `string`
 
-URL of the image of the store item
+URL of the image of the store item, 256x256px
 
 ___
 
@@ -56,7 +56,7 @@ ___
 
 • **ribbon**: `string`
 
-The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon
+The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px
 
 ___
 
@@ -213,7 +213,7 @@ ___
 
 • `Optional` **custom\_ribbon\_image**: `string`
 
-The custom ribbon image of the discounted price.
+The custom ribbon image of the discounted price, 250x300px
 
 ___
 

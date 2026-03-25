@@ -30,7 +30,7 @@ ___
 
 • **image\_url**: `string`
 
-URL of the image that represents the prize
+URL of the image that represents the prize, 256x256px
 
 ___
 
