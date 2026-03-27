@@ -139,7 +139,7 @@ import {
 	GamePickRoundBoard,
 	GamePickUserInfo,
 	GamePickGameInfo,
-} from './GamePick';
+} from './WSAPI/WSAPITypes';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';

@@ -39,8 +39,6 @@ import {
 	TLevelCurrent,
 	TActivityLog,
 	TRaffleOptinResponse,
-} from './WSAPITypes';
-import {
 	GamesApiResponse,
 	GamePickRound,
 	GamePickRoundBoard,
@@ -48,7 +46,7 @@ import {
 	GamePickGameInfo,
 	GamePickRequestParams,
 	GamePickRoundRequestParams,
-} from '../GamePick';
+} from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
 	JackpotDetails,
@@ -1401,40 +1399,6 @@ export class WSAPI {
 			throw new Error('saw_template_id is required');
 		}
 		return this.api.gpGetGameInfo(props.saw_template_id);
-	}
-
-	/**
-	 * Returns translations for the MatchX/Quiz game UI.
-	 * Translations are returned as a key-value map for the Gamification and RetentionGames areas,
-	 * resolved to the current user's language.
-	 *
-	 * @param props.saw_template_id - The ID of the MatchX or Quiz game template
-	 *
-	 * **Response** `GamesApiResponse<any>`:
-	 * - `errCode` - 0 on success
-	 * - `data`:
-	 *   - `translations` - Key-value map of translation strings (e.g. `rgSubmitSelection`, `rgLeaderboardTitle`, `quizConfirmAnswer`, etc.)
-	 *   - `hash_code` - Hash for cache invalidation
-	 *   - `lang_code` - Resolved language code (e.g. 'EN')
-	 *
-	 * **Example**:
-	 * ```
-	 * _smartico.api.getGamePickTranslations({
-	 *      saw_template_id: 1083,
-	 * }).then((result) => {
-	 *      const tr = result.data.translations;
-	 *      console.log(tr.rgSubmitSelection);   // "Submit selection"
-	 *      console.log(tr.rgLeaderboardTitle);  // "Leaderboard"
-	 * });
-	 * ```
-	 *
-	 * **Visitor mode: not supported**
-	 */
-	public async getGamePickTranslations(props: GamePickRequestParams): Promise<GamesApiResponse<any>> {
-		if (!props.saw_template_id) {
-			throw new Error('saw_template_id is required');
-		}
-		return this.api.gpGetTranslations(props.saw_template_id);
 	}
 
 	/**
