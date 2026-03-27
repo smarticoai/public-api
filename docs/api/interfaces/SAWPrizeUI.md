@@ -102,8 +102,6 @@ ___
 
 • `Optional` **icon**: `string`
 
-Prize icon URL; BackOffice shared prize editor recommends **1:1** aspect (`sizeHints="1:1"`).
-
 ___
 
 ### replace\_name\_with\_image

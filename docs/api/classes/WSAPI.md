@@ -1032,7 +1032,7 @@ ___
 
 ### getGamePickActiveRounds
 
-▸ **getGamePickActiveRounds**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
+▸ **getGamePickActiveRounds**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
 Returns the active rounds for the specified MatchX or Quiz game.
 Each round includes its events (matches/questions) along with the current user's selections and scores.
@@ -1041,17 +1041,17 @@ Each round includes its events (matches/questions) along with the current user's
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRequestParams` |
+| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
 ___
 
 ### getGamePickActiveRound
 
-▸ **getGamePickActiveRound**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+▸ **getGamePickActiveRound**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Returns a single active round for the specified MatchX or Quiz game.
 The round includes full event details with the current user's selections.
@@ -1060,17 +1060,17 @@ The round includes full event details with the current user's selections.
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRoundRequestParams` |
+| `props` | [`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 ___
 
 ### getGamePickHistory
 
-▸ **getGamePickHistory**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
+▸ **getGamePickHistory**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
 Returns the history of all rounds (including resolved ones) for the specified MatchX or Quiz game.
 Each round contains full event details with results and the current user's predictions.
@@ -1079,17 +1079,17 @@ Each round contains full event details with results and the current user's predi
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRequestParams` |
+| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
 ___
 
 ### getGamePickBoard
 
-▸ **getGamePickBoard**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRoundBoard`\>\>
+▸ **getGamePickBoard**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
 
 Returns the leaderboard for a specific round within a MatchX or Quiz game.
 Use `round_id = -1` (AllRoundsGameBoardID) to get the season/overall leaderboard across all rounds.
@@ -1098,17 +1098,17 @@ Use `round_id = -1` (AllRoundsGameBoardID) to get the season/overall leaderboard
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRoundRequestParams` |
+| `props` | [`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickRoundBoard`\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
 
 ___
 
 ### submitGamePickSelection
 
-▸ **submitGamePickSelection**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+▸ **submitGamePickSelection**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Submits score predictions for a round in a MatchX game.
 Sends the round object with user selections for all events at once.
@@ -1120,17 +1120,17 @@ Predictions can be edited until each match starts (if `allow_edit_answers` is en
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRequestParams` & \{ `round`: `Partial`\<`GamePickRound`\>  } |
+| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & \{ `round`: `Partial`\<[`GamePickRound`](../interfaces/GamePickRound.md)\>  } |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 ___
 
 ### submitGamePickSelectionQuiz
 
-▸ **submitGamePickSelectionQuiz**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+▸ **submitGamePickSelectionQuiz**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Submits answers for a round in a Quiz game.
 Sends the round object with user answers for all events at once.
@@ -1142,17 +1142,17 @@ Answers can be edited until each match starts (if `allow_edit_answers` is enable
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRequestParams` & \{ `round`: `Partial`\<`GamePickRound`\>  } |
+| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & \{ `round`: `Partial`\<[`GamePickRound`](../interfaces/GamePickRound.md)\>  } |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 ___
 
 ### getGamePickUserInfo
 
-▸ **getGamePickUserInfo**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickUserInfo`\>\>
+▸ **getGamePickUserInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickUserInfo`](../interfaces/GamePickUserInfo.md)\>\>
 
 Returns the current user's profile information within the specified MatchX or Quiz game.
 The user record is synced from the Smartico platform into the games DB (synced every 1 minute).
@@ -1162,17 +1162,17 @@ If the user doesn't exist in the games DB yet, it will be created automatically 
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRequestParams` |
+| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickUserInfo`\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickUserInfo`](../interfaces/GamePickUserInfo.md)\>\>
 
 ___
 
 ### getGamePickGameInfo
 
-▸ **getGamePickGameInfo**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickGameInfo`\>\>
+▸ **getGamePickGameInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickGameInfo`](../interfaces/GamePickGameInfo.md)\>\>
 
 Returns the game configuration and the list of all rounds for the specified MatchX or Quiz game.
 Includes the SAW template definition, label settings, and round metadata (without events).
@@ -1181,37 +1181,17 @@ Includes the SAW template definition, label settings, and round metadata (withou
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRequestParams` |
+| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickGameInfo`\>\>
-
-___
-
-### getGamePickTranslations
-
-▸ **getGamePickTranslations**(`props`): `Promise`\<`GamesApiResponse`\<`any`\>\>
-
-Returns translations for the MatchX/Quiz game UI.
-Translations are returned as a key-value map for the Gamification and RetentionGames areas,
-resolved to the current user's language.
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `props` | `GamePickRequestParams` |
-
-#### Returns
-
-`Promise`\<`GamesApiResponse`\<`any`\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickGameInfo`](../interfaces/GamePickGameInfo.md)\>\>
 
 ___
 
 ### getGamePickRoundInfoForUser
 
-▸ **getGamePickRoundInfoForUser**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+▸ **getGamePickRoundInfoForUser**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Returns round data with events and picks for a specific user (identified by their internal user ID).
 Useful for viewing another user's predictions from the leaderboard.
@@ -1221,11 +1201,11 @@ The `int_user_id` can be obtained from the `getGamePickBoard` response (`users[]
 
 | Name | Type |
 | :------ | :------ |
-| `props` | `GamePickRoundRequestParams` & \{ `int_user_id`: `number`  } |
+| `props` | [`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) & \{ `int_user_id`: `number`  } |
 
 #### Returns
 
-`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
+`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 ___
 

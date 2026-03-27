@@ -46,6 +46,12 @@
 - [TournamentRegistrationStatusName](enums/TournamentRegistrationStatusName.md)
 - [TournamentRegistrationType](enums/TournamentRegistrationType.md)
 - [BonusStatus](enums/BonusStatus-1.md)
+- [GamePickMarketType](enums/GamePickMarketType.md)
+- [GamePickResolutionType](enums/GamePickResolutionType.md)
+- [GPRoundStatus](enums/GPRoundStatus.md)
+- [GamePickScoreType](enums/GamePickScoreType.md)
+- [GamePickSportType](enums/GamePickSportType.md)
+- [GameRoundOrderType](enums/GameRoundOrderType.md)
 
 ## Classes
 
@@ -174,6 +180,19 @@
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
 - [TActivityLog](interfaces/TActivityLog.md)
 - [TRaffleOptinResponse](interfaces/TRaffleOptinResponse.md)
+- [QuizEventMeta](interfaces/QuizEventMeta.md)
+- [GamePickEventMeta](interfaces/GamePickEventMeta.md)
+- [GamePickEvent](interfaces/GamePickEvent.md)
+- [GamePickRoundPublicMeta](interfaces/GamePickRoundPublicMeta.md)
+- [GamePickRoundBase](interfaces/GamePickRoundBase.md)
+- [GamePickRound](interfaces/GamePickRound.md)
+- [GamePickRoundBoard](interfaces/GamePickRoundBoard.md)
+- [GamePickBoardUser](interfaces/GamePickBoardUser.md)
+- [GamePickUserInfo](interfaces/GamePickUserInfo.md)
+- [GamePickGameInfo](interfaces/GamePickGameInfo.md)
+- [GamesApiResponse](interfaces/GamesApiResponse.md)
+- [GamePickRequestParams](interfaces/GamePickRequestParams.md)
+- [GamePickRoundRequestParams](interfaces/GamePickRoundRequestParams.md)
 
 ## General API
 
@@ -218,6 +237,14 @@ ___
 | `1` | `string` |
 | `2` | `string` |
 | `3` | `string` |
+
+___
+
+### AllRoundsGameBoardID
+
+• `Const` **AllRoundsGameBoardID**: ``-1``
+
+Round ID constant used to request the overall/seasonal leaderboard across all rounds
 
 ## Functions
 
