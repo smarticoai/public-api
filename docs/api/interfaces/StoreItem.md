@@ -10,13 +10,13 @@ ___
 
 ### itemTypeId
 
-• **itemTypeId**: `StoreItemType`
+• **itemTypeId**: [`StoreItemType`](../enums/StoreItemType.md)
 
 ___
 
 ### itemPublicMeta
 
-• **itemPublicMeta**: `StoreItemPublicMeta`
+• **itemPublicMeta**: [`StoreItemPublicMeta`](StoreItemPublicMeta.md)
 
 ___
 

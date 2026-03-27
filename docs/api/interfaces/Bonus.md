@@ -70,10 +70,10 @@ ___
 
 ### labelBonusTemplateMetaMap
 
-• `Optional` **labelBonusTemplateMetaMap**: `BonusTemplateMetaMap`
+• `Optional` **labelBonusTemplateMetaMap**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap.md)
 
 ___
 
 ### bonusMetaMap
 
-• `Optional` **bonusMetaMap**: `BonusMetaMap`
+• `Optional` **bonusMetaMap**: [`BonusMetaMap`](BonusMetaMap.md)

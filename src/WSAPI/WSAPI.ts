@@ -176,7 +176,7 @@ export class WSAPI {
 	 * Pay attention that this method is synchronous and returns the user profile object immediately, not a promise.
 	 * **Example**:
 	 * ```
-	 * var p = _smartico.api.getUserProfile);
+	 * var p = _smartico.api.getUserProfile();
 	 * console.log(p);
 	 * ```
 	 * **Visitor mode: not supported**
@@ -223,7 +223,7 @@ export class WSAPI {
 		return await this.api.coreCheckSegments(this.userExtId, Array.isArray(segment_ids) ? segment_ids : [segment_ids]);
 	}
 
-	/** Returns all the levels available the current user
+	/** Returns all the levels available to the current user
 	 * **Example**:
 	 * ```
 	 * _smartico.api.getLevels().then((result) => {
@@ -291,7 +291,7 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns all the badges available the current user
+	 * Returns all the badges available to the current user
 	 *
 	 * **Visitor mode: not supported**
 	 */
@@ -301,7 +301,7 @@ export class WSAPI {
 
 	/**
 	 * Returns all the bonuses for the current user
-	 * The returned bonuss are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
+	 * The returned bonuses are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
 	 * Note that each time you call getBonuses with a new onUpdate callback, the old one will be overwritten by the new one.
 	 * The onUpdate callback will be called on bonus claimed and the updated bonuses will be passed to it.
 	 *
@@ -337,7 +337,7 @@ export class WSAPI {
 
 	/**
 	 * Returns the extra counters for the current user level.
-	 * These are counters that are configured for each Smartico client separatly by request.
+	 * These are counters that are configured for each Smartico client separately by request.
 	 * For example 1st counter could be total wagering amount, 2nd counter could be total deposit amount, etc.
 	 *
 	 * **Example**:
@@ -360,7 +360,7 @@ export class WSAPI {
 
 	/**
 	 *
-	 * Returns all the store items available the current user
+	 * Returns all the store items available to the current user
 	 * The returned store items are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
 	 * Note that each time you call getStoreItems with a new onUpdate callback, the old one will be overwritten by the new one.
 	 * The onUpdate callback will be called on purchase of the store item.
@@ -533,7 +533,7 @@ export class WSAPI {
 	/**
 	 * Returns the list of mini-games configured for the current user (not filtered by spin availability or Widget visibility).
 	 * The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one.
-	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
+	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or won prize is spin/jackpot and if max count of the available user spins equals one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
 	 *
 	 * **Example**:
 	 * ```
@@ -596,7 +596,7 @@ export class WSAPI {
 	/**
 	 * Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
 	 * After playMiniGame is called, you can call getMiniGames to get the list of mini-games.The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGame with a new onUpdate callback, the old one will be overwritten by the new one.
-	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
+	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or won prize is spin/jackpot and if max count of the available user spins equals one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
 	 *
 	 * **Example**:
 	 * ```
@@ -643,7 +643,7 @@ export class WSAPI {
 	/**
 	 * Plays the specified by template_id mini-game on behalf of user spin_count times and returns array of the prizes
 	 * After playMiniGameBatch is called, you can call getMiniGames to get the list of mini-games. The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGameBatch with a new onUpdate callback, the old one will be overwritten by the new one.
-	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or wined prize is spin/jackpot and if max count of the available user spin equal one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
+	 * The onUpdate callback will be called on available spin count change, if mini-game has increasing jackpot per spin or won prize is spin/jackpot and if max count of the available user spins equals one, also if the spins were issued to the user manually in the BO. Updated templates will be passed to onUpdate callback.
 	 *
 	 * **Example**:
 	 * ```
@@ -656,7 +656,7 @@ export class WSAPI {
 	public async playMiniGameBatch(
 		template_id: number,
 		spin_count: number,
-		{ onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {},
+		{ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {},
 	): Promise<TMiniGamePlayBatchResult[]> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
@@ -742,7 +742,7 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns details information of specific tournament instance, the response will include tournament info and the leaderboard of players
+	 * Returns detailed information for a specific tournament instance; the response includes tournament info and the leaderboard of players
 	 *
 	 * **Example**:
 	 * ```
@@ -818,7 +818,7 @@ export class WSAPI {
 	 * An indicator "onlyFavorite" can be passed to get only messages marked as favorites.
 	 * An indicator "read_status" can be passed to get only messages marked as read or unread.
 	 * You can leave this params empty and by default it will return list of messages ranging from 0 to 20.
-	 * This functions return list of messages without the body of the message.
+	 * This function returns a list of messages without the body of each message.
 	 * To get the body of the message you need to call getInboxMessageBody function and pass the message guid contained in each message of this request.
 	 * All other action like mark as read, favorite, delete, etc. can be done using this message GUID.
 	 * The "onUpdate" callback will be triggered when the user receives a new message. It will provide an updated list of messages, ranging from 0 to 20, to the onUpdate callback function.
@@ -890,7 +890,7 @@ export class WSAPI {
 	}
 
 	/**
-	 * Requests to mark all inbox messages as rea
+	 * Requests to mark all inbox messages as read
 	 *
 	 * **Visitor mode: not supported**
 	 */
@@ -996,7 +996,7 @@ export class WSAPI {
 	 * ```
 	 * _smartico.api.reportClickEvent({
 	 *      engagement_uid: 'abc123-def456',
-	 *      activityType: 31 // Inbox,
+	 *      activityType: 31 // Inbox
 	 *      action: 'dp:gf_missions'
 	 * });
 	 * ```
@@ -1524,7 +1524,7 @@ export class WSAPI {
 		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.JackpotWinners);
 	}
 
-	/** Returns list of Jackpots that are active in the systen and matching to the filter definition.
+	/** Returns list of Jackpots that are active in the system and matching to the filter definition.
 	 * If filter is not provided, all active jackpots will be returned.
 	 * Filter can be used to get jackpots related to specific game or specific jackpot template.
 	 * You can call this method every second in order to get up to date information about current value of the jackpot(s) and present them to the end-users
@@ -1641,7 +1641,9 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns the winners of the jackpot with the specified jp_template_id.
+	 * Returns jackpot winners for the given `jp_template_id` (paginated on the server).
+	 * Default page size on the wire is 20; use `limit`, `offset`, and repeated calls to load more.
+	 * The full protocol response also includes `has_more`; this method returns only the `winners` array.
 	 *
 	 * **Example**:
 	 * ```
@@ -1651,16 +1653,19 @@ export class WSAPI {
 	 *      console.log(result);
 	 * });
 	 * ```
-	 * 
+	 *
 	 * **Visitor mode: not supported**
-	 * 
+	 *
+	 * @param params.jp_template_id - Jackpot template id (required; throws if missing)
+	 * @param params.limit - Page size (server default 20 when omitted)
+	 * @param params.offset - Offset into the winner list
 	 */
 
 	public async getJackpotWinners({
 		limit,
 		offset,
 		jp_template_id,
-	} : {
+	}: {
 		limit?: number;
 		offset?: number;
 		jp_template_id?: number;
@@ -1793,7 +1798,7 @@ export class WSAPI {
 	 * **Example**:
 	 * 
 	 * ```javascript
-	 * _smartico.api.getRaffleDrawRunHistory({raffle_id:156, draw_id: 432}).then((result) => {
+	 * _smartico.api.getRaffleDrawRunsHistory({ raffle_id: 156, draw_id: 432 }).then((result) => {
 	 *      console.log(result);
 	 * });
 	 * ```
@@ -1801,7 +1806,7 @@ export class WSAPI {
 	 * **Example in the Visitor mode**:
 	 * 
 	 * ```javascript
-	 * _smartico.vapi('EN').getRaffleDrawRunHistory({ raffle_id: 156, draw_id: 432 }).then((result) => {
+	 * _smartico.vapi('EN').getRaffleDrawRunsHistory({ raffle_id: 156, draw_id: 432 }).then((result) => {
 	 *      console.log(result);
 	 * });
 	 * ```
@@ -1809,6 +1814,7 @@ export class WSAPI {
 	 */
 
 	public async getRaffleDrawRunsHistory(props: { raffle_id: number; draw_id?: number }): Promise<TRaffleDrawRun[]> {
+		
 		const res = await this.api.getRaffleDrawRunsHistory(this.userExtId, props);
 
 		if (!props.raffle_id) {
@@ -1819,7 +1825,7 @@ export class WSAPI {
 	}
 
 	/**
-	 * Returns error code, and error Message after calling the function, error message 0 - means that the request was successful
+	 * Returns `err_code` and `err_message` after the call; `err_code` 0 means the request succeeded.
 	 *
 	 *
 	 * **Example**:
@@ -1869,6 +1875,6 @@ export class WSAPI {
 		return {
 			err_code: r.errCode,
 			err_message: r.errMsg,
-		};;
+		};
 	}
 }

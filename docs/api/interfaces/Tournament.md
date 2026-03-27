@@ -20,7 +20,7 @@ ___
 
 ### tournamentType
 
-• `Optional` **tournamentType**: `TournamentType`
+• `Optional` **tournamentType**: [`TournamentType`](../enums/TournamentType.md)
 
 Type of the tournament. For now only SCHEDULED is support
 
@@ -28,7 +28,7 @@ ___
 
 ### publicMeta
 
-• `Optional` **publicMeta**: `TournamentPublicMeta`
+• `Optional` **publicMeta**: [`TournamentPublicMeta`](TournamentPublicMeta.md)
 
 Meta information about tournament that should be used to build UI
 
@@ -116,7 +116,7 @@ ___
 
 ### tournamentInstanceStatus
 
-• `Optional` **tournamentInstanceStatus**: `TournamentInstanceStatus`
+• `Optional` **tournamentInstanceStatus**: [`TournamentInstanceStatus`](../enums/TournamentInstanceStatus.md)
 
 Status of tournament instance
 

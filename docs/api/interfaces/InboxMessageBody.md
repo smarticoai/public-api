@@ -16,7 +16,7 @@ ___
 
 ### type
 
-• **type**: `InboxMessageType`
+• **type**: [`InboxMessageType`](../enums/InboxMessageType.md)
 
 ___
 
@@ -64,7 +64,7 @@ ___
 
 ### open\_links
 
-• `Optional` **open\_links**: `OpenLinksType`
+• `Optional` **open\_links**: [`OpenLinksType`](../enums/OpenLinksType.md)
 
 ___
 

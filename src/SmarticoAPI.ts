@@ -585,7 +585,7 @@ class SmarticoAPI {
 			{ jp_template_id },
 		);
 
-		return await this.send<GetJackpotEligibleGamesResponse>(message, ClassId.JP_GET_ELIGIBLE_GAMES_RESPONSE);;
+		return await this.send<GetJackpotEligibleGamesResponse>(message, ClassId.JP_GET_ELIGIBLE_GAMES_RESPONSE);
 	}
 
 	public async getJackpotEligibleGamesT(user_ext_id: string, { jp_template_id }: { jp_template_id: number }): Promise<TGetJackpotEligibleGamesResponse> {

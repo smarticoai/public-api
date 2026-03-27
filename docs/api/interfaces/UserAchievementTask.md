@@ -10,7 +10,7 @@ ___
 
 ### task\_public\_meta
 
-• `Optional` **task\_public\_meta**: `AchievementTaskPublicMeta`
+• `Optional` **task\_public\_meta**: [`AchievementTaskPublicMeta`](AchievementTaskPublicMeta.md)
 
 ___
 
@@ -22,7 +22,7 @@ ___
 
 ### task\_type\_id
 
-• **task\_type\_id**: `AchievementTaskType`
+• **task\_type\_id**: [`AchievementTaskType`](../enums/AchievementTaskType.md)
 
 ___
 
@@ -80,4 +80,4 @@ ___
 
 ### affects\_progress
 
-• `Optional` **affects\_progress**: `AffectsProgress`
+• `Optional` **affects\_progress**: [`AffectsProgress`](AffectsProgress.md)

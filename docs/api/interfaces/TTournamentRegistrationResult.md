@@ -4,7 +4,7 @@
 
 ### err\_code
 
-• **err\_code**: `TournamentRegistrationError`
+• **err\_code**: [`TournamentRegistrationError`](../enums/TournamentRegistrationError.md)
 
 Error code that represents outcome of the tournament registration request. Successful registration in case err_code is 0
 

@@ -355,7 +355,7 @@ ___
 
 ### badgeTimeLimitState
 
-• `Optional` **badgeTimeLimitState**: `BadgesTimeLimitStates`
+• `Optional` **badgeTimeLimitState**: [`BadgesTimeLimitStates`](../enums/BadgesTimeLimitStates.md)
 
 Badge time limit state for badges with time restrictions
 

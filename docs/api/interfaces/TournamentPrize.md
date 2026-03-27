@@ -34,7 +34,7 @@ ___
 
 ### type
 
-• **type**: `ActivityTypeLimited`
+• **type**: [`ActivityTypeLimited`](../enums/ActivityTypeLimited.md)
 
 ___
 

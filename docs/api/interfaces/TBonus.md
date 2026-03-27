@@ -52,7 +52,7 @@ ___
 
 ### label\_bonus\_template\_meta\_map
 
-• `Optional` **label\_bonus\_template\_meta\_map**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap.md)
+• `Optional` **label\_bonus\_template\_meta\_map**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap-1.md)
 
 Additional information about the bonus(edscription, image,name, acknowledge)
 
@@ -60,6 +60,6 @@ ___
 
 ### bonus\_meta\_map
 
-• `Optional` **bonus\_meta\_map**: [`BonusMetaMap`](BonusMetaMap.md)
+• `Optional` **bonus\_meta\_map**: [`BonusMetaMap`](BonusMetaMap-1.md)
 
 Additional information presented to the player when the bonus is redeemed

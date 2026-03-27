@@ -1,0 +1,67 @@
+# Interface: GetCustomSectionsResponse
+
+## Hierarchy
+
+- `ProtocolResponse`
+
+  ↳ **`GetCustomSectionsResponse`**
+
+## Properties
+
+### cid
+
+• **cid**: `number`
+
+#### Inherited from
+
+ProtocolResponse.cid
+
+___
+
+### ts
+
+• `Optional` **ts**: `number`
+
+#### Inherited from
+
+ProtocolResponse.ts
+
+___
+
+### uuid
+
+• `Optional` **uuid**: `string`
+
+#### Inherited from
+
+ProtocolResponse.uuid
+
+___
+
+### errCode
+
+• `Optional` **errCode**: `number`
+
+#### Inherited from
+
+ProtocolResponse.errCode
+
+___
+
+### errMsg
+
+• `Optional` **errMsg**: `string`
+
+#### Inherited from
+
+ProtocolResponse.errMsg
+
+___
+
+### customSections
+
+• **customSections**: `Object`
+
+#### Index signature
+
+▪ [key: `string`]: [`UICustomSection`](UICustomSection.md)

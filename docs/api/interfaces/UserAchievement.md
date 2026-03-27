@@ -10,7 +10,7 @@ ___
 
 ### ach\_type\_id
 
-• `Optional` **ach\_type\_id**: `AchievementType`
+• `Optional` **ach\_type\_id**: [`AchievementType`](../enums/AchievementType.md)
 
 ___
 
@@ -112,13 +112,13 @@ ___
 
 ### ach\_status\_id
 
-• `Optional` **ach\_status\_id**: `AchievementStatus`
+• `Optional` **ach\_status\_id**: [`AchievementStatus`](../enums/AchievementStatus.md)
 
 ___
 
 ### scheduledMissionType
 
-• `Optional` **scheduledMissionType**: `ScheduledMissionType`
+• `Optional` **scheduledMissionType**: [`ScheduledMissionType`](../enums/ScheduledMissionType.md)
 
 ___
 
@@ -202,4 +202,4 @@ ___
 
 ### badgeTimeLimitState
 
-• `Optional` **badgeTimeLimitState**: `BadgesTimeLimitStates`
+• `Optional` **badgeTimeLimitState**: [`BadgesTimeLimitStates`](../enums/BadgesTimeLimitStates.md)
