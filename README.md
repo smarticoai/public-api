@@ -122,19 +122,44 @@ npm install --save @smartico/public-api
 
 ### Usage
 
+`WSAPI` provides a high-level interface on top of `SmarticoAPI`. Create a `SmarticoAPI` instance with a custom `messageSender`, then create `WSAPI` instances bound to specific users:
+
 ```typescript
-import { SmarticoAPI } from '@smartico/public-api';
+import { SmarticoAPI, WSAPI } from '@smartico/public-api';
 
-const SAPI = new SmarticoAPI( 'your-label-api-key', 'your-brand-key', 'your-message-sender', { logger: console });
+// publicApiUrl is resolved automatically by SmarticoAPI from your label key
+const messageSender = async (message: any, publicApiUrl?: string): Promise<any> => {
+    const res = await fetch(publicApiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(message),
+    });
+    return res.ok ? res.json() : '';
+};
 
-const userExtId = 'John1984'
-            
-const response = await SAPI.miniGamesGetTemplates(userExtId);
+const smarticoApi = new SmarticoAPI('your-label-api-key', 'your-brand-key', messageSender);
 
-response.templates.forEach( t => {
-    console.log(t.saw_template_ui_definition.name)
-}
+const userExtId = 'John1984';
+const api = new WSAPI(smarticoApi, userExtId);
 
+const missions = await api.getMissions();
+missions.forEach(m => {
+    console.log(m.name, m.is_completed);
+});
+
+const optInResult = await api.requestMissionOptIn(missions[0].id);
+console.log('Opt-in:', optInResult.err_code);
+```
+
+For the full list of available methods, see the [WSAPI documentation](docs/api/classes/WSAPI.md).
+
+You can also use `SmarticoAPI` directly for low-level protocol access:
+
+```typescript
+const response = await smarticoApi.miniGamesGetTemplates(userExtId);
+response.templates.forEach(t => {
+    console.log(t.saw_template_ui_definition.name);
+});
 ```
 
 ## Backend usage (http-protocol)
