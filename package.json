@@ -1,6 +1,6 @@
 {
 	"name": "@smartico/public-api",
-	"version": "0.0.352",
+	"version": "0.0.355",
 	"description": "Smartico public API",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
@@ -38,6 +38,8 @@
 		"npm-run-all": "4.1.5",
 		"typedoc": "^0.28.17",
 		"typedoc-plugin-markdown": "^4.11.0",
-		"typedoc-plugin-merge-modules": "^7.0.0"
+		"typedoc-plugin-merge-modules": "^7.0.0",
+		"typescript": "~5.1.0",
+		"@types/node": "^18.19.130"
 	}
 }
