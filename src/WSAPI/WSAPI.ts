@@ -1097,7 +1097,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickActiveRounds({
+	 * _smartico.api.gamePickGetActiveRounds({
 	 *      saw_template_id: 1083,
 	 * }).then((result) => {
 	 *      console.log(result.data); // GamePickRound[]
@@ -1109,7 +1109,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickActiveRounds(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickRound[]>> {
+	public async gamePickGetActiveRounds(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickRound[]>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1125,12 +1125,12 @@ export class WSAPI {
 	 *
 	 * **Response** `GamesApiResponse<GamePickRound>`:
 	 * - `errCode` - 0 on success
-	 * - `data` - Single round object with the same structure as in `getGamePickActiveRounds`,
+	 * - `data` - Single round object with the same structure as in `gamePickGetActiveRounds`,
 	 *   including `events[]` with full event details, user selections, and resolution info
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickActiveRound({
+	 * _smartico.api.gamePickGetActiveRound({
 	 *      saw_template_id: 1083,
 	 *      round_id: 31652,
 	 * }).then((result) => {
@@ -1141,7 +1141,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickActiveRound(props: GamePickRoundRequestParams): Promise<GamesApiResponse<GamePickRound>> {
+	public async gamePickGetActiveRound(props: GamePickRoundRequestParams): Promise<GamesApiResponse<GamePickRound>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1160,12 +1160,12 @@ export class WSAPI {
 	 * **Response** `GamesApiResponse<GamePickRound[]>`:
 	 * - `errCode` - 0 on success
 	 * - `data` - Array of rounds ordered by `round_row_id` descending (newest first).
-	 *   Each round has the same structure as in `getGamePickActiveRounds`, including resolved events
+	 *   Each round has the same structure as in `gamePickGetActiveRounds`, including resolved events
 	 *   with `resolution_type_id` (0=None, 2=Lost, 3=PartialWin, 4=FullWin) and `resolution_score`
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickHistory({
+	 * _smartico.api.gamePickGetHistory({
 	 *      saw_template_id: 1083,
 	 * }).then((result) => {
 	 *      result.data.forEach(round => {
@@ -1176,7 +1176,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickHistory(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickRound[]>> {
+	public async gamePickGetHistory(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickRound[]>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1204,7 +1204,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickBoard({
+	 * _smartico.api.gamePickGetBoard({
 	 *      saw_template_id: 1083,
 	 *      round_id: 31652,
 	 * }).then((result) => {
@@ -1215,7 +1215,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickBoard(props: GamePickRoundRequestParams): Promise<GamesApiResponse<GamePickRoundBoard>> {
+	public async gamePickGetBoard(props: GamePickRoundRequestParams): Promise<GamesApiResponse<GamePickRoundBoard>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1233,7 +1233,7 @@ export class WSAPI {
 	 * Predictions can be edited until each match starts (if `allow_edit_answers` is enabled on the round).
 	 *
 	 * @param props.saw_template_id - The ID of the MatchX game template
-	 * @param props.round - Round object containing `round_id` and `events[]`. Typically obtained from `getGamePickActiveRound`
+	 * @param props.round - Round object containing `round_id` and `events[]`. Typically obtained from `gamePickGetActiveRound`
 	 *   and modified with user predictions. Each event needs: `gp_event_id`, `team1_user_selection`, `team2_user_selection`
 	 *
 	 * **Response** `GamesApiResponse<GamePickRound>`:
@@ -1243,7 +1243,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickActiveRound({
+	 * _smartico.api.gamePickGetActiveRound({
 	 *      saw_template_id: 1190,
 	 *      round_id: 38665,
 	 * }).then((roundData) => {
@@ -1253,7 +1253,7 @@ export class WSAPI {
 	 *          team1_user_selection: 1,
 	 *          team2_user_selection: 0,
 	 *      }));
-	 *      _smartico.api.submitGamePickSelection({
+	 *      _smartico.api.gamePickSubmitSelection({
 	 *          saw_template_id: 1190,
 	 *          round: round,
 	 *      }).then((result) => {
@@ -1264,7 +1264,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async submitGamePickSelection(props: GamePickRequestParams & { round: Partial<GamePickRound> }): Promise<GamesApiResponse<GamePickRound>> {
+	public async gamePickSubmitSelection(props: GamePickRequestParams & { round: Partial<GamePickRound> }): Promise<GamesApiResponse<GamePickRound>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1282,7 +1282,7 @@ export class WSAPI {
 	 * Answers can be edited until each match starts (if `allow_edit_answers` is enabled on the round).
 	 *
 	 * @param props.saw_template_id - The ID of the Quiz game template
-	 * @param props.round - Round object containing `round_id` and `events[]`. Typically obtained from `getGamePickActiveRound`
+	 * @param props.round - Round object containing `round_id` and `events[]`. Typically obtained from `gamePickGetActiveRound`
 	 *   and modified with user answers. Each event needs: `gp_event_id`, `user_selection`
 	 *
 	 * **Response** `GamesApiResponse<GamePickRound>`:
@@ -1292,7 +1292,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickActiveRound({
+	 * _smartico.api.gamePickGetActiveRound({
 	 *      saw_template_id: 1183,
 	 *      round_id: 37974,
 	 * }).then((roundData) => {
@@ -1301,7 +1301,7 @@ export class WSAPI {
 	 *          gp_event_id: e.gp_event_id,
 	 *          user_selection: 'x',
 	 *      }));
-	 *      _smartico.api.submitGamePickSelectionQuiz({
+	 *      _smartico.api.gamePickSubmitSelectionQuiz({
 	 *          saw_template_id: 1183,
 	 *          round: round,
 	 *      }).then((result) => {
@@ -1312,7 +1312,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async submitGamePickSelectionQuiz(props: GamePickRequestParams & { round: Partial<GamePickRound> }): Promise<GamesApiResponse<GamePickRound>> {
+	public async gamePickSubmitSelectionQuiz(props: GamePickRequestParams & { round: Partial<GamePickRound> }): Promise<GamesApiResponse<GamePickRound>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1344,7 +1344,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickUserInfo({
+	 * _smartico.api.gamePickGetUserInfo({
 	 *      saw_template_id: 1083,
 	 * }).then((result) => {
 	 *      console.log(result.data.public_username, result.data.ach_points_balance);
@@ -1353,7 +1353,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickUserInfo(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickUserInfo>> {
+	public async gamePickGetUserInfo(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickUserInfo>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1383,7 +1383,7 @@ export class WSAPI {
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickGameInfo({
+	 * _smartico.api.gamePickGetGameInfo({
 	 *      saw_template_id: 1189,
 	 * }).then((result) => {
 	 *      console.log(result.data.sawTemplate.saw_template_ui_definition.name);
@@ -1394,7 +1394,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickGameInfo(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickGameInfo>> {
+	public async gamePickGetGameInfo(props: GamePickRequestParams): Promise<GamesApiResponse<GamePickGameInfo>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
@@ -1404,7 +1404,7 @@ export class WSAPI {
 	/**
 	 * Returns round data with events and picks for a specific user (identified by their internal user ID).
 	 * Useful for viewing another user's predictions from the leaderboard.
-	 * The `int_user_id` can be obtained from the `getGamePickBoard` response (`users[].int_user_id`).
+	 * The `int_user_id` can be obtained from the `gamePickGetBoard` response (`users[].int_user_id`).
 	 *
 	 * @param props.saw_template_id - The ID of the MatchX or Quiz game template
 	 * @param props.round_id - The round to get info for
@@ -1413,13 +1413,13 @@ export class WSAPI {
 	 * **Response** `GamesApiResponse<GamePickRound>`:
 	 * - `errCode` - 0 on success
 	 * - `data` - Round object with the target user's selections.
-	 *   Same structure as `getGamePickActiveRound`, but `user_selection`/`team1_user_selection`/`team2_user_selection`
+	 *   Same structure as `gamePickGetActiveRound`, but `user_selection`/`team1_user_selection`/`team2_user_selection`
 	 *   fields on events reflect the specified user's picks instead of the current user's.
 	 *   Events also include `resolution_type_id` (0=None, 2=Lost, 3=PartialWin, 4=FullWin) showing how each prediction was scored
 	 *
 	 * **Example**:
 	 * ```
-	 * _smartico.api.getGamePickRoundInfoForUser({
+	 * _smartico.api.gamePickGetRoundInfoForUser({
 	 *      saw_template_id: 1083,
 	 *      round_id: 31652,
 	 *      int_user_id: 65653810,
@@ -1432,7 +1432,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 */
-	public async getGamePickRoundInfoForUser(props: GamePickRoundRequestParams & { int_user_id: number }): Promise<GamesApiResponse<GamePickRound>> {
+	public async gamePickGetRoundInfoForUser(props: GamePickRoundRequestParams & { int_user_id: number }): Promise<GamesApiResponse<GamePickRound>> {
 		if (!props.saw_template_id) {
 			throw new Error('saw_template_id is required');
 		}
