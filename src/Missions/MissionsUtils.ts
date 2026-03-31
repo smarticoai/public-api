@@ -5,6 +5,9 @@ import { UserAchievement } from "./UserAchievement";
 import { UserAchievementTask } from "./UserAchievementTask";
 import { BadgesTimeLimitStates } from "./BadgesTimeLimitStates";
 
+type UserStateParamsKeys = 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount' | 'casino_last_bet_amount' | 'casino_last_bet_amount_real' | 'casino_last_bet_amount_bonus' | 'acc_last_deposit_amount';
+const USER_STATE_PARAMS_KEYS_GAMES: UserStateParamsKeys[] = ['core_fav_game_top3', 'core_fav_game_type_top3', 'core_fav_game_provider_top3'];
+const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = ['core_recommended_deposit_amount', 'core_recommended_casino_bet_amount', 'casino_last_bet_amount', 'casino_last_bet_amount_real', 'casino_last_bet_amount_bonus', 'acc_last_deposit_amount'];
 export class MissionUtils {
 
     public static getAvailabilityStatus = (mission: UserAchievement) => {
@@ -188,10 +191,10 @@ export class MissionUtils {
         let suggestedGames: string = '';
         let suggestedValue: string = '';
 
-        userStateParamsKeys.forEach((k: 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount') => {
+        userStateParamsKeys.forEach((k: UserStateParamsKeys) => {
             const operator = userStateOperator[k]?.op;
 
-            if (k === 'core_fav_game_top3' || k === 'core_fav_game_type_top3' || k === 'core_fav_game_provider_top3') {
+            if (USER_STATE_PARAMS_KEYS_GAMES.includes(k)) {
                 if (operatorsMulti.includes(operator)) {
                     const value = userStateParams[k]?.filter(v => Boolean(v));
                     if (value && value.length > 0) {
@@ -218,7 +221,7 @@ export class MissionUtils {
                 }
             }
 
-            if (k === 'core_recommended_deposit_amount' || k === 'core_recommended_casino_bet_amount') {
+            if (USER_STATE_PARAMS_KEYS_BET_AMOUNT.includes(k)) { 
                 suggestedValue = userStateParams[k];
 
                 if (suggestedValue) {
