@@ -1,3 +1,4 @@
+import { AchRelatedGame } from '../Base/AchRelatedGame';
 import { IntUtils } from '../IntUtils';
 import { TStoreItem } from '../WSAPI/WSAPITypes';
 import { StoreItemPublicMeta } from './StoreItemPublicMeta';
@@ -12,6 +13,7 @@ export interface StoreItem {
 	canBuy?: boolean;
 	shopPool: number;
 	activeTillDate?: number;
+	related_games?: AchRelatedGame[];
 }
 
 const mapPurchaseType = (purchaseType: StoreItemPurchaseType) => {
@@ -57,6 +59,19 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				only_in_custom_section: r.itemPublicMeta.only_in_custom_section,
 				custom_section_type_id: r.itemPublicMeta.custom_section_type_id,
 				...(r.itemPublicMeta.cant_buy_message ? { cant_buy_message: r.itemPublicMeta.cant_buy_message } : {}),
+				related_games: (r.related_games || []).map((g, i) => ({
+					ext_game_id: g.ext_game_id,
+					game_public_meta: {
+						name: g.game_public_meta.name,
+						link: g.game_public_meta.link,
+						image: g.game_public_meta.image,
+						enabled: g.game_public_meta.enabled,
+						game_categories: g.game_public_meta.game_categories,
+						game_provider: g.game_public_meta.game_provider,
+						mobile_spec_link: g.game_public_meta.mobile_spec_link,
+						priority: i + 1,
+					},
+				})),
 			};
 			return x;
 		});

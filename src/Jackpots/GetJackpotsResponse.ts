@@ -1,4 +1,3 @@
-import { AchRelatedGame } from '../Base/AchRelatedGame';
 import { ProtocolResponse } from '../Base/ProtocolResponse';
 import { JackpotDetails } from './JackpotDetails';
 

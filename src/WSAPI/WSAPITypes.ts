@@ -525,6 +525,8 @@ export interface TStoreItem {
 	priority: number;
 	/** The list of IDs of the related items. Can be used to show the related items in the store */
 	related_item_ids: number[];
+	/** List of casino games (or other types of entities) related to the store item */
+	related_games?: AchRelatedGame[];
 	/** The indicator if the user can buy the item
 	 *  This indicator is taking into account the segment conditions for the store item, the price of item towards users balance,
 	 */
