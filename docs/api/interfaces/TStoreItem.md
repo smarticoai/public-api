@@ -96,6 +96,14 @@ The list of IDs of the related items. Can be used to show the related items in t
 
 ___
 
+### related\_games
+
+• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame-1.md)[]
+
+List of casino games (or other types of entities) related to the store item
+
+___
+
 ### can\_buy
 
 • **can\_buy**: `boolean`

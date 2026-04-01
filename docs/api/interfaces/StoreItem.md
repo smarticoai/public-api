@@ -41,3 +41,9 @@ ___
 ### activeTillDate
 
 • `Optional` **activeTillDate**: `number`
+
+___
+
+### related\_games
+
+• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
