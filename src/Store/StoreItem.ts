@@ -13,7 +13,7 @@ export interface StoreItem {
 	canBuy?: boolean;
 	shopPool: number;
 	activeTillDate?: number;
-	related_games?: AchRelatedGame[];
+	relatedGames?: AchRelatedGame[];
 }
 
 const mapPurchaseType = (purchaseType: StoreItemPurchaseType) => {
@@ -59,7 +59,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				only_in_custom_section: r.itemPublicMeta.only_in_custom_section,
 				custom_section_type_id: r.itemPublicMeta.custom_section_type_id,
 				...(r.itemPublicMeta.cant_buy_message ? { cant_buy_message: r.itemPublicMeta.cant_buy_message } : {}),
-				related_games: (r.related_games || []).map((g, i) => ({
+				related_games: (r.relatedGames?.filter((g) => g.game_public_meta.enabled) || []).map((g, i) => ({
 					ext_game_id: g.ext_game_id,
 					game_public_meta: {
 						name: g.game_public_meta.name,

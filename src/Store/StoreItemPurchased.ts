@@ -54,7 +54,20 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
 				purchased_today: purchasedToday,
 				purchased_this_week: purchasedThisWeek,
 				purchased_this_month: purchasedThisMonth,
-				custom_data: r.itemPublicMeta.custom_data
+				custom_data: r.itemPublicMeta.custom_data,
+				related_games: (r.relatedGames?.filter((g) => g.game_public_meta.enabled) || []).map((g, i) => ({
+					ext_game_id: g.ext_game_id,
+					game_public_meta: {
+						name: g.game_public_meta.name,
+						link: g.game_public_meta.link,
+						image: g.game_public_meta.image,
+						enabled: g.game_public_meta.enabled,
+						game_categories: g.game_public_meta.game_categories,
+						game_provider: g.game_public_meta.game_provider,
+						mobile_spec_link: g.game_public_meta.mobile_spec_link,
+						priority: i + 1,
+					},
+				})),
 			};
 
 			return x;

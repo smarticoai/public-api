@@ -44,6 +44,6 @@ ___
 
 ___
 
-### related\_games
+### relatedGames
 
-• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
+• `Optional` **relatedGames**: [`AchRelatedGame`](AchRelatedGame.md)[]
