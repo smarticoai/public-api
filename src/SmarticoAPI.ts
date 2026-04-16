@@ -100,6 +100,9 @@ import {
 	TLevelCurrent,
 	TActivityLog,
 	TRaffleDraw,
+	TAvatarDefinition,
+	TAvatarCustomized,
+	TAvatarPrompt,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -129,7 +132,10 @@ import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform } from './ActivityLog';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform } from './Raffle';
-import { GetAvatarsListResponse, GetAvatarsCustomizedResponse, GetAvatarPromptsResponse, SetAvatarRequest, SetAvatarResponse } from './Avatars';
+import { GetAvatarsListResponse, avatarDefinitionTransform } from './Avatars/GetAvatarsListResponse';
+import { GetAvatarsCustomizedResponse, avatarCustomizedTransform } from './Avatars/GetAvatarsCustomizedResponse';
+import { GetAvatarPromptsResponse, avatarPromptTransform } from './Avatars/GetAvatarPromptsResponse';
+import { SetAvatarRequest, SetAvatarResponse } from './Avatars';
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
@@ -1441,6 +1447,18 @@ class SmarticoAPI {
 			avatar_real_id,
 		});
 		return await this.send<SetAvatarResponse>(message, ClassId.CLIENT_SET_AVATAR_RESPONSE);
+	}
+
+	public async avatarsGetListT(user_ext_id: string): Promise<TAvatarDefinition[]> {
+		return avatarDefinitionTransform((await this.avatarsGetList(user_ext_id)).avatars ?? [], this.avatarDomain);
+	}
+
+	public async avatarsGetCustomizedT(user_ext_id: string): Promise<TAvatarCustomized[]> {
+		return avatarCustomizedTransform((await this.avatarsGetCustomized(user_ext_id)).avatars ?? [], this.avatarDomain);
+	}
+
+	public async avatarsGetPromptsT(user_ext_id: string): Promise<TAvatarPrompt[]> {
+		return avatarPromptTransform((await this.avatarsGetPrompts(user_ext_id)).prompts ?? [], this.avatarDomain);
 	}
 
 	public getWSCalls(): WSAPI {

@@ -1471,15 +1471,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.AvatarsList,
 			ECacheContext.WSAPI,
-			async () => {
-				const response = await this.api.avatarsGetList(this.userExtId);
-				return (response.avatars || []).map((a) => ({
-					...a,
-					avatar_url: this.api.avatarDomain && a.public_meta?.url
-						? (a.public_meta.url.startsWith('http') ? a.public_meta.url : `${this.api.avatarDomain}${a.public_meta.url}`)
-						: (a.public_meta?.url || ''),
-				}));
-			},
+			() => this.api.avatarsGetListT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -1502,10 +1494,7 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.AvatarsCustomized,
 			ECacheContext.WSAPI,
-			async () => {
-				const response = await this.api.avatarsGetCustomized(this.userExtId);
-				return response.avatars || [];
-			},
+			() => this.api.avatarsGetCustomizedT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -1528,17 +1517,14 @@ export class WSAPI {
 		return OCache.use(
 			onUpdateContextKey.AvatarPrompts,
 			ECacheContext.WSAPI,
-			async () => {
-				const response = await this.api.avatarsGetPrompts(this.userExtId);
-				return response.prompts || [];
-			},
+			() => this.api.avatarsGetPromptsT(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
 
 	/**
 	 * Sets the specified avatar as the active avatar for the current user.
-	 * Pass `avatar_url` (the image path from `TAvatarDefinition.public_meta.url` or a CDN URL for AI-customized avatars)
+	 * Pass `avatar_url` (the `TAvatarDefinition.url` path or a CDN URL for AI-customized avatars)
 	 * and `avatar_real_id` from the avatar catalog.
 	 * After a successful call, the avatar list cache is cleared so the next `getAvatarsList()` call reflects `is_in_use`.
 	 *
@@ -1548,7 +1534,7 @@ export class WSAPI {
 	 *      const avatar = avatars.find((a) => !a.hide_until_achieved || a.is_given);
 	 *      if (avatar) {
 	 *          _smartico.api.setAvatar({
-	 *              avatar_url: avatar.public_meta.url,
+	 *              avatar_url: avatar.url,
 	 *              avatar_real_id: avatar.avatar_real_id,
 	 *          }).then((result) => {
 	 *              console.log(result);

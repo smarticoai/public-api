@@ -1881,7 +1881,8 @@ export interface GamePickRoundRequestParams extends GamePickRequestParams {
 }
 
 /**
- * TAvatarDefinition describes a single avatar available in the avatar catalog
+ * TAvatarDefinition describes a single avatar available in the avatar catalog.
+ * Fields from the raw `public_meta` object are flattened to the top level.
  */
 export interface TAvatarDefinition {
 	/** Unique identifier of the avatar */
@@ -1892,13 +1893,12 @@ export interface TAvatarDefinition {
 	hide_until_achieved: boolean;
 	/** Display priority — lower value means higher position in the grid */
 	priority: number;
-	/** Public metadata containing the avatar image URL and optional description */
-	public_meta: {
-		/** Optional description of the avatar */
-		description?: string;
-		/** Image path/URL of the avatar */
-		url: string;
-	};
+	/** Optional description of the avatar (from public_meta) */
+	description?: string;
+	/** Raw image path/URL of the avatar as returned by the server (from public_meta) */
+	url: string;
+	/** Full CDN URL of the avatar image, built from avatar_domain + url */
+	avatar_url: string;
 	/**
 	 * Source type of the avatar.
 	 * 0 = free (always available to all users), other values = earned/purchased
@@ -1912,8 +1912,6 @@ export interface TAvatarDefinition {
 	is_given: boolean;
 	/** Whether this avatar is currently in use by the user */
 	is_in_use?: boolean;
-	/** Full CDN URL of the avatar image, built from avatar_domain + public_meta.url */
-	avatar_url: string;
 }
 
 /**
@@ -1929,18 +1927,16 @@ export interface TAvatarCustomized {
 }
 
 /**
- * TAvatarPrompt describes an AI style prompt available for avatar customization
+ * TAvatarPrompt describes an AI style prompt available for avatar customization.
+ * Fields from the raw `public_meta` object are flattened to the top level.
  */
 export interface TAvatarPrompt {
 	/** Unique identifier of the AI customization prompt */
 	prompt_id: number;
-	/** Public metadata for the prompt */
-	public_meta: {
-		/** Display name of the prompt style (e.g. "Cartoon", "Watercolor") */
-		name: string;
-		/** URL of the prompt style icon image */
-		icon_url: string;
-	};
+	/** Display name of the prompt style, e.g. "Cartoon", "Watercolor" (from public_meta) */
+	name: string;
+	/** Full CDN URL of the prompt style icon image (from public_meta) */
+	icon_url: string;
 	/** Currency type used to pay for this customization (0=points, 1=gems, 2=diamonds) */
 	cost_currency_type_id: number;
 	/** Cost amount in the given currency */
