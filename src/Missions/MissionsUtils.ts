@@ -8,6 +8,35 @@ import { BadgesTimeLimitStates } from "./BadgesTimeLimitStates";
 type UserStateParamsKeys = 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount' | 'casino_last_bet_amount' | 'casino_last_bet_amount_real' | 'casino_last_bet_amount_bonus' | 'acc_last_deposit_amount';
 const USER_STATE_PARAMS_KEYS_GAMES: UserStateParamsKeys[] = ['core_fav_game_top3', 'core_fav_game_type_top3', 'core_fav_game_provider_top3'];
 const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = ['core_recommended_deposit_amount', 'core_recommended_casino_bet_amount', 'casino_last_bet_amount', 'casino_last_bet_amount_real', 'casino_last_bet_amount_bonus', 'acc_last_deposit_amount'];
+
+const MINOR_WORDS = new Set([
+    'of', 'at', 'in', 'on', 'to', 'up', 'as', 'by', 'for',
+    'from', 'into', 'onto', 'with', 'upon', 'via',
+    'and', 'but', 'or', 'nor', 'so', 'yet',
+    'vs', 'v',
+    'a', 'an', 'the',
+]);
+
+function toGameTitleCase(raw: string): string {
+    if (!raw) return raw;
+    const tokens = raw.toLowerCase().split(/(\b\w+\b)/);
+    const wordTokens = tokens.filter((t) => /^\w+$/.test(t));
+    const lastWordIdx = wordTokens.length - 1;
+    let wordIndex = 0;
+    return tokens
+        .map((token) => {
+            if (!/^\w+$/.test(token)) return token;
+            const isFirst = wordIndex === 0;
+            const isLast  = wordIndex === lastWordIdx;
+            wordIndex++;
+            if (isFirst || isLast || !MINOR_WORDS.has(token)) {
+                return token.charAt(0).toUpperCase() + token.slice(1);
+            }
+            return token;
+        })
+        .join('');
+}
+
 export class MissionUtils {
 
     public static getAvailabilityStatus = (mission: UserAchievement) => {
@@ -199,8 +228,8 @@ export class MissionUtils {
                     const value = userStateParams[k]?.filter(v => Boolean(v));
                     if (value && value.length > 0) {
                         suggestedGames = value.map((v: string) => {
-                            const cleaned = v.replace(/_/g, ' ').toLowerCase();
-                            return cleaned.charAt(0).toUpperCase() + cleaned.slice(1);
+                            const cleaned = v.replace(/_/g, ' ');
+                            return toGameTitleCase(cleaned);
                         }).join(', ');
                     }
                 }
@@ -213,8 +242,7 @@ export class MissionUtils {
                         suggestedGames = value[pos];
 
                         if (suggestedGames) {
-                            suggestedGames = suggestedGames.replace('_', ' ').toLowerCase();
-                            suggestedGames = suggestedGames.charAt(0).toUpperCase() + suggestedGames.slice(1);
+                            suggestedGames = toGameTitleCase(suggestedGames.replace(/_/g, ' '));
                         }
 
                     }
