@@ -129,6 +129,7 @@ import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform } from './ActivityLog';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform } from './Raffle';
+import { GetAvatarsListResponse, GetAvatarsCustomizedResponse, GetAvatarPromptsResponse, SetAvatarRequest, SetAvatarResponse } from './Avatars';
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
@@ -1417,6 +1418,29 @@ class SmarticoAPI {
 		};
 
 		return this.sendGamesApi<GamePickRound>({ method: 'game-round-info-for-user', params });
+	}
+
+	public async avatarsGetList(user_ext_id: string): Promise<GetAvatarsListResponse> {
+		const message = this.buildMessage<any, GetAvatarsListResponse>(user_ext_id, ClassId.GET_AVATARS_LIST_REQUEST);
+		return await this.send<GetAvatarsListResponse>(message, ClassId.GET_AVATARS_LIST_RESPONSE);
+	}
+
+	public async avatarsGetCustomized(user_ext_id: string): Promise<GetAvatarsCustomizedResponse> {
+		const message = this.buildMessage<any, GetAvatarsCustomizedResponse>(user_ext_id, ClassId.GET_AVATARS_CUSTOMIZED_REQUEST);
+		return await this.send<GetAvatarsCustomizedResponse>(message, ClassId.GET_AVATARS_CUSTOMIZED_RESPONSE);
+	}
+
+	public async avatarsGetPrompts(user_ext_id: string): Promise<GetAvatarPromptsResponse> {
+		const message = this.buildMessage<any, GetAvatarPromptsResponse>(user_ext_id, ClassId.GET_AVATAR_PROMPTS_REQUEST);
+		return await this.send<GetAvatarPromptsResponse>(message, ClassId.GET_AVATAR_PROMPTS_RESPONSE);
+	}
+
+	public async avatarSetAvatar(user_ext_id: string, avatar_id: string, avatar_real_id: number): Promise<SetAvatarResponse> {
+		const message = this.buildMessage<SetAvatarRequest, SetAvatarResponse>(user_ext_id, ClassId.CLIENT_SET_AVATAR_REQUEST, {
+			avatar_id,
+			avatar_real_id,
+		});
+		return await this.send<SetAvatarResponse>(message, ClassId.CLIENT_SET_AVATAR_RESPONSE);
 	}
 
 	public getWSCalls(): WSAPI {

@@ -46,6 +46,10 @@ import {
 	GamePickGameInfo,
 	GamePickRequestParams,
 	GamePickRoundRequestParams,
+	TAvatarDefinition,
+	TAvatarCustomized,
+	TAvatarPrompt,
+	TSetAvatarResult,
 } from './WSAPITypes';
 import { LeaderBoardPeriodType } from '../Leaderboard';
 import {
@@ -103,6 +107,9 @@ enum onUpdateContextKey {
 	CurrentLevel = 'currentLevel',
 	InboxUnreadCount = 'inboxUnreadCount',
 	ActivityLog = 'activityLog',
+	AvatarsList = 'avatarsList',
+	AvatarsCustomized = 'avatarsCustomized',
+	AvatarPrompts = 'avatarPrompts',
 }
 
 /** @group General API */
@@ -1443,6 +1450,132 @@ export class WSAPI {
 			throw new Error('int_user_id is required');
 		}
 		return this.api.gpGetRoundInfoForUser(props.saw_template_id, props.round_id, props.int_user_id);
+	}
+
+	/**
+	 * Returns the list of avatars available in the catalog for the current user.
+	 * The response includes both free avatars and earned/purchased ones.
+	 * Avatars with `hide_until_achieved = true` and `is_given = false` should be hidden from the user.
+	 * The result is cached for 30 seconds.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getAvatarsList().then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getAvatarsList(): Promise<TAvatarDefinition[]> {
+		return OCache.use(
+			onUpdateContextKey.AvatarsList,
+			ECacheContext.WSAPI,
+			async () => {
+				const response = await this.api.avatarsGetList(this.userExtId);
+				return (response.avatars || []).map((a) => ({
+					...a,
+					avatar_url: this.api.avatarDomain && a.public_meta?.url
+						? (a.public_meta.url.startsWith('http') ? a.public_meta.url : `${this.api.avatarDomain}${a.public_meta.url}`)
+						: (a.public_meta?.url || ''),
+				}));
+			},
+			CACHE_DATA_SEC,
+		);
+	}
+
+	/**
+	 * Returns the list of AI-customized avatars for the current user.
+	 * Each entry represents a previously generated AI customization for a specific base avatar.
+	 * The result is cached for 30 seconds.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getAvatarsCustomized().then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getAvatarsCustomized(): Promise<TAvatarCustomized[]> {
+		return OCache.use(
+			onUpdateContextKey.AvatarsCustomized,
+			ECacheContext.WSAPI,
+			async () => {
+				const response = await this.api.avatarsGetCustomized(this.userExtId);
+				return response.avatars || [];
+			},
+			CACHE_DATA_SEC,
+		);
+	}
+
+	/**
+	 * Returns the list of AI customization prompts (styles) available for avatar customization.
+	 * Each prompt represents a visual style that can be applied to a base avatar.
+	 * The result is cached for 30 seconds.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getAvatarPrompts().then((result) => {
+	 *      console.log(result);
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getAvatarPrompts(): Promise<TAvatarPrompt[]> {
+		return OCache.use(
+			onUpdateContextKey.AvatarPrompts,
+			ECacheContext.WSAPI,
+			async () => {
+				const response = await this.api.avatarsGetPrompts(this.userExtId);
+				return response.prompts || [];
+			},
+			CACHE_DATA_SEC,
+		);
+	}
+
+	/**
+	 * Sets the specified avatar as the active avatar for the current user.
+	 * Pass `avatar_url` (the image path from `TAvatarDefinition.public_meta.url` or a CDN URL for AI-customized avatars)
+	 * and `avatar_real_id` from the avatar catalog.
+	 * After a successful call, the avatar list cache is cleared so the next `getAvatarsList()` call reflects `is_in_use`.
+	 *
+	 * **Example**:
+	 * ```
+	 * _smartico.api.getAvatarsList().then((avatars) => {
+	 *      const avatar = avatars.find((a) => !a.hide_until_achieved || a.is_given);
+	 *      if (avatar) {
+	 *          _smartico.api.setAvatar({
+	 *              avatar_url: avatar.public_meta.url,
+	 *              avatar_real_id: avatar.avatar_real_id,
+	 *          }).then((result) => {
+	 *              console.log(result);
+	 *          });
+	 *      }
+	 * });
+	 * ```
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async setAvatar(props: { avatar_url: string; avatar_real_id: number }): Promise<TSetAvatarResult> {
+		if (!props.avatar_url) {
+			throw new Error('avatar_url is required');
+		}
+		if (!props.avatar_real_id) {
+			throw new Error('avatar_real_id is required');
+		}
+
+		const r = await this.api.avatarSetAvatar(this.userExtId, props.avatar_url, props.avatar_real_id);
+
+		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.AvatarsList);
+		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.AvatarsCustomized);
+
+		return {
+			err_code: r.errCode ?? 0,
+			err_message: r.errMsg,
+		};
 	}
 
 	private async updateOnSpin(data: SAWSpinsCountPush) {

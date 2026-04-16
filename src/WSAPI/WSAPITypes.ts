@@ -1880,4 +1880,81 @@ export interface GamePickRoundRequestParams extends GamePickRequestParams {
 	round_id: number;
 }
 
+/**
+ * TAvatarDefinition describes a single avatar available in the avatar catalog
+ */
+export interface TAvatarDefinition {
+	/** Unique identifier of the avatar */
+	avatar_real_id: number;
+	/** Whether this avatar is the default one */
+	is_default: boolean;
+	/** If true, avatar is hidden until user achieves/unlocks it */
+	hide_until_achieved: boolean;
+	/** Display priority — lower value means higher position in the grid */
+	priority: number;
+	/** Public metadata containing the avatar image URL and optional description */
+	public_meta: {
+		/** Optional description of the avatar */
+		description?: string;
+		/** Image path/URL of the avatar */
+		url: string;
+	};
+	/**
+	 * Source type of the avatar.
+	 * 0 = free (always available to all users), other values = earned/purchased
+	 */
+	avatar_source_type_id: number;
+	/** ISO date string from which the avatar becomes available */
+	active_from_date?: string;
+	/** ISO date string until which the avatar is available */
+	active_till_date?: string;
+	/** Whether the avatar has been granted/given to the current user */
+	is_given: boolean;
+	/** Whether this avatar is currently in use by the user */
+	is_in_use?: boolean;
+	/** Full CDN URL of the avatar image, built from avatar_domain + public_meta.url */
+	avatar_url: string;
+}
+
+/**
+ * TAvatarCustomized describes an AI-customized version of a base avatar
+ */
+export interface TAvatarCustomized {
+	/** The avatar_real_id of the base avatar this customization was generated from */
+	avatar_real_id: number;
+	/** Full CDN URL of the AI-generated customized avatar image */
+	url: string;
+	/** ISO date string when the customization was created */
+	dt_created: string;
+}
+
+/**
+ * TAvatarPrompt describes an AI style prompt available for avatar customization
+ */
+export interface TAvatarPrompt {
+	/** Unique identifier of the AI customization prompt */
+	prompt_id: number;
+	/** Public metadata for the prompt */
+	public_meta: {
+		/** Display name of the prompt style (e.g. "Cartoon", "Watercolor") */
+		name: string;
+		/** URL of the prompt style icon image */
+		icon_url: string;
+	};
+	/** Currency type used to pay for this customization (0=points, 1=gems, 2=diamonds) */
+	cost_currency_type_id: number;
+	/** Cost amount in the given currency */
+	cost_value: number;
+}
+
+/**
+ * TSetAvatarResult describes the response of call to _smartico.api.setAvatar() method
+ */
+export interface TSetAvatarResult {
+	/** Error code that represents outcome of the set avatar request. Successful if err_code is 0 */
+	err_code: number;
+	/** Optional error message */
+	err_message?: string;
+}
+
 export { SAWAcknowledgeTypeName, PrizeModifiers, SAWTemplateUI, InboxCategories, AchCustomSectionType, SAWAskForUsername, SAWGameLayout, PointChangeSourceType, UserBalanceType, SAWGPMarketType, QuizAnswersValueType }
