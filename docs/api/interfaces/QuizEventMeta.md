@@ -2,40 +2,60 @@
 
 QuizEventMeta describes metadata for a quiz-type event (custom question with answer options)
 
-## Hierarchy
+## Extended by
 
-- **`QuizEventMeta`**
-
-  ↳ [`GamePickEventMeta`](GamePickEventMeta.md)
+- [`GamePickEventMeta`](GamePickEventMeta.md)
 
 ## Properties
 
-### answers
+### answers?
 
-• `Optional` **answers**: \{ `value`: `string` ; `text`: `string` ; `_translations`: \{ `[key: string]`: \{ `text`: `string`  };  }  }[]
+> `optional` **answers?**: `object`[]
 
 List of possible answer options for the quiz question
 
-___
+#### value
 
-### question\_image
+> **value**: `string`
 
-• `Optional` **question\_image**: `string`
+Answer identifier value sent on submission
+
+#### text
+
+> **text**: `string`
+
+Localized display text of the answer
+
+#### \_translations
+
+> **\_translations**: `object`
+
+Per-language overrides for the answer text
+
+##### Index Signature
+
+\[`key`: `string`\]: `object`
+
+***
+
+### question\_image?
+
+> `optional` **question\_image?**: `string`
 
 URL of an image associated with the question
 
-___
+***
 
-### result
+### result?
 
-• `Optional` **result**: [`QuizAnswersValueType`](../enums/QuizAnswersValueType.md)
+> `optional` **result?**: [`QuizAnswersValueType`](../enumerations/QuizAnswersValueType.md)
 
 Correct answer value after resolution
 
-___
+***
 
 ### custom\_question
 
-• **custom\_question**: `string`
+> **custom\_question**: `string`
 
 Custom question text displayed to the user

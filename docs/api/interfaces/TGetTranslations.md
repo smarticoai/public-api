@@ -4,8 +4,8 @@
 
 ### translations
 
-• **translations**: `Object`
+> **translations**: `object`
 
-#### Index signature
+#### Index Signature
 
-▪ [key: `string`]: `string`
+\[`key`: `string`\]: `string`

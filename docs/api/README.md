@@ -2,71 +2,71 @@
 
 ## Enumerations
 
-- [PointChangeSourceType](enums/PointChangeSourceType.md)
-- [UserBalanceType](enums/UserBalanceType.md)
-- [BonusStatus](enums/BonusStatus.md)
-- [ActivityTypeLimited](enums/ActivityTypeLimited.md)
-- [AchCustomSectionType](enums/AchCustomSectionType.md)
-- [AchCustomLayoutTheme](enums/AchCustomLayoutTheme.md)
-- [AchMissionsTabsOptions](enums/AchMissionsTabsOptions.md)
-- [AchOverviewMissionsFilter](enums/AchOverviewMissionsFilter.md)
-- [LiquidEntityData](enums/LiquidEntityData.md)
-- [InboxCategories](enums/InboxCategories.md)
-- [InboxMessageType](enums/InboxMessageType.md)
-- [InboxReadStatus](enums/InboxReadStatus.md)
-- [OpenLinksType](enums/OpenLinksType.md)
-- [JackpotContributionType](enums/JackpotContributionType.md)
-- [JackPotTemparature](enums/JackPotTemparature.md)
-- [JackpotType](enums/JackpotType.md)
-- [LeaderBoardPeriodType](enums/LeaderBoardPeriodType.md)
-- [AttemptPeriodType](enums/AttemptPeriodType.md)
-- [PrizeModifiers](enums/PrizeModifiers.md)
-- [SAWAcknowledgeType](enums/SAWAcknowledgeType.md)
-- [SAWAcknowledgeTypeName](enums/SAWAcknowledgeTypeName.md)
-- [SAWAskForUsername](enums/SAWAskForUsername.md)
-- [SAWBuyInType](enums/SAWBuyInType.md)
-- [SAWBuyInTypeName](enums/SAWBuyInTypeName.md)
-- [SAWExposeUserSpinId](enums/SAWExposeUserSpinId.md)
-- [SAWExposeUserSpinIdName](enums/SAWExposeUserSpinIdName.md)
-- [SAWGameDifficultyType](enums/SAWGameDifficultyType.md)
-- [SAWGameDifficultyTypeName](enums/SAWGameDifficultyTypeName.md)
-- [SAWGameLayout](enums/SAWGameLayout.md)
-- [SAWGameLayoutName](enums/SAWGameLayoutName.md)
-- [SAWGameType](enums/SAWGameType.md)
-- [SAWGameTypeName](enums/SAWGameTypeName.md)
-- [SAWPrizeType](enums/SAWPrizeType.md)
-- [MiniGamePrizeTypeName](enums/MiniGamePrizeTypeName.md)
-- [SAWSpinErrorCode](enums/SAWSpinErrorCode.md)
-- [SAWWheelLayout](enums/SAWWheelLayout.md)
-- [SAWWinSoundType](enums/SAWWinSoundType.md)
-- [AchievementAvailabilityStatus](enums/AchievementAvailabilityStatus.md)
-- [AchievementStatus](enums/AchievementStatus.md)
-- [AchievementTaskType](enums/AchievementTaskType.md)
-- [AchievementType](enums/AchievementType.md)
-- [BadgesTimeLimitStates](enums/BadgesTimeLimitStates.md)
-- [ScheduledMissionType](enums/ScheduledMissionType.md)
-- [QuizAnswersValueType](enums/QuizAnswersValueType.md)
-- [SAWGPMarketType](enums/SAWGPMarketType.md)
-- [RaffleTicketCapVisualization](enums/RaffleTicketCapVisualization.md)
-- [RaffleDrawInstanceState](enums/RaffleDrawInstanceState.md)
-- [RaffleDrawTypeExecution](enums/RaffleDrawTypeExecution.md)
-- [BuyStoreItemErrorCode](enums/BuyStoreItemErrorCode.md)
-- [StoreItemPurchaseType](enums/StoreItemPurchaseType.md)
-- [StoreItemType](enums/StoreItemType.md)
-- [StoreItemTypeName](enums/StoreItemTypeName.md)
-- [TournamentInstanceStatus](enums/TournamentInstanceStatus.md)
-- [TournamentRegistrationError](enums/TournamentRegistrationError.md)
-- [TournamentRegistrationStatus](enums/TournamentRegistrationStatus.md)
-- [TournamentRegistrationStatusName](enums/TournamentRegistrationStatusName.md)
-- [TournamentRegistrationType](enums/TournamentRegistrationType.md)
-- [TournamentType](enums/TournamentType.md)
-- [BonusStatus](enums/BonusStatus-1.md)
-- [GamePickMarketType](enums/GamePickMarketType.md)
-- [GamePickResolutionType](enums/GamePickResolutionType.md)
-- [GPRoundStatus](enums/GPRoundStatus.md)
-- [GamePickScoreType](enums/GamePickScoreType.md)
-- [GamePickSportType](enums/GamePickSportType.md)
-- [GameRoundOrderType](enums/GameRoundOrderType.md)
+- [PointChangeSourceType](enumerations/PointChangeSourceType.md)
+- [UserBalanceType](enumerations/UserBalanceType.md)
+- [BonusStatus](enumerations/BonusStatus.md)
+- [ActivityTypeLimited](enumerations/ActivityTypeLimited.md)
+- [AchCustomSectionType](enumerations/AchCustomSectionType.md)
+- [AchCustomLayoutTheme](enumerations/AchCustomLayoutTheme.md)
+- [AchMissionsTabsOptions](enumerations/AchMissionsTabsOptions.md)
+- [AchOverviewMissionsFilter](enumerations/AchOverviewMissionsFilter.md)
+- [LiquidEntityData](enumerations/LiquidEntityData.md)
+- [InboxCategories](enumerations/InboxCategories.md)
+- [InboxMessageType](enumerations/InboxMessageType.md)
+- [InboxReadStatus](enumerations/InboxReadStatus.md)
+- [OpenLinksType](enumerations/OpenLinksType.md)
+- [JackpotContributionType](enumerations/JackpotContributionType.md)
+- [JackPotTemparature](enumerations/JackPotTemparature.md)
+- [JackpotType](enumerations/JackpotType.md)
+- [LeaderBoardPeriodType](enumerations/LeaderBoardPeriodType.md)
+- [AttemptPeriodType](enumerations/AttemptPeriodType.md)
+- [PrizeModifiers](enumerations/PrizeModifiers.md)
+- [SAWAcknowledgeType](enumerations/SAWAcknowledgeType.md)
+- [SAWAcknowledgeTypeName](enumerations/SAWAcknowledgeTypeName.md)
+- [SAWAskForUsername](enumerations/SAWAskForUsername.md)
+- [SAWBuyInType](enumerations/SAWBuyInType.md)
+- [SAWBuyInTypeName](enumerations/SAWBuyInTypeName.md)
+- [SAWExposeUserSpinId](enumerations/SAWExposeUserSpinId.md)
+- [SAWExposeUserSpinIdName](enumerations/SAWExposeUserSpinIdName.md)
+- [SAWGameDifficultyType](enumerations/SAWGameDifficultyType.md)
+- [SAWGameDifficultyTypeName](enumerations/SAWGameDifficultyTypeName.md)
+- [SAWGameLayout](enumerations/SAWGameLayout.md)
+- [SAWGameLayoutName](enumerations/SAWGameLayoutName.md)
+- [SAWGameType](enumerations/SAWGameType.md)
+- [SAWGameTypeName](enumerations/SAWGameTypeName.md)
+- [SAWPrizeType](enumerations/SAWPrizeType.md)
+- [MiniGamePrizeTypeName](enumerations/MiniGamePrizeTypeName.md)
+- [SAWSpinErrorCode](enumerations/SAWSpinErrorCode.md)
+- [SAWWheelLayout](enumerations/SAWWheelLayout.md)
+- [SAWWinSoundType](enumerations/SAWWinSoundType.md)
+- [AchievementAvailabilityStatus](enumerations/AchievementAvailabilityStatus.md)
+- [AchievementStatus](enumerations/AchievementStatus.md)
+- [AchievementTaskType](enumerations/AchievementTaskType.md)
+- [AchievementType](enumerations/AchievementType.md)
+- [BadgesTimeLimitStates](enumerations/BadgesTimeLimitStates.md)
+- [ScheduledMissionType](enumerations/ScheduledMissionType.md)
+- [QuizAnswersValueType](enumerations/QuizAnswersValueType.md)
+- [SAWGPMarketType](enumerations/SAWGPMarketType.md)
+- [RaffleTicketCapVisualization](enumerations/RaffleTicketCapVisualization.md)
+- [RaffleDrawInstanceState](enumerations/RaffleDrawInstanceState.md)
+- [RaffleDrawTypeExecution](enumerations/RaffleDrawTypeExecution.md)
+- [BuyStoreItemErrorCode](enumerations/BuyStoreItemErrorCode.md)
+- [StoreItemPurchaseType](enumerations/StoreItemPurchaseType.md)
+- [StoreItemType](enumerations/StoreItemType.md)
+- [StoreItemTypeName](enumerations/StoreItemTypeName.md)
+- [TournamentInstanceStatus](enumerations/TournamentInstanceStatus.md)
+- [TournamentRegistrationError](enumerations/TournamentRegistrationError.md)
+- [TournamentRegistrationStatus](enumerations/TournamentRegistrationStatus.md)
+- [TournamentRegistrationStatusName](enumerations/TournamentRegistrationStatusName.md)
+- [TournamentRegistrationType](enumerations/TournamentRegistrationType.md)
+- [TournamentType](enumerations/TournamentType.md)
+- [BonusStatus](enumerations/BonusStatus-1.md)
+- [GamePickMarketType](enumerations/GamePickMarketType.md)
+- [GamePickResolutionType](enumerations/GamePickResolutionType.md)
+- [GPRoundStatus](enumerations/GPRoundStatus.md)
+- [GamePickScoreType](enumerations/GamePickScoreType.md)
+- [GamePickSportType](enumerations/GamePickSportType.md)
+- [GameRoundOrderType](enumerations/GameRoundOrderType.md)
 
 ## Classes
 
@@ -157,6 +157,9 @@
 - [StoreItemPublicMeta](interfaces/StoreItemPublicMeta.md)
 - [GetTournamentInfoResponse](interfaces/GetTournamentInfoResponse.md)
 - [Tournament](interfaces/Tournament.md)
+- [ClanLeaderboardEntry](interfaces/ClanLeaderboardEntry.md)
+- [ClanPrizeTier](interfaces/ClanPrizeTier.md)
+- [ClanPrizeStructureEntry](interfaces/ClanPrizeStructureEntry.md)
 - [TournamentPlayer](interfaces/TournamentPlayer.md)
 - [TournamentPrize](interfaces/TournamentPrize.md)
 - [TournamentPublicMeta](interfaces/TournamentPublicMeta.md)
@@ -169,6 +172,11 @@
 - [TLevelCurrent](interfaces/TLevelCurrent.md)
 - [TTournament](interfaces/TTournament.md)
 - [TTournamentDetailed](interfaces/TTournamentDetailed.md)
+- [TClanTournamentPlayers](interfaces/TClanTournamentPlayers.md)
+- [TClan](interfaces/TClan.md)
+- [TClans](interfaces/TClans.md)
+- [TClanInfo](interfaces/TClanInfo.md)
+- [TClanJoinResult](interfaces/TClanJoinResult.md)
 - [TStoreCategory](interfaces/TStoreCategory.md)
 - [TStoreItem](interfaces/TStoreItem.md)
 - [TAchCategory](interfaces/TAchCategory.md)
@@ -216,279 +224,38 @@
 - [GamesApiResponse](interfaces/GamesApiResponse.md)
 - [GamePickRequestParams](interfaces/GamePickRequestParams.md)
 - [GamePickRoundRequestParams](interfaces/GamePickRoundRequestParams.md)
+- [TAvatarDefinition](interfaces/TAvatarDefinition.md)
+- [TAvatarCustomized](interfaces/TAvatarCustomized.md)
+- [TAvatarPrompt](interfaces/TAvatarPrompt.md)
+- [TSetAvatarResult](interfaces/TSetAvatarResult.md)
+
+## Type Aliases
+
+- [TournamentRegistrationTypeName](type-aliases/TournamentRegistrationTypeName.md)
+
+## Variables
+
+- [PrizeModifiersKeysNames](variables/PrizeModifiersKeysNames.md)
+- [SAWWinSoundFiles](variables/SAWWinSoundFiles.md)
+- [AllRoundsGameBoardID](variables/AllRoundsGameBoardID.md)
+
+## Functions
+
+- [BonusItemsTransform](functions/BonusItemsTransform.md)
+- [UICustomSectionTransform](functions/UICustomSectionTransform.md)
+- [InboxMessageBodyTransform](functions/InboxMessageBodyTransform.md)
+- [SAWTemplatesTransform](functions/SAWTemplatesTransform.md)
+- [SAWHistoryTransform](functions/SAWHistoryTransform.md)
+- [AchCategoryTransform](functions/AchCategoryTransform.md)
+- [enrichUserAchievementsWithBadgeState](functions/enrichUserAchievementsWithBadgeState.md)
+- [UserAchievementTransform](functions/UserAchievementTransform.md)
+- [StoreCategoryTransform](functions/StoreCategoryTransform.md)
+- [StoreItemTransform](functions/StoreItemTransform.md)
+- [StoreItemTypeNamed](functions/StoreItemTypeNamed.md)
+- [tournamentInfoItemTransform](functions/tournamentInfoItemTransform.md)
+- [TournamentItemsTransform](functions/TournamentItemsTransform.md)
+- [TournamentInstanceStatusName](functions/TournamentInstanceStatusName.md)
 
 ## General API
 
 - [WSAPI](classes/WSAPI.md)
-
-## Type Aliases
-
-### TournamentRegistrationTypeName
-
-Ƭ **TournamentRegistrationTypeName**: ``"AUTO"`` \| ``"OPT_IN"`` \| ``"BUY_IN_POINTS"`` \| ``"MANUAL_APPROVAL"`` \| ``"REQUIRES_QUALIFICATION"`` \| ``"BUY_IN_GEMS"`` \| ``"BUY_IN_DIAMONDS"`` \| ``"UNKNOWN"``
-
-## Variables
-
-### PrizeModifiersKeysNames
-
-• `Const` **PrizeModifiersKeysNames**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `1` | `string` |
-| `2` | `string` |
-| `3` | `string` |
-| `4` | `string` |
-| `5` | `string` |
-| `6` | `string` |
-| `7` | `string` |
-| `8` | `string` |
-
-___
-
-### SAWWinSoundFiles
-
-• `Const` **SAWWinSoundFiles**: `Object`
-
-#### Type declaration
-
-| Name | Type |
-| :------ | :------ |
-| `4` | `any` |
-| `1` | `string` |
-| `2` | `string` |
-| `3` | `string` |
-
-___
-
-### AllRoundsGameBoardID
-
-• `Const` **AllRoundsGameBoardID**: ``-1``
-
-Round ID constant used to request the overall/seasonal leaderboard across all rounds
-
-## Functions
-
-### BonusItemsTransform
-
-▸ **BonusItemsTransform**(`items`): [`TBonus`](interfaces/TBonus.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`Bonus`](interfaces/Bonus.md)[] |
-
-#### Returns
-
-[`TBonus`](interfaces/TBonus.md)[]
-
-___
-
-### UICustomSectionTransform
-
-▸ **UICustomSectionTransform**(`response`): [`TUICustomSection`](interfaces/TUICustomSection.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `response` | [`GetCustomSectionsResponse`](interfaces/GetCustomSectionsResponse.md) |
-
-#### Returns
-
-[`TUICustomSection`](interfaces/TUICustomSection.md)[]
-
-___
-
-### InboxMessageBodyTransform
-
-▸ **InboxMessageBodyTransform**(`item`): [`TInboxMessageBody`](interfaces/TInboxMessageBody.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `item` | [`InboxMessageBody`](interfaces/InboxMessageBody.md) |
-
-#### Returns
-
-[`TInboxMessageBody`](interfaces/TInboxMessageBody.md)
-
-___
-
-### SAWTemplatesTransform
-
-▸ **SAWTemplatesTransform**(`items`): [`TMiniGameTemplate`](interfaces/TMiniGameTemplate.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`SAWTemplate`](interfaces/SAWTemplate.md)[] |
-
-#### Returns
-
-[`TMiniGameTemplate`](interfaces/TMiniGameTemplate.md)[]
-
-___
-
-### SAWHistoryTransform
-
-▸ **SAWHistoryTransform**(`items`): [`TSawHistory`](interfaces/TSawHistory.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`SAWPrizesHistory`](interfaces/SAWPrizesHistory.md)[] |
-
-#### Returns
-
-[`TSawHistory`](interfaces/TSawHistory.md)[]
-
-___
-
-### AchCategoryTransform
-
-▸ **AchCategoryTransform**(`items`): [`TAchCategory`](interfaces/TAchCategory.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`AchCategory`](interfaces/AchCategory.md)[] |
-
-#### Returns
-
-[`TAchCategory`](interfaces/TAchCategory.md)[]
-
-___
-
-### enrichUserAchievementsWithBadgeState
-
-▸ **enrichUserAchievementsWithBadgeState**(`items`): [`UserAchievement`](interfaces/UserAchievement.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`UserAchievement`](interfaces/UserAchievement.md)[] |
-
-#### Returns
-
-[`UserAchievement`](interfaces/UserAchievement.md)[]
-
-___
-
-### UserAchievementTransform
-
-▸ **UserAchievementTransform**(`items`): [`TMissionOrBadge`](interfaces/TMissionOrBadge.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`UserAchievement`](interfaces/UserAchievement.md)[] |
-
-#### Returns
-
-[`TMissionOrBadge`](interfaces/TMissionOrBadge.md)[]
-
-___
-
-### StoreCategoryTransform
-
-▸ **StoreCategoryTransform**(`items`): [`TStoreCategory`](interfaces/TStoreCategory.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`StoreCategory`](interfaces/StoreCategory.md)[] |
-
-#### Returns
-
-[`TStoreCategory`](interfaces/TStoreCategory.md)[]
-
-___
-
-### StoreItemTransform
-
-▸ **StoreItemTransform**(`items`): [`TStoreItem`](interfaces/TStoreItem.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`StoreItem`](interfaces/StoreItem.md)[] |
-
-#### Returns
-
-[`TStoreItem`](interfaces/TStoreItem.md)[]
-
-___
-
-### StoreItemTypeNamed
-
-▸ **StoreItemTypeNamed**(`type`): [`StoreItemTypeName`](enums/StoreItemTypeName.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `type` | [`StoreItemType`](enums/StoreItemType.md) |
-
-#### Returns
-
-[`StoreItemTypeName`](enums/StoreItemTypeName.md)
-
-___
-
-### tournamentInfoItemTransform
-
-▸ **tournamentInfoItemTransform**(`t`): [`TTournamentDetailed`](interfaces/TTournamentDetailed.md)
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `t` | [`GetTournamentInfoResponse`](interfaces/GetTournamentInfoResponse.md) |
-
-#### Returns
-
-[`TTournamentDetailed`](interfaces/TTournamentDetailed.md)
-
-___
-
-### TournamentItemsTransform
-
-▸ **TournamentItemsTransform**(`items`): [`TTournament`](interfaces/TTournament.md)[]
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `items` | [`Tournament`](interfaces/Tournament.md)[] |
-
-#### Returns
-
-[`TTournament`](interfaces/TTournament.md)[]
-
-___
-
-### TournamentInstanceStatusName
-
-▸ **TournamentInstanceStatusName**(`s`): `string`
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `s` | [`TournamentInstanceStatus`](enums/TournamentInstanceStatus.md) |
-
-#### Returns
-
-`string`

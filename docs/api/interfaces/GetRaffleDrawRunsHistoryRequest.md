@@ -1,51 +1,49 @@
 # Interface: GetRaffleDrawRunsHistoryRequest
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`GetRaffleDrawRunsHistoryRequest`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### raffle\_id
 
-• **raffle\_id**: `number`
+> **raffle\_id**: `number`
 
-___
+***
 
-### draw\_id
+### draw\_id?
 
-• `Optional` **draw\_id**: `number`
+> `optional` **draw\_id?**: `number`
 
 If draw_id is not passed all draw runs that belong to raffle with passed raffle_id will be returned.

@@ -4,10 +4,10 @@
 
 ### id
 
-• **id**: `string`
+> **id**: `string`
 
-___
+***
 
 ### content
 
-• **content**: `string`
+> **content**: `string`

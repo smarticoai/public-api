@@ -4,46 +4,46 @@
 
 ### message\_guid
 
-• **message\_guid**: `string`
+> **message\_guid**: `string`
 
 Uniq identifier of the message. It is needed to request the message body, mark the message as read/deleted/favorite.
 
-___
+***
 
 ### sent\_date
 
-• **sent\_date**: `string`
+> **sent\_date**: `string`
 
 Date when the message was sent
 
-___
+***
 
 ### read
 
-• **read**: `boolean`
+> **read**: `boolean`
 
 Indicator if a message is read
 
-___
+***
 
 ### favorite
 
-• **favorite**: `boolean`
+> **favorite**: `boolean`
 
 Indicator if a message is added to favorites
 
-___
+***
 
-### category\_id
+### category\_id?
 
-• `Optional` **category\_id**: [`InboxCategories`](../enums/InboxCategories.md)
+> `optional` **category\_id?**: [`InboxCategories`](../enumerations/InboxCategories.md)
 
 Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages
 
-___
+***
 
-### expire\_on\_dt
+### expire\_on\_dt?
 
-• `Optional` **expire\_on\_dt**: `number`
+> `optional` **expire\_on\_dt?**: `number`
 
 The epoch timestamp, with milliseconds, when the message is going to be expired

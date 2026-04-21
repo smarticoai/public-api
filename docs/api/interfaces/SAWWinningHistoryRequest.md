@@ -1,61 +1,59 @@
 # Interface: SAWWinningHistoryRequest
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`SAWWinningHistoryRequest`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### limit
 
-• **limit**: `number`
+> **limit**: `number`
 
-___
+***
 
 ### offset
 
-• **offset**: `number`
+> **offset**: `number`
 
-___
+***
 
-### saw\_template\_id
+### saw\_template\_id?
 
-• `Optional` **saw\_template\_id**: `number`
+> `optional` **saw\_template\_id?**: `number`
 
-___
+***
 
-### only\_claimed
+### only\_claimed?
 
-• `Optional` **only\_claimed**: `boolean`
+> `optional` **only\_claimed?**: `boolean`

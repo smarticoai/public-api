@@ -2,89 +2,87 @@
 
 TLevelCurrent describes the information of each level defined in the system along with ordinal position and progress of the current level
 
-## Hierarchy
+## Extends
 
 - [`TLevel`](TLevel.md)
-
-  ↳ **`TLevelCurrent`**
 
 ## Properties
 
 ### id
 
-• **id**: `number`
+> **id**: `number`
 
 The ID of the Level
 
 #### Inherited from
 
-[TLevel](TLevel.md).[id](TLevel.md#id)
+[`TLevel`](TLevel.md).[`id`](TLevel.md#id)
 
-___
+***
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
 The name of the Level, translated to the user language
 
 #### Inherited from
 
-[TLevel](TLevel.md).[name](TLevel.md#name)
+[`TLevel`](TLevel.md).[`name`](TLevel.md#name)
 
-___
+***
 
 ### description
 
-• **description**: `string`
+> **description**: `string`
 
 The description of the Level, translated to the user language
 
 #### Inherited from
 
-[TLevel](TLevel.md).[description](TLevel.md#description)
+[`TLevel`](TLevel.md).[`description`](TLevel.md#description)
 
-___
+***
 
 ### image
 
-• **image**: `string`
+> **image**: `string`
 
 The URL of the image of the Level, 256x256px
 
 #### Inherited from
 
-[TLevel](TLevel.md).[image](TLevel.md#image)
+[`TLevel`](TLevel.md).[`image`](TLevel.md#image)
 
-___
+***
 
 ### required\_points
 
-• **required\_points**: `number`
+> **required\_points**: `number`
 
 The amount of points required to reach the Level
 
 #### Inherited from
 
-[TLevel](TLevel.md).[required_points](TLevel.md#required_points)
+[`TLevel`](TLevel.md).[`required_points`](TLevel.md#required_points)
 
-___
+***
 
 ### visibility\_points
 
-• **visibility\_points**: `number`
+> **visibility\_points**: `number`
 
 Number of points that user should collect in order to see this level
 
 #### Inherited from
 
-[TLevel](TLevel.md).[visibility_points](TLevel.md#visibility_points)
+[`TLevel`](TLevel.md).[`visibility_points`](TLevel.md#visibility_points)
 
-___
+***
 
 ### required\_level\_counter\_1
 
-• **required\_level\_counter\_1**: `number`
+> **required\_level\_counter\_1**: `number`
 
 The counter of 1st metric used to reach the Level.
 Relevant in case of using advanced leveling logic
@@ -92,13 +90,13 @@ https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for
 
 #### Inherited from
 
-[TLevel](TLevel.md).[required_level_counter_1](TLevel.md#required_level_counter_1)
+[`TLevel`](TLevel.md).[`required_level_counter_1`](TLevel.md#required_level_counter_1)
 
-___
+***
 
 ### required\_level\_counter\_2
 
-• **required\_level\_counter\_2**: `number`
+> **required\_level\_counter\_2**: `number`
 
 The counter of 2nd metric used to reach the Level.
 Relevant in case of using advanced leveling logic
@@ -106,13 +104,13 @@ https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for
 
 #### Inherited from
 
-[TLevel](TLevel.md).[required_level_counter_2](TLevel.md#required_level_counter_2)
+[`TLevel`](TLevel.md).[`required_level_counter_2`](TLevel.md#required_level_counter_2)
 
-___
+***
 
 ### custom\_data
 
-• **custom\_data**: `string`
+> **custom\_data**: `string`
 
 Custom data as string or JSON string that can be used in API to build custom UI
 You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
@@ -120,24 +118,24 @@ Read more here - https://help.smartico.ai/welcome/products/general-concepts/cust
 
 #### Inherited from
 
-[TLevel](TLevel.md).[custom_data](TLevel.md#custom_data)
+[`TLevel`](TLevel.md).[`custom_data`](TLevel.md#custom_data)
 
-___
+***
 
 ### ordinal\_position
 
-• **ordinal\_position**: `number`
+> **ordinal\_position**: `number`
 
 The ordinal position of the level
 
 #### Inherited from
 
-[TLevel](TLevel.md).[ordinal_position](TLevel.md#ordinal_position)
+[`TLevel`](TLevel.md).[`ordinal_position`](TLevel.md#ordinal_position)
 
-___
+***
 
 ### progress
 
-• **progress**: `number`
+> **progress**: `number`
 
 The progress of the user towards next level in the percents to complete

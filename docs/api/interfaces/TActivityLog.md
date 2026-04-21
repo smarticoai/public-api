@@ -7,62 +7,62 @@ The structure is the same regardless of balance type, making it easy to iterate 
 
 ### create\_date
 
-• **create\_date**: `number`
+> **create\_date**: `number`
 
 Date when the change was created (epoch timestamp in seconds)
 
-___
+***
 
 ### user\_ext\_id
 
-• **user\_ext\_id**: `string`
+> **user\_ext\_id**: `string`
 
 External user ID
 
-___
+***
 
 ### crm\_brand\_id
 
-• **crm\_brand\_id**: `number`
+> **crm\_brand\_id**: `number`
 
 CRM brand ID
 
-___
+***
 
 ### type
 
-• **type**: [`UserBalanceType`](../enums/UserBalanceType.md)
+> **type**: [`UserBalanceType`](../enumerations/UserBalanceType.md)
 
 Type of balance: Points = 0, Gems = 1, Diamonds = 2
 
-___
+***
 
 ### amount
 
-• **amount**: `number`
+> **amount**: `number`
 
 Amount changed (positive or negative)
 
-___
+***
 
 ### balance
 
-• **balance**: `number`
+> **balance**: `number`
 
 Current balance after this change
 
-___
+***
 
-### total\_ever
+### total\_ever?
 
-• `Optional` **total\_ever**: `number`
+> `optional` **total\_ever?**: `number`
 
 Total ever collected (only relevant for type points)
 
-___
+***
 
 ### source\_type\_id
 
-• **source\_type\_id**: [`PointChangeSourceType`](../enums/PointChangeSourceType.md)
+> **source\_type\_id**: [`PointChangeSourceType`](../enumerations/PointChangeSourceType.md)
 
 Source type ID indicating what triggered this change

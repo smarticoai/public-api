@@ -4,22 +4,22 @@
 
 ### affects\_level
 
-• **affects\_level**: `boolean`
+> **affects\_level**: `boolean`
 
-___
+***
 
 ### affects\_leaderboard
 
-• **affects\_leaderboard**: `boolean`
+> **affects\_leaderboard**: `boolean`
 
-___
+***
 
 ### affects\_current\_balance
 
-• **affects\_current\_balance**: `boolean`
+> **affects\_current\_balance**: `boolean`
 
-___
+***
 
 ### rewardPoints
 
-• **rewardPoints**: `number`
+> **rewardPoints**: `number`

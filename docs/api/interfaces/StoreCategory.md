@@ -2,12 +2,12 @@
 
 ## Properties
 
-### id
+### id?
 
-• `Optional` **id**: `number`
+> `optional` **id?**: `number`
 
-___
+***
 
-### publicMeta
+### publicMeta?
 
-• `Optional` **publicMeta**: [`StoreCategoryPublicMeta`](StoreCategoryPublicMeta.md)
+> `optional` **publicMeta?**: [`StoreCategoryPublicMeta`](StoreCategoryPublicMeta.md)

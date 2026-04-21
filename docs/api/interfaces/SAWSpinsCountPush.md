@@ -1,49 +1,47 @@
 # Interface: SAWSpinsCountPush
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`SAWSpinsCountPush`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### saw\_template\_id
 
-• **saw\_template\_id**: `number`
+> **saw\_template\_id**: `number`
 
-___
+***
 
 ### spin\_count
 
-• **spin\_count**: `number`
+> **spin\_count**: `number`

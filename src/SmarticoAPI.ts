@@ -68,6 +68,8 @@ import {
 	enrichUserAchievementsWithBadgeState,
 } from './Missions';
 import {
+	GetClanTournamentPlayersRequest,
+	GetClanTournamentPlayersResponse,
 	GetTournamentInfoRequest,
 	GetTournamentInfoResponse,
 	GetTournamentsRequest,
@@ -75,6 +77,7 @@ import {
 	TournamentItemsTransform,
 	TournamentRegisterRequest,
 	TournamentRegisterResponse,
+	clanTournamentPlayersTransform,
 	tournamentInfoItemTransform,
 } from './Tournaments';
 import { GetLeaderBoardsRequest, GetLeaderBoardsResponse, LeaderBoardDetails, LeaderBoardPeriodType } from './Leaderboard';
@@ -103,6 +106,10 @@ import {
 	TAvatarDefinition,
 	TAvatarCustomized,
 	TAvatarPrompt,
+	TClans,
+	TClanInfo,
+	TClanJoinResult,
+	TClanTournamentPlayers,
 } from './WSAPI/WSAPITypes';
 import { getLeaderBoardTransform } from './Leaderboard/LeaderBoards';
 import { GetAchievementsUserInfoResponse } from './Core/GetAchievementsUserInfoResponse';
@@ -130,6 +137,7 @@ import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse'
 import { GetRafflesResponse, raffleTransform } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform } from './ActivityLog';
+import { GetClanListRequest, GetClanListResponse, GetClanInfoRequest, GetClanInfoResponse, JoinClanRequest, JoinClanResponse } from './Clans';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform } from './Raffle';
 import { GetAvatarsListResponse, avatarDefinitionTransform } from './Avatars/GetAvatarsListResponse';
@@ -1005,6 +1013,69 @@ class SmarticoAPI {
 		return TournamentItemsTransform((await this.tournamentsGetLobby(user_ext_id)).tournaments);
 	}
 
+	public async clansGetList(user_ext_id: string, force_language?: string): Promise<GetClanListResponse> {
+		const message = this.buildMessage<GetClanListRequest, GetClanListResponse>(
+			user_ext_id,
+			ClassId.GET_CLAN_LIST_REQUEST,
+		);
+		return await this.send<GetClanListResponse>(message, ClassId.GET_CLAN_LIST_RESPONSE, force_language);
+	}
+
+	public async clansGetListT(user_ext_id: string): Promise<TClans> {
+		const response = await this.clansGetList(user_ext_id);
+		return {
+			clans: response.clans,
+			user_clan_id: response.user_clan_id,
+			cooldown_until: response.cooldown_until,
+		};
+	}
+
+	public async clansGetInfo(user_ext_id: string, clanId: number, force_language?: string): Promise<GetClanInfoResponse> {
+		const message = this.buildMessage<GetClanInfoRequest, GetClanInfoResponse>(
+			user_ext_id,
+			ClassId.GET_CLAN_INFO_REQUEST,
+			{ clan_id: clanId },
+		);
+		return await this.send<GetClanInfoResponse>(message, ClassId.GET_CLAN_INFO_RESPONSE, force_language);
+	}
+
+	public async clansGetInfoT(user_ext_id: string, clanId: number, force_language?: string): Promise<TClanInfo> {
+		const response = await this.clansGetInfo(user_ext_id, clanId, force_language);
+		const c = response.clan_info;
+		return {
+			clan_id: c.clan_id,
+			public_meta: c.public_meta,
+			member_count: c.member_count,
+			capacity_limit: c.capacity_limit,
+			entry_fee_currency_type_id: response.entry_fee_currency_type_id ?? c.entry_fee_currency_type_id,
+			entry_fee_amount: response.entry_fee_amount ?? c.entry_fee_amount,
+			rating_position: c.rating_position,
+			rating_score: c.rating_score,
+			cooldown_until: response.cooldown_until ?? null,
+			members: (response.members || []).map((m) => ({
+				user_id: m.user_id,
+				public_username: m.public_username,
+				avatar_id: m.avatar_id,
+				avatar_real_id: m.avatar_real_id,
+				avatar_url: CoreUtils.avatarUrl(m.avatar_id, this.avatarDomain),
+				position: m.position,
+				contribution_score: m.contribution_score,
+				is_me: m.is_me,
+				clean_ext_user_id: m.clean_ext_user_id,
+			})),
+		};
+	}
+
+	public async clanJoin(user_ext_id: string, clanId: number, joinSourceId: number = 0): Promise<TClanJoinResult> {
+		const message = this.buildMessage<JoinClanRequest, JoinClanResponse>(
+			user_ext_id,
+			ClassId.JOIN_CLAN_REQUEST,
+			{ clan_id: clanId, join_source_id: joinSourceId },
+		);
+		const response = await this.send<JoinClanResponse>(message, ClassId.JOIN_CLAN_RESPONSE);
+		return { errCode: response.errCode ?? 0, errMsg: response.errMsg ?? '' };
+	}
+
 	public async tournamentsGetInfo(
 		user_ext_id: string,
 		tournamentInstanceId: number,
@@ -1042,6 +1113,30 @@ class SmarticoAPI {
 		}
 		const response = await this.tournamentsGetInfo(user_ext_id, tournamentInstanceId);
 		return tournamentInfoItemTransform(response);
+	}
+
+	public async clanTournamentGetPlayers(
+		user_ext_id: string,
+		tournamentInstanceId: number,
+		clanId: number,
+		force_language?: string,
+	): Promise<TClanTournamentPlayers> {
+		const message = this.buildMessage<GetClanTournamentPlayersRequest, GetClanTournamentPlayersResponse>(
+			user_ext_id,
+			ClassId.GET_CLAN_TOURNAMENT_PLAYERS_REQUEST,
+			{ tournamentInstanceId, clanId, forceLanguage: force_language },
+		);
+		const response = await this.send<GetClanTournamentPlayersResponse>(
+			message,
+			ClassId.GET_CLAN_TOURNAMENT_PLAYERS_RESPONSE,
+			force_language,
+		);
+		if (response.players?.length) {
+			response.players.forEach((p) => {
+				p.avatar_url = CoreUtils.avatarUrl(p.avatar_id, this.avatarDomain);
+			});
+		}
+		return clanTournamentPlayersTransform(response);
 	}
 
 	public async leaderboardGet(

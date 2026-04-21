@@ -4,7 +4,7 @@
 
 ### err\_code
 
-• **err\_code**: [`BuyStoreItemErrorCode`](../enums/BuyStoreItemErrorCode.md)
+> **err\_code**: [`BuyStoreItemErrorCode`](../enumerations/BuyStoreItemErrorCode.md)
 
 Error code representing the result of the purchase of the shop item. Successful purchase if err_code is 0 
 
@@ -17,10 +17,10 @@ SmarticoAPI.buyStoreItem(item_id).then(res => {
 });
 ```
 
-___
+***
 
 ### err\_message
 
-• **err\_message**: `string`
+> **err\_message**: `string`
 
 Optional error message

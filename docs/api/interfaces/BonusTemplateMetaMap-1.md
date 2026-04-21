@@ -4,30 +4,30 @@
 
 ### description
 
-• **description**: `string`
+> **description**: `string`
 
 Description of the bonus template
 
-___
+***
 
 ### acknowledge
 
-• **acknowledge**: `string`
+> **acknowledge**: `string`
 
 Acknowledge message setup in the bonus template
 
-___
+***
 
 ### image\_url
 
-• **image\_url**: `string`
+> **image\_url**: `string`
 
 Image URL of the bonus template, 1:1 aspect ratio
 
-___
+***
 
-### redirect\_url
+### redirect\_url?
 
-• `Optional` **redirect\_url**: `string`
+> `optional` **redirect\_url?**: `string`
 
 Redirect URL of the bonus template

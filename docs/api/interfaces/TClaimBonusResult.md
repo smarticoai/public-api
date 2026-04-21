@@ -6,22 +6,22 @@ TClaimBonusResult describes the response of call to _smartico.api.claimBonus(bon
 
 ### err\_code
 
-• **err\_code**: [`SAWSpinErrorCode`](../enums/SAWSpinErrorCode.md)
+> **err\_code**: [`SAWSpinErrorCode`](../enumerations/SAWSpinErrorCode.md)
 
 Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0
 
-___
+***
 
 ### err\_message
 
-• **err\_message**: `string`
+> **err\_message**: `string`
 
 Optional error message
 
-___
+***
 
-### success
+### success?
 
-• `Optional` **success**: `boolean`
+> `optional` **success?**: `boolean`
 
 If the bonus was claimed successfully, then success is true

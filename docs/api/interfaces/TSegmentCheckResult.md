@@ -4,10 +4,10 @@
 
 ### segment\_id
 
-• **segment\_id**: `number`
+> **segment\_id**: `number`
 
-___
+***
 
 ### is\_matching
 
-• **is\_matching**: `boolean`
+> **is\_matching**: `boolean`

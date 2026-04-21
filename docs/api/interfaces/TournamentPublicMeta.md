@@ -2,114 +2,114 @@
 
 ## Properties
 
-### name
+### name?
 
-• `Optional` **name**: `string`
+> `optional` **name?**: `string`
 
 Name of tournament
 
-___
+***
 
-### image\_url
+### image\_url?
 
-• `Optional` **image\_url**: `string`
+> `optional` **image\_url?**: `string`
 
 1st image
 
-___
+***
 
-### image\_url2
+### image\_url2?
 
-• `Optional` **image\_url2**: `string`
+> `optional` **image\_url2?**: `string`
 
 2nd image
 
-___
+***
 
-### image\_url2\_mobile
+### image\_url2\_mobile?
 
-• `Optional` **image\_url2\_mobile**: `string`
+> `optional` **image\_url2\_mobile?**: `string`
 
 2nd image for mobile
 
-___
+***
 
-### description
+### description?
 
-• `Optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Description, html capable
 
-___
+***
 
-### prize\_pool\_short
+### prize\_pool\_short?
 
-• `Optional` **prize\_pool\_short**: `string`
+> `optional` **prize\_pool\_short?**: `string`
 
 Short explanation of prize pool
 
-___
+***
 
-### segment\_dont\_match\_message
+### segment\_dont\_match\_message?
 
-• `Optional` **segment\_dont\_match\_message**: `string`
+> `optional` **segment\_dont\_match\_message?**: `string`
 
 Message to show when user is not matching to the segment allowed to register (error code 30005 in registration response)
 
-___
+***
 
-### custom\_price\_text
+### custom\_price\_text?
 
-• `Optional` **custom\_price\_text**: `string`
+> `optional` **custom\_price\_text?**: `string`
 
 Short explanation of registration price
 
-___
+***
 
-### show\_other\_users\_score
+### show\_other\_users\_score?
 
-• `Optional` **show\_other\_users\_score**: `boolean`
+> `optional` **show\_other\_users\_score?**: `boolean`
 
 Indicator if the scores of other users should be shown in the leaderboard of tournament
 
-___
+***
 
-### custom\_section\_id
+### custom\_section\_id?
 
-• `Optional` **custom\_section\_id**: `number`
+> `optional` **custom\_section\_id?**: `number`
 
-___
+***
 
-### only\_in\_custom\_section
+### only\_in\_custom\_section?
 
-• `Optional` **only\_in\_custom\_section**: `boolean`
+> `optional` **only\_in\_custom\_section?**: `boolean`
 
-___
+***
 
-### label\_tag
+### label\_tag?
 
-• `Optional` **label\_tag**: `string`
+> `optional` **label\_tag?**: `string`
 
-___
+***
 
-### custom\_label\_tag
+### custom\_label\_tag?
 
-• `Optional` **custom\_label\_tag**: `string`
+> `optional` **custom\_label\_tag?**: `string`
 
-___
+***
 
-### featured
+### featured?
 
-• `Optional` **featured**: `boolean`
+> `optional` **featured?**: `boolean`
 
-___
+***
 
-### position
+### position?
 
-• `Optional` **position**: `number`
+> `optional` **position?**: `number`
 
-___
+***
 
-### custom\_data
+### custom\_data?
 
-• `Optional` **custom\_data**: `string`
+> `optional` **custom\_data?**: `string`

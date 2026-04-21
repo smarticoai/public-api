@@ -2,34 +2,34 @@
 
 ## Properties
 
-### name
+### name?
 
-• `Optional` **name**: `string`
+> `optional` **name?**: `string`
 
-___
+***
 
-### display\_progress\_as\_count
+### display\_progress\_as\_count?
 
-• `Optional` **display\_progress\_as\_count**: `boolean`
+> `optional` **display\_progress\_as\_count?**: `boolean`
 
-___
+***
 
-### stage\_image
+### stage\_image?
 
-• `Optional` **stage\_image**: `string`
+> `optional` **stage\_image?**: `string`
 
-___
+***
 
-### priority
+### priority?
 
-• `Optional` **priority**: `number`
+> `optional` **priority?**: `number`
 
-___
+***
 
-### user\_state\_operations
+### user\_state\_operations?
 
-• `Optional` **user\_state\_operations**: `Object`
+> `optional` **user\_state\_operations?**: `object`
 
-#### Index signature
+#### Index Signature
 
-▪ [key: `string`]: \{ `op`: `string`  }
+\[`key`: `string`\]: `object`

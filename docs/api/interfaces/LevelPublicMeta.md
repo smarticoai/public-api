@@ -2,58 +2,65 @@
 
 ## Properties
 
-### description
+### description?
 
-• `Optional` **description**: `string`
+> `optional` **description?**: `string`
 
 Description of level, HTML capabable
 
-___
+***
 
-### image\_url
+### image\_url?
 
-• `Optional` **image\_url**: `string`
+> `optional` **image\_url?**: `string`
 
 URL to the image of level
 
-___
+***
 
-### name
+### name?
 
-• `Optional` **name**: `string`
+> `optional` **name?**: `string`
 
 Name of level
 
-___
+***
 
-### visibility\_points
+### visibility\_points?
 
-• `Optional` **visibility\_points**: `number`
+> `optional` **visibility\_points?**: `number`
 
 Number of points that user should have collected in order to see this level
 
-___
+***
 
-### position
+### position?
 
-• `Optional` **position**: `Object`
+> `optional` **position?**: `object`
 
 X & Y coordinates of level on the visual mission map, for desktop and mobile
 
-#### Type declaration
+#### mx
 
-| Name | Type |
-| :------ | :------ |
-| `mx` | `number` |
-| `my` | `number` |
-| `dx` | `number` |
-| `dy` | `number` |
+> **mx**: `number`
 
-___
+#### my
 
-### custom\_data
+> **my**: `number`
 
-• `Optional` **custom\_data**: `string`
+#### dx
+
+> **dx**: `number`
+
+#### dy
+
+> **dy**: `number`
+
+***
+
+### custom\_data?
+
+> `optional` **custom\_data?**: `string`
 
 Custom data as string or JSON string that can be used in API to build custom UI
 You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice

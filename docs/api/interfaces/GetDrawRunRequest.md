@@ -1,61 +1,59 @@
 # Interface: GetDrawRunRequest
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`GetDrawRunRequest`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### raffle\_id
 
-• **raffle\_id**: `number`
+> **raffle\_id**: `number`
 
-___
+***
 
 ### run\_id
 
-• **run\_id**: `number`
+> **run\_id**: `number`
 
-___
+***
 
-### winners\_limit
+### winners\_limit?
 
-• `Optional` **winners\_limit**: `number`
+> `optional` **winners\_limit?**: `number`
 
-___
+***
 
-### winners\_offset
+### winners\_offset?
 
-• `Optional` **winners\_offset**: `number`
+> `optional` **winners\_offset?**: `number`

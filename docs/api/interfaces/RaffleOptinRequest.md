@@ -1,55 +1,53 @@
 # Interface: RaffleOptinRequest
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`RaffleOptinRequest`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### raffle\_id
 
-• **raffle\_id**: `number`
+> **raffle\_id**: `number`
 
-___
+***
 
 ### draw\_id
 
-• **draw\_id**: `number`
+> **draw\_id**: `number`
 
-___
+***
 
 ### raffle\_run\_id
 
-• **raffle\_run\_id**: `number`
+> **raffle\_run\_id**: `number`

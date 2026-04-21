@@ -1,49 +1,47 @@
 # Interface: JackpotWinPush
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`JackpotWinPush`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### jackpot
 
-• **jackpot**: [`JackpotDetails`](JackpotDetails.md)
+> **jackpot**: [`JackpotDetails`](JackpotDetails.md)
 
-___
+***
 
 ### winners
 
-• **winners**: [`JackPotWinner`](JackPotWinner.md)[]
+> **winners**: [`JackPotWinner`](JackPotWinner.md)[]

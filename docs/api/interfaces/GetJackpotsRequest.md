@@ -1,49 +1,47 @@
 # Interface: GetJackpotsRequest
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`GetJackpotsRequest`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
 
-### related\_game\_id
+### uuid?
 
-• `Optional` **related\_game\_id**: `string`
+> `optional` **uuid?**: `string`
 
-___
+#### Inherited from
 
-### jp\_template\_id
+`ProtocolMessage.uuid`
 
-• `Optional` **jp\_template\_id**: `number`
+***
+
+### related\_game\_id?
+
+> `optional` **related\_game\_id?**: `string`
+
+***
+
+### jp\_template\_id?
+
+> `optional` **jp\_template\_id?**: `number`

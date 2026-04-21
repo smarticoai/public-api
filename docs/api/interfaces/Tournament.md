@@ -2,214 +2,220 @@
 
 ## Properties
 
-### tournamentId
+### tournamentId?
 
-• `Optional` **tournamentId**: `number`
+> `optional` **tournamentId?**: `number`
 
 ID of tournament template
 
-___
+***
 
-### tournamentInstanceId
+### tournamentInstanceId?
 
-• `Optional` **tournamentInstanceId**: `number`
+> `optional` **tournamentInstanceId?**: `number`
 
 ID of tournament instance. Generated every time when tournament based on specific template is scheduled for run
 
-___
+***
 
-### tournamentType
+### tournamentType?
 
-• `Optional` **tournamentType**: [`TournamentType`](../enums/TournamentType.md)
+> `optional` **tournamentType?**: [`TournamentType`](../enumerations/TournamentType.md)
 
 Type of the tournament. For now only SCHEDULED is support
 
-___
+***
 
-### publicMeta
+### publicMeta?
 
-• `Optional` **publicMeta**: [`TournamentPublicMeta`](TournamentPublicMeta.md)
+> `optional` **publicMeta?**: [`TournamentPublicMeta`](TournamentPublicMeta.md)
 
 Meta information about tournament that should be used to build UI
 
-___
+***
 
-### buyInAmount
+### buyInAmount?
 
-• `Optional` **buyInAmount**: `number`
+> `optional` **buyInAmount?**: `number`
 
 Cost of registration in the tournament in gamification points
 
-___
+***
 
-### prizePool
+### prizePool?
 
-• `Optional` **prizePool**: `number`
+> `optional` **prizePool?**: `number`
 
 Not in use
 
-___
+***
 
-### startTime
+### startTime?
 
-• `Optional` **startTime**: `string`
+> `optional` **startTime?**: `string`
 
 The time when tournament is going to start
 
-___
+***
 
-### endTime
+### endTime?
 
-• `Optional` **endTime**: `string`
+> `optional` **endTime?**: `string`
 
 The time when tournament is going to finish
 
-___
+***
 
-### startTimeTs
+### startTimeTs?
 
-• `Optional` **startTimeTs**: `number`
+> `optional` **startTimeTs?**: `number`
 
 The time when tournament is going to start, epoch
 
-___
+***
 
-### endTimeTs
+### endTimeTs?
 
-• `Optional` **endTimeTs**: `number`
+> `optional` **endTimeTs?**: `number`
 
 The time when tournament is going to finish, epoch
 
-___
+***
 
-### registrationCount
+### registrationCount?
 
-• `Optional` **registrationCount**: `number`
+> `optional` **registrationCount?**: `number`
 
 Number of users registered in the tournament
 
-___
+***
 
-### totalCount
+### totalCount?
 
-• `Optional` **totalCount**: `number`
+> `optional` **totalCount?**: `number`
 
 Not in use
 
-___
+***
 
-### registrationType
+### registrationType?
 
-• `Optional` **registrationType**: [`TournamentRegistrationType`](../enums/TournamentRegistrationType.md)
+> `optional` **registrationType?**: [`TournamentRegistrationType`](../enumerations/TournamentRegistrationType.md)
 
 Type of registration in the tournament
 
-___
+***
 
-### tournamentRegistrationStatus
+### tournamentRegistrationStatus?
 
-• `Optional` **tournamentRegistrationStatus**: [`TournamentRegistrationStatus`](../enums/TournamentRegistrationStatus.md)
+> `optional` **tournamentRegistrationStatus?**: [`TournamentRegistrationStatus`](../enumerations/TournamentRegistrationStatus.md)
 
 Status of registration in the tournament for current user
 
-___
+***
 
-### tournamentInstanceStatus
+### tournamentInstanceStatus?
 
-• `Optional` **tournamentInstanceStatus**: [`TournamentInstanceStatus`](../enums/TournamentInstanceStatus.md)
+> `optional` **tournamentInstanceStatus?**: [`TournamentInstanceStatus`](../enumerations/TournamentInstanceStatus.md)
 
 Status of tournament instance
 
-___
+***
 
-### isUserRegistered
+### isUserRegistered?
 
-• `Optional` **isUserRegistered**: `boolean`
+> `optional` **isUserRegistered?**: `boolean`
 
 flag indicating if current user is registered in the tournament
 
-___
+***
 
-### allowLateRegistration
+### allowLateRegistration?
 
-• `Optional` **allowLateRegistration**: `boolean`
+> `optional` **allowLateRegistration?**: `boolean`
 
 Indicator if tournament allows later registration, when tournament is already started
 
-___
+***
 
-### playersMinCount
+### playersMinCount?
 
-• `Optional` **playersMinCount**: `number`
+> `optional` **playersMinCount?**: `number`
 
 Minimum number of participant for this tournament. If tournament doesnt have enough registrations, it will not start
 
-___
+***
 
-### playersMaxCount
+### playersMaxCount?
 
-• `Optional` **playersMaxCount**: `number`
+> `optional` **playersMaxCount?**: `number`
 
 Maximum number of participant for this tournament. When reached, new users won't be able to register
 
-___
+***
 
-### durationMs
+### durationMs?
 
-• `Optional` **durationMs**: `number`
+> `optional` **durationMs?**: `number`
 
 Tournament duration in millisecnnds
 
-___
+***
 
-### prizeStructure
+### prizeStructure?
 
-• `Optional` **prizeStructure**: `Object`
+> `optional` **prizeStructure?**: `object`
 
 prizes structure
 
-#### Type declaration
+#### prizes
 
-| Name | Type |
-| :------ | :------ |
-| `prizes` | [`TournamentPrize`](TournamentPrize.md)[] |
+> **prizes**: [`TournamentPrize`](TournamentPrize.md)[]
 
-___
+***
 
-### tournamentPlayer
+### tournamentPlayer?
 
-• `Optional` **tournamentPlayer**: [`TournamentPlayer`](TournamentPlayer.md)
+> `optional` **tournamentPlayer?**: [`TournamentPlayer`](TournamentPlayer.md)
 
 Information about current user
 
-___
+***
 
-### related\_games
+### related\_games?
 
-• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
+> `optional` **related\_games?**: [`AchRelatedGame`](AchRelatedGame.md)[]
 
 List of casino games (or other types of entities) related to the tournament
 
-___
+***
 
-### minScoreToWin
+### minScoreToWin?
 
-• `Optional` **minScoreToWin**: `number`
+> `optional` **minScoreToWin?**: `number`
 
 The minimum amount of score points that the user should get in order to be qualified for the prize
 
-___
+***
 
-### hideLeaderboardsMinScores
+### hideLeaderboardsMinScores?
 
-• `Optional` **hideLeaderboardsMinScores**: `boolean`
+> `optional` **hideLeaderboardsMinScores?**: `boolean`
 
 When enabled, users who don't meet the minimum qualifying score will be hidden from the Leaderboard.
 
-___
+***
 
-### totalScores
+### totalScores?
 
-• `Optional` **totalScores**: `number`
+> `optional` **totalScores?**: `number`
 
 Total scores across all participants in the tournament
+
+***
+
+### isClanBased?
+
+> `optional` **isClanBased?**: `boolean`
+
+Indicates if the tournament is clan-based

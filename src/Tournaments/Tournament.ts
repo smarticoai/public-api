@@ -70,6 +70,8 @@ export interface Tournament {
 	hideLeaderboardsMinScores?: boolean;
 	/** Total scores across all participants in the tournament */
 	totalScores?: number;
+	/** Indicates if the tournament is clan-based */
+	isClanBased?: boolean;
 }
 
 export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => {

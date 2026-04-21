@@ -2,12 +2,12 @@
 
 ## Properties
 
-### name
+### name?
 
-• `Optional` **name**: `string`
+> `optional` **name?**: `string`
 
-___
+***
 
-### order
+### order?
 
-• `Optional` **order**: `number`
+> `optional` **order?**: `number`

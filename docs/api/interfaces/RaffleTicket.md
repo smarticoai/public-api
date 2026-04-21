@@ -4,14 +4,14 @@
 
 ### id
 
-• **id**: `number`
+> **id**: `number`
 
 Int presentation of the ticket
 
-___
+***
 
 ### s
 
-• **s**: `string`
+> **s**: `string`
 
 String presentation of the ticket

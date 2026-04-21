@@ -2,9 +2,9 @@
 
 ## Methods
 
-### getUserProfile
+### getUserProfile()
 
-▸ **getUserProfile**(): [`TUserProfile`](../interfaces/TUserProfile.md)
+> **getUserProfile**(): [`TUserProfile`](../interfaces/TUserProfile.md)
 
 Returns information about current user
 Pay attention that this method is synchronous and returns the user profile object immediately, not a promise.
@@ -19,11 +19,11 @@ console.log(p);
 
 [`TUserProfile`](../interfaces/TUserProfile.md)
 
-___
+***
 
-### checkSegmentMatch
+### checkSegmentMatch()
 
-▸ **checkSegmentMatch**(`segment_id`): `Promise`\<`boolean`\>
+> **checkSegmentMatch**(`segment_id`): `Promise`\<`boolean`\>
 
 Check if user belongs to specific segments
 **Example**:
@@ -37,19 +37,19 @@ _smartico.api.checkSegmentMatch(1).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `segment_id` | `number` |
+##### segment\_id
+
+`number`
 
 #### Returns
 
 `Promise`\<`boolean`\>
 
-___
+***
 
-### checkSegmentListMatch
+### checkSegmentListMatch()
 
-▸ **checkSegmentListMatch**(`segment_ids`): `Promise`\<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
+> **checkSegmentListMatch**(`segment_ids`): `Promise`\<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
 
 Check if user belongs to specific list of segments
 **Example**:
@@ -62,19 +62,19 @@ _smartico.api.checkSegmentListMatch([1, 2, 3]).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `segment_ids` | `number`[] |
+##### segment\_ids
+
+`number`[]
 
 #### Returns
 
 `Promise`\<[`TSegmentCheckResult`](../interfaces/TSegmentCheckResult.md)[]\>
 
-___
+***
 
-### getLevels
+### getLevels()
 
-▸ **getLevels**(): `Promise`\<[`TLevel`](../interfaces/TLevel.md)[]\>
+> **getLevels**(): `Promise`\<[`TLevel`](../interfaces/TLevel.md)[]\>
 
 Returns all the levels available to the current user
 **Example**:
@@ -95,11 +95,11 @@ _smartico.vapi('EN').getLevels().then((result) => {
 
 `Promise`\<[`TLevel`](../interfaces/TLevel.md)[]\>
 
-___
+***
 
-### getCurrentLevel
+### getCurrentLevel()
 
-▸ **getCurrentLevel**(): `Promise`\<[`TLevelCurrent`](../interfaces/TLevelCurrent.md)\>
+> **getCurrentLevel**(): `Promise`\<[`TLevelCurrent`](../interfaces/TLevelCurrent.md)\>
 
 Returns the current level of the user with extended information including ordinal position and progress.
 
@@ -116,11 +116,11 @@ _smartico.api.getCurrentLevel().then((result) => {
 
 `Promise`\<[`TLevelCurrent`](../interfaces/TLevelCurrent.md)\>
 
-___
+***
 
-### getMissions
+### getMissions()
 
-▸ **getMissions**(`«destructured»?`): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+> **getMissions**(`__namedParameters?`): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the missions configured for the current user (server-side scoped, not filtered by Widget visibility).
 The returned missions are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
@@ -143,20 +143,21 @@ _smartico.vapi('EN').getMissions().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]) => `void` |
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
-___
+***
 
-### getBadges
+### getBadges()
 
-▸ **getBadges**(): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
+> **getBadges**(): `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
 Returns all the badges available to the current user
 
@@ -166,11 +167,11 @@ Returns all the badges available to the current user
 
 `Promise`\<[`TMissionOrBadge`](../interfaces/TMissionOrBadge.md)[]\>
 
-___
+***
 
-### getBonuses
+### getBonuses()
 
-▸ **getBonuses**(`«destructured»?`): `Promise`\<[`TBonus`](../interfaces/TBonus.md)[]\>
+> **getBonuses**(`__namedParameters?`): `Promise`\<[`TBonus`](../interfaces/TBonus.md)[]\>
 
 Returns all the bonuses for the current user
 The returned bonuses are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
@@ -181,20 +182,21 @@ The onUpdate callback will be called on bonus claimed and the updated bonuses wi
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TBonus`](../interfaces/TBonus.md)[]) => `void` |
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TBonus`](../interfaces/TBonus.md)[]\>
 
-___
+***
 
-### claimBonus
+### claimBonus()
 
-▸ **claimBonus**(`bonus_id`): `Promise`\<[`TClaimBonusResult`](../interfaces/TClaimBonusResult.md)\>
+> **claimBonus**(`bonus_id`): `Promise`\<[`TClaimBonusResult`](../interfaces/TClaimBonusResult.md)\>
 
 Claim the bonus by bonus_id. Returns the err_code in case of success or error.
 Note that this method can be used only on integrations where originally failed bonus can be claimed again.
@@ -205,19 +207,19 @@ This bonus will be available for the user to claim again.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `bonus_id` | `number` |
+##### bonus\_id
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TClaimBonusResult`](../interfaces/TClaimBonusResult.md)\>
 
-___
+***
 
-### getUserLevelExtraCounters
+### getUserLevelExtraCounters()
 
-▸ **getUserLevelExtraCounters**(): `Promise`\<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
+> **getUserLevelExtraCounters**(): `Promise`\<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
 
 Returns the extra counters for the current user level.
 These are counters that are configured for each Smartico client separately by request.
@@ -236,11 +238,11 @@ _smartico.api.getUserLevelExtraCounters().then((result) => {
 
 `Promise`\<[`UserLevelExtraCountersT`](../interfaces/UserLevelExtraCountersT.md)\>
 
-___
+***
 
-### getStoreItems
+### getStoreItems()
 
-▸ **getStoreItems**(`params?`): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+> **getStoreItems**(`params?`): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns all the store items available to the current user
 The returned store items are cached for 30 seconds. But you can pass the onUpdate callback as a parameter.
@@ -263,20 +265,23 @@ _smartico.vapi('EN').getStoreItems().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | `Object` |
-| `params.onUpdate?` | (`data`: [`TStoreItem`](../interfaces/TStoreItem.md)[]) => `void` |
+##### params?
+
+###### onUpdate?
+
+(`data`) => `void`
+
+callback function that will be called when the store items are updated
 
 #### Returns
 
 `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
-___
+***
 
-### buyStoreItem
+### buyStoreItem()
 
-▸ **buyStoreItem**(`item_id`): `Promise`\<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
+> **buyStoreItem**(`item_id`): `Promise`\<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
 
 Buy the specific shop item by item_id. Returns the err_code in case of success or error.
 **Example**:
@@ -290,19 +295,19 @@ _smartico.api.buyStoreItem(1).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `item_id` | `number` |
+##### item\_id
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TBuyStoreItemResult`](../interfaces/TBuyStoreItemResult.md)\>
 
-___
+***
 
-### getStoreCategories
+### getStoreCategories()
 
-▸ **getStoreCategories**(): `Promise`\<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
+> **getStoreCategories**(): `Promise`\<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
 
 Returns store categories
 
@@ -324,11 +329,11 @@ _smartico.vapi('EN').getStoreCategories().then((result) => {
 
 `Promise`\<[`TStoreCategory`](../interfaces/TStoreCategory.md)[]\>
 
-___
+***
 
-### getStorePurchasedItems
+### getStorePurchasedItems()
 
-▸ **getStorePurchasedItems**(`«destructured»?`): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
+> **getStorePurchasedItems**(`__namedParameters?`): `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
 Returns purchased items based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched.
 The maximum number of items per request is limited to 20.
@@ -348,22 +353,29 @@ _smartico.api.getStorePurchasedItems().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `limit?` | `number` |
-| › `offset?` | `number` |
-| › `onUpdate?` | (`data`: [`TStoreItem`](../interfaces/TStoreItem.md)[]) => `void` |
+##### \_\_namedParameters?
+
+###### limit?
+
+`number`
+
+###### offset?
+
+`number`
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TStoreItem`](../interfaces/TStoreItem.md)[]\>
 
-___
+***
 
-### getAchCategories
+### getAchCategories()
 
-▸ **getAchCategories**(): `Promise`\<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
+> **getAchCategories**(): `Promise`\<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
 
 Returns missions & badges categories
 
@@ -385,11 +397,11 @@ _smartico.vapi('EN').getAchCategories().then((result) => {
 
 `Promise`\<[`TAchCategory`](../interfaces/TAchCategory.md)[]\>
 
-___
+***
 
-### getCustomSections
+### getCustomSections()
 
-▸ **getCustomSections**(): `Promise`\<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
+> **getCustomSections**(): `Promise`\<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
 
 Returns list of custom sections
 
@@ -411,11 +423,11 @@ _smartico.vapi('EN').getCustomSections().then((result) => {
 
 `Promise`\<[`TUICustomSection`](../interfaces/TUICustomSection.md)[]\>
 
-___
+***
 
-### getMiniGames
+### getMiniGames()
 
-▸ **getMiniGames**(`«destructured»?`): `Promise`\<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
+> **getMiniGames**(`__namedParameters?`): `Promise`\<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
 Returns the list of mini-games configured for the current user (not filtered by spin availability or Widget visibility).
 The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getMiniGames with a new onUpdate callback, the old one will be overwritten by the new one.
@@ -437,20 +449,21 @@ _smartico.vapi('EN').getMiniGames().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]\>
 
-___
+***
 
-### getMiniGamesHistory
+### getMiniGamesHistory()
 
-▸ **getMiniGamesHistory**(`«destructured»`): `Promise`\<[`TSawHistory`](../interfaces/TSawHistory.md)[]\>
+> **getMiniGamesHistory**(`__namedParameters`): `Promise`\<[`TSawHistory`](../interfaces/TSawHistory.md)[]\>
 
 Returns the list of mini-games based on the provided parameters. "Limit" and "offset" indicate the range of items to be fetched.
 The maximum number of items per request is limited to 20.
@@ -468,22 +481,29 @@ _smartico.api.getMiniGamesHistory().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `limit?` | `number` |
-| › `offset?` | `number` |
-| › `saw_template_id?` | `number` |
+##### \_\_namedParameters
+
+###### limit?
+
+`number`
+
+###### offset?
+
+`number`
+
+###### saw_template_id?
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TSawHistory`](../interfaces/TSawHistory.md)[]\>
 
-___
+***
 
-### playMiniGame
+### playMiniGame()
 
-▸ **playMiniGame**(`template_id`, `«destructured»?`): `Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
+> **playMiniGame**(`template_id`, `__namedParameters?`): `Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
 Plays the specified by template_id mini-game on behalf of user and returns prize_id or err_code
 After playMiniGame is called, you can call getMiniGames to get the list of mini-games.The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGame with a new onUpdate callback, the old one will be overwritten by the new one.
@@ -500,21 +520,25 @@ _smartico.api.playMiniGame(55).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `template_id` | `number` |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
+##### template\_id
+
+`number`
+
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TMiniGamePlayResult`](../interfaces/TMiniGamePlayResult.md)\>
 
-___
+***
 
-### miniGameWinAcknowledgeRequest
+### miniGameWinAcknowledgeRequest()
 
-▸ **miniGameWinAcknowledgeRequest**(`request_id`): `Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
+> **miniGameWinAcknowledgeRequest**(`request_id`): `Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
 
 Sends the acknowledge request with specific client_request_id from minigame history in order to claim prize
 **Example**:
@@ -526,19 +550,19 @@ _smartico.api.miniGameWinAcknowledgeRequest('2a189322-31bb-4119-b943-bx7868ff8dc
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `request_id` | `string` |
+##### request\_id
+
+`string`
 
 #### Returns
 
 `Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
 
-___
+***
 
-### playMiniGameBatch
+### playMiniGameBatch()
 
-▸ **playMiniGameBatch**(`template_id`, `spin_count`, `«destructured»?`): `Promise`\<[`TMiniGamePlayBatchResult`](../interfaces/TMiniGamePlayBatchResult.md)[]\>
+> **playMiniGameBatch**(`template_id`, `spin_count`, `__namedParameters?`): `Promise`\<[`TMiniGamePlayBatchResult`](../interfaces/TMiniGamePlayBatchResult.md)[]\>
 
 Plays the specified by template_id mini-game on behalf of user spin_count times and returns array of the prizes
 After playMiniGameBatch is called, you can call getMiniGames to get the list of mini-games. The returned list of mini-games is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call playMiniGameBatch with a new onUpdate callback, the old one will be overwritten by the new one.
@@ -554,22 +578,29 @@ _smartico.api.playMiniGameBatch(55, 10).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `template_id` | `number` |
-| `spin_count` | `number` |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TMiniGameTemplate`](../interfaces/TMiniGameTemplate.md)[]) => `void` |
+##### template\_id
+
+`number`
+
+##### spin\_count
+
+`number`
+
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TMiniGamePlayBatchResult`](../interfaces/TMiniGamePlayBatchResult.md)[]\>
 
-___
+***
 
-### requestMissionOptIn
+### requestMissionOptIn()
 
-▸ **requestMissionOptIn**(`mission_id`): `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+> **requestMissionOptIn**(`mission_id`): `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
 
 Requests an opt-in for the specified mission_id. Returns the err_code.
 
@@ -577,19 +608,19 @@ Requests an opt-in for the specified mission_id. Returns the err_code.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mission_id` | `number` |
+##### mission\_id
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
 
-___
+***
 
-### requestMissionClaimReward
+### requestMissionClaimReward()
 
-▸ **requestMissionClaimReward**(`mission_id`, `ach_completed_id`): `Promise`\<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
+> **requestMissionClaimReward**(`mission_id`, `ach_completed_id`): `Promise`\<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
 
 Request for claim reward for the specified mission id. Returns the err_code.
 
@@ -597,20 +628,23 @@ Request for claim reward for the specified mission id. Returns the err_code.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `mission_id` | `number` |
-| `ach_completed_id` | `number` |
+##### mission\_id
+
+`number`
+
+##### ach\_completed\_id
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TMissionClaimRewardResult`](../interfaces/TMissionClaimRewardResult.md)\>
 
-___
+***
 
-### getTournamentsList
+### getTournamentsList()
 
-▸ **getTournamentsList**(`«destructured»?`): `Promise`\<[`TTournament`](../interfaces/TTournament.md)[]\>
+> **getTournamentsList**(`__namedParameters?`): `Promise`\<[`TTournament`](../interfaces/TTournament.md)[]\>
 
 Returns all the active instances of tournaments
 The returned list is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getTournamentsList with a new onUpdate callback, the old one will be overwritten by the new one.
@@ -632,20 +666,85 @@ _smartico.vapi('EN').getTournamentsList().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TTournament`](../interfaces/TTournament.md)[]) => `void` |
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TTournament`](../interfaces/TTournament.md)[]\>
 
-___
+***
 
-### getTournamentInstanceInfo
+### getClans()
 
-▸ **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`\<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
+> **getClans**(`__namedParameters?`): `Promise`\<[`TClans`](../interfaces/TClans.md)\>
+
+Returns clans list payload for the current user.
+The returned payload is cached for 30 seconds.
+If onUpdate is passed, it will be called when clans response is received.
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
+
+#### Returns
+
+`Promise`\<[`TClans`](../interfaces/TClans.md)\>
+
+***
+
+### getClanInfo()
+
+> **getClanInfo**(`clanId`): `Promise`\<[`TClanInfo`](../interfaces/TClanInfo.md)\>
+
+Returns detailed information for a specific clan including its members.
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+##### clanId
+
+`number`
+
+#### Returns
+
+`Promise`\<[`TClanInfo`](../interfaces/TClanInfo.md)\>
+
+***
+
+### joinClan()
+
+> **joinClan**(`clanId`): `Promise`\<[`TClanJoinResult`](../interfaces/TClanJoinResult.md)\>
+
+Joins a clan on behalf of the current user.
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+##### clanId
+
+`number`
+
+#### Returns
+
+`Promise`\<[`TClanJoinResult`](../interfaces/TClanJoinResult.md)\>
+
+***
+
+### getTournamentInstanceInfo()
+
+> **getTournamentInstanceInfo**(`tournamentInstanceId`): `Promise`\<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
 
 Returns detailed information for a specific tournament instance; the response includes tournament info and the leaderboard of players
 
@@ -673,19 +772,43 @@ _smartico.vapi('EN').getTournamentsList().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `tournamentInstanceId` | `number` |
+##### tournamentInstanceId
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TTournamentDetailed`](../interfaces/TTournamentDetailed.md)\>
 
-___
+***
 
-### registerInTournament
+### getClanTournamentPlayers()
 
-▸ **registerInTournament**(`tournamentInstanceId`): `Promise`\<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
+> **getClanTournamentPlayers**(`tournamentInstanceId`, `clanId`): `Promise`\<[`TClanTournamentPlayers`](../interfaces/TClanTournamentPlayers.md)\>
+
+Returns the players of a specific clan in a clan-based tournament.
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+##### tournamentInstanceId
+
+`number`
+
+##### clanId
+
+`number`
+
+#### Returns
+
+`Promise`\<[`TClanTournamentPlayers`](../interfaces/TClanTournamentPlayers.md)\>
+
+***
+
+### registerInTournament()
+
+> **registerInTournament**(`tournamentInstanceId`): `Promise`\<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
 
 Requests registration for the specified tournament instance. Returns the err_code.
 
@@ -693,19 +816,19 @@ Requests registration for the specified tournament instance. Returns the err_cod
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `tournamentInstanceId` | `number` |
+##### tournamentInstanceId
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TTournamentRegistrationResult`](../interfaces/TTournamentRegistrationResult.md)\>
 
-___
+***
 
-### getLeaderBoard
+### getLeaderBoard()
 
-▸ **getLeaderBoard**(`periodType`, `getPreviousPeriod?`): `Promise`\<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
+> **getLeaderBoard**(`periodType`, `getPreviousPeriod?`): `Promise`\<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
 
 Returns the leaderboard for the current type (default is Daily). If getPreviousPeriod is passed as true, a leaderboard for the previous period for the current type will be returned.
 For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
@@ -726,20 +849,23 @@ _smartico.vapi('EN').getLeaderBoard(1).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `periodType` | [`LeaderBoardPeriodType`](../enums/LeaderBoardPeriodType.md) |
-| `getPreviousPeriod?` | `boolean` |
+##### periodType
+
+[`LeaderBoardPeriodType`](../enumerations/LeaderBoardPeriodType.md)
+
+##### getPreviousPeriod?
+
+`boolean`
 
 #### Returns
 
 `Promise`\<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)\>
 
-___
+***
 
-### getInboxMessages
+### getInboxMessages()
 
-▸ **getInboxMessages**(`params?`): `Promise`\<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
+> **getInboxMessages**(`params?`): `Promise`\<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
 
 Returns inbox messages based on the provided parameters. "From" and "to" indicate the range of messages to be fetched.
 The maximum number of messages per request is limited to 20. 
@@ -755,25 +881,41 @@ The "onUpdate" callback will be triggered when the user receives a new message. 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | `Object` |
-| `params.from?` | `number` |
-| `params.to?` | `number` |
-| `params.onlyFavorite?` | `boolean` |
-| `params.categoryId?` | [`InboxCategories`](../enums/InboxCategories.md) |
-| `params.read_status?` | [`InboxReadStatus`](../enums/InboxReadStatus.md) |
-| `params.onUpdate?` | (`data`: [`TInboxMessage`](../interfaces/TInboxMessage.md)[]) => `void` |
+##### params?
+
+###### from?
+
+`number`
+
+###### to?
+
+`number`
+
+###### onlyFavorite?
+
+`boolean`
+
+###### categoryId?
+
+[`InboxCategories`](../enumerations/InboxCategories.md)
+
+###### read_status?
+
+[`InboxReadStatus`](../enumerations/InboxReadStatus.md)
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TInboxMessage`](../interfaces/TInboxMessage.md)[]\>
 
-___
+***
 
-### getInboxUnreadCount
+### getInboxUnreadCount()
 
-▸ **getInboxUnreadCount**(`params?`): `Promise`\<`number`\>
+> **getInboxUnreadCount**(`params?`): `Promise`\<`number`\>
 
 Returns inbox unread count.
 
@@ -781,20 +923,21 @@ Returns inbox unread count.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `params` | `Object` |
-| `params.onUpdate?` | (`unread_count`: `number`) => `void` |
+##### params?
+
+###### onUpdate?
+
+(`unread_count`) => `void`
 
 #### Returns
 
 `Promise`\<`number`\>
 
-___
+***
 
-### getInboxMessageBody
+### getInboxMessageBody()
 
-▸ **getInboxMessageBody**(`messageGuid`): `Promise`\<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
+> **getInboxMessageBody**(`messageGuid`): `Promise`\<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
 
 Returns the message body of the specified message guid.
 
@@ -802,19 +945,19 @@ Returns the message body of the specified message guid.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `messageGuid` | `string` |
+##### messageGuid
+
+`string`
 
 #### Returns
 
 `Promise`\<[`TInboxMessageBody`](../interfaces/TInboxMessageBody.md)\>
 
-___
+***
 
-### markInboxMessageAsRead
+### markInboxMessageAsRead()
 
-▸ **markInboxMessageAsRead**(`messageGuid`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+> **markInboxMessageAsRead**(`messageGuid`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to mark inbox message with specified guid as read
 
@@ -822,19 +965,19 @@ Requests to mark inbox message with specified guid as read
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `messageGuid` | `string` |
+##### messageGuid
+
+`string`
 
 #### Returns
 
 `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
-___
+***
 
-### markAllInboxMessagesAsRead
+### markAllInboxMessagesAsRead()
 
-▸ **markAllInboxMessagesAsRead**(): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+> **markAllInboxMessagesAsRead**(): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to mark all inbox messages as read
 
@@ -844,11 +987,11 @@ Requests to mark all inbox messages as read
 
 `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
-___
+***
 
-### markUnmarkInboxMessageAsFavorite
+### markUnmarkInboxMessageAsFavorite()
 
-▸ **markUnmarkInboxMessageAsFavorite**(`messageGuid`, `mark`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+> **markUnmarkInboxMessageAsFavorite**(`messageGuid`, `mark`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to mark inbox message with specified guid as favorite. Pass mark true to add message to favorite and false to remove.
 
@@ -856,20 +999,23 @@ Requests to mark inbox message with specified guid as favorite. Pass mark true t
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `messageGuid` | `string` |
-| `mark` | `boolean` |
+##### messageGuid
+
+`string`
+
+##### mark
+
+`boolean`
 
 #### Returns
 
 `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
-___
+***
 
-### deleteInboxMessage
+### deleteInboxMessage()
 
-▸ **deleteInboxMessage**(`messageGuid`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+> **deleteInboxMessage**(`messageGuid`): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to delete inbox message
 
@@ -877,19 +1023,19 @@ Requests to delete inbox message
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `messageGuid` | `string` |
+##### messageGuid
+
+`string`
 
 #### Returns
 
 `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
-___
+***
 
-### deleteAllInboxMessages
+### deleteAllInboxMessages()
 
-▸ **deleteAllInboxMessages**(): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
+> **deleteAllInboxMessages**(): `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
 Requests to delete all inbox messages
 
@@ -899,29 +1045,29 @@ Requests to delete all inbox messages
 
 `Promise`\<[`InboxMarkMessageAction`](../interfaces/InboxMarkMessageAction.md)\>
 
-___
+***
 
-### getTranslations
+### getTranslations()
 
-▸ **getTranslations**(`lang_code`): `Promise`\<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
+> **getTranslations**(`lang_code`): `Promise`\<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
 
 Requests translations for the given language. Returns the object including translation key/translation value pairs. All possible translation keys defined in the back office.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `lang_code` | `string` |
+##### lang\_code
+
+`string`
 
 #### Returns
 
 `Promise`\<[`TGetTranslations`](../interfaces/TGetTranslations.md)\>
 
-___
+***
 
-### reportImpressionEvent
+### reportImpressionEvent()
 
-▸ **reportImpressionEvent**(`«destructured»`): `void`
+> **reportImpressionEvent**(`__namedParameters`): `void`
 
 Reports an impression event for an engagement (when engagement content is displayed to the user).
 Use this method to track when users view engagement content such as inbox messages, popups.
@@ -939,21 +1085,25 @@ _smartico.api.reportImpressionEvent({
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `engagement_uid` | `string` |
-| › `activityType` | `number` |
+##### \_\_namedParameters
+
+###### engagement_uid
+
+`string`
+
+###### activityType
+
+`number`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### reportClickEvent
+### reportClickEvent()
 
-▸ **reportClickEvent**(`«destructured»`): `void`
+> **reportClickEvent**(`__namedParameters`): `void`
 
 Reports a click/action event for an engagement (when user interacts with engagement content).
 Use this method to track when users click on or interact with engagement content such as inbox messages, popups.
@@ -972,22 +1122,29 @@ _smartico.api.reportClickEvent({
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `engagement_uid` | `string` |
-| › `activityType` | `number` |
-| › `action?` | `string` |
+##### \_\_namedParameters
+
+###### engagement_uid
+
+`string`
+
+###### activityType
+
+`number`
+
+###### action?
+
+`string`
 
 #### Returns
 
 `void`
 
-___
+***
 
-### getActivityLog
+### getActivityLog()
 
-▸ **getActivityLog**(`«destructured»`): `Promise`\<[`TActivityLog`](../interfaces/TActivityLog.md)[]\>
+> **getActivityLog**(`__namedParameters`): `Promise`\<[`TActivityLog`](../interfaces/TActivityLog.md)[]\>
 
 Returns the activity log for a user within a specified time range.
 The response includes both points changes and gems/diamonds changes.
@@ -1015,100 +1172,113 @@ _smartico.api.getActivityLog({
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `startTimeSeconds` | `number` |
-| › `endTimeSeconds` | `number` |
-| › `from` | `number` |
-| › `to` | `number` |
-| › `onUpdate?` | (`data`: [`TActivityLog`](../interfaces/TActivityLog.md)[]) => `void` |
+##### \_\_namedParameters
+
+###### startTimeSeconds
+
+`number`
+
+###### endTimeSeconds
+
+`number`
+
+###### from
+
+`number`
+
+###### to
+
+`number`
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TActivityLog`](../interfaces/TActivityLog.md)[]\>
 
-___
+***
 
-### gamePickGetActiveRounds
+### gamePickGetActiveRounds()
 
-▸ **gamePickGetActiveRounds**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
+> **gamePickGetActiveRounds**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
 Returns the active rounds for the specified MatchX or Quiz game.
 Each round includes its events (matches/questions) along with the current user's selections and scores.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
+##### props
+
+[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
-___
+***
 
-### gamePickGetActiveRound
+### gamePickGetActiveRound()
 
-▸ **gamePickGetActiveRound**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickGetActiveRound**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Returns a single active round for the specified MatchX or Quiz game.
 The round includes full event details with the current user's selections.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) |
+##### props
+
+[`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md)
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
-___
+***
 
-### gamePickGetHistory
+### gamePickGetHistory()
 
-▸ **gamePickGetHistory**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
+> **gamePickGetHistory**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
 Returns the history of all rounds (including resolved ones) for the specified MatchX or Quiz game.
 Each round contains full event details with results and the current user's predictions.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
+##### props
+
+[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
-___
+***
 
-### gamePickGetBoard
+### gamePickGetBoard()
 
-▸ **gamePickGetBoard**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
+> **gamePickGetBoard**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
 
 Returns the leaderboard for a specific round within a MatchX or Quiz game.
 Use `round_id = -1` (AllRoundsGameBoardID) to get the season/overall leaderboard across all rounds.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) |
+##### props
+
+[`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md)
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
 
-___
+***
 
-### gamePickSubmitSelection
+### gamePickSubmitSelection()
 
-▸ **gamePickSubmitSelection**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickSubmitSelection**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Submits score predictions for a round in a MatchX game.
 Sends the round object with user selections for all events at once.
@@ -1118,19 +1288,19 @@ Predictions can be edited until each match starts (if `allow_edit_answers` is en
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & \{ `round`: `Partial`\<[`GamePickRound`](../interfaces/GamePickRound.md)\>  } |
+##### props
+
+[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & `object`
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
-___
+***
 
-### gamePickSubmitSelectionQuiz
+### gamePickSubmitSelectionQuiz()
 
-▸ **gamePickSubmitSelectionQuiz**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickSubmitSelectionQuiz**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Submits answers for a round in a Quiz game.
 Sends the round object with user answers for all events at once.
@@ -1140,19 +1310,19 @@ Answers can be edited until each match starts (if `allow_edit_answers` is enable
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & \{ `round`: `Partial`\<[`GamePickRound`](../interfaces/GamePickRound.md)\>  } |
+##### props
+
+[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & `object`
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
-___
+***
 
-### gamePickGetUserInfo
+### gamePickGetUserInfo()
 
-▸ **gamePickGetUserInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickUserInfo`](../interfaces/GamePickUserInfo.md)\>\>
+> **gamePickGetUserInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickUserInfo`](../interfaces/GamePickUserInfo.md)\>\>
 
 Returns the current user's profile information within the specified MatchX or Quiz game.
 The user record is synced from the Smartico platform into the games DB (synced every 1 minute).
@@ -1160,38 +1330,38 @@ If the user doesn't exist in the games DB yet, it will be created automatically 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
+##### props
+
+[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickUserInfo`](../interfaces/GamePickUserInfo.md)\>\>
 
-___
+***
 
-### gamePickGetGameInfo
+### gamePickGetGameInfo()
 
-▸ **gamePickGetGameInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickGameInfo`](../interfaces/GamePickGameInfo.md)\>\>
+> **gamePickGetGameInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickGameInfo`](../interfaces/GamePickGameInfo.md)\>\>
 
 Returns the game configuration and the list of all rounds for the specified MatchX or Quiz game.
 Includes the SAW template definition, label settings, and round metadata (without events).
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) |
+##### props
+
+[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickGameInfo`](../interfaces/GamePickGameInfo.md)\>\>
 
-___
+***
 
-### gamePickGetRoundInfoForUser
+### gamePickGetRoundInfoForUser()
 
-▸ **gamePickGetRoundInfoForUser**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickGetRoundInfoForUser**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Returns round data with events and picks for a specific user (identified by their internal user ID).
 Useful for viewing another user's predictions from the leaderboard.
@@ -1199,19 +1369,133 @@ The `int_user_id` can be obtained from the `gamePickGetBoard` response (`users[]
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | [`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) & \{ `int_user_id`: `number`  } |
+##### props
+
+[`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) & `object`
 
 #### Returns
 
 `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
-___
+***
 
-### jackpotGet
+### getAvatarsList()
 
-▸ **jackpotGet**(`filter?`): `Promise`\<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
+> **getAvatarsList**(): `Promise`\<[`TAvatarDefinition`](../interfaces/TAvatarDefinition.md)[]\>
+
+Returns the list of avatars available in the catalog for the current user.
+The response includes both free avatars and earned/purchased ones.
+Avatars with `hide_until_achieved = true` and `is_given = false` should be hidden from the user.
+The result is cached for 30 seconds.
+
+**Example**:
+```
+_smartico.api.getAvatarsList().then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Returns
+
+`Promise`\<[`TAvatarDefinition`](../interfaces/TAvatarDefinition.md)[]\>
+
+***
+
+### getAvatarsCustomized()
+
+> **getAvatarsCustomized**(): `Promise`\<[`TAvatarCustomized`](../interfaces/TAvatarCustomized.md)[]\>
+
+Returns the list of AI-customized avatars for the current user.
+Each entry represents a previously generated AI customization for a specific base avatar.
+The result is cached for 30 seconds.
+
+**Example**:
+```
+_smartico.api.getAvatarsCustomized().then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Returns
+
+`Promise`\<[`TAvatarCustomized`](../interfaces/TAvatarCustomized.md)[]\>
+
+***
+
+### getAvatarPrompts()
+
+> **getAvatarPrompts**(): `Promise`\<[`TAvatarPrompt`](../interfaces/TAvatarPrompt.md)[]\>
+
+Returns the list of AI customization prompts (styles) available for avatar customization.
+Each prompt represents a visual style that can be applied to a base avatar.
+The result is cached for 30 seconds.
+
+**Example**:
+```
+_smartico.api.getAvatarPrompts().then((result) => {
+     console.log(result);
+});
+```
+
+**Visitor mode: not supported**
+
+#### Returns
+
+`Promise`\<[`TAvatarPrompt`](../interfaces/TAvatarPrompt.md)[]\>
+
+***
+
+### setAvatar()
+
+> **setAvatar**(`props`): `Promise`\<[`TSetAvatarResult`](../interfaces/TSetAvatarResult.md)\>
+
+Sets the specified avatar as the active avatar for the current user.
+Pass `avatar_url` (the `TAvatarDefinition.url` path or a CDN URL for AI-customized avatars)
+and `avatar_real_id` from the avatar catalog.
+After a successful call, the avatar list cache is cleared so the next `getAvatarsList()` call reflects `is_in_use`.
+
+**Example**:
+```
+_smartico.api.getAvatarsList().then((avatars) => {
+     const avatar = avatars.find((a) => !a.hide_until_achieved || a.is_given);
+     if (avatar) {
+         _smartico.api.setAvatar({
+             avatar_url: avatar.url,
+             avatar_real_id: avatar.avatar_real_id,
+         }).then((result) => {
+             console.log(result);
+         });
+     }
+});
+```
+
+**Visitor mode: not supported**
+
+#### Parameters
+
+##### props
+
+###### avatar_url
+
+`string`
+
+###### avatar_real_id
+
+`number`
+
+#### Returns
+
+`Promise`\<[`TSetAvatarResult`](../interfaces/TSetAvatarResult.md)\>
+
+***
+
+### jackpotGet()
+
+> **jackpotGet**(`filter?`): `Promise`\<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
 
 Returns list of Jackpots that are active in the system and matching to the filter definition.
 If filter is not provided, all active jackpots will be returned.
@@ -1234,21 +1518,25 @@ _smartico.vapi('EN').jackpotGet({ related_game_id: 'wooko-slot' }).then((result)
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `filter?` | `Object` |
-| `filter.related_game_id?` | `string` |
-| `filter.jp_template_id?` | `number` |
+##### filter?
+
+###### related_game_id?
+
+`string`
+
+###### jp_template_id?
+
+`number`
 
 #### Returns
 
 `Promise`\<[`JackpotDetails`](../interfaces/JackpotDetails.md)[]\>
 
-___
+***
 
-### jackpotOptIn
+### jackpotOptIn()
 
-▸ **jackpotOptIn**(`filter`): `Promise`\<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
+> **jackpotOptIn**(`filter`): `Promise`\<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
 
 Opt-in currently logged in user to the jackpot with the specified jp_template_id.
 You may call jackpotGet method after doing optin to see that user is opted in to the jackpot.
@@ -1264,20 +1552,21 @@ _smartico.api.jackpotOptIn({ jp_template_id: 123 }).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `filter` | `Object` |
-| `filter.jp_template_id` | `number` |
+##### filter
+
+###### jp_template_id
+
+`number`
 
 #### Returns
 
 `Promise`\<[`JackpotsOptinResponse`](../interfaces/JackpotsOptinResponse.md)\>
 
-___
+***
 
-### jackpotOptOut
+### jackpotOptOut()
 
-▸ **jackpotOptOut**(`filter`): `Promise`\<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
+> **jackpotOptOut**(`filter`): `Promise`\<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
 
 Opt-out currently logged in user from the jackpot with the specified jp_template_id.
 You may call jackpotGet method after doing optout to see that user is not opted in to the jackpot.
@@ -1293,20 +1582,21 @@ _smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `filter` | `Object` |
-| `filter.jp_template_id` | `number` |
+##### filter
+
+###### jp_template_id
+
+`number`
 
 #### Returns
 
 `Promise`\<[`JackpotsOptoutResponse`](../interfaces/JackpotsOptoutResponse.md)\>
 
-___
+***
 
-### getJackpotWinners
+### getJackpotWinners()
 
-▸ **getJackpotWinners**(`«destructured»`): `Promise`\<[`JackpotWinnerHistory`](../interfaces/JackpotWinnerHistory.md)[]\>
+> **getJackpotWinners**(`__namedParameters`): `Promise`\<[`JackpotWinnerHistory`](../interfaces/JackpotWinnerHistory.md)[]\>
 
 Returns jackpot winners for the given `jp_template_id` (paginated on the server).
 Default page size on the wire is 20; use `limit`, `offset`, and repeated calls to load more.
@@ -1325,22 +1615,29 @@ _smartico.api.getJackpotWinners({
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `limit?` | `number` |
-| › `offset?` | `number` |
-| › `jp_template_id?` | `number` |
+##### \_\_namedParameters
+
+###### limit?
+
+`number`
+
+###### offset?
+
+`number`
+
+###### jp_template_id?
+
+`number`
 
 #### Returns
 
 `Promise`\<[`JackpotWinnerHistory`](../interfaces/JackpotWinnerHistory.md)[]\>
 
-___
+***
 
-### getJackpotEligibleGames
+### getJackpotEligibleGames()
 
-▸ **getJackpotEligibleGames**(`«destructured»`): `Promise`\<[`TGetJackpotEligibleGamesResponse`](../interfaces/TGetJackpotEligibleGamesResponse.md)\>
+> **getJackpotEligibleGames**(`__namedParameters`): `Promise`\<[`TGetJackpotEligibleGamesResponse`](../interfaces/TGetJackpotEligibleGamesResponse.md)\>
 
 Returns the eligible games for the jackpot with the specified jp_template_id.
 
@@ -1355,21 +1652,25 @@ _smartico.api.getJackpotEligibleGames({ jp_template_id: 123 }).then((result) => 
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `jp_template_id` | `number` |
-| › `onUpdate?` | () => `void` |
+##### \_\_namedParameters
+
+###### jp_template_id
+
+`number`
+
+###### onUpdate?
+
+() => `void`
 
 #### Returns
 
 `Promise`\<[`TGetJackpotEligibleGamesResponse`](../interfaces/TGetJackpotEligibleGamesResponse.md)\>
 
-___
+***
 
-### getRelatedItemsForGame
+### getRelatedItemsForGame()
 
-▸ **getRelatedItemsForGame**(`related_game_id`): `Promise`\<[`GetRelatedAchTourResponse`](../interfaces/GetRelatedAchTourResponse.md)\>
+> **getRelatedItemsForGame**(`related_game_id`): `Promise`\<[`GetRelatedAchTourResponse`](../interfaces/GetRelatedAchTourResponse.md)\>
 
 Returns all the related tournaments and missions for the provided game id for the current user
 The provided Game ID should correspond to the ID from the Games Catalog - https://help.smartico.ai/welcome/technical-guides/games-catalog-api
@@ -1390,19 +1691,19 @@ _smartico.vapi('EN').getRelatedItemsForGame('gold-slot2').then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `related_game_id` | `string` |
+##### related\_game\_id
+
+`string`
 
 #### Returns
 
 `Promise`\<[`GetRelatedAchTourResponse`](../interfaces/GetRelatedAchTourResponse.md)\>
 
-___
+***
 
-### getRaffles
+### getRaffles()
 
-▸ **getRaffles**(`«destructured»?`): `Promise`\<[`TRaffle`](../interfaces/TRaffle.md)[]\>
+> **getRaffles**(`__namedParameters?`): `Promise`\<[`TRaffle`](../interfaces/TRaffle.md)[]\>
 
 Returns the list of Raffles available for user
 The returned list of Raffles is cached for 30 seconds. But you can pass the onUpdate callback as a parameter. Note that each time you call getRaffles with a new onUpdate callback, the old one will be overwritten by the new one.
@@ -1426,20 +1727,21 @@ _smartico.vapi('EN').getRaffles().then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `«destructured»` | `Object` |
-| › `onUpdate?` | (`data`: [`TRaffle`](../interfaces/TRaffle.md)[]) => `void` |
+##### \_\_namedParameters?
+
+###### onUpdate?
+
+(`data`) => `void`
 
 #### Returns
 
 `Promise`\<[`TRaffle`](../interfaces/TRaffle.md)[]\>
 
-___
+***
 
-### getRaffleDrawRun
+### getRaffleDrawRun()
 
-▸ **getRaffleDrawRun**(`props`): `Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
+> **getRaffleDrawRun**(`props`): `Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
 
 Returns draw run for provided raffle_id and run_id.
 You can pass winners_from and winners_to parameters to get a specific range of winners. Default is 0-20.
@@ -1462,23 +1764,33 @@ _smartico.vapi('EN').getRaffleDrawRun({ raffle_id: 156, run_id: 145 }).then((res
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | `Object` |
-| `props.raffle_id` | `number` |
-| `props.run_id` | `number` |
-| `props.winners_from?` | `number` |
-| `props.winners_to?` | `number` |
+##### props
+
+###### raffle_id
+
+`number`
+
+###### run_id
+
+`number`
+
+###### winners_from?
+
+`number`
+
+###### winners_to?
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TRaffleDraw`](../interfaces/TRaffleDraw.md)\>
 
-___
+***
 
-### getRaffleDrawRunsHistory
+### getRaffleDrawRunsHistory()
 
-▸ **getRaffleDrawRunsHistory**(`props`): `Promise`\<[`TRaffleDrawRun`](../interfaces/TRaffleDrawRun.md)[]\>
+> **getRaffleDrawRunsHistory**(`props`): `Promise`\<[`TRaffleDrawRun`](../interfaces/TRaffleDrawRun.md)[]\>
 
 Returns history of draw runs for the provided raffle_id and draw_id, if the draw_id is not provided will return history of all the draws for the provided raffle_id
 
@@ -1500,21 +1812,25 @@ _smartico.vapi('EN').getRaffleDrawRunsHistory({ raffle_id: 156, draw_id: 432 }).
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | `Object` |
-| `props.raffle_id` | `number` |
-| `props.draw_id?` | `number` |
+##### props
+
+###### raffle_id
+
+`number`
+
+###### draw_id?
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TRaffleDrawRun`](../interfaces/TRaffleDrawRun.md)[]\>
 
-___
+***
 
-### claimRafflePrize
+### claimRafflePrize()
 
-▸ **claimRafflePrize**(`props`): `Promise`\<[`TransformedRaffleClaimPrizeResponse`](../interfaces/TransformedRaffleClaimPrizeResponse.md)\>
+> **claimRafflePrize**(`props`): `Promise`\<[`TransformedRaffleClaimPrizeResponse`](../interfaces/TransformedRaffleClaimPrizeResponse.md)\>
 
 Returns `err_code` and `err_message` after the call; `err_code` 0 means the request succeeded.
 
@@ -1536,20 +1852,21 @@ _smartico.vapi('EN').claimRafflePrize({ won_id: 251 }).then((result) => {
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | `Object` |
-| `props.won_id` | `number` |
+##### props
+
+###### won_id
+
+`number`
 
 #### Returns
 
 `Promise`\<[`TransformedRaffleClaimPrizeResponse`](../interfaces/TransformedRaffleClaimPrizeResponse.md)\>
 
-___
+***
 
-### requestRaffleOptin
+### requestRaffleOptin()
 
-▸ **requestRaffleOptin**(`props`): `Promise`\<[`TRaffleOptinResponse`](../interfaces/TRaffleOptinResponse.md)\>
+> **requestRaffleOptin**(`props`): `Promise`\<[`TRaffleOptinResponse`](../interfaces/TRaffleOptinResponse.md)\>
 
 Requests an opt-in for the specified raffle. Returns the err_code.
 
@@ -1557,12 +1874,19 @@ Requests an opt-in for the specified raffle. Returns the err_code.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `props` | `Object` |
-| `props.raffle_id` | `number` |
-| `props.draw_id` | `number` |
-| `props.raffle_run_id` | `number` |
+##### props
+
+###### raffle_id
+
+`number`
+
+###### draw_id
+
+`number`
+
+###### raffle_run_id
+
+`number`
 
 #### Returns
 

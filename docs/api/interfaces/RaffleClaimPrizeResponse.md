@@ -1,57 +1,55 @@
 # Interface: RaffleClaimPrizeResponse
 
-## Hierarchy
+## Extends
 
 - `ProtocolResponse`
-
-  ↳ **`RaffleClaimPrizeResponse`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolResponse.cid
+`ProtocolResponse.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolResponse.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolResponse.uuid
+`ProtocolResponse.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolResponse.uuid`
+
+***
 
 ### errCode
 
-• **errCode**: `number`
+> **errCode**: `number`
 
 #### Overrides
 
-ProtocolResponse.errCode
+`ProtocolResponse.errCode`
 
-___
+***
 
-### errMsg
+### errMsg?
 
-• `Optional` **errMsg**: `string`
+> `optional` **errMsg?**: `string`
 
 #### Overrides
 
-ProtocolResponse.errMsg
+`ProtocolResponse.errMsg`

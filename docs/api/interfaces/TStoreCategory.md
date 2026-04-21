@@ -6,22 +6,22 @@ TStoreCategory describes the store category item. Each store item can be assigne
 
 ### id
 
-• **id**: `number`
+> **id**: `number`
 
 ID of the store category
 
-___
+***
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
 Name of the store category
 
-___
+***
 
 ### order
 
-• **order**: `number`
+> **order**: `number`
 
 Order of the store category among other categories. Default value is 1

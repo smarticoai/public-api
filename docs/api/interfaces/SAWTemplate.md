@@ -4,151 +4,158 @@
 
 ### saw\_template\_id
 
-• **saw\_template\_id**: `number`
+> **saw\_template\_id**: `number`
 
-___
+***
 
 ### saw\_game\_type\_id
 
-• **saw\_game\_type\_id**: [`SAWGameType`](../enums/SAWGameType.md)
+> **saw\_game\_type\_id**: [`SAWGameType`](../enumerations/SAWGameType.md)
 
-___
+***
 
 ### saw\_template\_ui\_definition
 
-• **saw\_template\_ui\_definition**: [`SAWTemplateUI`](SAWTemplateUI.md)
+> **saw\_template\_ui\_definition**: [`SAWTemplateUI`](SAWTemplateUI.md)
 
-___
+***
 
 ### saw\_buyin\_type\_id
 
-• **saw\_buyin\_type\_id**: [`SAWBuyInType`](../enums/SAWBuyInType.md)
+> **saw\_buyin\_type\_id**: [`SAWBuyInType`](../enumerations/SAWBuyInType.md)
 
-___
+***
 
-### buyin\_cost\_points
+### buyin\_cost\_points?
 
-• `Optional` **buyin\_cost\_points**: `number`
+> `optional` **buyin\_cost\_points?**: `number`
 
-___
+***
 
 ### visibile\_when\_can\_spin
 
-• **visibile\_when\_can\_spin**: `boolean`
+> **visibile\_when\_can\_spin**: `boolean`
 
-___
+***
 
-### spin\_count
+### spin\_count?
 
-• `Optional` **spin\_count**: `number`
+> `optional` **spin\_count?**: `number`
 
-___
+***
 
 ### prizes
 
-• **prizes**: [`SAWPrize`](SAWPrize.md)[]
+> **prizes**: [`SAWPrize`](SAWPrize.md)[]
 
-___
+***
 
 ### is\_visible
 
-• **is\_visible**: `boolean`
+> **is\_visible**: `boolean`
 
-___
+***
 
-### activeFromDate
+### activeFromDate?
 
-• `Optional` **activeFromDate**: `number`
+> `optional` **activeFromDate?**: `number`
 
-___
+***
 
-### activeTillDate
+### activeTillDate?
 
-• `Optional` **activeTillDate**: `number`
+> `optional` **activeTillDate?**: `number`
 
-___
+***
 
 ### jackpot\_add\_on\_attempt
 
-• **jackpot\_add\_on\_attempt**: `number`
+> **jackpot\_add\_on\_attempt**: `number`
 
-___
+***
 
 ### jackpot\_current
 
-• **jackpot\_current**: `number`
+> **jackpot\_current**: `number`
 
-___
+***
 
 ### jackpot\_guaranteed
 
-• **jackpot\_guaranteed**: `number`
+> **jackpot\_guaranteed**: `number`
 
-___
+***
 
 ### maxActiveSpinsAllowed
 
-• **maxActiveSpinsAllowed**: `number`
+> **maxActiveSpinsAllowed**: `number`
 
-___
+***
 
 ### maxSpinsCount
 
-• **maxSpinsCount**: `number`
+> **maxSpinsCount**: `number`
 
-___
+***
 
 ### maxSpinsPediodMs
 
-• **maxSpinsPediodMs**: `number`
+> **maxSpinsPediodMs**: `number`
 
-___
+***
 
-### next\_available\_spin\_ts
+### next\_available\_spin\_ts?
 
-• `Optional` **next\_available\_spin\_ts**: `number`
+> `optional` **next\_available\_spin\_ts?**: `number`
 
-___
+***
 
 ### saw\_skin\_key
 
-• **saw\_skin\_key**: `string`
+> **saw\_skin\_key**: `string`
 
-___
+***
 
 ### saw\_skin\_ui\_definition
 
-• **saw\_skin\_ui\_definition**: `Object`
+> **saw\_skin\_ui\_definition**: `object`
 
-#### Type declaration
+#### skin\_folder
 
-| Name | Type |
-| :------ | :------ |
-| `skin_folder` | `string` |
-| `skin_css` | `string` |
-| `use_new_popups?` | `boolean` |
-| `lottie_animation_speed?` | `number` |
+> **skin\_folder**: `string`
 
-___
+#### skin\_css
 
-### expose\_game\_stat\_on\_api
+> **skin\_css**: `string`
 
-• `Optional` **expose\_game\_stat\_on\_api**: `boolean`
+#### use\_new\_popups?
 
-___
+> `optional` **use\_new\_popups?**: `boolean`
 
-### requires\_prize\_claim
+#### lottie\_animation\_speed?
 
-• `Optional` **requires\_prize\_claim**: `boolean`
+> `optional` **lottie\_animation\_speed?**: `number`
 
-___
+***
 
-### relative\_period\_timezone
+### expose\_game\_stat\_on\_api?
 
-• `Optional` **relative\_period\_timezone**: `number`
+> `optional` **expose\_game\_stat\_on\_api?**: `boolean`
 
-___
+***
 
-### show\_prize\_history
+### requires\_prize\_claim?
 
-• `Optional` **show\_prize\_history**: `boolean`
+> `optional` **requires\_prize\_claim?**: `boolean`
+
+***
+
+### relative\_period\_timezone?
+
+> `optional` **relative\_period\_timezone?**: `number`
+
+***
+
+### show\_prize\_history?
+
+> `optional` **show\_prize\_history?**: `boolean`

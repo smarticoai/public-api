@@ -4,14 +4,14 @@
 
 ### errorCode
 
-• **errorCode**: `number`
+> **errorCode**: `number`
 
 Error code, 0 means no error
 
-___
+***
 
-### errorMessage
+### errorMessage?
 
-• `Optional` **errorMessage**: `string`
+> `optional` **errorMessage?**: `string`
 
 Error message, will be exposed only if ErrorCode is not 0

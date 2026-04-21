@@ -4,10 +4,10 @@
 
 ### place
 
-• **place**: `number`
+> **place**: `number`
 
-___
+***
 
 ### points
 
-• **points**: `number`
+> **points**: `number`

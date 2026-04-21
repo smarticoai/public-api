@@ -2,32 +2,32 @@
 
 GamesApiResponse is the standard response wrapper for all GamePick/Quiz API calls
 
-## Type parameters
+## Type Parameters
 
-| Name |
-| :------ |
-| `T` |
+### T
+
+`T`
 
 ## Properties
 
 ### errCode
 
-• **errCode**: `number`
+> **errCode**: `number`
 
 Error code: 0 on success, non-zero on failure
 
-___
+***
 
-### errMessage
+### errMessage?
 
-• `Optional` **errMessage**: `string`
+> `optional` **errMessage?**: `string`
 
 Human-readable error message when errCode is non-zero
 
-___
+***
 
-### data
+### data?
 
-• `Optional` **data**: `T`
+> `optional` **data?**: `T`
 
 Response payload, present on success

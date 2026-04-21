@@ -1,55 +1,53 @@
 # Interface: SAWEventSawPush
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`SAWEventSawPush`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### pending\_message\_id
 
-• **pending\_message\_id**: `number`
+> **pending\_message\_id**: `number`
 
-___
+***
 
 ### saw\_template\_id
 
-• **saw\_template\_id**: `number`
+> **saw\_template\_id**: `number`
 
-___
+***
 
 ### saw\_game\_type\_id
 
-• **saw\_game\_type\_id**: [`SAWGameType`](../enums/SAWGameType.md)
+> **saw\_game\_type\_id**: [`SAWGameType`](../enumerations/SAWGameType.md)

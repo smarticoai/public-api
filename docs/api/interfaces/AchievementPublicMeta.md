@@ -2,132 +2,132 @@
 
 ## Properties
 
-### sub\_header
+### sub\_header?
 
-• `Optional` **sub\_header**: `string`
+> `optional` **sub\_header?**: `string`
 
-___
+***
 
-### description
+### description?
 
-• `Optional` **description**: `string`
+> `optional` **description?**: `string`
 
-___
+***
 
-### unlock\_mission\_description
+### unlock\_mission\_description?
 
-• `Optional` **unlock\_mission\_description**: `string`
+> `optional` **unlock\_mission\_description?**: `string`
 
-___
+***
 
-### custom\_data
+### custom\_data?
 
-• `Optional` **custom\_data**: `string`
+> `optional` **custom\_data?**: `string`
 
-___
+***
 
-### cta\_text
+### cta\_text?
 
-• `Optional` **cta\_text**: `string`
+> `optional` **cta\_text?**: `string`
 
-___
+***
 
-### cta\_action
+### cta\_action?
 
-• `Optional` **cta\_action**: `string`
+> `optional` **cta\_action?**: `string`
 
-___
+***
 
-### label\_tag
+### label\_tag?
 
-• `Optional` **label\_tag**: `string`
+> `optional` **label\_tag?**: `string`
 
-___
+***
 
-### custom\_label\_tag
+### custom\_label\_tag?
 
-• `Optional` **custom\_label\_tag**: `string`
+> `optional` **custom\_label\_tag?**: `string`
 
-___
+***
 
-### reward
+### reward?
 
-• `Optional` **reward**: `string`
+> `optional` **reward?**: `string`
 
-___
+***
 
-### image\_url
+### image\_url?
 
-• `Optional` **image\_url**: `string`
+> `optional` **image\_url?**: `string`
 
-___
+***
 
-### name
+### name?
 
-• `Optional` **name**: `string`
+> `optional` **name?**: `string`
 
-___
+***
 
-### position
+### position?
 
-• `Optional` **position**: `number`
+> `optional` **position?**: `number`
 
-___
+***
 
-### hide\_tasks
+### hide\_tasks?
 
-• `Optional` **hide\_tasks**: `boolean`
+> `optional` **hide\_tasks?**: `boolean`
 
-___
+***
 
-### hide\_locked\_mission
+### hide\_locked\_mission?
 
-• `Optional` **hide\_locked\_mission**: `boolean`
+> `optional` **hide\_locked\_mission?**: `boolean`
 
-___
+***
 
-### custom\_section\_id
+### custom\_section\_id?
 
-• `Optional` **custom\_section\_id**: `number`
+> `optional` **custom\_section\_id?**: `number`
 
-___
+***
 
-### only\_in\_custom\_section
+### only\_in\_custom\_section?
 
-• `Optional` **only\_in\_custom\_section**: `boolean`
+> `optional` **only\_in\_custom\_section?**: `boolean`
 
-___
+***
 
-### hint\_text
+### hint\_text?
 
-• `Optional` **hint\_text**: `string`
+> `optional` **hint\_text?**: `string`
 
-___
+***
 
-### hide\_badge\_from\_ui
+### hide\_badge\_from\_ui?
 
-• `Optional` **hide\_badge\_from\_ui**: `boolean`
+> `optional` **hide\_badge\_from\_ui?**: `boolean`
 
-___
+***
 
-### show\_badge\_first\_task\_completed
+### show\_badge\_first\_task\_completed?
 
-• `Optional` **show\_badge\_first\_task\_completed**: `boolean`
+> `optional` **show\_badge\_first\_task\_completed?**: `boolean`
 
-___
+***
 
-### custom\_section\_type\_id
+### custom\_section\_type\_id?
 
-• `Optional` **custom\_section\_type\_id**: `number`
+> `optional` **custom\_section\_type\_id?**: `number`
 
-___
+***
 
-### claim\_button\_title
+### claim\_button\_title?
 
-• `Optional` **claim\_button\_title**: `string`
+> `optional` **claim\_button\_title?**: `string`
 
-___
+***
 
-### claim\_button\_action
+### claim\_button\_action?
 
-• `Optional` **claim\_button\_action**: `string`
+> `optional` **claim\_button\_action?**: `string`

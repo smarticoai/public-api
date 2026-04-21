@@ -4,46 +4,46 @@
 
 ### id
 
-• **id**: `number`
+> **id**: `number`
 
-___
+***
 
 ### itemTypeId
 
-• **itemTypeId**: [`StoreItemType`](../enums/StoreItemType.md)
+> **itemTypeId**: [`StoreItemType`](../enumerations/StoreItemType.md)
 
-___
+***
 
 ### itemPublicMeta
 
-• **itemPublicMeta**: [`StoreItemPublicMeta`](StoreItemPublicMeta.md)
+> **itemPublicMeta**: [`StoreItemPublicMeta`](StoreItemPublicMeta.md)
 
-___
+***
 
-### categoryIds
+### categoryIds?
 
-• `Optional` **categoryIds**: `number`[]
+> `optional` **categoryIds?**: `number`[]
 
-___
+***
 
-### canBuy
+### canBuy?
 
-• `Optional` **canBuy**: `boolean`
+> `optional` **canBuy?**: `boolean`
 
-___
+***
 
 ### shopPool
 
-• **shopPool**: `number`
+> **shopPool**: `number`
 
-___
+***
 
-### activeTillDate
+### activeTillDate?
 
-• `Optional` **activeTillDate**: `number`
+> `optional` **activeTillDate?**: `number`
 
-___
+***
 
-### relatedGames
+### relatedGames?
 
-• `Optional` **relatedGames**: [`AchRelatedGame`](AchRelatedGame.md)[]
+> `optional` **relatedGames?**: [`AchRelatedGame`](AchRelatedGame.md)[]

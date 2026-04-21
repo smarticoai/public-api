@@ -1,67 +1,65 @@
 # Interface: GetCustomSectionsResponse
 
-## Hierarchy
+## Extends
 
 - `ProtocolResponse`
-
-  ↳ **`GetCustomSectionsResponse`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolResponse.cid
+`ProtocolResponse.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolResponse.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolResponse.uuid
+`ProtocolResponse.ts`
 
-___
+***
 
-### errCode
+### uuid?
 
-• `Optional` **errCode**: `number`
-
-#### Inherited from
-
-ProtocolResponse.errCode
-
-___
-
-### errMsg
-
-• `Optional` **errMsg**: `string`
+> `optional` **uuid?**: `string`
 
 #### Inherited from
 
-ProtocolResponse.errMsg
+`ProtocolResponse.uuid`
 
-___
+***
+
+### errCode?
+
+> `optional` **errCode?**: `number`
+
+#### Inherited from
+
+`ProtocolResponse.errCode`
+
+***
+
+### errMsg?
+
+> `optional` **errMsg?**: `string`
+
+#### Inherited from
+
+`ProtocolResponse.errMsg`
+
+***
 
 ### customSections
 
-• **customSections**: `Object`
+> **customSections**: `object`
 
-#### Index signature
+#### Index Signature
 
-▪ [key: `string`]: [`UICustomSection`](UICustomSection.md)
+\[`key`: `string`\]: [`UICustomSection`](UICustomSection.md)

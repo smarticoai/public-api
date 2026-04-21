@@ -6,38 +6,38 @@ TMiniGamePlayBatchResult describes the response of call to _smartico.api.playMin
 
 ### saw\_prize\_id
 
-• **saw\_prize\_id**: `number`
+> **saw\_prize\_id**: `number`
 
 The saw_prize_id that user won, details of the prize can be found in the mini-game definition
 
-___
+***
 
 ### errCode
 
-• **errCode**: [`SAWSpinErrorCode`](../enums/SAWSpinErrorCode.md)
+> **errCode**: [`SAWSpinErrorCode`](../enumerations/SAWSpinErrorCode.md)
 
 Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0
 
-___
+***
 
-### errMessage
+### errMessage?
 
-• `Optional` **errMessage**: `string`
+> `optional` **errMessage?**: `string`
 
 Optional error message
 
-___
+***
 
-### jackpot\_amount
+### jackpot\_amount?
 
-• `Optional` **jackpot\_amount**: `number`
+> `optional` **jackpot\_amount?**: `number`
 
 Jackpot amount what user won
 
-___
+***
 
-### first\_spin\_in\_period
+### first\_spin\_in\_period?
 
-• `Optional` **first\_spin\_in\_period**: `number`
+> `optional` **first\_spin\_in\_period?**: `number`
 
 Period in miliseconds from last spin

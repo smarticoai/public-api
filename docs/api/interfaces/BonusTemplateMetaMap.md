@@ -4,22 +4,22 @@
 
 ### description
 
-• **description**: `string`
+> **description**: `string`
 
-___
+***
 
 ### acknowledge
 
-• **acknowledge**: `string`
+> **acknowledge**: `string`
 
-___
+***
 
 ### image\_url
 
-• **image\_url**: `string`
+> **image\_url**: `string`
 
-___
+***
 
-### redirect\_url
+### redirect\_url?
 
-• `Optional` **redirect\_url**: `string`
+> `optional` **redirect\_url?**: `string`

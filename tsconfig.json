@@ -26,6 +26,7 @@
 			"src/Tournaments/TournamentPlayer.ts",
 			"src/Tournaments/TournamentPrize.ts",
 			"src/Tournaments/GetTournamentInfoResponse.ts",
+			"src/Tournaments/TournamentClan.ts",
 			"src/Bonuses/BonusStatus.ts",
 			"src/Bonuses/Bonus.ts",
 			"src/Bonuses/BonusMetaMap.ts",
@@ -70,13 +71,13 @@
 		],
 		"out": "docs/api",
 		"plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],
-		"entryDocument": "README.md",
+		"entryFileName": "README.md",
 		"disableSources": true,
 		"excludePrivate": true,
 		"readme": "none",
 		"cleanOutputDir": true,
 		"hideBreadcrumbs": true,
-		"hideInPageTOC": true,
+		"hidePageHeader": true,
 		"sort": "source-order"
 	}
 }

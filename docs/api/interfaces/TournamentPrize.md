@@ -4,52 +4,52 @@
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
-___
+***
 
 ### description
 
-• **description**: `string`
+> **description**: `string`
 
-___
+***
 
 ### image\_url
 
-• **image\_url**: `string`
+> **image\_url**: `string`
 
-___
+***
 
 ### place\_from
 
-• **place\_from**: `number`
+> **place\_from**: `number`
 
-___
+***
 
 ### place\_to
 
-• **place\_to**: `number`
+> **place\_to**: `number`
 
-___
+***
 
 ### type
 
-• **type**: [`ActivityTypeLimited`](../enums/ActivityTypeLimited.md)
+> **type**: [`ActivityTypeLimited`](../enumerations/ActivityTypeLimited.md)
 
-___
+***
 
 ### points
 
-• **points**: `number`
+> **points**: `number`
 
-___
+***
 
 ### gems
 
-• **gems**: `number`
+> **gems**: `number`
 
-___
+***
 
 ### diamonds
 
-• **diamonds**: `number`
+> **diamonds**: `number`

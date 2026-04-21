@@ -2,6 +2,6 @@
 
 ## Properties
 
-### uiAmount
+### uiAmount?
 
-• `Optional` **uiAmount**: `string`
+> `optional` **uiAmount?**: `string`

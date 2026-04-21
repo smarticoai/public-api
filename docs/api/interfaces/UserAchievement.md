@@ -2,204 +2,204 @@
 
 ## Properties
 
-### ach\_id
+### ach\_id?
 
-• `Optional` **ach\_id**: `number`
+> `optional` **ach\_id?**: `number`
 
-___
+***
 
-### ach\_type\_id
+### ach\_type\_id?
 
-• `Optional` **ach\_type\_id**: [`AchievementType`](../enums/AchievementType.md)
+> `optional` **ach\_type\_id?**: [`AchievementType`](../enumerations/AchievementType.md)
 
-___
+***
 
-### ach\_public\_meta
+### ach\_public\_meta?
 
-• `Optional` **ach\_public\_meta**: [`AchievementPublicMeta`](AchievementPublicMeta.md)
+> `optional` **ach\_public\_meta?**: [`AchievementPublicMeta`](AchievementPublicMeta.md)
 
-___
+***
 
-### isCompleted
+### isCompleted?
 
-• `Optional` **isCompleted**: `boolean`
+> `optional` **isCompleted?**: `boolean`
 
-___
+***
 
-### isLocked
+### isLocked?
 
-• `Optional` **isLocked**: `boolean`
+> `optional` **isLocked?**: `boolean`
 
-___
+***
 
-### requiresOptin
+### requiresOptin?
 
-• `Optional` **requiresOptin**: `boolean`
+> `optional` **requiresOptin?**: `boolean`
 
-___
+***
 
-### isOptedIn
+### isOptedIn?
 
-• `Optional` **isOptedIn**: `boolean`
+> `optional` **isOptedIn?**: `boolean`
 
-___
+***
 
-### start\_date
+### start\_date?
 
-• `Optional` **start\_date**: `string`
+> `optional` **start\_date?**: `string`
 
-___
+***
 
-### start\_date\_ts
+### start\_date\_ts?
 
-• `Optional` **start\_date\_ts**: `number`
+> `optional` **start\_date\_ts?**: `number`
 
-___
+***
 
-### time\_limit\_ms
+### time\_limit\_ms?
 
-• `Optional` **time\_limit\_ms**: `number`
+> `optional` **time\_limit\_ms?**: `number`
 
-___
+***
 
-### progress
+### progress?
 
-• `Optional` **progress**: `number`
+> `optional` **progress?**: `number`
 
-___
+***
 
-### complete\_date
+### complete\_date?
 
-• `Optional` **complete\_date**: `string`
+> `optional` **complete\_date?**: `string`
 
-___
+***
 
-### complete\_date\_ts
+### complete\_date\_ts?
 
-• `Optional` **complete\_date\_ts**: `number`
+> `optional` **complete\_date\_ts?**: `number`
 
-___
+***
 
-### unlock\_date
+### unlock\_date?
 
-• `Optional` **unlock\_date**: `string`
+> `optional` **unlock\_date?**: `string`
 
-___
+***
 
-### milliseconds\_till\_available
+### milliseconds\_till\_available?
 
-• `Optional` **milliseconds\_till\_available**: `number`
+> `optional` **milliseconds\_till\_available?**: `number`
 
-___
+***
 
-### completed\_tasks
+### completed\_tasks?
 
-• `Optional` **completed\_tasks**: `number`
+> `optional` **completed\_tasks?**: `number`
 
-___
+***
 
-### achievementTasks
+### achievementTasks?
 
-• `Optional` **achievementTasks**: [`UserAchievementTask`](UserAchievementTask.md)[]
+> `optional` **achievementTasks?**: [`UserAchievementTask`](UserAchievementTask.md)[]
 
-___
+***
 
-### next\_recurrence\_date\_ts
+### next\_recurrence\_date\_ts?
 
-• `Optional` **next\_recurrence\_date\_ts**: `number`
+> `optional` **next\_recurrence\_date\_ts?**: `number`
 
-___
+***
 
-### ach\_status\_id
+### ach\_status\_id?
 
-• `Optional` **ach\_status\_id**: [`AchievementStatus`](../enums/AchievementStatus.md)
+> `optional` **ach\_status\_id?**: [`AchievementStatus`](../enumerations/AchievementStatus.md)
 
-___
+***
 
-### scheduledMissionType
+### scheduledMissionType?
 
-• `Optional` **scheduledMissionType**: [`ScheduledMissionType`](../enums/ScheduledMissionType.md)
+> `optional` **scheduledMissionType?**: [`ScheduledMissionType`](../enumerations/ScheduledMissionType.md)
 
-___
+***
 
-### related\_games
+### related\_games?
 
-• `Optional` **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
+> `optional` **related\_games?**: [`AchRelatedGame`](AchRelatedGame.md)[]
 
-___
+***
 
-### active\_from\_ts
+### active\_from\_ts?
 
-• `Optional` **active\_from\_ts**: `number`
+> `optional` **active\_from\_ts?**: `number`
 
-___
+***
 
-### active\_till\_ts
+### active\_till\_ts?
 
-• `Optional` **active\_till\_ts**: `number`
+> `optional` **active\_till\_ts?**: `number`
 
-___
+***
 
-### ach\_categories
+### ach\_categories?
 
-• `Optional` **ach\_categories**: `number`[]
+> `optional` **ach\_categories?**: `number`[]
 
-___
+***
 
-### recurring\_quantity
+### recurring\_quantity?
 
-• `Optional` **recurring\_quantity**: `number`
+> `optional` **recurring\_quantity?**: `number`
 
-___
+***
 
-### completed\_count
+### completed\_count?
 
-• `Optional` **completed\_count**: `number`
+> `optional` **completed\_count?**: `number`
 
-___
+***
 
-### ach\_completed\_id
+### ach\_completed\_id?
 
-• `Optional` **ach\_completed\_id**: `number`
+> `optional` **ach\_completed\_id?**: `number`
 
-___
+***
 
-### requires\_prize\_claim
+### requires\_prize\_claim?
 
-• `Optional` **requires\_prize\_claim**: `boolean`
+> `optional` **requires\_prize\_claim?**: `boolean`
 
-___
+***
 
-### prize\_claimed\_date\_ts
+### prize\_claimed\_date\_ts?
 
-• `Optional` **prize\_claimed\_date\_ts**: `number`
+> `optional` **prize\_claimed\_date\_ts?**: `number`
 
-___
+***
 
-### completed\_today
+### completed\_today?
 
-• `Optional` **completed\_today**: `boolean`
+> `optional` **completed\_today?**: `boolean`
 
-___
+***
 
-### completed\_this\_week
+### completed\_this\_week?
 
-• `Optional` **completed\_this\_week**: `boolean`
+> `optional` **completed\_this\_week?**: `boolean`
 
-___
+***
 
-### completed\_this\_month
+### completed\_this\_month?
 
-• `Optional` **completed\_this\_month**: `boolean`
+> `optional` **completed\_this\_month?**: `boolean`
 
-___
+***
 
-### custom\_section\_type\_id
+### custom\_section\_type\_id?
 
-• `Optional` **custom\_section\_type\_id**: `number`
+> `optional` **custom\_section\_type\_id?**: `number`
 
-___
+***
 
-### badgeTimeLimitState
+### badgeTimeLimitState?
 
-• `Optional` **badgeTimeLimitState**: [`BadgesTimeLimitStates`](../enums/BadgesTimeLimitStates.md)
+> `optional` **badgeTimeLimitState?**: [`BadgesTimeLimitStates`](../enumerations/BadgesTimeLimitStates.md)

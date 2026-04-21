@@ -39,6 +39,10 @@ import {
 	TLevelCurrent,
 	TActivityLog,
 	TRaffleOptinResponse,
+	TClans,
+	TClanInfo,
+	TClanJoinResult,
+	TClanTournamentPlayers,
 	GamesApiResponse,
 	GamePickRound,
 	GamePickRoundBoard,
@@ -66,8 +70,6 @@ import { InboxCategories } from '../Inbox/InboxCategories';
 import {
 	drawRunHistoryTransform,
 	raffleClaimPrizeResponseTransform,
-	RaffleOptinRequest,
-	RaffleOptinResponse,
 } from '../Raffle';
 import { IntUtils } from '../IntUtils';
 import { TGetJackpotEligibleGamesResponse } from '../Jackpots/GetJackpotEligibleGamesResponse';
@@ -100,6 +102,7 @@ enum onUpdateContextKey {
 	Pots = 'Pots',
 	CustomSections = 'customSections',
 	Bonuses = 'bonuses',
+	Clans = 'clans',
 	SAWHistory = 'sawHistory',
 	JackpotWinners = 'jackpotWinners',
 	Raffles = 'raffles',
@@ -749,6 +752,44 @@ export class WSAPI {
 	}
 
 	/**
+	 * Returns clans list payload for the current user.
+	 * The returned payload is cached for 30 seconds.
+	 * If onUpdate is passed, it will be called when clans response is received.
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getClans({ onUpdate }: { onUpdate?: (data: TClans) => void } = {}): Promise<TClans> {
+		if (onUpdate) {
+			this.onUpdateCallback.set(onUpdateContextKey.Clans, onUpdate);
+		}
+
+		return OCache.use(
+			onUpdateContextKey.Clans,
+			ECacheContext.WSAPI,
+			() => this.api.clansGetListT(this.userExtId),
+			CACHE_DATA_SEC,
+		);
+	}
+
+	/**
+	 * Returns detailed information for a specific clan including its members.
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getClanInfo(clanId: number): Promise<TClanInfo> {
+		return this.api.clansGetInfoT(this.userExtId, clanId);
+	}
+
+	/**
+	 * Joins a clan on behalf of the current user.
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async joinClan(clanId: number): Promise<TClanJoinResult> {
+		return this.api.clanJoin(this.userExtId, clanId);
+	}
+
+	/**
 	 * Returns detailed information for a specific tournament instance; the response includes tournament info and the leaderboard of players
 	 *
 	 * **Example**:
@@ -775,6 +816,15 @@ export class WSAPI {
 	 */
 	public async getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed> {
 		return this.api.tournamentsGetInfoT(this.userExtId, tournamentInstanceId);
+	}
+
+	/**
+	 * Returns the players of a specific clan in a clan-based tournament.
+	 *
+	 * **Visitor mode: not supported**
+	 */
+	public async getClanTournamentPlayers(tournamentInstanceId: number, clanId: number): Promise<TClanTournamentPlayers> {
+		return this.api.clanTournamentGetPlayers(this.userExtId, tournamentInstanceId, clanId);
 	}
 
 	/**
@@ -1594,6 +1644,11 @@ export class WSAPI {
 	private async updateTournaments() {
 		const payload = await this.api.tournamentsGetLobbyT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.TournamentList, payload);
+	}
+
+	private async updateClans() {
+		const payload = await this.api.clansGetListT(this.userExtId);
+		this.updateEntity(onUpdateContextKey.Clans, payload);
 	}
 
 	private async updateStorePurchasedItems() {

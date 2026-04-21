@@ -478,6 +478,137 @@ export interface TTournamentDetailed extends TTournament {
 		/** if the prize is points related, indicates amount of points */
 		points?: number;
 	}[];
+
+	/** True when this tournament groups participants by clan */
+	is_clan_based?: boolean;
+	/** Ranked list of clans in this tournament; null for non-clan tournaments */
+	clan_leaderboard?: {
+		clan_id: number;
+		public_meta: { name: string; description: string; image_url: string };
+		position: number;
+		total_score: number;
+		contributing_members: number;
+	}[] | null;
+	/** The clan ID the current user belongs to; null when clanless or non-clan tournament */
+	user_clan_id?: number | null;
+	/** The user's rank within their own clan; null when clanless or not registered */
+	user_position_in_clan?: number | null;
+	/** The user's score contribution to their clan; null when clanless or not registered */
+	user_score_in_clan?: number | null;
+	/** Per-clan prize structure; null for non-clan tournaments */
+	clan_prize_structure?: {
+		clan_place: number;
+		/** 1 = Fixed, 2 = Dynamic */
+		prize_type_id: number;
+		prize_pool_amount: number | null;
+		activity_type_id: number | null;
+		details_json: Record<string, any>;
+		public_meta: { name: string; description: string; image_url: string } | null;
+		tiers: {
+			player_place_from: number;
+			player_place_to: number;
+			pool_amount: number | null;
+			/** 1 = ScoreWeighted, 2 = EqualSplit; null for Fixed */
+			distribution_type: number | null;
+			activity_type_id: number;
+			details_json: Record<string, any>;
+			public_meta: { name: string; description: string; image_url: string } | null;
+		}[];
+	}[] | null;
+}
+
+/**
+ * TClanTournamentPlayers describes the players of a specific clan in a clan-based tournament.
+ */
+export interface TClanTournamentPlayers {
+	/** Clan ID */
+	clan_id: number;
+	/** Clan display metadata */
+	clan_public_meta: { name: string; image_url: string };
+	/** Top players of this clan ranked by score DESC */
+	players: {
+		user_id: number;
+		public_username: string;
+		avatar_id: string;
+		avatar_real_id: number;
+		avatar_url?: string;
+		position: number;
+		scores: number;
+		is_me: boolean;
+		clean_ext_user_id: string;
+	}[];
+}
+
+/**
+ * TClan describes one clan item from the clans list.
+ */
+export interface TClan {
+	/** Clan ID */
+	clan_id: number;
+	/** Translated clan metadata */
+	public_meta: {
+		name: string;
+		description: string;
+		image_url: string;
+	};
+	/** Current number of members in clan */
+	member_count: number;
+	/** Max number of members allowed in clan */
+	capacity_limit: number;
+	/** ShopPurchaseType: 0=Points, 1=Gems, 2=Diamonds, 3=Free */
+	entry_fee_currency_type_id: number;
+	/** Numeric value for entry fee */
+	entry_fee_amount: number;
+	/** F1 rank ASC, 1=best */
+	rating_position: number;
+	/** Clan rating score */
+	rating_score: number;
+}
+
+/**
+ * TClans describes the clans payload returned by the API.
+ */
+export interface TClans {
+	/** List of active clans available to the user */
+	clans: TClan[];
+	/** The clan ID the current user belongs to; null if clanless */
+	user_clan_id: number | null;
+	/** Cooldown-until date string; null if no cooldown */
+	cooldown_until: string | null;
+}
+
+/**
+ * TClanInfo describes the detailed info of a single clan including its members.
+ */
+export interface TClanInfo {
+	clan_id: number;
+	public_meta: { name: string; description: string; image_url: string };
+	member_count: number;
+	capacity_limit: number;
+	entry_fee_currency_type_id: number;
+	entry_fee_amount: number;
+	rating_position: number;
+	rating_score: number;
+	cooldown_until: string | null;
+	members: {
+		user_id: number;
+		public_username: string;
+		avatar_id: string;
+		avatar_real_id: number;
+		avatar_url?: string;
+		position: number;
+		contribution_score: number;
+		is_me?: boolean;
+		clean_ext_user_id?: string;
+	}[];
+}
+
+/**
+ * TClanJoinResult describes the result of a join clan request.
+ */
+export interface TClanJoinResult {
+	errCode: number;
+	errMsg: string;
 }
 
 /**

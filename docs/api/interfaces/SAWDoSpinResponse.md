@@ -1,93 +1,91 @@
 # Interface: SAWDoSpinResponse
 
-## Hierarchy
+## Extends
 
 - `ProtocolResponse`
-
-  ↳ **`SAWDoSpinResponse`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolResponse.cid
+`ProtocolResponse.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolResponse.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolResponse.uuid
+`ProtocolResponse.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolResponse.uuid`
+
+***
 
 ### errCode
 
-• **errCode**: [`SAWSpinErrorCode`](../enums/SAWSpinErrorCode.md)
+> **errCode**: [`SAWSpinErrorCode`](../enumerations/SAWSpinErrorCode.md)
 
 #### Overrides
 
-ProtocolResponse.errCode
+`ProtocolResponse.errCode`
 
-___
+***
 
-### errMsg
+### errMsg?
 
-• `Optional` **errMsg**: `string`
+> `optional` **errMsg?**: `string`
 
 #### Overrides
 
-ProtocolResponse.errMsg
+`ProtocolResponse.errMsg`
 
-___
+***
 
 ### request\_id
 
-• **request\_id**: `string`
+> **request\_id**: `string`
 
-___
+***
 
 ### saw\_prize\_id
 
-• **saw\_prize\_id**: `number`
+> **saw\_prize\_id**: `number`
 
-___
+***
 
-### jackpot\_amount
+### jackpot\_amount?
 
-• `Optional` **jackpot\_amount**: `number`
+> `optional` **jackpot\_amount?**: `number`
 
-___
+***
 
 ### first\_spin\_in\_period
 
-• **first\_spin\_in\_period**: `number`
+> **first\_spin\_in\_period**: `number`
 
-___
+***
 
-### visitor\_win\_uuid
+### visitor\_win\_uuid?
 
-• `Optional` **visitor\_win\_uuid**: `string`
+> `optional` **visitor\_win\_uuid?**: `string`
 
-___
+***
 
-### spin\_id
+### spin\_id?
 
-• `Optional` **spin\_id**: `number`
+> `optional` **spin\_id?**: `number`

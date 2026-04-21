@@ -4,62 +4,62 @@
 
 ### board\_id
 
-• **board\_id**: `number`
+> **board\_id**: `number`
 
 ID of the leaderboard
 
-___
+***
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
 Name of the leaderboard
 
-___
+***
 
 ### description
 
-• **description**: `string`
+> **description**: `string`
 
 Description of the leaderboard
 
-___
+***
 
 ### rules
 
-• **rules**: `string`
+> **rules**: `string`
 
 Rules of the leaderboard
 
-___
+***
 
 ### period\_type\_id
 
-• **period\_type\_id**: [`LeaderBoardPeriodType`](../enums/LeaderBoardPeriodType.md)
+> **period\_type\_id**: [`LeaderBoardPeriodType`](../enumerations/LeaderBoardPeriodType.md)
 
 Leaderboard period type ID
 
-___
+***
 
 ### rewards
 
-• **rewards**: [`LeaderBoardsRewardsT`](LeaderBoardsRewardsT.md)[]
+> **rewards**: [`LeaderBoardsRewardsT`](LeaderBoardsRewardsT.md)[]
 
 Leaderboard points rewards
 
-___
+***
 
 ### users
 
-• **users**: [`LeaderBoardUserT`](LeaderBoardUserT.md)[]
+> **users**: [`LeaderBoardUserT`](LeaderBoardUserT.md)[]
 
 Leaderboard users
 
-___
+***
 
-### me
+### me?
 
-• `Optional` **me**: [`LeaderBoardUserT`](LeaderBoardUserT.md)
+> `optional` **me?**: [`LeaderBoardUserT`](LeaderBoardUserT.md)
 
 Info about current user in leaderboard

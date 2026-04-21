@@ -1,67 +1,65 @@
 # Interface: SAWPrizeDropWinPush
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`SAWPrizeDropWinPush`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### request\_id
 
-• **request\_id**: `string`
+> **request\_id**: `string`
 
-___
+***
 
 ### saw\_template\_id
 
-• **saw\_template\_id**: `number`
+> **saw\_template\_id**: `number`
 
-___
+***
 
 ### saw\_prize
 
-• **saw\_prize**: [`SAWPrize`](SAWPrize.md)
+> **saw\_prize**: [`SAWPrize`](SAWPrize.md)
 
-___
+***
 
 ### saw\_template
 
-• **saw\_template**: [`SAWTemplate`](SAWTemplate.md)
+> **saw\_template**: [`SAWTemplate`](SAWTemplate.md)
 
-___
+***
 
 ### pending\_message\_id
 
-• **pending\_message\_id**: `number`
+> **pending\_message\_id**: `number`

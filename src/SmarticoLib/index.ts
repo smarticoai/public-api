@@ -1030,6 +1030,155 @@ export interface TTournamentDetailed extends TTournament {
 		/** if the prize is points related, indicates amount of points */
 		points?: number;
 	}[];
+	/** True when this tournament groups participants by clan */
+	is_clan_based?: boolean;
+	/** Ranked list of clans in this tournament; null for non-clan tournaments */
+	clan_leaderboard?: {
+		clan_id: number;
+		public_meta: { name: string; description: string; image_url: string };
+		position: number;
+		total_score: number;
+		contributing_members: number;
+	}[] | null;
+	/** The clan ID the current user belongs to; null when clanless or non-clan tournament */
+	user_clan_id?: number | null;
+	/** The user's rank within their own clan; null when clanless or not registered */
+	user_position_in_clan?: number | null;
+	/** The user's score contribution to their clan; null when clanless or not registered */
+	user_score_in_clan?: number | null;
+	/** Per-clan prize structure; null for non-clan tournaments */
+	clan_prize_structure?: {
+			clan_place: number;
+		/** 1 = Fixed, 2 = Dynamic */
+		prize_type_id: number;
+		prize_pool_amount: number | null;
+		activity_type_id: number | null;
+		details_json: Record<string, any>;
+		public_meta: { name: string; description: string; image_url: string } | null;
+		tiers: {
+			player_place_from: number;
+			player_place_to: number;
+			pool_amount: number | null;
+			/** 1 = ScoreWeighted, 2 = EqualSplit; null for Fixed */
+			distribution_type: number | null;
+			activity_type_id: number;
+			details_json: Record<string, any>;
+			public_meta: { name: string; description: string; image_url: string } | null;
+		}[];
+	}[] | null;
+}
+/**
+ * TClanTournamentPlayers describes the players of a specific clan in a clan-based tournament.
+ */
+export interface TClanTournamentPlayers {
+	/** Clan ID */
+	clan_id: number;
+	/** Clan display metadata */
+	public_meta: { name: string; image_url: string };
+	/** Top players of this clan ranked by score DESC */
+	players: {
+		user_id: number;
+		public_username: string;
+		avatar_id: string;
+		avatar_real_id: number;
+		avatar_url?: string;
+		position: number;
+		scores: number;
+		is_me: boolean;
+		clean_ext_user_id: string;
+	}[];
+}
+export interface GetClanListResponse extends ProtocolResponse {
+	clans: {
+		clan_id: number;
+		public_meta: { name: string; description: string; image_url: string };
+		member_count: number;
+		capacity_limit: number;
+		entry_fee_currency_type_id: number;
+		entry_fee_amount: number;
+		rating_position: number;
+		rating_score: number;
+	}[];
+	user_clan_id?: number | null;
+	cooldown_until?: string | null;
+}
+export interface GetClanInfoResponse extends ProtocolResponse {
+	clan_info: {
+		clan_id: number;
+		public_meta: { name: string; description: string; image_url: string };
+		member_count: number;
+		capacity_limit: number;
+		entry_fee_currency_type_id: number;
+		entry_fee_amount: number;
+		rating_position: number;
+		rating_score: number;
+	};
+	members: {
+		user_id: number;
+		public_username: string;
+		avatar_id: string;
+		avatar_real_id: number;
+		position: number;
+		contribution_score: number;
+		is_me?: boolean;
+		clean_ext_user_id?: string;
+	}[];
+	entry_fee_currency_type_id: number;
+	entry_fee_amount: number;
+	cooldown_until: string | null;
+}
+/**
+ * TClan describes one clan item from the clans list.
+ */
+export interface TClan {
+	clan_id: number;
+	public_meta: { name: string; description: string; image_url: string };
+	member_count: number;
+	capacity_limit: number;
+	entry_fee_currency_type_id: number;
+	entry_fee_amount: number;
+	rating_position: number;
+	rating_score: number;
+}
+/**
+ * TClans describes the clans payload returned by the API.
+ */
+export interface TClans {
+	clans: TClan[];
+	user_clan_id: number | null;
+	cooldown_until: string | null;
+}
+/**
+ * TClanInfo describes the detailed info of a single clan including its members.
+ */
+export interface TClanInfo {
+	clan_id: number;
+	public_meta: { name: string; description: string; image_url: string };
+	member_count: number;
+	capacity_limit: number;
+	entry_fee_currency_type_id: number;
+	entry_fee_amount: number;
+	rating_position: number;
+	rating_score: number;
+	cooldown_until: string | null;
+	members: {
+		user_id: number;
+		public_username: string;
+		avatar_id: string;
+		avatar_real_id: number;
+		avatar_url?: string;
+		position: number;
+		contribution_score: number;
+		is_me?: boolean;
+		clean_ext_user_id?: string;
+	}[];
+}
+/**
+ * TClanJoinResult describes the result of a join clan request.
+ */
+export interface TClanJoinResult {
+	errCode: number;
+	errMsg: string;
 }
 /**
  * TStoreCategory describes the store category item. Each store item can be assigned to 1 or more categories
@@ -1756,8 +1905,16 @@ declare class WSAPI {
 	getTournamentsList({ onUpdate }?: { onUpdate?: (data: TTournament[]) => void }): Promise<TTournament[]>;
 	/** Returns details information of specific tournament instance, the response will include tournament info and the leaderboard of players */
 	getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed>;
+	/** Returns the players of a specific clan in a clan-based tournament */
+	getClanTournamentPlayers(tournamentInstanceId: number, clanId: number): Promise<TClanTournamentPlayers>;
 	/** Requests registration for the specified tournament instance. Returns the err_code. */
 	registerInTournament(tournamentInstanceId: number): Promise<TTournamentRegistrationResult>;
+	/** Returns clans list */
+	getClans({ onUpdate }?: { onUpdate?: (data: TClans) => void }): Promise<TClans>;
+	/** Returns detailed info for a specific clan including its members */
+	getClanInfo(clanId: number): Promise<TClanInfo>;
+	/** Joins a clan on behalf of the current user */
+	joinClan(clanId: number): Promise<TClanJoinResult>;
 	/** Returns the leaderboard for the current type (default is Daily). If getPreviousPeriod is passed as true, a leaderboard for the previous period for the current type will be returned.
 		For example, if the type is Weekly and getPreviousPeriod is true, a leaderboard for the previous week will be returned.
 	 */
@@ -1887,6 +2044,12 @@ declare class SmarticoAPI {
 	tournamentsGetLobbyT(user_ext_id: string): Promise<TTournament[]>;
 	tournamentsGetInfo(user_ext_id: string, tournamentInstanceId: number): Promise<GetTournamentInfoResponse>;
 	tournamentsGetInfoT(user_ext_id: string, tournamentInstanceId: number): Promise<TTournamentDetailed>;
+	clanTournamentGetPlayers(user_ext_id: string, tournamentInstanceId: number, clanId: number, force_language?: string): Promise<TClanTournamentPlayers>;
+	clansGetList(user_ext_id: string, force_language?: string): Promise<GetClanListResponse>;
+	clansGetListT(user_ext_id: string): Promise<TClans>;
+	clansGetInfo(user_ext_id: string, clanId: number, force_language?: string): Promise<GetClanInfoResponse>;
+	clansGetInfoT(user_ext_id: string, clanId: number, force_language?: string): Promise<TClanInfo>;
+	clanJoin(user_ext_id: string, clanId: number, joinSourceId?: number): Promise<TClanJoinResult>;
 	leaderboardGet(
 		user_ext_id: string,
 		period_type_id?: LeaderBoardPeriodType,

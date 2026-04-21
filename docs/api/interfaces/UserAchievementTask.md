@@ -2,82 +2,82 @@
 
 ## Properties
 
-### task\_id
+### task\_id?
 
-• `Optional` **task\_id**: `number`
+> `optional` **task\_id?**: `number`
 
-___
+***
 
-### task\_public\_meta
+### task\_public\_meta?
 
-• `Optional` **task\_public\_meta**: [`AchievementTaskPublicMeta`](AchievementTaskPublicMeta.md)
+> `optional` **task\_public\_meta?**: [`AchievementTaskPublicMeta`](AchievementTaskPublicMeta.md)
 
-___
+***
 
-### points\_reward
+### points\_reward?
 
-• `Optional` **points\_reward**: `number`
+> `optional` **points\_reward?**: `number`
 
-___
+***
 
 ### task\_type\_id
 
-• **task\_type\_id**: [`AchievementTaskType`](../enums/AchievementTaskType.md)
+> **task\_type\_id**: [`AchievementTaskType`](../enumerations/AchievementTaskType.md)
 
-___
+***
 
-### isCompleted
+### isCompleted?
 
-• `Optional` **isCompleted**: `boolean`
+> `optional` **isCompleted?**: `boolean`
 
-___
+***
 
-### userExecutedCount
+### userExecutedCount?
 
-• `Optional` **userExecutedCount**: `number`
+> `optional` **userExecutedCount?**: `number`
 
-___
+***
 
-### executionCount
+### executionCount?
 
-• `Optional` **executionCount**: `number`
+> `optional` **executionCount?**: `number`
 
-___
+***
 
-### userProgress
+### userProgress?
 
-• `Optional` **userProgress**: `number`
+> `optional` **userProgress?**: `number`
 
-___
+***
 
 ### lastExecutionDate
 
-• **lastExecutionDate**: `string`
+> **lastExecutionDate**: `string`
 
-___
+***
 
-### unlocked\_by\_mission\_id
+### unlocked\_by\_mission\_id?
 
-• `Optional` **unlocked\_by\_mission\_id**: `number`
+> `optional` **unlocked\_by\_mission\_id?**: `number`
 
-___
+***
 
-### unlocked\_by\_level\_id
+### unlocked\_by\_level\_id?
 
-• `Optional` **unlocked\_by\_level\_id**: `number`
+> `optional` **unlocked\_by\_level\_id?**: `number`
 
-___
+***
 
-### user\_state\_params
+### user\_state\_params?
 
-• `Optional` **user\_state\_params**: `Object`
+> `optional` **user\_state\_params?**: `object`
 
-#### Index signature
+#### Index Signature
 
-▪ [key: `string`]: `any`
+\[`key`: `string`\]: `any`
 
-___
+***
 
-### affects\_progress
+### affects\_progress?
 
-• `Optional` **affects\_progress**: [`AffectsProgress`](AffectsProgress.md)
+> `optional` **affects\_progress?**: [`AffectsProgress`](AffectsProgress.md)

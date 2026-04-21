@@ -4,76 +4,76 @@
 
 ### id
 
-• **id**: `number`
+> **id**: `number`
 
-___
+***
 
-### redeemable
+### redeemable?
 
-• `Optional` **redeemable**: `boolean`
+> `optional` **redeemable?**: `boolean`
 
-___
+***
 
-### createDate
+### createDate?
 
-• `Optional` **createDate**: `string`
+> `optional` **createDate?**: `string`
 
-___
+***
 
-### updateDate
+### updateDate?
 
-• `Optional` **updateDate**: `string`
+> `optional` **updateDate?**: `string`
 
-___
+***
 
-### redeemDate
+### redeemDate?
 
-• `Optional` **redeemDate**: `string`
+> `optional` **redeemDate?**: `string`
 
-___
+***
 
-### engagementUid
+### engagementUid?
 
-• `Optional` **engagementUid**: `string`
+> `optional` **engagementUid?**: `string`
 
-___
+***
 
-### labelBonusTemplateId
+### labelBonusTemplateId?
 
-• `Optional` **labelBonusTemplateId**: `number`
+> `optional` **labelBonusTemplateId?**: `number`
 
-___
+***
 
-### sourceProductRefId
+### sourceProductRefId?
 
-• `Optional` **sourceProductRefId**: `number`
+> `optional` **sourceProductRefId?**: `number`
 
-___
+***
 
-### sourceProductId
+### sourceProductId?
 
-• `Optional` **sourceProductId**: `number`
+> `optional` **sourceProductId?**: `number`
 
-___
+***
 
-### userId
+### userId?
 
-• `Optional` **userId**: `number`
+> `optional` **userId?**: `number`
 
-___
+***
 
-### bonusStatusId
+### bonusStatusId?
 
-• `Optional` **bonusStatusId**: [`BonusStatus`](../enums/BonusStatus.md)
+> `optional` **bonusStatusId?**: [`BonusStatus`](../enumerations/BonusStatus.md)
 
-___
+***
 
-### labelBonusTemplateMetaMap
+### labelBonusTemplateMetaMap?
 
-• `Optional` **labelBonusTemplateMetaMap**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap.md)
+> `optional` **labelBonusTemplateMetaMap?**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap.md)
 
-___
+***
 
-### bonusMetaMap
+### bonusMetaMap?
 
-• `Optional` **bonusMetaMap**: [`BonusMetaMap`](BonusMetaMap.md)
+> `optional` **bonusMetaMap?**: [`BonusMetaMap`](BonusMetaMap.md)

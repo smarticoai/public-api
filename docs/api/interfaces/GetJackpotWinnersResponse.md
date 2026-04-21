@@ -1,73 +1,71 @@
 # Interface: GetJackpotWinnersResponse
 
-## Hierarchy
+## Extends
 
 - `ProtocolResponse`
-
-  ↳ **`GetJackpotWinnersResponse`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolResponse.cid
+`ProtocolResponse.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolResponse.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolResponse.uuid
+`ProtocolResponse.ts`
 
-___
+***
 
-### errCode
+### uuid?
 
-• `Optional` **errCode**: `number`
-
-#### Inherited from
-
-ProtocolResponse.errCode
-
-___
-
-### errMsg
-
-• `Optional` **errMsg**: `string`
+> `optional` **uuid?**: `string`
 
 #### Inherited from
 
-ProtocolResponse.errMsg
+`ProtocolResponse.uuid`
 
-___
+***
+
+### errCode?
+
+> `optional` **errCode?**: `number`
+
+#### Inherited from
+
+`ProtocolResponse.errCode`
+
+***
+
+### errMsg?
+
+> `optional` **errMsg?**: `string`
+
+#### Inherited from
+
+`ProtocolResponse.errMsg`
+
+***
 
 ### winners
 
-• **winners**: [`JackpotWinnerHistory`](JackpotWinnerHistory.md)[]
+> **winners**: [`JackpotWinnerHistory`](JackpotWinnerHistory.md)[]
 
 The list of jackpot winners
 
-___
+***
 
 ### has\_more
 
-• **has\_more**: `boolean`
+> **has\_more**: `boolean`
 
 Whether there are more winners to fetch

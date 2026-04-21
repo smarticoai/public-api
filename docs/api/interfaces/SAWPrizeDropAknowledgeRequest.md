@@ -1,55 +1,53 @@
 # Interface: SAWPrizeDropAknowledgeRequest
 
-## Hierarchy
+## Extends
 
 - `ProtocolMessage`
-
-  ↳ **`SAWPrizeDropAknowledgeRequest`**
 
 ## Properties
 
 ### cid
 
-• **cid**: `number`
+> **cid**: `number`
 
 #### Inherited from
 
-ProtocolMessage.cid
+`ProtocolMessage.cid`
 
-___
+***
 
-### ts
+### ts?
 
-• `Optional` **ts**: `number`
-
-#### Inherited from
-
-ProtocolMessage.ts
-
-___
-
-### uuid
-
-• `Optional` **uuid**: `string`
+> `optional` **ts?**: `number`
 
 #### Inherited from
 
-ProtocolMessage.uuid
+`ProtocolMessage.ts`
 
-___
+***
+
+### uuid?
+
+> `optional` **uuid?**: `string`
+
+#### Inherited from
+
+`ProtocolMessage.uuid`
+
+***
 
 ### request\_id
 
-• **request\_id**: `string`
+> **request\_id**: `string`
 
-___
+***
 
 ### pending\_message\_id
 
-• **pending\_message\_id**: `number`
+> **pending\_message\_id**: `number`
 
-___
+***
 
 ### claim\_required
 
-• **claim\_required**: `boolean`
+> **claim\_required**: `boolean`

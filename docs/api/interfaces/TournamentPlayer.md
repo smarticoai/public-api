@@ -4,52 +4,52 @@
 
 ### userAltName
 
-• **userAltName**: `string`
+> **userAltName**: `string`
 
-___
+***
 
 ### cleanExtUserId
 
-• **cleanExtUserId**: `string`
+> **cleanExtUserId**: `string`
 
-___
+***
 
 ### crmBrandId
 
-• **crmBrandId**: `number`
+> **crmBrandId**: `number`
 
-___
+***
 
 ### position
 
-• **position**: `number`
+> **position**: `number`
 
-___
+***
 
 ### scores
 
-• **scores**: `number`
+> **scores**: `number`
 
-___
+***
 
 ### isMe
 
-• **isMe**: `boolean`
+> **isMe**: `boolean`
 
-___
+***
 
 ### userId
 
-• **userId**: `number`
+> **userId**: `number`
 
-___
+***
 
 ### avatar\_id
 
-• **avatar\_id**: `string`
+> **avatar\_id**: `string`
 
-___
+***
 
-### avatar\_url
+### avatar\_url?
 
-• `Optional` **avatar\_url**: `string`
+> `optional` **avatar\_url?**: `string`

@@ -2,162 +2,162 @@
 
 ## Properties
 
-### position
+### position?
 
-• `Optional` **position**: `number`
+> `optional` **position?**: `number`
 
-___
+***
 
 ### name
 
-• **name**: `string`
+> **name**: `string`
 
-___
+***
 
-### name\_original
+### name\_original?
 
-• `Optional` **name\_original**: `string`
+> `optional` **name\_original?**: `string`
 
-___
+***
 
 ### hide\_prize\_popup
 
-• **hide\_prize\_popup**: `boolean`
+> **hide\_prize\_popup**: `boolean`
 
-___
+***
 
-### aknowledge\_message
+### aknowledge\_message?
 
-• `Optional` **aknowledge\_message**: `string`
+> `optional` **aknowledge\_message?**: `string`
 
-___
+***
 
-### aknowledge\_message\_lose
+### aknowledge\_message\_lose?
 
-• `Optional` **aknowledge\_message\_lose**: `string`
+> `optional` **aknowledge\_message\_lose?**: `string`
 
-___
+***
 
-### sectors
+### sectors?
 
-• `Optional` **sectors**: `number`[]
+> `optional` **sectors?**: `number`[]
 
-___
+***
 
-### acknowledge\_type
+### acknowledge\_type?
 
-• `Optional` **acknowledge\_type**: [`SAWAcknowledgeType`](../enums/SAWAcknowledgeType.md)
+> `optional` **acknowledge\_type?**: [`SAWAcknowledgeType`](../enumerations/SAWAcknowledgeType.md)
 
-___
+***
 
-### acknowledge\_dp
+### acknowledge\_dp?
 
-• `Optional` **acknowledge\_dp**: `string`
+> `optional` **acknowledge\_dp?**: `string`
 
-___
+***
 
-### font\_size
+### font\_size?
 
-• `Optional` **font\_size**: `number`
+> `optional` **font\_size?**: `number`
 
-___
+***
 
-### font\_size\_mobile
+### font\_size\_mobile?
 
-• `Optional` **font\_size\_mobile**: `number`
+> `optional` **font\_size\_mobile?**: `number`
 
-___
+***
 
-### sound\_type
+### sound\_type?
 
-• `Optional` **sound\_type**: [`SAWWinSoundType`](../enums/SAWWinSoundType.md)
+> `optional` **sound\_type?**: [`SAWWinSoundType`](../enumerations/SAWWinSoundType.md)
 
-___
+***
 
-### second\_btn
+### second\_btn?
 
-• `Optional` **second\_btn**: `string`
+> `optional` **second\_btn?**: `string`
 
-___
+***
 
-### second\_btn\_action\_title
+### second\_btn\_action\_title?
 
-• `Optional` **second\_btn\_action\_title**: `string`
+> `optional` **second\_btn\_action\_title?**: `string`
 
-___
+***
 
-### acknowledge\_dp\_additional
+### acknowledge\_dp\_additional?
 
-• `Optional` **acknowledge\_dp\_additional**: `string`
+> `optional` **acknowledge\_dp\_additional?**: `string`
 
-___
+***
 
-### acknowledge\_action\_title\_additional
+### acknowledge\_action\_title\_additional?
 
-• `Optional` **acknowledge\_action\_title\_additional**: `string`
+> `optional` **acknowledge\_action\_title\_additional?**: `string`
 
-___
+***
 
-### icon
+### icon?
 
-• `Optional` **icon**: `string`
+> `optional` **icon?**: `string`
 
-___
+***
 
-### replace\_name\_with\_image
+### replace\_name\_with\_image?
 
-• `Optional` **replace\_name\_with\_image**: `boolean`
+> `optional` **replace\_name\_with\_image?**: `boolean`
 
-___
+***
 
-### acknowledge\_action\_title
+### acknowledge\_action\_title?
 
-• `Optional` **acknowledge\_action\_title**: `string`
+> `optional` **acknowledge\_action\_title?**: `string`
 
-___
+***
 
-### custom\_win\_sound
+### custom\_win\_sound?
 
-• `Optional` **custom\_win\_sound**: `string`
+> `optional` **custom\_win\_sound?**: `string`
 
-___
+***
 
-### out\_of\_stock\_message
+### out\_of\_stock\_message?
 
-• `Optional` **out\_of\_stock\_message**: `string`
+> `optional` **out\_of\_stock\_message?**: `string`
 
-___
+***
 
-### custom\_data
+### custom\_data?
 
-• `Optional` **custom\_data**: `any`
+> `optional` **custom\_data?**: `any`
 
-___
+***
 
-### prize\_modifiers
+### prize\_modifiers?
 
-• `Optional` **prize\_modifiers**: [`PrizeModifiers`](../enums/PrizeModifiers.md)[]
+> `optional` **prize\_modifiers?**: [`PrizeModifiers`](../enumerations/PrizeModifiers.md)[]
 
-___
+***
 
-### allow\_split\_decimal
+### allow\_split\_decimal?
 
-• `Optional` **allow\_split\_decimal**: `boolean`
+> `optional` **allow\_split\_decimal?**: `boolean`
 
-___
+***
 
-### hide\_prize\_from\_history
+### hide\_prize\_from\_history?
 
-• `Optional` **hide\_prize\_from\_history**: `boolean`
+> `optional` **hide\_prize\_from\_history?**: `boolean`
 
-___
+***
 
-### hide\_prize\_till\_won
+### hide\_prize\_till\_won?
 
-• `Optional` **hide\_prize\_till\_won**: `boolean`
+> `optional` **hide\_prize\_till\_won?**: `boolean`
 
-___
+***
 
-### requirements\_to\_get\_prize
+### requirements\_to\_get\_prize?
 
-• `Optional` **requirements\_to\_get\_prize**: `string`
+> `optional` **requirements\_to\_get\_prize?**: `string`

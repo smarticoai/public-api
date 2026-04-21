@@ -4,62 +4,62 @@
 
 ### bonus\_id
 
-• **bonus\_id**: `number`
+> **bonus\_id**: `number`
 
 ID of the bonus
 
-___
+***
 
-### is\_redeemable
+### is\_redeemable?
 
-• `Optional` **is\_redeemable**: `boolean`
+> `optional` **is\_redeemable?**: `boolean`
 
 Can the bonus be redeemed (if bonus is redeemable the user needs to claim it)
 
-___
+***
 
-### create\_date
+### create\_date?
 
-• `Optional` **create\_date**: `string`
+> `optional` **create\_date?**: `string`
 
 Date of creation
 
-___
+***
 
-### redeem\_date
+### redeem\_date?
 
-• `Optional` **redeem\_date**: `string`
+> `optional` **redeem\_date?**: `string`
 
 Date of redemption
 
-___
+***
 
-### label\_bonus\_template\_id
+### label\_bonus\_template\_id?
 
-• `Optional` **label\_bonus\_template\_id**: `number`
+> `optional` **label\_bonus\_template\_id?**: `number`
 
 ID of template used
 
-___
+***
 
-### bonus\_status\_id
+### bonus\_status\_id?
 
-• `Optional` **bonus\_status\_id**: [`BonusStatus`](../enums/BonusStatus-1.md)
+> `optional` **bonus\_status\_id?**: [`BonusStatus`](../enumerations/BonusStatus-1.md)
 
 ID of the bonus status
 
-___
+***
 
-### label\_bonus\_template\_meta\_map
+### label\_bonus\_template\_meta\_map?
 
-• `Optional` **label\_bonus\_template\_meta\_map**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap-1.md)
+> `optional` **label\_bonus\_template\_meta\_map?**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap-1.md)
 
 Additional information about the bonus(edscription, image,name, acknowledge)
 
-___
+***
 
-### bonus\_meta\_map
+### bonus\_meta\_map?
 
-• `Optional` **bonus\_meta\_map**: [`BonusMetaMap`](BonusMetaMap-1.md)
+> `optional` **bonus\_meta\_map?**: [`BonusMetaMap`](BonusMetaMap-1.md)
 
 Additional information presented to the player when the bonus is redeemed

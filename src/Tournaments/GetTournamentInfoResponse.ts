@@ -4,6 +4,7 @@ import { ProtocolResponse } from '../Base/ProtocolResponse';
 import { TournamentPrize } from './TournamentPrize';
 import { TTournamentDetailed } from '../WSAPI/WSAPITypes';
 import { TournamentUtils } from './TournamentUtils';
+import { ClanLeaderboardEntry, ClanPrizeStructureEntry } from './TournamentClan';
 
 export interface GetTournamentInfoResponse extends ProtocolResponse {
 	/** tournament info */
@@ -20,6 +21,16 @@ export interface GetTournamentInfoResponse extends ProtocolResponse {
 	prizeStructure?: {
 		prizes: TournamentPrize[];
 	};
+	/** Ranked list of clans in this tournament. Empty/null for non-clan tournaments. */
+	clanLeaderboard?: ClanLeaderboardEntry[] | null;
+	/**
+	 * The clan ID the current user belongs to.
+	 * null when the user has no clan or the tournament is not clan-based.
+	 * Match against clanLeaderboard[i].clan_id to highlight the user's clan row.
+	 */
+	userClanId?: number | null;
+	/** Per-clan prize structure. Empty/null for non-clan tournaments. */
+	clanPrizes?: ClanPrizeStructureEntry[] | null;
 }
 
 export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTournamentDetailed => {
@@ -47,6 +58,47 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 
 	if (t.userPosition) {
 		response.me = TournamentUtils.getPlayerTransformed(t.userPosition, true);
+	}
+
+	if (t.tournamentInfo?.tournamentLobbyInfo?.isClanBased) {
+		response.is_clan_based = true;
+		response.user_clan_id = t.userClanId ?? null;
+		response.clan_leaderboard = t.clanLeaderboard
+			? t.clanLeaderboard.map((entry) => ({
+					clan_id: entry.clan_id,
+					public_meta: {
+						name: entry.public_meta.name,
+						description: entry.public_meta.description,
+						image_url: entry.public_meta.image_url,
+					},
+					position: entry.position,
+					total_score: entry.total_score,
+					contributing_members: entry.contributing_members,
+			  }))
+			: null;
+		response.clan_prize_structure = t.clanPrizes
+			? t.clanPrizes.map((entry) => ({
+					clan_place: entry.clan_place,
+					prize_type_id: entry.prize_type_id,
+					prize_pool_amount: entry.prize_pool_amount,
+					activity_type_id: entry.activity_type_id,
+					details_json: entry.details_json,
+					public_meta: entry.public_meta
+						? { name: entry.public_meta.name, description: entry.public_meta.description, image_url: entry.public_meta.image_url }
+						: null,
+					tiers: (entry.tiers || []).map((tier) => ({
+						player_place_from: tier.player_place_from,
+						player_place_to: tier.player_place_to,
+						pool_amount: tier.pool_amount,
+						distribution_type: tier.distribution_type,
+						activity_type_id: tier.activity_type_id,
+						details_json: tier.details_json,
+						public_meta: tier.public_meta
+							? { name: tier.public_meta.name, description: tier.public_meta.description, image_url: tier.public_meta.image_url }
+							: null,
+					})),
+			  }))
+			: null;
 	}
 
 	return response;

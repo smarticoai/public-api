@@ -4,70 +4,78 @@
 
 ### action
 
-• **action**: `string`
+> **action**: `string`
 
-___
+***
 
 ### body
 
-• **body**: `string`
+> **body**: `string`
 
-___
+***
 
 ### type
 
-• **type**: [`InboxMessageType`](../enums/InboxMessageType.md)
+> **type**: [`InboxMessageType`](../enumerations/InboxMessageType.md)
 
-___
+***
 
 ### image
 
-• **image**: `string`
+> **image**: `string`
 
-___
+***
 
 ### title
 
-• **title**: `string`
+> **title**: `string`
 
-___
+***
 
 ### html\_body
 
-• **html\_body**: `string`
+> **html\_body**: `string`
 
-___
+***
 
-### additional\_buttons
+### additional\_buttons?
 
-• `Optional` **additional\_buttons**: \{ `inbox_cta_text`: `string` ; `action`: `string`  }[]
+> `optional` **additional\_buttons?**: `object`[]
 
-___
+#### inbox\_cta\_text
 
-### show\_preview
+> **inbox\_cta\_text**: `string`
 
-• `Optional` **show\_preview**: `boolean`
+#### action
 
-___
+> **action**: `string`
 
-### show\_duration\_sec
+***
 
-• `Optional` **show\_duration\_sec**: `number`
+### show\_preview?
 
-___
+> `optional` **show\_preview?**: `boolean`
 
-### enable\_zoom\_mode
+***
 
-• `Optional` **enable\_zoom\_mode**: `boolean`
+### show\_duration\_sec?
 
-___
+> `optional` **show\_duration\_sec?**: `number`
 
-### open\_links
+***
 
-• `Optional` **open\_links**: [`OpenLinksType`](../enums/OpenLinksType.md)
+### enable\_zoom\_mode?
 
-___
+> `optional` **enable\_zoom\_mode?**: `boolean`
 
-### custom\_data
+***
 
-• `Optional` **custom\_data**: `string`
+### open\_links?
+
+> `optional` **open\_links?**: [`OpenLinksType`](../enumerations/OpenLinksType.md)
+
+***
+
+### custom\_data?
+
+> `optional` **custom\_data?**: `string`

@@ -2,40 +2,38 @@
 
 GamePickRequestParams describes the base parameters required for GamePick API calls
 
-## Hierarchy
+## Extended by
 
-- **`GamePickRequestParams`**
-
-  ↳ [`GamePickRoundRequestParams`](GamePickRoundRequestParams.md)
+- [`GamePickRoundRequestParams`](GamePickRoundRequestParams.md)
 
 ## Properties
 
 ### saw\_template\_id
 
-• **saw\_template\_id**: `number`
+> **saw\_template\_id**: `number`
 
 ID of the MatchX or Quiz game template
 
-___
+***
 
 ### ext\_user\_id
 
-• **ext\_user\_id**: `string`
+> **ext\_user\_id**: `string`
 
 External user ID
 
-___
+***
 
 ### smartico\_ext\_user\_id
 
-• **smartico\_ext\_user\_id**: `string`
+> **smartico\_ext\_user\_id**: `string`
 
 Smartico external user ID used for platform API calls
 
-___
+***
 
-### lang
+### lang?
 
-• `Optional` **lang**: `string`
+> `optional` **lang?**: `string`
 
 Language code for translations (e.g. 'EN', 'DE')

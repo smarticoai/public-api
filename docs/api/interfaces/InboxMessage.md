@@ -4,46 +4,46 @@
 
 ### createDate
 
-• **createDate**: `string`
+> **createDate**: `string`
 
-___
+***
 
 ### body
 
-• **body**: [`InboxMessageBody`](InboxMessageBody.md)
+> **body**: [`InboxMessageBody`](InboxMessageBody.md)
 
-___
+***
 
 ### engagement\_uid
 
-• **engagement\_uid**: `string`
+> **engagement\_uid**: `string`
 
-___
+***
 
 ### is\_read
 
-• **is\_read**: `boolean`
+> **is\_read**: `boolean`
 
-___
+***
 
 ### is\_starred
 
-• **is\_starred**: `boolean`
+> **is\_starred**: `boolean`
 
-___
+***
 
-### is\_deleted
+### is\_deleted?
 
-• `Optional` **is\_deleted**: `boolean`
+> `optional` **is\_deleted?**: `boolean`
 
-___
+***
 
-### category\_id
+### category\_id?
 
-• `Optional` **category\_id**: [`InboxCategories`](../enums/InboxCategories.md)
+> `optional` **category\_id?**: [`InboxCategories`](../enumerations/InboxCategories.md)
 
-___
+***
 
-### expire\_on\_dt
+### expire\_on\_dt?
 
-• `Optional` **expire\_on\_dt**: `number`
+> `optional` **expire\_on\_dt?**: `number`
