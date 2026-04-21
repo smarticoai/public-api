@@ -67,7 +67,8 @@
 			"src/Inbox/InboxMessage.ts",
 			"src/Inbox/InboxMessageType.ts",
 			"src/Inbox/OpenLinksType.ts",
-			"src/Inbox/InboxReadStatus.ts"
+			"src/Inbox/InboxReadStatus.ts",
+			"src/Clans/Clan.ts"
 		],
 		"out": "docs/api",
 		"plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],

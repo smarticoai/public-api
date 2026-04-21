@@ -1067,7 +1067,7 @@ Requests translations for the given language. Returns the object including trans
 
 ### reportImpressionEvent()
 
-> **reportImpressionEvent**(`__namedParameters`): `void`
+> **reportImpressionEvent**(`params`): `void`
 
 Reports an impression event for an engagement (when engagement content is displayed to the user).
 Use this method to track when users view engagement content such as inbox messages, popups.
@@ -1085,15 +1085,21 @@ _smartico.api.reportImpressionEvent({
 
 #### Parameters
 
-##### \_\_namedParameters
+##### params
+
+Event parameters
 
 ###### engagement_uid
 
 `string`
 
+Unique identifier for the engagement
+
 ###### activityType
 
 `number`
+
+Type of engagement activity (Popup=30, Inbox=31)
 
 #### Returns
 
@@ -1103,7 +1109,7 @@ _smartico.api.reportImpressionEvent({
 
 ### reportClickEvent()
 
-> **reportClickEvent**(`__namedParameters`): `void`
+> **reportClickEvent**(`params`): `void`
 
 Reports a click/action event for an engagement (when user interacts with engagement content).
 Use this method to track when users click on or interact with engagement content such as inbox messages, popups.
@@ -1122,19 +1128,27 @@ _smartico.api.reportClickEvent({
 
 #### Parameters
 
-##### \_\_namedParameters
+##### params
+
+Event parameters
 
 ###### engagement_uid
 
 `string`
 
+Unique identifier for the engagement
+
 ###### activityType
 
 `number`
 
+Type of engagement activity (Popup=30, Inbox=31)
+
 ###### action?
 
 `string`
+
+Optional action/deeplink that was triggered by the user interaction
 
 #### Returns
 
@@ -1144,7 +1158,7 @@ _smartico.api.reportClickEvent({
 
 ### getActivityLog()
 
-> **getActivityLog**(`__namedParameters`): `Promise`\<[`TActivityLog`](../interfaces/TActivityLog.md)[]\>
+> **getActivityLog**(`params`): `Promise`\<[`TActivityLog`](../interfaces/TActivityLog.md)[]\>
 
 Returns the activity log for a user within a specified time range.
 The response includes both points changes and gems/diamonds changes.
@@ -1172,27 +1186,39 @@ _smartico.api.getActivityLog({
 
 #### Parameters
 
-##### \_\_namedParameters
+##### params
+
+Activity log parameters
 
 ###### startTimeSeconds
 
 `number`
 
+Start time in seconds (epoch timestamp)
+
 ###### endTimeSeconds
 
 `number`
+
+End time in seconds (epoch timestamp)
 
 ###### from
 
 `number`
 
+Start index of records to return
+
 ###### to
 
 `number`
 
+End index of records to return
+
 ###### onUpdate?
 
 (`data`) => `void`
+
+Optional callback function that will be called when the activity log is updated
 
 #### Returns
 
@@ -1596,7 +1622,7 @@ _smartico.api.jackpotOptOut({ jp_template_id: 123 }).then((result) => {
 
 ### getJackpotWinners()
 
-> **getJackpotWinners**(`__namedParameters`): `Promise`\<[`JackpotWinnerHistory`](../interfaces/JackpotWinnerHistory.md)[]\>
+> **getJackpotWinners**(`params`): `Promise`\<[`JackpotWinnerHistory`](../interfaces/JackpotWinnerHistory.md)[]\>
 
 Returns jackpot winners for the given `jp_template_id` (paginated on the server).
 Default page size on the wire is 20; use `limit`, `offset`, and repeated calls to load more.
@@ -1615,19 +1641,27 @@ _smartico.api.getJackpotWinners({
 
 #### Parameters
 
-##### \_\_namedParameters
+##### params
+
+Jackpot winners parameters
 
 ###### limit?
 
 `number`
 
+Page size (server default 20 when omitted)
+
 ###### offset?
 
 `number`
 
+Offset into the winner list
+
 ###### jp_template_id?
 
 `number`
+
+Jackpot template id (required; throws if missing)
 
 #### Returns
 

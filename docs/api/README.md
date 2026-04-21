@@ -78,6 +78,8 @@
 - [Bonus](interfaces/Bonus.md)
 - [BonusMetaMap](interfaces/BonusMetaMap.md)
 - [BonusTemplateMetaMap](interfaces/BonusTemplateMetaMap.md)
+- [ClanPublicMeta](interfaces/ClanPublicMeta.md)
+- [Clan](interfaces/Clan.md)
 - [GetCustomSectionsResponse](interfaces/GetCustomSectionsResponse.md)
 - [UICustomSection](interfaces/UICustomSection.md)
 - [InboxMessageBody](interfaces/InboxMessageBody.md)

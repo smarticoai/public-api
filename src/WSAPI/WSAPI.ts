@@ -1030,6 +1030,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 *
+	 * @param params - Event parameters
 	 * @param params.engagement_uid - Unique identifier for the engagement
 	 * @param params.activityType - Type of engagement activity (Popup=30, Inbox=31)
 	 */
@@ -1060,6 +1061,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 *
+	 * @param params - Event parameters
 	 * @param params.engagement_uid - Unique identifier for the engagement
 	 * @param params.activityType - Type of engagement activity (Popup=30, Inbox=31)
 	 * @param params.action - Optional action/deeplink that was triggered by the user interaction
@@ -1101,6 +1103,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 *
+	 * @param params - Activity log parameters
 	 * @param params.startTimeSeconds - Start time in seconds (epoch timestamp)
 	 * @param params.endTimeSeconds - End time in seconds (epoch timestamp)
 	 * @param params.from - Start index of records to return
@@ -1830,6 +1833,7 @@ export class WSAPI {
 	 *
 	 * **Visitor mode: not supported**
 	 *
+	 * @param params - Jackpot winners parameters
 	 * @param params.jp_template_id - Jackpot template id (required; throws if missing)
 	 * @param params.limit - Page size (server default 20 when omitted)
 	 * @param params.offset - Offset into the winner list

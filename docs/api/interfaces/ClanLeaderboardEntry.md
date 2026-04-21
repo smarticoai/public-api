@@ -10,7 +10,7 @@
 
 ### public\_meta
 
-> **public\_meta**: `ClanPublicMeta`
+> **public\_meta**: [`ClanPublicMeta`](ClanPublicMeta.md)
 
 ***
 
