@@ -26,7 +26,7 @@ export const winnersTransform = (items: RafflePrizeWinner[]): TRafflePrizeWinner
 		return {
 			id: item.user_id,
 			username: item.public_username,
-			avatar_url: item.avatar_url,
+			avatar_url: item.avatar_url || item.avatar_id,
 			ticket: { ticekt_id: item.ticket.id, ticket_id_string: item.ticket.s },
 			raf_won_id: item.raf_won_id,
 			claimed_date: item.claimed_date,
