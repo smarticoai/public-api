@@ -116,9 +116,10 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
 				is_in_progress: TournamentUtils.isInProgress(r),
 				is_upcoming: TournamentUtils.isUpcoming(r),
 
-			min_scores_win: r.minScoreToWin,
-			hide_leaderboard_min_scores: r.hideLeaderboardsMinScores,
-			total_scores: r.totalScores,
+				min_scores_win: r.minScoreToWin,
+				hide_leaderboard_min_scores: r.hideLeaderboardsMinScores,
+				total_scores: r.totalScores,
+				is_clan_based: r.isClanBased,
 			};
 
 			if (r.prizeStructure) {

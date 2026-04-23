@@ -1,11 +1,11 @@
 import { ClanPublicMeta } from '../Clans/Clan';
 
 export interface ClanLeaderboardEntry {
-	clan_id: number;
-	public_meta: ClanPublicMeta;
-	position: number;
-	total_score: number;
-	contributing_members: number;
+	clanId: number;
+	publicMeta: ClanPublicMeta;
+	rank: number;
+	totalScore: number;
+	memberCount: number;
 }
 
 export interface ClanPrizeTier {
@@ -13,8 +13,8 @@ export interface ClanPrizeTier {
 	player_place_to: number;
 	pool_amount: number | null;
 	distribution_type: number | null;
-	activity_type_id: number;
-	details_json: Record<string, any>;
+	activity_type_id: number | null;
+	details_json: Record<string, any> | null;
 	public_meta: ClanPublicMeta | null;
 }
 
@@ -24,7 +24,7 @@ export interface ClanPrizeStructureEntry {
 	prize_type_id: number;
 	prize_pool_amount: number | null;
 	activity_type_id: number | null;
-	details_json: Record<string, any>;
-	public_meta: ClanPublicMeta;
-	tiers: ClanPrizeTier[];
+	details_json: Record<string, any> | null;
+	public_meta: ClanPublicMeta | null;
+	player_tiers: ClanPrizeTier[] | null;
 }

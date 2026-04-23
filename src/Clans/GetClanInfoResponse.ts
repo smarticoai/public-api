@@ -14,11 +14,13 @@ export interface ClanMember {
 	clean_ext_user_id?: string;
 }
 
-export interface GetClanInfoResponse extends ProtocolResponse {
-	clan_info: Clan;
+export interface ClanInfo extends Clan {
+	label_id: number;
 	members: ClanMember[];
-	entry_fee_currency_type_id: number;
-	entry_fee_amount: number;
 	/** Cooldown until date string; null if no cooldown active */
 	cooldown_until: string | null;
+}
+
+export interface GetClanInfoResponse extends ProtocolResponse {
+	clanInfo: ClanInfo;
 }

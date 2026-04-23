@@ -35,7 +35,7 @@ export interface GetTournamentInfoResponse extends ProtocolResponse {
 
 export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTournamentDetailed => {
 	const response: TTournamentDetailed = {
-		...TournamentItemsTransform([t.tournamentInfo.tournamentLobbyInfo])[0],
+		...TournamentItemsTransform([t.tournamentInfo?.tournamentLobbyInfo ?? null])?.[0],
 		related_games: (t.tournamentInfo.tournamentLobbyInfo.related_games || []).map((g, i) => ({
 			ext_game_id: g.ext_game_id,
 			game_public_meta: {
@@ -65,15 +65,15 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 		response.user_clan_id = t.userClanId ?? null;
 		response.clan_leaderboard = t.clanLeaderboard
 			? t.clanLeaderboard.map((entry) => ({
-					clan_id: entry.clan_id,
+					clan_id: entry.clanId,
 					public_meta: {
-						name: entry.public_meta.name,
-						description: entry.public_meta.description,
-						image_url: entry.public_meta.image_url,
+						name: entry.publicMeta.name,
+						description: entry.publicMeta.description,
+						image_url: entry.publicMeta.image_url,
 					},
-					position: entry.position,
-					total_score: entry.total_score,
-					contributing_members: entry.contributing_members,
+					position: entry.rank,
+					total_score: entry.totalScore,
+					contributing_members: entry.memberCount,
 			  }))
 			: null;
 		response.clan_prize_structure = t.clanPrizes
@@ -86,7 +86,7 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 					public_meta: entry.public_meta
 						? { name: entry.public_meta.name, description: entry.public_meta.description, image_url: entry.public_meta.image_url }
 						: null,
-					tiers: (entry.tiers || []).map((tier) => ({
+					tiers: (entry.player_tiers || []).map((tier) => ({
 						player_place_from: tier.player_place_from,
 						player_place_to: tier.player_place_to,
 						pool_amount: tier.pool_amount,

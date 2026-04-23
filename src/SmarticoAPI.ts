@@ -1027,6 +1027,7 @@ class SmarticoAPI {
 			clans: response.clans,
 			user_clan_id: response.user_clan_id,
 			cooldown_until: response.cooldown_until,
+			join_date: response.join_date ?? null,
 		};
 	}
 
@@ -1041,18 +1042,18 @@ class SmarticoAPI {
 
 	public async clansGetInfoT(user_ext_id: string, clanId: number, force_language?: string): Promise<TClanInfo> {
 		const response = await this.clansGetInfo(user_ext_id, clanId, force_language);
-		const c = response.clan_info;
+		const c = response.clanInfo;
 		return {
 			clan_id: c.clan_id,
 			public_meta: c.public_meta,
 			member_count: c.member_count,
 			capacity_limit: c.capacity_limit,
-			entry_fee_currency_type_id: response.entry_fee_currency_type_id ?? c.entry_fee_currency_type_id,
-			entry_fee_amount: response.entry_fee_amount ?? c.entry_fee_amount,
+			entry_fee_currency_type_id: c.entry_fee_currency_type_id,
+			entry_fee_amount: c.entry_fee_amount,
 			rating_position: c.rating_position,
 			rating_score: c.rating_score,
-			cooldown_until: response.cooldown_until ?? null,
-			members: (response.members || []).map((m) => ({
+			cooldown_until: c.cooldown_until ?? null,
+			members: (c.members || []).map((m) => ({
 				user_id: m.user_id,
 				public_username: m.public_username,
 				avatar_id: m.avatar_id,
@@ -1117,14 +1118,14 @@ class SmarticoAPI {
 
 	public async clanTournamentGetPlayers(
 		user_ext_id: string,
-		tournamentInstanceId: number,
-		clanId: number,
+		tournament_instance_id: number,
+		clan_id: number,
 		force_language?: string,
 	): Promise<TClanTournamentPlayers> {
 		const message = this.buildMessage<GetClanTournamentPlayersRequest, GetClanTournamentPlayersResponse>(
 			user_ext_id,
 			ClassId.GET_CLAN_TOURNAMENT_PLAYERS_REQUEST,
-			{ tournamentInstanceId, clanId, forceLanguage: force_language },
+			{ tournament_instance_id, clan_id, force_language },
 		);
 		const response = await this.send<GetClanTournamentPlayersResponse>(
 			message,

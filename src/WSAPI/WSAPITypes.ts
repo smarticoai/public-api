@@ -418,6 +418,8 @@ export interface TTournament {
 	hide_leaderboard_min_scores?: boolean;
 	/** Total scores across all participants in the tournament */
 	total_scores?: number;
+	/** True when this tournament groups participants by clan */
+	is_clan_based?: boolean;
 }
 
 /**
@@ -479,8 +481,6 @@ export interface TTournamentDetailed extends TTournament {
 		points?: number;
 	}[];
 
-	/** True when this tournament groups participants by clan */
-	is_clan_based?: boolean;
 	/** Ranked list of clans in this tournament; null for non-clan tournaments */
 	clan_leaderboard?: {
 		clan_id: number;
@@ -575,6 +575,8 @@ export interface TClans {
 	user_clan_id: number | null;
 	/** Cooldown-until date string; null if no cooldown */
 	cooldown_until: string | null;
+	/** Epoch ms when the current user joined their clan; null if clanless */
+	join_date: number | null;
 }
 
 /**
