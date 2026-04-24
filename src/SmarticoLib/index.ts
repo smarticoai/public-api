@@ -692,6 +692,7 @@ export interface GetTournamentsResponse extends ProtocolResponse {
 }
 declare enum TournamentRegistrationError {
 	NO_ERROR = 0,
+	TOURNAMENT_USER_CANNOT_JOIN_WITHOUT_CLAN = 1010,
 	TOURNAMENT_INSTANCE_NOT_FOUND = 30001,
 	TOURNAMENT_REGISTRATION_NOT_ENOUGH_POINTS = 30002,
 	TOURNAMENT_INSTANCE_NOT_IN_STATE = 30003,
