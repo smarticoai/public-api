@@ -1,14 +1,16 @@
 import { ProtocolResponse } from '../Base/ProtocolResponse';
 
 export interface ClanTournamentPlayerRaw {
-	user_id: number;
-	public_username: string;
+	userId: number;
+	cleanExtUserId: string;
+	userAltName: string;
 	avatar_id: string;
 	avatar_real_id: number;
 	position: number;
 	scores: number;
-	is_me: boolean;
-	clean_ext_user_id: string;
+	isMe: boolean;
+	registration_status?: number;
+	crmBrandId?: number;
 	avatar_url?: string;
 }
 
@@ -19,15 +21,15 @@ export interface GetClanTournamentPlayersResponse extends ProtocolResponse {
 }
 
 export interface TClanTournamentPlayer {
-	user_id: number;
-	public_username: string;
+	userId: number;
+	cleanExtUserId: string;
+	userAltName: string;
 	avatar_id: string;
 	avatar_real_id: number;
 	avatar_url?: string;
 	position: number;
 	scores: number;
-	is_me: boolean;
-	clean_ext_user_id: string;
+	isMe: boolean;
 }
 
 export interface TClanTournamentPlayersResult {
@@ -44,15 +46,15 @@ export const clanTournamentPlayersTransform = (response: GetClanTournamentPlayer
 			image_url: response.clan_public_meta.image_url,
 		},
 		players: (response.players || []).map((p) => ({
-			user_id: p.user_id,
-			public_username: p.public_username,
+			userId: p.userId,
+			cleanExtUserId: p.cleanExtUserId,
+			userAltName: p.userAltName,
 			avatar_id: p.avatar_id,
 			avatar_real_id: p.avatar_real_id,
 			avatar_url: p.avatar_url,
 			position: p.position,
 			scores: p.scores,
-			is_me: p.is_me,
-			clean_ext_user_id: p.clean_ext_user_id,
+			isMe: p.isMe,
 		})),
 	};
 };
