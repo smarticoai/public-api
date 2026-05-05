@@ -9,6 +9,7 @@ import { MissionUtils } from './MissionsUtils';
 import { ScheduledMissionType } from './ScheduledMissionType';
 import { UserAchievementTask } from './UserAchievementTask';
 import { BadgesTimeLimitStates } from './BadgesTimeLimitStates';
+import { AchievementClaimPeriodTypeId } from './AchievementClaimTypeId';
 
 export interface UserAchievement {
 	ach_id?: number;
@@ -47,6 +48,8 @@ export interface UserAchievement {
 	completed_this_month?: boolean;
 	custom_section_type_id?: number;
 	badgeTimeLimitState?: BadgesTimeLimitStates;
+	prize_claim_expiration_date?: number;
+	prize_claim_period_type_id?: AchievementClaimPeriodTypeId;
 }
 
 export const enrichUserAchievementsWithBadgeState = (items: UserAchievement[]): UserAchievement[] => {
@@ -156,6 +159,8 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				claim_button_action: r.ach_public_meta.claim_button_action,
 				badgeTimeLimitState: r.badgeTimeLimitState,
 				hide_locked_mission: r.ach_public_meta.hide_locked_mission,
+				prize_claim_expiration_date: r.prize_claim_expiration_date,
+				prize_claim_period_type_id: r.prize_claim_period_type_id,
 			};
 
 			if (r.ach_status_id === AchievementStatus.Recurring) {

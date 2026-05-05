@@ -24,3 +24,4 @@ export * from './MissionsUtils';
 export * from './MissionCategory';
 export * from './UserAchievementTaskAffectsProgress';
 export * from './BadgesTimeLimitStates';
+export * from './AchievementClaimTypeId';

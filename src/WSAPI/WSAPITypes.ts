@@ -11,6 +11,7 @@ import { PointChangeSourceType } from '../ActivityLog/PointChangeSourceType';
 import { UserBalanceType } from '../ActivityLog/UserBalanceType';
 import { SAWGPMarketType } from '../Quiz/MarketsType';
 import { QuizAnswersValueType } from '../Quiz/MarketsAnswers';
+import { AchievementClaimPeriodTypeId } from '../Missions/AchievementClaimTypeId';
 
 
 /** Preset ribbon keys or a custom image URL. For custom images **250×300 px** */
@@ -840,6 +841,12 @@ export interface TMissionOrBadge {
 
 	/** Action for the claim reward button */
 	claim_button_action?: string;
+
+	/** The date/timestamp indicating when the mission claim will expire */
+	prize_claim_expiration_date?: number;
+
+	/** The type of the prize claim period (Relative or Exact time and date) */
+	prize_claim_period_type_id?: AchievementClaimPeriodTypeId;
 
 	/** Badge time limit state for badges with time restrictions */
 	badgeTimeLimitState?: BadgesTimeLimitStates;
