@@ -203,3 +203,15 @@
 ### badgeTimeLimitState?
 
 > `optional` **badgeTimeLimitState?**: [`BadgesTimeLimitStates`](../enumerations/BadgesTimeLimitStates.md)
+
+***
+
+### prize\_claim\_expiration\_date?
+
+> `optional` **prize\_claim\_expiration\_date?**: `number`
+
+***
+
+### prize\_claim\_period\_type\_id?
+
+> `optional` **prize\_claim\_period\_type\_id?**: `AchievementClaimPeriodTypeId`

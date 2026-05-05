@@ -40,6 +40,6 @@
 
 ***
 
-### tiers
+### player\_tiers
 
-> **tiers**: [`ClanPrizeTier`](ClanPrizeTier.md)[]
+> **player\_tiers**: [`ClanPrizeTier`](ClanPrizeTier.md)[]

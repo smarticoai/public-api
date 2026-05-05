@@ -392,3 +392,11 @@ When enabled, users who don’t meet the minimum qualifying score will be hidden
 > `optional` **total\_scores?**: `number`
 
 Total scores across all participants in the tournament
+
+***
+
+### is\_clan\_based?
+
+> `optional` **is\_clan\_based?**: `boolean`
+
+True when this tournament groups participants by clan

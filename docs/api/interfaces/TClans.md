@@ -25,3 +25,11 @@ The clan ID the current user belongs to; null if clanless
 > **cooldown\_until**: `string`
 
 Cooldown-until date string; null if no cooldown
+
+***
+
+### join\_date
+
+> **join\_date**: `number`
+
+Epoch ms when the current user joined their clan; null if clanless

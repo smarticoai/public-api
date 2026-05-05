@@ -2,30 +2,30 @@
 
 ## Properties
 
-### clan\_id
+### clanId
 
-> **clan\_id**: `number`
-
-***
-
-### public\_meta
-
-> **public\_meta**: [`ClanPublicMeta`](ClanPublicMeta.md)
+> **clanId**: `number`
 
 ***
 
-### position
+### publicMeta
 
-> **position**: `number`
-
-***
-
-### total\_score
-
-> **total\_score**: `number`
+> **publicMeta**: [`ClanPublicMeta`](ClanPublicMeta.md)
 
 ***
 
-### contributing\_members
+### rank
 
-> **contributing\_members**: `number`
+> **rank**: `number`
+
+***
+
+### totalScore
+
+> **totalScore**: `number`
+
+***
+
+### memberCount
+
+> **memberCount**: `number`

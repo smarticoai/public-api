@@ -441,6 +441,18 @@ Total scores across all participants in the tournament
 
 ***
 
+### is\_clan\_based?
+
+> `optional` **is\_clan\_based?**: `boolean`
+
+True when this tournament groups participants by clan
+
+#### Inherited from
+
+[`TTournament`](TTournament.md).[`is_clan_based`](TTournament.md#is_clan_based)
+
+***
+
 ### related\_games?
 
 > `optional` **related\_games?**: [`AchRelatedGame`](AchRelatedGame-1.md)[]
@@ -608,14 +620,6 @@ if the prize is points related, indicates amount of points
 #### Overrides
 
 [`TTournament`](TTournament.md).[`prizes`](TTournament.md#prizes)
-
-***
-
-### is\_clan\_based?
-
-> `optional` **is\_clan\_based?**: `boolean`
-
-True when this tournament groups participants by clan
 
 ***
 

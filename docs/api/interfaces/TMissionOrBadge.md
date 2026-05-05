@@ -353,6 +353,22 @@ Action for the claim reward button
 
 ***
 
+### prize\_claim\_expiration\_date?
+
+> `optional` **prize\_claim\_expiration\_date?**: `number`
+
+The date/timestamp indicating when the mission claim will expire
+
+***
+
+### prize\_claim\_period\_type\_id?
+
+> `optional` **prize\_claim\_period\_type\_id?**: `AchievementClaimPeriodTypeId`
+
+The type of the prize claim period (Relative or Exact time and date)
+
+***
+
 ### badgeTimeLimitState?
 
 > `optional` **badgeTimeLimitState?**: [`BadgesTimeLimitStates`](../enumerations/BadgesTimeLimitStates.md)
