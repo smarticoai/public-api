@@ -431,6 +431,16 @@ export interface SAWTemplateUI {
      */
     steps_to_finish_game?: number;
 
+    /**
+     * Minimum number of path steps / collectible prizes a Voyager session
+     * must include before the game can finish.  Acts as a floor for the
+     * randomly-chosen path length so that sessions cannot terminate after
+     * only one or two prizes.  When omitted, no minimum is enforced.
+     * Must be `>= 1` and `<= steps_to_finish_game`.
+     * Back-Office label: _"Min. number of prizes"_.
+     */
+    min_steps_to_finish_game?: number;
+
     // ─── Voyager specific ────────────────────────────────────────────────────
 
     /**
