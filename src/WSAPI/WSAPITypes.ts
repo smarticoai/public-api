@@ -1067,6 +1067,8 @@ export interface TUICustomSection {
 	overview_missions_filter?: AchOverviewMissionsFilter;
 	/** Quantity of missions to be shown in overview */
 	overview_missions_count?: number;
+	/** URL or DP to be used for custom section */
+	url_or_dp?: string;
 	/** Data to be used for Liquid templates */
 	liquid_entity_data?: LiquidEntityData[];
 	/** Tournament ID to be used for Liquid templates */

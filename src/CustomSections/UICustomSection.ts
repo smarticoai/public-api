@@ -19,6 +19,7 @@ export interface UICustomSection {
 	mission_tabs_options?: AchMissionsTabsOptions;
 	overview_missions_filter?: AchOverviewMissionsFilter;
 	overview_missions_count?: number;
+	url_or_dp?: string;
 	liquid_entity_data?: LiquidEntityData[];
 	ach_tournament_id?: number;
 	raffle_id?: number;
@@ -47,6 +48,7 @@ export const UICustomSectionTransform = (response: GetCustomSectionsResponse): T
 				mission_tabs_options: r.mission_tabs_options,
 				overview_missions_count: r.overview_missions_count,
 				overview_missions_filter: r.overview_missions_filter,
+				url_or_dp: r.url_or_dp,
 				theme: r.theme,
 				...(r.section_type_id === AchCustomSectionType.LEVELS
 					? {
