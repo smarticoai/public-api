@@ -90,6 +90,14 @@ Quantity of missions to be shown in overview
 
 ***
 
+### url\_or\_dp?
+
+> `optional` **url\_or\_dp?**: `string`
+
+URL or DP to be used for custom section
+
+***
+
 ### liquid\_entity\_data?
 
 > `optional` **liquid\_entity\_data?**: [`LiquidEntityData`](../enumerations/LiquidEntityData.md)[]

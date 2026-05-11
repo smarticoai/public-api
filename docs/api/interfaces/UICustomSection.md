@@ -62,6 +62,12 @@
 
 ***
 
+### url\_or\_dp?
+
+> `optional` **url\_or\_dp?**: `string`
+
+***
+
 ### liquid\_entity\_data?
 
 > `optional` **liquid\_entity\_data?**: [`LiquidEntityData`](../enumerations/LiquidEntityData.md)[]
