@@ -5,3 +5,4 @@ export * from './GetClanInfoRequest';
 export * from './GetClanInfoResponse';
 export * from './JoinClanRequest';
 export * from './JoinClanResponse';
+export * from './JoinClanErrorCode';

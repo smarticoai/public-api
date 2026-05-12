@@ -1,6 +1,7 @@
 import { ProtocolResponse } from '../Base/ProtocolResponse';
+import { JoinClanErrorCode } from './JoinClanErrorCode';
 
 export interface JoinClanResponse extends ProtocolResponse {
-	errCode?: number;
+	errCode?: JoinClanErrorCode;
 	errMsg?: string;
 }
