@@ -454,4 +454,11 @@ export interface SAWTemplateUI {
      * | `SAWGameDifficultyType.HARD = 3` | Hard |
      */
     game_difficulty?: SAWGameDifficultyType;
+
+	/**
+	 * Minutes for the Voyager seed window.
+	 * The seed window is the range of seeds that can be used to generate the map.
+	 * The seed window is used to ensure that the map is generated the same way for each player.
+	 */
+	voyager_seed_window_min?: number;
 }
