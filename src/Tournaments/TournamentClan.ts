@@ -23,6 +23,7 @@ export interface ClanPrizeStructureEntry {
 	/** 1 = Fixed, 2 = Dynamic */
 	prize_type_id: number;
 	prize_pool_amount: number | null;
+	prize_pool_currency_code: string | null;
 	activity_type_id: number | null;
 	details_json: Record<string, any> | null;
 	public_meta: ClanPublicMeta | null;

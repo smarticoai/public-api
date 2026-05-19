@@ -81,6 +81,7 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 					clan_place: entry.clan_place,
 					prize_type_id: entry.prize_type_id,
 					prize_pool_amount: entry.prize_pool_amount,
+					prize_pool_currency_code: entry.prize_pool_currency_code,
 					activity_type_id: entry.activity_type_id,
 					details_json: entry.details_json,
 					public_meta: entry.public_meta

@@ -1049,10 +1049,11 @@ export interface TTournamentDetailed extends TTournament {
 	user_score_in_clan?: number | null;
 	/** Per-clan prize structure; null for non-clan tournaments */
 	clan_prize_structure?: {
-			clan_place: number;
+		clan_place: number;
 		/** 1 = Fixed, 2 = Dynamic */
 		prize_type_id: number;
 		prize_pool_amount: number | null;
+		prize_pool_currency_code: string | null;
 		activity_type_id: number | null;
 		details_json: Record<string, any>;
 		public_meta: { name: string; description: string; image_url: string } | null;
