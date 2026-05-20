@@ -8,6 +8,10 @@ export interface ClanLeaderboardEntry {
 	memberCount: number;
 }
 
+export interface ClanPrizePublicMeta extends ClanPublicMeta {
+	prize_name?: string;
+}
+
 export interface ClanPrizeTier {
 	player_place_from: number;
 	player_place_to: number;
@@ -26,6 +30,6 @@ export interface ClanPrizeStructureEntry {
 	prize_pool_currency_code: string | null;
 	activity_type_id: number | null;
 	details_json: Record<string, any> | null;
-	public_meta: ClanPublicMeta | null;
+	public_meta: ClanPrizePublicMeta | null;
 	player_tiers: ClanPrizeTier[] | null;
 }

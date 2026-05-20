@@ -85,7 +85,12 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 					activity_type_id: entry.activity_type_id,
 					details_json: entry.details_json,
 					public_meta: entry.public_meta
-						? { name: entry.public_meta.name, description: entry.public_meta.description, image_url: entry.public_meta.image_url }
+						? {
+								name: entry.public_meta.name,
+								description: entry.public_meta.description,
+								image_url: entry.public_meta.image_url,
+								prize_name: entry.public_meta.prize_name,
+						  }
 						: null,
 					tiers: (entry.player_tiers || []).map((tier) => ({
 						player_place_from: tier.player_place_from,

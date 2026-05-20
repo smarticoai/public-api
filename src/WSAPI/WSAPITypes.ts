@@ -505,7 +505,7 @@ export interface TTournamentDetailed extends TTournament {
 		prize_pool_currency_code: string | null;
 		activity_type_id: number | null;
 		details_json: Record<string, any>;
-		public_meta: { name: string; description: string; image_url: string } | null;
+		public_meta: { name: string; description: string; image_url: string; prize_name?: string } | null;
 		tiers: {
 			player_place_from: number;
 			player_place_to: number;
