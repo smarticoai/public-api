@@ -602,9 +602,12 @@ _smartico.api.playMiniGameBatch(55, 10).then((result) => {
 
 > **requestMissionOptIn**(`mission_id`): `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
 
-Requests an opt-in for the specified mission_id. Returns the err_code.
-
-**Visitor mode: not supported**
+Opt the current user in to a mission. The mission must have
+`is_requires_optin: true` (from `getMissions()`) and must not already
+be opted-in or locked. After a successful opt-in, the user's task
+progress starts counting toward this mission — events fired BEFORE
+opt-in do not count retroactively (except `UNLOCK_ACHIEVEMENT` tasks,
+which are exempt and can fire pre-opt-in).
 
 #### Parameters
 
@@ -612,9 +615,94 @@ Requests an opt-in for the specified mission_id. Returns the err_code.
 
 `number`
 
+The mission `id` (from `getMissions()`)
+
 #### Returns
 
 `Promise`\<[`TMissionOptInResult`](../interfaces/TMissionOptInResult.md)\>
+
+`{ err_code, err_message }`; success when `err_code === 0`
+
+#### Remarks
+
+**Preconditions**
+Only call when the mission has `is_requires_optin === true`,
+`is_opted_in === false`, and `is_locked === false`. Calling on a
+mission that does not require opt-in is wasted; calling twice returns
+`40010`.
+
+**Error codes** (in `err_code`)
+- `0` — success; task progress counting begins
+- `105` — wrong mission id (different label) OR visibility conditions
+  not met. Same code covers both; use `err_message` to disambiguate.
+- `40010` — already opted-in. Safe to treat as "no-op success"; usually
+  means local mission state was stale (e.g. user opted in from another
+  session/tab).
+- `40013` — mission not opt-in-able: missing `requires_optin`, in
+  DRAFT/ARCHIVED state, or outside its `active_from_ts` /
+  `active_till_ts` window.
+- `40014` — mission is locked; user has unlock-tasks remaining.
+  Surface the mission's `unlock_mission_description` to guide them.
+- other non-zero — generic server error. Surface `err_message` if any.
+
+**Time-limited missions**
+For missions with `time_limit_ms > 0`, the countdown begins at opt-in
+time, not at mission creation. Server records expiration as
+`optin_date + time_limit_ms`.
+
+**Refresh after success**
+The SDK refreshes its mission cache automatically on opt-in response;
+any `onUpdate` callback passed to a prior `getMissions({ onUpdate })`
+fires with the new state shortly after. No manual re-fetch needed.
+
+**Idempotency**: not idempotent. A second call returns `40010`. Guard
+the call site against double-clicks.
+
+**Side effects**: does NOT award points / badges / levels directly.
+Rewards come from task completion, which is itself gated on opt-in.
+May affect visibility of other missions whose visibility conditions
+depend on this opt-in.
+
+**UI guidance**
+- Show a loading indicator (spinner, dots, button-disable) while the
+  promise is pending; opt-in is a server round-trip and may take
+  100–500ms under normal conditions.
+- Disable the trigger element for the duration of the call to prevent
+  double-clicks. The local `is_opted_in` flag won't flip until the
+  `onUpdate` callback fires post-response.
+- Treat `err_code === 0` and `err_code === 40010` identically in the
+  UI: hide the opt-in button. Don't surface 40010 as an error.
+- For `err_code === 40014` (locked), show the mission's
+  `unlock_mission_description` instead of a generic error.
+- Do NOT optimistically set `is_opted_in = true` before the response.
+  Authoritative refresh comes from the SDK's `onUpdate` invocation,
+  not from local state.
+
+**Visitor mode: not supported**
+
+#### Example
+
+```ts
+const missions = await window._smartico.api.getMissions({ onUpdate: refreshUI });
+const mission = missions.find(m => m.id === missionId);
+
+if (!mission || !mission.is_requires_optin || mission.is_opted_in || mission.is_locked) {
+  return;
+}
+
+setLoading(true);
+const r = await window._smartico.api.requestMissionOptIn(mission.id);
+setLoading(false);
+
+if (r.err_code === 0 || r.err_code === 40010) {
+  // success or already-opted-in — both fine; onUpdate will fire
+} else if (r.err_code === 40014) {
+  // locked — show unlock-task description
+  showUnlockTasks(mission.unlock_mission_description);
+} else {
+  showError(r.err_message ?? 'Could not opt in to mission');
+}
+```
 
 ***
 

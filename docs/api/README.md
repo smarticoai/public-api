@@ -160,6 +160,7 @@
 - [GetTournamentInfoResponse](interfaces/GetTournamentInfoResponse.md)
 - [Tournament](interfaces/Tournament.md)
 - [ClanLeaderboardEntry](interfaces/ClanLeaderboardEntry.md)
+- [ClanPrizePublicMeta](interfaces/ClanPrizePublicMeta.md)
 - [ClanPrizeTier](interfaces/ClanPrizeTier.md)
 - [ClanPrizeStructureEntry](interfaces/ClanPrizeStructureEntry.md)
 - [TournamentPlayer](interfaces/TournamentPlayer.md)

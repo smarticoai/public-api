@@ -22,6 +22,12 @@
 
 ***
 
+### prize\_pool\_currency\_code
+
+> **prize\_pool\_currency\_code**: `string`
+
+***
+
 ### activity\_type\_id
 
 > **activity\_type\_id**: `number`
@@ -36,7 +42,7 @@
 
 ### public\_meta
 
-> **public\_meta**: [`ClanPublicMeta`](ClanPublicMeta.md)
+> **public\_meta**: [`ClanPrizePublicMeta`](ClanPrizePublicMeta.md)
 
 ***
 

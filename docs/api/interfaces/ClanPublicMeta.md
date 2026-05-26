@@ -1,5 +1,9 @@
 # Interface: ClanPublicMeta
 
+## Extended by
+
+- [`ClanPrizePublicMeta`](ClanPrizePublicMeta.md)
+
 ## Properties
 
 ### name

@@ -707,6 +707,10 @@ Per-clan prize structure; null for non-clan tournaments
 
 > **prize\_pool\_amount**: `number`
 
+#### prize\_pool\_currency\_code
+
+> **prize\_pool\_currency\_code**: `string`
+
 #### activity\_type\_id
 
 > **activity\_type\_id**: `number`
@@ -730,6 +734,10 @@ Per-clan prize structure; null for non-clan tournaments
 ##### public\_meta.image\_url
 
 > **image\_url**: `string`
+
+##### public\_meta.prize\_name?
+
+> `optional` **prize\_name?**: `string`
 
 #### tiers
 

@@ -563,3 +563,13 @@ controlling obstacle frequency and game speed.
 | `SAWGameDifficultyType.EASY = 1` | Easy |
 | `SAWGameDifficultyType.MEDIUM = 2` | Medium |
 | `SAWGameDifficultyType.HARD = 3` | Hard |
+
+***
+
+### voyager\_seed\_window\_min?
+
+> `optional` **voyager\_seed\_window\_min?**: `number`
+
+Minutes for the Voyager seed window.
+The seed window is the range of seeds that can be used to generate the map.
+The seed window is used to ensure that the map is generated the same way for each player.
