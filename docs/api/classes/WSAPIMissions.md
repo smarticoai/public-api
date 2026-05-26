@@ -104,7 +104,7 @@ reaching the SDK:
   section. The list still includes it — filter it out client-side
   for general views.
 
-**UI guidance**: see [UI Guide — `getMissions`](../../docs/ui/missions/UIGuide_getMissions.md).
+**UI guidance**: see [UI Guide — `getMissions`](../../ui/missions/UIGuide_getMissions.md).
 
 #### Example
 
@@ -226,7 +226,7 @@ objects but should be ignored by badge UI):
 **Idempotency / Side effects**: fetch-only; safe to call repeatedly.
 The cache layer deduplicates concurrent calls within the TTL window.
 
-**UI guidance**: see [UI Guide — `getBadges`](../../docs/ui/missions/UIGuide_getBadges.md).
+**UI guidance**: see [UI Guide — `getBadges`](../../ui/missions/UIGuide_getBadges.md).
 
 #### Example
 
@@ -337,7 +337,7 @@ headers for them.
 
 **Side effects**: none — pure metadata read.
 
-**UI guidance**: see [UI Guide — `getAchCategories`](../../docs/ui/missions/UIGuide_getAchCategories.md).
+**UI guidance**: see [UI Guide — `getAchCategories`](../../ui/missions/UIGuide_getAchCategories.md).
 
 #### Example
 
@@ -440,7 +440,7 @@ Rewards come from task completion, which is itself gated on opt-in.
 May affect visibility of other missions whose visibility conditions
 depend on this opt-in.
 
-**UI guidance**: see [UI Guide — `requestMissionOptIn`](../../docs/ui/missions/UIGuide_requestMissionOptIn.md).
+**UI guidance**: see [UI Guide — `requestMissionOptIn`](../../ui/missions/UIGuide_requestMissionOptIn.md).
 
 **Visitor mode: not supported**
 
@@ -572,7 +572,7 @@ against double-clicks; the SDK does not enforce its own in-flight lock.
   in the response, but visible via the mission auto-refresh and any
   subsequent bonus / badge updates.
 
-**UI guidance**: see [UI Guide — `requestMissionClaimReward`](../../docs/ui/missions/UIGuide_requestMissionClaimReward.md).
+**UI guidance**: see [UI Guide — `requestMissionClaimReward`](../../ui/missions/UIGuide_requestMissionClaimReward.md).
 
 #### Example
 

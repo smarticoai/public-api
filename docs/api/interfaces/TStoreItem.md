@@ -213,6 +213,14 @@ The date when the store item will be available till
 
 ***
 
+### show\_timer?
+
+> `optional` **show\_timer?**: `boolean`
+
+Should countdown timer be shown when `active_till_date` is present
+
+***
+
 ### discounted\_price?
 
 > `optional` **discounted\_price?**: `number`

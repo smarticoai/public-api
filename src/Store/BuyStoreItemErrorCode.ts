@@ -1,4 +1,8 @@
 export enum BuyStoreItemErrorCode {
+	/** Generic server error / control-group rejection */
+	SHOP_FAILED_GENERIC = 1,
+	/** Label mismatch detected before purchase transaction */
+	SHOP_WRONG_LABEL_PRECHECK = 106,
 	/** User don't have enough points on balance */
 	SHOP_NO_BALANCE = 11000,
 	/** Wrong shop item id */
@@ -13,6 +17,8 @@ export enum BuyStoreItemErrorCode {
 	SHOP_FAILED_TO_BUY_MATCHING_BONUS = 11005,
 	/** Failed to buy item because of limit of max items is reached */
 	SHOP_FAILED_MAX_BOUGHT_ITEMS_REACHED = 11006,
+	/** Bonus was issued but a follow-up redemption step failed */
+	SHOP_FAILED_BONUS_REDEMPTION = 11007,
 	/** Failed to buy item because no more items are available */
 	SHOP_FAILED_POOL_EMPTY = 11009,
 	/** User doesn't have enough gems on balance */
@@ -21,4 +27,6 @@ export enum BuyStoreItemErrorCode {
 	SHOP_NO_BALANCE_DIAMONDS = 11012,
 	/** Failed to buy item because of purchase limitation */
 	SHOP_FAILED_PURCHASE_LIMITATION = 11014,
+	/** Uncaught server exception */
+	SHOP_UNEXPECTED_EXCEPTION = 9999,
 }

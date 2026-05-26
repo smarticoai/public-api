@@ -2,6 +2,22 @@
 
 ## Enumeration Members
 
+### SHOP\_FAILED\_GENERIC
+
+> **SHOP\_FAILED\_GENERIC**: `1`
+
+Generic server error / control-group rejection
+
+***
+
+### SHOP\_WRONG\_LABEL\_PRECHECK
+
+> **SHOP\_WRONG\_LABEL\_PRECHECK**: `106`
+
+Label mismatch detected before purchase transaction
+
+***
+
 ### SHOP\_NO\_BALANCE
 
 > **SHOP\_NO\_BALANCE**: `11000`
@@ -58,6 +74,14 @@ Failed to buy item because of limit of max items is reached
 
 ***
 
+### SHOP\_FAILED\_BONUS\_REDEMPTION
+
+> **SHOP\_FAILED\_BONUS\_REDEMPTION**: `11007`
+
+Bonus was issued but a follow-up redemption step failed
+
+***
+
 ### SHOP\_FAILED\_POOL\_EMPTY
 
 > **SHOP\_FAILED\_POOL\_EMPTY**: `11009`
@@ -87,3 +111,11 @@ User doesn't have enough diamonds on balance
 > **SHOP\_FAILED\_PURCHASE\_LIMITATION**: `11014`
 
 Failed to buy item because of purchase limitation
+
+***
+
+### SHOP\_UNEXPECTED\_EXCEPTION
+
+> **SHOP\_UNEXPECTED\_EXCEPTION**: `9999`
+
+Uncaught server exception

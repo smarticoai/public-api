@@ -11,11 +11,8 @@ Outcome of the store-item purchase. `0` means the purchase succeeded
 signals a failure.
 
 The typed values are the named codes in the [BuyStoreItemErrorCode](../enumerations/BuyStoreItemErrorCode.md)
-enum, but the field is `number` at runtime — the server can also emit
-codes that are NOT in the public enum (`1`, `106`, `11007`, `9999` —
-see the full table on `buyStoreItem` in WSAPI). Always branch on the
-known codes first and fall back to a generic error handler for
-anything else.
+enum. Always branch on known codes first and fall back to a generic
+error handler for anything else.
 
 See the `buyStoreItem` TSDoc for the full error-code table, the
 Buy-button decision matrix, and per-code UI guidance.

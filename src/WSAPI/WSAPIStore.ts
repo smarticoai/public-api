@@ -82,6 +82,12 @@ import { WSAPIBonuses } from './WSAPIBonuses';
 
 /** @group Store */
 export class WSAPIStore extends WSAPIBonuses {
+	private storeHistoryOnUpdateParams: { limit: number; offset: number } = { limit: 20, offset: 0 };
+
+	private storeHistoryCacheKey(limit: number, offset: number): string {
+		return `${onUpdateContextKey.StoreHistory}:${limit}:${offset}`;
+	}
+
 	/**
 	 * Returns the catalog of buyable store items visible to the current user,
 	 * scoped server-side to what the user is qualified to see. Optionally
@@ -324,8 +330,7 @@ export class WSAPIStore extends WSAPIBonuses {
 	 *   transient failure; show a "try again later" message.
 	 * - `106` — label mismatch detected before the purchase transaction
 	 *   (e.g. cross-label item id). From a consumer perspective: the item is
-	 *   not purchasable by this user. Not currently a member of the public
-	 *   `BuyStoreItemErrorCode` enum.
+	 *   not purchasable by this user.
 	 * - `11000` (`SHOP_NO_BALANCE`) — insufficient **points** balance.
 	 *   Show an insufficient-balance message that names how many points are
 	 *   missing (`price - current_points_balance`). The Buy button on the
@@ -358,8 +363,7 @@ export class WSAPIStore extends WSAPIBonuses {
 	 * - `11007` — bonus was issued but a follow-up redemption step failed
 	 *   server-side. Funds **are** debited and the purchase event is recorded;
 	 *   the consumer's UI should refresh the store list (auto-refresh will
-	 *   fire) and surface a soft warning rather than a hard error. Not
-	 *   currently a member of the public `BuyStoreItemErrorCode` enum.
+	 *   fire) and surface a soft warning rather than a hard error.
 	 * - `11009` (`SHOP_FAILED_POOL_EMPTY`) — stock pool is empty / sold out.
 	 *   Show a "sold out" message; auto-refresh will mark the item as such
 	 *   in subsequent `getStoreItems()` updates.
@@ -371,8 +375,7 @@ export class WSAPIStore extends WSAPIBonuses {
 	 *   purchase window (purchase weekday / time-of-day / window). Surface
 	 *   the item's `purchase_limit_message` if set, otherwise `err_message`.
 	 * - `9999` — uncaught server exception. Treat as a transient failure;
-	 *   surface a generic error and allow retry. Not currently a member of
-	 *   the public `BuyStoreItemErrorCode` enum.
+	 *   surface a generic error and allow retry.
 	 * - other non-zero — generic server error. Surface `err_message` if any.
 	 *
 	 * **Idempotency**: NOT idempotent. The server performs no de-duplication —
@@ -676,21 +679,13 @@ export class WSAPIStore extends WSAPIBonuses {
 	 *   call `JSON.parse()` yourself.
 	 *
 	 * **Cache & refresh**
-	 * - The SDK caches the response under a single key (`StoreHistory`) for
-	 *   30 seconds. Repeated calls within that window resolve from the cache
-	 *   without a network round-trip. The cache key is shared across all
-	 *   `(limit, offset)` combinations — if you call once with `limit = 20,
-	 *   offset = 0` and then call again with `limit = 20, offset = 20`, the
-	 *   second call may serve the cached first-page array. Treat the cache as
-	 *   covering "the first page only"; for true pagination, avoid relying on
-	 *   the cache and either bypass it (consumer-side cache) or accept that
-	 *   load-more pages won't be cached separately.
+	 * - The SDK caches each `(limit, offset)` page separately for 30 seconds.
+	 *   Repeated calls within that window resolve from cache without a
+	 *   network round-trip.
 	 * - The cache is invalidated and `onUpdate` (when registered) is invoked
 	 *   automatically after a successful {@link buyStoreItem} call — the SDK
-	 *   re-fetches the first page (`limit = 20, offset = 0`) and pushes the
-	 *   fresh array to the callback. This always re-fetches page 1, so a
-	 *   consumer paginated past page 1 will need to re-scroll or refetch its
-	 *   subsequent pages manually.
+	 *   re-fetches the same page parameters that were registered together with
+	 *   the current `onUpdate` callback and pushes the fresh array.
 	 * - Multi-tab caveat: if the user has the same brand open in multiple
 	 *   tabs, **all open tabs** receive the `onUpdate` event on a purchase,
 	 *   not only the tab that initiated the buy. The event is scoped to the
@@ -714,9 +709,9 @@ export class WSAPIStore extends WSAPIBonuses {
 	 *   length.
 	 * @param params.onUpdate - Optional callback invoked after a successful
 	 *   {@link buyStoreItem} elsewhere in the session. Receives the refreshed
-	 *   first page (`limit = 20, offset = 0`) — NOT the page parameters
-	 *   passed to this initial call. Only ONE callback can be registered;
-	 *   each new call overwrites the previous one. Pass a stable handler or
+	 *   page for the same `(limit, offset)` used on the call that registered
+	 *   this callback. Only ONE callback can be registered; each new call
+	 *   overwrites the previous one. Pass a stable handler or
 	 *   re-register intentionally on screen entry.
 	 *
 	 * @returns Promise resolving to an array of `TStoreItem` history entries
@@ -792,20 +787,37 @@ export class WSAPIStore extends WSAPIBonuses {
 		offset,
 		onUpdate,
 	}: { limit?: number; offset?: number; onUpdate?: (data: TStoreItem[]) => void } = {}): Promise<TStoreItem[]> {
+		const requestLimit = limit === undefined ? 20 : limit;
+		const requestOffset = offset === undefined ? 0 : offset;
+		const cacheKey = this.storeHistoryCacheKey(requestLimit, requestOffset);
+
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.StoreHistory, onUpdate);
+			this.storeHistoryOnUpdateParams = { limit: requestLimit, offset: requestOffset };
 		}
+
 		return OCache.use(
-			onUpdateContextKey.StoreHistory,
+			cacheKey,
 			ECacheContext.WSAPI,
-			() => this.api.storeGetPurchasedItemsT(this.userExtId, limit, offset),
+			() => this.api.storeGetPurchasedItemsT(this.userExtId, requestLimit, requestOffset),
 			CACHE_DATA_SEC,
 		);
 	}
 
 	protected async updateStorePurchasedItems() {
-		const payload = await this.api.storeGetPurchasedItemsT(this.userExtId, 20, 0);
-		this.updateEntity(onUpdateContextKey.StoreHistory, payload);
+		const payload = await this.api.storeGetPurchasedItemsT(
+			this.userExtId,
+			this.storeHistoryOnUpdateParams.limit,
+			this.storeHistoryOnUpdateParams.offset,
+		);
+		const cacheKey = this.storeHistoryCacheKey(this.storeHistoryOnUpdateParams.limit, this.storeHistoryOnUpdateParams.offset);
+
+		OCache.set(cacheKey, payload, ECacheContext.WSAPI);
+
+		const onUpdate = this.onUpdateCallback.get(onUpdateContextKey.StoreHistory);
+		if (onUpdate) {
+			onUpdate(payload);
+		}
 	}
 
 	protected async updateStoreItems() {

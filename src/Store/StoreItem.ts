@@ -52,6 +52,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				pool: r.shopPool,
 				custom_data: IntUtils.JsonOrText(r.itemPublicMeta.custom_data),
 				active_till_date: r.activeTillDate,
+				show_timer: r.itemPublicMeta.show_timer,
 				discounted_price: r.itemPublicMeta.discount_prize,
 				discount_price_ribbon: r.itemPublicMeta.discount_prize_ribbon,
 				custom_ribbon_image: r.itemPublicMeta.custom_ribbon_image,

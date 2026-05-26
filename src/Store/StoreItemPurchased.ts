@@ -55,6 +55,7 @@ export const StoreItemPurchasedTransform = (items: StoreItemPurchased[]): TStore
 				purchased_this_week: purchasedThisWeek,
 				purchased_this_month: purchasedThisMonth,
 				custom_data: r.itemPublicMeta.custom_data,
+				show_timer: r.itemPublicMeta.show_timer,
 				related_games: (r.relatedGames?.filter((g) => g.game_public_meta.enabled) || []).map((g, i) => ({
 					ext_game_id: g.ext_game_id,
 					game_public_meta: {

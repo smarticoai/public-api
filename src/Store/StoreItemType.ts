@@ -21,7 +21,7 @@ export const StoreItemTypeNamed = (type: StoreItemType): StoreItemTypeName => {
 	return (
 		{
 			[StoreItemType.Bonus]: StoreItemTypeName.Bonus,
-			[StoreItemType.Tangible]: StoreItemTypeName.Bonus,
+			[StoreItemType.Tangible]: StoreItemTypeName.Tangible,
 			[StoreItemType.MiniGameSpin]: StoreItemTypeName.MiniGameSpin,
 			[StoreItemType.ChangeLevel]: StoreItemTypeName.ChangeLevel,
 			[StoreItemType.PrizeDrop]: StoreItemTypeName.PrizeDrop,

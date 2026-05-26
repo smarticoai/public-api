@@ -700,6 +700,8 @@ export interface TStoreItem {
 	purchase_type: 'points' | 'gems' | 'diamonds';
 	/** The date when the store item will be available till */
 	active_till_date?: number;
+	/** Should countdown timer be shown when `active_till_date` is present */
+	show_timer?: boolean;
 	/** The discounted price of the store item */
 	discounted_price?: number;
 	/** The ribbon of the discounted price. */
@@ -990,11 +992,8 @@ export interface TBuyStoreItemResult {
 	 * signals a failure.
 	 *
 	 * The typed values are the named codes in the {@link BuyStoreItemErrorCode}
-	 * enum, but the field is `number` at runtime — the server can also emit
-	 * codes that are NOT in the public enum (`1`, `106`, `11007`, `9999` —
-	 * see the full table on `buyStoreItem` in WSAPI). Always branch on the
-	 * known codes first and fall back to a generic error handler for
-	 * anything else.
+	 * enum. Always branch on known codes first and fall back to a generic
+	 * error handler for anything else.
 	 *
 	 * See the `buyStoreItem` TSDoc for the full error-code table, the
 	 * Buy-button decision matrix, and per-code UI guidance.

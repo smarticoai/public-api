@@ -104,12 +104,15 @@ const UI_GUIDE_DOMAIN = {
 
 function rewriteMediaLinks(text) {
 	let count = 0;
-	// Pattern: `(../_media/<filename>.md)` (when generated inside docs/api/classes/)
+	// Pattern: `(../_media/<filename>.md)` (when generated inside docs/api/classes/).
+	// Rewrite to `(../../ui/<domain>/<filename>.md)` — correct relative from
+	// `docs/api/classes/` to `docs/ui/<domain>/`. Going through `docs/` once is
+	// enough; an extra `docs/` in the path would resolve to `docs/docs/ui/...`.
 	const out = text.replace(/\(\.\.\/_media\/([A-Za-z0-9_]+)\.md\)/g, (m, name) => {
 		const domain = UI_GUIDE_DOMAIN[name];
 		if (!domain) return m; // unknown media file — leave it
 		count++;
-		return `(../../docs/ui/${domain}/${name}.md)`;
+		return `(../../ui/${domain}/${name}.md)`;
 	});
 	return { text: out, count };
 }
