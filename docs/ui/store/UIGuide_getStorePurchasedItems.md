@@ -60,7 +60,7 @@ fields, top-to-bottom:
 ## Detail view
 No tap-to-expand inline detail view exists for history rows. "Buy
 Again" is the only action; it routes through the standard
-[getStoreItems](#getstoreitems) buy modal (full description, related games, etc.
+[getStoreItems](../../api/classes/WSAPIStore.md#getstoreitems) buy modal (full description, related games, etc.
 are surfaced there).
 
 ## Status-specific treatments

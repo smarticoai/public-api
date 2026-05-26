@@ -138,15 +138,15 @@ Apply in priority order; first match wins:
      disabled. Surface a localized insufficient-balance line with the
      deficit.
   5. All clear → **"Buy Now"** button enabled. On click: call
-     [buyStoreItem](#buystoreitem)(`id`) and show loading dots until the
+     [buyStoreItem](../../api/classes/WSAPIStore.md#buystoreitem)(`id`) and show loading dots until the
      response arrives.
 
-After a successful purchase ([buyStoreItem](#buystoreitem) `err_code === 0`):
+After a successful purchase ([buyStoreItem](../../api/classes/WSAPIStore.md#buystoreitem) `err_code === 0`):
 - Close the popup, show a success toast.
 - The SDK auto-fires `onUpdate` with the refreshed catalog — re-render
   from that array, do NOT manually decrement the local `pool`.
 
-On a failed purchase, branch on `err_code` (see [buyStoreItem](#buystoreitem)
+On a failed purchase, branch on `err_code` (see [buyStoreItem](../../api/classes/WSAPIStore.md#buystoreitem)
 for the full error code table — codes `11000` / `11011` / `11012` for
 insufficient balance per currency, `11006` for per-period cap reached,
 `11009` for pool emptied between catalog fetch and buy, `11014` for
@@ -260,5 +260,5 @@ elapsing while the page is open.
   meaningful for display.
 - `onUpdate` is accepted but NEVER fires in visitor mode — there is no
   live channel, so push events are not delivered.
-- [buyStoreItem](#buystoreitem) is not supported in visitor mode; the Buy button
+- [buyStoreItem](../../api/classes/WSAPIStore.md#buystoreitem) is not supported in visitor mode; the Buy button
   should deep-link to a login/registration flow instead.

@@ -32,7 +32,7 @@ Partition the array using this **priority order — first match wins**:
 
 Each mission belongs to exactly ONE bucket. Many UIs render these as
 status tabs / sections. The `availability_status` field
-([AchievementAvailabilityStatus](../enumerations/AchievementAvailabilityStatus.md)) is authoritative for **timer /
+([AchievementAvailabilityStatus](../../api/enumerations/AchievementAvailabilityStatus.md)) is authoritative for **timer /
 window state** (which countdown to show, whether the window has
 elapsed) — but it is NOT a substitute for bucketing: distinguishing
 "locked" from "opt-in required" requires reading `is_locked` and
