@@ -40,6 +40,7 @@
 - [SAWWheelLayout](enumerations/SAWWheelLayout.md)
 - [SAWWinSoundType](enumerations/SAWWinSoundType.md)
 - [AchievementAvailabilityStatus](enumerations/AchievementAvailabilityStatus.md)
+- [AchievementClaimPeriodTypeId](enumerations/AchievementClaimPeriodTypeId.md)
 - [AchievementStatus](enumerations/AchievementStatus.md)
 - [AchievementTaskType](enumerations/AchievementTaskType.md)
 - [AchievementType](enumerations/AchievementType.md)
@@ -259,6 +260,58 @@
 - [TournamentItemsTransform](functions/TournamentItemsTransform.md)
 - [TournamentInstanceStatusName](functions/TournamentInstanceStatusName.md)
 
-## General API
+## Avatars
 
-- [WSAPI](classes/WSAPI.md)
+- [WSAPIAvatars](classes/WSAPIAvatars.md)
+
+## Bonuses
+
+- [WSAPIBonuses](classes/WSAPIBonuses.md)
+
+## Clans
+
+- [WSAPIClans](classes/WSAPIClans.md)
+
+## GamePick
+
+- [WSAPIGamePick](classes/WSAPIGamePick.md)
+
+## General
+
+- [WSAPIGeneral](classes/WSAPIGeneral.md)
+
+## Inbox
+
+- [WSAPIInbox](classes/WSAPIInbox.md)
+
+## Jackpots
+
+- [WSAPIJackpots](classes/WSAPIJackpots.md)
+
+## LeaderBoard
+
+- [WSAPILeaderBoard](classes/WSAPILeaderBoard.md)
+
+## MiniGames
+
+- [WSAPIMiniGames](classes/WSAPIMiniGames.md)
+
+## Missions
+
+- [WSAPIMissions](classes/WSAPIMissions.md)
+
+## Raffles
+
+- [WSAPIRaffles](classes/WSAPIRaffles.md)
+
+## Store
+
+- [WSAPIStore](classes/WSAPIStore.md)
+
+## Tournaments
+
+- [WSAPITournaments](classes/WSAPITournaments.md)
+
+## User
+
+- [WSAPIUser](classes/WSAPIUser.md)

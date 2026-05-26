@@ -668,7 +668,19 @@ export interface TStoreItem {
 	can_buy: boolean;
 	/** The list of IDs of the categories where the store item is assigned, information about categories can be retrieved with getStoreCategories method */
 	category_ids: number[];
-	/** Number of items in the pool avaliable for the purchase.*/
+	/** Number of items remaining in the pool available for purchase.
+	 * `null` means unlimited supply (no pool configured for this item).
+	 * A positive integer is the remaining stock.
+	 * `0` means sold out — the item is still returned by `getStoreItems` so a
+	 * "Sold out" state can be rendered. Operators may instead choose to hide
+	 * pool-empty items entirely (per-item operator flag), in which case
+	 * sold-out items simply disappear from the catalog rather than appearing
+	 * with `pool === 0`.
+	 *
+	 * Pool is decremented server-side on a successful purchase; the client
+	 * observes the new value via the `onUpdate` callback on `getStoreItems`
+	 * (which fires only for the buyer's own purchases — other users'
+	 * concurrent purchases do not push). */
 	pool?: number;
 	/** The custom data of the store item defined by operator. Can be a JSON object, string or number */
 	custom_data: any;
@@ -705,14 +717,32 @@ export interface TStoreItem {
 }
 
 /**
- * TAchCategory describes the badge category item. Each badge item can be assigned to 1 or more categories
+ * TAchCategory describes a mission/badge category. Categories are
+ * operator-defined groupings, configured per-label by the brand operator,
+ * shared across BOTH missions and badges — the same list is returned for
+ * both entity types. A mission or badge can belong to **zero or more**
+ * categories (many-to-many) via its `category_ids: number[]` field on
+ * `TMissionOrBadge`.
+ *
+ * Returned by `_smartico.api.getAchCategories()`. See that method's TSDoc
+ * for translation, refresh, and rendering details.
  */
+// TODOYY: confirm "zero or more" assignment is intentional product semantics — BO may
+// validate that missions/badges must have at least one category on save; if so the SDK
+// shape still has to allow `[]` because legacy records exist.
 export interface TAchCategory {
-	/**ID of the badge category */
+	/** Stable numeric ID of the category. Used as the key when joining to
+	 * `TMissionOrBadge.category_ids: number[]`. */
 	id: number;
-	/**Name of the badge category */
+	/** Display name of the category. **Pre-translated server-side** to the authenticated
+	 * user's stored language (or to the language passed to `_smartico.vapi(lang)` in
+	 * visitor mode). Falls back to the EN base name when a translation is missing — never
+	 * null. Consumers should NOT translate this further. */
 	name: string;
-	/**Order of the badge category among other categories. Default value is 1 */
+	/** Relative position among other categories (lower = appears first). The server does
+	 * NOT pre-sort by this value — the consumer must sort:
+	 * `categories.sort((a, b) => a.order - b.order)`. Default value is 1 when the
+	 * operator did not configure an explicit order. */
 	order: number;
 }
 
@@ -796,7 +826,11 @@ export interface TMissionOrBadge {
 	/** The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px */
 	ribbon?: TRibbon;
 
-	/** ID of the completion fact from ach_completed or ach_completed_recurring tables */
+	/** Stable identifier of the specific completion of this mission. Pass this
+	 * value to `requestMissionClaimReward()` alongside the mission id. Always
+	 * read from a fresh `getMissions()` result; never synthesise or cache
+	 * across sessions. Undefined for badges and for missions that have not
+	 * yet completed. */
 	ach_completed_id?: number;
 
 	/** Flag from achievement if the mission prize will be given only after user claims it */
@@ -920,12 +954,25 @@ export interface TMissionOptInResult {
 }
 
 /**
- * TMissionClaimRewardResult describes the response of call to _smartico.api.requestMissionClaimReward(mission_id, ach_completed_id) method
+ * Response of `_smartico.api.requestMissionClaimReward(mission_id, ach_completed_id)`.
+ *
+ * See `requestMissionClaimReward` TSDoc for the full table of `err_code`
+ * values, preconditions, side effects, and recommended UI handling.
  */
 export interface TMissionClaimRewardResult {
-	/** Error code that represents outcome of the claim request. Successful claim reward in case err_code is 0 */
+	/**
+	 * Error code that represents outcome of the claim request.
+	 * `0` = success (rewards have been credited);
+	 * `40017` = already claimed (treat as idempotent success);
+	 * `40015` = claim window expired;
+	 * `40016` = mission not completed yet (stale local state);
+	 * `1` = generic server error (stale `ach_completed_id`, archived/draft
+	 * mission, label mismatch, completion older than 6 months, or
+	 * `requires_prize_claim=false` on the server). See
+	 * `requestMissionClaimReward` TSDoc for the full table.
+	 */
 	err_code: number;
-	/** Optional error message */
+	/** Optional error message; populated on non-zero `err_code`. */
 	err_message: string;
 }
 
@@ -937,19 +984,43 @@ export interface TTournamentRegistrationResult {
 }
 
 export interface TBuyStoreItemResult {
-	/** Error code representing the result of the purchase of the shop item. Successful purchase if err_code is 0 
+	/**
+	 * Outcome of the store-item purchase. `0` means the purchase succeeded
+	 * (funds debited, reward delivered server-side); any non-zero value
+	 * signals a failure.
+	 *
+	 * The typed values are the named codes in the {@link BuyStoreItemErrorCode}
+	 * enum, but the field is `number` at runtime — the server can also emit
+	 * codes that are NOT in the public enum (`1`, `106`, `11007`, `9999` —
+	 * see the full table on `buyStoreItem` in WSAPI). Always branch on the
+	 * known codes first and fall back to a generic error handler for
+	 * anything else.
+	 *
+	 * See the `buyStoreItem` TSDoc for the full error-code table, the
+	 * Buy-button decision matrix, and per-code UI guidance.
 	 *
 	 * Example for error handling:
-	 * ```javascript
-	 * SmarticoAPI.buyStoreItem(item_id).then(res => {
-	 *   if (res.err_code !== 0) {
-	 *     // YOUR LOGIC HERE, you can use res.err_message, but it's optional and not always present
-	 *   }
-	 * });
+	 * ```ts
+	 * const res = await window._smartico.api.buyStoreItem(item_id);
+	 * if (res.err_code === 0) {
+	 *   console.log('[smartico] purchase succeeded — close the detail modal, show a success toast; the SDK auto-refreshes getStoreItems and the purchased-items list');
+	 * } else if (res.err_code === 11000 || res.err_code === 11011 || res.err_code === 11012) {
+	 *   console.error('[smartico] insufficient balance — show insufficient-balance UI for the item.purchase_type');
+	 * } else if (res.err_code === 11009) {
+	 *   console.error('[smartico] sold out — show a "Sold out" message');
+	 * } else {
+	 *   console.error('[smartico] purchase failed — show a generic error with this message:', res.err_message);
+	 * }
 	 * ```
-	*/
+	 */
 	err_code: BuyStoreItemErrorCode;
-	/** Optional error message */
+	/**
+	 * Optional server-side error message describing the failure. Present
+	 * only on non-zero `err_code`, and even then can be empty. For codes
+	 * that have operator-defined copy on the item itself (`11006` →
+	 * `limit_message`, `11014` → `purchase_limit_message`), prefer the
+	 * item-level copy and use `err_message` only as a fallback.
+	 */
 	err_message: string;
 }
 

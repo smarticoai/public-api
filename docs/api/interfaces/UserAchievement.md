@@ -214,4 +214,4 @@
 
 ### prize\_claim\_period\_type\_id?
 
-> `optional` **prize\_claim\_period\_type\_id?**: `AchievementClaimPeriodTypeId`
+> `optional` **prize\_claim\_period\_type\_id?**: [`AchievementClaimPeriodTypeId`](../enumerations/AchievementClaimPeriodTypeId.md)

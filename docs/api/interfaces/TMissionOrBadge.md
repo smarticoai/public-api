@@ -236,7 +236,11 @@ The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL 
 
 > `optional` **ach\_completed\_id?**: `number`
 
-ID of the completion fact from ach_completed or ach_completed_recurring tables
+Stable identifier of the specific completion of this mission. Pass this
+value to `requestMissionClaimReward()` alongside the mission id. Always
+read from a fresh `getMissions()` result; never synthesise or cache
+across sessions. Undefined for badges and for missions that have not
+yet completed.
 
 ***
 
@@ -363,7 +367,7 @@ The date/timestamp indicating when the mission claim will expire
 
 ### prize\_claim\_period\_type\_id?
 
-> `optional` **prize\_claim\_period\_type\_id?**: `AchievementClaimPeriodTypeId`
+> `optional` **prize\_claim\_period\_type\_id?**: [`AchievementClaimPeriodTypeId`](../enumerations/AchievementClaimPeriodTypeId.md)
 
 The type of the prize claim period (Relative or Exact time and date)
 

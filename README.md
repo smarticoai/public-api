@@ -38,7 +38,36 @@ _smartico.api.getMiniGames( { onUpdate: miniGamesUpdates} ).then( games => {
 
 ```
 
-See the [API documentation](docs/api/classes/WSAPI.md) for all available methods and returning data.
+## API reference
+
+The SDK surface is split across one class per feature area, joined by an internal inheritance chain. Consumers always call `_smartico.api.<methodName>(...)` — the chain is an implementation detail; never import the domain classes directly.
+
+| Domain | Reference | Methods | UI Guides |
+|---|---|---|---|
+| **Levels** | [`WSAPIUser`](docs/api/classes/WSAPIUser.md) | `getLevels`, `getCurrentLevel`, `getUserLevelExtraCounters` | — |
+| **User / General / Utility** | [`WSAPIGeneral`](docs/api/classes/WSAPIGeneral.md) | `getUserProfile`, `checkSegmentMatch`, `checkSegmentListMatch`, `getCustomSections`, `getTranslations`, `getActivityLog`, `getRelatedItemsForGame` | — |
+| **Missions & Badges** | [`WSAPIMissions`](docs/api/classes/WSAPIMissions.md) | `getMissions`, `getBadges`, `getAchCategories`, `requestMissionOptIn`, `requestMissionClaimReward` | [`getMissions`](docs/ui/missions/UIGuide_getMissions.md) · [`getBadges`](docs/ui/missions/UIGuide_getBadges.md) · [`getAchCategories`](docs/ui/missions/UIGuide_getAchCategories.md) · [`requestMissionOptIn`](docs/ui/missions/UIGuide_requestMissionOptIn.md) · [`requestMissionClaimReward`](docs/ui/missions/UIGuide_requestMissionClaimReward.md) |
+| **Bonuses** | [`WSAPIBonuses`](docs/api/classes/WSAPIBonuses.md) | `getBonuses`, `claimBonus` | — |
+| **Store / Shop** | [`WSAPIStore`](docs/api/classes/WSAPIStore.md) | `getStoreItems`, `buyStoreItem`, `getStoreCategories`, `getStorePurchasedItems` | [`getStoreItems`](docs/ui/store/UIGuide_getStoreItems.md) · [`buyStoreItem`](docs/ui/store/UIGuide_buyStoreItem.md) · [`getStoreCategories`](docs/ui/store/UIGuide_getStoreCategories.md) · [`getStorePurchasedItems`](docs/ui/store/UIGuide_getStorePurchasedItems.md) |
+| **Tournaments** | [`WSAPITournaments`](docs/api/classes/WSAPITournaments.md) | `getTournamentsList`, `getTournamentInstanceInfo`, `registerInTournament`, `getClanTournamentPlayers` | — |
+| **Clans** | [`WSAPIClans`](docs/api/classes/WSAPIClans.md) | `getClans`, `getClanInfo`, `joinClan` | — |
+| **Jackpots** | [`WSAPIJackpots`](docs/api/classes/WSAPIJackpots.md) | `jackpotGet`, `jackpotOptIn`, `jackpotOptOut`, `getJackpotWinners`, `getJackpotEligibleGames` | — |
+| **Raffles / Draws** | [`WSAPIRaffles`](docs/api/classes/WSAPIRaffles.md) | `getRaffles`, `getRaffleDrawRun`, `getRaffleDrawRunsHistory`, `claimRafflePrize`, `requestRaffleOptin` | — |
+| **MiniGames / SAW** | [`WSAPIMiniGames`](docs/api/classes/WSAPIMiniGames.md) | `getMiniGames`, `getMiniGamesHistory`, `playMiniGame`, `miniGameWinAcknowledgeRequest`, `playMiniGameBatch` | — |
+| **Avatars** | [`WSAPIAvatars`](docs/api/classes/WSAPIAvatars.md) | `getAvatarsList`, `getAvatarsCustomized`, `getAvatarPrompts`, `setAvatar` | — |
+| **Game Pick (sports / quiz)** | [`WSAPIGamePick`](docs/api/classes/WSAPIGamePick.md) | `gamePickGet*`, `gamePickSubmit*` (9 methods) | — |
+| **Leaderboard** | [`WSAPILeaderBoard`](docs/api/classes/WSAPILeaderBoard.md) | `getLeaderBoard` | — |
+| **Inbox / Messages / Engagement** | [`WSAPIInbox`](docs/api/classes/WSAPIInbox.md) | `getInboxMessages`, `getInboxUnreadCount`, `getInboxMessageBody`, `markInboxMessageAsRead`, `markAllInboxMessagesAsRead`, `markUnmarkInboxMessageAsFavorite`, `deleteInboxMessage`, `deleteAllInboxMessages`, `reportImpressionEvent`, `reportClickEvent` | — |
+
+The shared return / param types live in [`WSAPITypes`](docs/api/classes/WSAPITypes.md). For the full type / enum / interface listing, see [`docs/api/globals.md`](docs/api/globals.md).
+
+### Where to look for working examples
+
+The class reference pages above describe **API behavior** — preconditions, error codes, refresh semantics, cache, idempotency, side effects, visitor mode. They do not include long-form UI prescriptions.
+
+For runnable, copy-pasteable widget code, the canonical reference is [**expo.smartico.ai**](https://expo.smartico.ai/widgets/intro). Each widget there is a complete React component built against this SDK — read it, fork it, adapt it. The expo site is where to start when you're building a new widget from scratch.
+
+The "UI Guides" column in the table above links to per-method prescriptive guidance for the most heavily-used flows (Missions, Store) — list bucketing, card and detail layouts, action-button decision matrices, image specs, status-specific visual treatments, animations. Use these alongside the expo examples when you need finer guidance on edge cases (locked / missed / recurring missions, multi-currency store items, claim-window expiration, etc.). More UI guides will be added per domain over time.
 
 See [expo.smartico.ai](https://expo.smartico.ai/widgets/intro) for the open-source examples of using the API as React-based components. Available examples:
 
@@ -151,7 +180,7 @@ const optInResult = await api.requestMissionOptIn(missions[0].id);
 console.log('Opt-in:', optInResult.err_code);
 ```
 
-For the full list of available methods, see the [WSAPI documentation](docs/api/classes/WSAPI.md).
+For the full list of available methods, see the [API reference](#api-reference) section above.
 
 You can also use `SmarticoAPI` directly for low-level protocol access:
 
