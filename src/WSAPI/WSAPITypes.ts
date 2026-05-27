@@ -326,7 +326,7 @@ export interface TTournament {
 	segment_dont_match_message: string;
 	/**
 	 * The ID of the custom section where the tournament is assigned
-	 * The list of custom sections can be retrieved using _smartico.api.getCustomSections() method (TODO-API)
+	 * The list of custom sections can be retrieved using _smartico.api.getCustomSections() method
 	 */
 	custom_section_id: number;
 	/** The custom data of the tournament defined by operator. Can be a JSON object, string or number */
@@ -729,21 +729,13 @@ export interface TStoreItem {
  * Returned by `_smartico.api.getAchCategories()`. See that method's TSDoc
  * for translation, refresh, and rendering details.
  */
-// TODOYY: confirm "zero or more" assignment is intentional product semantics — BO may
-// validate that missions/badges must have at least one category on save; if so the SDK
-// shape still has to allow `[]` because legacy records exist.
 export interface TAchCategory {
 	/** Stable numeric ID of the category. Used as the key when joining to
 	 * `TMissionOrBadge.category_ids: number[]`. */
 	id: number;
-	/** Display name of the category. **Pre-translated server-side** to the authenticated
-	 * user's stored language (or to the language passed to `_smartico.vapi(lang)` in
-	 * visitor mode). Falls back to the EN base name when a translation is missing — never
-	 * null. Consumers should NOT translate this further. */
+	/** Display name of the category, pre-translated server-side. Never null. */
 	name: string;
-	/** Relative position among other categories (lower = appears first). The server does
-	 * NOT pre-sort by this value — the consumer must sort:
-	 * `categories.sort((a, b) => a.order - b.order)`. Default value is 1 when the
+	/** Relative display position (lower = appears first). Default 1 when the
 	 * operator did not configure an explicit order. */
 	order: number;
 }
@@ -800,8 +792,8 @@ export interface TMissionOrBadge {
 	/** The text of the CTA button, e.g. 'Make a deposit' */
 	cta_text: string;
 	/**
-	 * The ID of the custom section where the mission or badge is assigned
-	 * The list of custom sections can be retrieved using _smartico.api.getCustomSections() method (TODO-API)
+	 * The ID of the custom section where the mission or badge is assigned.
+	 * Resolve to section metadata via `_smartico.api.getCustomSections()`.
 	 */
 	custom_section_id: number;
 	/** The indicator if the mission or badge is visible only in the custom section and should be hidden from the main overview of missions/badges */
@@ -828,11 +820,8 @@ export interface TMissionOrBadge {
 	/** The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px */
 	ribbon?: TRibbon;
 
-	/** Stable identifier of the specific completion of this mission. Pass this
-	 * value to `requestMissionClaimReward()` alongside the mission id. Always
-	 * read from a fresh `getMissions()` result; never synthesise or cache
-	 * across sessions. Undefined for badges and for missions that have not
-	 * yet completed. */
+	/** Stable identifier of this specific mission completion. Undefined for
+	 * badges and for missions that have not yet completed. */
 	ach_completed_id?: number;
 
 	/** Flag from achievement if the mission prize will be given only after user claims it */
@@ -943,13 +932,7 @@ export interface TMissionOrBadgeTask {
  * and recommended UI handling.
  */
 export interface TMissionOptInResult {
-	/**
-	 * Error code. `0` = success; `40010` = already opted-in (treat as
-	 * idempotent success); `40013` = mission not opt-in-able (draft /
-	 * archived / out of window); `40014` = locked (show unlock tasks);
-	 * `105` = wrong id or visibility-condition rejection. See
-	 * `requestMissionOptIn` TSDoc for the full table.
-	 */
+	/** Error code. `0` = success. See `requestMissionOptIn` TSDoc for the full table. */
 	err_code: number;
 	/** Optional error message; populated on non-zero `err_code`. */
 	err_message: string;
@@ -962,17 +945,7 @@ export interface TMissionOptInResult {
  * values, preconditions, side effects, and recommended UI handling.
  */
 export interface TMissionClaimRewardResult {
-	/**
-	 * Error code that represents outcome of the claim request.
-	 * `0` = success (rewards have been credited);
-	 * `40017` = already claimed (treat as idempotent success);
-	 * `40015` = claim window expired;
-	 * `40016` = mission not completed yet (stale local state);
-	 * `1` = generic server error (stale `ach_completed_id`, archived/draft
-	 * mission, label mismatch, completion older than 6 months, or
-	 * `requires_prize_claim=false` on the server). See
-	 * `requestMissionClaimReward` TSDoc for the full table.
-	 */
+	/** Error code. `0` = success (rewards credited). See `requestMissionClaimReward` TSDoc for the full table. */
 	err_code: number;
 	/** Optional error message; populated on non-zero `err_code`. */
 	err_message: string;
