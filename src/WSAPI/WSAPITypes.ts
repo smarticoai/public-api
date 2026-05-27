@@ -557,13 +557,17 @@ export interface TClan {
 	member_count: number;
 	/** Max number of members allowed in clan */
 	capacity_limit: number;
-	/** ShopPurchaseType: 0=Points, 1=Gems, 2=Diamonds, 3=Free */
+	/** Currency type for `entry_fee_amount`. `0` = points, `1` = gems,
+	 * `2` = diamonds, `3` = free (no fee). */
 	entry_fee_currency_type_id: number;
-	/** Numeric value for entry fee */
+	/** Entry fee amount in the currency indicated by `entry_fee_currency_type_id`.
+	 * `0` (or `entry_fee_currency_type_id === 3`) means the clan is free to join. */
 	entry_fee_amount: number;
-	/** F1 rank ASC, 1=best */
+	/** Global rank among all active clans in the label, by `rating_score` DESC.
+	 * `1` = highest-rated. May skip positions when some clans are hidden by
+	 * per-user visibility (e.g. user sees positions 1, 3, 7). */
 	rating_position: number;
-	/** Clan rating score */
+	/** Clan rating score (higher is better). */
 	rating_score: number;
 }
 
@@ -575,7 +579,9 @@ export interface TClans {
 	clans: TClan[];
 	/** The clan ID the current user belongs to; null if clanless */
 	user_clan_id: number | null;
-	/** Cooldown-until date string; null if no cooldown */
+	/** Switch-cooldown expiry as ISO 8601 UTC string ("YYYY-MM-DDTHH:MM:SS"
+	 * with no timezone suffix; interpret as UTC). `null` when no cooldown.
+	 * User-level: while set, the user cannot join any clan. */
 	cooldown_until: string | null;
 	/** Epoch ms when the current user joined their clan; null if clanless */
 	join_date: number | null;
@@ -583,35 +589,71 @@ export interface TClans {
 
 /**
  * TClanInfo describes the detailed info of a single clan including its members.
+ * Returned by `_smartico.api.getClanInfo(clanId)`.
  */
 export interface TClanInfo {
+	/** Clan ID. */
 	clan_id: number;
+	/** Translated clan metadata (name, description, image URL). */
 	public_meta: { name: string; description: string; image_url: string };
+	/** Current number of members in clan. */
 	member_count: number;
+	/** Max number of members allowed in clan. */
 	capacity_limit: number;
+	/** Currency type for `entry_fee_amount`. `0` = points, `1` = gems,
+	 * `2` = diamonds, `3` = free. */
 	entry_fee_currency_type_id: number;
+	/** Entry fee amount in the currency indicated by `entry_fee_currency_type_id`. */
 	entry_fee_amount: number;
+	/** Global rank among all active clans in the label, by `rating_score` DESC.
+	 * `1` = highest-rated. */
 	rating_position: number;
+	/** Clan rating score (higher is better). */
 	rating_score: number;
+	/** User-level switch-cooldown expiry as ISO 8601 UTC string
+	 * ("YYYY-MM-DDTHH:MM:SS" with no timezone suffix). `null` when no
+	 * cooldown. Same semantic as `TClans.cooldown_until` but always fresh
+	 * (the list version may be up to 30 s stale). */
 	cooldown_until: string | null;
+	/** Members of this clan, server-ordered by `contribution_score` DESC
+	 * (i.e. `position` ASC). */
 	members: {
+		/** Member's internal user ID. */
 		user_id: number;
+		/** Member's display username. */
 		public_username: string;
+		/** Avatar identifier; resolve via `avatar_url` below or rebuild
+		 * from `avatar_id` + brand avatar domain. */
 		avatar_id: string;
+		/** Numeric avatar ID (alternative identifier). */
 		avatar_real_id: number;
+		/** Pre-resolved CDN URL for the avatar. */
 		avatar_url?: string;
+		/** Member's rank within this clan; `1` = top contributor. */
 		position: number;
+		/** Member's contribution to the clan rating score. */
 		contribution_score: number;
+		/** `true` when this row is the current authenticated user. */
 		is_me?: boolean;
+		/** External user identifier (operator-provided alias);
+		 * preferred over `public_username` on some surfaces. */
 		clean_ext_user_id?: string;
 	}[];
 }
 
 /**
- * TClanJoinResult describes the result of a join clan request.
+ * TClanJoinResult describes the result of a join-clan request.
+ * Note: this type uses `errCode` / `errMsg` (camelCase) — different
+ * from most other SDK result types in this library which use
+ * `err_code` / `err_message` (snake_case).
  */
 export interface TClanJoinResult {
+	/** Error code. `0` = success. Typed values are members of
+	 * {@link JoinClanErrorCode}. See `joinClan` TSDoc for the full
+	 * table and per-code UI guidance. */
 	errCode: number;
+	/** Optional server-side error message. Present only on non-zero
+	 * `errCode`; may be empty even then. */
 	errMsg: string;
 }
 
