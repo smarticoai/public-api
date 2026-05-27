@@ -47,7 +47,7 @@ Promise resolving to the catalog of store
 The catalog is per-user. Visitor mode is supported with caveats (see
 "Visitor mode" below). For the authenticated path, the user's balances
 (`ach_points_balance`, `ach_gems_balance`, `ach_diamonds_balance` from
-[getUserProfile](WSAPIGeneral.md#getuserprofile)) must be tracked client-side to drive the
+[getUserProfile](WSAPIUser.md#getuserprofile)) must be tracked client-side to drive the
 affordability state of the Buy button — the SDK does not pre-compute
 affordability into `can_buy`.
 

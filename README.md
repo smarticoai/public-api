@@ -44,8 +44,8 @@ The SDK surface is split across one class per feature area, joined by an interna
 
 | Domain | Reference | Methods | UI Guides |
 |---|---|---|---|
-| **Levels** | [`WSAPIUser`](docs/api/classes/WSAPIUser.md) | `getLevels`, `getCurrentLevel`, `getUserLevelExtraCounters` | — |
-| **User / General / Utility** | [`WSAPIGeneral`](docs/api/classes/WSAPIGeneral.md) | `getUserProfile`, `checkSegmentMatch`, `checkSegmentListMatch`, `getCustomSections`, `getTranslations`, `getActivityLog`, `getRelatedItemsForGame` | — |
+| **User / Profile / Levels** | [`WSAPIUser`](docs/api/classes/WSAPIUser.md) | `getUserProfile`, `checkSegmentMatch`, `checkSegmentListMatch`, `getLevels`, `getCurrentLevel`, `getUserLevelExtraCounters`, `getActivityLog` | — |
+| **General / Utility** | [`WSAPIGeneral`](docs/api/classes/WSAPIGeneral.md) | `getCustomSections`, `getTranslations`, `getRelatedItemsForGame` | — |
 | **Missions & Badges** | [`WSAPIMissions`](docs/api/classes/WSAPIMissions.md) | `getMissions`, `getBadges`, `getAchCategories`, `requestMissionOptIn`, `requestMissionClaimReward` | [`getMissions`](docs/ui/missions/UIGuide_getMissions.md) · [`getBadges`](docs/ui/missions/UIGuide_getBadges.md) · [`getAchCategories`](docs/ui/missions/UIGuide_getAchCategories.md) · [`requestMissionOptIn`](docs/ui/missions/UIGuide_requestMissionOptIn.md) · [`requestMissionClaimReward`](docs/ui/missions/UIGuide_requestMissionClaimReward.md) |
 | **Bonuses** | [`WSAPIBonuses`](docs/api/classes/WSAPIBonuses.md) | `getBonuses`, `claimBonus` | — |
 | **Store / Shop** | [`WSAPIStore`](docs/api/classes/WSAPIStore.md) | `getStoreItems`, `buyStoreItem`, `getStoreCategories`, `getStorePurchasedItems` | [`getStoreItems`](docs/ui/store/UIGuide_getStoreItems.md) · [`buyStoreItem`](docs/ui/store/UIGuide_buyStoreItem.md) · [`getStoreCategories`](docs/ui/store/UIGuide_getStoreCategories.md) · [`getStorePurchasedItems`](docs/ui/store/UIGuide_getStorePurchasedItems.md) |
