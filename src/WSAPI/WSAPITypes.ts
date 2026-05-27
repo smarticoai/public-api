@@ -212,89 +212,78 @@ export interface TMiniGameTemplate {
  */
 
 export interface TUserProfile {
-	/** The language of the user */
+	/** Language code stored server-side for the user (e.g. `"en"`, `"de"`). */
 	core_user_language: string;
-	/** The current points balance that user can use in the Store, Mini-games, Tournaments, etc.. */
+	/** Current spendable points balance — decremented by store purchases,
+	 * tournament buy-ins, and clan entry fees. */
 	ach_points_balance: number;
-	/** The amount of points that user collected in total */
+	/** All-time cumulative points earned. Monotonic — NOT decremented by
+	 * store purchases or clan/tournament fees. */
 	ach_points_ever: number;
-	/** The current gems balance */
+	/** Current gems balance (secondary currency). */
 	ach_gems_balance: number;
-	/** The current diamonds balance */
+	/** Current diamonds balance (tertiary currency). */
 	ach_diamonds_balance: number;
-	/**
-	 * The array of the public tags set on the user object.
-	 * They can be treated as server-based cookies.
-	 * You can set tags using following method _smartico.event('core_public_tags_update', { core_public_tags: ['A', 'B'] } );
-	 * And then you can check for the tags
-	 */
+	/** Server-stored public tags on the user (uppercase strings).
+	 * Modify via `_smartico.updatePublicTags(operation, tags)`. */
 	core_public_tags: string[];
-	/** The ID of the current level of the user */
+	/** FK into the level ladder; resolve via `getCurrentLevel()` or `getLevels()`. */
 	ach_level_current_id?: number;
-	/** The indicator if user is marked as test user */
+	/** `true` when the user is flagged as a test account. */
 	core_is_test_account?: boolean;
-	/** The URL to the user avatar */
+	/** Resolved CDN URL for the user's avatar. */
 	avatar_url?: string;
-	/** The username of current user */
+	/** Display username (operator-defined alias). */
 	public_username?: string;
-	/** THe number of unread inbox messages */
+	/** Unread inbox messages count. Push-updated in real time. */
 	core_inbox_unread_count?: number;
-	/** The recommended deposit amount for the user */
+	/** AI-recommended deposit amount for this user. Undefined when no
+	 * recommendation is currently available. */
 	core_recommended_deposit_amount?: number;
-	/** The recommended casino bet amount for the user */
+	/** AI-recommended casino bet amount for this user. Undefined when no
+	 * recommendation is currently available. */
 	core_recommended_casino_bet_amount?: number;
 }
 
 /**
- * TLevel describes the information of each level defined in the system
- * There is no order of the levels, but it can be calculated using required_points property
- * The current level of user can be taken from the user object using ach_level_current_id property
- * The progress to the next level can be calculated using ach_points_ever and required_points properties of next level
+ * TLevel describes one level in the label's level ladder.
+ * Returned by `_smartico.api.getLevels()` (already sorted by `required_points` ASC).
  */
 export interface TLevel {
-	/** The ID of the Level */
+	/** Stable ID of the level. */
 	id: number;
-	/** The name of the Level, translated to the user language */
+	/** Display name of the level, pre-translated to the user's language. */
 	name: string;
-	/** The description of the Level, translated to the user language */
+	/** Display description of the level, pre-translated to the user's language. */
 	description: string;
-	/** The URL of the image of the Level, 256x256px */
+	/** URL of the level image (256x256 px source). */
 	image: string;
-	/** The amount of points required to reach the Level */
+	/** Total `ach_points_ever` required to reach this level. */
 	required_points: number;
-	/** Number of points that user should collect in order to see this level */
+	/** Visibility threshold — clients hide the level from the user until
+	 * `ach_points_ever >= visibility_points`. `null` means always visible. */
 	visibility_points: number;
-	/**
-	 * The counter of 1st metric used to reach the Level.
-	 * Relevant in case of using advanced leveling logic
-	 * https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
-	 *
-	 */
+	/** Required value of the first level counter for sliding-window leveling.
+	 * `null` on points-only labels. See `UserLevelExtraCountersT`. */
 	required_level_counter_1: number;
-	/**
-	 * The counter of 2nd metric used to reach the Level.
-	 * Relevant in case of using advanced leveling logic
-	 * https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
-	 *
-	 */
+	/** Required value of the second level counter for sliding-window leveling.
+	 * `null` on points-only labels. */
 	required_level_counter_2: number;
-
-	/** 
-	 * Custom data as string or JSON string that can be used in API to build custom UI
-	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
-	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
-	 */
+	/** Operator-defined custom data. The SDK auto-parses JSON-looking
+	 * strings, so at runtime this is `any` despite the `string` type. */
 	custom_data: string;
-	/** The ordinal position of the level */
+	/** 1-based position in the ladder (matches the order of the returned
+	 * array, which is sorted by `required_points` ASC). */
 	ordinal_position: number;
 }
 
 /**
- * TLevelCurrent describes the information of each level defined in the system along with ordinal position and progress of the current level
+ * TLevelCurrent extends `TLevel` with the user's progress toward the next level.
+ * Returned by `_smartico.api.getCurrentLevel()`.
  */
-
 export interface TLevelCurrent extends TLevel {
-	/** The progress of the user towards next level in the percents to complete */
+	/** Progress to the next level as a 0–100 integer percentage. `100`
+	 * at the highest level. */
 	progress: number;
 }
 
@@ -1094,10 +1083,18 @@ export interface LeaderBoardUserT {
 	is_me: boolean;
 }
 
+/**
+ * UserLevelExtraCountersT exposes the user's current values for the two
+ * label-defined sliding-window level counters. Returned by
+ * `_smartico.api.getUserLevelExtraCounters()`. Both fields are
+ * `undefined` on points-only labels.
+ */
 export interface UserLevelExtraCountersT {
-	/** The counter of 1st metric used to reach the level. */
+	/** Current value of the user's first level counter. Operator-defined
+	 * semantics per label. `undefined` on points-only labels. */
 	level_counter_1?: number;
-	/** The counter of 2nd metric used to reach the level. */
+	/** Current value of the user's second level counter. Operator-defined
+	 * semantics per label. `undefined` on points-only labels. */
 	level_counter_2?: number;
 }
 
