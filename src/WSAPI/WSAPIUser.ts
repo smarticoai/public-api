@@ -138,15 +138,75 @@ export class WSAPIUser extends WSAPIBase {
 		}
 	}
 
-	/** Check if user belongs to specific segments
-	 * **Example**:
-	 * ```
-	 * _smartico.api.checkSegmentMatch(1).then((result) => {
-	 *   console.log(result);
+	/**
+	 * Checks whether the current user matches a single segment, returning
+	 * `true` / `false` directly. Use this as a decision primitive to gate
+	 * UI surfaces (e.g. show a "VIP lounge" tab only when the user is in
+	 * the VIP segment), or to drive segment-specific CTA copy.
+	 *
+	 * Every call is a server round-trip — there is no SDK-side cache. For
+	 * checking multiple segments in one round-trip, use
+	 * {@link checkSegmentListMatch} instead.
+	 *
+	 * @remarks
+	 * **Refresh model**
+	 * - **No client cache.** Every call sends a request; the SDK does not
+	 *   memoize results.
+	 * - **No push event** notifies the consumer when segment membership
+	 *   flips (the user crosses a qualification threshold, or the
+	 *   operator changes the segment definition). Membership changes
+	 *   become visible only on the next `checkSegmentMatch` call.
+	 * - **Behavioral segments (configured against BigQuery) have batch
+	 *   lag** — even if the user's activity has changed (deposit, wager,
+	 *   etc.), the segment-membership result may not reflect that change
+	 *   until the next batch evaluation run (typically up to several
+	 *   hours).
+	 *
+	 * **Rate limit** (important)
+	 * The server caps `checkSegment*` calls at **10 requests per
+	 * 60-second window**, with a minimum gap of **~5 seconds between
+	 * consecutive calls**. Avoid calling on every render — cache the
+	 * result client-side for the session, or until you have a reason to
+	 * believe the user's state changed (e.g. after a deposit completes,
+	 * a level changes via {@link getUserProfile}'s `props_change`, or a
+	 * specific custom event fires).
+	 *
+	 * **`is_matching: false` is ambiguous on the server** — both "the
+	 * segment doesn't exist for this label" and "the user doesn't
+	 * qualify" return `false` with no distinguishing signal. Pass IDs
+	 * you've verified are valid for your label.
+	 *
+	 * **Idempotency**: safe. Read-only. No side effects (no analytics
+	 * events, no DB writes).
+	 *
+	 * **Visitor mode**: not supported.
+	 *
+	 * @param segment_id  The segment ID. Segment IDs are label-scoped;
+	 *                    the same numeric ID can refer to different
+	 *                    segments under different labels. Use the IDs
+	 *                    configured for your label.
+	 * @returns           `true` if the user currently matches the
+	 *                    segment, `false` otherwise. `false` also covers
+	 *                    the "segment doesn't exist for this label"
+	 *                    case — these are not distinguishable.
+	 *
+	 * @example
+	 * ```ts
+	 * const isVip = await window._smartico.api.checkSegmentMatch(vipSegmentId);
+	 * if (isVip) {
+	 *   console.log('[smartico] user is in VIP segment — render the VIP-only widget surface');
+	 * } else {
+	 *   console.log('[smartico] user not in VIP segment (or segment id misconfigured) — hide the VIP surface');
+	 * }
+	 *
+	 * // Cache the result for the session; re-check after material user-state changes.
+	 * window._smartico.on('props_change', async (changed) => {
+	 *   if ('ach_points_ever' in changed || 'ach_level_current_id' in changed) {
+	 *     const fresh = await window._smartico.api.checkSegmentMatch(vipSegmentId);
+	 *     console.log('[smartico] user state changed — VIP membership now:', fresh);
+	 *   }
 	 * });
 	 * ```
-	 *
-	 * **Visitor mode: not supported**
 	 */
 	public async checkSegmentMatch(segment_id: number): Promise<boolean> {
 		const r = await this.api.coreCheckSegments(this.userExtId, [segment_id]);
@@ -157,14 +217,67 @@ export class WSAPIUser extends WSAPIBase {
 		}
 	}
 
-	/** Check if user belongs to specific list of segments
-	 * **Example**:
+	/**
+	 * Checks the current user's membership in multiple segments in a
+	 * single server round-trip — returns a `TSegmentCheckResult[]` with
+	 * one entry per *unique* segment ID. Use this instead of looping
+	 * {@link checkSegmentMatch} when you need to evaluate several
+	 * segments at once (e.g. multi-segment composite gating, A/B-style
+	 * cohort detection).
+	 *
+	 * @remarks
+	 * **Response order is NOT guaranteed**
+	 * The server returns results in an unspecified order — different
+	 * from the input array. Always correlate by the `segment_id` field on
+	 * each `TSegmentCheckResult` rather than by array position. The
+	 * returned array length may also be smaller than the input array
+	 * (duplicate IDs are silently de-duplicated server-side).
+	 *
+	 * **Single round-trip**
+	 * The entire `segment_ids` array is sent in one request. Two segments
+	 * cost the same as one in terms of network latency and rate-limit
+	 * consumption (one call = one rate-limit slot, regardless of how many
+	 * segments).
+	 *
+	 * **Shared semantics with `checkSegmentMatch`**
+	 * Both methods wrap the same underlying server endpoint and share
+	 * the same caching, refresh, rate-limit, and ambiguity behavior. See
+	 * {@link checkSegmentMatch} for: no client cache · no push event for
+	 * membership changes · behavioral segments have batch lag · rate
+	 * limit (10 requests / 60 s, ~5 s minimum gap between calls) ·
+	 * `is_matching: false` doesn't distinguish "not in segment" from
+	 * "segment doesn't exist for this label".
+	 *
+	 * **Idempotency**: safe. Read-only. No side effects.
+	 *
+	 * **Visitor mode**: not supported.
+	 *
+	 * @param segment_ids  Array of segment IDs to check. Duplicates are
+	 *                     silently de-duplicated server-side. Segment IDs
+	 *                     are label-scoped — use the IDs configured for
+	 *                     your label.
+	 * @returns            Array of `{ segment_id, is_matching }` results.
+	 *                     Order is NOT guaranteed; correlate by
+	 *                     `segment_id`. Length may be less than the input
+	 *                     when duplicate IDs were sent.
+	 *
+	 * @example
+	 * ```ts
+	 * const segmentIds = [vipSegmentId, newPlayerSegmentId, freeRollSegmentId];
+	 * const results = await window._smartico.api.checkSegmentListMatch(segmentIds);
+	 *
+	 * // Always correlate by segment_id — the response order is unspecified.
+	 * const byId = new Map(results.map(r => [r.segment_id, r.is_matching]));
+	 *
+	 * if (byId.get(vipSegmentId)) {
+	 *   console.log('[smartico] user is in VIP segment — render VIP surface');
+	 * }
+	 * if (byId.get(newPlayerSegmentId) && byId.get(freeRollSegmentId)) {
+	 *   console.log('[smartico] new player AND eligible for free roll — show the welcome promo');
+	 * }
+	 *
+	 * // Cache the result map for the session; refresh on material state changes.
 	 * ```
-	 * _smartico.api.checkSegmentListMatch([1, 2, 3]).then((result) => {
-	 *    console.log(result);
-	 * });
-	 * ```
-	 * **Visitor mode: not supported**
 	 */
 	public async checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentCheckResult[]> {
 		return await this.api.coreCheckSegments(this.userExtId, Array.isArray(segment_ids) ? segment_ids : [segment_ids]);
@@ -389,36 +502,76 @@ export class WSAPIUser extends WSAPIBase {
 	}
 
 	/**
-	 * Returns the activity log for a user within a specified time range.
-	 * The response includes both points changes and gems/diamonds changes.
-	 * Each log entry contains information about the change amount, balance, and source.
-	 * The returned list is cached for 30 seconds.
-	 * You can pass the onUpdate callback as a parameter, it will be called every time the activity log is updated and will provide the updated list of activity logs for the last 10 minutes.
+	 * Returns the user's unified balance-change history — every points, gems, and
+	 * diamonds transaction within the requested time window, ordered newest-first.
+	 * Use to power an "Activity" / "History" tab showing wins, claims, purchases,
+	 * level-up rewards, and operator adjustments.
 	 *
-	 * **Example**:
-	 * ```
-	 * const startTime = Math.floor(Date.now() / 1000) - 86400 * 30; // 30 days ago
-	 * const endTime = Math.floor(Date.now() / 1000); // now
+	 * The returned shape is the same regardless of currency type — `type` (see
+	 * {@link UserBalanceType}) distinguishes points / gems / diamonds and
+	 * `source_type_id` (see {@link PointChangeSourceType}) names the originating
+	 * event.
 	 *
-	 * _smartico.api.getActivityLog({
-	 *      startTimeSeconds: startTime,
-	 *      endTimeSeconds: endTime,
-	 *      from: 0,
-	 *      to: 50,
-	 *      onUpdate: (data) => console.log('Updated:', data)
-	 * }).then((result) => {
-	 *      console.log(result);
+	 * @remarks
+	 * **Preconditions**
+	 * - User must be authenticated. Visitor mode is not guarded at the SDK level
+	 *   but is not meaningful — activity is per-user.
+	 *
+	 * **Pagination — `from` / `to` are offset + ceiling, not timestamps**
+	 * The SDK derives `offset = from`, `limit = min(to - from, 50)` — the server
+	 * hard-caps a single response at 50 entries. For infinite scroll, advance
+	 * `from` by 50 between calls. Both `startTimeSeconds` and `endTimeSeconds`
+	 * are epoch seconds bounding the window the server scans.
+	 *
+	 * **Subscription model (`onUpdate`)**
+	 * The callback fires when the user's `ach_points_balance`,
+	 * `ach_gems_balance`, or `ach_diamonds_balance` changes (i.e. whenever a
+	 * wallet event lands). The pushed payload is a FIXED re-fetch of the
+	 * **last 10 minutes / first 50 entries** — it does NOT honor the original
+	 * call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to`. Consumers
+	 * maintaining a long historical view must re-call `getActivityLog` with
+	 * their own params after receiving an `onUpdate` notification.
+	 *
+	 * **Refresh**
+	 * - The SDK caches results for 30 seconds.
+	 * - Push triggers fire only on balance changes; transactions that don't
+	 *   alter a balance (theoretical zero-amount entries) won't refresh.
+	 *
+	 * **Visitor mode**: not meaningful (no per-user history available).
+	 *
+	 * **UI guidance**: see [UI Guide — `getActivityLog`](../../docs/ui/user/UIGuide_getActivityLog.md).
+	 *
+	 * @param params.startTimeSeconds  Window start in epoch seconds.
+	 * @param params.endTimeSeconds    Window end in epoch seconds.
+	 * @param params.from              Pagination offset (0-based).
+	 * @param params.to                Pagination ceiling (exclusive); server
+	 *                                 caps `to - from` at 50.
+	 * @param params.onUpdate          Optional push callback; payload is a
+	 *                                 fixed 10-min / 50-entry refresh on every
+	 *                                 wallet change (see Subscription model).
+	 * @returns Array of {@link TActivityLog} ordered newest-first.
+	 *
+	 * @example
+	 * ```ts
+	 * const now = Math.floor(Date.now() / 1000);
+	 * const start = now - 86400 * 30; // 30 days
+	 *
+	 * const log = await window._smartico.api.getActivityLog({
+	 *     startTimeSeconds: start,
+	 *     endTimeSeconds:   now,
+	 *     from: 0,
+	 *     to:   50,
+	 *     onUpdate: (refreshed) => {
+	 *         console.log('[smartico] wallet changed — refreshed payload is last 10 min / 50 entries:', refreshed.length, 'rows');
+	 *         // If the consumer is showing a full 30-day view, re-call getActivityLog with the original params here.
+	 *     },
 	 * });
+	 *
+	 * for (const row of log) {
+	 *     const sign = row.amount >= 0 ? '+' : '';
+	 *     console.log('[smartico] activity row — render with', row.type === 0 ? 'points' : row.type === 1 ? 'gems' : 'diamonds', 'icon, color by sign:', sign + row.amount, 'balance after:', row.balance, 'source:', row.source_type_id);
+	 * }
 	 * ```
-	 *
-	 * **Visitor mode: not supported**
-	 *
-	 * @param params - Activity log parameters
-	 * @param params.startTimeSeconds - Start time in seconds (epoch timestamp)
-	 * @param params.endTimeSeconds - End time in seconds (epoch timestamp)
-	 * @param params.from - Start index of records to return
-	 * @param params.to - End index of records to return
-	 * @param params.onUpdate - Optional callback function that will be called when the activity log is updated
 	 */
 	public async getActivityLog({
 		startTimeSeconds,

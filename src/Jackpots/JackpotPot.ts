@@ -9,18 +9,22 @@ enum JackPotTemparature {
 	BURNING = 3,
 }
 
+/**
+ * Live snapshot of one jackpot pot's value and temperature.
+ * Embedded on `JackpotDetails.pot`; refreshed at the 1 s SDK cache TTL.
+ */
 interface JackpotPot {
-	/** ID of the jackpot template */
+	/** Template ID this pot belongs to. */
 	jp_template_id: number;
-	/** ID of the jackpot pot */
+	/** Stable numeric ID of the current pot instance (rotates when the pot explodes). */
 	jp_pot_id: number;
-	/** currency of the jackpot pot in the Jackput base currency */
+	/** Current pot amount in the jackpot's native currency (`jp_currency`). */
 	current_pot_amount: number;
-	/** currency of the jackpot pot in the user wallet currency */
+	/** Current pot amount converted to the user's wallet currency (`user_currency`). */
 	current_pot_amount_user_currency: number;
-	/** the date/time when this pot exploded */
+	/** Unix ms timestamp of when this pot last exploded; `0` if it has never exploded. */
 	explode_date_ts: number;
-	/** current pot temperature */
+	/** Heat band of the pot relative to its explosion range; see {@link JackPotTemparature}. */
 	current_pot_temperature: JackPotTemparature;
 }
 

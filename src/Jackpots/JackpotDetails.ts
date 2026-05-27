@@ -4,34 +4,33 @@ import { JackpotPublicMeta } from './JackpotPublicMeta';
 import { JackpotType } from './JackpotType';
 
 /**
- * JackpotDetails the information about Jackpot template
- * It also includes JackpotPot object that holds the current value of the jackpot
- * Flag is_opted_in indicates if the current user is opted in to the jackpot
+ * One jackpot template the user is eligible for, with its live pot snapshot.
+ * Returned by `jackpotGet()`.
  */
 interface JackpotDetails {
-	/** ID of the jackpot template */
+	/** Stable numeric ID of the template; pass to opt-in / opt-out / winners / eligible-games methods. */
 	jp_template_id: number;
-	/** Type of jackpot logic */
+	/** Whether the jackpot has a shared pot or one independent per user; see {@link JackpotType}. */
 	jp_type_id: JackpotType;
-	/** UI information of jackpot, like name, description, etc. */
+	/** Display data: name, description, image_url, winner / not-winner HTML templates, custom_data (JSON-parsed). */
 	jp_public_meta: JackpotPublicMeta;
-	/** Base currency of the jackpot */
+	/** Native jackpot currency (ISO 4217). Used for winner-history amounts. */
 	jp_currency: string;
-	/** Wallet currency of currently logged in user */
+	/** Current user's wallet currency. Used to display the pot via `pot.current_pot_amount_user_currency`. */
 	user_currency: string;
-	/** Type of the user contribution to the jackpot */
+	/** Whether the contribution is a fixed amount or a percentage of the bet; see {@link JackpotContributionType}. */
 	contribution_type: JackpotContributionType;
-	/** Value of the user contribution. Fixed amount or percentage of bet depending on the contribution type */
+	/** Amount of contribution per qualifying bet — fixed value or percentage depending on `contribution_type`. */
 	contribution_value: number;
-	/** Information of current value of the jackpot */
+	/** Live pot snapshot (amount, temperature, last explosion timestamp). */
 	pot: JackpotPot;
-	/** Indication if the current user is opted in to the jackpot */
+	/** `true` when the current user is currently opted in. */
 	is_opted_in: boolean;
-	/** Indicates whether all games are eligible for the jackpot */
+	/** `true` when every game in the operator catalog contributes; if `true`, skip `getJackpotEligibleGames`. */
 	ach_related_game_allow_all: boolean;
-	/** The number of users who have opted in to participate in the jackpot */
+	/** Number of users currently opted in; always `1` for `JackpotType.Personal`. */
 	registration_count: number;
-	/** Show winners in widget and over API */
+	/** Operator flag: whether the winners list should be displayed. Enforced client-side only — gate `getJackpotWinners` calls on this. */
 	expose_winners_over_api: boolean;
 }
 

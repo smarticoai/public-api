@@ -88,30 +88,43 @@ export interface TMiniGamePrize {
 }
 
 /**
- * TMiniGamePlayResult describes the response of call to _smartico.api.playMiniGame(template_id) method
+ * TMiniGamePlayResult describes the response of
+ * `_smartico.api.playMiniGame(template_id)`.
  */
 export interface TMiniGamePlayResult {
-	/** Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0 */
+	/** Error code. `0` = success ({@link SAWSpinErrorCode.SAW_OK}).
+	 * See `playMiniGame` TSDoc for the full table. */
 	err_code: SAWSpinErrorCode;
-	/** Optional error message */
+	/** Optional server-side error message. Present only on non-zero
+	 * `err_code`; may be empty even then. */
 	err_message: string;
-	/** The prize_id that user won, details of the prize can be found in the mini-game definition */
+	/** ID of the won prize. Look up in `template.prizes` to interpret
+	 * (including `prize_type === 'no-prize'` for a configured loss
+	 * slot). Always populated, even when `err_code !== 0`. */
 	prize_id: number;
 }
 
 /**
- * TMiniGamePlayBatchResult describes the response of call to _smartico.api.playMiniGameBatch(template_id, spin_count) method
+ * TMiniGamePlayBatchResult describes one entry in the array returned
+ * by `_smartico.api.playMiniGameBatch(template_id, spin_count)`.
+ *
+ * Note: this type uses `errCode` / `errMessage` (camelCase) —
+ * different from `TMiniGamePlayResult` which uses `err_code` /
+ * `err_message` (snake_case).
  */
 export interface TMiniGamePlayBatchResult {
-	/** The saw_prize_id that user won, details of the prize can be found in the mini-game definition */
+	/** ID of the won prize for this spin. Look up in `template.prizes`. */
 	saw_prize_id: number;
-	/** Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0 */
+	/** Error code. `0` = success. See `playMiniGameBatch` TSDoc for the
+	 * full table. */
 	errCode: SAWSpinErrorCode;
-	/** Optional error message */
+	/** Optional server-side error message. */
 	errMessage?: string;
-	/** Jackpot amount what user won */
+	/** Jackpot amount the user won, populated when the prize type is
+	 * `'jackpot'`. */
 	jackpot_amount?: number;
-	/** Period in miliseconds from last spin */
+	/** Epoch ms of the user's first spin in the current cooldown
+	 * period; populated when `errCode === SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED`. */
 	first_spin_in_period?: number,
 }
 
@@ -972,114 +985,157 @@ export interface TMissionClaimRewardResult {
 	err_message: string;
 }
 
+/**
+ * Result of `_smartico.api.registerInTournament(tournament_id)`.
+ */
 export interface TTournamentRegistrationResult {
-	/** Error code. `0` = success (registration persisted, buy-in
-	 * deducted). Typed values are members of {@link TournamentRegistrationError};
-	 * numeric codes `300010` (insufficient gems) and `300011` (insufficient
-	 * diamonds) may also be returned and are NOT currently in the enum.
-	 * See `registerInTournament` TSDoc for the full table. */
+	/** Error code. `0` = success. See `registerInTournament` TSDoc for the full table. */
 	err_code: TournamentRegistrationError;
-	/** Optional error message. Present only on non-zero `err_code`;
-	 * may be empty even then. */
+	/** Optional error message; populated on non-zero `err_code`. */
 	err_message: string;
 }
 
+/**
+ * Result of `_smartico.api.buyStoreItem(store_item_id)`.
+ */
 export interface TBuyStoreItemResult {
-	/** Error code. `0` = success (funds debited and reward delivered).
-	 * Typed values are the named codes in {@link BuyStoreItemErrorCode}.
-	 * See `buyStoreItem` TSDoc for the full table and per-code UI guidance. */
+	/** Error code. `0` = success. See `buyStoreItem` TSDoc for the full table. */
 	err_code: BuyStoreItemErrorCode;
+	/** Optional error message; populated on non-zero `err_code`. */
+	err_message: string;
+}
+
+/**
+ * Result of `getTranslations(lang_code)`.
+ */
+export interface TGetTranslations {
+	/** Flat dictionary of operator-defined translation key → translated string. */
+	translations: { [key: string]: string };
+}
+
+/**
+ * TInboxMessage is the lightweight envelope returned by
+ * `_smartico.api.getInboxMessages()`. Fetch the rich body (title,
+ * preview, icon, html_body, buttons) separately via
+ * `_smartico.api.getInboxMessageBody(message_guid)`.
+ */
+export interface TInboxMessage {
+	/** Unique identifier of the message. Pass to `getInboxMessageBody`
+	 * and the mark / favorite / delete mutations. */
+	message_guid: string;
+	/** Date when the message was sent (server timestamp). */
+	sent_date: string;
+	/** `true` when the message has been marked read. */
+	read: boolean;
+	/** `true` when the message has been starred (favorited). */
+	favorite: boolean;
+	/** Operator-assigned category ({@link InboxCategories}). */
+	category_id?: InboxCategories;
+	/** Expiry timestamp as Unix-ms epoch. Server filters out expired
+	 * messages from list responses — consumers rarely see this set
+	 * unless the expiry is upcoming. */
+	expire_on_dt?: number;
+}
+
+/**
+ * TInboxMessageBody is the rich body of one inbox message.
+ * Returned by `_smartico.api.getInboxMessageBody(message_guid)`.
+ * Fetched from a CDN (not over WebSocket).
+ */
+export interface TInboxMessageBody {
+	/** Display title. */
+	title: string;
+	/** Short preview text (typically rendered alongside the title in list items). */
+	preview_body: string;
+	/** Message icon URL (128×128 px recommended). */
+	icon: string;
+	/** Click-action — either a deep-link (e.g. `'dp:deposit'`) or a
+	 * plain URL. The literal `'dp:inbox'` indicates the message has a
+	 * rich `html_body`; for any other value `html_body` and `buttons`
+	 * are absent. Pass to `_smartico.dp(action)` for safe execution. */
+	action: string;
+	/** Rich HTML body. Populated only when `action === 'dp:inbox'`. */
+	html_body?: string;
+	/** Up to 2 additional action buttons. Populated only when
+	 * `action === 'dp:inbox'`. */
+	buttons?: {
+		/** Button click-action (deep-link or URL). */
+		action: string;
+		/** Button label. */
+		text: string;
+	}[];
+	/** Operator-defined custom data. The SDK auto-parses JSON-looking
+	 * strings, so at runtime this is `any` despite the `string` type. */
+	custom_data?: string;
+}
+
+/**
+ * InboxMarkMessageAction is the response of the five inbox mutation
+ * methods (`markInboxMessageAsRead`, `markAllInboxMessagesAsRead`,
+ * `markUnmarkInboxMessageAsFavorite`, `deleteInboxMessage`,
+ * `deleteAllInboxMessages`).
+ */
+export interface InboxMarkMessageAction {
+	/** Error code. `0` = success. See the calling method's TSDoc for
+	 * the full error semantics (server returns generic codes; the
+	 * five inbox mutations share the same shape). */
+	err_code: number;
 	/** Optional server-side error message. Present only on non-zero
 	 * `err_code`; may be empty even then. */
 	err_message: string;
 }
 
-export interface TGetTranslations {
-	translations: { [key: string]: string };
-}
-
-export interface TInboxMessage {
-	/** Uniq identifier of the message. It is needed to request the message body, mark the message as read/deleted/favorite. */
-	message_guid: string;
-	/** Date when the message was sent */
-	sent_date: string;
-	/** Indicator if a message is read */
-	read: boolean;
-	/** Indicator if a message is added to favorites */
-	favorite: boolean;
-	/** Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages */
-	category_id?: InboxCategories;
-	/** The epoch timestamp, with milliseconds, when the message is going to be expired  */
-	expire_on_dt?: number;
-}
-
-export interface TInboxMessageBody {
-	/** Message title */
-	title: string;
-	/** Short preview body of the message */
-	preview_body: string;
-	/** Message icon, 128x128px */
-	icon: string;
-	/** The action that should be performed when user clicks on the message.
-	 * Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
-	 * The 'dp' function will handle the CTA and will execute it in the most safe way.
-	 * If the message has a rich html body - the action will always be 'dp:inbox' which will open the inbox widget when triggered. 
-	*/
-	action: string;
-	/** Rich HTML body of the message. */
-	html_body?: string;
-	/** Optional additional buttons to show in the message, available only if message has rich HTML body. Max count - 2. */
-	buttons?: {
-		/** The action that should be performed when user clicks on the button. The logic is the same as for message actions */
-		action: string;
-		/** Button text */
-		text: string;
-	}[];
-	/** The custom data of the inbox message defined by operator. Can be a JSON object, string or number */
-	custom_data?: string;
-}
-
-export interface InboxMarkMessageAction {
-	/** An error code representing the result of marking a message as deleted, favorite or read. Successful marking action if err_code is 0 */
-	err_code: number;
-	/** Optional error message */
-	err_message: string;
-}
-
+/**
+ * LeaderBoardDetailsT describes one period's leaderboard.
+ * Returned by `_smartico.api.getLeaderBoard(periodType, getPreviousPeriod?)`.
+ * May be `undefined` at runtime when no board is configured for the requested period.
+ */
 export interface LeaderBoardDetailsT {
-	/** ID of the leaderboard */
+	/** Stable ID of the leaderboard. */
 	board_id: number;
-	/** Name of the leaderboard */
+	/** Operator-defined display name. */
 	name: string;
-	/** Description of the leaderboard */
+	/** Operator-defined description (HTML allowed). */
 	description: string;
-	/** Rules of the leaderboard */
+	/** Operator-defined rules / terms (HTML allowed). */
 	rules: string;
-	/** Leaderboard period type ID */
+	/** Period type this board is bound to ({@link LeaderBoardPeriodType}). */
 	period_type_id: LeaderBoardPeriodType;
-	/** Leaderboard points rewards */
+	/** Per-place prize table; the array length is the number of paid places. */
 	rewards: LeaderBoardsRewardsT[];
-	/** Leaderboard users */
+	/** Top-20 ranked entries (server-capped), sorted by `position` ASC. */
 	users: LeaderBoardUserT[];
-	/** Info about current user in leaderboard */
+	/** Current user's own entry. `undefined` for visitor sessions.
+	 * For authenticated users, `position === -1` means the user is
+	 * unranked / outside the ranked window. */
 	me?: LeaderBoardUserT;
 }
 
+/**
+ * LeaderBoardsRewardsT describes one place's prize on a leaderboard.
+ * Leaderboard prizes are always gamification points (never gems / diamonds / items).
+ */
 export interface LeaderBoardsRewardsT {
+	/** Place number (1-based). */
 	place: number;
+	/** Gamification points awarded to the user occupying this place at period finalization. */
 	points: number;
 }
 
+/**
+ * LeaderBoardUserT describes one participant row on a leaderboard.
+ */
 export interface LeaderBoardUserT {
-	/** The username of the participant */
+	/** Display username (operator-defined alias). */
 	public_username: string;
-	/** The URL to the avatar of the participant */
+	/** Resolved CDN URL for the participant's avatar. */
 	avatar_url: string;
-	/** The position of the participant in the leaderboard */
+	/** Rank in the leaderboard (DENSE_RANK over all participants).
+	 * `-1` on the `me` entry signals "unranked / outside the window". */
 	position: number;
-	/** The points of the participant in the leaderboard */
+	/** Participant's points for this period. */
 	points: number;
-	/** The indicator if the participant is current user */
+	/** `true` when this row is the current authenticated user. */
 	is_me: boolean;
 }
 
@@ -1098,109 +1154,151 @@ export interface UserLevelExtraCountersT {
 	level_counter_2?: number;
 }
 
+/**
+ * TSegmentCheckResult describes one segment-membership outcome.
+ * Returned by `_smartico.api.checkSegmentListMatch()` (and used
+ * internally by `checkSegmentMatch()`).
+ */
 export interface TSegmentCheckResult {
+	/** The segment ID this result refers to (label-scoped). */
 	segment_id: number;
+	/** `true` if the user currently matches this segment. `false` also
+	 * covers the case where the segment doesn't exist for the label —
+	 * the two are not distinguishable. */
 	is_matching: boolean;
 }
 
+/**
+ * One operator-configured navigation entry. Returned by `getCustomSections()`.
+ * `section_type_id` is the dispatch key — it determines which page component the
+ * consumer mounts when the user opens this section.
+ */
 export interface TUICustomSection {
-	/** The ID of the custom section */
+	/** Stable numeric ID of the section. */
 	id: number;
-	/** The body of the custom section */
+	/** Raw HTML body for `HTML_PAGE` sections; Liquid template body for `LEVELS` (Liquid) sections. */
 	body?: string;
-	/** The image of the custom section, 64x64px */
+	/** CDN URL of the section's nav icon, 64x64 px square. */
 	menu_img?: string;
-	/** The name of the custom section */
+	/** Display name shown next to the nav icon. Pre-translated server-side. */
 	menu_name?: string;
-	/** Custom images for custom section */
+	/** JSON-serialized list of skin image overrides for themed sections (e.g. `MISSION_CUSTOM_LAYOUT`). */
 	custom_skin_images?: string;
-	/** The particular type of custom section, can be Missions, Tournaments, Lootbox and etc */
+	/** Dispatch key — see {@link AchCustomSectionType}. */
 	section_type_id?: AchCustomSectionType;
-	/** Theme of the custom section */
+	/** Themed-layout name for `MISSION_CUSTOM_LAYOUT` sections; see {@link AchCustomLayoutTheme}. */
 	theme?: AchCustomLayoutTheme;
-	/** Custom css for the custom section */
+	/** Custom CSS for themed layouts. */
 	generic_custom_css?: string;
-	/** Tabs that can be shown in custom section, e.g Overview, No Overview, All tabs */
+	/** Which tabs to render for `MISSIONS_CATEGORY` sections; see {@link AchMissionsTabsOptions}. */
 	mission_tabs_options?: AchMissionsTabsOptions;
-	/** Filter that allow to show missions by criteria */
+	/** Mission-filter rule for the Overview tab; see {@link AchOverviewMissionsFilter}. */
 	overview_missions_filter?: AchOverviewMissionsFilter;
-	/** Quantity of missions to be shown in overview */
+	/** Maximum number of missions shown in the Overview tab. */
 	overview_missions_count?: number;
-	/** URL or DP to be used for custom section */
+	/** Click target for `REDIRECT_LINK` sections — either a Smartico DP string (`dp:…`) or an external URL. */
 	url_or_dp?: string;
-	/** Data to be used for Liquid templates */
+	/** Data-context selectors for Liquid templates; see {@link LiquidEntityData}. */
 	liquid_entity_data?: LiquidEntityData[];
-	/** Tournament ID to be used for Liquid templates */
+	/** Tournament ID for a single-tournament Liquid template (`LiquidEntityData.Tournament`). */
 	ach_tournament_id?: number;
-	/** Indicates if the data should be shown as raw data (for Liquid templates) */
+	/** Operator debug flag — when `true`, Liquid renders raw context data instead of the templated HTML. */
 	show_raw_data?: boolean;
-	/** Liquid template id to be used for Liquid templates */
+	/** Liquid template ID resolved server-side; the rendered body is delivered in `body`. */
 	liquid_template?: number;
-	/** List of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method */
+	/** Category IDs the section filters badges by — correlate with `getAchCategories()`. */
 	ach_category_ids?: number[];
-	/** List of IDs of the categories where the store item is assigned, information about categories can be retrieved with getShopCategories method */
+	/** Category IDs the section filters store items by — correlate with `getStoreCategories()`. */
 	shop_category_ids?: number[];
-	/** ID of the raffle to be used for Liquid templates */
+	/** Raffle ID for `RAFFLE` sections (and `LiquidEntityData.SingleRaffle` Liquid templates). */
 	raffle_id?: number;
 }
 
+/**
+ * TBonus describes one bonus awarded to the user.
+ * Returned by `_smartico.api.getBonuses()`.
+ */
 export interface TBonus {
-	/** ID of the bonus */
+	/** Stable ID of the bonus. */
 	bonus_id: number;
-	/** Can the bonus be redeemed (if bonus is redeemable the user needs to claim it) */
+	/** `true` when the bonus is in a player-claim-required state.
+	 * Gate the Claim button on this; see `claimBonus` TSDoc. */
 	is_redeemable?: boolean;
-	/** Date of creation */
+	/** Bonus creation timestamp as ISO 8601 UTC string
+	 * ("YYYY-MM-DDTHH:MM:SS", no timezone suffix). */
 	create_date?: string;
-	/** Date of redemption */
+	/** Bonus redemption timestamp as ISO 8601 UTC string. Absent until
+	 * the bonus reaches `BonusStatus.REDEEMED`. */
 	redeem_date?: string;
-	/** ID of template used */
+	/** ID of the bonus template used to issue this bonus. */
 	label_bonus_template_id?: number;
-	/** ID of the bonus status */
+	/** Lifecycle status; see {@link BonusStatus}. */
 	bonus_status_id?: BonusStatus;
-	/** Additional information about the bonus(edscription, image,name, acknowledge) */
+	/** Template-level display metadata (operator-configured, identical
+	 * across all bonuses from the same template). */
 	label_bonus_template_meta_map?: BonusTemplateMetaMap;
-	/** Additional information presented to the player when the bonus is redeemed */
+	/** Instance-level display metadata (per-issuance; carries the
+	 * dynamic amount computed at award time). */
 	bonus_meta_map?: BonusMetaMap;
 }
 
+/**
+ * BonusStatus describes the lifecycle stage of a bonus on `TBonus.bonus_status_id`.
+ * Operator widget configuration typically filters out internal statuses
+ * (`New`, `COUPON_ISSUE_FAILED`, `EXPIRED`); consumers usually see
+ * `COUPON_ISSUED`, `REDEEMED`, and `REDEEM_FAILED`.
+ */
 export enum BonusStatus {
-	/** The bonus is newly created (shouldn't be shown to the client) */
+	/** Newly created, not yet processed (internal). */
 	New = 1,
-	/** The bonus is issued and available for redemption but has not been redeemed yet */
+	/** Issued and awaiting player claim. */
 	COUPON_ISSUED = 2,
-	/** The bonus has been successfully redeemed */
+	/** Successfully redeemed. */
 	REDEEMED = 3,
-	/** The bonus is still valid, but a previous redemption attempt failed */
+	/** Previous redemption attempt failed; still valid and re-claimable. */
 	REDEEM_FAILED = 4,
-	/** Failed to issue the bonus (shouldn't be shown to the client) */
+	/** Coupon issuance failed (internal). */
 	COUPON_ISSUE_FAILED = 5,
-	/** The bonus was issued but has expired and can no longer be redeemed (shouldn't be shown to the client) */
+	/** Issued but expired before redemption (internal). */
 	EXPIRED = 6,
 }
+/**
+ * Template-level bonus display metadata (operator-configured at the
+ * bonus template; identical for every bonus issued from the same template).
+ */
 export interface BonusTemplateMetaMap {
-	/** Description of the bonus template*/
+	/** Operator-set description / display text. May include HTML. */
 	description: string;
-	/** Acknowledge message setup in the bonus template*/
+	/** Operator-set additional message shown to the player at claim
+	 * time (e.g. wagering terms). May include deep-links. */
 	acknowledge: string;
-	/** Image URL of the bonus template, 1:1 aspect ratio */
+	/** Bonus icon URL (1:1 aspect ratio recommended). */
 	image_url: string;
-	/** Redirect URL of the bonus template*/
+	/** Optional redirect — external HTTP URL (opens in new tab) or
+	 * internal deep-link (handled by the SDK's deep-link router). */
 	redirect_url?: string;
 }
+/**
+ * Instance-level bonus display metadata (set per-issuance, may carry
+ * a dynamically-computed amount).
+ */
 export interface BonusMetaMap {
-	/** Label and description of the bonus sent to the player*/
+	/** Display-ready amount string (e.g. "€50", "100 free spins"). */
 	uiAmount?: string;
 }
 
 /**
- * TClaimBonusResult describes the response of call to _smartico.api.claimBonus(bonus_id) method
+ * TClaimBonusResult describes the response of `_smartico.api.claimBonus(bonus_id)`.
+ */
+/**
+ * Result of `_smartico.api.claimBonus(bonus_id)`.
  */
 export interface TClaimBonusResult {
-	/** Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0 */
-	err_code: SAWSpinErrorCode;
-	/** Optional error message */
+	/** Error code. `0` = success. See `claimBonus` TSDoc for the full table. */
+	err_code: number;
+	/** Optional error message; populated on non-zero `err_code`. */
 	err_message: string;
-	/** If the bonus was claimed successfully, then success is true */
+	/** Unreliable on the wire — prefer `err_code === 0` as the success check. */
 	success?: boolean;
 }
 
@@ -1576,10 +1674,23 @@ export interface TRaffleDrawRun {
 
 }
 
+/**
+ * TransformedRaffleClaimPrizeResponse describes the response of
+ * `_smartico.api.claimRafflePrize({won_id})`.
+ *
+ * Note: this type uses `errorCode` / `errorMessage` (camelCase
+ * full-word) — different from most other SDK wrapper-result types in
+ * this library which use `err_code` / `err_message` (snake_case).
+ */
+/**
+ * Result of `_smartico.api.claimRafflePrize({raffle_id, draw_id, raffle_run_id})`.
+ * Uses camelCase `errorCode` / `errorMessage` — distinct from most other SDK
+ * result wrappers which use snake_case `err_code` / `err_message`.
+ */
 export interface TransformedRaffleClaimPrizeResponse {
-	/** Error code, 0 means no error */
+	/** Error code. `0` = success. See `claimRafflePrize` TSDoc for the full table. */
 	errorCode: number
-	/** Error message, will be exposed only if ErrorCode is not 0 */
+	/** Optional error message; populated on non-zero `errorCode`. */
 	errorMessage?: string
 }
 /**
@@ -1606,10 +1717,13 @@ export interface TActivityLog {
 }
 
 
+/**
+ * Result of `_smartico.api.requestRaffleOptin({raffle_id, draw_id, raffle_run_id})`.
+ */
 export interface TRaffleOptinResponse {
-	/** Error code that represents outcome of the opt-in attempt. Opt-in succeed in case err_code is 0 */
+	/** Error code. `0` = success. See `requestRaffleOptin` TSDoc for the full table. */
 	err_code: number;
-	/** Optional error message */
+	/** Optional error message; populated on non-zero `err_code`. */
 	err_message?: string;
 }
 
@@ -2082,75 +2196,72 @@ export interface GamePickRoundRequestParams extends GamePickRequestParams {
 }
 
 /**
- * TAvatarDefinition describes a single avatar available in the avatar catalog.
+ * One avatar in the user's catalog. Returned by `getAvatarsList()`.
  * Fields from the raw `public_meta` object are flattened to the top level.
  */
 export interface TAvatarDefinition {
-	/** Unique identifier of the avatar */
+	/** Stable numeric identifier of the avatar. Primary key passed to `setAvatar()`. */
 	avatar_real_id: number;
-	/** Whether this avatar is the default one */
+	/** True when this is the system default avatar for the label. */
 	is_default: boolean;
-	/** If true, avatar is hidden until user achieves/unlocks it */
+	/** When true and `is_given === false`, the avatar should be hidden from the user (surprise unlock). */
 	hide_until_achieved: boolean;
-	/** Display priority — lower value means higher position in the grid */
+	/** Display position; lower = earlier in the grid. */
 	priority: number;
-	/** Optional description of the avatar (from public_meta) */
+	/** Optional description shown alongside the avatar in detail views. */
 	description?: string;
-	/** Raw image path/URL of the avatar as returned by the server (from public_meta) */
+	/** Raw image path as returned by the server (relative or absolute). */
 	url: string;
-	/** Full CDN URL of the avatar image, built from avatar_domain + url */
+	/** Absolute CDN URL of the avatar image; built from the configured avatar domain + `url`. */
 	avatar_url: string;
-	/**
-	 * Source type of the avatar.
-	 * 0 = free (always available to all users), other values = earned/purchased
-	 */
+	/** Source type. `0` = free / always available; non-zero = earned or purchased. */
 	avatar_source_type_id: number;
-	/** ISO date string from which the avatar becomes available */
+	/** ISO date string from which the avatar becomes available; undefined when no start window. */
 	active_from_date?: string;
-	/** ISO date string until which the avatar is available */
+	/** ISO date string until which the avatar is available; undefined when no end window. */
 	active_till_date?: string;
-	/** Whether the avatar has been granted/given to the current user */
+	/** True when the user owns / has unlocked this avatar. */
 	is_given: boolean;
-	/** Whether this avatar is currently in use by the user */
+	/** True when this avatar is the user's currently active profile avatar. */
 	is_in_use?: boolean;
 }
 
 /**
- * TAvatarCustomized describes an AI-customized version of a base avatar
+ * One AI-generated variant of a base avatar. Returned by `getAvatarsCustomized()`.
  */
 export interface TAvatarCustomized {
-	/** The avatar_real_id of the base avatar this customization was generated from */
+	/** `avatar_real_id` of the base avatar this variant was generated from. */
 	avatar_real_id: number;
-	/** Full CDN URL of the AI-generated customized avatar image */
+	/** Absolute CDN URL of the AI-generated image. Can be passed as `avatar_url` to `setAvatar()`. */
 	url: string;
-	/** ISO date string when the customization was created */
+	/** ISO date string of when the variant was generated. */
 	dt_created: string;
 }
 
 /**
- * TAvatarPrompt describes an AI style prompt available for avatar customization.
+ * One AI style prompt for avatar customization. Returned by `getAvatarPrompts()`.
  * Fields from the raw `public_meta` object are flattened to the top level.
  */
 export interface TAvatarPrompt {
-	/** Unique identifier of the AI customization prompt */
+	/** Stable numeric identifier of the prompt. */
 	prompt_id: number;
-	/** Display name of the prompt style, e.g. "Cartoon", "Watercolor" (from public_meta) */
+	/** Display name of the style, e.g. "Cartoon", "Watercolor". */
 	name: string;
-	/** Full CDN URL of the prompt style icon image (from public_meta) */
+	/** Absolute CDN URL of the prompt's preview icon. */
 	icon_url: string;
-	/** Currency type used to pay for this customization (0=points, 1=gems, 2=diamonds) */
+	/** Currency used to pay for the customization. `0` = points, `1` = gems, `2` = diamonds. */
 	cost_currency_type_id: number;
-	/** Cost amount in the given currency */
+	/** Cost amount in the currency named by `cost_currency_type_id`. */
 	cost_value: number;
 }
 
 /**
- * TSetAvatarResult describes the response of call to _smartico.api.setAvatar() method
+ * Result of `_smartico.api.setAvatar()`.
  */
 export interface TSetAvatarResult {
-	/** Error code that represents outcome of the set avatar request. Successful if err_code is 0 */
+	/** Error code. `0` = success. See `setAvatar` TSDoc for the full table. */
 	err_code: number;
-	/** Optional error message */
+	/** Optional error message; populated on non-zero `err_code`. */
 	err_message?: string;
 }
 
