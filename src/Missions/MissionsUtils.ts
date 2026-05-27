@@ -7,7 +7,14 @@ import { BadgesTimeLimitStates } from "./BadgesTimeLimitStates";
 
 type UserStateParamsKeys = 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount' | 'casino_last_bet_amount' | 'casino_last_bet_amount_real' | 'casino_last_bet_amount_bonus' | 'acc_last_deposit_amount';
 const USER_STATE_PARAMS_KEYS_GAMES: UserStateParamsKeys[] = ['core_fav_game_top3', 'core_fav_game_type_top3', 'core_fav_game_provider_top3'];
-const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = ['core_recommended_deposit_amount', 'core_recommended_casino_bet_amount', 'casino_last_bet_amount', 'casino_last_bet_amount_real', 'casino_last_bet_amount_bonus', 'acc_last_deposit_amount'];
+const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = [
+    'core_recommended_deposit_amount',
+    'core_recommended_casino_bet_amount',
+    'casino_last_bet_amount',
+    'casino_last_bet_amount_real',
+    'casino_last_bet_amount_bonus',
+    'acc_last_deposit_amount',
+];
 
 const MINOR_WORDS = new Set([
     'of', 'at', 'in', 'on', 'to', 'up', 'as', 'by', 'for',
@@ -249,13 +256,12 @@ export class MissionUtils {
                 }
             }
 
-            if (USER_STATE_PARAMS_KEYS_BET_AMOUNT.includes(k)) { 
+            for (const k of USER_STATE_PARAMS_KEYS_BET_AMOUNT) {
                 suggestedValue = userStateParams[k];
-
-                if (suggestedValue) {
+                if (userStateParamsKeys.includes(k) && suggestedValue) {
                     const currencyFromTheTask = userStateParams?.core_wallet_currency;
-
                     suggestedValue = `${suggestedValue} ${currencySymbol || currencyFromTheTask || ''}`;
+                    break;
                 }
             }
         });
