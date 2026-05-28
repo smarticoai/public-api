@@ -72,6 +72,17 @@ This document describes the low-level protocol for communicating with Smartico b
 - [getTournamentsList](#gettournamentslist)
 - [getTournamentInstanceInfo](#gettournamentinstanceinfo)
 - [registerInTournament](#registerintournament)
+- [getClanTournamentPlayers](#getclantournamentplayers)
+
+#### Clans
+- [getClans](#getclans)
+- [getClanInfo](#getclaninfo)
+- [joinClan](#joinclan)
+
+#### Avatars
+- [getAvatarsList](#getavatarslist)
+- [getAvatarsCustomized](#getavatarscustomized)
+- [getAvatarPrompts](#getavatarprompts)
 
 #### Leaderboard
 - [getLeaderBoard](#getleaderboard)
@@ -1644,6 +1655,213 @@ Register user in a tournament.
 **ClassId:** `522` (TOURNAMENT_REGISTER_RESPONSE)
 
 No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
+
+---
+
+### getClanTournamentPlayers
+
+Get the players of a specific clan within a clan-based tournament instance.
+
+#### Request
+
+**ClassId:** `576` (GET_CLAN_TOURNAMENT_PLAYERS_REQUEST)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `tournament_instance_id` | `number` | Tournament instance ID |
+| `clan_id` | `number` | Clan ID whose players to fetch |
+| `force_language` | `string` | Optional language override |
+
+#### Response
+
+**ClassId:** `577` (GET_CLAN_TOURNAMENT_PLAYERS_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `clan_id` | `number` | The clan ID |
+| `clan_public_meta` | `object` | `{ name: string, image_url: string }` |
+| `players` | [`ClanTournamentPlayerRaw[]`](../api/interfaces/ClanTournamentPlayerRaw.md) | Ranked players of the clan in this tournament |
+
+> **Note:** `players[]` fields are **camelCase** (`userId`, `cleanExtUserId`, `userAltName`, `isMe`), unlike most other responses in this protocol. `userAltName` is the display name; `scores` is the player's tournament score; `position` is the rank within the clan.
+
+---
+
+## Clans
+
+### getClans
+
+Get the list of clans available to the current user, plus the user's own clan membership state.
+
+#### Request
+
+**ClassId:** `570` (GET_CLAN_LIST_REQUEST)
+
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
+
+#### Response
+
+**ClassId:** `571` (GET_CLAN_LIST_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `clans` | [`Clan[]`](../api/interfaces/Clan.md) | Available clans |
+| `user_clan_id` | `number \| null` | Clan ID the current user belongs to; `null` if clanless |
+| `cooldown_until` | `string \| null` | Cooldown end as a date string (e.g. `"29/03/2026 10:00:00"`); `null` if no cooldown |
+| `join_date` | `number \| null` | Epoch ms when the user joined their clan; `null` if clanless |
+
+**Example:**
+
+```json
+{
+  "cid": 571,
+  "clans": [
+    {
+      "clan_id": 12,
+      "public_meta": { "name": "Wolves", "description": "Top pack", "image_url": "https://.../wolves.png" },
+      "member_count": 18,
+      "capacity_limit": 30,
+      "entry_fee_currency_type_id": 0,
+      "entry_fee_amount": 100,
+      "rating_position": 3,
+      "rating_score": 45200
+    }
+  ],
+  "user_clan_id": 12,
+  "cooldown_until": null,
+  "join_date": 1742212800000
+}
+```
+
+> **Note:** `entry_fee_currency_type_id`: `0` = Points, `1` = Gems, `2` = Diamonds, `3` = Free. `rating_position` is the F1-style clan rank (ascending, `1` = best).
+
+---
+
+### getClanInfo
+
+Get the full details of a single clan, including its member roster.
+
+#### Request
+
+**ClassId:** `572` (GET_CLAN_INFO_REQUEST)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `clan_id` | `number` | Clan ID to fetch |
+
+#### Response
+
+**ClassId:** `573` (GET_CLAN_INFO_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `clanInfo` | [`ClanInfo`](../api/interfaces/ClanInfo.md) | Clan details + `members[]` roster |
+
+> **Note:** `ClanInfo` extends the `Clan` fields and adds `label_id`, `cooldown_until`, and `members` (an array of [`ClanMember`](../api/interfaces/ClanMember.md)). Member `avatar_id` is the raw avatar id — build the image URL from it client-side (the JS SDK adds an `avatar_url`; the raw protocol response does not).
+
+---
+
+### joinClan
+
+Join (or switch to) a clan. On labels with no cooldown, switching clans re-charges the entry fee — guard against accidental re-joins of the user's current clan.
+
+#### Request
+
+**ClassId:** `574` (JOIN_CLAN_REQUEST)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `clan_id` | `number` | Clan ID to join |
+| `join_source_id` | `number` | Origin of the join action (operator-defined; `0` if unspecified) |
+
+#### Response
+
+**ClassId:** `575` (JOIN_CLAN_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `errCode` | `number` | Result code; `0` = success (see Error Codes below) |
+| `errMsg` | `string` | Optional error message on a non-zero `errCode` |
+
+### Error Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Success — join completed |
+| `1000` | Invalid parameters |
+| `1001` | Clan not found for this label |
+| `1002` | Clan is full (`member_count >= capacity_limit`) |
+| `1003` | Insufficient funds for the entry fee |
+| `1004` | User does not satisfy the clan's entry conditions / segment |
+| `1006` | User is within the clan-switch cooldown window |
+| `1007` | Clan is archived |
+
+---
+
+## Avatars
+
+Avatar selection (`setAvatar`) is documented under [User](#setavatar). The methods below read the avatar catalog and the user's AI-customized avatars.
+
+### getAvatarsList
+
+Get the avatar catalog available to the current user.
+
+#### Request
+
+**ClassId:** `560` (GET_AVATARS_LIST_REQUEST)
+
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
+
+#### Response
+
+**ClassId:** `561` (GET_AVATARS_LIST_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `avatars` | [`AvatarDefinition[]`](../api/interfaces/AvatarDefinition.md) | Avatar catalog with per-user unlock flags |
+
+> **Note:** The image path is nested at `public_meta.url` (the JS SDK flattens it to `url` / `avatar_url`). `avatar_source_type_id`: `0` = free / always available, non-zero = earned or purchased. Hide entries where `hide_until_achieved === true && is_given === false`.
+
+---
+
+### getAvatarsCustomized
+
+Get the user's previously generated AI-customized avatar variants.
+
+#### Request
+
+**ClassId:** `562` (GET_AVATARS_CUSTOMIZED_REQUEST)
+
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
+
+#### Response
+
+**ClassId:** `563` (GET_AVATARS_CUSTOMIZED_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `avatars` | [`AvatarCustomized[]`](../api/interfaces/AvatarCustomized.md) | AI-generated variants, each tied to a base avatar by `avatar_real_id` |
+
+---
+
+### getAvatarPrompts
+
+Get the AI style prompts available for avatar customization.
+
+#### Request
+
+**ClassId:** `564` (GET_AVATAR_PROMPTS_REQUEST)
+
+No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
+
+#### Response
+
+**ClassId:** `565` (GET_AVATAR_PROMPTS_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `prompts` | [`AvatarPrompt[]`](../api/interfaces/AvatarPrompt.md) | Available AI style prompts |
+
+> **Note:** Prompt name/icon are nested at `public_meta.name` / `public_meta.icon_url`. `cost_currency_type_id`: `0` = points, `1` = gems, `2` = diamonds; `cost_value` is the amount.
 
 ---
 

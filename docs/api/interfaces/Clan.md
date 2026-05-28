@@ -1,5 +1,9 @@
 # Interface: Clan
 
+## Extended by
+
+- [`ClanInfo`](ClanInfo.md)
+
 ## Properties
 
 ### clan\_id

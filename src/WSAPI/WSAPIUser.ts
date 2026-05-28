@@ -67,7 +67,7 @@ export class WSAPIUser extends WSAPIBase {
 	 *
 	 * **Inbox unread count** — `core_inbox_unread_count` on this profile
 	 * is push-updated in real time (under 1 second). For an inbox badge,
-	 * prefer this field over {@link getInboxUnreadCount} (which is cached
+	 * prefer this field over `getInboxUnreadCount` (which is cached
 	 * for 30 s) — same value, fresher signal.
 	 *
 	 * **Language**: `core_user_language` reflects the server's stored
@@ -438,7 +438,7 @@ export class WSAPIUser extends WSAPIBase {
 	 * The SDK exposes raw numeric values; the meaning of each counter
 	 * (deposit amount, wager amount, lifetime spend, etc.) is fully
 	 * operator-defined per label. Resolve labels for display via
-	 * {@link getTranslations} — the operator's display strings are
+	 * `getTranslations` — the operator's display strings are
 	 * stored under the translation keys `levelsCounter1Name` and
 	 * `levelsCounter2Name`.
 	 *
@@ -541,14 +541,6 @@ export class WSAPIUser extends WSAPIBase {
 	 *
 	 * **UI guidance**: see [UI Guide — `getActivityLog`](../../docs/ui/user/UIGuide_getActivityLog.md).
 	 *
-	 * @param params.startTimeSeconds  Window start in epoch seconds.
-	 * @param params.endTimeSeconds    Window end in epoch seconds.
-	 * @param params.from              Pagination offset (0-based).
-	 * @param params.to                Pagination ceiling (exclusive); server
-	 *                                 caps `to - from` at 50.
-	 * @param params.onUpdate          Optional push callback; payload is a
-	 *                                 fixed 10-min / 50-entry refresh on every
-	 *                                 wallet change (see Subscription model).
 	 * @returns Array of {@link TActivityLog} ordered newest-first.
 	 *
 	 * @example
@@ -580,10 +572,15 @@ export class WSAPIUser extends WSAPIBase {
 		to,
 		onUpdate,
 	}: {
+		/** Window start in epoch seconds. */
 		startTimeSeconds: number;
+		/** Window end in epoch seconds. */
 		endTimeSeconds: number;
+		/** Pagination offset (0-based). */
 		from: number;
+		/** Pagination ceiling (exclusive); server caps `to - from` at 50. */
 		to: number;
+		/** Optional push callback; payload is a fixed 10-min / 50-entry refresh on every wallet change (see Subscription model). */
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]> {
 

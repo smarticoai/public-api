@@ -63,7 +63,7 @@ is the FK into the level ladder — resolve metadata via
 
 **Inbox unread count** — `core_inbox_unread_count` on this profile
 is push-updated in real time (under 1 second). For an inbox badge,
-prefer this field over getInboxUnreadCount (which is cached
+prefer this field over `getInboxUnreadCount` (which is cached
 for 30 s) — same value, fresher signal.
 
 **Language**: `core_user_language` reflects the server's stored
@@ -476,7 +476,7 @@ a points-only label by either counter being `undefined`.
 The SDK exposes raw numeric values; the meaning of each counter
 (deposit amount, wager amount, lifetime spend, etc.) is fully
 operator-defined per label. Resolve labels for display via
-getTranslations — the operator's display strings are
+`getTranslations` — the operator's display strings are
 stored under the translation keys `levelsCounter1Name` and
 `levelsCounter2Name`.
 
@@ -551,21 +551,31 @@ event.
 
 `number`
 
+Window start in epoch seconds.
+
 ###### endTimeSeconds
 
 `number`
+
+Window end in epoch seconds.
 
 ###### from
 
 `number`
 
+Pagination offset (0-based).
+
 ###### to
 
 `number`
 
+Pagination ceiling (exclusive); server caps `to - from` at 50.
+
 ###### onUpdate?
 
 (`data`) => `void`
+
+Optional push callback; payload is a fixed 10-min / 50-entry refresh on every wallet change (see Subscription model).
 
 #### Returns
 

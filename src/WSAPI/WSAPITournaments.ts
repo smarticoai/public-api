@@ -380,7 +380,7 @@ export class WSAPITournaments extends WSAPIStore {
 	 *
 	 * For clan tournaments (`is_clan_based === true`), the user must
 	 * already belong to a clan before calling. If they don't, prompt them
-	 * to pick a clan first via {@link joinClan}, then call
+	 * to pick a clan first via `joinClan`, then call
 	 * `registerInTournament` after the clan-join resolves. See "Error
 	 * codes" `1010` below for the server-side safety net.
 	 *
@@ -389,8 +389,8 @@ export class WSAPITournaments extends WSAPIStore {
 	 *   tournament lobby refresh fires.
 	 * - `1010` — `TOURNAMENT_USER_CANNOT_JOIN_WITHOUT_CLAN`: clan-based
 	 *   tournament and the user has no clan. Surface the clan-pick flow
-	 *   (e.g. open a clan-pick modal driven by {@link getClans} +
-	 *   {@link joinClan}), then retry registration.
+	 *   (e.g. open a clan-pick modal driven by `getClans` +
+	 *   `joinClan`), then retry registration.
 	 * - `30001` — `TOURNAMENT_INSTANCE_NOT_FOUND`: instance ID is invalid
 	 *   or the tournament was deleted. Refresh the lobby via
 	 *   `getTournamentsList()` and hide the entry from the UI.

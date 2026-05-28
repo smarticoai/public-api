@@ -304,7 +304,7 @@ The SDK forwards the call unconditionally — calling without
 satisfying these will most likely return one of the error codes
 below.
 
-**Error codes** (in `errCode`, typed as JoinClanErrorCode)
+**Error codes** (in `errCode`, typed as [JoinClanErrorCode](../enumerations/JoinClanErrorCode.md))
 - `0` (`JOIN_CLAN_OK`) — success; membership persisted, fee
   debited, cooldown restarted.
 - `1000` (`JOIN_CLAN_INVALID_PARAMETERS`) — request body missing

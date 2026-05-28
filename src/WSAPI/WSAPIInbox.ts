@@ -50,14 +50,6 @@ export class WSAPIInbox extends WSAPILeaderBoard {
 	 *
 	 * **Visitor mode**: not supported.
 	 *
-	 * @param params.engagement_uid  For inbox: the message's
-	 *                               `message_guid` from
-	 *                               {@link getInboxMessages}. For popups:
-	 *                               the popup's GUID provided by the
-	 *                               popup display callback.
-	 * @param params.activityType    `ActivityTypeLimited.Inbox` (`31`)
-	 *                               for inbox; `Popup` (`30`) for popups.
-	 *
 	 * @example
 	 * ```ts
 	 * // When the user opens an inbox message in the detail view.
@@ -72,7 +64,9 @@ export class WSAPIInbox extends WSAPILeaderBoard {
 		engagement_uid,
 		activityType,
 	}: {
+		/** For inbox: the message's `message_guid` from `getInboxMessages`. For popups: the popup's GUID from the popup display callback. */
 		engagement_uid: string;
+		/** `ActivityTypeLimited.Inbox` (`31`) for inbox; `Popup` (`30`) for popups. */
 		activityType: ActivityTypeLimited | number;
 	}): void {
 		this.api.reportEngagementImpression(this.userExtId, engagement_uid, activityType);
@@ -117,15 +111,6 @@ export class WSAPIInbox extends WSAPILeaderBoard {
 	 *
 	 * **Visitor mode**: not supported.
 	 *
-	 * @param params.engagement_uid  For inbox: the message's
-	 *                               `message_guid` from
-	 *                               {@link getInboxMessages}.
-	 * @param params.activityType    `ActivityTypeLimited.Inbox` (`31`)
-	 *                               for inbox; `Popup` (`30`) for popups.
-	 * @param params.action          The deep-link / URL that the user
-	 *                               triggered (optional but recommended
-	 *                               for analytics fidelity).
-	 *
 	 * @example
 	 * ```ts
 	 * // When the user taps a CTA button in an inbox message.
@@ -142,8 +127,11 @@ export class WSAPIInbox extends WSAPILeaderBoard {
 		activityType,
 		action,
 	}: {
+		/** For inbox: the message's `message_guid` from `getInboxMessages`. */
 		engagement_uid: string;
+		/** `ActivityTypeLimited.Inbox` (`31`) for inbox; `Popup` (`30`) for popups. */
 		activityType: ActivityTypeLimited | number;
+		/** The deep-link / URL the user triggered (optional but recommended for analytics fidelity). */
 		action?: string;
 	}): void {
 		this.api.reportEngagementAction(this.userExtId, engagement_uid, activityType, action);

@@ -12,7 +12,7 @@ from most other SDK result types in this library which use
 > **errCode**: `number`
 
 Error code. `0` = success. Typed values are members of
-JoinClanErrorCode. See `joinClan` TSDoc for the full
+[JoinClanErrorCode](../enumerations/JoinClanErrorCode.md). See `joinClan` TSDoc for the full
 table and per-code UI guidance.
 
 ***

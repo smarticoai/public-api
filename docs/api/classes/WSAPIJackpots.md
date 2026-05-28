@@ -287,13 +287,19 @@ the flag will display winners the operator intended to keep private.
 
 `number`
 
+Page size (default 20).
+
 ###### offset?
 
 `number`
 
+Pagination offset (default 0).
+
 ###### jp_template_id?
 
 `number`
+
+Jackpot template ID (required).
 
 #### Returns
 
@@ -376,9 +382,13 @@ hides the Eligible Games tab entirely in that case.
 
 `number`
 
+Jackpot template ID (required).
+
 ###### onUpdate?
 
 () => `void`
+
+Optional callback; not auto-invoked today.
 
 #### Returns
 

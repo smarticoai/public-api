@@ -84,7 +84,13 @@
 			"src/Inbox/InboxMessageType.ts",
 			"src/Inbox/OpenLinksType.ts",
 			"src/Inbox/InboxReadStatus.ts",
-			"src/Clans/Clan.ts"
+			"src/Clans/Clan.ts",
+			"src/Clans/GetClanInfoResponse.ts",
+			"src/Clans/JoinClanErrorCode.ts",
+			"src/Tournaments/GetClanTournamentPlayersResponse.ts",
+			"src/Avatars/AvatarDefinition.ts",
+			"src/Avatars/AvatarCustomized.ts",
+			"src/Avatars/AvatarPrompt.ts"
 		],
 		"out": "docs/api",
 		"projectDocuments": ["docs/SmarticoObject.md", "docs/Callbacks.md"],

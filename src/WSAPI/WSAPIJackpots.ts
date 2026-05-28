@@ -338,9 +338,6 @@ export class WSAPIJackpots extends WSAPIClans {
 	 *
 	 * **UI guidance**: see [UI Guide — `getJackpotWinners`](../../docs/ui/jackpots/UIGuide_getJackpotWinners.md).
 	 *
-	 * @param params.jp_template_id  Jackpot template ID (required).
-	 * @param params.limit            Page size (default 20).
-	 * @param params.offset           Pagination offset (default 0).
 	 * @returns Array of {@link JackpotWinnerHistory} entries newest-first.
 	 *
 	 * @example
@@ -365,8 +362,11 @@ export class WSAPIJackpots extends WSAPIClans {
 		offset,
 		jp_template_id,
 	}: {
+		/** Page size (default 20). */
 		limit?: number;
+		/** Pagination offset (default 0). */
 		offset?: number;
+		/** Jackpot template ID (required). */
 		jp_template_id?: number;
 	}): Promise<JackpotWinnerHistory[]> {
 		return OCache.use(
@@ -412,8 +412,6 @@ export class WSAPIJackpots extends WSAPIClans {
 	 *
 	 * **UI guidance**: see [UI Guide — `getJackpotEligibleGames`](../../docs/ui/jackpots/UIGuide_getJackpotEligibleGames.md).
 	 *
-	 * @param params.jp_template_id  Jackpot template ID (required).
-	 * @param params.onUpdate        Optional callback; not auto-invoked today.
 	 * @returns {@link TGetJackpotEligibleGamesResponse} —
 	 * `{ eligible_games: JackpotEligibleGame[] }`.
 	 *
@@ -430,7 +428,12 @@ export class WSAPIJackpots extends WSAPIClans {
 	 * console.log('[smartico] render', r.eligible_games.length, 'eligible game tiles');
 	 * ```
 	 */
-	public async getJackpotEligibleGames({ jp_template_id, onUpdate } : { jp_template_id: number, onUpdate?: () => void }): Promise<TGetJackpotEligibleGamesResponse> {
+	public async getJackpotEligibleGames({ jp_template_id, onUpdate } : {
+		/** Jackpot template ID (required). */
+		jp_template_id: number,
+		/** Optional callback; not auto-invoked today. */
+		onUpdate?: () => void,
+	}): Promise<TGetJackpotEligibleGamesResponse> {
 		if (onUpdate) {
 			this.onUpdateCallback.set(onUpdateContextKey.JackpotEligibleGames, onUpdate);
 		}

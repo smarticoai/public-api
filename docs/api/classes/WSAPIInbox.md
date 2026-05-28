@@ -22,9 +22,13 @@ swallows transport failures silently. Returns `void`.
 
 `string`
 
+For inbox: the message's `message_guid` from `getInboxMessages`. For popups: the popup's GUID from the popup display callback.
+
 ###### activityType
 
 `number`
+
+`ActivityTypeLimited.Inbox` (`31`) for inbox; `Popup` (`30`) for popups.
 
 #### Returns
 
@@ -91,13 +95,19 @@ swallows transport failures silently. Returns `void`.
 
 `string`
 
+For inbox: the message's `message_guid` from `getInboxMessages`.
+
 ###### activityType
 
 `number`
 
+`ActivityTypeLimited.Inbox` (`31`) for inbox; `Popup` (`30`) for popups.
+
 ###### action?
 
 `string`
+
+The deep-link / URL the user triggered (optional but recommended for analytics fidelity).
 
 #### Returns
 
