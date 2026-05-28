@@ -125,19 +125,9 @@ The list of IDs of the categories where the store item is assigned, information 
 
 > `optional` **pool?**: `number`
 
-Number of items remaining in the pool available for purchase.
-`null` means unlimited supply (no pool configured for this item).
-A positive integer is the remaining stock.
-`0` means sold out — the item is still returned by `getStoreItems` so a
-"Sold out" state can be rendered. Operators may instead choose to hide
-pool-empty items entirely (per-item operator flag), in which case
-sold-out items simply disappear from the catalog rather than appearing
-with `pool === 0`.
-
-Pool is decremented server-side on a successful purchase; the client
-observes the new value via the `onUpdate` callback on `getStoreItems`
-(which fires only for the buyer's own purchases — other users'
-concurrent purchases do not push).
+Items remaining in the pool available for purchase. `null` = unlimited
+supply. Positive integer = remaining stock. `0` = sold out but still
+returned (operator may instead hide pool-empty items entirely).
 
 ***
 

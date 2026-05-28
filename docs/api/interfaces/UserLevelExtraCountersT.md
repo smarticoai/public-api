@@ -1,12 +1,18 @@
 # Interface: UserLevelExtraCountersT
 
+UserLevelExtraCountersT exposes the user's current values for the two
+label-defined sliding-window level counters. Returned by
+`_smartico.api.getUserLevelExtraCounters()`. Both fields are
+`undefined` on points-only labels.
+
 ## Properties
 
 ### level\_counter\_1?
 
 > `optional` **level\_counter\_1?**: `number`
 
-The counter of 1st metric used to reach the level.
+Current value of the user's first level counter. Operator-defined
+semantics per label. `undefined` on points-only labels.
 
 ***
 
@@ -14,4 +20,5 @@ The counter of 1st metric used to reach the level.
 
 > `optional` **level\_counter\_2?**: `number`
 
-The counter of 2nd metric used to reach the level.
+Current value of the user's second level counter. Operator-defined
+semantics per label. `undefined` on points-only labels.

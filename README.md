@@ -38,6 +38,26 @@ _smartico.api.getMiniGames( { onUpdate: miniGamesUpdates} ).then( games => {
 
 ```
 
+## The `_smartico` object
+
+Beyond `_smartico.api.*`, the global `_smartico` object exposes core methods for initialization, user identity, language, deep links, embedding widgets, and push — `_smartico.init(...)`, `_smartico.online(...)`, `_smartico.dp(...)`, `_smartico.showWidget(...)`, etc.
+
+See the [**`_smartico` object reference**](docs/SmarticoObject.md) for the most important core methods, their arguments, and usage notes.
+
+## Event callbacks
+
+Beyond the `_smartico.api.*` request/response methods, the SDK emits lifecycle and engagement events (user identified, balance changed, gamification widget opened, mini-game won, jackpot hit, …). Subscribe with `_smartico.on('<event>', handler)`:
+
+```javascript
+
+_smartico.on('props_change', (props) => {
+    console.log('User properties changed', props);
+});
+
+```
+
+See the [**Event callbacks reference**](docs/Callbacks.md) for the full list of events, when each fires, and the handler arguments.
+
 ## API reference
 
 The SDK surface is split across one class per feature area, joined by an internal inheritance chain. Consumers always call `_smartico.api.<methodName>(...)` — the chain is an implementation detail; never import the domain classes directly.

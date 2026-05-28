@@ -11,15 +11,7 @@ values, preconditions, side effects, and recommended UI handling.
 
 > **err\_code**: `number`
 
-Error code that represents outcome of the claim request.
-`0` = success (rewards have been credited);
-`40017` = already claimed (treat as idempotent success);
-`40015` = claim window expired;
-`40016` = mission not completed yet (stale local state);
-`1` = generic server error (stale `ach_completed_id`, archived/draft
-mission, label mismatch, completion older than 6 months, or
-`requires_prize_claim=false` on the server). See
-`requestMissionClaimReward` TSDoc for the full table.
+Error code. `0` = success (rewards credited). See `requestMissionClaimReward` TSDoc for the full table.
 
 ***
 

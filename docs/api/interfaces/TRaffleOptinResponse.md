@@ -1,12 +1,14 @@
 # Interface: TRaffleOptinResponse
 
+Result of `_smartico.api.requestRaffleOptin({raffle_id, draw_id, raffle_run_id})`.
+
 ## Properties
 
 ### err\_code
 
 > **err\_code**: `number`
 
-Error code that represents outcome of the opt-in attempt. Opt-in succeed in case err_code is 0
+Error code. `0` = success. See `requestRaffleOptin` TSDoc for the full table.
 
 ***
 
@@ -14,4 +16,4 @@ Error code that represents outcome of the opt-in attempt. Opt-in succeed in case
 
 > `optional` **err\_message?**: `string`
 
-Optional error message
+Optional error message; populated on non-zero `err_code`.

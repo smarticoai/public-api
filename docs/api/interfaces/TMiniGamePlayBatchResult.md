@@ -1,6 +1,11 @@
 # Interface: TMiniGamePlayBatchResult
 
-TMiniGamePlayBatchResult describes the response of call to _smartico.api.playMiniGameBatch(template_id, spin_count) method
+TMiniGamePlayBatchResult describes one entry in the array returned
+by `_smartico.api.playMiniGameBatch(template_id, spin_count)`.
+
+Note: this type uses `errCode` / `errMessage` (camelCase) —
+different from `TMiniGamePlayResult` which uses `err_code` /
+`err_message` (snake_case).
 
 ## Properties
 
@@ -8,7 +13,7 @@ TMiniGamePlayBatchResult describes the response of call to _smartico.api.playMin
 
 > **saw\_prize\_id**: `number`
 
-The saw_prize_id that user won, details of the prize can be found in the mini-game definition
+ID of the won prize for this spin. Look up in `template.prizes`.
 
 ***
 
@@ -16,7 +21,8 @@ The saw_prize_id that user won, details of the prize can be found in the mini-ga
 
 > **errCode**: [`SAWSpinErrorCode`](../enumerations/SAWSpinErrorCode.md)
 
-Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0
+Error code. `0` = success. See `playMiniGameBatch` TSDoc for the
+full table.
 
 ***
 
@@ -24,7 +30,7 @@ Error code that represents outcome of the game play attempt. Game succeed to be 
 
 > `optional` **errMessage?**: `string`
 
-Optional error message
+Optional server-side error message.
 
 ***
 
@@ -32,7 +38,8 @@ Optional error message
 
 > `optional` **jackpot\_amount?**: `number`
 
-Jackpot amount what user won
+Jackpot amount the user won, populated when the prize type is
+`'jackpot'`.
 
 ***
 
@@ -40,4 +47,5 @@ Jackpot amount what user won
 
 > `optional` **first\_spin\_in\_period?**: `number`
 
-Period in miliseconds from last spin
+Epoch ms of the user's first spin in the current cooldown
+period; populated when `errCode === SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED`.

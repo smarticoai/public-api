@@ -46,27 +46,24 @@ Promise resolving to the current list of
 #### Remarks
 
 **Subscription model (`onUpdate`)**
-The callback registered via `onUpdate` is invoked with the FULL refreshed
-mission array — never a diff/patch — whenever any of these occur:
-- `requestMissionOptIn(...)` resolves (any `err_code`)
-- `requestMissionClaimReward(...)` resolves (any `err_code`)
-- The server pushes an asynchronous mission-state change — e.g. task
-  progress advances (for tasks configured to push updates), a mission
-  completes, or the user's level / gamification visibility tags change
+The callback receives the FULL refreshed mission array (never a
+diff/patch). Each subsequent call to `getMissions({ onUpdate })`
+REPLACES the prior callback — only one active subscriber at a time.
+Pass `onUpdate: undefined` (or omit it) to keep the prior callback in
+place; the callback is never auto-cleared.
 
-Each subsequent call to `getMissions({ onUpdate })` REPLACES the prior
-callback — there is only one active subscriber at a time. Pass
-`onUpdate: undefined` (or omit it) to keep the prior callback in place;
-the callback is never auto-cleared.
+**Update triggers** — the callback fires when:
+1. **Mutation responses**: `requestMissionOptIn(...)` or
+   `requestMissionClaimReward(...)` resolves (any `err_code`).
+2. **Asynchronous server pushes**: a user activity (deposit, bet,
+   login, etc.) advances task progress on a task configured to push
+   updates, or completes a mission.
+3. **Visibility changes**: the user's level changes, or other
+   gamification visibility tags change.
 
-**What triggers an asynchronous mission-state refresh** (consumer-relevant)
-- A user activity (deposit, bet, login, etc.) advances task progress
-  on a task configured to push updates, OR the activity completes a
-  mission.
-- The user's level changes, or other gamification visibility tags change.
-- Operator-side BO mission-config edits do NOT push to connected clients —
-  those changes surface only on the next cache miss, or after one of the
-  other trigger events above fires.
+Operator-side BO mission-config edits do NOT push to connected
+clients — those changes surface only on the next cache miss (after
+the 30 s TTL) or alongside the next trigger from (1)–(3).
 
 **What's in the returned list / what's filtered server-side**
 The response is pre-filtered by the server. Missions EXCLUDED before
@@ -77,32 +74,37 @@ reaching the SDK:
   qualifies (configurable per-brand).
 - `FEATURED_MANUALLY` missions that are still locked — they appear
   only after the user unlocks them.
-- Locked missions whose `ach_public_meta.hide_locked_mission` is
-  `true` or `null` — UNLESS the mission has
-  `expose_immediately_on_unlock = true` (then the locked mission is
-  included as a teaser).
+- Locked missions configured to hide while locked — UNLESS the
+  mission is configured to expose immediately on unlock (then the
+  locked mission is included as a teaser).
 - `RECURRING` missions between cycles, until the next cycle starts.
 - `RECURRING_QUANTITY` missions outside their `active_from_ts` /
   `active_till_ts` window.
 
-**Field semantics** (non-obvious fields on `TMissionOrBadge`)
-- `is_opted_in` does NOT flip optimistically. It flips only after the
-  opt-in round-trip completes and the auto-refresh lands. Render the
-  pending state from your own loading flag, not from this field.
-- `dt_start` doubles as opt-in timestamp for opt-in missions and as
-  unlock timestamp for previously-locked missions; for time-limited
-  missions, expiration is `dt_start + time_limit_ms`.
-- `availability_status` is the canonical derived state — see
-  [AchievementAvailabilityStatus](../enumerations/AchievementAvailabilityStatus.md) for the full enum. Use this
-  field to drive UI chips ("missed", "coming soon", "needs opt-in",
-  "in progress", etc.) rather than recomputing from raw timestamps.
-- `next_recurrence_date_ts` is populated for `RECURRING` /
-  `RECURRING_QUANTITY` missions; ignore it when the mission has an
-  `active_till_ts` that has already passed.
-- `only_in_custom_section: true` means the mission should be HIDDEN
-  from the main missions view and shown only inside its custom
-  section. The list still includes it — filter it out client-side
-  for general views.
+Client-side filtering you may still want: missions with
+`only_in_custom_section: true` are intended for their custom-section
+view only and should be hidden from the main mission list.
+
+**Reading state from the returned mission**
+Drive availability chips ("missed", "coming soon", "needs opt-in",
+"in progress", "expired") from `availability_status` (enum
+[AchievementAvailabilityStatus](../enumerations/AchievementAvailabilityStatus.md)) — it's the canonical derived
+state and reflects all server-side timing/visibility rules in one
+field. For time-limited and recurring missions, `dt_start` doubles
+as the opt-in timestamp (for opt-in missions) or unlock timestamp
+(for previously-locked missions); the expiration of a time-limited
+mission is `dt_start + time_limit_ms`. `next_recurrence_date_ts`
+is populated for `RECURRING` / `RECURRING_QUANTITY` missions but
+is no longer meaningful once the mission's `active_till_ts` has
+passed.
+
+**Refresh after a mutation**
+After `requestMissionOptIn(...)` or `requestMissionClaimReward(...)`
+resolves, the SDK auto-refreshes the mission cache; the `onUpdate`
+callback fires with the new array shortly after. `is_opted_in`,
+`progress`, and `is_completed` flip on the refreshed mission — do
+NOT mutate them optimistically while the round-trip is pending.
+Render any pending state from your own loading flag.
 
 **UI guidance**: see [UI Guide — `getMissions`](../../ui/missions/UIGuide_getMissions.md).
 
@@ -186,42 +188,19 @@ setInterval(async () => {
 Alternatively, re-fetch on a domain event your app already handles
 (e.g. after the user finishes a game round or claims a bonus).
 
-**Field semantics — badges vs. missions** (same `TMissionOrBadge` type,
-different feature semantics; mission-only fields are present on badge
-objects but should be ignored by badge UI):
-- `is_requires_optin` — always `false` for badges in practice; the BO
-  badge editor does not expose this field, so live badge rows never
-  have it set to `true`.
-- `is_opted_in` — irrelevant for badges; do not gate badge UI on it.
-- `time_limit_ms` — NOT used for badges (no opt-in time to count from).
-  Badges express their time window with `active_from_ts` and
-  `active_till_ts` (absolute calendar timestamps) instead.
-- `badgeTimeLimitState` — badge-only computed field, injected by the
-  SDK before returning. Enum `BadgesTimeLimitStates`:
-  `BeforeStartDate` (0), `AfterStartDateNoProgress` (1),
-  `AfterStartDateNoProgressAndEndDate` (2),
-  `AfterStartDateWithProgressAndEndDate` (3),
-  `AfterEndDateNotStarted` (4), `AfterEndDateWithProgress` (5).
-  Use this — not `time_limit_ms` — to drive badge availability chips.
-- `is_locked` — for badges this is only meaningful when
-  `badgeTimeLimitState === BeforeStartDate` (time window not started).
-  Badges have no prerequisite-mission lock concept, so
-  `unlock_mission_description` is not used in badge UIs.
-- `tasks[]` — present, but badge UIs deliberately hide task
-  descriptions ("surprise mechanics"): show only `name`, not
-  `description`. Display stage count (`completed_tasks` / total) rather
-  than a percentage progress bar.
-- `requires_prize_claim`, `prize_claimed_date_ts`, `claim_button_title`,
-  `claim_button_action`, `prize_claim_expiration_date` — defined on
-  the type but not used in badge flows (no claim workflow for badges).
-- `max_completion_count`, `completion_count`, `next_recurrence_date_ts`,
-  `milliseconds_till_available` — recurring-mission fields; not used in
-  badge UIs.
-- `category_ids` — primary navigation field for badges. Call
-  [getAchCategories](#getachcategories) to resolve category metadata and group
-  badges by category (badge UIs typically show all categories
-  simultaneously as collapsible sections, each labeled with
-  "completed / total").
+**Differences from missions** (same `TMissionOrBadge` shape, different
+feature)
+The opt-in, claim, recurring-cycle, and unlock-description fields on
+the returned objects are not populated for badges; treat their values
+as undefined / default. Time windows are absolute calendar timestamps
+(`active_from_ts` / `active_till_ts`), not opt-in-relative durations —
+drive availability chips from the SDK-computed `badgeTimeLimitState`
+(enum [BadgesTimeLimitStates](../enumerations/BadgesTimeLimitStates.md)), not `time_limit_ms`. Locking for
+badges is purely time-based: `is_locked` is `true` only when
+`badgeTimeLimitState === BadgesTimeLimitStates.BeforeStartDate` (the
+time window hasn't started yet). The primary navigation field is
+`category_ids` — call [getAchCategories](#getachcategories) to resolve category
+metadata and group badges by category.
 
 **Idempotency / Side effects**: fetch-only; safe to call repeatedly.
 The cache layer deduplicates concurrent calls within the TTL window.

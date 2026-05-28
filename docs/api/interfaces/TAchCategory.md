@@ -25,10 +25,7 @@ Stable numeric ID of the category. Used as the key when joining to
 
 > **name**: `string`
 
-Display name of the category. **Pre-translated server-side** to the authenticated
-user's stored language (or to the language passed to `_smartico.vapi(lang)` in
-visitor mode). Falls back to the EN base name when a translation is missing — never
-null. Consumers should NOT translate this further.
+Display name of the category, pre-translated server-side. Never null.
 
 ***
 
@@ -36,7 +33,5 @@ null. Consumers should NOT translate this further.
 
 > **order**: `number`
 
-Relative position among other categories (lower = appears first). The server does
-NOT pre-sort by this value — the consumer must sort:
-`categories.sort((a, b) => a.order - b.order)`. Default value is 1 when the
+Relative display position (lower = appears first). Default 1 when the
 operator did not configure an explicit order.

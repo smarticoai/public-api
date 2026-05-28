@@ -1,6 +1,7 @@
 # Interface: TLevelCurrent
 
-TLevelCurrent describes the information of each level defined in the system along with ordinal position and progress of the current level
+TLevelCurrent extends `TLevel` with the user's progress toward the next level.
+Returned by `_smartico.api.getCurrentLevel()`.
 
 ## Extends
 
@@ -12,7 +13,7 @@ TLevelCurrent describes the information of each level defined in the system alon
 
 > **id**: `number`
 
-The ID of the Level
+Stable ID of the level.
 
 #### Inherited from
 
@@ -24,7 +25,7 @@ The ID of the Level
 
 > **name**: `string`
 
-The name of the Level, translated to the user language
+Display name of the level, pre-translated to the user's language.
 
 #### Inherited from
 
@@ -36,7 +37,7 @@ The name of the Level, translated to the user language
 
 > **description**: `string`
 
-The description of the Level, translated to the user language
+Display description of the level, pre-translated to the user's language.
 
 #### Inherited from
 
@@ -48,7 +49,7 @@ The description of the Level, translated to the user language
 
 > **image**: `string`
 
-The URL of the image of the Level, 256x256px
+URL of the level image (256x256 px source).
 
 #### Inherited from
 
@@ -60,7 +61,7 @@ The URL of the image of the Level, 256x256px
 
 > **required\_points**: `number`
 
-The amount of points required to reach the Level
+Total `ach_points_ever` required to reach this level.
 
 #### Inherited from
 
@@ -72,7 +73,8 @@ The amount of points required to reach the Level
 
 > **visibility\_points**: `number`
 
-Number of points that user should collect in order to see this level
+Visibility threshold — clients hide the level from the user until
+`ach_points_ever >= visibility_points`. `null` means always visible.
 
 #### Inherited from
 
@@ -84,9 +86,8 @@ Number of points that user should collect in order to see this level
 
 > **required\_level\_counter\_1**: `number`
 
-The counter of 1st metric used to reach the Level.
-Relevant in case of using advanced leveling logic
-https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
+Required value of the first level counter for sliding-window leveling.
+`null` on points-only labels. See `UserLevelExtraCountersT`.
 
 #### Inherited from
 
@@ -98,9 +99,8 @@ https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for
 
 > **required\_level\_counter\_2**: `number`
 
-The counter of 2nd metric used to reach the Level.
-Relevant in case of using advanced leveling logic
-https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
+Required value of the second level counter for sliding-window leveling.
+`null` on points-only labels.
 
 #### Inherited from
 
@@ -112,9 +112,8 @@ https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for
 
 > **custom\_data**: `string`
 
-Custom data as string or JSON string that can be used in API to build custom UI
-You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
-Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+Operator-defined custom data. The SDK auto-parses JSON-looking
+strings, so at runtime this is `any` despite the `string` type.
 
 #### Inherited from
 
@@ -126,7 +125,8 @@ Read more here - https://help.smartico.ai/welcome/products/general-concepts/cust
 
 > **ordinal\_position**: `number`
 
-The ordinal position of the level
+1-based position in the ladder (matches the order of the returned
+array, which is sorted by `required_points` ASC).
 
 #### Inherited from
 
@@ -138,4 +138,5 @@ The ordinal position of the level
 
 > **progress**: `number`
 
-The progress of the user towards next level in the percents to complete
+Progress to the next level as a 0–100 integer percentage. `100`
+at the highest level.

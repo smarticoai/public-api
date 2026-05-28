@@ -133,7 +133,7 @@ The message that should be shown to the user when the user cannot register in to
 > **custom\_section\_id**: `number`
 
 The ID of the custom section where the tournament is assigned
-The list of custom sections can be retrieved using _smartico.api.getCustomSections() method (TODO-API)
+The list of custom sections can be retrieved using _smartico.api.getCustomSections() method
 
 #### Inherited from
 

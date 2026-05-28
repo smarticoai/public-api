@@ -18,8 +18,13 @@ Requirements:
 1. Find request/response ClassId in ../../src/SmarticoAPI.ts and ../../src/Base/ClassId.ts
 2. Document raw message structure (not transformed T-prefixed types)
 3. For complex types — link to ../api/interfaces/*.md files
-4. If raw interface MD file doesn't exist in ../api/interfaces/ — create it following typedoc style like existing files there:
-   - Format: `# Interface: Name`, `## Properties`, `### property_name`, `• **property_name**: \`type\``, `___` separators between properties
+4. If the interface MD file doesn't exist in ../api/interfaces/, DO NOT hand-create it
+   there — that directory is TypeDoc output and is wiped on every `npm run doc`
+   (`cleanOutputDir: true`). Instead, add the interface's source `.ts` file to
+   `typedocOptions.entryPoints` in ../../tsconfig.json and re-run `npm run doc`;
+   TypeDoc then generates the interface page. (Example: `PointsLog` /
+   `GemsDiamondsLog` live in `src/ActivityLog/ActivityLogEntry.ts`, which must be
+   an entry point for their pages to exist.)
 5. Add method to Table of Contents in appropriate category
 6. Follow the same format as other methods in PROTOCOL.md (Request section with ClassId and fields table, Response section with ClassId and fields table, JSON examples where helpful)
 7. All documentation must be in English

@@ -52,7 +52,8 @@ Max number of members allowed in clan
 
 > **entry\_fee\_currency\_type\_id**: `number`
 
-ShopPurchaseType: 0=Points, 1=Gems, 2=Diamonds, 3=Free
+Currency type for `entry_fee_amount`. `0` = points, `1` = gems,
+`2` = diamonds, `3` = free (no fee).
 
 ***
 
@@ -60,7 +61,8 @@ ShopPurchaseType: 0=Points, 1=Gems, 2=Diamonds, 3=Free
 
 > **entry\_fee\_amount**: `number`
 
-Numeric value for entry fee
+Entry fee amount in the currency indicated by `entry_fee_currency_type_id`.
+`0` (or `entry_fee_currency_type_id === 3`) means the clan is free to join.
 
 ***
 
@@ -68,7 +70,9 @@ Numeric value for entry fee
 
 > **rating\_position**: `number`
 
-F1 rank ASC, 1=best
+Global rank among all active clans in the label, by `rating_score` DESC.
+`1` = highest-rated. May skip positions when some clans are hidden by
+per-user visibility (e.g. user sees positions 1, 3, 7).
 
 ***
 
@@ -76,4 +80,4 @@ F1 rank ASC, 1=best
 
 > **rating\_score**: `number`
 
-Clan rating score
+Clan rating score (higher is better).

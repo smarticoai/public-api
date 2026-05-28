@@ -1,6 +1,6 @@
 # Interface: TAvatarDefinition
 
-TAvatarDefinition describes a single avatar available in the avatar catalog.
+One avatar in the user's catalog. Returned by `getAvatarsList()`.
 Fields from the raw `public_meta` object are flattened to the top level.
 
 ## Properties
@@ -9,7 +9,7 @@ Fields from the raw `public_meta` object are flattened to the top level.
 
 > **avatar\_real\_id**: `number`
 
-Unique identifier of the avatar
+Stable numeric identifier of the avatar. Primary key passed to `setAvatar()`.
 
 ***
 
@@ -17,7 +17,7 @@ Unique identifier of the avatar
 
 > **is\_default**: `boolean`
 
-Whether this avatar is the default one
+True when this is the system default avatar for the label.
 
 ***
 
@@ -25,7 +25,7 @@ Whether this avatar is the default one
 
 > **hide\_until\_achieved**: `boolean`
 
-If true, avatar is hidden until user achieves/unlocks it
+When true and `is_given === false`, the avatar should be hidden from the user (surprise unlock).
 
 ***
 
@@ -33,7 +33,7 @@ If true, avatar is hidden until user achieves/unlocks it
 
 > **priority**: `number`
 
-Display priority — lower value means higher position in the grid
+Display position; lower = earlier in the grid.
 
 ***
 
@@ -41,7 +41,7 @@ Display priority — lower value means higher position in the grid
 
 > `optional` **description?**: `string`
 
-Optional description of the avatar (from public_meta)
+Optional description shown alongside the avatar in detail views.
 
 ***
 
@@ -49,7 +49,7 @@ Optional description of the avatar (from public_meta)
 
 > **url**: `string`
 
-Raw image path/URL of the avatar as returned by the server (from public_meta)
+Raw image path as returned by the server (relative or absolute).
 
 ***
 
@@ -57,7 +57,7 @@ Raw image path/URL of the avatar as returned by the server (from public_meta)
 
 > **avatar\_url**: `string`
 
-Full CDN URL of the avatar image, built from avatar_domain + url
+Absolute CDN URL of the avatar image; built from the configured avatar domain + `url`.
 
 ***
 
@@ -65,8 +65,7 @@ Full CDN URL of the avatar image, built from avatar_domain + url
 
 > **avatar\_source\_type\_id**: `number`
 
-Source type of the avatar.
-0 = free (always available to all users), other values = earned/purchased
+Source type. `0` = free / always available; non-zero = earned or purchased.
 
 ***
 
@@ -74,7 +73,7 @@ Source type of the avatar.
 
 > `optional` **active\_from\_date?**: `string`
 
-ISO date string from which the avatar becomes available
+ISO date string from which the avatar becomes available; undefined when no start window.
 
 ***
 
@@ -82,7 +81,7 @@ ISO date string from which the avatar becomes available
 
 > `optional` **active\_till\_date?**: `string`
 
-ISO date string until which the avatar is available
+ISO date string until which the avatar is available; undefined when no end window.
 
 ***
 
@@ -90,7 +89,7 @@ ISO date string until which the avatar is available
 
 > **is\_given**: `boolean`
 
-Whether the avatar has been granted/given to the current user
+True when the user owns / has unlocked this avatar.
 
 ***
 
@@ -98,4 +97,4 @@ Whether the avatar has been granted/given to the current user
 
 > `optional` **is\_in\_use?**: `boolean`
 
-Whether this avatar is currently in use by the user
+True when this avatar is the user's currently active profile avatar.

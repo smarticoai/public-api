@@ -1,6 +1,6 @@
 # Interface: TAvatarPrompt
 
-TAvatarPrompt describes an AI style prompt available for avatar customization.
+One AI style prompt for avatar customization. Returned by `getAvatarPrompts()`.
 Fields from the raw `public_meta` object are flattened to the top level.
 
 ## Properties
@@ -9,7 +9,7 @@ Fields from the raw `public_meta` object are flattened to the top level.
 
 > **prompt\_id**: `number`
 
-Unique identifier of the AI customization prompt
+Stable numeric identifier of the prompt.
 
 ***
 
@@ -17,7 +17,7 @@ Unique identifier of the AI customization prompt
 
 > **name**: `string`
 
-Display name of the prompt style, e.g. "Cartoon", "Watercolor" (from public_meta)
+Display name of the style, e.g. "Cartoon", "Watercolor".
 
 ***
 
@@ -25,7 +25,7 @@ Display name of the prompt style, e.g. "Cartoon", "Watercolor" (from public_meta
 
 > **icon\_url**: `string`
 
-Full CDN URL of the prompt style icon image (from public_meta)
+Absolute CDN URL of the prompt's preview icon.
 
 ***
 
@@ -33,7 +33,7 @@ Full CDN URL of the prompt style icon image (from public_meta)
 
 > **cost\_currency\_type\_id**: `number`
 
-Currency type used to pay for this customization (0=points, 1=gems, 2=diamonds)
+Currency used to pay for the customization. `0` = points, `1` = gems, `2` = diamonds.
 
 ***
 
@@ -41,4 +41,4 @@ Currency type used to pay for this customization (0=points, 1=gems, 2=diamonds)
 
 > **cost\_value**: `number`
 
-Cost amount in the given currency
+Cost amount in the currency named by `cost_currency_type_id`.

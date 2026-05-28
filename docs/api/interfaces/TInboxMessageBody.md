@@ -1,12 +1,16 @@
 # Interface: TInboxMessageBody
 
+TInboxMessageBody is the rich body of one inbox message.
+Returned by `_smartico.api.getInboxMessageBody(message_guid)`.
+Fetched from a CDN (not over WebSocket).
+
 ## Properties
 
 ### title
 
 > **title**: `string`
 
-Message title
+Display title.
 
 ***
 
@@ -14,7 +18,7 @@ Message title
 
 > **preview\_body**: `string`
 
-Short preview body of the message
+Short preview text (typically rendered alongside the title in list items).
 
 ***
 
@@ -22,7 +26,7 @@ Short preview body of the message
 
 > **icon**: `string`
 
-Message icon, 128x128px
+Message icon URL (128×128 px recommended).
 
 ***
 
@@ -30,10 +34,10 @@ Message icon, 128x128px
 
 > **action**: `string`
 
-The action that should be performed when user clicks on the message.
-Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action);
-The 'dp' function will handle the CTA and will execute it in the most safe way.
-If the message has a rich html body - the action will always be 'dp:inbox' which will open the inbox widget when triggered.
+Click-action — either a deep-link (e.g. `'dp:deposit'`) or a
+plain URL. The literal `'dp:inbox'` indicates the message has a
+rich `html_body`; for any other value `html_body` and `buttons`
+are absent. Pass to `_smartico.dp(action)` for safe execution.
 
 ***
 
@@ -41,7 +45,7 @@ If the message has a rich html body - the action will always be 'dp:inbox' which
 
 > `optional` **html\_body?**: `string`
 
-Rich HTML body of the message.
+Rich HTML body. Populated only when `action === 'dp:inbox'`.
 
 ***
 
@@ -49,19 +53,20 @@ Rich HTML body of the message.
 
 > `optional` **buttons?**: `object`[]
 
-Optional additional buttons to show in the message, available only if message has rich HTML body. Max count - 2.
+Up to 2 additional action buttons. Populated only when
+`action === 'dp:inbox'`.
 
 #### action
 
 > **action**: `string`
 
-The action that should be performed when user clicks on the button. The logic is the same as for message actions
+Button click-action (deep-link or URL).
 
 #### text
 
 > **text**: `string`
 
-Button text
+Button label.
 
 ***
 
@@ -69,4 +74,5 @@ Button text
 
 > `optional` **custom\_data?**: `string`
 
-The custom data of the inbox message defined by operator. Can be a JSON object, string or number
+Operator-defined custom data. The SDK auto-parses JSON-looking
+strings, so at runtime this is `any` despite the `string` type.

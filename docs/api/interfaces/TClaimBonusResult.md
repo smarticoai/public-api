@@ -1,14 +1,14 @@
 # Interface: TClaimBonusResult
 
-TClaimBonusResult describes the response of call to _smartico.api.claimBonus(bonus_id) method
+Result of `_smartico.api.claimBonus(bonus_id)`.
 
 ## Properties
 
 ### err\_code
 
-> **err\_code**: [`SAWSpinErrorCode`](../enumerations/SAWSpinErrorCode.md)
+> **err\_code**: `number`
 
-Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0
+Error code. `0` = success. See `claimBonus` TSDoc for the full table.
 
 ***
 
@@ -16,7 +16,7 @@ Error code that represents outcome of the game play attempt. Game succeed to be 
 
 > **err\_message**: `string`
 
-Optional error message
+Optional error message; populated on non-zero `err_code`.
 
 ***
 
@@ -24,4 +24,4 @@ Optional error message
 
 > `optional` **success?**: `boolean`
 
-If the bonus was claimed successfully, then success is true
+Unreliable on the wire — prefer `err_code === 0` as the success check.

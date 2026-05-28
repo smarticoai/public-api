@@ -1,5 +1,10 @@
 # Smartico API documentation
 
+## Documents
+
+- [SmarticoObject](documents/SmarticoObject.md)
+- [Callbacks](documents/Callbacks.md)
+
 ## Enumerations
 
 - [PointChangeSourceType](enumerations/PointChangeSourceType.md)
@@ -75,6 +80,8 @@
 
 ## Interfaces
 
+- [PointsLog](interfaces/PointsLog.md)
+- [GemsDiamondsLog](interfaces/GemsDiamondsLog.md)
 - [AchRelatedGame](interfaces/AchRelatedGame.md)
 - [Bonus](interfaces/Bonus.md)
 - [BonusMetaMap](interfaces/BonusMetaMap.md)
@@ -235,6 +242,7 @@
 
 ## Type Aliases
 
+- [ActivityLogEntry](type-aliases/ActivityLogEntry.md)
 - [TournamentRegistrationTypeName](type-aliases/TournamentRegistrationTypeName.md)
 
 ## Variables

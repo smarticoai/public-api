@@ -1,12 +1,15 @@
 # Interface: BonusTemplateMetaMap
 
+Template-level bonus display metadata (operator-configured at the
+bonus template; identical for every bonus issued from the same template).
+
 ## Properties
 
 ### description
 
 > **description**: `string`
 
-Description of the bonus template
+Operator-set description / display text. May include HTML.
 
 ***
 
@@ -14,7 +17,8 @@ Description of the bonus template
 
 > **acknowledge**: `string`
 
-Acknowledge message setup in the bonus template
+Operator-set additional message shown to the player at claim
+time (e.g. wagering terms). May include deep-links.
 
 ***
 
@@ -22,7 +26,7 @@ Acknowledge message setup in the bonus template
 
 > **image\_url**: `string`
 
-Image URL of the bonus template, 1:1 aspect ratio
+Bonus icon URL (1:1 aspect ratio recommended).
 
 ***
 
@@ -30,4 +34,5 @@ Image URL of the bonus template, 1:1 aspect ratio
 
 > `optional` **redirect\_url?**: `string`
 
-Redirect URL of the bonus template
+Optional redirect — external HTTP URL (opens in new tab) or
+internal deep-link (handled by the SDK's deep-link router).

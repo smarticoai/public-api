@@ -60,6 +60,7 @@
 			"src/Leaderboard/LeaderBoardPeriodType.ts",
 			"src/Base/AchRelatedGame.ts",
 			"src/Core/ActivityTypeLimited.ts",
+			"src/ActivityLog/ActivityLogEntry.ts",
 			"src/Jackpots/index.ts",
 			"src/Raffle/index.ts",
 			"src/Missions/AchievementAvailabilityStatus.ts",
@@ -86,6 +87,7 @@
 			"src/Clans/Clan.ts"
 		],
 		"out": "docs/api",
+		"projectDocuments": ["docs/SmarticoObject.md", "docs/Callbacks.md"],
 		"plugin": ["typedoc-plugin-markdown", "typedoc-plugin-merge-modules"],
 		"entryFileName": "README.md",
 		"disableSources": true,

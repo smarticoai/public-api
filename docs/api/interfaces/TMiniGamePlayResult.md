@@ -1,6 +1,7 @@
 # Interface: TMiniGamePlayResult
 
-TMiniGamePlayResult describes the response of call to _smartico.api.playMiniGame(template_id) method
+TMiniGamePlayResult describes the response of
+`_smartico.api.playMiniGame(template_id)`.
 
 ## Properties
 
@@ -8,7 +9,8 @@ TMiniGamePlayResult describes the response of call to _smartico.api.playMiniGame
 
 > **err\_code**: [`SAWSpinErrorCode`](../enumerations/SAWSpinErrorCode.md)
 
-Error code that represents outcome of the game play attempt. Game succeed to be played in case err_code is 0
+Error code. `0` = success ([SAWSpinErrorCode.SAW\_OK](../enumerations/SAWSpinErrorCode.md#saw_ok)).
+See `playMiniGame` TSDoc for the full table.
 
 ***
 
@@ -16,7 +18,8 @@ Error code that represents outcome of the game play attempt. Game succeed to be 
 
 > **err\_message**: `string`
 
-Optional error message
+Optional server-side error message. Present only on non-zero
+`err_code`; may be empty even then.
 
 ***
 
@@ -24,4 +27,6 @@ Optional error message
 
 > **prize\_id**: `number`
 
-The prize_id that user won, details of the prize can be found in the mini-game definition
+ID of the won prize. Look up in `template.prizes` to interpret
+(including `prize_type === 'no-prize'` for a configured loss
+slot). Always populated, even when `err_code !== 0`.

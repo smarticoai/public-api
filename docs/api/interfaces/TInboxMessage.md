@@ -1,12 +1,18 @@
 # Interface: TInboxMessage
 
+TInboxMessage is the lightweight envelope returned by
+`_smartico.api.getInboxMessages()`. Fetch the rich body (title,
+preview, icon, html_body, buttons) separately via
+`_smartico.api.getInboxMessageBody(message_guid)`.
+
 ## Properties
 
 ### message\_guid
 
 > **message\_guid**: `string`
 
-Uniq identifier of the message. It is needed to request the message body, mark the message as read/deleted/favorite.
+Unique identifier of the message. Pass to `getInboxMessageBody`
+and the mark / favorite / delete mutations.
 
 ***
 
@@ -14,7 +20,7 @@ Uniq identifier of the message. It is needed to request the message body, mark t
 
 > **sent\_date**: `string`
 
-Date when the message was sent
+Date when the message was sent (server timestamp).
 
 ***
 
@@ -22,7 +28,7 @@ Date when the message was sent
 
 > **read**: `boolean`
 
-Indicator if a message is read
+`true` when the message has been marked read.
 
 ***
 
@@ -30,7 +36,7 @@ Indicator if a message is read
 
 > **favorite**: `boolean`
 
-Indicator if a message is added to favorites
+`true` when the message has been starred (favorited).
 
 ***
 
@@ -38,7 +44,7 @@ Indicator if a message is added to favorites
 
 > `optional` **category\_id?**: [`InboxCategories`](../enumerations/InboxCategories.md)
 
-Category id per inbox message, can be part of System inboxes, Personal inboxes or General inbox messages
+Operator-assigned category ([InboxCategories](../enumerations/InboxCategories.md)).
 
 ***
 
@@ -46,4 +52,6 @@ Category id per inbox message, can be part of System inboxes, Personal inboxes o
 
 > `optional` **expire\_on\_dt?**: `number`
 
-The epoch timestamp, with milliseconds, when the message is going to be expired
+Expiry timestamp as Unix-ms epoch. Server filters out expired
+messages from list responses — consumers rarely see this set
+unless the expiry is upcoming.

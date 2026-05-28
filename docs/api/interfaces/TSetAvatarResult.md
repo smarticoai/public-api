@@ -1,6 +1,6 @@
 # Interface: TSetAvatarResult
 
-TSetAvatarResult describes the response of call to _smartico.api.setAvatar() method
+Result of `_smartico.api.setAvatar()`.
 
 ## Properties
 
@@ -8,7 +8,7 @@ TSetAvatarResult describes the response of call to _smartico.api.setAvatar() met
 
 > **err\_code**: `number`
 
-Error code that represents outcome of the set avatar request. Successful if err_code is 0
+Error code. `0` = success. See `setAvatar` TSDoc for the full table.
 
 ***
 
@@ -16,4 +16,4 @@ Error code that represents outcome of the set avatar request. Successful if err_
 
 > `optional` **err\_message?**: `string`
 
-Optional error message
+Optional error message; populated on non-zero `err_code`.

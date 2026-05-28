@@ -1,12 +1,15 @@
 # Interface: TBonus
 
+TBonus describes one bonus awarded to the user.
+Returned by `_smartico.api.getBonuses()`.
+
 ## Properties
 
 ### bonus\_id
 
 > **bonus\_id**: `number`
 
-ID of the bonus
+Stable ID of the bonus.
 
 ***
 
@@ -14,7 +17,8 @@ ID of the bonus
 
 > `optional` **is\_redeemable?**: `boolean`
 
-Can the bonus be redeemed (if bonus is redeemable the user needs to claim it)
+`true` when the bonus is in a player-claim-required state.
+Gate the Claim button on this; see `claimBonus` TSDoc.
 
 ***
 
@@ -22,7 +26,8 @@ Can the bonus be redeemed (if bonus is redeemable the user needs to claim it)
 
 > `optional` **create\_date?**: `string`
 
-Date of creation
+Bonus creation timestamp as ISO 8601 UTC string
+("YYYY-MM-DDTHH:MM:SS", no timezone suffix).
 
 ***
 
@@ -30,7 +35,8 @@ Date of creation
 
 > `optional` **redeem\_date?**: `string`
 
-Date of redemption
+Bonus redemption timestamp as ISO 8601 UTC string. Absent until
+the bonus reaches `BonusStatus.REDEEMED`.
 
 ***
 
@@ -38,7 +44,7 @@ Date of redemption
 
 > `optional` **label\_bonus\_template\_id?**: `number`
 
-ID of template used
+ID of the bonus template used to issue this bonus.
 
 ***
 
@@ -46,7 +52,7 @@ ID of template used
 
 > `optional` **bonus\_status\_id?**: [`BonusStatus`](../enumerations/BonusStatus-1.md)
 
-ID of the bonus status
+Lifecycle status; see [BonusStatus](../enumerations/BonusStatus-1.md).
 
 ***
 
@@ -54,7 +60,8 @@ ID of the bonus status
 
 > `optional` **label\_bonus\_template\_meta\_map?**: [`BonusTemplateMetaMap`](BonusTemplateMetaMap-1.md)
 
-Additional information about the bonus(edscription, image,name, acknowledge)
+Template-level display metadata (operator-configured, identical
+across all bonuses from the same template).
 
 ***
 
@@ -62,4 +69,5 @@ Additional information about the bonus(edscription, image,name, acknowledge)
 
 > `optional` **bonus\_meta\_map?**: [`BonusMetaMap`](BonusMetaMap-1.md)
 
-Additional information presented to the player when the bonus is redeemed
+Instance-level display metadata (per-issuance; carries the
+dynamic amount computed at award time).

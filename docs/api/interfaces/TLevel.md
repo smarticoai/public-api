@@ -1,9 +1,7 @@
 # Interface: TLevel
 
-TLevel describes the information of each level defined in the system
-There is no order of the levels, but it can be calculated using required_points property
-The current level of user can be taken from the user object using ach_level_current_id property
-The progress to the next level can be calculated using ach_points_ever and required_points properties of next level
+TLevel describes one level in the label's level ladder.
+Returned by `_smartico.api.getLevels()` (already sorted by `required_points` ASC).
 
 ## Extended by
 
@@ -15,7 +13,7 @@ The progress to the next level can be calculated using ach_points_ever and requi
 
 > **id**: `number`
 
-The ID of the Level
+Stable ID of the level.
 
 ***
 
@@ -23,7 +21,7 @@ The ID of the Level
 
 > **name**: `string`
 
-The name of the Level, translated to the user language
+Display name of the level, pre-translated to the user's language.
 
 ***
 
@@ -31,7 +29,7 @@ The name of the Level, translated to the user language
 
 > **description**: `string`
 
-The description of the Level, translated to the user language
+Display description of the level, pre-translated to the user's language.
 
 ***
 
@@ -39,7 +37,7 @@ The description of the Level, translated to the user language
 
 > **image**: `string`
 
-The URL of the image of the Level, 256x256px
+URL of the level image (256x256 px source).
 
 ***
 
@@ -47,7 +45,7 @@ The URL of the image of the Level, 256x256px
 
 > **required\_points**: `number`
 
-The amount of points required to reach the Level
+Total `ach_points_ever` required to reach this level.
 
 ***
 
@@ -55,7 +53,8 @@ The amount of points required to reach the Level
 
 > **visibility\_points**: `number`
 
-Number of points that user should collect in order to see this level
+Visibility threshold — clients hide the level from the user until
+`ach_points_ever >= visibility_points`. `null` means always visible.
 
 ***
 
@@ -63,9 +62,8 @@ Number of points that user should collect in order to see this level
 
 > **required\_level\_counter\_1**: `number`
 
-The counter of 1st metric used to reach the Level.
-Relevant in case of using advanced leveling logic
-https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
+Required value of the first level counter for sliding-window leveling.
+`null` on points-only labels. See `UserLevelExtraCountersT`.
 
 ***
 
@@ -73,9 +71,8 @@ https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for
 
 > **required\_level\_counter\_2**: `number`
 
-The counter of 2nd metric used to reach the Level.
-Relevant in case of using advanced leveling logic
-https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
+Required value of the second level counter for sliding-window leveling.
+`null` on points-only labels.
 
 ***
 
@@ -83,9 +80,8 @@ https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for
 
 > **custom\_data**: `string`
 
-Custom data as string or JSON string that can be used in API to build custom UI
-You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
-Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+Operator-defined custom data. The SDK auto-parses JSON-looking
+strings, so at runtime this is `any` despite the `string` type.
 
 ***
 
@@ -93,4 +89,5 @@ Read more here - https://help.smartico.ai/welcome/products/general-concepts/cust
 
 > **ordinal\_position**: `number`
 
-The ordinal position of the level
+1-based position in the ladder (matches the order of the returned
+array, which is sorted by `required_points` ASC).

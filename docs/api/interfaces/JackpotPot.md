@@ -1,12 +1,15 @@
 # Interface: JackpotPot
 
+Live snapshot of one jackpot pot's value and temperature.
+Embedded on `JackpotDetails.pot`; refreshed at the 1 s SDK cache TTL.
+
 ## Properties
 
 ### jp\_template\_id
 
 > **jp\_template\_id**: `number`
 
-ID of the jackpot template
+Template ID this pot belongs to.
 
 ***
 
@@ -14,7 +17,7 @@ ID of the jackpot template
 
 > **jp\_pot\_id**: `number`
 
-ID of the jackpot pot
+Stable numeric ID of the current pot instance (rotates when the pot explodes).
 
 ***
 
@@ -22,7 +25,7 @@ ID of the jackpot pot
 
 > **current\_pot\_amount**: `number`
 
-currency of the jackpot pot in the Jackput base currency
+Current pot amount in the jackpot's native currency (`jp_currency`).
 
 ***
 
@@ -30,7 +33,7 @@ currency of the jackpot pot in the Jackput base currency
 
 > **current\_pot\_amount\_user\_currency**: `number`
 
-currency of the jackpot pot in the user wallet currency
+Current pot amount converted to the user's wallet currency (`user_currency`).
 
 ***
 
@@ -38,7 +41,7 @@ currency of the jackpot pot in the user wallet currency
 
 > **explode\_date\_ts**: `number`
 
-the date/time when this pot exploded
+Unix ms timestamp of when this pot last exploded; `0` if it has never exploded.
 
 ***
 
@@ -46,4 +49,4 @@ the date/time when this pot exploded
 
 > **current\_pot\_temperature**: [`JackPotTemparature`](../enumerations/JackPotTemparature.md)
 
-current pot temperature
+Heat band of the pot relative to its explosion range; see [JackPotTemparature](../enumerations/JackPotTemparature.md).

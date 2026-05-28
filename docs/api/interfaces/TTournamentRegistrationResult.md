@@ -1,12 +1,14 @@
 # Interface: TTournamentRegistrationResult
 
+Result of `_smartico.api.registerInTournament(tournament_id)`.
+
 ## Properties
 
 ### err\_code
 
 > **err\_code**: [`TournamentRegistrationError`](../enumerations/TournamentRegistrationError.md)
 
-Error code that represents outcome of the tournament registration request. Successful registration in case err_code is 0
+Error code. `0` = success. See `registerInTournament` TSDoc for the full table.
 
 ***
 
@@ -14,4 +16,4 @@ Error code that represents outcome of the tournament registration request. Succe
 
 > **err\_message**: `string`
 
-Optional error message
+Optional error message; populated on non-zero `err_code`.

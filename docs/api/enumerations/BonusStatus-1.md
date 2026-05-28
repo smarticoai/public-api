@@ -1,12 +1,17 @@
 # Enumeration: BonusStatus
 
+BonusStatus describes the lifecycle stage of a bonus on `TBonus.bonus_status_id`.
+Operator widget configuration typically filters out internal statuses
+(`New`, `COUPON_ISSUE_FAILED`, `EXPIRED`); consumers usually see
+`COUPON_ISSUED`, `REDEEMED`, and `REDEEM_FAILED`.
+
 ## Enumeration Members
 
 ### New
 
 > **New**: `1`
 
-The bonus is newly created (shouldn't be shown to the client)
+Newly created, not yet processed (internal).
 
 ***
 
@@ -14,7 +19,7 @@ The bonus is newly created (shouldn't be shown to the client)
 
 > **COUPON\_ISSUED**: `2`
 
-The bonus is issued and available for redemption but has not been redeemed yet
+Issued and awaiting player claim.
 
 ***
 
@@ -22,7 +27,7 @@ The bonus is issued and available for redemption but has not been redeemed yet
 
 > **REDEEMED**: `3`
 
-The bonus has been successfully redeemed
+Successfully redeemed.
 
 ***
 
@@ -30,7 +35,7 @@ The bonus has been successfully redeemed
 
 > **REDEEM\_FAILED**: `4`
 
-The bonus is still valid, but a previous redemption attempt failed
+Previous redemption attempt failed; still valid and re-claimable.
 
 ***
 
@@ -38,7 +43,7 @@ The bonus is still valid, but a previous redemption attempt failed
 
 > **COUPON\_ISSUE\_FAILED**: `5`
 
-Failed to issue the bonus (shouldn't be shown to the client)
+Coupon issuance failed (internal).
 
 ***
 
@@ -46,4 +51,4 @@ Failed to issue the bonus (shouldn't be shown to the client)
 
 > **EXPIRED**: `6`
 
-The bonus was issued but has expired and can no longer be redeemed (shouldn't be shown to the client)
+Issued but expired before redemption (internal).

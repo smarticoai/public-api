@@ -1,6 +1,6 @@
 # Interface: TAvatarCustomized
 
-TAvatarCustomized describes an AI-customized version of a base avatar
+One AI-generated variant of a base avatar. Returned by `getAvatarsCustomized()`.
 
 ## Properties
 
@@ -8,7 +8,7 @@ TAvatarCustomized describes an AI-customized version of a base avatar
 
 > **avatar\_real\_id**: `number`
 
-The avatar_real_id of the base avatar this customization was generated from
+`avatar_real_id` of the base avatar this variant was generated from.
 
 ***
 
@@ -16,7 +16,7 @@ The avatar_real_id of the base avatar this customization was generated from
 
 > **url**: `string`
 
-Full CDN URL of the AI-generated customized avatar image
+Absolute CDN URL of the AI-generated image. Can be passed as `avatar_url` to `setAvatar()`.
 
 ***
 
@@ -24,4 +24,4 @@ Full CDN URL of the AI-generated customized avatar image
 
 > **dt\_created**: `string`
 
-ISO date string when the customization was created
+ISO date string of when the variant was generated.

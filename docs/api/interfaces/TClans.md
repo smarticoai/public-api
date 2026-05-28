@@ -24,7 +24,9 @@ The clan ID the current user belongs to; null if clanless
 
 > **cooldown\_until**: `string`
 
-Cooldown-until date string; null if no cooldown
+Switch-cooldown expiry as ISO 8601 UTC string ("YYYY-MM-DDTHH:MM:SS"
+with no timezone suffix; interpret as UTC). `null` when no cooldown.
+User-level: while set, the user cannot join any clan.
 
 ***
 

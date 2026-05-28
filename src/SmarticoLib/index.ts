@@ -2127,10 +2127,12 @@ declare enum EWidgetType {
 }
 declare enum EXTERNAL_CALLBACK_KEY {
 	INIT = 'init',
+	LABEL_INIT_COMPLETED = 'label_init_completed',
 	IDENTIFY = 'identify',
 	LOGIN = 'login',
 	LOGOUT = 'logout',
 	USER_PROPS_CHANGE = 'props_change',
+	PAGE_NAVIGATION = 'page_navigation',
 	SESSION_BASED_DP_DETECTED = 'session_based_dp_detected',
 	GF_CLOSING = 'gf_closing',
 	GF_STARTING = 'gf_starting',
@@ -2140,6 +2142,8 @@ declare enum EXTERNAL_CALLBACK_KEY {
 	PROTOCOL_ERROR = 'protocol_error',
 	MNIGAME_WIN = 'mini_game_win',
 	ACH_GAME_OPENING = 'ach_game_opening',
+	JACKPOT_WIN = 'jackpot_win',
+	GF_UX = 'gf_ux',
 }
 declare enum DpType {
 	AskPushPermissions = 'ask_push_permissions',

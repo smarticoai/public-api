@@ -1,12 +1,16 @@
 # Interface: TUICustomSection
 
+One operator-configured navigation entry. Returned by `getCustomSections()`.
+`section_type_id` is the dispatch key — it determines which page component the
+consumer mounts when the user opens this section.
+
 ## Properties
 
 ### id
 
 > **id**: `number`
 
-The ID of the custom section
+Stable numeric ID of the section.
 
 ***
 
@@ -14,7 +18,7 @@ The ID of the custom section
 
 > `optional` **body?**: `string`
 
-The body of the custom section
+Raw HTML body for `HTML_PAGE` sections; Liquid template body for `LEVELS` (Liquid) sections.
 
 ***
 
@@ -22,7 +26,7 @@ The body of the custom section
 
 > `optional` **menu\_img?**: `string`
 
-The image of the custom section, 64x64px
+CDN URL of the section's nav icon, 64x64 px square.
 
 ***
 
@@ -30,7 +34,7 @@ The image of the custom section, 64x64px
 
 > `optional` **menu\_name?**: `string`
 
-The name of the custom section
+Display name shown next to the nav icon. Pre-translated server-side.
 
 ***
 
@@ -38,7 +42,7 @@ The name of the custom section
 
 > `optional` **custom\_skin\_images?**: `string`
 
-Custom images for custom section
+JSON-serialized list of skin image overrides for themed sections (e.g. `MISSION_CUSTOM_LAYOUT`).
 
 ***
 
@@ -46,7 +50,7 @@ Custom images for custom section
 
 > `optional` **section\_type\_id?**: [`AchCustomSectionType`](../enumerations/AchCustomSectionType.md)
 
-The particular type of custom section, can be Missions, Tournaments, Lootbox and etc
+Dispatch key — see [AchCustomSectionType](../enumerations/AchCustomSectionType.md).
 
 ***
 
@@ -54,7 +58,7 @@ The particular type of custom section, can be Missions, Tournaments, Lootbox and
 
 > `optional` **theme?**: [`AchCustomLayoutTheme`](../enumerations/AchCustomLayoutTheme.md)
 
-Theme of the custom section
+Themed-layout name for `MISSION_CUSTOM_LAYOUT` sections; see [AchCustomLayoutTheme](../enumerations/AchCustomLayoutTheme.md).
 
 ***
 
@@ -62,7 +66,7 @@ Theme of the custom section
 
 > `optional` **generic\_custom\_css?**: `string`
 
-Custom css for the custom section
+Custom CSS for themed layouts.
 
 ***
 
@@ -70,7 +74,7 @@ Custom css for the custom section
 
 > `optional` **mission\_tabs\_options?**: [`AchMissionsTabsOptions`](../enumerations/AchMissionsTabsOptions.md)
 
-Tabs that can be shown in custom section, e.g Overview, No Overview, All tabs
+Which tabs to render for `MISSIONS_CATEGORY` sections; see [AchMissionsTabsOptions](../enumerations/AchMissionsTabsOptions.md).
 
 ***
 
@@ -78,7 +82,7 @@ Tabs that can be shown in custom section, e.g Overview, No Overview, All tabs
 
 > `optional` **overview\_missions\_filter?**: [`AchOverviewMissionsFilter`](../enumerations/AchOverviewMissionsFilter.md)
 
-Filter that allow to show missions by criteria
+Mission-filter rule for the Overview tab; see [AchOverviewMissionsFilter](../enumerations/AchOverviewMissionsFilter.md).
 
 ***
 
@@ -86,7 +90,7 @@ Filter that allow to show missions by criteria
 
 > `optional` **overview\_missions\_count?**: `number`
 
-Quantity of missions to be shown in overview
+Maximum number of missions shown in the Overview tab.
 
 ***
 
@@ -94,7 +98,7 @@ Quantity of missions to be shown in overview
 
 > `optional` **url\_or\_dp?**: `string`
 
-URL or DP to be used for custom section
+Click target for `REDIRECT_LINK` sections — either a Smartico DP string (`dp:…`) or an external URL.
 
 ***
 
@@ -102,7 +106,7 @@ URL or DP to be used for custom section
 
 > `optional` **liquid\_entity\_data?**: [`LiquidEntityData`](../enumerations/LiquidEntityData.md)[]
 
-Data to be used for Liquid templates
+Data-context selectors for Liquid templates; see [LiquidEntityData](../enumerations/LiquidEntityData.md).
 
 ***
 
@@ -110,7 +114,7 @@ Data to be used for Liquid templates
 
 > `optional` **ach\_tournament\_id?**: `number`
 
-Tournament ID to be used for Liquid templates
+Tournament ID for a single-tournament Liquid template (`LiquidEntityData.Tournament`).
 
 ***
 
@@ -118,7 +122,7 @@ Tournament ID to be used for Liquid templates
 
 > `optional` **show\_raw\_data?**: `boolean`
 
-Indicates if the data should be shown as raw data (for Liquid templates)
+Operator debug flag — when `true`, Liquid renders raw context data instead of the templated HTML.
 
 ***
 
@@ -126,7 +130,7 @@ Indicates if the data should be shown as raw data (for Liquid templates)
 
 > `optional` **liquid\_template?**: `number`
 
-Liquid template id to be used for Liquid templates
+Liquid template ID resolved server-side; the rendered body is delivered in `body`.
 
 ***
 
@@ -134,7 +138,7 @@ Liquid template id to be used for Liquid templates
 
 > `optional` **ach\_category\_ids?**: `number`[]
 
-List of IDs of the categories where the badge item is assigned, information about categories can be retrieved with getAchCategories method
+Category IDs the section filters badges by — correlate with `getAchCategories()`.
 
 ***
 
@@ -142,7 +146,7 @@ List of IDs of the categories where the badge item is assigned, information abou
 
 > `optional` **shop\_category\_ids?**: `number`[]
 
-List of IDs of the categories where the store item is assigned, information about categories can be retrieved with getShopCategories method
+Category IDs the section filters store items by — correlate with `getStoreCategories()`.
 
 ***
 
@@ -150,4 +154,4 @@ List of IDs of the categories where the store item is assigned, information abou
 
 > `optional` **raffle\_id?**: `number`
 
-ID of the raffle to be used for Liquid templates
+Raffle ID for `RAFFLE` sections (and `LiquidEntityData.SingleRaffle` Liquid templates).

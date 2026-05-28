@@ -52,90 +52,70 @@ affordability state of the Buy button — the SDK does not pre-compute
 affordability into `can_buy`.
 
 **Subscription model (`onUpdate`)**
-The callback registered via `onUpdate` is invoked with the FULL refreshed
-catalog — never a diff/patch — after any `buyStoreItem(...)` call
-resolves on this connection (regardless of `err_code`). It is the ONLY
-trigger for the store catalog. Side effects covered:
-- Pool decrement on the item the user just bought.
-- `purchased_today` / `purchased_this_week` / `purchased_this_month`
-  flag flips (these appear only in the purchase-history list, but the
-  underlying `can_buy` field on the main catalog re-evaluates against
-  the operator's "max bought" rules after every purchase).
-- `can_buy === false` after a per-period purchase cap is hit.
-
+The callback receives the FULL refreshed catalog (never a diff/patch).
 Each subsequent call to `getStoreItems({ onUpdate })` REPLACES the prior
-callback — there is only one active subscriber at a time. Pass
+callback — only one active subscriber at a time. Pass
 `onUpdate: undefined` (or omit it) to keep the prior callback in place;
 the callback is never auto-cleared.
 
-**What does NOT trigger an `onUpdate`** (consumer-relevant)
+**Update triggers**
+
+Fires after: any `buyStoreItem(...)` call resolves on this connection
+(success OR failure). This is the ONLY trigger. The refreshed array
+reflects pool decrement on the just-bought item, per-period purchase
+cap re-evaluation on `can_buy`, and any `purchased_today` /
+`purchased_this_week` / `purchased_this_month` flips visible via
+[getStorePurchasedItems](#getstorepurchaseditems).
+
+Does NOT fire for:
 - Operator-side BO catalog edits (price, ribbons, pool seed, segment
-  conditions, new/removed items) do NOT push to connected clients —
-  those changes surface only on the next cache miss.
-- Pool depletion caused by OTHER users' concurrent purchases does NOT
-  push. The current user's view of `pool` may be stale until they
-  trigger a refresh themselves.
-- User balance changes (points/gems/diamonds going up from gameplay)
-  do NOT refresh the catalog. The catalog is independent of balance;
-  the consumer must drive button affordability from a separately
-  tracked balance source (e.g. the user's gamification profile,
-  updated independently of this catalog).
-- Items going past their `active_till_date` while the page is open do
-  NOT push — the item will simply disappear on the next refresh.
+  conditions, new/removed items) — surface only on the next cache miss.
+- Concurrent purchases by OTHER users — the current user's view of
+  `pool` may be stale until they themselves refresh.
+- User balance changes from gameplay — the catalog is independent of
+  balance; the consumer drives Buy-button affordability from a
+  separately-tracked balance source.
+- Items going past their `active_till_date` while the page is open —
+  the item simply disappears on the next refresh.
 
 **Server-side filtering** (what's already excluded before the SDK sees it)
-- Items outside the `[active_from_date, active_till_date]` window — past
-  the till-date, items are ALWAYS filtered out server-side.
-- Items the user fails visibility-segment / visibility-condition checks for.
-- Items with `shop_pool_hide_when_empty = true` whose pool has reached 0
-  (operator-configured per item). Items without that flag are still
-  returned with `pool === 0` so a "Sold out" state can be rendered.
+- Items outside the `[active_from_date, active_till_date]` window —
+  past the till-date, items are ALWAYS filtered out server-side.
+- Items the user fails visibility-segment / visibility-condition
+  checks for.
+- Items configured to hide-when-empty whose pool has reached 0
+  (per-item operator flag). Items without that flag are still returned
+  with `pool === 0` so a "Sold out" state can be rendered.
 - Items where the per-period bought-count cap is reached (and the
   operator chose to hide rather than just disable).
 
-**Field semantics** (non-obvious fields on `TStoreItem`)
-- `price` is typed as `number` on the SDK surface; internally the server
-  stores it as a string and the SDK converts. Always coerce defensively
-  if you arithmetic against it.
-- `purchase_type` is per-item and may differ across items in the same
-  catalog: `'points'`, `'gems'`, or `'diamonds'`. There is no
-  label-level currency — operators can mix currencies freely.
-- `can_buy` reflects segment conditions, per-period purchase caps, and
-  item-active-window — but NOT the user's current balance. Consumers
-  must check affordability separately by comparing `price` to the
-  live balance for `purchase_type`.
-- `pool` is `null` for unlimited items, a positive integer for limited
-  stock, and `0` for sold-out items that the operator kept visible. It
-  is NOT live: only the buyer's own pool-decrementing purchase updates
-  it client-side.
-- `active_till_date` is a unix-ms timestamp; items past this point are
-  filtered server-side, so consumers should NOT need to render an
-  "Expired" state for catalog items (only for purchase-history rows).
-  A live countdown ("flash sale ends in HH:MM:SS") is rendered only
-  when the operator has enabled the per-item `show_timer` flag.
-- `discounted_price` + `discount_price_ribbon` are the discount-display
-  pair: render `price` with a strikethrough and `discounted_price` as
-  the active price. `discount_price_ribbon` is either a percentage
-  preset (`'10'`, `'15'`, `'20'`, `'25'`, `'50'`) styled by the
-  consumer's CSS, or the literal `'custom'` — in which case
-  `custom_ribbon_image` (250×300 px URL) is the artwork.
-- `ribbon` (general item ribbon) accepts the presets `'sale'`, `'hot'`,
-  `'new'`, `'vip'` (built-in styling) or a custom-image URL (250×300 px).
-- `category_ids` maps to `TStoreCategory.id` from
-  [getStoreCategories](#getstorecategories) — an item can appear in multiple categories;
-  render it as multiple cards or once per active-tab as the consumer's
-  navigation prefers.
-- `only_in_custom_section: true` means the item should be HIDDEN from
-  the main store view and shown only inside the operator-defined
-  custom section (`custom_section_id`). The catalog still includes it —
-  filter client-side for general views.
-- `type` distinguishes the post-purchase server effect (see "Side
-  effects" below). UI rendering of the CATALOG card is identical across
-  types — there is no built-in card variation per type.
-- `purchase_ts`, `purchase_points_amount`, `purchased_today`,
-  `purchased_this_week`, `purchased_this_month` are populated only on
-  rows returned from [getStorePurchasedItems](#getstorepurchaseditems) (purchase history),
-  NOT on rows from `getStoreItems`.
+**Reading state from the returned item**
+The catalog row carries everything a Buy button needs except the user's
+balance: `can_buy` already reflects segment / visibility / per-period
+cap checks, but the SDK does NOT pre-compute balance affordability —
+compare `discounted_price ?? price` against the user's balance for
+`purchase_type` (`ach_points_balance` / `ach_gems_balance` /
+`ach_diamonds_balance` from [getUserProfile](WSAPIUser.md#getuserprofile)). `purchase_type` is
+per-item (`'points'` / `'gems'` / `'diamonds'`); operators can mix
+currencies within a single catalog. For sold-out display, `pool === 0`
+means the operator chose to keep the item visible — render an "Out of
+stock" overlay. When `discounted_price` is set, render `price` with a
+strikethrough and `discounted_price` as the active price; the
+accompanying `discount_price_ribbon` is either a percentage preset
+(`'10'`, `'15'`, `'20'`, `'25'`, `'50'`) or the literal `'custom'`
+(in which case `custom_ribbon_image` is the artwork at 250×300 px).
+A live countdown for time-limited items is rendered only when the
+operator has enabled the per-item `show_timer` flag.
+
+**Cross-references**
+`category_ids` joins to `TStoreCategory.id` from
+[getStoreCategories](#getstorecategories) (many-to-many — an item can belong to
+multiple categories). Items with `only_in_custom_section: true` are
+returned in the catalog but intended for their custom-section view
+only — filter them client-side for the main store view. The
+history-only fields (`purchase_ts`, `purchase_points_amount`, the
+`purchased_*` booleans) are populated only by
+[getStorePurchasedItems](#getstorepurchaseditems), not by this method.
 
 **Idempotency**: yes. `getStoreItems` is a pure read. Calling it
 repeatedly within the 30-second cache window resolves from the cache
@@ -622,40 +602,35 @@ Promise resolving to an array of `TStoreItem` history entries
 - History rows render identically across types — there is no deep-link to
   the bonus wallet or re-claim affordance on the row itself.
 
-**History-only fields on `TStoreItem`**
-The following fields are populated **only** for entries returned by this
-method (NOT by [getStoreItems](#getstoreitems)):
-- `purchase_ts` — Unix milliseconds, server-recorded UTC moment of
-  purchase. Format on the consumer side in the **user's browser local
-  timezone** (the default Smartico UI uses
-  `new Date(purchase_ts).toLocaleString(undefined, { dateStyle: 'short', timeStyle: 'medium' })`).
-  No relative labels ("Today" / "Yesterday") are produced by the SDK —
-  render those client-side if desired.
-- `purchase_points_amount` — the amount the user actually paid at the
-  time of purchase, in the currency given by `purchase_type`. Historical
-  discounts are preserved here; the item's current `price` may differ.
-- `purchase_type` — `'points' | 'gems' | 'diamonds'`. The currency
-  actually charged. Render the matching balance icon next to
-  `purchase_points_amount`.
-- `purchased_today` / `purchased_this_week` / `purchased_this_month` —
-  convenience booleans computed by the SDK at transform time using the
-  **consumer's local clock**, not server-stamped. Useful for client-side
-  bucketing (e.g. "Today" / "This Week" group headers).
+**Per-row data**
+Each row uses the `TStoreItem` shape but populates four history-only
+fields not present on `getStoreItems` output. `purchase_ts` is the
+Unix-ms timestamp of the purchase — format with
+`new Date(purchase_ts).toLocaleString()` in the user's local timezone;
+no relative labels ("Today" / "Yesterday") are produced by the SDK.
+`purchase_points_amount` is the amount actually paid at the time of
+purchase — a snapshot of the historical price, which may differ from
+the item's current `price`. `purchase_type` is the currency actually
+charged (`'points' | 'gems' | 'diamonds'`); render the matching
+balance icon next to the amount. The convenience booleans
+`purchased_today` / `purchased_this_week` / `purchased_this_month` are
+computed client-side from the consumer's local clock — useful for
+grouping rows under "Today" / "This Week" headers.
 
-**Catalog fields that ARE present but commonly ignored on a history row**
-- `ribbon`, `discounted_price`, `discount_price_ribbon`,
-  `custom_ribbon_image`, `active_till_date` — reflect the current
-  catalog state of the item, not its state at purchase time. The
-  default Smartico UI hides them on history rows to avoid mis-implying that
-  the historical purchase carried that current promotional banner.
-- `description`, `hint_text` (T&C), `related_games` — descriptive
-  marketing fields; typically suppressed on a compact history row.
-- `can_buy`, `pool` — reflect **current** purchasability of the same
-  item, useful only if you render a "Buy Again" affordance on the history
-  row (see UI guidance below).
-- `custom_data` — present, but unlike `getStoreItems` the history
-  transform does NOT auto-parse JSON strings. If you store JSON there,
-  call `JSON.parse()` yourself.
+**Catalog fields on a history row**
+The promotional fields (`ribbon`, `discounted_price`,
+`discount_price_ribbon`, `custom_ribbon_image`, `active_till_date`)
+reflect the CURRENT catalog state of the item, NOT its state at
+purchase time — the default Smartico UI hides them on history rows to
+avoid implying that the historical purchase carried the current
+promotional banner. Descriptive marketing fields (`description`,
+`hint_text`, `related_games`) are typically suppressed on a compact
+history row. The current-purchasability fields `can_buy` and `pool`
+reflect now, not then — useful only if you render a "Buy Again"
+affordance on the row. One implementation gotcha: unlike
+`getStoreItems`, this method's transform does NOT auto-parse JSON
+strings in `custom_data` — call `JSON.parse()` yourself if you store
+JSON there.
 
 **Cache & refresh**
 - The SDK caches each `(limit, offset)` page separately for 30 seconds.

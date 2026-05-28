@@ -1,12 +1,16 @@
 # Interface: LeaderBoardDetailsT
 
+LeaderBoardDetailsT describes one period's leaderboard.
+Returned by `_smartico.api.getLeaderBoard(periodType, getPreviousPeriod?)`.
+May be `undefined` at runtime when no board is configured for the requested period.
+
 ## Properties
 
 ### board\_id
 
 > **board\_id**: `number`
 
-ID of the leaderboard
+Stable ID of the leaderboard.
 
 ***
 
@@ -14,7 +18,7 @@ ID of the leaderboard
 
 > **name**: `string`
 
-Name of the leaderboard
+Operator-defined display name.
 
 ***
 
@@ -22,7 +26,7 @@ Name of the leaderboard
 
 > **description**: `string`
 
-Description of the leaderboard
+Operator-defined description (HTML allowed).
 
 ***
 
@@ -30,7 +34,7 @@ Description of the leaderboard
 
 > **rules**: `string`
 
-Rules of the leaderboard
+Operator-defined rules / terms (HTML allowed).
 
 ***
 
@@ -38,7 +42,7 @@ Rules of the leaderboard
 
 > **period\_type\_id**: [`LeaderBoardPeriodType`](../enumerations/LeaderBoardPeriodType.md)
 
-Leaderboard period type ID
+Period type this board is bound to ([LeaderBoardPeriodType](../enumerations/LeaderBoardPeriodType.md)).
 
 ***
 
@@ -46,7 +50,7 @@ Leaderboard period type ID
 
 > **rewards**: [`LeaderBoardsRewardsT`](LeaderBoardsRewardsT.md)[]
 
-Leaderboard points rewards
+Per-place prize table; the array length is the number of paid places.
 
 ***
 
@@ -54,7 +58,7 @@ Leaderboard points rewards
 
 > **users**: [`LeaderBoardUserT`](LeaderBoardUserT.md)[]
 
-Leaderboard users
+Top-20 ranked entries (server-capped), sorted by `position` ASC.
 
 ***
 
@@ -62,4 +66,6 @@ Leaderboard users
 
 > `optional` **me?**: [`LeaderBoardUserT`](LeaderBoardUserT.md)
 
-Info about current user in leaderboard
+Current user's own entry. `undefined` for visitor sessions.
+For authenticated users, `position === -1` means the user is
+unranked / outside the ranked window.

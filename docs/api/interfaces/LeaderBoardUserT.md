@@ -1,12 +1,14 @@
 # Interface: LeaderBoardUserT
 
+LeaderBoardUserT describes one participant row on a leaderboard.
+
 ## Properties
 
 ### public\_username
 
 > **public\_username**: `string`
 
-The username of the participant
+Display username (operator-defined alias).
 
 ***
 
@@ -14,7 +16,7 @@ The username of the participant
 
 > **avatar\_url**: `string`
 
-The URL to the avatar of the participant
+Resolved CDN URL for the participant's avatar.
 
 ***
 
@@ -22,7 +24,8 @@ The URL to the avatar of the participant
 
 > **position**: `number`
 
-The position of the participant in the leaderboard
+Rank in the leaderboard (DENSE_RANK over all participants).
+`-1` on the `me` entry signals "unranked / outside the window".
 
 ***
 
@@ -30,7 +33,7 @@ The position of the participant in the leaderboard
 
 > **points**: `number`
 
-The points of the participant in the leaderboard
+Participant's points for this period.
 
 ***
 
@@ -38,4 +41,4 @@ The points of the participant in the leaderboard
 
 > **is\_me**: `boolean`
 
-The indicator if the participant is current user
+`true` when this row is the current authenticated user.

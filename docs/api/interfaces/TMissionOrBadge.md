@@ -163,8 +163,8 @@ The text of the CTA button, e.g. 'Make a deposit'
 
 > **custom\_section\_id**: `number`
 
-The ID of the custom section where the mission or badge is assigned
-The list of custom sections can be retrieved using _smartico.api.getCustomSections() method (TODO-API)
+The ID of the custom section where the mission or badge is assigned.
+Resolve to section metadata via `_smartico.api.getCustomSections()`.
 
 ***
 
@@ -236,11 +236,8 @@ The ribbon of the mission/badge item. Can be 'sale', 'hot', 'new', 'vip' or URL 
 
 > `optional` **ach\_completed\_id?**: `number`
 
-Stable identifier of the specific completion of this mission. Pass this
-value to `requestMissionClaimReward()` alongside the mission id. Always
-read from a fresh `getMissions()` result; never synthesise or cache
-across sessions. Undefined for badges and for missions that have not
-yet completed.
+Stable identifier of this specific mission completion. Undefined for
+badges and for missions that have not yet completed.
 
 ***
 

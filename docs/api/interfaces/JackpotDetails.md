@@ -1,8 +1,7 @@
 # Interface: JackpotDetails
 
-JackpotDetails the information about Jackpot template
-It also includes JackpotPot object that holds the current value of the jackpot
-Flag is_opted_in indicates if the current user is opted in to the jackpot
+One jackpot template the user is eligible for, with its live pot snapshot.
+Returned by `jackpotGet()`.
 
 ## Properties
 
@@ -10,7 +9,7 @@ Flag is_opted_in indicates if the current user is opted in to the jackpot
 
 > **jp\_template\_id**: `number`
 
-ID of the jackpot template
+Stable numeric ID of the template; pass to opt-in / opt-out / winners / eligible-games methods.
 
 ***
 
@@ -18,7 +17,7 @@ ID of the jackpot template
 
 > **jp\_type\_id**: [`JackpotType`](../enumerations/JackpotType.md)
 
-Type of jackpot logic
+Whether the jackpot has a shared pot or one independent per user; see [JackpotType](../enumerations/JackpotType.md).
 
 ***
 
@@ -26,7 +25,7 @@ Type of jackpot logic
 
 > **jp\_public\_meta**: [`JackpotPublicMeta`](JackpotPublicMeta.md)
 
-UI information of jackpot, like name, description, etc.
+Display data: name, description, image_url, winner / not-winner HTML templates, custom_data (JSON-parsed).
 
 ***
 
@@ -34,7 +33,7 @@ UI information of jackpot, like name, description, etc.
 
 > **jp\_currency**: `string`
 
-Base currency of the jackpot
+Native jackpot currency (ISO 4217). Used for winner-history amounts.
 
 ***
 
@@ -42,7 +41,7 @@ Base currency of the jackpot
 
 > **user\_currency**: `string`
 
-Wallet currency of currently logged in user
+Current user's wallet currency. Used to display the pot via `pot.current_pot_amount_user_currency`.
 
 ***
 
@@ -50,7 +49,7 @@ Wallet currency of currently logged in user
 
 > **contribution\_type**: [`JackpotContributionType`](../enumerations/JackpotContributionType.md)
 
-Type of the user contribution to the jackpot
+Whether the contribution is a fixed amount or a percentage of the bet; see [JackpotContributionType](../enumerations/JackpotContributionType.md).
 
 ***
 
@@ -58,7 +57,7 @@ Type of the user contribution to the jackpot
 
 > **contribution\_value**: `number`
 
-Value of the user contribution. Fixed amount or percentage of bet depending on the contribution type
+Amount of contribution per qualifying bet — fixed value or percentage depending on `contribution_type`.
 
 ***
 
@@ -66,7 +65,7 @@ Value of the user contribution. Fixed amount or percentage of bet depending on t
 
 > **pot**: [`JackpotPot`](JackpotPot.md)
 
-Information of current value of the jackpot
+Live pot snapshot (amount, temperature, last explosion timestamp).
 
 ***
 
@@ -74,7 +73,7 @@ Information of current value of the jackpot
 
 > **is\_opted\_in**: `boolean`
 
-Indication if the current user is opted in to the jackpot
+`true` when the current user is currently opted in.
 
 ***
 
@@ -82,7 +81,7 @@ Indication if the current user is opted in to the jackpot
 
 > **ach\_related\_game\_allow\_all**: `boolean`
 
-Indicates whether all games are eligible for the jackpot
+`true` when every game in the operator catalog contributes; if `true`, skip `getJackpotEligibleGames`.
 
 ***
 
@@ -90,7 +89,7 @@ Indicates whether all games are eligible for the jackpot
 
 > **registration\_count**: `number`
 
-The number of users who have opted in to participate in the jackpot
+Number of users currently opted in; always `1` for `JackpotType.Personal`.
 
 ***
 
@@ -98,4 +97,4 @@ The number of users who have opted in to participate in the jackpot
 
 > **expose\_winners\_over\_api**: `boolean`
 
-Show winners in widget and over API
+Operator flag: whether the winners list should be displayed. Enforced client-side only — gate `getJackpotWinners` calls on this.

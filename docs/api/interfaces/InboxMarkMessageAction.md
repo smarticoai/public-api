@@ -1,12 +1,19 @@
 # Interface: InboxMarkMessageAction
 
+InboxMarkMessageAction is the response of the five inbox mutation
+methods (`markInboxMessageAsRead`, `markAllInboxMessagesAsRead`,
+`markUnmarkInboxMessageAsFavorite`, `deleteInboxMessage`,
+`deleteAllInboxMessages`).
+
 ## Properties
 
 ### err\_code
 
 > **err\_code**: `number`
 
-An error code representing the result of marking a message as deleted, favorite or read. Successful marking action if err_code is 0
+Error code. `0` = success. See the calling method's TSDoc for
+the full error semantics (server returns generic codes; the
+five inbox mutations share the same shape).
 
 ***
 
@@ -14,4 +21,5 @@ An error code representing the result of marking a message as deleted, favorite 
 
 > **err\_message**: `string`
 
-Optional error message
+Optional server-side error message. Present only on non-zero
+`err_code`; may be empty even then.

@@ -11,7 +11,7 @@ If you want to track the changes of the user profile, you can subscribe to the c
 
 > **core\_user\_language**: `string`
 
-The language of the user
+Language code stored server-side for the user (e.g. `"en"`, `"de"`).
 
 ***
 
@@ -19,7 +19,8 @@ The language of the user
 
 > **ach\_points\_balance**: `number`
 
-The current points balance that user can use in the Store, Mini-games, Tournaments, etc..
+Current spendable points balance — decremented by store purchases,
+tournament buy-ins, and clan entry fees.
 
 ***
 
@@ -27,7 +28,8 @@ The current points balance that user can use in the Store, Mini-games, Tournamen
 
 > **ach\_points\_ever**: `number`
 
-The amount of points that user collected in total
+All-time cumulative points earned. Monotonic — NOT decremented by
+store purchases or clan/tournament fees.
 
 ***
 
@@ -35,7 +37,7 @@ The amount of points that user collected in total
 
 > **ach\_gems\_balance**: `number`
 
-The current gems balance
+Current gems balance (secondary currency).
 
 ***
 
@@ -43,7 +45,7 @@ The current gems balance
 
 > **ach\_diamonds\_balance**: `number`
 
-The current diamonds balance
+Current diamonds balance (tertiary currency).
 
 ***
 
@@ -51,10 +53,8 @@ The current diamonds balance
 
 > **core\_public\_tags**: `string`[]
 
-The array of the public tags set on the user object.
-They can be treated as server-based cookies.
-You can set tags using following method _smartico.event('core_public_tags_update', { core_public_tags: ['A', 'B'] } );
-And then you can check for the tags
+Server-stored public tags on the user (uppercase strings).
+Modify via `_smartico.updatePublicTags(operation, tags)`.
 
 ***
 
@@ -62,7 +62,7 @@ And then you can check for the tags
 
 > `optional` **ach\_level\_current\_id?**: `number`
 
-The ID of the current level of the user
+FK into the level ladder; resolve via `getCurrentLevel()` or `getLevels()`.
 
 ***
 
@@ -70,7 +70,7 @@ The ID of the current level of the user
 
 > `optional` **core\_is\_test\_account?**: `boolean`
 
-The indicator if user is marked as test user
+`true` when the user is flagged as a test account.
 
 ***
 
@@ -78,7 +78,7 @@ The indicator if user is marked as test user
 
 > `optional` **avatar\_url?**: `string`
 
-The URL to the user avatar
+Resolved CDN URL for the user's avatar.
 
 ***
 
@@ -86,7 +86,7 @@ The URL to the user avatar
 
 > `optional` **public\_username?**: `string`
 
-The username of current user
+Display username (operator-defined alias).
 
 ***
 
@@ -94,7 +94,7 @@ The username of current user
 
 > `optional` **core\_inbox\_unread\_count?**: `number`
 
-THe number of unread inbox messages
+Unread inbox messages count. Push-updated in real time.
 
 ***
 
@@ -102,7 +102,8 @@ THe number of unread inbox messages
 
 > `optional` **core\_recommended\_deposit\_amount?**: `number`
 
-The recommended deposit amount for the user
+AI-recommended deposit amount for this user. Undefined when no
+recommendation is currently available.
 
 ***
 
@@ -110,4 +111,5 @@ The recommended deposit amount for the user
 
 > `optional` **core\_recommended\_casino\_bet\_amount?**: `number`
 
-The recommended casino bet amount for the user
+AI-recommended casino bet amount for this user. Undefined when no
+recommendation is currently available.
