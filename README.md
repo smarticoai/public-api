@@ -81,6 +81,8 @@ The SDK surface is split across one class per feature area, joined by an interna
 
 The shared return / param types live in [`WSAPITypes`](docs/api/classes/WSAPITypes.md). For the full type / enum / interface listing, see [`docs/api/globals.md`](docs/api/globals.md).
 
+These friendly `T`-prefixed types (`TStoreItem`, `TAvatarDefinition`, …) are produced by the SDK's **transform functions**, which normalize the raw WebSocket protocol shapes into a cleaner form. See [**Transform functions**](docs/Transforms.md) for the concept and naming conventions (`T`-types, `*Transform` functions, `*T` methods).
+
 ### Where to look for working examples
 
 The class reference pages above describe **API behavior** — preconditions, error codes, refresh semantics, cache, idempotency, side effects, visitor mode. They do not include long-form UI prescriptions.

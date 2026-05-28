@@ -4,6 +4,7 @@
 
 - [SmarticoObject](documents/SmarticoObject.md)
 - [Callbacks](documents/Callbacks.md)
+- [Transforms](documents/Transforms.md)
 
 ## Enumerations
 
