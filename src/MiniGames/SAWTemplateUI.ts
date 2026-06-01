@@ -455,6 +455,16 @@ export interface SAWTemplateUI {
      */
     game_difficulty?: SAWGameDifficultyType;
 
+    // ─── Custom Minigame specific ─────────────────────────────────────────────
+
+    /**
+     * URL of the operator-hosted custom mini-game, loaded inside an iframe by
+     * the widget for `SAWGameType.CustomMinigame`.  The operator is trusted, so
+     * the iframe is rendered without a sandbox.
+     * Back-Office label: _"Game URL"_.
+     */
+    custom_game?: string;
+
 	/**
 	 * Minutes for the Voyager seed window.
 	 * The seed window is the range of seeds that can be used to generate the map.

@@ -11,6 +11,7 @@ export enum SAWGameType {
 	Voyager = 10,
 	Plinko = 11,
 	CoinFlip = 12,
+	CustomMinigame = 13,
 }
 
 export enum SAWGameTypeName {
@@ -26,6 +27,7 @@ export enum SAWGameTypeName {
 	Voyager = 'voyager',
 	Plinko = 'plinko',
 	CoinFlip = 'coin_flip',
+	CustomMinigame = 'custom_minigame',
 	Unknown = 'unknown',
 }
 
@@ -45,6 +47,7 @@ export const SAWGameTypeNamed = (type: SAWGameType): SAWGameTypeName => {
 			[SAWGameType.Voyager]: SAWGameTypeName.Voyager,
 			[SAWGameType.Plinko]: SAWGameTypeName.Plinko,
 			[SAWGameType.CoinFlip]: SAWGameTypeName.CoinFlip,
+			[SAWGameType.CustomMinigame]: SAWGameTypeName.CustomMinigame,
 		}[type] || SAWGameTypeName.Unknown
 	);
 };
