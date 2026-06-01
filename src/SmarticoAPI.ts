@@ -139,7 +139,7 @@ import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
 import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform } from './ActivityLog';
 import { GetClanListRequest, GetClanListResponse, GetClanInfoRequest, GetClanInfoResponse, JoinClanRequest, JoinClanResponse } from './Clans';
 import { InboxCategories } from './Inbox/InboxCategories';
-import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform } from './Raffle';
+import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform, GetRaffleWonPrizesRequest, GetRaffleWonPrizesResponse } from './Raffle';
 import { GetAvatarsListResponse, avatarDefinitionTransform } from './Avatars/GetAvatarsListResponse';
 import { GetAvatarsCustomizedResponse, avatarCustomizedTransform } from './Avatars/GetAvatarsCustomizedResponse';
 import { GetAvatarPromptsResponse, avatarPromptTransform } from './Avatars/GetAvatarPromptsResponse';
@@ -1639,6 +1639,19 @@ class SmarticoAPI {
 
 		return await this.send<RaffleOptinResponse>(message, ClassId.RAF_OPTIN_RESPONSE);
 
+	}
+
+	public async getRaffleWonPrizes(
+		user_ext_id: string,
+		props: { raffle_id: number; offset: number; limit: number },
+	): Promise<GetRaffleWonPrizesResponse> {
+		const message = this.buildMessage<GetRaffleWonPrizesRequest, GetRaffleWonPrizesResponse>(
+			user_ext_id,
+			ClassId.RAF_GET_WON_PRIZES_REQUEST,
+			props,
+		);
+
+		return await this.send<GetRaffleWonPrizesResponse>(message, ClassId.RAF_GET_WON_PRIZES_RESPONSE);
 	}
 
 	public async getActivityLog(

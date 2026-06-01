@@ -15,3 +15,5 @@ export * from './RaffleClaimPrizeResponse';
 export * from './RaffleDrawPublicMeta';
 export * from './RaffleOptinRequest';
 export * from './RaffleOptinResponse';
+export * from './GetRaffleWonPrizesRequest';
+export * from './GetRaffleWonPrizesResponse';

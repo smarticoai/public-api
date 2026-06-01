@@ -125,6 +125,7 @@ This document describes the low-level protocol for communicating with Smartico b
 - [getRaffleDrawRunsHistory](#getraffledrawrunshistory)
 - [claimRafflePrize](#claimraffleprize)
 - [requestRaffleOptin](#requestraffleoptin)
+- [getRaffleWonPrizes](#getrafflewonprizes)
 
 ---
 
@@ -2670,6 +2671,124 @@ Request opt-in for a specific raffle draw run. Used when a raffle requires expli
 **Fields:**
 
 No method-specific fields. Returns only the common response fields (see [Common Message Fields](#common-message-fields)).
+
+---
+
+### getRaffleWonPrizes
+
+Get every prize the current user has won within a single raffle — across all of that raffle's draws (recurring, one-shot, and grand; all historical runs) — newest-won first, paginated. Requires an authenticated user; visitor/anonymous sessions are rejected.
+
+### Request
+
+**ClassId:** `920`
+
+**Example:**
+
+```json
+{
+  "cid": 920,
+  "uuid": "550e8400-e29b-41d4-a716-446655440000",
+  "ts": 1704067200000,
+  "raffle_id": 123,
+  "offset": 0,
+  "limit": 20
+}
+```
+
+**Fields:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `raffle_id` | `number` | ✓ | ID of the raffle |
+| `offset` | `number` | - | Zero-based index of the first row to return. Default `0` |
+| `limit` | `number` | - | Page size. Defaults to a per-label setting when omitted; not clamped server-side, so always send an explicit value |
+| `force_language` | `string` | - | Overrides the language used to localise `won_prizes[].public_meta.name`. Defaults to the user's profile language |
+
+Rate-limited to ~30 requests per 60 s with a ~5 s minimum gap between calls.
+
+---
+
+### Response
+
+**ClassId:** `921`
+
+**Example:**
+
+```json
+{
+  "cid": 921,
+  "errCode": 0,
+  "errMsg": "",
+  "user": {
+    "user_id": 149600373,
+    "avatar_id": "https://cdn.example.com/avatar.webp",
+    "avatar_real_id": 29,
+    "public_username": "32:r*****",
+    "avatar_url": null
+  },
+  "won_prizes": [
+    {
+      "raf_won_id": 9795826,
+      "prize_id": 389,
+      "raffle_run_id": 659016,
+      "draw_id": 272,
+      "public_meta": {
+        "name": "1 $",
+        "hide_chance_to_win": false,
+        "image_url": "https://cdn.example.com/prize.png"
+      },
+      "requires_claim": false,
+      "claimed_date": 1779978607539
+    }
+  ],
+  "total": 103,
+  "offset": 0,
+  "limit": 20
+}
+```
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `user` | [`RaffleWonPrizeUser`](../api/interfaces/RaffleWonPrizeUser.md) \| `null` | The user the prizes belong to. `null` when `won_prizes` is empty |
+| `won_prizes` | [`RaffleWonPrize[]`](../api/interfaces/RaffleWonPrize.md) | Won prizes for this page, newest-first |
+| `total` | `number` | Full count of the user's won prizes for this raffle across all draws (for pagination) |
+| `offset` | `number` | Echo of the resolved request offset |
+| `limit` | `number` | Echo of the resolved request limit |
+
+`user` sub-object:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `user_id` | `number` | Internal user ID |
+| `avatar_id` | `string` | Full URL for a system avatar, otherwise an avatar token to resolve against the avatar domain |
+| `avatar_real_id` | `number` | Numeric ID of the selected avatar definition |
+| `public_username` | `string` | Server-masked username (e.g. `"32:r*****"`) |
+| `avatar_url` | `null` | Always `null` on the wire — use `avatar_id` |
+
+`won_prizes[]` item:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `raf_won_id` | `number` | Winning-row ID. Pass as `won_id` to [claimRafflePrize](#claimraffleprize) when `requires_claim` is `true` and `claimed_date` is `null` |
+| `prize_id` | `number` | ID of the prize definition |
+| `raffle_run_id` | `number` | Run-instance ID of the awarding draw |
+| `draw_id` | `number` | Schedule ID of the awarding draw |
+| `public_meta.name` | `string` | Prize name (localised; honours `force_language`) |
+| `public_meta.hide_chance_to_win` | `boolean` | Whether to hide the chance-to-win in the UI |
+| `public_meta.image_url` | `string` | CDN URL for the prize artwork |
+| `requires_claim` | `boolean` | Whether the prize requires an explicit claim action |
+| `claimed_date` | `number` \| `null` | Epoch ms when claimed; `null` when not yet claimed |
+
+---
+
+### Error Codes
+
+| Code | Description |
+|------|-------------|
+| `0` | Success. Also returned with an empty `won_prizes[]` / `total: 0` and `user: null` when the user has no wins or is not eligible to see the raffle |
+| `1` | System error (includes unauthenticated/visitor session, unknown raffle, or any server-side failure) |
 
 ---
 
