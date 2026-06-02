@@ -463,7 +463,7 @@ export interface SAWTemplateUI {
      * the iframe is rendered without a sandbox.
      * Back-Office label: _"Game URL"_.
      */
-    custom_game?: string;
+    custom_game_url?: string;
 
 	/**
 	 * Minutes for the Voyager seed window.
