@@ -74,6 +74,12 @@
 
 ***
 
+### CustomMinigame
+
+> **CustomMinigame**: `"custom_minigame"`
+
+***
+
 ### Unknown
 
 > **Unknown**: `"unknown"`

@@ -4,3 +4,4 @@ export * from './ScoreResultTypes';
 export * from './MarketsInfo';
 export * from './MarketsPerSport';
 export * from './MarketsAnswers';
+export * from './GamePickTypes';

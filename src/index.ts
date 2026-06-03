@@ -14,7 +14,7 @@ export * from './Missions';
 export * from './Store';
 export * from './Tournaments';
 export * from './Level';
-export * from './Quiz';
+export * from './GamePick';
 export * from './Jackpots';
 export * from './Raffle';
 

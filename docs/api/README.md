@@ -18,6 +18,8 @@
 - [AchMissionsTabsOptions](enumerations/AchMissionsTabsOptions.md)
 - [AchOverviewMissionsFilter](enumerations/AchOverviewMissionsFilter.md)
 - [LiquidEntityData](enumerations/LiquidEntityData.md)
+- [QuizAnswersValueType](enumerations/QuizAnswersValueType.md)
+- [SAWGPMarketType](enumerations/SAWGPMarketType.md)
 - [InboxCategories](enumerations/InboxCategories.md)
 - [InboxMessageType](enumerations/InboxMessageType.md)
 - [InboxReadStatus](enumerations/InboxReadStatus.md)
@@ -53,8 +55,6 @@
 - [AchievementType](enumerations/AchievementType.md)
 - [BadgesTimeLimitStates](enumerations/BadgesTimeLimitStates.md)
 - [ScheduledMissionType](enumerations/ScheduledMissionType.md)
-- [QuizAnswersValueType](enumerations/QuizAnswersValueType.md)
-- [SAWGPMarketType](enumerations/SAWGPMarketType.md)
 - [RaffleTicketCapVisualization](enumerations/RaffleTicketCapVisualization.md)
 - [RaffleDrawInstanceState](enumerations/RaffleDrawInstanceState.md)
 - [RaffleDrawTypeExecution](enumerations/RaffleDrawTypeExecution.md)
@@ -69,12 +69,6 @@
 - [TournamentRegistrationType](enumerations/TournamentRegistrationType.md)
 - [TournamentType](enumerations/TournamentType.md)
 - [BonusStatus](enumerations/BonusStatus-1.md)
-- [GamePickMarketType](enumerations/GamePickMarketType.md)
-- [GamePickResolutionType](enumerations/GamePickResolutionType.md)
-- [GPRoundStatus](enumerations/GPRoundStatus.md)
-- [GamePickScoreType](enumerations/GamePickScoreType.md)
-- [GamePickSportType](enumerations/GamePickSportType.md)
-- [GameRoundOrderType](enumerations/GameRoundOrderType.md)
 
 ## Classes
 
@@ -239,19 +233,6 @@
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
 - [TActivityLog](interfaces/TActivityLog.md)
 - [TRaffleOptinResponse](interfaces/TRaffleOptinResponse.md)
-- [QuizEventMeta](interfaces/QuizEventMeta.md)
-- [GamePickEventMeta](interfaces/GamePickEventMeta.md)
-- [GamePickEvent](interfaces/GamePickEvent.md)
-- [GamePickRoundPublicMeta](interfaces/GamePickRoundPublicMeta.md)
-- [GamePickRoundBase](interfaces/GamePickRoundBase.md)
-- [GamePickRound](interfaces/GamePickRound.md)
-- [GamePickRoundBoard](interfaces/GamePickRoundBoard.md)
-- [GamePickBoardUser](interfaces/GamePickBoardUser.md)
-- [GamePickUserInfo](interfaces/GamePickUserInfo.md)
-- [GamePickGameInfo](interfaces/GamePickGameInfo.md)
-- [GamesApiResponse](interfaces/GamesApiResponse.md)
-- [GamePickRequestParams](interfaces/GamePickRequestParams.md)
-- [GamePickRoundRequestParams](interfaces/GamePickRoundRequestParams.md)
 - [TAvatarDefinition](interfaces/TAvatarDefinition.md)
 - [TAvatarCustomized](interfaces/TAvatarCustomized.md)
 - [TAvatarPrompt](interfaces/TAvatarPrompt.md)
@@ -266,7 +247,6 @@
 
 - [PrizeModifiersKeysNames](variables/PrizeModifiersKeysNames.md)
 - [SAWWinSoundFiles](variables/SAWWinSoundFiles.md)
-- [AllRoundsGameBoardID](variables/AllRoundsGameBoardID.md)
 
 ## Functions
 

@@ -3,7 +3,7 @@
 
 ### gamePickGetActiveRounds()
 
-> **gamePickGetActiveRounds**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
+> **gamePickGetActiveRounds**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
 
 Returns every open round for a MatchX or Quiz game template, with the full
 event list (matches / questions) and the current user's selections per event.
@@ -16,13 +16,13 @@ can tap into to make predictions. For a single round, use
 
 ##### props
 
-[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
+`GamePickRequestParams`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) of [GamePickRound](../interfaces/GamePickRound.md) array.
+Wrapped GamesApiResponse of GamePickRound array.
 
 #### Remarks
 
@@ -37,7 +37,7 @@ Game Pick methods are HTTP REST calls to a separate Game Pick games server
 subscription — every call is a fresh server roundtrip.
 
 **Round status**
-Each round's `round_status_id` is a [GPRoundStatus](../enumerations/GPRoundStatus.md) value. Rounds with
+Each round's `round_status_id` is a GPRoundStatus value. Rounds with
 status `NoEventsDefined` (1) are filtered out server-side and never appear
 here. Other values: `Other` (-1, normally open), `NoMoreBetsAllowed` (2),
 `AllEventsResolved_ButNotRound` (3), `RoundResolved` (4 — appears here only
@@ -80,7 +80,7 @@ for (const round of r.data ?? []) {
 
 ### gamePickGetActiveRound()
 
-> **gamePickGetActiveRound**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickGetActiveRound**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
 Returns a single round (events, user selections, scoring rules) for a
 MatchX or Quiz game. Use to power the round-detail / prediction-input
@@ -93,13 +93,13 @@ UI only shows one round at a time.
 
 ##### props
 
-[`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md)
+`GamePickRoundRequestParams`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) of a single [GamePickRound](../interfaces/GamePickRound.md).
+Wrapped GamesApiResponse of a single GamePickRound.
 
 #### Remarks
 
@@ -147,7 +147,7 @@ if (r.errCode === 0 && r.data) {
 
 ### gamePickGetHistory()
 
-> **gamePickGetHistory**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
+> **gamePickGetHistory**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
 
 Returns the full round history (active + resolved) for a MatchX or Quiz game
 template, newest-first. Each round carries the user's predictions plus the
@@ -160,13 +160,13 @@ use [gamePickGetActiveRounds](#gamepickgetactiverounds) (faster — skips resolv
 
 ##### props
 
-[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
+`GamePickRequestParams`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickRound`[]\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) of [GamePickRound](../interfaces/GamePickRound.md) array,
+Wrapped GamesApiResponse of GamePickRound array,
 newest-first.
 
 #### Remarks
@@ -179,7 +179,7 @@ Server returns rounds newest-first. No client-side sort needed.
 
 **Per-event resolution**
 Each event in the rounds carries `resolution_type_id` — values are from
-[GamePickResolutionType](../enumerations/GamePickResolutionType.md): `None` (0, not yet resolved), `Lost` (2),
+GamePickResolutionType: `None` (0, not yet resolved), `Lost` (2),
 `PartialWin` (3), `FullWin` (4). Use these to render result badges on
 each event row.
 
@@ -211,7 +211,7 @@ for (const round of r.data ?? []) {
 
 ### gamePickGetBoard()
 
-> **gamePickGetBoard**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
+> **gamePickGetBoard**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRoundBoard`\>\>
 
 Returns the leaderboard for a MatchX or Quiz game round — ranked list of
 players plus the current user's entry (`my_user`). Pass `round_id: -1` for
@@ -221,13 +221,13 @@ the season / overall leaderboard across every round in the template.
 
 ##### props
 
-[`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md)
+`GamePickRoundRequestParams`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickRoundBoard`\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) of [GamePickRoundBoard](../interfaces/GamePickRoundBoard.md).
+Wrapped GamesApiResponse of GamePickRoundBoard.
 
 #### Remarks
 
@@ -288,7 +288,7 @@ if (r.errCode === 0 && r.data) {
 
 ### gamePickSubmitSelection()
 
-> **gamePickSubmitSelection**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickSubmitSelection**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
 Submits all score predictions for a round in a MatchX game in one shot.
 Each event in the round must carry `team1_user_selection` and
@@ -303,13 +303,13 @@ selections.
 
 ##### props
 
-[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & `object`
+`GamePickRequestParams` & `object`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) with the updated round.
+Wrapped GamesApiResponse with the updated round.
 
 #### Remarks
 
@@ -353,7 +353,7 @@ buy-in is consumed exactly once per round-per-user. Re-submitting after
 - Updates the round's participant counter (`users_cnt`) and per-event
   counters (`num_users`).
 - Score is awarded after the operator resolves the round
-  ([GPRoundStatus](../enumerations/GPRoundStatus.md) = `RoundResolved`).
+  (GPRoundStatus = `RoundResolved`).
 
 **Visitor mode**: not supported.
 
@@ -405,7 +405,7 @@ switch (r.errCode) {
 
 ### gamePickSubmitSelectionQuiz()
 
-> **gamePickSubmitSelectionQuiz**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickSubmitSelectionQuiz**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
 Submits all quiz answers for a round in one shot. Each event in the round
 must carry `user_selection` (the answer value — typically `"1"` / `"2"` /
@@ -420,13 +420,13 @@ the same round are free.
 
 ##### props
 
-[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md) & `object`
+`GamePickRequestParams` & `object`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) with the updated round.
+Wrapped GamesApiResponse with the updated round.
 
 #### Remarks
 
@@ -498,7 +498,7 @@ if (r.errCode === 0) {
 
 ### gamePickGetUserInfo()
 
-> **gamePickGetUserInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickUserInfo`](../interfaces/GamePickUserInfo.md)\>\>
+> **gamePickGetUserInfo**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickUserInfo`\>\>
 
 Returns the current user's profile within the Game Pick system — display
 name, avatar, balances, and last wallet-sync timestamp. The Game Pick server
@@ -514,13 +514,13 @@ with this game" call.
 
 ##### props
 
-[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
+`GamePickRequestParams`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickUserInfo`](../interfaces/GamePickUserInfo.md)\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickUserInfo`\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) of [GamePickUserInfo](../interfaces/GamePickUserInfo.md).
+Wrapped GamesApiResponse of GamePickUserInfo.
 
 #### Remarks
 
@@ -561,7 +561,7 @@ if (r.errCode === 0 && r.data) {
 
 ### gamePickGetGameInfo()
 
-> **gamePickGetGameInfo**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickGameInfo`](../interfaces/GamePickGameInfo.md)\>\>
+> **gamePickGetGameInfo**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickGameInfo`\>\>
 
 Returns the game template configuration plus a metadata listing of every
 round (without events). Use to power the game's welcome / lobby screen —
@@ -577,13 +577,13 @@ the user actually opens.
 
 ##### props
 
-[`GamePickRequestParams`](../interfaces/GamePickRequestParams.md)
+`GamePickRequestParams`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickGameInfo`](../interfaces/GamePickGameInfo.md)\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickGameInfo`\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) of [GamePickGameInfo](../interfaces/GamePickGameInfo.md).
+Wrapped GamesApiResponse of GamePickGameInfo.
 
 #### Remarks
 
@@ -629,7 +629,7 @@ if (r.errCode === 0 && r.data) {
 
 ### gamePickGetRoundInfoForUser()
 
-> **gamePickGetRoundInfoForUser**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+> **gamePickGetRoundInfoForUser**(`props`): `Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
 Returns a round with another player's predictions instead of the current
 user's. The target player is identified by `int_user_id` (the Game Pick
@@ -643,14 +643,14 @@ rows — community / social inspection of how a top-ranked user predicted.
 
 ##### props
 
-[`GamePickRoundRequestParams`](../interfaces/GamePickRoundRequestParams.md) & `object`
+`GamePickRoundRequestParams` & `object`
 
 #### Returns
 
-`Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
+`Promise`\<`GamesApiResponse`\<`GamePickRound`\>\>
 
-Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) with the target user's
-[GamePickRound](../interfaces/GamePickRound.md).
+Wrapped GamesApiResponse with the target user's
+GamePickRound.
 
 #### Remarks
 
@@ -663,10 +663,10 @@ Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) with the target us
   templates.
 
 **Shape vs `gamePickGetActiveRound`**
-Same [GamePickRound](../interfaces/GamePickRound.md) structure, but `user_selection` /
+Same GamePickRound structure, but `user_selection` /
 `team1_user_selection` / `team2_user_selection` reflect the TARGET user's
 predictions instead of the caller's. Each event still carries its own
-`resolution_type_id` (see [GamePickResolutionType](../enumerations/GamePickResolutionType.md)) so the UI can
+`resolution_type_id` (see GamePickResolutionType) so the UI can
 render result badges per pick.
 
 **Error codes** (in `errCode`)

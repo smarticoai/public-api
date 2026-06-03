@@ -148,13 +148,7 @@ import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotW
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
 import { GetJackpotEligibleGamesResponse, GetJackpotEligibleGamesResponseTransform, JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from './Jackpots/GetJackpotEligibleGamesResponse';
-import {
-	GamesApiResponse,
-	GamePickRound,
-	GamePickRoundBoard,
-	GamePickUserInfo,
-	GamePickGameInfo,
-} from './WSAPI/WSAPITypes';
+import { GamePickGameInfo, GamePickRound, GamePickRoundBoard, GamePickUserInfo, GamesApiResponse } from './GamePick';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';

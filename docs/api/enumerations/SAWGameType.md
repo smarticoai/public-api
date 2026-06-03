@@ -71,3 +71,9 @@
 ### CoinFlip
 
 > **CoinFlip**: `12`
+
+***
+
+### CustomMinigame
+
+> **CustomMinigame**: `13`

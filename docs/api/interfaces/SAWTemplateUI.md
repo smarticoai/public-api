@@ -566,6 +566,17 @@ controlling obstacle frequency and game speed.
 
 ***
 
+### custom\_game\_url?
+
+> `optional` **custom\_game\_url?**: `string`
+
+URL of the operator-hosted custom mini-game, loaded inside an iframe by
+the widget for `SAWGameType.CustomMinigame`.  The operator is trusted, so
+the iframe is rendered without a sandbox.
+Back-Office label: _"Game URL"_.
+
+***
+
 ### voyager\_seed\_window\_min?
 
 > `optional` **voyager\_seed\_window\_min?**: `number`

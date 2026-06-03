@@ -1,12 +1,4 @@
-import {
-	GamesApiResponse,
-	GamePickRound,
-	GamePickRoundBoard,
-	GamePickUserInfo,
-	GamePickGameInfo,
-	GamePickRequestParams,
-	GamePickRoundRequestParams,
-} from './WSAPITypes';
+import { GamePickGameInfo, GamePickRequestParams, GamePickRound, GamePickRoundBoard, GamePickRoundRequestParams, GamePickUserInfo, GamesApiResponse } from 'src/GamePick';
 import { WSAPIAvatars } from './WSAPIAvatars';
 
 /** @group GamePick */
