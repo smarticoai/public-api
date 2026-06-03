@@ -134,7 +134,7 @@ export class WSAPIClans extends WSAPITournaments {
 	 * ```
 	 */
 	public async getClans({ onUpdate }: { onUpdate?: (data: TClans) => void } = {}): Promise<TClans> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Clans, onUpdate);
 		}
 

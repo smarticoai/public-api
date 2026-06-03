@@ -434,7 +434,7 @@ export class WSAPIJackpots extends WSAPIClans {
 		/** Optional callback; not auto-invoked today. */
 		onUpdate?: () => void,
 	}): Promise<TGetJackpotEligibleGamesResponse> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.JackpotEligibleGames, onUpdate);
 		}
 

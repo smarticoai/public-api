@@ -111,7 +111,7 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<
 		TMiniGameTemplate[]
 	> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 
@@ -369,7 +369,7 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 		template_id: number,
 		{ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {},
 	): Promise<TMiniGamePlayResult> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 
@@ -558,7 +558,7 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 		spin_count: number,
 		{ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {},
 	): Promise<TMiniGamePlayBatchResult[]> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 

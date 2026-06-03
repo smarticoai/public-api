@@ -138,7 +138,7 @@ export class WSAPIMissions extends WSAPIGeneral {
 	 * ```
 	 */
 	public async getMissions({ onUpdate }: { onUpdate?: (data: TMissionOrBadge[]) => void } = {}): Promise<TMissionOrBadge[]> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Missions, onUpdate);
 		}
 

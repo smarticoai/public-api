@@ -194,7 +194,7 @@ export class WSAPIStore extends WSAPIBonuses {
 	 * ```
 	 */
 	public async getStoreItems({ onUpdate }: { onUpdate?: (data: TStoreItem[]) => void } = {}): Promise<TStoreItem[]> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.StoreItems, onUpdate);
 		}
 		return OCache.use(
@@ -696,7 +696,7 @@ export class WSAPIStore extends WSAPIBonuses {
 		const requestOffset = offset === undefined ? 0 : offset;
 		const cacheKey = this.storeHistoryCacheKey(requestLimit, requestOffset);
 
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.StoreHistory, onUpdate);
 			this.storeHistoryOnUpdateParams = { limit: requestLimit, offset: requestOffset };
 		}

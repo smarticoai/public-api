@@ -133,7 +133,7 @@ export class WSAPIBonuses extends WSAPIMissions {
 	 * ```
 	 */
 	public async getBonuses({ onUpdate }: { onUpdate?: (data: TBonus[]) => void } = {}): Promise<TBonus[]> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Bonuses, onUpdate);
 		}
 

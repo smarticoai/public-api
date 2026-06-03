@@ -584,7 +584,7 @@ export class WSAPIUser extends WSAPIBase {
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]> {
 
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.ActivityLog, onUpdate);
 		}
 

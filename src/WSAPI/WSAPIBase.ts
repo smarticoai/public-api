@@ -86,7 +86,7 @@ export abstract class WSAPIBase {
 		OCache.set(contextKey, payload, ECacheContext.WSAPI);
 
 		const onUpdate = this.onUpdateCallback.get(contextKey);
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			onUpdate(payload);
 		}
 	}

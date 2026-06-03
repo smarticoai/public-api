@@ -133,7 +133,7 @@ export class WSAPIRaffles extends WSAPIJackpots {
 	 * ```
 	 */
 	public async getRaffles({ onUpdate }: { onUpdate?: (data: TRaffle[]) => void } = {}): Promise<TRaffle[]> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Raffles, onUpdate);
 		}
 

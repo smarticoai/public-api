@@ -138,7 +138,7 @@ export class WSAPITournaments extends WSAPIStore {
 	 * ```
 	 */
 	public async getTournamentsList({ onUpdate }: { onUpdate?: (data: TTournament[]) => void } = {}): Promise<TTournament[]> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.TournamentList, onUpdate);
 		}
 

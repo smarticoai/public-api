@@ -265,7 +265,7 @@ export class WSAPIInbox extends WSAPILeaderBoard {
 		read_status?: InboxReadStatus;
 		onUpdate?: (data: TInboxMessage[]) => void;
 	} = {}): Promise<TInboxMessage[]> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.InboxMessages, onUpdate);
 		}
 		return await this.api.getInboxMessagesT(this.userExtId, from, to, onlyFavorite, categoryId, read_status);
@@ -321,7 +321,7 @@ export class WSAPIInbox extends WSAPILeaderBoard {
 	 * ```
 	 */
 	public async getInboxUnreadCount({ onUpdate }: { onUpdate?: (unread_count: number) => void } = {}): Promise<number> {
-		if (onUpdate) {
+		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.InboxUnreadCount, onUpdate);
 		}
 		return OCache.use(
