@@ -53,6 +53,9 @@ export interface InboxMessage {
 }
 
 export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessageBody => {
+	if (!item) {
+		return null;
+	}
 	const x: TInboxMessageBody = {
 		action: item.action,
 		icon: item.image,

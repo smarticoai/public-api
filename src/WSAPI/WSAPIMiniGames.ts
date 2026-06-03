@@ -586,6 +586,9 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 			CACHE_DATA_SEC,
 		);
 		const index = templates.findIndex((t) => t.id === data.saw_template_id);
+		if (index === -1) {
+			return;
+		}
 		templates[index].spin_count = data.spin_count;
 		this.updateEntity(onUpdateContextKey.Saw, templates);
 	}

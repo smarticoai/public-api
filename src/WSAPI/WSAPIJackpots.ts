@@ -121,6 +121,9 @@ export class WSAPIJackpots extends WSAPIClans {
 			ECacheContext.WSAPI,
 			async () => {
 				const _jackpots = await this.api.jackpotGet(this.userExtId, filter);
+				if (!_jackpots?.items) {
+					return [];
+				}
 				const _pots = _jackpots.items.map((jp) => jp.pot);
 
 				_jackpots.items.forEach((jp) => {

@@ -76,7 +76,7 @@ export interface Tournament {
 
 export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => {
 	return items
-		.filter((r) => r.tournamentId >= 1)
+		.filter((r) => r != null && r.tournamentId >= 1)
 		.map((r) => {
 			const x: TTournament = {
 				instance_id: r.tournamentInstanceId,
