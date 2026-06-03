@@ -205,7 +205,16 @@ metadata and group badges by category.
 **Idempotency / Side effects**: fetch-only; safe to call repeatedly.
 The cache layer deduplicates concurrent calls within the TTL window.
 
+**Visitor mode**: not supported. Badges are an authenticated-only
+feature; calling this on the visitor-mode handle (`_smartico.vapi`)
+throws synchronously rather than silently returning an empty list.
+
 **UI guidance**: see [UI Guide — `getBadges`](../../ui/missions/UIGuide_getBadges.md).
+
+#### Throws
+
+`Error("getBadges is not available in visitor mode")` when
+        called from a visitor-mode session.
 
 #### Example
 
