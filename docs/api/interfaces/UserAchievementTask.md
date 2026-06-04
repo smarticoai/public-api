@@ -20,6 +20,22 @@
 
 ***
 
+### gems\_reward?
+
+> `optional` **gems\_reward?**: `number`
+
+Gems awarded when this task is completed.
+
+***
+
+### diamonds\_reward?
+
+> `optional` **diamonds\_reward?**: `number`
+
+Diamonds awarded when this task is completed.
+
+***
+
 ### task\_type\_id
 
 > **task\_type\_id**: [`AchievementTaskType`](../enumerations/AchievementTaskType.md)

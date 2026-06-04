@@ -44,6 +44,22 @@ Reward for completing the task in points
 
 ***
 
+### gems\_reward?
+
+> `optional` **gems\_reward?**: `number`
+
+Reward for completing the task in gems
+
+***
+
+### diamonds\_reward?
+
+> `optional` **diamonds\_reward?**: `number`
+
+Reward for completing the task in diamonds
+
+***
+
 ### execution\_count\_expected?
 
 > `optional` **execution\_count\_expected?**: `number`
