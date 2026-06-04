@@ -76,8 +76,7 @@ table of codes; UI handling per code:
 | `1003` (insufficient funds) | Show insufficient-balance UI naming the currency (`['points','gems','diamonds'][entry_fee_currency_type_id]`) and the deficit (`entry_fee_amount`). Optional: deep-link to a currency-earning surface. |
 | `1004` (segment mismatch) | Show a gating message — operator-supplied copy if the clan exposes one; otherwise a generic "Not eligible for this clan". Don't retry. |
 | `1005` | `joinClan` does NOT return `1005`. If you see it in this method's response, treat as a generic error. |
-| `1006` (cooldown active) | Show "Cooldown until {cooldown_until local-formatted}". Disable the Join CTA across ALL clans until cooldown expires. |
-| `1007` (archived) | Defined in the public enum but the server emits `1001` instead. Handle as a synonym for `1001` defensively. |
+| `1006` (cooldown active) | Show "Cooldown until {cooldown_until local-formatted}". Disable the Join CTA across ALL clans until cooldown expires. Only fires when the user is already in a *different* clan (a switch); a first-time join never returns it. |
 | `1011` | `joinClan` does NOT return `1011`. If you see it in this method's response, treat as a generic error. |
 | Other | Generic error toast with `errMsg` if any. |
 
