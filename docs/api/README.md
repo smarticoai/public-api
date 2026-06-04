@@ -10,6 +10,7 @@
 
 - [PointChangeSourceType](enumerations/PointChangeSourceType.md)
 - [UserBalanceType](enumerations/UserBalanceType.md)
+- [AvatarCustomizeErrorCode](enumerations/AvatarCustomizeErrorCode.md)
 - [BonusStatus](enumerations/BonusStatus.md)
 - [JoinClanErrorCode](enumerations/JoinClanErrorCode.md)
 - [ActivityTypeLimited](enumerations/ActivityTypeLimited.md)
@@ -78,6 +79,7 @@
 
 - [PointsLog](interfaces/PointsLog.md)
 - [GemsDiamondsLog](interfaces/GemsDiamondsLog.md)
+- [AvatarCustomizeResponse](interfaces/AvatarCustomizeResponse.md)
 - [AvatarCustomized](interfaces/AvatarCustomized.md)
 - [AvatarDefinition](interfaces/AvatarDefinition.md)
 - [AvatarPrompt](interfaces/AvatarPrompt.md)

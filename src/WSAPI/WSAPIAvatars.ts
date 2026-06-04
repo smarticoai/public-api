@@ -345,38 +345,99 @@ export class WSAPIAvatars extends WSAPIMiniGames {
 	}
 
 	/**
-	 * Runs AI avatar customization — applies a style prompt from
-	 * {@link getAvatarPrompts} to a base avatar and returns the CDN URL of the
-	 * generated variant. The returned `cdn_url` can be passed to {@link setAvatar}
-	 * to activate the new variant.
+	 * Generates an AI-customized variant of a base avatar by applying an
+	 * operator-defined style prompt, returning the CDN URL of the result.
+	 * This is a paid, generate-only step: it does NOT change the user's
+	 * active avatar — pass the returned `cdn_url` to {@link setAvatar} to
+	 * activate it.
 	 *
 	 * @remarks
-	 * **Transport**
-	 * AI customization is a plain HTTP POST to the avatar server. One consequence:
-	 * there is no SDK cache and no push subscription — every call is a fresh server
-	 * roundtrip.
-	 *
 	 * **Preconditions**
-	 * - User must be authenticated. Visitor mode is not supported (throws).
-	 * - All fields are mandatory — the SDK throws synchronously if any is missing.
+	 * - Authenticated session required; not available in visitor mode (throws).
+	 * - All five fields are mandatory — the SDK throws synchronously
+	 *   (`Error("<field> is required")`) if any is missing or zero.
+	 * - `prompt_id` must be one of the prompts from {@link getAvatarPrompts};
+	 *   `avatar_url` / `avatar_real_id` identify the base avatar to style.
 	 *
-	 * **Cost / side effects**
-	 * On success the new variant is
-	 * persisted and the SDK clears the {@link getAvatarsCustomized} cache so the
-	 * next call surfaces it.
+	 * **Cost**
+	 * Each generation costs the currency the operator configured on the
+	 * chosen prompt (points, gems, or diamonds — some prompts are free; read
+	 * `cost_currency_type_id` / `cost_value` from the {@link getAvatarPrompts}
+	 * entry to gate the UI before calling). The cost is charged only on
+	 * success; if the user can't afford it the call fails with `errCode -1`
+	 * and nothing is generated or charged.
 	 *
-	 * **Result**
-	 * - Success: `{ cdn_url }` is set.
-	 * - Failure: `{ errCode, errMessage }` is set — `12001` / `12002` are the
-	 *   per-user / per-label limit codes ({@link AvatarCustomizeErrorCode}), `-1`
-	 *   is a generic server error.
+	 * **Latency**
+	 * Generation runs server-side AI image synthesis and is synchronous from
+	 * the caller's side — expect several seconds (roughly 5–20 s) before the
+	 * promise resolves. There is no SDK cache and no push/subscription; show
+	 * a loading state for the full duration and disable the trigger to
+	 * prevent duplicate submissions.
 	 *
-	 * @param props.label_id        Internal numeric label id.
-	 * @param props.user_id         Internal numeric user id.
-	 * @param props.prompt_id       ID of the style prompt from {@link getAvatarPrompts}.
-	 * @param props.avatar_url      URL of the base avatar to customize.
+	 * **Result & error codes**
+	 * On success the result has `cdn_url` set; on failure it has `errCode` /
+	 * `errMessage` set and no `cdn_url`. Branch on `errCode` — the generic
+	 * message is fixed text, not cause-specific:
+	 * - `12001` (`AvatarCustomizeErrorCode.AVATAR_USER_LIMIT`) — the user hit
+	 *   their monthly per-user generation cap. Nothing is generated or charged.
+	 * - `12002` (`AvatarCustomizeErrorCode.AVATAR_LABEL_LIMIT`) — the brand's
+	 *   shared monthly pool is exhausted. Nothing is generated or charged;
+	 *   surface a "try again later" message.
+	 * - `-1` — generic failure: insufficient balance, an unavailable prompt,
+	 *   or a generation error. Nothing is charged. Allow the user to retry.
+	 *
+	 * Both monthly caps are operator-configured and reset at the start of
+	 * each calendar month.
+	 *
+	 * **Side effects (on success)**
+	 * The generated variant is persisted to the user's customization history
+	 * and counts toward the monthly caps **whether or not** it is later
+	 * activated — generation is not reversible. The SDK clears the
+	 * {@link getAvatarsCustomized} cache so the next call surfaces the new
+	 * variant. The user's active avatar is unchanged until you call
+	 * {@link setAvatar} with the returned `cdn_url`.
+	 *
+	 * **Idempotency**: not idempotent — each successful call generates (and
+	 * charges for) a new variant. Guard the call site against double-clicks.
+	 *
+	 * **UI guidance**: see [UI Guide — `avatarsCustomize`](../../docs/ui/avatars/UIGuide_avatarsCustomize.md).
+	 *
+	 * **Visitor mode**: not supported (throws).
+	 *
+	 * @param props.label_id        Numeric Smartico label (brand) ID the user belongs to.
+	 * @param props.user_id         Numeric Smartico user ID.
+	 * @param props.prompt_id       Style-prompt ID (`prompt_id`) from {@link getAvatarPrompts}.
+	 * @param props.avatar_url      CDN URL of the base avatar to customize.
 	 * @param props.avatar_real_id  `avatar_real_id` of the base avatar.
-	 * @returns {@link AvatarCustomizeResponse} — check `cdn_url` for success.
+	 * @returns {@link AvatarCustomizeResponse} — `cdn_url` set on success;
+	 *          `errCode` / `errMessage` set on failure.
+	 *
+	 * @example
+	 * ```ts
+	 * // label_id / user_id identify the Smartico user being customized.
+	 * const prompts = await window._smartico.api.getAvatarPrompts();
+	 * const prompt = prompts[0];
+	 *
+	 * console.log('[smartico] generating avatar — show a spinner for ~5-20s and disable the Generate button');
+	 * const result = await window._smartico.api.avatarsCustomize({
+	 *   label_id,
+	 *   user_id,
+	 *   prompt_id: prompt.prompt_id,
+	 *   avatar_url: baseAvatar.avatar_url,
+	 *   avatar_real_id: baseAvatar.avatar_real_id,
+	 * });
+	 *
+	 * if (result.cdn_url) {
+	 *   console.log('[smartico] generation succeeded — preview this URL, then call setAvatar to apply it:', result.cdn_url);
+	 *   // await window._smartico.api.setAvatar({ avatar_url: result.cdn_url, avatar_real_id: baseAvatar.avatar_real_id });
+	 * } else if (result.errCode === 12001) {
+	 *   console.error('[smartico] user monthly limit reached — show "you have used all your custom avatars this month"');
+	 * } else if (result.errCode === 12002) {
+	 *   console.error('[smartico] brand monthly pool exhausted — show "custom avatars are unavailable right now, try later"');
+	 * } else {
+	 *   console.error('[smartico] generation failed (e.g. not enough balance) — let the user retry:', result.errMessage);
+	 * }
+	 * ```
 	 */
 	public async avatarsCustomize(props: {
 		label_id: number;

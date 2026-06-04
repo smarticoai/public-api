@@ -1784,9 +1784,9 @@ export interface TAvatarPrompt {
 	name: string;
 	/** Absolute CDN URL of the prompt's preview icon. */
 	icon_url: string;
-	/** Currency used to pay for the customization. `0` = points, `1` = gems, `2` = diamonds. */
+	/** Currency used to pay for the customization. `0` = points, `1` = gems, `2` = diamonds, `3` = free. A `cost_value` of `0` is also free. */
 	cost_currency_type_id: number;
-	/** Cost amount in the currency named by `cost_currency_type_id`. */
+	/** Cost amount in the currency named by `cost_currency_type_id`. `0` = free. */
 	cost_value: number;
 }
 

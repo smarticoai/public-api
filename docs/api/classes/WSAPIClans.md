@@ -334,12 +334,10 @@ below.
   tournament requires the user to be in a clan first.
 - `1006` (`JOIN_CLAN_COOLDOWN_ACTIVE`) — user is inside the
   switch-cooldown window from a previous clan join (default
-  7 days, configurable per label). Surface the
+  7 days, configurable per label). Only reachable when the user is
+  already in a *different* clan (this call is then a clan switch);
+  a first-time join never returns `1006`. Surface the
   `TClans.cooldown_until` expiry in the disabled CTA.
-- `1007` (`JOIN_CLAN_ARCHIVED`) — defined on the public enum but
-  the server does NOT emit this code in practice (archived clans
-  are reported as `1001`). Handle it as a synonym for `1001`
-  defensively, but do not rely on it.
 - `1011` (`JOIN_CLAN_JOINED_AFTER_TOURNAMENT_START`) — this
   method does NOT return `1011` directly. The code fires on
   [registerInTournament](WSAPITournaments.md#registerintournament) responses when the user joined

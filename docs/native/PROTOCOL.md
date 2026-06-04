@@ -1802,6 +1802,8 @@ Join (or switch to) a clan. On labels with no cooldown, switching clans re-charg
 
 Avatar selection (`setAvatar`) is documented under [User](#setavatar). The methods below read the avatar catalog and the user's AI-customized avatars.
 
+> **Note:** Generating a new AI-customized variant (`avatarsCustomize` in the JS SDK) is a separate **HTTP POST** to the avatar server, not part of this WebSocket protocol. It returns a CDN URL that you then activate via `setAvatar`. Native clients must call that HTTP endpoint directly; it is out of scope for this spec.
+
 ### getAvatarsList
 
 Get the avatar catalog available to the current user.
@@ -1862,7 +1864,7 @@ No method-specific fields. Send only the common fields (see [Common Message Fiel
 |-------|------|-------------|
 | `prompts` | [`AvatarPrompt[]`](../api/interfaces/AvatarPrompt.md) | Available AI style prompts |
 
-> **Note:** Prompt name/icon are nested at `public_meta.name` / `public_meta.icon_url`. `cost_currency_type_id`: `0` = points, `1` = gems, `2` = diamonds; `cost_value` is the amount.
+> **Note:** Prompt name/icon are nested at `public_meta.name` / `public_meta.icon_url`. `cost_currency_type_id`: `0` = points, `1` = gems, `2` = diamonds, `3` = free; `cost_value` is the amount (a `cost_value` of `0` is also free).
 
 ---
 

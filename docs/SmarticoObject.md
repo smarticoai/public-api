@@ -108,6 +108,14 @@ login payload and (optionally) the language. Both are being consolidated into
 Logs the current user out, forgets the session, and reconnects as anonymous.
 Fires the `logout` callback on success.
 
+### `checkSuccessfullyIdentify()`
+
+Returns `true` once the SDK is initialized **and** a user has been
+successfully identified, `false` otherwise. Use it as a synchronous gate
+before calling user-scoped `_smartico.api.*` methods (e.g. `getUserProfile()`),
+as an alternative to waiting on the `identify` callback. Returns `false` in
+visitor mode.
+
 ### `changeLanguage(language)`
 
 Switches the active language. The code is normalized to a 2-letter form
@@ -395,6 +403,13 @@ Returns `true` on mobile user agents.
 
 Parse the current page URL / URL hash into an object (helpers for reading
 query / hash parameters).
+
+### `sendServerError(message)` · `sendServerDebug(message)`
+
+Forward a client-side message to Smartico's servers for support correlation —
+`sendServerError` for error conditions, `sendServerDebug` for diagnostic
+detail. Useful when reporting an integration issue so the message lands
+alongside your session server-side. No-ops if the SDK isn't initialized.
 
 ---
 

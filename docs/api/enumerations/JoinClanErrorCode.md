@@ -1,12 +1,17 @@
 # Enumeration: JoinClanErrorCode
 
+Error codes returned in `errCode` by the `joinClan` method (also carried
+on `TClanJoinResult`). These are terse value definitions for lookup; the
+full per-code narrative and UI handling lives in the `joinClan` method
+TSDoc, which owns the error table.
+
 ## Enumeration Members
 
 ### JOIN\_CLAN\_OK
 
 > **JOIN\_CLAN\_OK**: `0`
 
-No error, join completed
+Success — join completed; entry fee (if any) deducted.
 
 ***
 
@@ -14,7 +19,7 @@ No error, join completed
 
 > **JOIN\_CLAN\_INVALID\_PARAMETERS**: `1000`
 
-Invalid parameters
+Request was malformed (missing or invalid parameters).
 
 ***
 
@@ -22,7 +27,7 @@ Invalid parameters
 
 > **JOIN\_CLAN\_NOT\_FOUND**: `1001`
 
-clan_id doesn't exist for this label
+Clan doesn't exist for this label. Archived clans are also reported as `1001`.
 
 ***
 
@@ -30,7 +35,7 @@ clan_id doesn't exist for this label
 
 > **JOIN\_CLAN\_FULL**: `1002`
 
-members_count >= capacity_limit
+Clan is full — member capacity reached.
 
 ***
 
@@ -38,7 +43,7 @@ members_count >= capacity_limit
 
 > **JOIN\_CLAN\_INSUFFICIENT\_FUNDS**: `1003`
 
-Not enough Points / Gems / Diamonds for entry fee
+Insufficient balance for the entry fee (points / gems / diamonds).
 
 ***
 
@@ -46,7 +51,7 @@ Not enough Points / Gems / Diamonds for entry fee
 
 > **JOIN\_CLAN\_SEGMENT\_MISMATCH**: `1004`
 
-User doesn't satisfy entry_conditions / entry_segment_id
+User doesn't meet the clan's entry segment or conditions.
 
 ***
 
@@ -54,7 +59,8 @@ User doesn't satisfy entry_conditions / entry_segment_id
 
 > **JOIN\_CLAN\_USER\_IS\_NOT\_IN\_CLAN**: `1005`
 
-User is not in a clan
+User is not in a clan. Note: a `registerInTournament` response code
+that shares this enum — never returned by `joinClan`.
 
 ***
 
@@ -62,15 +68,7 @@ User is not in a clan
 
 > **JOIN\_CLAN\_COOLDOWN\_ACTIVE**: `1006`
 
-User is within the CLAN_COOLDOWN_DAYS window
-
-***
-
-### JOIN\_CLAN\_ARCHIVED
-
-> **JOIN\_CLAN\_ARCHIVED**: `1007`
-
-clan_status_id != 1 (clan is archived)
+User is within the clan-switch cooldown window (switch only).
 
 ***
 
@@ -78,4 +76,5 @@ clan_status_id != 1 (clan is archived)
 
 > **JOIN\_CLAN\_JOINED\_AFTER\_TOURNAMENT\_START**: `1011`
 
-Clan joined after tournament start
+Clan joined after tournament start. Note: a `registerInTournament`
+response code that shares this enum — never returned by `joinClan`.

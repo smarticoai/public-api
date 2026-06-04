@@ -33,7 +33,7 @@ Absolute CDN URL of the prompt's preview icon.
 
 > **cost\_currency\_type\_id**: `number`
 
-Currency used to pay for the customization. `0` = points, `1` = gems, `2` = diamonds.
+Currency used to pay for the customization. `0` = points, `1` = gems, `2` = diamonds, `3` = free. A `cost_value` of `0` is also free.
 
 ***
 
@@ -41,4 +41,4 @@ Currency used to pay for the customization. `0` = points, `1` = gems, `2` = diam
 
 > **cost\_value**: `number`
 
-Cost amount in the currency named by `cost_currency_type_id`.
+Cost amount in the currency named by `cost_currency_type_id`. `0` = free.
