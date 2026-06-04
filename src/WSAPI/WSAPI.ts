@@ -5,6 +5,7 @@ import { SmarticoAPI } from '../SmarticoAPI';
 import { JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutRequest } from '../Jackpots';
 import { onUpdateContextKey } from './WSAPIBase';
 import { WSAPIInbox } from './WSAPIInbox';
+import { TUserProfile } from './WSAPITypes';
 
 /**
  * Public surface of the Smartico WebSocket API. The consumer reaches every
@@ -64,13 +65,14 @@ export class WSAPI extends WSAPIInbox {
 					this.updateInboxUnreadCount(res.unread_count);
 				}
 			});
-			on(ClassId.CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT, (data: { props: { core_inbox_unread_count?: number; ach_points_balance?: number; ach_gems_balance?: number; ach_diamonds_balance?: number } }) => {
+			on(ClassId.CLIENT_PUBLIC_PROPERTIES_CHANGED_EVENT, (data: { props: TUserProfile }) => {
 				if (data?.props?.core_inbox_unread_count !== undefined && data?.props?.core_inbox_unread_count !== null) {
 					this.updateInboxUnreadCount(data.props.core_inbox_unread_count);
 				}
 				if (data?.props?.ach_points_balance !== undefined || data?.props?.ach_gems_balance !== undefined || data?.props?.ach_diamonds_balance !== undefined) {
 					this.notifyActivityLogUpdate();
 				}
+				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.CurrentLevel);
 			});
 			on(ClassId.RAF_OPTIN_RESPONSE, () => this.updateRaffles());
 		}

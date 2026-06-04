@@ -4,8 +4,8 @@
 - Returns the top-20 ranked entries for one period, the current user's
   own rank, and the configured prize table.
 - One call per (period type, current-or-previous) — the SDK caches
-  under a single key, so switching periods or current/previous within
-  30 s returns stale cached data unless `clearCaches()` is invoked.
+  each combination independently for 30 s, so switching periods or
+  current/previous fetches the correct board (no cross-tab collision).
 - No subscription, no push refresh. Poll manually if the consumer
   needs live updates during an in-progress period.
 
@@ -92,15 +92,13 @@ content.
 
 When the user switches between current and previous period:
 
-1. Call `clearCaches()` to bust the shared OCache key
-   (otherwise the second call returns stale data within 30 s).
-2. Call `getLeaderBoard(periodType, getPreviousPeriod)` with the new
-   `getPreviousPeriod` value.
-3. Replace the rendered data.
+1. Call `getLeaderBoard(periodType, getPreviousPeriod)` with the new
+   `getPreviousPeriod` value — current and previous are cached under
+   distinct keys, so no manual cache-busting is needed.
+2. Replace the rendered data.
 
 ```ts
 const onTogglePrevious = async (showPrevious: boolean) => {
-  await window._smartico.api.clearCaches();
   const board = await window._smartico.api.getLeaderBoard(
     activePeriodType,
     showPrevious,
@@ -109,8 +107,11 @@ const onTogglePrevious = async (showPrevious: boolean) => {
 };
 ```
 
-Same pattern applies when switching between period types
-(`DAILY` → `WEEKLY` → `MONTHLY`).
+The same holds when switching between period types
+(`DAILY` → `WEEKLY` → `MONTHLY`): each is cached separately. To force
+a fresh fetch within the TTL (e.g. a manual refresh button), call
+`clearCaches()` first — it clears the whole SDK cache, not just this
+board.
 
 ## Status-specific visual treatments
 
@@ -155,10 +156,10 @@ Same pattern applies when switching between period types
 
 ## Performance
 
-- The 30 s cache deduplicates rapid refetches, but the single-key
-  design means switching periods within the window returns stale
-  data. `clearCaches()` is the only way to force a fresh fetch
-  before the TTL expires.
+- The 30 s cache deduplicates rapid refetches and is keyed per
+  `(periodType, getPreviousPeriod)`, so switching tabs returns the
+  correct board. `clearCaches()` forces a fresh fetch before the TTL
+  expires (it clears the entire SDK cache).
 - For live polling during an in-progress period, ~30 s cadence is
   appropriate (matching the cache TTL — additional polls within
   the window are free).

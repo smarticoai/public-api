@@ -401,12 +401,25 @@ source values directly from [getUserProfile](#getuserprofile)'s
 `ach_points_ever` and [getLevels](#getlevels) would also work, but
 `progress` saves the math.
 
-**Cache TTL**: the SDK caches the response for 30 seconds. There is
-no push event that refreshes this cache; a server-side level change
-(visible immediately on [getUserProfile](#getuserprofile)'s `ach_level_current_id`
-via the user-properties update channel) becomes visible on this
-method only after the cache TTL expires, or after
-`_smartico.api.clearCaches()` is called.
+**Cache TTL & freshness**
+The response is cached for 30 seconds, but the SDK automatically
+drops that cache whenever a user-properties update arrives — the
+same live channel that backs [getUserProfile](#getuserprofile). The practical
+effect depends on the label's leveling logic:
+- **Points-based or operator-manual leveling**: a points or level
+  change flows through the user-properties channel, so the cache is
+  busted at that moment and the next `getCurrentLevel()` call
+  returns up-to-date data without waiting out the TTL.
+- **Counter-based leveling** (level driven by sliding-window
+  counters such as deposit or wagering totals over a recent window —
+  see [getUserLevelExtraCounters](#getuserlevelextracounters)): ordinary progress changes
+  are recomputed by a periodic server job and do NOT emit a
+  user-properties update, so they become visible on this method only
+  after the 30 s TTL expires (or after `_smartico.api.clearCaches()`).
+
+Avoid calling `clearCaches()` on the points/manual path — it's
+unnecessary there (the cache is already refreshed on the property
+update) and forces a slower extra round-trip.
 
 **Leveling logic**
 The semantics of how a user advances depends on the label's
@@ -432,10 +445,10 @@ const level = await window._smartico.api.getCurrentLevel();
 console.log('[smartico] render level badge — name:', level.name,
   'progress:', Math.round(level.progress), '%');
 
-// Detect level-up via getUserProfile's push channel.
+// Detect level-up via getUserProfile's push channel. No clearCaches()
+// needed — the SDK already drops the level cache on this update.
 window._smartico.on('props_change', async (changed) => {
   if ('ach_level_current_id' in changed) {
-    await window._smartico.api.clearCaches();   // bust the 30 s cache
     const fresh = await window._smartico.api.getCurrentLevel();
     console.log('[smartico] user levelled up — animate badge to new level:', fresh.name);
   }
@@ -481,14 +494,12 @@ stored under the translation keys `levelsCounter1Name` and
 `levelsCounter2Name`.
 
 **Refresh cadence**
-Sliding-window counters are recomputed by a server-side job that
-runs roughly every 60 seconds against the operator's BigQuery
-dataset; level transitions driven by counter changes have a
-latency of up to several minutes after the underlying activity
-(e.g. a deposit). The SDK caches the response for 30 seconds; no
-push event refreshes this cache. After a level change visible on
-[getUserProfile](#getuserprofile)'s `ach_level_current_id`, call
-`_smartico.api.clearCaches()` to force a fresh fetch.
+Sliding-window counters are recomputed by a periodic server-side
+job. Its rebuild cadence is operator-configured per brand —
+commonly daily, though it can be set more frequent — so level
+transitions driven by counter changes surface with a latency tied
+to that rebuild schedule after the underlying activity (e.g. a
+deposit), not in real time.
 
 **Idempotency**: safe. Read-only. Repeated calls within the cache
 window return a deep-cloned cached value without a network

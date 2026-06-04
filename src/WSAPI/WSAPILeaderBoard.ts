@@ -56,15 +56,8 @@ export class WSAPILeaderBoard extends WSAPIGamePick {
 	 * the array is the prize for place 1, the second for place 2, and
 	 * so on. The array length is the number of paid places.
 	 *
-	 * **Cache TTL — single shared key (known limitation)**
-	 * The SDK caches the response for 30 seconds under a SINGLE shared
-	 * key — calling `getLeaderBoard(DAILY)` followed by
-	 * `getLeaderBoard(WEEKLY)` within the same 30 s window returns the
-	 * cached DAILY result for the WEEKLY call. Same applies to
-	 * switching `getPreviousPeriod`. To force a fresh fetch when
-	 * switching periods or current/previous, call
-	 * `_smartico.api.clearCaches()` before the second call, or simply
-	 * wait out the TTL.
+	 * **Cache TTL**
+	 * The SDK caches each response for 30 seconds. 
 	 *
 	 * **Period boundaries**
 	 * The server finalizes each period on a server-configurable
@@ -134,8 +127,7 @@ export class WSAPILeaderBoard extends WSAPIGamePick {
 	 *   }
 	 * }
 	 *
-	 * // Switch to previous period view — but bust the cache first to avoid the shared-key collision.
-	 * await window._smartico.api.clearCaches();
+	 * // Switch to previous period view — cached separately from the current period.
 	 * const prev = await window._smartico.api.getLeaderBoard(LeaderBoardPeriodType.WEEKLY, true);
 	 * console.log('[smartico] previous-week standings — render with greyed-out "ended" treatment:', prev?.users.length, 'finalists');
 	 *
@@ -144,8 +136,11 @@ export class WSAPILeaderBoard extends WSAPIGamePick {
 	 * ```
 	 */
 	public async getLeaderBoard(periodType: LeaderBoardPeriodType, getPreviousPeriod?: boolean): Promise<LeaderBoardDetailsT> {
+		// Cache per (periodType, current/previous) so switching tabs or
+		// current↔previous within the TTL doesn't return a colliding board.
+		const cacheKey = `${onUpdateContextKey.LeaderBoards}:${periodType}:${getPreviousPeriod ? 1 : 0}`;
 		return OCache.use(
-			onUpdateContextKey.LeaderBoards,
+			cacheKey,
 			ECacheContext.WSAPI,
 			() => this.api.leaderboardsGetT(this.userExtId, periodType, getPreviousPeriod),
 			CACHE_DATA_SEC,
