@@ -123,6 +123,8 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 							id: t.task_id,
 							name: t.task_public_meta?.name,
 							points_reward: t.points_reward,
+							gems_reward: t.gems_reward,
+							diamonds_reward: t.diamonds_reward,
 							is_completed: t.isCompleted,
 							progress: t.userProgress,
 							execution_count_expected: t.executionCount,

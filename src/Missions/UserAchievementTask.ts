@@ -6,6 +6,10 @@ export interface UserAchievementTask {
 	task_id?: number;
 	task_public_meta?: AchievementTaskPublicMeta;
 	points_reward?: number;
+	/** Gems awarded when this task is completed. */
+	gems_reward?: number;
+	/** Diamonds awarded when this task is completed. */
+	diamonds_reward?: number;
 	task_type_id: AchievementTaskType;
 	isCompleted?: boolean;
 	userExecutedCount?: number; // This is the number of times the user has executed 'activity' of the task. e.g. he bet 5 times out of 100. here will be 5
