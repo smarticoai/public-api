@@ -1,4 +1,5 @@
 export * from './AvatarCustomizeErrorCode';
+export * from './AvatarCustomizeResponse';
 export * from './AvatarDefinition';
 export * from './AvatarCustomized';
 export * from './AvatarPrompt';

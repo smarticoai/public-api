@@ -144,6 +144,7 @@ import { GetAvatarsListResponse, avatarDefinitionTransform } from './Avatars/Get
 import { GetAvatarsCustomizedResponse, avatarCustomizedTransform } from './Avatars/GetAvatarsCustomizedResponse';
 import { GetAvatarPromptsResponse, avatarPromptTransform } from './Avatars/GetAvatarPromptsResponse';
 import { SetAvatarRequest, SetAvatarResponse } from './Avatars';
+import { AvatarCustomizeResponse } from './Avatars/AvatarCustomizeResponse';
 import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
@@ -183,6 +184,7 @@ class SmarticoAPI {
 	private gamesApiUrl: string;
 	private baseRgApiParams: Record<string, string>;
 	public avatarDomain: string;
+	private avatarOriginDomain: string;
 	private envId: number;
 
 	private logger: ILogger;
@@ -220,6 +222,7 @@ class SmarticoAPI {
 		}
 
 		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
+		this.avatarOriginDomain = SmarticoAPI.getAvatarOriginUrl(label_api_key || options.tracker?.label_api_key);
 
 		this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key);
 	}
@@ -290,6 +293,10 @@ class SmarticoAPI {
 	public static getAvatarUrl(label_api_key: string): string {
 		const avatarUrl = AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 		return SmarticoAPI.replaceSmrDomainsWithCloudfront(avatarUrl);
+	}
+
+	public static getAvatarOriginUrl(label_api_key: string): string {
+		return AVATAR_DOMAIN.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(label_api_key));
 	}
 
 	private async send<T>(message: any, expectCID?: ClassId, force_language?: string): Promise<T> {
@@ -1438,6 +1445,31 @@ class SmarticoAPI {
 		}
 	}
 
+	private async sendAvatarApi<T>({ method, body }: { method: string, body: Record<string, any> }): Promise<T> {
+		if (!this.tracker) {
+			throw new Error(`Avatar APIs are not available in the visitor mode`);
+		}
+
+		const url = `${this.avatarOriginDomain}/${method}`;
+
+		try {
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Accept': 'application/json',
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(body),
+			});
+
+			const data = await response.json();
+			return SmarticoAPI.replaceSmrDomainsWithCloudfront<T>(data);
+		} catch (e) {
+			this.logger.error(`Failed to call avatar API: ${method}`, { url, error: e.message });
+			throw new Error(`Failed to call avatar API: ${method}. ${e.message}`);
+		}
+	}
+
 	public async gpGetActiveRounds(saw_template_id: number): Promise<GamesApiResponse<GamePickRound[]>> {
 		const params = {
 			ext_game_id: saw_template_id,
@@ -1537,6 +1569,27 @@ class SmarticoAPI {
 			avatar_real_id,
 		});
 		return await this.send<SetAvatarResponse>(message, ClassId.CLIENT_SET_AVATAR_RESPONSE);
+	}
+
+	public async avatarsCustomize(params: {
+		label_id: number;
+		user_id: number;
+		prompt_id: number;
+		avatar_url: string;
+		avatar_real_id: number;
+	}): Promise<AvatarCustomizeResponse> {
+		return this.sendAvatarApi<AvatarCustomizeResponse>({
+			method: 'avatar-customize',
+			body: {
+				label_id: params.label_id,
+				user_id: params.user_id,
+				user_ext_id: this.tracker?.getExtUserId(),
+				brand_key: this.brand_api_key || this.tracker?.params?.brand_key,
+				prompt_id: params.prompt_id,
+				avatar_url: params.avatar_url,
+				avatar_real_id: params.avatar_real_id,
+			},
+		});
 	}
 
 	public async avatarsGetListT(user_ext_id: string): Promise<TAvatarDefinition[]> {

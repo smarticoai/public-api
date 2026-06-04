@@ -10,6 +10,7 @@ import {
 	onUpdateContextKey,
 } from './WSAPIBase';
 import { WSAPIMiniGames } from './WSAPIMiniGames';
+import { AvatarCustomizeResponse } from '../Avatars/AvatarCustomizeResponse';
 
 /** @group Avatars */
 export class WSAPIAvatars extends WSAPIMiniGames {
@@ -341,5 +342,64 @@ export class WSAPIAvatars extends WSAPIMiniGames {
 			err_code: r.errCode ?? 0,
 			err_message: r.errMsg,
 		};
+	}
+
+	/**
+	 * Runs AI avatar customization — applies a style prompt from
+	 * {@link getAvatarPrompts} to a base avatar and returns the CDN URL of the
+	 * generated variant. The returned `cdn_url` can be passed to {@link setAvatar}
+	 * to activate the new variant.
+	 *
+	 * @remarks
+	 * **Transport**
+	 * AI customization is a plain HTTP POST to the avatar server. One consequence:
+	 * there is no SDK cache and no push subscription — every call is a fresh server
+	 * roundtrip.
+	 *
+	 * **Preconditions**
+	 * - User must be authenticated. Visitor mode is not supported (throws).
+	 * - All fields are mandatory — the SDK throws synchronously if any is missing.
+	 *
+	 * **Cost / side effects**
+	 * On success the new variant is
+	 * persisted and the SDK clears the {@link getAvatarsCustomized} cache so the
+	 * next call surfaces it.
+	 *
+	 * **Result**
+	 * - Success: `{ cdn_url }` is set.
+	 * - Failure: `{ errCode, errMessage }` is set — `12001` / `12002` are the
+	 *   per-user / per-label limit codes ({@link AvatarCustomizeErrorCode}), `-1`
+	 *   is a generic server error.
+	 *
+	 * @param props.label_id        Internal numeric label id.
+	 * @param props.user_id         Internal numeric user id.
+	 * @param props.prompt_id       ID of the style prompt from {@link getAvatarPrompts}.
+	 * @param props.avatar_url      URL of the base avatar to customize.
+	 * @param props.avatar_real_id  `avatar_real_id` of the base avatar.
+	 * @returns {@link AvatarCustomizeResponse} — check `cdn_url` for success.
+	 */
+	public async avatarsCustomize(props: {
+		label_id: number;
+		user_id: number;
+		prompt_id: number;
+		avatar_url: string;
+		avatar_real_id: number;
+	}): Promise<AvatarCustomizeResponse> {
+		const required: (keyof typeof props)[] = ['label_id', 'user_id', 'prompt_id', 'avatar_url', 'avatar_real_id'];
+		for (const field of required) {
+			if (!props[field]) {
+				throw new Error(`${field} is required`);
+			}
+		}
+
+		const r = await this.api.avatarsCustomize(props);
+
+		// On success a new variant is persisted server-side — drop the cached
+		// list so the next getAvatarsCustomized() surfaces it.
+		if (r.cdn_url) {
+			OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.AvatarsCustomized);
+		}
+
+		return r;
 	}
 }
