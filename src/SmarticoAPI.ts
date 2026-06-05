@@ -1600,16 +1600,17 @@ class SmarticoAPI {
 	}
 
 	public async avatarsCustomize(params: {
-		label_id: number;
 		user_id: number;
 		prompt_id: number;
 		avatar_url: string;
 		avatar_real_id: number;
+		label_id?: number;
 	}): Promise<AvatarCustomizeResponse> {
 		return this.sendAvatarApi<AvatarCustomizeResponse>({
 			method: 'avatar-customize',
 			body: {
 				label_id: params.label_id,
+				label_api_key: this.label_api_key,
 				user_id: params.user_id,
 				user_ext_id: this.tracker?.getExtUserId(),
 				brand_key: this.brand_api_key || this.tracker?.params?.brand_key,

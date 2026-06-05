@@ -404,11 +404,13 @@ export class WSAPIAvatars extends WSAPIMiniGames {
 	 *
 	 * **Visitor mode**: not supported (throws).
 	 *
-	 * @param props.label_id        Numeric Smartico label (brand) ID the user belongs to.
 	 * @param props.user_id         Numeric Smartico user ID.
 	 * @param props.prompt_id       Style-prompt ID (`prompt_id`) from {@link getAvatarPrompts}.
 	 * @param props.avatar_url      CDN URL of the base avatar to customize.
-	 * @param props.avatar_real_id  `avatar_real_id` of the base avatar.
+	 * @param props.avatar_real_id 
+	 * @param props.label_id        Optional internal numeric label id. When omitted
+	 *                              the server resolves it from the label public key.
+	 
 	 * @returns {@link AvatarCustomizeResponse} — `cdn_url` set on success;
 	 *          `errCode` / `errMessage` set on failure.
 	 *
@@ -440,13 +442,13 @@ export class WSAPIAvatars extends WSAPIMiniGames {
 	 * ```
 	 */
 	public async avatarsCustomize(props: {
-		label_id: number;
 		user_id: number;
 		prompt_id: number;
 		avatar_url: string;
 		avatar_real_id: number;
+		label_id?: number;
 	}): Promise<AvatarCustomizeResponse> {
-		const required: (keyof typeof props)[] = ['label_id', 'user_id', 'prompt_id', 'avatar_url', 'avatar_real_id'];
+		const required: (keyof typeof props)[] = ['user_id', 'prompt_id', 'avatar_url', 'avatar_real_id'];
 		for (const field of required) {
 			if (!props[field]) {
 				throw new Error(`${field} is required`);
