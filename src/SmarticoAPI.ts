@@ -1604,12 +1604,11 @@ class SmarticoAPI {
 		prompt_id: number;
 		avatar_url: string;
 		avatar_real_id: number;
-		label_id?: number;
 	}): Promise<AvatarCustomizeResponse> {
 		return this.sendAvatarApi<AvatarCustomizeResponse>({
 			method: 'avatar-customize',
 			body: {
-				label_id: params.label_id,
+				// The server resolves label_id from label_api_key.
 				label_api_key: this.label_api_key,
 				user_id: params.user_id,
 				user_ext_id: this.tracker?.getExtUserId(),

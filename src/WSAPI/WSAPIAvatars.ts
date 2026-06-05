@@ -407,22 +407,18 @@ export class WSAPIAvatars extends WSAPIMiniGames {
 	 * @param props.user_id         Numeric Smartico user ID.
 	 * @param props.prompt_id       Style-prompt ID (`prompt_id`) from {@link getAvatarPrompts}.
 	 * @param props.avatar_url      CDN URL of the base avatar to customize.
-	 * @param props.avatar_real_id 
-	 * @param props.label_id        Optional internal numeric label id. When omitted
-	 *                              the server resolves it from the label public key.
-	 
+	 * @param props.avatar_real_id  `avatar_real_id` of the base avatar.
 	 * @returns {@link AvatarCustomizeResponse} — `cdn_url` set on success;
 	 *          `errCode` / `errMessage` set on failure.
 	 *
 	 * @example
 	 * ```ts
-	 * // label_id / user_id identify the Smartico user being customized.
+	 * // user_id identifies the Smartico user being customized.
 	 * const prompts = await window._smartico.api.getAvatarPrompts();
 	 * const prompt = prompts[0];
 	 *
 	 * console.log('[smartico] generating avatar — show a spinner for ~5-20s and disable the Generate button');
 	 * const result = await window._smartico.api.avatarsCustomize({
-	 *   label_id,
 	 *   user_id,
 	 *   prompt_id: prompt.prompt_id,
 	 *   avatar_url: baseAvatar.avatar_url,
@@ -446,7 +442,6 @@ export class WSAPIAvatars extends WSAPIMiniGames {
 		prompt_id: number;
 		avatar_url: string;
 		avatar_real_id: number;
-		label_id?: number;
 	}): Promise<AvatarCustomizeResponse> {
 		const required: (keyof typeof props)[] = ['user_id', 'prompt_id', 'avatar_url', 'avatar_real_id'];
 		for (const field of required) {
