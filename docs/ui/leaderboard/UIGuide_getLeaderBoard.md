@@ -9,6 +9,15 @@
 - No subscription, no push refresh. Poll manually if the consumer
   needs live updates during an in-progress period.
 
+## Discovering boards (`getLeaderBoards`)
+Before loading any standings, call `getLeaderBoards()` to discover which
+boards the operator configured (DAILY / WEEKLY / MONTHLY, or none). It
+returns the board list as **metadata only** — `name`, `period_type_id`,
+`rewards`, etc., with `users` empty and `me` undefined — in one lightweight
+round-trip. Build the board/tab selector from that list, then call
+`getLeaderBoard(period_type_id)` to load a tab's standings on demand. If it
+returns an empty array, hide the leaderboard surface entirely.
+
 ## List view organization
 
 The default Smartico UI renders the leaderboard with three top-level
@@ -112,6 +121,12 @@ The same holds when switching between period types
 a fresh fetch within the TTL (e.g. a manual refresh button), call
 `clearCaches()` first — it clears the whole SDK cache, not just this
 board.
+
+To page back through **older** snapshots (not just the immediately
+previous one), pass a number instead of a boolean: `getLeaderBoard(periodType, 2)`
+fetches the period before last, `3` the one before that, etc. Label each
+historical board with its `create_date` / `version_id` so the user knows
+which run they're viewing.
 
 ## Status-specific visual treatments
 

@@ -1872,7 +1872,8 @@ No method-specific fields. Send only the common fields (see [Common Message Fiel
 
 ### getLeaderBoard
 
-Get leaderboard for a specific period type.
+Get one period's leaderboard with its ranked players, or the list of all
+configured boards without players.
 
 #### Request
 
@@ -1880,9 +1881,14 @@ Get leaderboard for a specific period type.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `period_type_id` | `number` | Period type: `1` = Daily, `2` = Weekly, `3` = Monthly (optional, if not set returns all boards) |
+| `period_type_id` | `number` | Period type: `1` = Daily, `2` = Weekly, `3` = Monthly. Optional — if omitted, the response `map` contains **every** configured board. |
 | `snapshot_offset` | `number` | `0` = current period, `1` = previous period, `2` = period before previous, etc. |
-| `include_users` | `boolean` | Whether to include user details (optional) |
+| `include_users` | `boolean` | `true` → each board includes its `positions` (and `userPosition`). `false` (or omitted) → board metadata only, no players — the lightweight "list available boards" mode. |
+
+> **Two modes from one request.** Send `period_type_id` + `include_users: true`
+> to load a single board's standings. Omit `period_type_id` and send
+> `include_users: false` to enumerate all configured boards (metadata only) —
+> useful to build the board/tab selector before loading any standings.
 
 #### Response
 
@@ -1890,9 +1896,31 @@ Get leaderboard for a specific period type.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `leaders` | [`LeaderBoardUserT[]`](../api/interfaces/LeaderBoardUserT.md) | Array of leaderboard entries |
-| `user_position` | `number` | Current user's position |
-| `user_points` | `number` | Current user's points |
+| `map` | `object` | Keyed by `period_type_id` (as a string: `"1"` / `"2"` / `"3"`), one entry per board. With `period_type_id` set in the request only that key is present; omitted → every configured board. |
+
+Each value of `map` is a leaderboard object:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `board_id` | `number` | Stable board id |
+| `period_type_id` | `number` | `1` = Daily, `2` = Weekly, `3` = Monthly |
+| `create_date` | `number` | `0` for the current period; the snapshot timestamp for a previous period |
+| `versiod_id` | `number` | Snapshot version; `0` for the current period (the field is spelled `versiod_id` on the wire) |
+| `reward_points` | `number[]` | Per-place prize points; index `0` = place 1 |
+| `board_public_meta` | `object` | `{ name, description, rules }` display strings (HTML allowed in `description` / `rules`) |
+| `positions` | `LeaderBoardPosition[]` | Ranked entries, top 20, ordered by rank. **Absent when `include_users` is `false`.** |
+| `userPosition` | `LeaderBoardPosition` | The requesting user's own entry. Absent when `include_users` is `false`, or when the user is unranked. |
+
+Each `LeaderBoardPosition`:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `position_in_board` | `number` | Rank (DENSE_RANK); `-1` on `userPosition` = unranked / outside the window |
+| `points_accumulated` | `number` | Participant's points for the period |
+| `public_username` | `string` | Display name (falls back to `user_alt_name`) |
+| `is_me` | `boolean` | `true` for the requesting user's row inside `positions` |
+| `avatar_id` | `string` | Raw avatar id — build the image URL client-side |
+| `level_id` | `number` | The participant's level (factor it into avatar resolution to match the default Smartico UI) |
 
 ---
 

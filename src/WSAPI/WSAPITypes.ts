@@ -1105,9 +1105,16 @@ export interface LeaderBoardDetailsT {
 	rules: string;
 	/** Period type this board is bound to ({@link LeaderBoardPeriodType}). */
 	period_type_id: LeaderBoardPeriodType;
+	/** Snapshot version. `0` for the live current period; a positive value
+	 * identifies a finalized previous-period snapshot (see `getPreviousPeriod`). */
+	version_id: number;
+	/** Snapshot creation timestamp (Unix ms). `0` for the live current period;
+	 * the finalization time for a previous-period snapshot. */
+	create_date: number;
 	/** Per-place prize table; the array length is the number of paid places. */
 	rewards: LeaderBoardsRewardsT[];
-	/** Top-20 ranked entries (server-capped), sorted by `position` ASC. */
+	/** Top-20 ranked entries (server-capped), sorted by `position` ASC.
+	 * Empty when fetched via `getLeaderBoards()` (metadata-only list). */
 	users: LeaderBoardUserT[];
 	/** Current user's own entry. `undefined` for visitor sessions.
 	 * For authenticated users, `position === -1` means the user is
@@ -1132,14 +1139,20 @@ export interface LeaderBoardsRewardsT {
 export interface LeaderBoardUserT {
 	/** Display username (operator-defined alias). */
 	public_username: string;
-	/** Resolved CDN URL for the participant's avatar. */
+	/** Resolved CDN URL for the participant's avatar. May be empty when the
+	 * participant has no custom avatar — fall back to a level-based default
+	 * using `level_id`. */
 	avatar_url: string;
+	/** The participant's level id — use it to resolve a level-based default
+	 * avatar when `avatar_url` is empty. */
+	level_id: number;
 	/** Rank in the leaderboard (DENSE_RANK over all participants).
 	 * `-1` on the `me` entry signals "unranked / outside the window". */
 	position: number;
 	/** Participant's points for this period. */
 	points: number;
-	/** `true` when this row is the current authenticated user. */
+	/** `true` when this row is the current authenticated user. Always `true`
+	 * on the `me` entry. */
 	is_me: boolean;
 }
 

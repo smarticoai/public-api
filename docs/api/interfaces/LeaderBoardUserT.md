@@ -16,7 +16,18 @@ Display username (operator-defined alias).
 
 > **avatar\_url**: `string`
 
-Resolved CDN URL for the participant's avatar.
+Resolved CDN URL for the participant's avatar. May be empty when the
+participant has no custom avatar — fall back to a level-based default
+using `level_id`.
+
+***
+
+### level\_id
+
+> **level\_id**: `number`
+
+The participant's level id — use it to resolve a level-based default
+avatar when `avatar_url` is empty.
 
 ***
 
@@ -41,4 +52,5 @@ Participant's points for this period.
 
 > **is\_me**: `boolean`
 
-`true` when this row is the current authenticated user.
+`true` when this row is the current authenticated user. Always `true`
+on the `me` entry.

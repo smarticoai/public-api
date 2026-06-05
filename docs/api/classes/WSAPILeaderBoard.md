@@ -13,7 +13,9 @@ monthly tabs.
 
 The leaderboard for each period type is configured separately by
 the operator. A label may have any combination of DAILY, WEEKLY,
-and MONTHLY boards configured (or none).
+and MONTHLY boards configured (or none). To discover which boards
+exist before loading any standings, call [getLeaderBoards](#getleaderboards)
+(metadata only) and drive the tab selector from its `period_type_id`s.
 
 #### Parameters
 
@@ -29,12 +31,13 @@ The board's period type
 
 ##### getPreviousPeriod?
 
-`boolean`
+`number` \| `boolean`
 
-When `true`, returns the most recent
-                          finalized snapshot for that period type
-                          (e.g. last week's results). Defaults to
-                          `false` (current in-progress period).
+Which period to fetch. `false` (default)
+                          = current in-progress period; `true` =
+                          the most recent finalized snapshot; a
+                          number `n` = the n-th previous snapshot
+                          (`1` = previous, `2` = the one before, …).
 
 #### Returns
 
@@ -56,10 +59,13 @@ against that case in consumer code.
 Pass a `periodType` from [LeaderBoardPeriodType](../enumerations/LeaderBoardPeriodType.md)
 (`DAILY = 1`, `WEEKLY = 2`, `MONTHLY = 3`). Pass
 `getPreviousPeriod: true` to fetch the most-recently-ended
-period's snapshot (yesterday's results, last week's results,
-last month's results) instead of the current live period. The
-SDK only exposes one period back — older snapshots are not
-reachable through this method.
+period's snapshot (yesterday's / last week's / last month's
+results) instead of the current live period. To reach older
+snapshots, pass a number instead of a boolean: `1` = previous
+period, `2` = the one before that, and so on (`0` / `false` =
+current). Use the snapshot's `create_date` / `version_id` to label
+which historical run a previous-period board is. How far back
+snapshots are retained is operator-configured.
 
 **Top-20 cap**
 The server hard-caps `users[]` at 20 entries, ordered by
@@ -144,6 +150,76 @@ console.log('[smartico] previous-week standings — render with greyed-out "ende
 
 // Visitor-mode equivalent — me is always undefined.
 // const visitorBoard = await window._smartico.vapi('EN').getLeaderBoard(LeaderBoardPeriodType.DAILY);
+```
+
+***
+
+### getLeaderBoards()
+
+> **getLeaderBoards**(): `Promise`\<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)[]\>
+
+Returns the list of leaderboards the operator has configured for this
+label — **metadata only, without participants**. Use it to discover
+which boards exist (and their period types) so you can render the
+board/tab selector, then load a specific board's standings on demand
+with [getLeaderBoard](#getleaderboard).
+
+This is the lightweight discovery counterpart to [getLeaderBoard](#getleaderboard):
+it issues one round-trip that returns every board's identity, name,
+description, rules, `period_type_id`, and prize table, but **not** the
+ranked players. Fetching the full standings for one board (the top-20
+`users[]` and the caller's own `me` entry) is what [getLeaderBoard](#getleaderboard)
+does per period.
+
+#### Returns
+
+`Promise`\<[`LeaderBoardDetailsT`](../interfaces/LeaderBoardDetailsT.md)[]\>
+
+Promise resolving to the array of configured boards
+         (metadata only). Empty array when none are configured.
+
+#### Remarks
+
+**Returned shape**
+An array of `LeaderBoardDetailsT`, one per configured board, ordered by
+`period_type_id` ascending (DAILY, WEEKLY, MONTHLY, …). On every entry
+`users` is an empty array and `me` is `undefined` — this call never
+carries participant data. Read `period_type_id` from each entry and pass
+it to [getLeaderBoard](#getleaderboard) to load that board's standings.
+
+**Empty result**
+Resolves to an empty array when the label has no leaderboards configured
+— treat that as "hide the leaderboard surface".
+
+**Cache TTL**
+Cached for 30 seconds under a dedicated key (independent of
+[getLeaderBoard](#getleaderboard)'s per-period cache). Repeated calls within the
+window return the cached list without a round-trip.
+
+**Refresh model**: one-shot fetch — no subscription, no push. Board
+configuration changes surface on the next cache miss.
+
+**Idempotency / Side effects**: safe. Read-only.
+
+**Visitor mode**: supported. Returns the brand's public board list.
+
+#### Example
+
+```ts
+const boards = await window._smartico.api.getLeaderBoards();
+
+if (boards.length === 0) {
+  console.log('[smartico] no leaderboards configured — hide the leaderboard surface');
+  return;
+}
+
+// Render one tab per board from the lightweight list (no players yet).
+console.log('[smartico] render leaderboard tabs:', boards.map(b => b.name));
+
+// When the user opens a tab, load that board's standings on demand.
+const first = boards[0];
+const full = await window._smartico.api.getLeaderBoard(first.period_type_id);
+console.log('[smartico] loaded standings for', first.name, '—', full?.users.length ?? 0, 'players');
 ```
 
 ***

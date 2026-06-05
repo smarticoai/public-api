@@ -1144,15 +1144,18 @@ class SmarticoAPI {
 	public async leaderboardGet(
 		user_ext_id: string,
 		period_type_id?: LeaderBoardPeriodType,
-		prevPeriod: boolean = false,
+		prevPeriod: boolean | number = false,
 		force_language?: string,
 	): Promise<LeaderBoardDetails> {
+		// boolean keeps back-compat (false → current, true → previous);
+		// a number selects an arbitrary snapshot offset (1 = previous, 2 = the one before, …).
+		const snapshot_offset = typeof prevPeriod === 'number' ? prevPeriod : prevPeriod ? 1 : 0;
 		const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(
 			user_ext_id,
 			ClassId.GET_LEADERS_BOARD_REQUEST,
 			{
 				period_type_id,
-				snapshot_offset: prevPeriod ? 1 : 0,
+				snapshot_offset,
 				include_users: true,
 			},
 		);
@@ -1184,9 +1187,34 @@ class SmarticoAPI {
 	public async leaderboardsGetT(
 		user_ext_id: string,
 		period_type_id: LeaderBoardPeriodType = LeaderBoardPeriodType.DAILY,
-		prevPeriod: boolean = false,
+		prevPeriod: boolean | number = false,
 	): Promise<LeaderBoardDetailsT> {
 		return getLeaderBoardTransform(await this.leaderboardGet(user_ext_id, period_type_id, prevPeriod));
+	}
+
+	public async leaderboardsGetList(
+		user_ext_id: string,
+		force_language?: string,
+	): Promise<LeaderBoardDetails[]> {
+		const message = this.buildMessage<GetLeaderBoardsRequest, GetLeaderBoardsResponse>(
+			user_ext_id,
+			ClassId.GET_LEADERS_BOARD_REQUEST,
+			{
+				// No period_type_id → the server returns every configured board.
+				// include_users: false → board metadata only (no positions / userPosition).
+				snapshot_offset: 0,
+				include_users: false,
+			},
+		);
+
+		const response = await this.send<GetLeaderBoardsResponse>(message, ClassId.GET_LEADERS_BOARD_RESPONSE, force_language);
+
+		// map is keyed by period_type_id; integer-like keys iterate in ascending order.
+		return Object.values(response.map || {});
+	}
+
+	public async leaderboardsGetListT(user_ext_id: string): Promise<LeaderBoardDetailsT[]> {
+		return (await this.leaderboardsGetList(user_ext_id)).map(getLeaderBoardTransform);
 	}
 
 	public async levelsGet(user_ext_id: string, force_language?: string): Promise<GetLevelMapResponse> {

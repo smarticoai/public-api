@@ -46,6 +46,24 @@ Period type this board is bound to ([LeaderBoardPeriodType](../enumerations/Lead
 
 ***
 
+### version\_id
+
+> **version\_id**: `number`
+
+Snapshot version. `0` for the live current period; a positive value
+identifies a finalized previous-period snapshot (see `getPreviousPeriod`).
+
+***
+
+### create\_date
+
+> **create\_date**: `number`
+
+Snapshot creation timestamp (Unix ms). `0` for the live current period;
+the finalization time for a previous-period snapshot.
+
+***
+
 ### rewards
 
 > **rewards**: [`LeaderBoardsRewardsT`](LeaderBoardsRewardsT.md)[]
@@ -59,6 +77,7 @@ Per-place prize table; the array length is the number of paid places.
 > **users**: [`LeaderBoardUserT`](LeaderBoardUserT.md)[]
 
 Top-20 ranked entries (server-capped), sorted by `position` ASC.
+Empty when fetched via `getLeaderBoards()` (metadata-only list).
 
 ***
 
