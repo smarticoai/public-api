@@ -48,4 +48,5 @@ export enum LiquidEntityData {
 	Tournament = 10,
 	Raffles = 11,
 	SingleRaffle = 12,
+	Clans = 13,
 }
