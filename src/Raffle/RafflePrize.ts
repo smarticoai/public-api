@@ -12,6 +12,11 @@ interface RafflePrizePublicMeta {
      * Indicates whether the chance to win should be hidden in the UI.
      */
     hide_chance_to_win: boolean;
+    /**
+     * Custom data field set in the backoffice prize setup.
+     * Can be used to build custom UI for gamification.
+     */
+    custom_data?: string;
 }
 
 /**
