@@ -766,6 +766,9 @@ class SmarticoAPI {
 	}
 
 	public async getSawWinningHistoryT(user_ext_id: string, limit?: number, offset?: number, saw_template_id?: number): Promise<SAWPrizesHistory[]> {
+		if (IntUtils.isNotNull(limit) && IntUtils.isNotNull(offset) && limit > 50) {
+			limit = 50;
+		}
 		return SAWHistoryTransform((await this.getSawWinningHistory(user_ext_id, limit, offset, saw_template_id)).prizes);
 	}
 
@@ -888,6 +891,9 @@ class SmarticoAPI {
 	}
 
 	public async storeGetPurchasedItemsT(user_ext_id: string, limit?: number, offset?: number): Promise<TStoreItem[]> {
+		if (IntUtils.isNotNull(limit) && IntUtils.isNotNull(offset) && limit > 50) {
+			limit = 50;
+		}
 		return StoreItemPurchasedTransform((await this.storeGetPurchasedItems(user_ext_id, limit, offset)).items);
 	}
 
