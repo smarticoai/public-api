@@ -69,7 +69,12 @@ export class WSAPI extends WSAPIInbox {
 				if (data?.props?.core_inbox_unread_count !== undefined && data?.props?.core_inbox_unread_count !== null) {
 					this.updateInboxUnreadCount(data.props.core_inbox_unread_count);
 				}
-				if (data?.props?.ach_points_balance !== undefined || data?.props?.ach_gems_balance !== undefined || data?.props?.ach_diamonds_balance !== undefined) {
+				if (
+					(
+						data?.props?.ach_points_balance !== undefined ||
+						data?.props?.ach_gems_balance !== undefined ||
+						data?.props?.ach_diamonds_balance !== undefined
+					) && OCache.get(onUpdateContextKey.ActivityLog, ECacheContext.WSAPI)) {
 					this.notifyActivityLogUpdate();
 				}
 				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.CurrentLevel);
