@@ -74,7 +74,7 @@ export class WSAPI extends WSAPIInbox {
 						data?.props?.ach_points_balance !== undefined ||
 						data?.props?.ach_gems_balance !== undefined ||
 						data?.props?.ach_diamonds_balance !== undefined
-					) && OCache.get(onUpdateContextKey.ActivityLog, ECacheContext.WSAPI)) {
+					) && this.onUpdateCallback.get(onUpdateContextKey.ActivityLog)) {
 					this.notifyActivityLogUpdate();
 				}
 				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.CurrentLevel);
