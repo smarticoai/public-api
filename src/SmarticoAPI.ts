@@ -157,6 +157,32 @@ const GAMES_API_URL = 'https://r-games-api.smr.vc';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
 const DEFAULT_LANG_EN = 'EN';
 
+const SMR_TO_CLOUDFRONT_DOMAINS: { [key: string]: string } = {
+	'img.smr.vc': 'd1am61onjxtys8.cloudfront.net',
+	'img3.smr.vc': 'd3dubbodzd2q05.cloudfront.net',
+	'img4.smr.vc': 'dvm0p9vsezqr2.cloudfront.net',
+	'img5.smr.vc': 'd3gen1ksvxhac8.cloudfront.net',
+	'img6.smr.vc': 'db1kmyg7iufeo.cloudfront.net',
+	'img7.smr.vc': 'd36om2g86xefo6.cloudfront.net',
+	'img8.smr.vc': 'd2zme31v54n5pb.cloudfront.net',
+
+	'static.smr.vc': 'dtt380pweilws.cloudfront.net',
+	'static3.smr.vc': 'd1qt8ake8g4imn.cloudfront.net',
+	'static4.smr.vc': 'd146b4m7rkvjkw.cloudfront.net',
+	'static5.smr.vc': 'd3l7suk1kl9rwh.cloudfront.net',
+	'static6.smr.vc': 'd121pfj16xdfcq.cloudfront.net',
+	'static7.smr.vc': 'd21deilz814qgl.cloudfront.net',
+	'static8.smr.vc': 'd1uffsroxjy2ku.cloudfront.net',
+};
+
+// Single combined matcher built once, so a call is one pass instead of one per domain.
+const SMR_DOMAIN_REGEX = new RegExp(
+	Object.keys(SMR_TO_CLOUDFRONT_DOMAINS)
+		.map((d) => d.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
+		.join('|'),
+	'g',
+);
+
 interface Tracker {
 	label_api_key: string;
 	userPublicProps: any;
@@ -241,34 +267,22 @@ class SmarticoAPI {
 			return value as T;
 		}
 
-		const domains = {
-			'img.smr.vc': 'd1am61onjxtys8.cloudfront.net',
-			'img3.smr.vc': 'd3dubbodzd2q05.cloudfront.net',
-			'img4.smr.vc': 'dvm0p9vsezqr2.cloudfront.net',
-			'img5.smr.vc': 'd3gen1ksvxhac8.cloudfront.net',
-			'img6.smr.vc': 'db1kmyg7iufeo.cloudfront.net',
-			'img7.smr.vc': 'd36om2g86xefo6.cloudfront.net',
-			'img8.smr.vc': 'd2zme31v54n5pb.cloudfront.net',
+		const isString = typeof value === 'string';
+		const source = isString ? (value as string) : JSON.stringify(value);
 
-			'static.smr.vc': 'dtt380pweilws.cloudfront.net',
-			'static3.smr.vc': 'd1qt8ake8g4imn.cloudfront.net',
-			'static4.smr.vc': 'd146b4m7rkvjkw.cloudfront.net',
-			'static5.smr.vc': 'd3l7suk1kl9rwh.cloudfront.net',
-			'static6.smr.vc': 'd121pfj16xdfcq.cloudfront.net',
-			'static7.smr.vc': 'd21deilz814qgl.cloudfront.net',
-			'static8.smr.vc': 'd1uffsroxjy2ku.cloudfront.net',
+		const replaced = source.replace(SMR_DOMAIN_REGEX, (match) => SMR_TO_CLOUDFRONT_DOMAINS[match]);
+
+		// No domain matched: skip the JSON re-parse and return the input untouched.
+		if (replaced === source) {
+			return value as T;
 		}
 
-		const escapeRegExp = (str: string) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-
-		let replacedValue = typeof value === 'string' ? value : JSON.stringify(value);
-
-		for (const [oldDomain, newDomain] of Object.entries(domains)) {
-			replacedValue = replacedValue.replace(new RegExp(escapeRegExp(oldDomain), 'g'), newDomain);
+		if (isString) {
+			return replaced as T;
 		}
 
 		try {
-			return typeof value === 'string' ? replacedValue as T : JSON.parse(replacedValue)
+			return JSON.parse(replaced);
 		} catch (err) {
 			return value as T;
 		}
