@@ -1,4 +1,4 @@
-import { SAWTemplate } from "src/MiniGames";
+import { SAWTemplate } from "../MiniGames";
 import { QuizAnswersValueType } from "./MarketsAnswers";
 import { SAWGPMarketType } from "./MarketsType";
 

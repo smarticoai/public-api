@@ -1,4 +1,4 @@
-import { IntUtils } from "src/IntUtils";
+import { IntUtils } from "../IntUtils";
 import { AchievementAvailabilityStatus } from "./AchievementAvailabilityStatus";
 import { AchievementStatus } from "./AchievementStatus";
 import { UserAchievement } from "./UserAchievement";
