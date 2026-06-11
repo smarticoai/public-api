@@ -1403,6 +1403,11 @@ export interface TRafflePrize {
 	/** URL of the image that represents the prize, 256x256px */
 	image_url: string;
 	/**
+	 * Custom data field set in the backoffice prize setup.
+	 * Can be used to build custom UI for gamification.
+	 */
+	custom_data?: string;
+	/**
 	 * The number of prizes available per run of the draw.
 	 * E.g. if the draw is run daily, this is the number of prizes available each day, for example 3 iPhones.
 	 */

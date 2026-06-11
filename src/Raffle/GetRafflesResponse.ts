@@ -42,6 +42,7 @@ export const prizeTransform = (items: RafflePrize[]): TRafflePrize[] => {
 			name: item.public_meta.name,
 			description: item.public_meta.description,
 			image_url: item.public_meta.image_url,
+			custom_data: item.public_meta.custom_data,
 			prizes_per_run: item.prizes_per_run,
 			prizes_per_run_actual: item.prizes_per_run_actual,
 			chances_to_win_perc: item.chances_to_win_perc,
