@@ -269,6 +269,7 @@ class SmarticoAPI {
 
 		const isString = typeof value === 'string';
 		const source = isString ? (value as string) : JSON.stringify(value);
+		if (!source.includes('smr.vc')) return value as T;   // ← skip even the regex
 
 		const replaced = source.replace(SMR_DOMAIN_REGEX, (match) => SMR_TO_CLOUDFRONT_DOMAINS[match]);
 
