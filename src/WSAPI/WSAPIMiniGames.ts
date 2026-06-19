@@ -374,8 +374,6 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 		}
 
 		const r = await this.api.sawSpinRequest(this.userExtId, template_id);
-		this.api.doAcknowledgeRequest(this.userExtId, r.request_id);
-
 		const o: TMiniGamePlayResult = {
 			err_code: r.errCode,
 			err_message: r.errMsg,
