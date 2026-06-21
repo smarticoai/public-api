@@ -208,10 +208,12 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	/**
 	 * Plays one round of a mini-game template — runs the server's
 	 * randomised prize selection, deducts the buy-in cost (if any),
-	 * and returns the won `prize_id`. After the play resolves, the SDK
-	 * automatically fires a server-side acknowledgement on a
-	 * fire-and-forget basis, marking the spin as "delivered" so the
-	 * prize takes effect.
+	 * credits the won prize, and returns the won `prize_id`. By default
+	 * (`acknowledge: true`) the SDK then sends a server-side
+	 * acknowledgement and AWAITS it before resolving, so the win is
+	 * marked delivered by the time the promise settles. Pass
+	 * `acknowledge: false` to skip that step and finalise the win
+	 * yourself later (see the `acknowledge` parameter).
 	 *
 	 * Works for all `SAWGameType` values EXCEPT:
 	 * - `PrizeDrop` — prizes arrive server-pushed; do NOT call
@@ -275,17 +277,36 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *   corresponding domain methods.
 	 * - `'manual'` — operator delivers offline.
 	 *
-	 * **Auto-acknowledge**
-	 * The SDK calls the server's acknowledge endpoint immediately
-	 * after the spin response, on a fire-and-forget basis (not
-	 * awaited). This marks the spin as "delivered" so prize effects
-	 * take hold. If the auto-acknowledge fails (network drop), the
-	 * spin appears as `is_claimed: false` in
-	 * {@link getMiniGamesHistory}; the consumer can recover it by
-	 * passing the `client_request_id` to
-	 * {@link miniGameWinAcknowledgeRequest}. A server-side fallback
-	 * job auto-acknowledges stale spins every ~60 seconds, so prizes
-	 * are eventually delivered even without consumer action.
+	 * **Acknowledge** (the `acknowledge` parameter, default `true`)
+	 * Every spin is finalised by a follow-up acknowledge step that
+	 * marks the win delivered. By default the SDK sends that
+	 * acknowledge and AWAITS it, so `playMiniGame` resolves only after
+	 * the win is finalised server-side. Keep the default unless you
+	 * have a specific reason not to.
+	 *
+	 * Pass `acknowledge: false` to skip that automatic step.
+	 * `playMiniGame` then resolves as soon as the spin result is known,
+	 * without waiting for the win to be marked delivered. You finalise
+	 * it later by calling {@link miniGameWinAcknowledgeRequest}. The
+	 * result does NOT carry the spin's request id — obtain it as the
+	 * `client_request_id` of the matching {@link getMiniGamesHistory}
+	 * row (the spin appears there with `is_claimed: false`).
+	 *
+	 * What `acknowledge: false` does and does NOT defer:
+	 * - For STANDARD prizes the value is credited at spin time
+	 *   regardless, so opting out does NOT delay the balance change —
+	 *   it only defers the "delivered" bookkeeping and the `is_claimed`
+	 *   flag flipping in {@link getMiniGamesHistory}.
+	 * - For operator-configured "explicit claim" prizes the credit IS
+	 *   deferred until the spin is acknowledged, so those require an
+	 *   explicit acknowledge to finalise.
+	 *
+	 * A server-side fallback auto-acknowledges ordinary un-acknowledged
+	 * spins after a short delay (about 1–3 minutes), so an ordinary
+	 * prize is never lost even without consumer action. "Explicit
+	 * claim" prizes are excluded from that fallback — if you use
+	 * `acknowledge: false` for one, you MUST acknowledge it explicitly
+	 * or its prize is never credited.
 	 *
 	 * **Idempotency**: NOT idempotent. A double-click sends two
 	 * spins and deducts the buy-in twice. The SDK does NOT guard
@@ -304,25 +325,33 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * refreshed array.
 	 *
 	 * **Side effects** (on `err_code === 0`)
-	 * - Buy-in deducted from the user's balance (points / gems /
-	 *   diamonds / spin tickets — depending on `saw_buyin_type`).
-	 *   Balance updates flow via the user-properties channel
-	 *   (subscribe to {@link getUserProfile} `props_change` to
-	 *   observe).
-	 * - Prize value credited per the prize's type (see "Prize
-	 *   handling" above).
-	 * - A `minigame_attempt` analytics event fires server-side with
-	 *   the result status.
+	 * - Buy-in deducted at spin time (points / gems / diamonds / spin
+	 *   tickets — depending on `saw_buyin_type`), already applied by the
+	 *   time the call resolves. Balance updates flow via the
+	 *   user-properties channel (observe via {@link getUserProfile}).
+	 * - Prize value credited per the prize's type (see "Prize handling"
+	 *   above). Standard prizes are credited at spin time; "explicit
+	 *   claim" prizes are credited when the spin is acknowledged.
+	 * - The play is recorded server-side for analytics / reporting.
 	 *
 	 * **UI guidance**: see [UI Guide — `playMiniGame`](../../docs/ui/minigames/UIGuide_playMiniGame.md).
 	 *
 	 * **Visitor mode**: not supported. Visitor sessions trying to
 	 * spin receive `SAW_VISITOR_STOP_SPIN_REQUEST (-40001)`.
 	 *
-	 * @param template_id  The mini-game template ID (from
-	 *                     `TMiniGameTemplate.id`).
-	 * @param params       Optional. Pass an `onUpdate` callback to
-	 *                     subscribe to subsequent template refreshes.
+	 * @param template_id        The mini-game template ID (from
+	 *                           `TMiniGameTemplate.id`).
+	 * @param params             Optional options bag.
+	 * @param params.onUpdate    Pass a callback to subscribe to
+	 *                           subsequent template refreshes (same
+	 *                           channel as {@link getMiniGames}).
+	 * @param params.acknowledge Whether the SDK automatically sends and
+	 *                           awaits the win acknowledge after the
+	 *                           spin. Defaults to `true` (recommended).
+	 *                           Set `false` to finalise the win yourself
+	 *                           via {@link miniGameWinAcknowledgeRequest}
+	 *                           — see "Acknowledge" above for the
+	 *                           request-id caveat.
 	 * @returns `{ err_code, err_message, prize_id }` — success when
 	 *          `err_code === 0`. `prize_id` is always populated; look
 	 *          it up in `template.prizes` to interpret the prize.
@@ -362,6 +391,26 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *   console.log('[smartico] visitor stopped — silently end the game, no prize modal');
 	 * } else {
 	 *   console.error('[smartico] play failed — show generic error with this message:', r.err_message);
+	 * }
+	 * ```
+	 *
+	 * @example
+	 * Manual finalisation (`acknowledge: false`) — e.g. an explicit
+	 * "Claim" CTA, or finalising on your own schedule:
+	 * ```ts
+	 * const r = await window._smartico.api.playMiniGame(game.id, { acknowledge: false });
+	 * if (r.err_code === 0) {
+	 *   // Spin resolved but not yet acknowledged. For standard prizes the
+	 *   // balance already changed server-side; "explicit claim" prizes
+	 *   // are credited only by the acknowledge below.
+	 *   console.log('[smartico] prize won — show the result / Claim CTA, then finalise');
+	 *
+	 *   // The result has no request id — read it from history as client_request_id.
+	 *   const [row] = await window._smartico.api.getMiniGamesHistory({ saw_template_id: game.id, limit: 1 });
+	 *   if (row && !row.is_claimed) {
+	 *     await window._smartico.api.miniGameWinAcknowledgeRequest(row.client_request_id);
+	 *     console.log('[smartico] win finalised — refresh getUserProfile / getMiniGames to reflect it');
+	 *   }
 	 * }
 	 * ```
 	 */

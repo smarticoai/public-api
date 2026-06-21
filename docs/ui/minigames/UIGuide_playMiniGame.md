@@ -4,8 +4,10 @@
 - Action-focused mutation. User clicks "Play" / "Spin" on a mini-
   game card; the server runs the prize selection and returns the
   won prize.
-- Auto-acknowledges on success (fire-and-forget) — most consumers
-  don't need to handle acknowledge manually.
+- Auto-acknowledges on success by default (`acknowledge: true`, the
+  SDK awaits it) — most consumers don't need to handle acknowledge
+  manually. Pass `acknowledge: false` to finalise the win yourself
+  (see "Prize reveal modals").
 - The SDK does NOT prevent double-clicks at the public API level;
   guard the call site.
 
@@ -80,12 +82,15 @@ UI behavior per `err_code`:
 | `FullMessage` (3) | Full-screen modal; user dismisses; auto-acknowledge fires. |
 | `ExplicitAcknowledge` (4) | Modal with explicit "Claim" CTA; acknowledge sends only on tap. Use this for high-value or lootbox-style rewards. |
 
-For `ExplicitAcknowledge`, suppress the SDK's auto-acknowledge by
-NOT using this method's `playMiniGame` directly — call the
-acknowledge via [`miniGameWinAcknowledgeRequest`](../../api/classes/WSAPIMiniGames.md#minigamewinacknowledgerequest)
-when the user taps Claim. (The SDK still auto-fires the
-acknowledge from `playMiniGame`, but the visual gate is still
-meaningful.)
+For `ExplicitAcknowledge`, gate the acknowledge on the user's Claim
+tap: call `playMiniGame(template_id, { acknowledge: false })` so the
+SDK does NOT auto-finalise, then call
+[`miniGameWinAcknowledgeRequest`](../../api/classes/WSAPIMiniGames.md#minigamewinacknowledgerequest)
+when the user taps Claim. Pass the spin's `client_request_id`, read
+from the matching [`getMiniGamesHistory`](../../api/classes/WSAPIMiniGames.md#getminigameshistory)
+row (it appears with `is_claimed: false`). Note: "explicit claim"
+prizes are NOT covered by the server-side auto-acknowledge fallback,
+so for these you MUST acknowledge or the prize is never credited.
 
 Modal contents per prize:
 
