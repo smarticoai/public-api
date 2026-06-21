@@ -367,13 +367,16 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 */
 	public async playMiniGame(
 		template_id: number,
-		{ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {},
+		{ onUpdate, acknowledge = true }: { onUpdate?: (data: TMiniGameTemplate[]) => void, acknowledge?: boolean } = {},
 	): Promise<TMiniGamePlayResult> {
 		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
 
 		const r = await this.api.sawSpinRequest(this.userExtId, template_id);
+		if (acknowledge) {
+			await this.api.doAcknowledgeRequest(this.userExtId, r.request_id);
+		}
 		const o: TMiniGamePlayResult = {
 			err_code: r.errCode,
 			err_message: r.errMsg,
