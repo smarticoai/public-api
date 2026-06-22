@@ -86,11 +86,12 @@ For `ExplicitAcknowledge`, gate the acknowledge on the user's Claim
 tap: call `playMiniGame(template_id, { acknowledge: false })` so the
 SDK does NOT auto-finalise, then call
 [`miniGameWinAcknowledgeRequest`](../../api/classes/WSAPIMiniGames.md#minigamewinacknowledgerequest)
-when the user taps Claim. Pass the spin's `client_request_id`, read
-from the matching [`getMiniGamesHistory`](../../api/classes/WSAPIMiniGames.md#getminigameshistory)
-row (it appears with `is_claimed: false`). Note: "explicit claim"
-prizes are NOT covered by the server-side auto-acknowledge fallback,
-so for these you MUST acknowledge or the prize is never credited.
+with the `request_id` from that play result when the user taps Claim.
+(The same id also surfaces as `client_request_id` on a
+[`getMiniGamesHistory`](../../api/classes/WSAPIMiniGames.md#getminigameshistory)
+row if you need to recover it later.) Note: "explicit claim" prizes
+are NOT covered by the server-side auto-acknowledge fallback, so for
+these you MUST acknowledge or the prize is never credited.
 
 Modal contents per prize:
 
