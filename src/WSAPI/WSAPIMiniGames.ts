@@ -287,10 +287,8 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * Pass `acknowledge: false` to skip that automatic step.
 	 * `playMiniGame` then resolves as soon as the spin result is known,
 	 * without waiting for the win to be marked delivered. You finalise
-	 * it later by calling {@link miniGameWinAcknowledgeRequest}. The
-	 * result does NOT carry the spin's request id — obtain it as the
-	 * `client_request_id` of the matching {@link getMiniGamesHistory}
-	 * row (the spin appears there with `is_claimed: false`).
+	 * it later by calling {@link miniGameWinAcknowledgeRequest} with the
+	 * `request_id` returned on this result.
 	 *
 	 * What `acknowledge: false` does and does NOT defer:
 	 * - For STANDARD prizes the value is credited at spin time
@@ -405,12 +403,9 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *   // are credited only by the acknowledge below.
 	 *   console.log('[smartico] prize won — show the result / Claim CTA, then finalise');
 	 *
-	 *   // The result has no request id — read it from history as client_request_id.
-	 *   const [row] = await window._smartico.api.getMiniGamesHistory({ saw_template_id: game.id, limit: 1 });
-	 *   if (row && !row.is_claimed) {
-	 *     await window._smartico.api.miniGameWinAcknowledgeRequest(row.client_request_id);
-	 *     console.log('[smartico] win finalised — refresh getUserProfile / getMiniGames to reflect it');
-	 *   }
+	 *   // On the user's Claim click, finalise with the request_id from the result.
+	 *   await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id);
+	 *   console.log('[smartico] win finalised — refresh getUserProfile / getMiniGames to reflect it');
 	 * }
 	 * ```
 	 */
@@ -430,6 +425,7 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 			err_code: r.errCode,
 			err_message: r.errMsg,
 			prize_id: r.saw_prize_id,
+			request_id: r.request_id,
 		};
 
 		return o;

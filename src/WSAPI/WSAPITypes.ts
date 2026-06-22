@@ -102,6 +102,11 @@ export interface TMiniGamePlayResult {
 	 * (including `prize_type === 'no-prize'` for a configured loss
 	 * slot). Always populated, even when `err_code !== 0`. */
 	prize_id: number;
+	/** Correlation id of this spin. Pass it to
+	 * {@link miniGameWinAcknowledgeRequest} to finalise the win when
+	 * playing with `acknowledge: false` — no need to look it up via
+	 * {@link getMiniGamesHistory}. */
+	request_id: string;
 }
 
 /**
