@@ -23,9 +23,9 @@ export interface UserAchievement {
 	start_date_ts?: number;
 	time_limit_ms?: number;
 	progress?: number;
-	complete_date?: string;
+	complete_date?: string; // "dd/MM/yyyy HH:mm:ss" string (not ISO-8601); use complete_date_ts for epoch-ms
 	complete_date_ts?: number;
-	unlock_date?: string;
+	unlock_date?: string; // "dd/MM/yyyy HH:mm:ss" string (not ISO-8601)
 	milliseconds_till_available?: number;
 	completed_tasks?: number;
 	achievementTasks?: UserAchievementTask[];

@@ -70,9 +70,9 @@ User's total score
 
 ### last\_wallet\_sync\_time?
 
-> `optional` **last\_wallet\_sync\_time?**: `Date`
+> `optional` **last\_wallet\_sync\_time?**: `string`
 
-Last time the user's balance was synced from the Smartico platform
+ISO 8601 date-time string of the last time the user's balance was synced from the Smartico platform.
 
 ***
 

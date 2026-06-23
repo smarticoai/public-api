@@ -14,17 +14,17 @@ Unique identifier of the event
 
 ### event\_resolution\_date
 
-> **event\_resolution\_date**: `number`
+> **event\_resolution\_date**: `string`
 
-Timestamp (ms) when the event was resolved, null if not yet resolved
+ISO 8601 date-time string when the event was resolved; null until resolved.
 
 ***
 
 ### match\_date
 
-> **match\_date**: `number`
+> **match\_date**: `string`
 
-Timestamp (ms) of the match/event start time
+ISO 8601 date-time string of the match/event start time.
 
 ***
 

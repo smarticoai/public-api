@@ -20,7 +20,8 @@ and the mark / favorite / delete mutations.
 
 > **sent\_date**: `string`
 
-Date when the message was sent (server timestamp).
+Date-time the message was sent, as a `"dd/MM/yyyy HH:mm:ss"` string
+(server local — NOT ISO-8601, so `new Date(sent_date)` will not parse it).
 
 ***
 

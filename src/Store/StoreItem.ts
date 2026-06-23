@@ -37,7 +37,7 @@ export const StoreItemTransform = (items: StoreItem[]): TStoreItem[] => {
 				id: r.id,
 				name: r.itemPublicMeta.name,
 				purchase_type: mapPurchaseType(r.itemPublicMeta.purchase_type),
-				price: r.itemPublicMeta.price as any as number, // AA: strange why it's string
+				price: Number(r.itemPublicMeta.price), // wire delivers price as a string; coerce to the number the type promises
 				image: r.itemPublicMeta.image_url,
 				description: r.itemPublicMeta.description,
 				ribbon: r.itemPublicMeta.label_tag === 'custom' ? r.itemPublicMeta.custom_label_tag : r.itemPublicMeta.label_tag,

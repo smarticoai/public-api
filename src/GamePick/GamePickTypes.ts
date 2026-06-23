@@ -211,10 +211,10 @@ export interface GamePickEventMeta extends QuizEventMeta {
 export interface GamePickEvent {
 	/** Unique identifier of the event */
 	gp_event_id: number;
-	/** Timestamp (ms) when the event was resolved, null if not yet resolved */
-	event_resolution_date: number;
-	/** Timestamp (ms) of the match/event start time */
-	match_date: number;
+	/** ISO 8601 date-time string when the event was resolved; null until resolved. */
+	event_resolution_date: string;
+	/** ISO 8601 date-time string of the match/event start time. */
+	match_date: string;
 	/** Market type defining the prediction format (e.g. two-team score, quiz question, custom) */
 	market_type_id: SAWGPMarketType;
 	/** Event metadata containing team names, images, sport type, and question details */
@@ -412,8 +412,8 @@ export interface GamePickUserInfo {
 	part_wins_count?: number;
 	/** User's total score */
 	resolution_score?: number;
-	/** Last time the user's balance was synced from the Smartico platform */
-	last_wallet_sync_time?: Date;
+	/** ISO 8601 date-time string of the last time the user's balance was synced from the Smartico platform. */
+	last_wallet_sync_time?: string;
 	/** User's current points balance */
 	ach_points_balance?: number;
 	/** User's current gems balance */

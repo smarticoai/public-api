@@ -261,7 +261,9 @@ The date/timestamp indicating when the prize was claimed by the user
 
 > `optional` **complete\_date?**: `string`
 
-Time in hours that took this player to complete mission
+Date-time the mission/badge was completed, as a `"dd/MM/yyyy HH:mm:ss"` string
+(server local — NOT ISO-8601, so `new Date(complete_date)` will not parse it).
+Prefer the epoch-ms `complete_date_ts` for date math.
 
 ***
 

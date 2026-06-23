@@ -869,7 +869,9 @@ export interface TMissionOrBadge {
 	/** The date/timestamp indicating when the prize was claimed by the user */
 	prize_claimed_date_ts?: number;
 
-	/** Time in hours that took this player to complete mission */
+	/** Date-time the mission/badge was completed, as a `"dd/MM/yyyy HH:mm:ss"` string
+	 * (server local — NOT ISO-8601, so `new Date(complete_date)` will not parse it).
+	 * Prefer the epoch-ms `complete_date_ts` for date math. */
 	complete_date?: string;
 
 	/** Time of mission/badge being completed, this property shows the epoch time in UTC */
@@ -1032,7 +1034,8 @@ export interface TInboxMessage {
 	/** Unique identifier of the message. Pass to `getInboxMessageBody`
 	 * and the mark / favorite / delete mutations. */
 	message_guid: string;
-	/** Date when the message was sent (server timestamp). */
+	/** Date-time the message was sent, as a `"dd/MM/yyyy HH:mm:ss"` string
+	 * (server local — NOT ISO-8601, so `new Date(sent_date)` will not parse it). */
 	sent_date: string;
 	/** `true` when the message has been marked read. */
 	read: boolean;

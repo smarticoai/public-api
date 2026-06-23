@@ -2,6 +2,7 @@ import { PointChangeSourceType } from './PointChangeSourceType';
 import { UserBalanceType } from './UserBalanceType';
 	
 export interface PointsLog {
+	/** Epoch timestamp in SECONDS (not ms — unlike most SDK timestamps). */
 	create_date: number;
 	user_ext_id: string;
 	crm_brand_id: number;
@@ -12,6 +13,7 @@ export interface PointsLog {
 }
 
 export interface GemsDiamondsLog {
+	/** Epoch timestamp in SECONDS (not ms — unlike most SDK timestamps). */
 	create_date: number;
 	user_ext_id: string;
 	crm_brand_id: number;

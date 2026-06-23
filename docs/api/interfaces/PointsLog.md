@@ -6,6 +6,8 @@
 
 > **create\_date**: `number`
 
+Epoch timestamp in SECONDS (not ms — unlike most SDK timestamps).
+
 ***
 
 ### user\_ext\_id
