@@ -39,6 +39,14 @@ class NodeCache {
 		}
 	}
 
+	public removeByPrefix(prefix: string) {
+		for (const key in this.cache) {
+			if (this.cache.hasOwnProperty(key) && key.indexOf(prefix) === 0) {
+				delete this.cache[key];
+			}
+		}
+	}
+
 	public flushAll() {
 		this.cache = {};
 		if (this.ttlChecker) {

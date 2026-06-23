@@ -56,6 +56,23 @@ export class OCache {
 		}
 	}
 
+	/**
+	 * Remove every entry whose string key starts with `oKeyBase` — the bare key
+	 * AND all per-parameter composite variants (`${oKeyBase}:…` / `${oKeyBase}<id>`).
+	 * Use when a cache is keyed per parameter (paginated, per-template, per-window):
+	 * an exact-key `clear(oKeyBase)` would miss every variant. `oKeyBase` must be a string.
+	 */
+	public static async clearByPrefix(cacheContext: ECacheContext, oKeyBase: string) {
+		// `set`/`get` build keys as `<context>_<JSON.stringify(oKey)>`; JSON.stringify
+		// wraps a string in quotes, so dropping the trailing quote yields a prefix that
+		// matches both the bare `"base"` key and every `"base…"` composite key.
+		const prefix = cacheContext.toString() + '_' + JSON.stringify(oKeyBase).slice(0, -1);
+
+		if (this.cache[cacheContext]) {
+			this.cache[cacheContext].removeByPrefix(prefix);
+		}
+	}
+
 	public static async clearContext(cacheContext: ECacheContext) {
 		if (this.cache[cacheContext]) {
 			this.cache[cacheContext].flushAll();

@@ -198,7 +198,7 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 		saw_template_id?: number;
 	}): Promise<TSawHistory[]> {
 		return OCache.use(
-			onUpdateContextKey.SAWHistory,
+			`${onUpdateContextKey.SAWHistory}:${saw_template_id ?? ''}:${limit ?? ''}:${offset ?? ''}`,
 			ECacheContext.WSAPI,
 			() => this.api.getSawWinningHistoryT(this.userExtId, limit, offset, saw_template_id),
 			CACHE_DATA_SEC,

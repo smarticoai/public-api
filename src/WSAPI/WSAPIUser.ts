@@ -595,23 +595,48 @@ export class WSAPIUser extends WSAPIBase {
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]> {
 
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}`;
+
 		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.ActivityLog, onUpdate);
+			// Remember the requested window so a push refresh re-fetches THIS window
+			// and writes the matching composite cache key (see notifyActivityLogUpdate).
+			this.activityLogOnUpdateParams = { startTimeSeconds, endTimeSeconds, from, to };
 		}
 
 		return await OCache.use(
-			onUpdateContextKey.ActivityLog,
+			cacheKey,
 			ECacheContext.WSAPI,
 			() => this.api.getActivityLogT(this.userExtId, startTimeSeconds, endTimeSeconds, from, to),
 			CACHE_DATA_SEC,
 		);
 	}
 
-	protected async notifyActivityLogUpdate() {
-		const startSeconds = Date.now() / 1000 - 600;
-		const endSeconds = Date.now() / 1000;
-		const payload = await this.api.getActivityLogT(this.userExtId, startSeconds, endSeconds, 0, 50);
+	/** @hidden Last window passed to `getActivityLog` with an `onUpdate`, so a push
+	 * refresh re-fetches the same window and updates its matching composite cache key. */
+	private activityLogOnUpdateParams: { startTimeSeconds: number; endTimeSeconds: number; from: number; to: number } | undefined;
 
-		this.updateEntity(onUpdateContextKey.ActivityLog, payload);
+	protected async notifyActivityLogUpdate() {
+		const params = this.activityLogOnUpdateParams;
+		// No consumer has subscribed to a specific window yet — nothing to refresh.
+		if (!params) {
+			return;
+		}
+
+		const payload = await this.api.getActivityLogT(
+			this.userExtId,
+			params.startTimeSeconds,
+			params.endTimeSeconds,
+			params.from,
+			params.to,
+		);
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${params.startTimeSeconds}:${params.endTimeSeconds}:${params.from}:${params.to}`;
+
+		OCache.set(cacheKey, payload, ECacheContext.WSAPI);
+
+		const onUpdate = this.onUpdateCallback.get(onUpdateContextKey.ActivityLog);
+		if (typeof onUpdate === 'function') {
+			onUpdate(payload);
+		}
 	}
 }

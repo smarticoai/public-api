@@ -34,11 +34,11 @@ export class WSAPI extends WSAPIInbox {
 			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.reloadMiniGameTemplate());
 			on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => {
 				this.reloadMiniGameTemplate();
-				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
+				OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
 			});
 			on(ClassId.SAW_DO_SPIN_RESPONSE, () => {
 				this.reloadMiniGameTemplate();
-				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
+				OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
 			});
 			on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissions());
 			on(ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE, () => this.updateMissions());
@@ -57,7 +57,7 @@ export class WSAPI extends WSAPIInbox {
 			on(ClassId.CLAIM_BONUS_RESPONSE, () => this.updateBonuses());
 			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, () => {
 				this.reloadMiniGameTemplate();
-				OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
+				OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
 			});
 			on(ClassId.RAF_CLAIM_PRIZE_RESPONSE, () => this.updateRaffles());
 			on(ClassId.GET_INBOX_MESSAGES_RESPONSE, (res) => {

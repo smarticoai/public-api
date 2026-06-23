@@ -25,7 +25,10 @@ export class WSAPIJackpots extends WSAPIClans {
 	protected async jackpotClearCache() {
 		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Jackpots);
 		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Pots);
-		OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.JackpotWinners);
+		// Winners + eligible-games are cached per jp_template_id (composite keys),
+		// so a bare clear misses every variant — clear by prefix.
+		OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.JackpotWinners);
+		OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.JackpotEligibleGames);
 	}
 
 	/**
