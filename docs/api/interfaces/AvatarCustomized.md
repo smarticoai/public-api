@@ -20,6 +20,6 @@ CDN URL of the AI-customized avatar image
 
 ### dt\_created
 
-> **dt\_created**: `string`
+> **dt\_created**: `number`
 
-ISO date string when the customization was created
+Unix-ms timestamp when the customization was created.

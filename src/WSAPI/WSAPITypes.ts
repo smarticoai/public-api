@@ -1792,8 +1792,8 @@ export interface TAvatarCustomized {
 	avatar_real_id: number;
 	/** Absolute CDN URL of the AI-generated image. Can be passed as `avatar_url` to `setAvatar()`. */
 	url: string;
-	/** ISO date string of when the variant was generated. */
-	dt_created: string;
+	/** Unix-ms timestamp of when the variant was generated. */
+	dt_created: number;
 }
 
 /**

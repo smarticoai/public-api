@@ -142,7 +142,7 @@ export class WSAPIAvatars extends WSAPIMiniGames {
 	 *
 	 * // Newest-first within each base.
 	 * for (const list of byBase.values()) {
-	 *     list.sort((a, b) => b.dt_created.localeCompare(a.dt_created));
+	 *     list.sort((a, b) => b.dt_created - a.dt_created);
 	 * }
 	 *
 	 * console.log('[smartico] AI variants by base avatar — render as a carousel under each base');

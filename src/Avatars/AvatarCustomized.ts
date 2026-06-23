@@ -3,6 +3,6 @@ export interface AvatarCustomized {
 	avatar_real_id: number;
 	/** CDN URL of the AI-customized avatar image */
 	url: string;
-	/** ISO date string when the customization was created */
-	dt_created: string;
+	/** Unix-ms timestamp when the customization was created. */
+	dt_created: number;
 }

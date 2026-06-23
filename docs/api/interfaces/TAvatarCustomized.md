@@ -22,6 +22,6 @@ Absolute CDN URL of the AI-generated image. Can be passed as `avatar_url` to `se
 
 ### dt\_created
 
-> **dt\_created**: `string`
+> **dt\_created**: `number`
 
-ISO date string of when the variant was generated.
+Unix-ms timestamp of when the variant was generated.
