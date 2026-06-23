@@ -30,6 +30,7 @@
 			"src/WSAPI/WSAPILeaderBoard.ts",
 			"src/WSAPI/WSAPIInbox.ts",
 			"src/WSAPI/WSAPITypes.ts",
+			"src/GamePick/GamePickTypes.ts",
 			"src/Tournaments/TournamentRegistrationStatus.ts",
 			"src/Tournaments/TournamentRegistrationType.ts",
 			"src/Tournaments/TournamentRegistrationError.ts",

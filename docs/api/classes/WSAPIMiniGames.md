@@ -221,10 +221,12 @@ console.log('[smartico] page 2 loaded —', page2.length, 'more rows;',
 
 Plays one round of a mini-game template — runs the server's
 randomised prize selection, deducts the buy-in cost (if any),
-and returns the won `prize_id`. After the play resolves, the SDK
-automatically fires a server-side acknowledgement on a
-fire-and-forget basis, marking the spin as "delivered" so the
-prize takes effect.
+credits the won prize, and returns the won `prize_id`. By default
+(`acknowledge: true`) the SDK then sends a server-side
+acknowledgement and AWAITS it before resolving, so the win is
+marked delivered by the time the promise settles. Pass
+`acknowledge: false` to skip that step and finalise the win
+yourself later (see the `acknowledge` parameter).
 
 Works for all `SAWGameType` values EXCEPT:
 - `PrizeDrop` — prizes arrive server-pushed; do NOT call
@@ -239,16 +241,31 @@ Works for all `SAWGameType` values EXCEPT:
 `number`
 
 The mini-game template ID (from
-                    `TMiniGameTemplate.id`).
+                          `TMiniGameTemplate.id`).
 
 ##### params?
 
-Optional. Pass an `onUpdate` callback to
-                    subscribe to subsequent template refreshes.
+Optional options bag.
 
 ###### onUpdate?
 
 (`data`) => `void`
+
+Pass a callback to subscribe to
+                          subsequent template refreshes (same
+                          channel as [getMiniGames](#getminigames)).
+
+###### acknowledge?
+
+`boolean` = `true`
+
+Whether the SDK automatically sends and
+                          awaits the win acknowledge after the
+                          spin. Defaults to `true` (recommended).
+                          Set `false` to finalise the win yourself
+                          via [miniGameWinAcknowledgeRequest](#minigamewinacknowledgerequest)
+                          — see "Acknowledge" above for the
+                          request-id caveat.
 
 #### Returns
 
@@ -315,17 +332,34 @@ On `err_code === 0`, `prize_id` matches an entry in
   corresponding domain methods.
 - `'manual'` — operator delivers offline.
 
-**Auto-acknowledge**
-The SDK calls the server's acknowledge endpoint immediately
-after the spin response, on a fire-and-forget basis (not
-awaited). This marks the spin as "delivered" so prize effects
-take hold. If the auto-acknowledge fails (network drop), the
-spin appears as `is_claimed: false` in
-[getMiniGamesHistory](#getminigameshistory); the consumer can recover it by
-passing the `client_request_id` to
-[miniGameWinAcknowledgeRequest](#minigamewinacknowledgerequest). A server-side fallback
-job auto-acknowledges stale spins every ~60 seconds, so prizes
-are eventually delivered even without consumer action.
+**Acknowledge** (the `acknowledge` parameter, default `true`)
+Every spin is finalised by a follow-up acknowledge step that
+marks the win delivered. By default the SDK sends that
+acknowledge and AWAITS it, so `playMiniGame` resolves only after
+the win is finalised server-side. Keep the default unless you
+have a specific reason not to.
+
+Pass `acknowledge: false` to skip that automatic step.
+`playMiniGame` then resolves as soon as the spin result is known,
+without waiting for the win to be marked delivered. You finalise
+it later by calling [miniGameWinAcknowledgeRequest](#minigamewinacknowledgerequest) with the
+`request_id` returned on this result.
+
+What `acknowledge: false` does and does NOT defer:
+- For STANDARD prizes the value is credited at spin time
+  regardless, so opting out does NOT delay the balance change —
+  it only defers the "delivered" bookkeeping and the `is_claimed`
+  flag flipping in [getMiniGamesHistory](#getminigameshistory).
+- For operator-configured "explicit claim" prizes the credit IS
+  deferred until the spin is acknowledged, so those require an
+  explicit acknowledge to finalise.
+
+A server-side fallback auto-acknowledges ordinary un-acknowledged
+spins after a short delay (about 1–3 minutes), so an ordinary
+prize is never lost even without consumer action. "Explicit
+claim" prizes are excluded from that fallback — if you use
+`acknowledge: false` for one, you MUST acknowledge it explicitly
+or its prize is never credited.
 
 **Idempotency**: NOT idempotent. A double-click sends two
 spins and deducts the buy-in twice. The SDK does NOT guard
@@ -344,22 +378,21 @@ affected template's `spin_count` / `jackpot_current` /
 refreshed array.
 
 **Side effects** (on `err_code === 0`)
-- Buy-in deducted from the user's balance (points / gems /
-  diamonds / spin tickets — depending on `saw_buyin_type`).
-  Balance updates flow via the user-properties channel
-  (subscribe to [getUserProfile](WSAPIUser.md#getuserprofile) `props_change` to
-  observe).
-- Prize value credited per the prize's type (see "Prize
-  handling" above).
-- A `minigame_attempt` analytics event fires server-side with
-  the result status.
+- Buy-in deducted at spin time (points / gems / diamonds / spin
+  tickets — depending on `saw_buyin_type`), already applied by the
+  time the call resolves. Balance updates flow via the
+  user-properties channel (observe via [getUserProfile](WSAPIUser.md#getuserprofile)).
+- Prize value credited per the prize's type (see "Prize handling"
+  above). Standard prizes are credited at spin time; "explicit
+  claim" prizes are credited when the spin is acknowledged.
+- The play is recorded server-side for analytics / reporting.
 
 **UI guidance**: see [UI Guide — `playMiniGame`](../_media/UIGuide_playMiniGame.md).
 
 **Visitor mode**: not supported. Visitor sessions trying to
 spin receive `SAW_VISITOR_STOP_SPIN_REQUEST (-40001)`.
 
-#### Example
+#### Examples
 
 ```ts
 const games = await window._smartico.api.getMiniGames({
@@ -398,17 +431,34 @@ if (r.err_code === 0) {
 }
 ```
 
+Manual finalisation (`acknowledge: false`) — e.g. an explicit
+"Claim" CTA, or finalising on your own schedule:
+```ts
+const r = await window._smartico.api.playMiniGame(game.id, { acknowledge: false });
+if (r.err_code === 0) {
+  // Spin resolved but not yet acknowledged. For standard prizes the
+  // balance already changed server-side; "explicit claim" prizes
+  // are credited only by the acknowledge below.
+  console.log('[smartico] prize won — show the result / Claim CTA, then finalise');
+
+  // On the user's Claim click, finalise with the request_id from the result.
+  await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id);
+  console.log('[smartico] win finalised — refresh getUserProfile / getMiniGames to reflect it');
+}
+```
+
 ***
 
 ### miniGameWinAcknowledgeRequest()
 
 > **miniGameWinAcknowledgeRequest**(`request_id`): `Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
 
-Manually acknowledges a mini-game spin — marks the spin as
-"delivered" so the prize takes effect server-side. Most consumers
-do NOT need to call this method directly; [playMiniGame](#playminigame)
-and [playMiniGameBatch](#playminigamebatch) auto-acknowledge on success. Use
-this only for recovery scenarios.
+Manually acknowledges a mini-game spin — marks the win delivered
+server-side. Most consumers do NOT need this: [playMiniGame](#playminigame)
+acknowledges by default (`acknowledge: true`) and
+[playMiniGameBatch](#playminigamebatch) acknowledges automatically. Call this
+directly only when you took ownership of the acknowledge step or
+need to recover a lost one.
 
 #### Parameters
 
@@ -416,8 +466,11 @@ this only for recovery scenarios.
 
 `string`
 
-The `client_request_id` from a `TSawHistory`
-                   row returned by [getMiniGamesHistory](#getminigameshistory).
+Correlation id of the spin to finalise: the
+                   `request_id` from a [playMiniGame](#playminigame) result
+                   (played with `acknowledge: false`), or the
+                   `client_request_id` of a
+                   [getMiniGamesHistory](#getminigameshistory) row.
 
 #### Returns
 
@@ -426,53 +479,62 @@ The `client_request_id` from a `TSawHistory`
 #### Remarks
 
 **When to call**
-- **Lost auto-acknowledge** — when the WebSocket dropped between
-  the spin response and the auto-acknowledge fire-and-forget,
-  the spin shows `is_claimed: false` in
-  [getMiniGamesHistory](#getminigameshistory). Pass that row's
-  `client_request_id` here to deliver the prize.
-- **Explicit-acknowledge UI** — for templates configured with
-  the `ExplicitAcknowledge` acknowledge type (operator
-  decision), the consumer's UI shows a "Claim" CTA after the
-  prize animation. Click handler calls this method with the
-  spin's `client_request_id` rather than auto-acknowledging.
+- **Primary — after `playMiniGame(..., { acknowledge: false })`.**
+  You opted out of the automatic acknowledge to finalise the win
+  on your own schedule (e.g. on a user "Claim" tap). Pass the
+  `request_id` from that call's result here when ready. This is
+  REQUIRED for operator-configured "explicit claim" prizes — they
+  are not covered by the server-side fallback, so without this
+  call their prize is never credited.
+- **Recovery — a lost acknowledge.** [playMiniGameBatch](#playminigamebatch)
+  acknowledges on a fire-and-forget basis; if one is lost (network
+  drop) the spin shows `is_claimed: false` in
+  [getMiniGamesHistory](#getminigameshistory). Pass that row's `client_request_id`
+  to deliver it.
 
-**No-op on already-acknowledged spins**
-The server's acknowledge SQL matches on `acknowledge_date IS
-NULL` — a duplicate call returns successfully with no effect.
+The `request_id` on a [playMiniGame](#playminigame) result and the
+`client_request_id` on a [getMiniGamesHistory](#getminigameshistory) row are the
+same correlation id — this method accepts either.
+
+**Idempotency**: safe. Acknowledging a spin that is already
+finalised — by you, by the automatic acknowledge, or by the
+fallback — is a no-op with no double credit. Acknowledging a
+failed spin's id is likewise a no-op.
 
 **Server-side fallback**
-Even without ever calling this method, a server-side job
-auto-acknowledges stale spins every ~60 seconds — so prizes are
-eventually delivered. The `is_claimed` flag flips on the next
-`getMiniGamesHistory` call after the job runs.
+Even if you never call this, a server-side job finalises ordinary
+un-acknowledged spins automatically after a short delay (about 1–3
+minutes), flipping `is_claimed` to `true` on the next
+[getMiniGamesHistory](#getminigameshistory) fetch. "Explicit claim" prizes are the
+exception — excluded from the fallback, they require an explicit
+call here.
 
-**Idempotency**: safe. Repeated calls have no effect after the
-first.
-
-**Side effects** (on first successful call for an unacknowledged
-spin)
-- Prize value credited per the prize's type (see
-  [playMiniGame](#playminigame) "Prize handling").
-- The spin's `is_claimed` flag flips to `true` on the next
-  [getMiniGamesHistory](#getminigameshistory) call.
+**Side effects** (first successful call for an un-acknowledged spin)
+- For "explicit claim" prizes, the prize value is credited on this
+  call. For standard prizes the value was already credited at spin
+  time (see [playMiniGame](#playminigame) "Prize handling"); this call only
+  marks the win delivered.
+- The spin's `is_claimed` flips to `true` on the next
+  [getMiniGamesHistory](#getminigameshistory) fetch.
 
 **Visitor mode**: not supported.
 
 #### Example
 
 ```ts
-const history = await window._smartico.api.getMiniGamesHistory({ limit: 20 });
-const unacknowledged = history.filter(h => !h.is_claimed);
+// Primary — finalise a win you played with acknowledge: false.
+const r = await window._smartico.api.playMiniGame(templateId, { acknowledge: false });
+if (r.err_code === 0) {
+  console.log('[smartico] show the prize / Claim CTA; on Claim, finalise the win');
+  await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id);
+}
 
-for (const row of unacknowledged) {
+// Recovery — re-acknowledge any spins a batch acknowledge missed.
+const history = await window._smartico.api.getMiniGamesHistory({ limit: 20 });
+for (const row of history.filter(h => !h.is_claimed)) {
   console.log('[smartico] re-acknowledging stale spin', row.client_request_id);
   await window._smartico.api.miniGameWinAcknowledgeRequest(row.client_request_id);
 }
-
-// Re-fetch history to see the updated is_claimed flags.
-const fresh = await window._smartico.api.getMiniGamesHistory({ limit: 20 });
-console.log('[smartico] history after recovery —', fresh.filter(h => !h.is_claimed).length, 'still unacknowledged');
 ```
 
 ***

@@ -71,3 +71,9 @@
 ### SingleRaffle
 
 > **SingleRaffle**: `12`
+
+***
+
+### Clans
+
+> **Clans**: `13`

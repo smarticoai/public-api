@@ -357,12 +357,6 @@ activate it.
 
 ##### props
 
-###### label_id
-
-`number`
-
-Numeric Smartico label (brand) ID the user belongs to.
-
 ###### user_id
 
 `number`
@@ -451,13 +445,12 @@ charges for) a new variant. Guard the call site against double-clicks.
 #### Example
 
 ```ts
-// label_id / user_id identify the Smartico user being customized.
+// user_id identifies the Smartico user being customized.
 const prompts = await window._smartico.api.getAvatarPrompts();
 const prompt = prompts[0];
 
 console.log('[smartico] generating avatar — show a spinner for ~5-20s and disable the Generate button');
 const result = await window._smartico.api.avatarsCustomize({
-  label_id,
   user_id,
   prompt_id: prompt.prompt_id,
   avatar_url: baseAvatar.avatar_url,

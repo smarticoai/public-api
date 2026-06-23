@@ -34,6 +34,15 @@ URL of the image that represents the prize, 256x256px
 
 ***
 
+### custom\_data?
+
+> `optional` **custom\_data?**: `string`
+
+Custom data field set in the backoffice prize setup.
+Can be used to build custom UI for gamification.
+
+***
+
 ### prizes\_per\_run
 
 > **prizes\_per\_run**: `number`

@@ -5,5 +5,6 @@ export * from './GetLabelInfoResponse';
 export * from './GetTranslationsRequest';
 export * from './GetTranslationsResponse';
 export * from './PublicLabelSettings';
+export * from './PublicProperties';
 export * from './ResponseIdentify';
 export * from './TranslationArea';

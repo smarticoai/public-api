@@ -2,6 +2,7 @@ export * from './Base/ClassId';
 export * from './ILogger';
 export * from './SmarticoAPI';
 export * from './WSAPI/WSAPI';
+export * from './SmarticoGlobal';
 export * from './CookieStore';
 
 export * from './Analytics';

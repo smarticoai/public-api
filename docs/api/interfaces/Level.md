@@ -49,3 +49,9 @@ Internal status of level. Not in use right now on the front-end
 ### general\_level\_progress
 
 > **general\_level\_progress**: `number`
+
+***
+
+### ordinal\_position?
+
+> `optional` **ordinal\_position?**: `number`
