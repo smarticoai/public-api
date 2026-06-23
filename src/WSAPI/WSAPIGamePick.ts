@@ -307,9 +307,9 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 * **Side effects**
 	 * - First successful submit deducts the buy-in (Points / Gems / Diamonds /
 	 *   one Spin) per `saw_buyin_type_id`.
-	 * - Reports a `minigame_matchx_prediction` event to the operator's event log.
-	 * - Updates the round's participant counter (`users_cnt`) and per-event
-	 *   counters (`num_users`).
+	 * - Records the user's participation against the round and its events
+	 *   server-side and reports a prediction event to the operator's activity
+	 *   stream.
 	 * - Score is awarded after the operator resolves the round
 	 *   ({@link GPRoundStatus} = `RoundResolved`).
 	 *
@@ -408,9 +408,9 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 * **Idempotency**: identical to {@link gamePickSubmitSelection} — re-submit
 	 * returns `errCode: 3` and never double-charges the buy-in.
 	 *
-	 * **Side effects**: identical to {@link gamePickSubmitSelection}, with the
-	 * reported event being `minigame_quiz_prediction` instead of
-	 * `minigame_matchx_prediction`.
+	 * **Side effects**: identical to {@link gamePickSubmitSelection} — buy-in
+	 * deduction on first submit, participation recorded, score awarded on round
+	 * resolution.
 	 *
 	 * **Visitor mode**: not supported.
 	 *

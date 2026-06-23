@@ -12,23 +12,23 @@ GamePickRequestParams describes the base parameters required for GamePick API ca
 
 > **saw\_template\_id**: `number`
 
-ID of the MatchX or Quiz game template
+ID of the MatchX or Quiz game template. The only field the consumer supplies.
 
 ***
 
-### ext\_user\_id
+### ext\_user\_id?
 
-> **ext\_user\_id**: `string`
+> `optional` **ext\_user\_id?**: `string`
 
-External user ID
+External user ID. Injected by the SDK from the active session; consumers omit it.
 
 ***
 
-### smartico\_ext\_user\_id
+### smartico\_ext\_user\_id?
 
-> **smartico\_ext\_user\_id**: `string`
+> `optional` **smartico\_ext\_user\_id?**: `string`
 
-Smartico external user ID used for platform API calls
+Platform external user ID. Injected by the SDK from the active session; consumers omit it.
 
 ***
 
@@ -36,4 +36,4 @@ Smartico external user ID used for platform API calls
 
 > `optional` **lang?**: `string`
 
-Language code for translations (e.g. 'EN', 'DE')
+Language code for translations (e.g. 'EN', 'DE'). Defaults to the session language.

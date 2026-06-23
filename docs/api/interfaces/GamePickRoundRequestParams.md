@@ -12,7 +12,7 @@ GamePickRoundRequestParams extends base params with a specific round ID
 
 > **saw\_template\_id**: `number`
 
-ID of the MatchX or Quiz game template
+ID of the MatchX or Quiz game template. The only field the consumer supplies.
 
 #### Inherited from
 
@@ -20,11 +20,11 @@ ID of the MatchX or Quiz game template
 
 ***
 
-### ext\_user\_id
+### ext\_user\_id?
 
-> **ext\_user\_id**: `string`
+> `optional` **ext\_user\_id?**: `string`
 
-External user ID
+External user ID. Injected by the SDK from the active session; consumers omit it.
 
 #### Inherited from
 
@@ -32,11 +32,11 @@ External user ID
 
 ***
 
-### smartico\_ext\_user\_id
+### smartico\_ext\_user\_id?
 
-> **smartico\_ext\_user\_id**: `string`
+> `optional` **smartico\_ext\_user\_id?**: `string`
 
-Smartico external user ID used for platform API calls
+Platform external user ID. Injected by the SDK from the active session; consumers omit it.
 
 #### Inherited from
 
@@ -48,7 +48,7 @@ Smartico external user ID used for platform API calls
 
 > `optional` **lang?**: `string`
 
-Language code for translations (e.g. 'EN', 'DE')
+Language code for translations (e.g. 'EN', 'DE'). Defaults to the session language.
 
 #### Inherited from
 

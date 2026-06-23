@@ -55,3 +55,5 @@ Internal status of level. Not in use right now on the front-end
 ### ordinal\_position?
 
 > `optional` **ordinal\_position?**: `number`
+
+1-based position of this level within the level ladder.

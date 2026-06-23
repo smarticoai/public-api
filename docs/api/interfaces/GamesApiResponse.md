@@ -14,7 +14,7 @@ GamesApiResponse is the standard response wrapper for all GamePick/Quiz API call
 
 > **errCode**: `number`
 
-Error code: 0 on success, non-zero on failure
+Error code; `0` = success. Per-method code tables live in each `gamePick*` method's TSDoc.
 
 ***
 
@@ -22,7 +22,7 @@ Error code: 0 on success, non-zero on failure
 
 > `optional` **errMessage?**: `string`
 
-Human-readable error message when errCode is non-zero
+Human-readable error message; populated when `errCode` is non-zero.
 
 ***
 

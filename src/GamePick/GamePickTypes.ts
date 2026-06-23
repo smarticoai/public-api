@@ -440,9 +440,9 @@ export interface GamePickGameInfo {
  * GamesApiResponse is the standard response wrapper for all GamePick/Quiz API calls
  */
 export interface GamesApiResponse<T> {
-	/** Error code: 0 on success, non-zero on failure */
+	/** Error code; `0` = success. Per-method code tables live in each `gamePick*` method's TSDoc. */
 	errCode: number;
-	/** Human-readable error message when errCode is non-zero */
+	/** Human-readable error message; populated when `errCode` is non-zero. */
 	errMessage?: string;
 	/** Response payload, present on success */
 	data?: T;
@@ -452,13 +452,13 @@ export interface GamesApiResponse<T> {
  * GamePickRequestParams describes the base parameters required for GamePick API calls
  */
 export interface GamePickRequestParams {
-	/** ID of the MatchX or Quiz game template */
+	/** ID of the MatchX or Quiz game template. The only field the consumer supplies. */
 	saw_template_id: number;
-	/** External user ID */
-	ext_user_id: string;
-	/** Smartico external user ID used for platform API calls */
-	smartico_ext_user_id: string;
-	/** Language code for translations (e.g. 'EN', 'DE') */
+	/** External user ID. Injected by the SDK from the active session; consumers omit it. */
+	ext_user_id?: string;
+	/** Platform external user ID. Injected by the SDK from the active session; consumers omit it. */
+	smartico_ext_user_id?: string;
+	/** Language code for translations (e.g. 'EN', 'DE'). Defaults to the session language. */
 	lang?: string;
 }
 

@@ -1478,7 +1478,8 @@ class SmarticoAPI {
 			};
 		} else if (params) {
 			const extraQuery = Object.entries(params)
-				.map(([k, v]) => `${k}=${encodeURIComponent(JSON.stringify(v))}`)
+				.filter(([, v]) => v !== null && v !== undefined)
+				.map(([k, v]) => `${k}=${encodeURIComponent(typeof v === 'object' ? JSON.stringify(v) : v)}`)
 				.join('&');
 			url += `&${extraQuery}`;
 		}
