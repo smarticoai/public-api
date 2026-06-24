@@ -77,6 +77,7 @@ if (next) {
 ```
 
 ### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 {
   "level_counter_1": null,

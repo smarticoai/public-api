@@ -193,6 +193,7 @@ if (r.errCode === 0 && r.data) {
 ```
 
 ### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 {
   "errCode": 0,
@@ -219,147 +220,7 @@ if (r.errCode === 0 && r.data) {
       "buyin_cost_points": 0,
       "visibile_when_can_spin": false,
       "spin_count": 0,
-      "prizesMap": {
-        "65862": {
-          "saw_prize_id": 65862,
-          "saw_template_id": 11487,
-          "saw_prize_ui_definition": {
-            "name": "€ 100 Free"
-          },
-          "prize_value": 1,
-          "prize_type_id": 3,
-          "pool": 1000000,
-          "wins_count": null,
-          "pool_initial": null,
-          "prize_ref_id": 0,
-          "is_surcharge": false,
-          "prize_details_json": {
-            "bonus_amount": 1,
-            "label_bonus_template_id": 2152
-          },
-          "affects_points_progress": true,
-          "affects_leaderboard_progress": true,
-          "affects_level_progress": true,
-          "affects_current_balance_progress": true,
-          "place_from": 1,
-          "place_to": 1,
-          "weekdays": null,
-          "active_from": null,
-          "active_till": null,
-          "active_from_ts": null,
-          "active_till_ts": null,
-          "is_deleted": false,
-          "relative_period_timezone": 0,
-          "show_prize_history": true,
-          "needed_tag_replacement": false,
-          "win_segment_id": null,
-          "win_conditions": null,
-          "max_give_period_type_id": 2
-        },
-        "65863": {
-          "saw_prize_id": 65863,
-          "saw_template_id": 11487,
-          "saw_prize_ui_definition": {
-            "name": "25 Free Spins on Book of Cleopatra"
-          },
-          "prize_value": 1,
-          "prize_type_id": 3,
-          "pool": 1000000,
-          "wins_count": null,
-          "pool_initial": null,
-          "prize_ref_id": 0,
-          "is_surcharge": false,
-          "prize_details_json": {
-            "ui_amount": "",
-            "bonus_coupon_code": "",
-            "label_bonus_template_id": 2156
-          },
-          "affects_points_progress": true,
-          "affects_leaderboard_progress": true,
-          "affects_level_progress": true,
-          "affects_current_balance_progress": true,
-          "place_from": 2,
-          "place_to": 2,
-          "weekdays": null,
-          "active_from": null,
-          "active_till": null,
-          "active_from_ts": null,
-          "active_till_ts": null,
-          "is_deleted": false,
-          "relative_period_timezone": 0,
-          "show_prize_history": true,
-          "needed_tag_replacement": false,
-          "win_segment_id": null,
-          "win_conditions": null,
-          "max_give_period_type_id": 2
-        },
-        "65864": {
-          "saw_prize_id": 65864,
-          "saw_template_id": 11487,
-          "saw_prize_ui_definition": {
-            "name": "300 Points"
-          },
-          "prize_value": 300,
-          "prize_type_id": 2,
-          "pool": 1000000,
-          "wins_count": null,
-          "pool_initial": null,
-          "prize_ref_id": 0,
-          "is_surcharge": false,
-          "prize_details_json": null,
-          "affects_points_progress": true,
-          "affects_leaderboard_progress": true,
-          "affects_level_progress": true,
-          "affects_current_balance_progress": true,
-          "place_from": 2,
-          "place_to": 2,
-          "weekdays": null,
-          "active_from": null,
-          "active_till": null,
-          "active_from_ts": null,
-          "active_till_ts": null,
-          "is_deleted": false,
-          "relative_period_timezone": 0,
-          "show_prize_history": true,
-          "needed_tag_replacement": false,
-          "win_segment_id": null,
-          "win_conditions": null,
-          "max_give_period_type_id": 2
-        },
-        "65865": {
-          "saw_prize_id": 65865,
-          "saw_template_id": 11487,
-          "saw_prize_ui_definition": {
-            "name": "50 Points"
-          },
-          "prize_value": 50,
-          "prize_type_id": 2,
-          "pool": 1000000,
-          "wins_count": null,
-          "pool_initial": null,
-          "prize_ref_id": 0,
-          "is_surcharge": false,
-          "prize_details_json": null,
-          "affects_points_progress": true,
-          "affects_leaderboard_progress": true,
-          "affects_level_progress": true,
-          "affects_current_balance_progress": true,
-          "place_from": 4,
-          "place_to": 10,
-          "weekdays": null,
-          "active_from": null,
-          "active_till": null,
-          "active_from_ts": null,
-          "active_till_ts": null,
-          "is_deleted": false,
-          "relative_period_timezone": 0,
-          "show_prize_history": true,
-          "needed_tag_replacement": false,
-          "win_segment_id": null,
-          "win_conditions": null,
-          "max_give_period_type_id": 2
-        }
-      },
+      "prizesMap": "…(keyed duplicate of `prizes[]`)",
       "prizes": [
         {
           "saw_prize_id": 65863,
@@ -436,50 +297,7 @@ if (r.errCode === 0 && r.data) {
         "hide_users_predictions": true
       }
     ],
-    "labelInfo": {
-      "settings": {
-        "_system_gamification_mask_username": "true",
-        "GAMIFICATION_UI_MAIN": "https://cdn.example/gf/Achievements3.html",
-        "GAMIFICATION_SHOW_POWERED_BY": "true",
-        "GAMIFICATION_DISABLE_FOR_BRAND": "false",
-        "GF_AVATARS_V2_ACTIVE_FOR": "all",
-        "WebSite Public URL": null,
-        "RETENTION_GAMES_CUSTOMER_ID": "4",
-        "GAMIFICATION_INBOX_NEW_VERSION": "true",
-        "GF_TOURNAMENT_LOBBY_NEW_UI": "true",
-        "GF_NEW_LOBBY_FOR_MINI_GAMES": "true",
-        "FCM_CLIENT_CONFIG": "{\n    \"apiKey\": \"AIzaSyAR0qFDM0DPrHC0sZ9tKe0PghN2NvuoQDA\",\n    \"authDomain\": \"btg-demo.firebaseapp.com\",\n    \"databaseURL\": \"https://btg-demo.firebaseio.com\"…",
-        "GAMIFICATION_POPUP_BG_OPACITY": "0.7",
-        "FRONT_SHOW_POPUP_IN_ONE_TAB_ONLY": "false",
-        "_system_gamification_mask_username_exact_count": "4",
-        "FRONT_DISABLE_INBOX_ON_URLS": null,
-        "GAMIFICATION_WIDGET_THEME": null,
-        "GAMIFICATION_UI_LEVEL_IMAGE_DESK": "https://cdn.example/9289c5a7ae06336487bc5b-tundra-map (2).jpg",
-        "AVATAR_CUSTOM_IMAGE_FOLDER": null,
-        "PUBLIC_API_URL": "https://cdn.example/services/public",
-        "FCM_SW_URL": null,
-        "…": "(+46 more keys)"
-      },
-      "products": [
-        9000
-      ],
-      "theme_style_desktop": null,
-      "theme_style_mobile": null,
-      "label_id": 16018,
-      "errCode": 0,
-      "errMsg": null,
-      "cid": 4,
-      "ts": 1782302214755,
-      "uuid": "00000000-0000-0000-0000-000000000000",
-      "payload": {
-        "country": "IE",
-        "s": "cha_AS@ip-172-24-1-111",
-        "city": "Dublin",
-        "ip": "63.34.126.10",
-        "sessionId": "xxxxxxx"
-      },
-      "duration": null
-    }
+    "labelInfo": "…(label config — typed `any`, omitted)"
   }
 }
 ```

@@ -75,6 +75,7 @@ for (const row of history.filter(h => !h.is_claimed)) {
 ```
 
 ### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 {
   "request_id": "00000000-0000-0000-0000-000000000000",

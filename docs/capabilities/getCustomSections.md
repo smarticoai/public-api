@@ -71,6 +71,7 @@ for (const s of sections) {
 ```
 
 ### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 [
   {

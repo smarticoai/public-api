@@ -69,6 +69,7 @@ if (body.action === 'dp:inbox' && body.html_body) {
 ```
 
 ### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 {
   "action": "dp:close",

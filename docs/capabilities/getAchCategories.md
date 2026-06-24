@@ -104,6 +104,7 @@ console.log('[smartico] visitor-mode categories (names translated to DE):', visi
 ```
 
 ### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 [
   {

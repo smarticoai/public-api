@@ -71,6 +71,12 @@ function tagText(comment) {
 // cases: long strings, wide arrays, and dictionary-sized maps (getTranslations → 800
 // keys). The full structural definition lives in the type-driven Returns section.
 const EX_ARR = 1, EX_OBJ_CAP = 40, EX_OBJ_KEEP = 12;
+// Noise keys collapsed in the example payload: irrelevant-to-consumer config and
+// keyed duplicates. They're the size driver on the biggest pages and add no signal.
+const NOISE_KEYS = {
+	labelInfo: '…(label config — typed `any`, omitted)',
+	prizesMap: '…(keyed duplicate of `prizes[]`)',
+};
 function trimVal(v) {
 	if (typeof v === 'string') return v.length > 160 ? v.slice(0, 157) + '…' : v;
 	if (Array.isArray(v)) return v.slice(0, EX_ARR).map(trimVal);
@@ -78,7 +84,9 @@ function trimVal(v) {
 		const keys = Object.keys(v);
 		const capped = keys.length > EX_OBJ_CAP;
 		const o = {};
-		for (const k of keys.slice(0, capped ? EX_OBJ_KEEP : keys.length)) o[k] = trimVal(v[k]);
+		for (const k of keys.slice(0, capped ? EX_OBJ_KEEP : keys.length)) {
+			o[k] = (NOISE_KEYS[k] && v[k] && typeof v[k] === 'object') ? NOISE_KEYS[k] : trimVal(v[k]);
+		}
 		if (capped) o['…'] = `(+${keys.length - EX_OBJ_KEEP} more keys)`;
 		return o;
 	}
@@ -288,7 +296,9 @@ function buildPage(method, reg) {
 	o.push(`## Returns${typeName ? ` — \`${ret}\`` : ''}`, returnsSection(ret, reg), '');
 	o.push('## Behavioral contract', contract || `See the [UI guide](../ui/${domain}/UIGuide_${name}.md) if present.`, '');
 	if (doc.example) o.push('## Example', doc.example.trim(), '');
-	if (respJson) o.push('### Example response (REAL shape)', '```json',
+	if (respJson) o.push('### Example response (REAL shape)',
+		'> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.',
+		'```json',
 		JSON.stringify(Array.isArray(respJson) ? [trimVal(respJson[0])] : trimVal(respJson), null, 2), '```', '');
 	o.push('## Errors', errors || "See this method's TSDoc / the mutation pages for `err_code` handling.", '');
 	if (doc.links.length) o.push('## Related', doc.links.filter(l => l !== name).map(l => `- \`${l}\``).join('\n'), '');
