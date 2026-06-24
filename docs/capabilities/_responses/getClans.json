@@ -27,34 +27,6 @@
       "entry_fee_amount": 1,
       "rating_position": 2,
       "rating_score": 92
-    },
-    {
-      "clan_id": 5,
-      "public_meta": {
-        "name": "Horseshoe Clan",
-        "description": "Join the clan if you believe in the lucky powers of horseshoes! Or just if you are a horse, this works as well.\n\nCrush the tournament leaderboards at full gallop, and ride into the sunset with your…",
-        "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780055765844-1.png"
-      },
-      "member_count": 888,
-      "capacity_limit": 1000,
-      "entry_fee_currency_type_id": 3,
-      "entry_fee_amount": 1,
-      "rating_position": 3,
-      "rating_score": 93
-    },
-    {
-      "clan_id": 3,
-      "public_meta": {
-        "name": "Shamrock Clan",
-        "description": "Join the clan if good old shamrock brings you luck! \n\nParticipate in tournaments and chase the end of the rainbow, maybe the pot-o-gold is waiting for you there!\n\nBut first - give a green gem to join.",
-        "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780056662358-1.png"
-      },
-      "member_count": 908,
-      "capacity_limit": 1000,
-      "entry_fee_currency_type_id": 1,
-      "entry_fee_amount": 1,
-      "rating_position": 4,
-      "rating_score": 112
     }
   ],
   "user_clan_id": null,

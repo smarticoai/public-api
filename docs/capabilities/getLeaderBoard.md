@@ -2,7 +2,7 @@
 
 > Returns the operator-configured standalone leaderboard for the given period type — top-20 ranked entries, the current user's own entry (when authenticated), and the configured prize table.
 > Import: `import { LeaderBoardDetailsT } from '@smartico/public-api'`
-> Search terms: getLeaderBoard, leaderboard, LeaderBoardDetailsT, board_id, name, description, rules, period_type_id, version_id, create_date, rewards
+> Search terms: getLeaderBoard, leaderboard, getLeaderboard, LeaderBoardDetailsT, LeaderBoardPeriodType, LeaderBoardsRewardsT, LeaderBoardUserT, board_id, name, description, rules, period_type_id, version_id, create_date, rewards
 
 ## Signature
 ```ts
@@ -148,10 +148,6 @@ console.log('[smartico] previous-week standings — render with greyed-out "ende
     {
       "place": 1,
       "points": 100
-    },
-    {
-      "place": 2,
-      "points": 75
     }
   ],
   "users": [
@@ -161,14 +157,6 @@ console.log('[smartico] previous-week standings — render with greyed-out "ende
       "level_id": 700,
       "position": 1,
       "points": 1525,
-      "is_me": false
-    },
-    {
-      "public_username": "Edwa*****",
-      "avatar_url": "https://cdn.example/avatar/362451457",
-      "level_id": 698,
-      "position": 2,
-      "points": 380,
       "is_me": false
     }
   ],

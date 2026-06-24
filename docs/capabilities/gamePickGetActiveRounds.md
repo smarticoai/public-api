@@ -2,7 +2,7 @@
 
 > Returns every open round for a MatchX or Quiz game template, with the full event list (matches / questions) and the current user's selections per event.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
-> Search terms: gamePickGetActiveRounds, gamepick, GamePickRound, errCode, data
+> Search terms: gamePickGetActiveRounds, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType, errCode, data
 
 ## Signature
 ```ts
@@ -93,14 +93,7 @@ for (const round of r.data ?? []) {
       "round_id": 42115,
       "round_row_id": 2,
       "public_meta": {
-        "round_name": "Group stage 15-28 June",
-        "_translations": {
-          "BR": {},
-          "TH": {}
-        },
-        "allow_edit_answers": true,
-        "final_screen_cta_dp": "dp:ok",
-        "hide_resolved_round": false
+        "…": "(nested)"
       },
       "score_type_id": 1,
       "open_date": 1782200297406,
@@ -121,158 +114,9 @@ for (const round of r.data ?? []) {
       "user_score": 0,
       "user_placed_bet": false,
       "events": [
-        {
-          "gp_event_id": 147400,
-          "market_type_id": 4,
-          "event_meta": {
-            "event_name": "World Cup",
-            "team1_name": "Czech Republic",
-            "team2_name": "Mexico",
-            "is_canceled": false,
-            "team1_image": "https://cdn.example/games/teams-images/1299262.png",
-            "team2_image": "https://cdn.example/games/teams-images/4781.png",
-            "sport_type_id": 1,
-            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
-            "scores_manually_adjusted": false
-          },
-          "event_resolution_date": null,
-          "match_date": "2026-06-25T01:00:00.000Z",
-          "odds_details": {
-            "odd_value": {
-              "1": 22,
-              "2": 35,
-              "x": 43
-            }
-          },
-          "user_placed_bet": false,
-          "resolution_score": 0,
-          "is_open_for_bets": true,
-          "resolution_type_id": 0
-        },
-        {
-          "gp_event_id": 147401,
-          "market_type_id": 6,
-          "event_meta": {
-            "event_name": "World Cup",
-            "team1_name": "South Africa",
-            "team2_name": "Republic of Korea",
-            "is_canceled": false,
-            "team1_image": "https://cdn.example/games/teams-images/4736.png",
-            "team2_image": "https://cdn.example/games/teams-images/4735.png",
-            "sport_type_id": 1,
-            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
-            "scores_manually_adjusted": false
-          },
-          "event_resolution_date": null,
-          "match_date": "2026-06-25T01:00:00.000Z",
-          "odds_details": {
-            "odd_value": {
-              "1": 31,
-              "2": 62,
-              "x": 7
-            }
-          },
-          "user_placed_bet": false,
-          "resolution_score": 0,
-          "is_open_for_bets": true,
-          "resolution_type_id": 0
-        }
+        "…"
       ],
       "has_open_for_bet_events": true,
-      "has_not_submitted_changes": false
-    },
-    {
-      "round_id": 40564,
-      "round_row_id": 1,
-      "public_meta": {
-        "round_name": "Group stage 11-14 June",
-        "_translations": {
-          "BR": {}
-        },
-        "allow_edit_answers": true,
-        "final_screen_cta_dp": "dp:ok",
-        "hide_resolved_round": false
-      },
-      "score_type_id": 1,
-      "open_date": 1779269280999,
-      "last_bet_date": 1781481540000,
-      "is_active_now": false,
-      "is_resolved": true,
-      "round_status_id": 4,
-      "resolution_date": 1782200293679,
-      "score_full_win": 0,
-      "score_part_win": 0,
-      "score_lost": 0,
-      "events_total": "11",
-      "events_resolved": "11",
-      "show_users_preference": true,
-      "order_events": 1,
-      "board_users_count": 20,
-      "hide_users_predictions": false,
-      "round_name": "Group stage 11-14 June",
-      "user_score": 0,
-      "user_placed_bet": false,
-      "events": [
-        {
-          "gp_event_id": 132891,
-          "market_type_id": 4,
-          "event_meta": {
-            "result": "1",
-            "event_name": "World Cup",
-            "team1_name": "Mexico",
-            "team2_name": "South Africa",
-            "is_canceled": false,
-            "team1_image": "https://cdn.example/games/teams-images/4781.png",
-            "team2_image": null,
-            "sport_type_id": 1,
-            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
-            "scores_manually_adjusted": false
-          },
-          "event_resolution_date": "2026-06-11T22:09:59.536Z",
-          "match_date": "2026-06-11T19:00:00.000Z",
-          "odds_details": {
-            "odd_value": {
-              "1": 48,
-              "2": 11,
-              "x": 42
-            }
-          },
-          "user_placed_bet": false,
-          "resolution_score": 0,
-          "is_open_for_bets": false,
-          "resolution_type_id": 0
-        },
-        {
-          "gp_event_id": 132892,
-          "market_type_id": 6,
-          "event_meta": {
-            "result": "2",
-            "event_name": "World Cup",
-            "team1_name": "Republic of Korea",
-            "team2_name": "Czech Republic",
-            "is_canceled": false,
-            "team1_image": "https://cdn.example/games/teams-images/4735.png",
-            "team2_image": null,
-            "sport_type_id": 1,
-            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
-            "scores_manually_adjusted": false
-          },
-          "event_resolution_date": "2026-06-12T04:50:43.260Z",
-          "match_date": "2026-06-12T02:00:00.000Z",
-          "odds_details": {
-            "odd_value": {
-              "1": 48,
-              "2": 44,
-              "x": 8
-            }
-          },
-          "user_placed_bet": false,
-          "resolution_score": 0,
-          "is_open_for_bets": false,
-          "resolution_type_id": 0
-        }
-      ],
-      "has_open_for_bet_events": false,
       "has_not_submitted_changes": false
     }
   ]

@@ -2,7 +2,7 @@
 
 > Returns all the badges available to the current user.
 > Import: `import { TMissionOrBadge } from '@smartico/public-api'`
-> Search terms: getBadges, missions, TMissionOrBadge, id, name, description, image, is_completed, is_locked, is_requires_optin, is_opted_in
+> Search terms: getBadges, missions, getUserBadges, TMissionOrBadge, TMissionOrBadgeTask, AchRelatedGame, TRibbon, AchievementAvailabilityStatus, AchievementClaimPeriodTypeId, BadgesTimeLimitStates, id, name, description, image, is_completed, is_locked, is_requires_optin, is_opted_in
 
 ## Signature
 ```ts

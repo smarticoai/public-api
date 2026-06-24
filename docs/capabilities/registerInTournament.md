@@ -2,7 +2,7 @@
 
 > Registers the authenticated user in the specified tournament instance.
 > Import: `import { TTournamentRegistrationResult } from '@smartico/public-api'`
-> Search terms: registerInTournament, tournaments, TTournamentRegistrationResult, err_code, err_message
+> Search terms: registerInTournament, tournaments, TTournamentRegistrationResult, TournamentRegistrationError, err_code, err_message
 
 ## Signature
 ```ts

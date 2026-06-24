@@ -2,7 +2,7 @@
 
 > Returns every prize the current user has won within a single raffle — across ALL of that raffle's draws, newest-won first — in one paginated call.
 > Import: `import { GetRaffleWonPrizesResponse } from '@smartico/public-api'`
-> Search terms: getRaffleWonPrizes, raffles, GetRaffleWonPrizesResponse
+> Search terms: getRaffleWonPrizes, raffles, GetRaffleWonPrizesResponse, RaffleWonPrizeUser, RaffleWonPrize, RaffleWonPrizePublicMeta
 
 ## Signature
 ```ts

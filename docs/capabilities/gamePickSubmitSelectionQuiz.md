@@ -2,7 +2,7 @@
 
 > Submits all quiz answers for a round in one shot.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
-> Search terms: gamePickSubmitSelectionQuiz, gamepick, GamePickRound
+> Search terms: gamePickSubmitSelectionQuiz, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType
 
 ## Signature
 ```ts

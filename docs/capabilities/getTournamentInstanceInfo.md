@@ -2,7 +2,7 @@
 
 > Returns the full detail of a single tournament instance — adds the player leaderboard, the full prize structure, and (for clan tournaments) the clan leaderboard and per-clan prize structure on top of everything already in `TTournament`.
 > Import: `import { TTournamentDetailed } from '@smartico/public-api'`
-> Search terms: getTournamentInstanceInfo, tournaments, TTournamentDetailed, instance_id, tournament_id, name, description, image1, image2, image2_mobile, prize_pool_short
+> Search terms: getTournamentInstanceInfo, tournaments, getTournament, TTournamentDetailed, TRibbon, TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS, TournamentRegistrationTypeName, TournamentRegistrationStatusName, AchRelatedGame, Fixed, Dynamic, instance_id, tournament_id, name, description, image1, image2, image2_mobile, prize_pool_short
 
 ## Signature
 ```ts
@@ -175,21 +175,7 @@ if (detail.me) {
     {
       "ext_game_id": "dragon-fortune",
       "game_public_meta": {
-        "name": "Dragon Fortune",
-        "link": "/game/dragon-fortune",
-        "image": "https://cdn.example/e93b87dfd94d462de49bc3-china.png",
-        "enabled": true,
-        "priority": 1
-      }
-    },
-    {
-      "ext_game_id": "treasure-seeker",
-      "game_public_meta": {
-        "name": "Treasure Seeker",
-        "link": "/game/treasure-seeker",
-        "image": "https://cdn.example/e9918412abb33c15a174fc-pirate_game_thumbnail.png",
-        "enabled": true,
-        "priority": 2
+        "…": "(nested)"
       }
     }
   ],
@@ -203,15 +189,6 @@ if (detail.me) {
       "type": "GEMS_AND_DIAMONDS_ADD",
       "place_from": 1,
       "place_to": 1
-    },
-    {
-      "diamonds": 10,
-      "image_url": "https://cdn.example/7014b5850d63423ba67957-Diamonds10.webp",
-      "name": "10 Diamonds",
-      "id": 38779,
-      "type": "GEMS_AND_DIAMONDS_ADD",
-      "place_from": 2,
-      "place_to": 2
     }
   ]
 }

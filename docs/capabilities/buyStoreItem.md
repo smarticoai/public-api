@@ -2,7 +2,7 @@
 
 > Purchase a specific store item on behalf of the current user.
 > Import: `import { TBuyStoreItemResult } from '@smartico/public-api'`
-> Search terms: buyStoreItem, store, TBuyStoreItemResult, err_code, err_message
+> Search terms: buyStoreItem, store, TBuyStoreItemResult, BuyStoreItemErrorCode, err_code, err_message
 
 ## Signature
 ```ts

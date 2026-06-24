@@ -2,7 +2,7 @@
 
 > Returns the leaderboard for a MatchX or Quiz game round — ranked list of players plus the current user's entry (`my_user`).
 > Import: `import { GamePickRoundBoard } from '@smartico/public-api'`
-> Search terms: gamePickGetBoard, gamepick, GamePickRoundBoard, errCode, data
+> Search terms: gamePickGetBoard, gamepick, GamePickRoundBoard, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickBoardUser, errCode, data
 
 ## Signature
 ```ts
@@ -76,8 +76,7 @@ if (r.errCode === 0 && r.data) {
     "public_meta": {
       "round_name": "Group stage 15-28 June",
       "_translations": {
-        "BR": {},
-        "TH": {}
+        "…": "(nested)"
       },
       "allow_edit_answers": true,
       "final_screen_cta_dp": "dp:ok",
@@ -101,15 +100,7 @@ if (r.errCode === 0 && r.data) {
     "round_name": "Group stage 15-28 June",
     "users": [
       {
-        "ext_user_id": "222849599",
-        "int_user_id": "228975556",
-        "public_username": "Alex*****",
-        "avatar_url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
-        "gp_position": null,
-        "resolution_score": 0,
-        "full_wins_count": 0,
-        "part_wins_count": 0,
-        "lost_count": 0
+        "…": "(nested)"
       }
     ],
     "my_user": null

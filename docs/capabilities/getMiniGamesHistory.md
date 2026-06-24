@@ -2,7 +2,7 @@
 
 > Returns a paginated, newest-first list of the user's past mini-game spins — each row carries the won prize ID, the client-side `request_id` used for the spin, and a server-recorded `is_claimed` flag (`true` if the spin has been acknowledged).
 > Import: `import { TSawHistory } from '@smartico/public-api'`
-> Search terms: getMiniGamesHistory, minigames, TSawHistory
+> Search terms: getMiniGamesHistory, minigames, getSAWHistory, TSawHistory, SAWTemplate, SAWGameType, SAWTemplateUI, SAWBuyInType, SAWPrize
 
 ## Signature
 ```ts

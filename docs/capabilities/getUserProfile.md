@@ -2,7 +2,7 @@
 
 > Returns the current user's public profile — the source of truth for balances (points / gems / diamonds), the current level ID, the display username + avatar, language, public tags, and the inbox unread count.
 > Import: `import { TUserProfile } from '@smartico/public-api'`
-> Search terms: getUserProfile, user, TUserProfile, core_public_tags, ach_points_ever, core_clan_is_kicked, user_last_session_push_state, aff_referred_by_friend_ext_user_id, core_inbox_unread_count, core_user_language, ach_level_current
+> Search terms: getUserProfile, user, getPublicProps, getProfile, balance, points, TUserProfile, core_public_tags, ach_points_ever, core_clan_is_kicked, user_last_session_push_state, aff_referred_by_friend_ext_user_id, core_inbox_unread_count, core_user_language, ach_level_current
 
 ## Signature
 ```ts

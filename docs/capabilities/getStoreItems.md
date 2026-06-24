@@ -2,7 +2,7 @@
 
 > Returns the catalog of buyable store items visible to the current user, scoped server-side to what the user is qualified to see.
 > Import: `import { TStoreItem } from '@smartico/public-api'`
-> Search terms: getStoreItems, store, TStoreItem, id, name, purchase_type, price, image, description, ribbon, priority
+> Search terms: getStoreItems, store, TStoreItem, TRibbon, AchRelatedGame, onUpdate, subscription, id, name, purchase_type, price, image, description, ribbon, priority
 
 ## Signature
 ```ts

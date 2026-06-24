@@ -193,13 +193,6 @@ export interface SmarticoGlobal {
 declare global {
 	interface Window {
 		/**
-		 * Params injected by the Smartico widget runtime (`widget.js`) when a widget
-		 * is embedded via `_smartico.showWidget` / a widget script tag. Keys mirror
-		 * the params passed in the embedding snippet (e.g. `id`).
-		 */
-		__SMARTICO_LP_PARAMS__?: Record<string, string | number>;
-
-		/**
 		 * The global Smartico SDK object, present once the embed snippet has loaded.
 		 * Optional because it is `undefined` until the script initializes — guard
 		 * access (`window._smartico?.…`) or gate on `checkSuccessfullyIdentify()`.

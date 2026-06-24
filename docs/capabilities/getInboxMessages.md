@@ -2,7 +2,7 @@
 
 > Returns the user's inbox messages — newest first — with optional filtering by category, favorite status, and read state.
 > Import: `import { TInboxMessage } from '@smartico/public-api'`
-> Search terms: getInboxMessages, inbox, TInboxMessage, sent_date, message_guid, read, favorite, category_id, expire_on_dt
+> Search terms: getInboxMessages, inbox, TInboxMessage, InboxCategories, onUpdate, subscription, sent_date, message_guid, read, favorite, category_id, expire_on_dt
 
 ## Signature
 ```ts

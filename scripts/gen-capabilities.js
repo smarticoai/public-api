@@ -67,10 +67,27 @@ const jsType = (v) =>
 	: Array.isArray(v) ? (v.length && v[0] && typeof v[0] === 'object' ? 'object[]' : 'array')
 	: typeof v;
 
-function trimVal(v) {
-	if (typeof v === 'string' && v.length > 160) return v.slice(0, 157) + '…';
-	if (Array.isArray(v)) return v.slice(0, 2).map(trimVal);
-	if (v && typeof v === 'object') { const o = {}; for (const k of Object.keys(v)) o[k] = trimVal(v[k]); return o; }
+// Example-response trimming so a method returning a huge map/array (e.g.
+// getTranslations → ~800 keys) doesn't dump a 900-line page. Long strings are
+// clipped; arrays show 2 items; "dictionary-sized" objects (> OBJ_CAP keys, i.e.
+// a key→value map rather than a struct) are truncated to a representative sample.
+const EX_ARR = 1, EX_OBJ_CAP = 40, EX_OBJ_KEEP = 12, EX_DEPTH = 3;
+function trimVal(v, d = 0) {
+	if (typeof v === 'string') return v.length > 160 ? v.slice(0, 157) + '…' : v;
+	if (Array.isArray(v)) {
+		if (!v.length) return [];
+		if (d >= EX_DEPTH) return ['…'];
+		return v.slice(0, EX_ARR).map(x => trimVal(x, d + 1));
+	}
+	if (v && typeof v === 'object') {
+		const keys = Object.keys(v);
+		if (d >= EX_DEPTH) return keys.length ? { '…': '(nested)' } : {};
+		const capped = keys.length > EX_OBJ_CAP;
+		const o = {};
+		for (const k of keys.slice(0, capped ? EX_OBJ_KEEP : keys.length)) o[k] = trimVal(v[k], d + 1);
+		if (capped) o['…'] = `(+${keys.length - EX_OBJ_KEEP} more keys)`;
+		return o;
+	}
 	return v;
 }
 
@@ -203,6 +220,43 @@ function returnsSection(respJson, reg, typeName, isArrayReturn) {
 	return lines.join('\n');
 }
 
+// Renamed / shorthand / guessed names the IDE agent actually searched (from a
+// 48h live-session analysis) → added to the page's Search-terms so the search
+// lands first-shot. doSAWAcknowledge (8 hits) was the biggest single miss.
+const ALIASES = {
+	miniGameWinAcknowledgeRequest: ['doSAWAcknowledge', 'SAWAcknowledge', 'acknowledge', 'SAWAcknowledgeType'],
+	getTournamentsList: ['getTournaments'],
+	getTournamentInstanceInfo: ['getTournament'],
+	getLeaderBoard: ['getLeaderboard', 'leaderboard'],
+	getLeaderBoards: ['getLeaderboards'],
+	getAvatarsList: ['getAvatars'],
+	getMiniGames: ['getSAW', 'spins', 'minigames', 'wheel'],
+	playMiniGame: ['doSAWSpin', 'SAWSpin', 'spin'],
+	playMiniGameBatch: ['doSAWSpinBatch'],
+	getMiniGamesHistory: ['getSAWHistory'],
+	getCurrentLevel: ['getUserLevel'],
+	getLevels: ['getUserLevels'],
+	getMissions: ['getUserMissions', 'achievements'],
+	getBadges: ['getUserBadges'],
+	getUserProfile: ['getPublicProps', 'getProfile', 'balance', 'points'],
+};
+
+/** Enum / sub-type names referenced by a return type's fields (1 level deep) —
+ * so a search by a cross-cutting enum name (SAWAcknowledgeType, PointChangeSourceType,
+ * GamePickResolutionType, …) lands on the page that owns it. */
+function collectFieldTypeNames(typeName, reg, seen = new Set(), depth = 0) {
+	const out = new Set();
+	if (!typeName || depth > 1) return out;
+	for (const info of Object.values(resolveFields(typeName, reg))) {
+		for (const n of (info.typeText || '').match(/[A-Z][A-Za-z0-9_]+/g) || []) {
+			if (n.length < 4 || ['Array', 'Record', 'Date', 'Partial', 'Promise', 'This', 'The', 'URL', 'JSON'].includes(n)) continue;
+			out.add(n);
+			if (reg[n] && !seen.has(n)) { seen.add(n); for (const x of collectFieldTypeNames(n, reg, seen, depth + 1)) out.add(x); }
+		}
+	}
+	return out;
+}
+
 function buildPage(method, reg) {
 	const { name, domain, node, sf } = method;
 	const doc = readJSDoc(node, sf);
@@ -218,7 +272,10 @@ function buildPage(method, reg) {
 	const { contract, errors } = splitRemarks(doc.remarks);
 
 	const sampleKeys = respJson ? Object.keys((Array.isArray(respJson) ? respJson[0] : respJson) || {}).slice(0, 8) : [];
-	const searchTerms = [name, domain, ...typeNames, ...sampleKeys].filter((v, i, a) => v && a.indexOf(v) === i).join(', ');
+	const onUpd = /\bonUpdate\b/.test(params) ? ['onUpdate', 'subscription'] : [];
+	const fieldTypes = [...collectFieldTypeNames(typeName, reg)].slice(0, 12);
+	const searchTerms = [name, domain, ...(ALIASES[name] || []), ...typeNames, ...fieldTypes, ...onUpd, ...sampleKeys]
+		.filter((v, i, a) => v && a.indexOf(v) === i).join(', ');
 
 	const o = [];
 	o.push(`# ${name} — API${typeName ? ` (${typeName})` : ''}`, '');
@@ -240,6 +297,47 @@ function buildPage(method, reg) {
 	return o.join('\n');
 }
 
+// ── global `_smartico.*` surface + callbacks (non-.api.* — the live-session
+//    analysis showed these were unreachable in the `api` lane and live-probed) ──
+
+function buildGlobalSurfacePage() {
+	const file = path.join(SRC, 'SmarticoGlobal.ts');
+	if (!fs.existsSync(file)) return null;
+	const sf = parse(file);
+	let iface = null;
+	const find = (n) => { if (ts.isInterfaceDeclaration(n) && n.name.text === 'SmarticoGlobal') iface = n; ts.forEachChild(n, find); };
+	find(sf);
+	if (!iface) return null;
+	const members = iface.members.filter(m => m.name).map(m => ({
+		name: m.name.getText(sf),
+		sig: m.getText(sf).replace(/;$/, '').replace(/\s+/g, ' ').trim(),
+		one: ts.getJSDocCommentsAndTags(m).map(d => tagText(d.comment)).filter(Boolean).join(' ').replace(/\s+/g, ' ').trim(),
+	}));
+	const extra = ['_smartico', 'global', 'window._smartico', 'SmarticoGlobal', 'visitor mode', 'callbacks', 'events',
+		'onWin', 'onReady', 'deep link', 'getWidgetParams', 'IWidgetParams', 'widget params', 'readiness', 'lifecycle', 'push'];
+	const terms = [...new Set([...members.map(m => m.name), ...extra])].join(', ');
+	const o = [];
+	o.push('# _smartico — global SDK surface (non-`.api.*`)', '');
+	o.push('> The `window._smartico` control surface: init/identify, events, deep links, widgets, visitor-mode `vapi`, push, and utilities — everything that is NOT `_smartico.api.*` (those have their own capability pages).');
+	o.push("> Import: typed via `SmarticoGlobal` from '@smartico/public-api'; at runtime the object is on `window._smartico` (no import).");
+	o.push(`> Search terms: ${terms}`, '');
+	o.push('## Readiness gate', 'Call `window._smartico?.checkSuccessfullyIdentify()` (synchronous) before any `_smartico.api.*` — `true` once init + identify completed. Or subscribe `_smartico.on(\'identify\', cb)` (see the callbacks page).', '');
+	o.push('## Methods');
+	for (const m of members) o.push(`- \`_smartico.${m.sig}\`${m.one ? ` — ${m.one}` : ''}`);
+	o.push('');
+	o.push('## Visitor mode (`vapi`)', '`_smartico.vapi(language)` returns a `WSAPI` scoped to anonymous visitors — same method shapes as `_smartico.api.*`, for unidentified users (pre-login surfaces).', '');
+	o.push('## Reading widget params', 'A widget embedded via `showWidget` / `miniGame` receives `IWidgetParams` (theme, height, inline, …). Read them from the embedding snippet / `window.__SMARTICO_LP_PARAMS__`, not from an API call.', '');
+	o.push('## Related', '- `_smartico.on — events & callbacks` (the callbacks capability page)', '- Full prose reference: the SmarticoObject doc (search source `api-raw`).');
+	return o.join('\n');
+}
+
+function buildConceptPage(srcRel, title, terms) {
+	const p = path.join(ROOT, srcRel);
+	if (!fs.existsSync(p)) return null;
+	const body = fs.readFileSync(p, 'utf8').replace(/^#\s+.*\r?\n/, '').trim();
+	return [`# ${title}`, '', `> ${title}.`, `> Search terms: ${terms}`, '', body].join('\n');
+}
+
 function main() {
 	if (!fs.existsSync(OUT_DIR)) fs.mkdirSync(OUT_DIR, { recursive: true });
 	const reg = buildTypeRegistry();
@@ -250,7 +348,13 @@ function main() {
 		written++;
 		if (fs.existsSync(path.join(RESP_DIR, `${method.name}.json`))) withResp++;
 	}
-	console.log(`[gen-capabilities] wrote ${written} pages (${withResp} with captured response); type registry: ${Object.keys(reg).length} interfaces`);
+	let extra = 0;
+	const g = buildGlobalSurfacePage();
+	if (g) { fs.writeFileSync(path.join(OUT_DIR, 'smarticoGlobal.md'), g); extra++; }
+	const cb = buildConceptPage('docs/Callbacks.md', '_smartico.on — events & callbacks',
+		'on, off, callbacks, events, subscribe, subscribeUpdate, onWin, onReady, props_change, identify, EXTERNAL_CALLBACK, lifecycle, _smartico.on');
+	if (cb) { fs.writeFileSync(path.join(OUT_DIR, 'smarticoCallbacks.md'), cb); extra++; }
+	console.log(`[gen-capabilities] wrote ${written} method pages + ${extra} global/concept pages (${withResp} with captured response); type registry: ${Object.keys(reg).length} interfaces`);
 }
 
 main();

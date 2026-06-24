@@ -2,7 +2,7 @@
 
 > Returns a round with another player's predictions instead of the current user's.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
-> Search terms: gamePickGetRoundInfoForUser, gamepick, GamePickRound
+> Search terms: gamePickGetRoundInfoForUser, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType
 
 ## Signature
 ```ts

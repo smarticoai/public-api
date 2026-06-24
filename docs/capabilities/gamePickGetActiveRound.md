@@ -2,7 +2,7 @@
 
 > Returns a single round (events, user selections, scoring rules) for a MatchX or Quiz game.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
-> Search terms: gamePickGetActiveRound, gamepick, GamePickRound, errCode, data
+> Search terms: gamePickGetActiveRound, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType, errCode, data
 
 ## Signature
 ```ts
@@ -60,8 +60,7 @@ if (r.errCode === 0 && r.data) {
     "public_meta": {
       "round_name": "Group stage 15-28 June",
       "_translations": {
-        "BR": {},
-        "TH": {}
+        "…": "(nested)"
       },
       "allow_edit_answers": true,
       "final_screen_cta_dp": "dp:ok",
@@ -87,60 +86,7 @@ if (r.errCode === 0 && r.data) {
     "user_placed_bet": false,
     "events": [
       {
-        "gp_event_id": 147400,
-        "market_type_id": 4,
-        "event_meta": {
-          "event_name": "World Cup",
-          "team1_name": "Czech Republic",
-          "team2_name": "Mexico",
-          "is_canceled": false,
-          "team1_image": "https://cdn.example/games/teams-images/1299262.png",
-          "team2_image": "https://cdn.example/games/teams-images/4781.png",
-          "sport_type_id": 1,
-          "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
-          "scores_manually_adjusted": false
-        },
-        "event_resolution_date": null,
-        "match_date": "2026-06-25T01:00:00.000Z",
-        "odds_details": {
-          "odd_value": {
-            "1": 22,
-            "2": 35,
-            "x": 43
-          }
-        },
-        "user_placed_bet": false,
-        "resolution_score": 0,
-        "is_open_for_bets": true,
-        "resolution_type_id": 0
-      },
-      {
-        "gp_event_id": 147401,
-        "market_type_id": 6,
-        "event_meta": {
-          "event_name": "World Cup",
-          "team1_name": "South Africa",
-          "team2_name": "Republic of Korea",
-          "is_canceled": false,
-          "team1_image": "https://cdn.example/games/teams-images/4736.png",
-          "team2_image": "https://cdn.example/games/teams-images/4735.png",
-          "sport_type_id": 1,
-          "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
-          "scores_manually_adjusted": false
-        },
-        "event_resolution_date": null,
-        "match_date": "2026-06-25T01:00:00.000Z",
-        "odds_details": {
-          "odd_value": {
-            "1": 31,
-            "2": 62,
-            "x": 7
-          }
-        },
-        "user_placed_bet": false,
-        "resolution_score": 0,
-        "is_open_for_bets": true,
-        "resolution_type_id": 0
+        "…": "(nested)"
       }
     ],
     "has_open_for_bet_events": true,

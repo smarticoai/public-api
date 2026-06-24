@@ -2,7 +2,7 @@
 
 > Returns the operator-configured "custom sections" the current user is eligible to see.
 > Import: `import { TUICustomSection } from '@smartico/public-api'`
-> Search terms: getCustomSections, general, TUICustomSection, id, body, menu_img, menu_name, section_type_id, liquid_entity_data, liquid_template
+> Search terms: getCustomSections, general, TUICustomSection, AchCustomSectionType, AchCustomLayoutTheme, AchMissionsTabsOptions, AchOverviewMissionsFilter, LiquidEntityData, id, body, menu_img, menu_name, section_type_id, liquid_entity_data, liquid_template
 
 ## Signature
 ```ts
@@ -68,8 +68,7 @@ for (const s of sections) {
     "menu_name": "Custom overview",
     "section_type_id": 4,
     "liquid_entity_data": [
-      1,
-      2
+      1
     ],
     "liquid_template": 1
   }

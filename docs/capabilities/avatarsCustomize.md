@@ -2,7 +2,7 @@
 
 > Generates an AI-customized variant of a base avatar by applying an operator-defined style prompt, returning the CDN URL of the result.
 > Import: `import { AvatarCustomizeResponse } from '@smartico/public-api'`
-> Search terms: avatarsCustomize, avatars, AvatarCustomizeResponse
+> Search terms: avatarsCustomize, avatars, AvatarCustomizeResponse, AvatarCustomizeErrorCode
 
 ## Signature
 ```ts

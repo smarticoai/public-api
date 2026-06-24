@@ -2,7 +2,7 @@
 
 > Returns all mini-game templates ("SAW" = Spin And Win — the umbrella term for wheel-spin, scratch-card, lootbox, gift-box, treasure-hunt, plinko, coin-flip, quiz, and several other formats) configured for the label.
 > Import: `import { TMiniGameTemplate } from '@smartico/public-api'`
-> Search terms: getMiniGames, minigames, TMiniGameTemplate, id, name, description, thumbnail, visibile_when_can_spin, saw_game_type, saw_buyin_type, jackpot_add_on_attempt
+> Search terms: getMiniGames, minigames, getSAW, spins, wheel, TMiniGameTemplate, SAWGameTypeName, SAWBuyInTypeName, TMiniGamePrize, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, PrizeModifiers, AttemptPeriodType, SAWTemplateUI, SAWAskForUsername, SAWGameLayoutName, SAWExposeUserSpinIdName, onUpdate, subscription, id, name, description, thumbnail, visibile_when_can_spin, saw_game_type, saw_buyin_type, jackpot_add_on_attempt
 
 ## Signature
 ```ts
@@ -195,7 +195,7 @@ for (const g of visible) {
         "font_size": null,
         "position": 7,
         "sectors": [
-          ""
+          "…"
         ],
         "acknowledge_type": "silent",
         "acknowledge_dp": "dp:ok",
@@ -208,32 +208,6 @@ for (const g of visible) {
         "active_till_ts": null,
         "relative_period_timezone": 0,
         "is_surcharge": false,
-        "is_deleted": false,
-        "custom_data": {},
-        "max_give_period_type_id": 2
-      },
-      {
-        "id": 3301,
-        "name": "150 Points",
-        "prize_type": "points",
-        "prize_value": 150,
-        "font_size": null,
-        "icon": "https://cdn.example/cbc28c039c3b2b4f91034c-Storeitemcopy18.png",
-        "position": 5,
-        "sectors": [
-          ""
-        ],
-        "acknowledge_type": "silent",
-        "acknowledge_dp": "dp:ok",
-        "acknowledge_action_title": "OK",
-        "pool": null,
-        "pool_initial": 1000,
-        "wins_count": null,
-        "weekdays": null,
-        "active_from_ts": null,
-        "active_till_ts": null,
-        "relative_period_timezone": 0,
-        "is_surcharge": true,
         "is_deleted": false,
         "custom_data": {},
         "max_give_period_type_id": 2

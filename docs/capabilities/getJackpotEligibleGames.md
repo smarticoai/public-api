@@ -2,7 +2,7 @@
 
 > Returns the casino games eligible to contribute to a specific jackpot — the catalog the user must play to grow the pot.
 > Import: `import { TGetJackpotEligibleGamesResponse } from '@smartico/public-api'`
-> Search terms: getJackpotEligibleGames, jackpots, TGetJackpotEligibleGamesResponse, eligible_games
+> Search terms: getJackpotEligibleGames, jackpots, TGetJackpotEligibleGamesResponse, JackpotEligibleGame, onUpdate, subscription, eligible_games
 
 ## Signature
 ```ts
@@ -74,14 +74,6 @@ console.log('[smartico] render', r.eligible_games.length, 'eligible game tiles')
       "image": "https://cdn.example/d67393a1c13d95219e6d03-SlotLogowithSkulls.png",
       "enabled": true,
       "priority": 1
-    },
-    {
-      "game_id": 2106041137,
-      "ext_game_id": "667",
-      "name": "Vampire's Treasure",
-      "image": "https://cdn.example/eb63838100c4a1b4641d60-SlotLogoGothicCastleBats.png",
-      "enabled": true,
-      "priority": 2
     }
   ]
 }

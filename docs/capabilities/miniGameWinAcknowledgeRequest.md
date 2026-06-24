@@ -2,7 +2,7 @@
 
 > Manually acknowledges a mini-game spin — marks the win delivered server-side.
 > Import: `import { /* types */ } from '@smartico/public-api'`
-> Search terms: miniGameWinAcknowledgeRequest, minigames, request_id, errCode, errMsg, cid, ts, uuid, payload, duration
+> Search terms: miniGameWinAcknowledgeRequest, minigames, doSAWAcknowledge, SAWAcknowledge, acknowledge, SAWAcknowledgeType, request_id, errCode, errMsg, cid, ts, uuid, payload, duration
 
 ## Signature
 ```ts

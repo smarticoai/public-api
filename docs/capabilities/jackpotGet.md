@@ -2,7 +2,7 @@
 
 > Returns the user-eligible jackpots active for the label, fused with their live pot values.
 > Import: `import { JackpotDetails } from '@smartico/public-api'`
-> Search terms: jackpotGet, jackpots, JackpotDetails, jp_template_id, jp_type_id, jp_public_meta, jp_currency, user_currency, related_games, contribution_type, contribution_value
+> Search terms: jackpotGet, jackpots, JackpotDetails, JackpotType, JackpotPublicMeta, JackpotHtmlTemplate, JackpotContributionType, JackpotPot, JackPotTemparature, jp_template_id, jp_type_id, jp_public_meta, jp_currency, user_currency, related_games, contribution_type, contribution_value
 
 ## Signature
 ```ts
@@ -144,18 +144,9 @@ console.log('[smartico] linked jackpots for game:', linked.length);
         "jpTemplateId": 6,
         "type": 2,
         "extEntityIds": [
-          "1111"
+          "…"
         ],
         "contributionValue": 4
-      },
-      {
-        "ruleId": 2,
-        "jpTemplateId": 6,
-        "type": 1,
-        "extEntityIds": [
-          "666666"
-        ],
-        "contributionValue": 3
       }
     ],
     "expose_winners_over_api": false

@@ -2,7 +2,7 @@
 
 > Returns the full level ladder configured for the current label — one `TLevel` per active level, server-sorted by `required_points` ASC (lowest first; `ordinal_position` is a 1-based index into the returned array).
 > Import: `import { TLevel } from '@smartico/public-api'`
-> Search terms: getLevels, user, TLevel, id, name, description, image, required_points, visibility_points, required_level_counter_1, required_level_counter_2
+> Search terms: getLevels, user, getUserLevels, TLevel, id, name, description, image, required_points, visibility_points, required_level_counter_1, required_level_counter_2
 
 ## Signature
 ```ts

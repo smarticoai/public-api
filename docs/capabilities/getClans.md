@@ -2,7 +2,7 @@
 
 > Returns the active clans visible to the current user along with the user's own membership state (`user_clan_id`, `cooldown_until`, `join_date`).
 > Import: `import { TClans } from '@smartico/public-api'`
-> Search terms: getClans, clans, TClans, user_clan_id, cooldown_until, join_date
+> Search terms: getClans, clans, TClans, TClan, onUpdate, subscription, user_clan_id, cooldown_until, join_date
 
 ## Signature
 ```ts
@@ -136,9 +136,7 @@ for (const clan of result.clans) {
     {
       "clan_id": 6,
       "public_meta": {
-        "name": "Joker Clan",
-        "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash an…",
-        "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
+        "…": "(nested)"
       },
       "member_count": 884,
       "capacity_limit": 1000,
@@ -146,20 +144,6 @@ for (const clan of result.clans) {
       "entry_fee_amount": 100,
       "rating_position": 1,
       "rating_score": 87
-    },
-    {
-      "clan_id": 9,
-      "public_meta": {
-        "name": "Lucky Penny Clan",
-        "description": "Join the clan if you're in it for the money and money is what brings you luck.<br>\n\nCompete in the Tournaments, team up with other money-loving Scrooges, and…",
-        "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780064807814-0.webp"
-      },
-      "member_count": 855,
-      "capacity_limit": 1000,
-      "entry_fee_currency_type_id": 0,
-      "entry_fee_amount": 1,
-      "rating_position": 2,
-      "rating_score": 92
     }
   ],
   "user_clan_id": null,

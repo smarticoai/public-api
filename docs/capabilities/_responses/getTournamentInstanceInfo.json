@@ -70,30 +70,6 @@
       "type": "GEMS_AND_DIAMONDS_ADD",
       "place_from": 2,
       "place_to": 2
-    },
-    {
-      "image_url": "https://cdn.example/7ca5042f3bb08da6b45d5a-Gamificationpoints10.webp",
-      "name": "100 Points",
-      "id": 38780,
-      "type": "POINTS_ADD",
-      "place_from": 3,
-      "place_to": 3,
-      "points": 100
-    },
-    {
-      "name": "10 Free Spins on Mystic Spin",
-      "id": 38781,
-      "type": "BONUS",
-      "place_from": 4,
-      "image_url": "https://cdn.example/a3557f7a23cc13d2d15c58-FreeSpins10.webp",
-      "place_to": 4
-    },
-    {
-      "name": "2 Raffle Tickets",
-      "id": 38782,
-      "place_from": 5,
-      "image_url": "https://cdn.example/cc779fb0a98813544729ae-Raffletickets2.webp",
-      "place_to": 5
     }
   ]
 }

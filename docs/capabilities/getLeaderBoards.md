@@ -2,7 +2,7 @@
 
 > Returns the list of leaderboards the operator has configured for this label — **metadata only, without participants**.
 > Import: `import { LeaderBoardDetailsT } from '@smartico/public-api'`
-> Search terms: getLeaderBoards, leaderboard, LeaderBoardDetailsT
+> Search terms: getLeaderBoards, leaderboard, getLeaderboards, LeaderBoardDetailsT, LeaderBoardPeriodType, LeaderBoardsRewardsT, LeaderBoardUserT
 
 ## Signature
 ```ts

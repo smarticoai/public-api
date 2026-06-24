@@ -2,7 +2,7 @@
 
 > Returns past winners of a specific jackpot template, paginated.
 > Import: `import { JackpotWinnerHistory } from '@smartico/public-api'`
-> Search terms: getJackpotWinners, jackpots, JackpotWinnerHistory, winner, win_date_ts, jp_pot_id
+> Search terms: getJackpotWinners, jackpots, JackpotWinnerHistory, JackPotWinner, winner, win_date_ts, jp_pot_id
 
 ## Signature
 ```ts

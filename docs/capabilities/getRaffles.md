@@ -2,7 +2,7 @@
 
 > Returns all raffles visible to the current user, each carrying an embedded `draws[]` array with per-draw state (current state, ticket counts, opt-in status, prize structure).
 > Import: `import { TRaffle } from '@smartico/public-api'`
-> Search terms: getRaffles, raffles, TRaffle, id, name, description, custom_section_id, image_url, image_url_mobile, start_date, end_date
+> Search terms: getRaffles, raffles, TRaffle, TRaffleDraw, TRafflePrize, RaffleDrawInstanceState, RaffleDrawTypeExecution, TRaffleTicket, RaffleTicketCapVisualization, onUpdate, subscription, id, name, description, custom_section_id, image_url, image_url_mobile, start_date, end_date
 
 ## Signature
 ```ts
@@ -167,38 +167,7 @@ for (const raffle of raffles) {
         "background_image_url_mobile": "https://cdn.example/9ec0cc0bcf58d038ab59f9-DrawBackgroundMobilecopy.png",
         "is_grand": false,
         "prizes": [
-          {
-            "id": 1244,
-            "name": "16\" Lenovo laptop",
-            "image_url": "https://cdn.example/6b4690ea0429208b244f7c-DailyDraw-516inchLaptopLenovoPrizeimage.png",
-            "prizes_per_run": 1,
-            "prizes_per_run_actual": 1,
-            "chances_to_win_perc": 0,
-            "min_required_total_tickets": 100,
-            "cap_prizes_per_run": 3,
-            "priority": 1,
-            "stock_items_per_draw": 9992,
-            "should_claim": false,
-            "winners": [],
-            "requires_claim": false,
-            "min_required_tickets_for_user": 10
-          },
-          {
-            "id": 1246,
-            "name": "100 Elite Spins on Holy Luck",
-            "image_url": "https://cdn.example/733d391eb7813f1f4ea2fd-SlotLogoPaladin.png",
-            "prizes_per_run": 5,
-            "prizes_per_run_actual": 7,
-            "chances_to_win_perc": 0,
-            "min_required_total_tickets": 10,
-            "cap_prizes_per_run": 20,
-            "priority": 2,
-            "stock_items_per_draw": null,
-            "should_claim": false,
-            "winners": [],
-            "requires_claim": false,
-            "min_required_tickets_for_user": 1
-          }
+          "…"
         ],
         "current_state": 1,
         "run_id": 771353,
@@ -209,68 +178,6 @@ for (const raffle of raffles) {
         "ticket_start_ts": 1782205200000,
         "allow_multi_prize_per_ticket": false,
         "total_tickets_count": 1409,
-        "my_tickets_count": 0,
-        "my_last_tickets": [],
-        "user_opted_in": true,
-        "requires_optin": false,
-        "is_active": true,
-        "winners_limit": 20,
-        "winners_offset": 0,
-        "winners_total": 0
-      },
-      {
-        "id": 323,
-        "name": "Hourly draw",
-        "description": "💰 Every hour, the luck could be yours! 🍀 Participate in our hourly draw for a chance to WIN BIG! 💸 Don't miss out!",
-        "image_url": "https://cdn.example/5bcd2fd9bf96f3709d96b5-HourlyDraw-Promoimage.png",
-        "image_url_mobile": "https://cdn.example/5bcd2fd9bf96f3709d96b5-HourlyDraw-Promoimage.png",
-        "icon_url": "https://cdn.example/c20dcc73645e365a387dc2-HourlyDraw-Drawicon.png",
-        "background_image_url": "https://cdn.example/867db7f6791f0a45039608-DrawBackground.png",
-        "background_image_url_mobile": "https://cdn.example/d31a8d4708a17723d57b4b-DrawBackgroundMobilecopy.png",
-        "is_grand": false,
-        "prizes": [
-          {
-            "id": 1249,
-            "name": "50 Points",
-            "image_url": "https://cdn.example/8d3401ef474e5c8f0d9372-Storeitemcopy22ice.png",
-            "prizes_per_run": 1,
-            "prizes_per_run_actual": 1,
-            "chances_to_win_perc": 0,
-            "min_required_total_tickets": 200,
-            "cap_prizes_per_run": 5,
-            "priority": 1,
-            "stock_items_per_draw": null,
-            "should_claim": false,
-            "winners": [],
-            "requires_claim": false,
-            "min_required_tickets_for_user": 10
-          },
-          {
-            "id": 1250,
-            "name": "50 Free Spins",
-            "image_url": "https://cdn.example/8328e5e60ec5eaa133a9c1-Storeitemcopy7.png",
-            "prizes_per_run": 1,
-            "prizes_per_run_actual": 1,
-            "chances_to_win_perc": 0,
-            "min_required_total_tickets": 25,
-            "cap_prizes_per_run": 10,
-            "priority": 2,
-            "stock_items_per_draw": null,
-            "should_claim": false,
-            "winners": [],
-            "requires_claim": false,
-            "min_required_tickets_for_user": 2
-          }
-        ],
-        "current_state": 1,
-        "run_id": 775241,
-        "execution_type": 2,
-        "execution_ts": 1782288000000,
-        "previous_run_ts": 1782284400000,
-        "previous_run_id": 775126,
-        "ticket_start_ts": 1782284400000,
-        "allow_multi_prize_per_ticket": false,
-        "total_tickets_count": 19,
         "my_tickets_count": 0,
         "my_last_tickets": [],
         "user_opted_in": true,

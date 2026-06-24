@@ -2,7 +2,7 @@
 
 > Returns the missions and tournaments associated with a casino / sportsbook game in the operator's games catalog — the reverse of "given this mission, which games count for it" — so you can surface "play this game to progress mission X" / "tournament Y features this game" badges on game tiles or detail screens.
 > Import: `import { GetRelatedAchTourResponse } from '@smartico/public-api'`
-> Search terms: getRelatedItemsForGame, general, GetRelatedAchTourResponse
+> Search terms: getRelatedItemsForGame, general, GetRelatedAchTourResponse, UserAchievement, AchievementType, AchievementPublicMeta, UserAchievementTask, AchievementStatus, ScheduledMissionType, AchRelatedGame, BadgesTimeLimitStates, Tournament, TournamentType, TournamentPublicMeta, TournamentRegistrationType
 
 ## Signature
 ```ts

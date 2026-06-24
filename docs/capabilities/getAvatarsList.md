@@ -2,7 +2,7 @@
 
 > Returns the avatar catalog available to the current user — every pre-defined avatar configured for the label, with per-user unlock flags (`is_given`, `is_in_use`) applied server-side.
 > Import: `import { TAvatarDefinition } from '@smartico/public-api'`
-> Search terms: getAvatarsList, avatars, TAvatarDefinition, avatar_real_id, is_default, hide_until_achieved, priority, description, url, avatar_url, avatar_source_type_id
+> Search terms: getAvatarsList, avatars, getAvatars, TAvatarDefinition, avatar_real_id, is_default, hide_until_achieved, priority, description, url, avatar_url, avatar_source_type_id
 
 ## Signature
 ```ts

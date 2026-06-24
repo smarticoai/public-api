@@ -2,7 +2,7 @@
 
 > Returns the user's unified balance-change history — every points, gems, and diamonds transaction within the requested time window, ordered newest-first.
 > Import: `import { TActivityLog } from '@smartico/public-api'`
-> Search terms: getActivityLog, user, TActivityLog
+> Search terms: getActivityLog, user, TActivityLog, UserBalanceType, PointChangeSourceType, onUpdate, subscription
 
 ## Signature
 ```ts

@@ -2,7 +2,7 @@
 
 > Fetches the authenticated user's **store purchase history** — a paginated, newest-first list of past store purchases (one row per redemption).
 > Import: `import { TStoreItem } from '@smartico/public-api'`
-> Search terms: getStorePurchasedItems, store, TStoreItem, id, name, price, purchase_type, image, description, ribbon, priority
+> Search terms: getStorePurchasedItems, store, TStoreItem, TRibbon, AchRelatedGame, onUpdate, subscription, id, name, price, purchase_type, image, description, ribbon, priority
 
 ## Signature
 ```ts
@@ -224,8 +224,7 @@ try {
     "type": "prizedrop",
     "can_buy": true,
     "category_ids": [
-      567,
-      234
+      567
     ],
     "pool": 1000,
     "purchase_ts": 1781880583706,

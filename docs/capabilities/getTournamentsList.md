@@ -2,7 +2,7 @@
 
 > Returns the list of tournaments currently visible to the user, scoped server-side to what the user's segments qualify them to see.
 > Import: `import { TTournament } from '@smartico/public-api'`
-> Search terms: getTournamentsList, tournaments, TTournament, instance_id, tournament_id, name, description, image1, image2, image2_mobile, prize_pool_short
+> Search terms: getTournamentsList, tournaments, getTournaments, TTournament, TRibbon, TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS, TournamentRegistrationTypeName, TournamentRegistrationStatusName, onUpdate, subscription, instance_id, tournament_id, name, description, image1, image2, image2_mobile, prize_pool_short
 
 ## Signature
 ```ts

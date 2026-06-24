@@ -2,7 +2,7 @@
 
 > Returns the user's current unread inbox message count — a single integer suitable for driving a header badge.
 > Import: `import { /* types */ } from '@smartico/public-api'`
-> Search terms: getInboxUnreadCount, inbox
+> Search terms: getInboxUnreadCount, inbox, onUpdate, subscription
 
 ## Signature
 ```ts

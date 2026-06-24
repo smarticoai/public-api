@@ -2,7 +2,7 @@
 
 > Plays a mini-game template `spin_count` times in one round-trip.
 > Import: `import { TMiniGamePlayBatchResult } from '@smartico/public-api'`
-> Search terms: playMiniGameBatch, minigames, TMiniGamePlayBatchResult, errCode, errMessage, saw_prize_id, jackpot_amount, first_spin_in_period
+> Search terms: playMiniGameBatch, minigames, doSAWSpinBatch, TMiniGamePlayBatchResult, SAWSpinErrorCode, onUpdate, subscription, errCode, errMessage, saw_prize_id, jackpot_amount, first_spin_in_period
 
 ## Signature
 ```ts

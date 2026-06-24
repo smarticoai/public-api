@@ -2,7 +2,7 @@
 
 > Returns the full detail of a single raffle draw run — same shape as the embedded `TRaffleDraw` in `getRaffles`, but populated with paginated `prizes[].winners[]` rows including usernames and avatars.
 > Import: `import { TRaffleDraw } from '@smartico/public-api'`
-> Search terms: getRaffleDrawRun, raffles, TRaffleDraw, id, name, description, image_url, image_url_mobile, icon_url, background_image_url, background_image_url_mobile
+> Search terms: getRaffleDrawRun, raffles, TRaffleDraw, TRafflePrize, TRafflePrizeWinner, RaffleDrawInstanceState, RaffleDrawTypeExecution, TRaffleTicket, id, name, description, image_url, image_url_mobile, icon_url, background_image_url, background_image_url_mobile
 
 ## Signature
 ```ts
@@ -166,22 +166,6 @@ if ((detail.winners_total ?? 0) > 20) {
       "winners": [],
       "requires_claim": false,
       "min_required_tickets_for_user": 10
-    },
-    {
-      "id": 1246,
-      "name": "100 Elite Spins on Holy Luck",
-      "image_url": "https://cdn.example/733d391eb7813f1f4ea2fd-SlotLogoPaladin.png",
-      "prizes_per_run": 5,
-      "prizes_per_run_actual": 7,
-      "chances_to_win_perc": 0,
-      "min_required_total_tickets": 10,
-      "cap_prizes_per_run": 20,
-      "priority": 2,
-      "stock_items_per_draw": null,
-      "should_claim": false,
-      "winners": [],
-      "requires_claim": false,
-      "min_required_tickets_for_user": 1
     }
   ],
   "current_state": 1,

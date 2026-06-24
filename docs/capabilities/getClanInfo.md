@@ -2,7 +2,7 @@
 
 > Returns the full detail of a single clan — adds the ranked `members[]` roster and a fresh `cooldown_until` on top of the same fields exposed on a `TClan` list entry.
 > Import: `import { TClanInfo } from '@smartico/public-api'`
-> Search terms: getClanInfo, clans, TClanInfo, clan_id, public_meta, member_count, capacity_limit, entry_fee_currency_type_id, entry_fee_amount, rating_position, rating_score
+> Search terms: getClanInfo, clans, TClanInfo, Member, Avatar, Numeric, External, clan_id, public_meta, member_count, capacity_limit, entry_fee_currency_type_id, entry_fee_amount, rating_position, rating_score
 
 ## Signature
 ```ts
@@ -136,17 +136,6 @@ if (isMyClan) {
       "avatar_url": "https://cdn.example/avatar/183751733",
       "position": 1,
       "contribution_score": 450460,
-      "is_me": false,
-      "clean_ext_user_id": "0"
-    },
-    {
-      "user_id": 339588750,
-      "public_username": "Carolyn",
-      "avatar_id": "339588750",
-      "avatar_real_id": null,
-      "avatar_url": "https://cdn.example/avatar/339588750",
-      "position": 2,
-      "contribution_score": 310342,
       "is_me": false,
       "clean_ext_user_id": "0"
     }

@@ -2,7 +2,7 @@
 
 > Returns the user's current level — every `TLevel` field plus a computed `progress` percentage toward the next level.
 > Import: `import { TLevelCurrent } from '@smartico/public-api'`
-> Search terms: getCurrentLevel, user, TLevelCurrent, id, name, description, image, required_points, visibility_points, required_level_counter_1, required_level_counter_2
+> Search terms: getCurrentLevel, user, getUserLevel, TLevelCurrent, id, name, description, image, required_points, visibility_points, required_level_counter_1, required_level_counter_2
 
 ## Signature
 ```ts

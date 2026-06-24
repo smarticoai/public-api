@@ -2,7 +2,7 @@
 
 > Returns the bonuses awarded to the current user — both pending (player-claim required) and already-redeemed.
 > Import: `import { TBonus } from '@smartico/public-api'`
-> Search terms: getBonuses, bonuses, TBonus, bonus_id, is_redeemable, create_date, redeem_date, label_bonus_template_id, bonus_status_id, label_bonus_template_meta_map, bonus_meta_map
+> Search terms: getBonuses, bonuses, TBonus, BonusStatus, BonusTemplateMetaMap, BonusMetaMap, onUpdate, subscription, bonus_id, is_redeemable, create_date, redeem_date, label_bonus_template_id, bonus_status_id, label_bonus_template_meta_map, bonus_meta_map
 
 ## Signature
 ```ts

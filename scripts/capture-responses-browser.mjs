@@ -53,6 +53,26 @@ const anon = (v) => {
 	return v;
 };
 
+// Bound a captured value so a method returning a huge map/array (e.g.
+// getTranslations → ~800 keys) doesn't produce an 800-line input file. A bit more
+// generous than the page generator (which re-trims to depth 3 / 1 item): keeps a
+// representative sample. strings→200 · arrays→2 · dictionary objects (>50 keys)→20
+// · nesting beyond depth 5 collapses.
+const bound = (v, d = 0) => {
+	if (typeof v === 'string') return v.length > 200 ? v.slice(0, 197) + '…' : v;
+	if (Array.isArray(v)) { if (!v.length) return []; if (d >= 5) return ['…']; return v.slice(0, 2).map(x => bound(x, d + 1)); }
+	if (v && typeof v === 'object') {
+		const keys = Object.keys(v);
+		if (d >= 5) return keys.length ? { '…': '(nested)' } : {};
+		const cap = keys.length > 50;
+		const o = {};
+		for (const k of keys.slice(0, cap ? 20 : keys.length)) o[k] = bound(v[k], d + 1);
+		if (cap) o['…'] = `(+${keys.length - 20} more keys)`;
+		return o;
+	}
+	return v;
+};
+
 (async () => {
 	const LOG = '/tmp/sm-capture.log';
 	const log = (m) => { const line = '[capture] ' + m; console.log(line); try { fs.appendFileSync(LOG, line + '\n'); } catch {} };
@@ -272,7 +292,7 @@ const anon = (v) => {
 	let ok = 0, skip = [];
 	for (const [name, val] of Object.entries(results)) {
 		if (typeof val === 'string' && val.startsWith('ERR')) { skip.push(`${name}: ${val.slice(0, 70)}`); continue; }
-		fs.writeFileSync(path.join(RESP_DIR, `${name}.json`), JSON.stringify(anon(val), null, 2));
+		fs.writeFileSync(path.join(RESP_DIR, `${name}.json`), JSON.stringify(bound(anon(val)), null, 2));
 		ok++;
 	}
 	log(`wrote ${ok} response files`);

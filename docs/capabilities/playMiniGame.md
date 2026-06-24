@@ -2,7 +2,7 @@
 
 > Plays one round of a mini-game template — runs the server's randomised prize selection, deducts the buy-in cost (if any), credits the won prize, and returns the won `prize_id`.
 > Import: `import { TMiniGamePlayResult } from '@smartico/public-api'`
-> Search terms: playMiniGame, minigames, TMiniGamePlayResult, err_code, err_message, prize_id, request_id
+> Search terms: playMiniGame, minigames, doSAWSpin, SAWSpin, spin, TMiniGamePlayResult, SAWSpinErrorCode, onUpdate, subscription, err_code, err_message, prize_id, request_id
 
 ## Signature
 ```ts

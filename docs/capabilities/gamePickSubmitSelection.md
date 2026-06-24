@@ -2,7 +2,7 @@
 
 > Submits all score predictions for a round in a MatchX game in one shot.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
-> Search terms: gamePickSubmitSelection, gamepick, GamePickRound
+> Search terms: gamePickSubmitSelection, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType
 
 ## Signature
 ```ts

@@ -2,7 +2,7 @@
 
 > Returns the rich body of a single inbox message — title, preview text, icon, click action, optional rich HTML body, and optional buttons.
 > Import: `import { TInboxMessageBody } from '@smartico/public-api'`
-> Search terms: getInboxMessageBody, inbox, TInboxMessageBody, action, icon, title, preview_body, custom_data
+> Search terms: getInboxMessageBody, inbox, TInboxMessageBody, Button, action, icon, title, preview_body, custom_data
 
 ## Signature
 ```ts

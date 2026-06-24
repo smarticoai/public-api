@@ -2,7 +2,7 @@
 
 > Returns all missions visible to the current user, scoped server-side to what the user is qualified to see.
 > Import: `import { TMissionOrBadge } from '@smartico/public-api'`
-> Search terms: getMissions, missions, TMissionOrBadge, id, name, image, is_completed, is_locked, is_requires_optin, is_opted_in, time_limit_ms
+> Search terms: getMissions, missions, getUserMissions, achievements, TMissionOrBadge, TMissionOrBadgeTask, AchRelatedGame, TRibbon, AchievementAvailabilityStatus, AchievementClaimPeriodTypeId, BadgesTimeLimitStates, onUpdate, subscription, id, name, image, is_completed, is_locked, is_requires_optin, is_opted_in, time_limit_ms
 
 ## Signature
 ```ts

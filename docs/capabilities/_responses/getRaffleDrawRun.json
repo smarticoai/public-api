@@ -40,38 +40,6 @@
       "winners": [],
       "requires_claim": false,
       "min_required_tickets_for_user": 1
-    },
-    {
-      "id": 1247,
-      "name": "10 Gems",
-      "image_url": "https://cdn.example/ecec44e4c2d0555b4d8a32-Gems10.webp",
-      "prizes_per_run": 5,
-      "prizes_per_run_actual": 5,
-      "chances_to_win_perc": 0,
-      "min_required_total_tickets": 50,
-      "cap_prizes_per_run": null,
-      "priority": 3,
-      "stock_items_per_draw": null,
-      "should_claim": false,
-      "winners": [],
-      "requires_claim": false,
-      "min_required_tickets_for_user": 5
-    },
-    {
-      "id": 1248,
-      "name": "10 Diamonds",
-      "image_url": "https://cdn.example/7014b5850d63423ba67957-Diamonds10.webp",
-      "prizes_per_run": 5,
-      "prizes_per_run_actual": 5,
-      "chances_to_win_perc": 0,
-      "min_required_total_tickets": 50,
-      "cap_prizes_per_run": null,
-      "priority": 4,
-      "stock_items_per_draw": null,
-      "should_claim": false,
-      "winners": [],
-      "requires_claim": false,
-      "min_required_tickets_for_user": 5
     }
   ],
   "current_state": 1,
