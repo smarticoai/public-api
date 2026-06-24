@@ -113,3 +113,139 @@ recommendation is currently available.
 
 AI-recommended casino bet amount for this user. Undefined when no
 recommendation is currently available.
+
+***
+
+### ach\_level\_current?
+
+> `optional` **ach\_level\_current?**: `string`
+
+Display name of the user's current level (e.g. `"Silver"`); resolve the id via `getCurrentLevel()`.
+
+***
+
+### ach\_gamification\_in\_control\_group?
+
+> `optional` **ach\_gamification\_in\_control\_group?**: `boolean`
+
+`true` when the user is in the gamification A/B control group (gamification UI suppressed).
+
+***
+
+### user\_id?
+
+> `optional` **user\_id?**: `number`
+
+Smartico-internal numeric user id.
+
+***
+
+### user\_country?
+
+> `optional` **user\_country?**: `string`
+
+ISO country code of the user (e.g. `"BG"`).
+
+***
+
+### core\_wallet\_currency?
+
+> `optional` **core\_wallet\_currency?**: `string`
+
+Wallet currency code (e.g. `"EUR"`).
+
+***
+
+### core\_registration\_date?
+
+> `optional` **core\_registration\_date?**: `number`
+
+Registration timestamp (epoch ms); `0` when unknown.
+
+***
+
+### user\_last\_session\_push\_state?
+
+> `optional` **user\_last\_session\_push\_state?**: `string`
+
+Last-session browser push-permission state (e.g. `"BLOCKED"`, `"GRANTED"`).
+
+***
+
+### acc\_bonus\_abuser?
+
+> `optional` **acc\_bonus\_abuser?**: `boolean`
+
+`true` when the account is flagged as a bonus abuser.
+
+***
+
+### avatar\_id?
+
+> `optional` **avatar\_id?**: `string`
+
+Selected avatar id (catalogue avatar or AI-variant base).
+
+***
+
+### avatar\_real\_id?
+
+> `optional` **avatar\_real\_id?**: `number`
+
+`avatar_real_id` of the selected avatar; `0` when none.
+
+***
+
+### core\_avatar\_real\_id?
+
+> `optional` **core\_avatar\_real\_id?**: `number`
+
+`avatar_real_id` of the user's core avatar; null when unset.
+
+***
+
+### core\_clan\_id?
+
+> `optional` **core\_clan\_id?**: `string`
+
+Current clan id (string); empty/null when not in a clan.
+
+***
+
+### core\_clan\_is\_kicked?
+
+> `optional` **core\_clan\_is\_kicked?**: `boolean`
+
+`true` when the user was kicked from their clan; null when not applicable.
+
+***
+
+### core\_clan\_kicked\_out\_id?
+
+> `optional` **core\_clan\_kicked\_out\_id?**: `number`
+
+Id of the clan the user was kicked from; null when not applicable.
+
+***
+
+### aff\_referred\_by\_friend\_ext\_user\_id?
+
+> `optional` **aff\_referred\_by\_friend\_ext\_user\_id?**: `string`
+
+ext_user_id of the friend who referred this user; null when none.
+
+***
+
+### aff\_refer\_friend\_url?
+
+> `optional` **aff\_refer\_friend\_url?**: `string`
+
+Refer-a-friend share URL; null when the feature is disabled.
+
+***
+
+### aff\_refered\_friends\_count?
+
+> `optional` **aff\_refered\_friends\_count?**: `number`
+
+Count of friends this user has referred.

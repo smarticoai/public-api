@@ -1,0 +1,211 @@
+[
+  {
+    "jp_template_id": 6,
+    "jp_type_id": 1,
+    "jp_public_meta": {
+      "image_url": "https://cdn.example/f8b68a18473c437e32a860-Jackpot1.jpg",
+      "placeholder1": null,
+      "placeholder2": null,
+      "name": "Minor",
+      "description": "1% on top of your bet amount will be contributed to the Jackpot",
+      "not_winner_template": {
+        "id": "0",
+        "content": ""
+      },
+      "priority": "1",
+      "winner_template": {
+        "id": "0",
+        "content": ""
+      },
+      "custom_data": {}
+    },
+    "jp_currency": "EUR",
+    "user_currency": "EUR",
+    "related_games": [],
+    "contribution_type": 2,
+    "contribution_value": 0.2,
+    "pot": {
+      "jp_template_id": 6,
+      "jp_pot_id": 306053,
+      "user_id": null,
+      "current_pot_amount": 13.08704704,
+      "current_pot_amount_user_currency": 13.08704704,
+      "explode_date_ts": null,
+      "current_pot_temperature": 2
+    },
+    "is_opted_in": true,
+    "is_auto_opt_in": true,
+    "ach_related_game_allow_all": true,
+    "registration_count": 17260,
+    "contribution_rules": [
+      {
+        "ruleId": 1,
+        "jpTemplateId": 6,
+        "type": 2,
+        "extEntityIds": [
+          "1111"
+        ],
+        "contributionValue": 4
+      },
+      {
+        "ruleId": 2,
+        "jpTemplateId": 6,
+        "type": 1,
+        "extEntityIds": [
+          "666666"
+        ],
+        "contributionValue": 3
+      }
+    ],
+    "expose_winners_over_api": false
+  },
+  {
+    "jp_template_id": 4,
+    "jp_type_id": 1,
+    "jp_public_meta": {
+      "image_url": "https://cdn.example/f8b68a18473c437e32a860-Jackpot1.jpg",
+      "placeholder1": null,
+      "placeholder2": null,
+      "name": "Major",
+      "description": "1% on top of your bet amount will be contributed to the Jackpot",
+      "not_winner_template": {
+        "id": "0",
+        "content": ""
+      },
+      "priority": "2",
+      "winner_template": {
+        "id": "0",
+        "content": ""
+      },
+      "custom_data": {}
+    },
+    "jp_currency": "EUR",
+    "user_currency": "EUR",
+    "related_games": [],
+    "contribution_type": 2,
+    "contribution_value": 6.7,
+    "pot": {
+      "jp_template_id": 4,
+      "jp_pot_id": 306106,
+      "user_id": null,
+      "current_pot_amount": 814.33570322,
+      "current_pot_amount_user_currency": 814.33570322,
+      "explode_date_ts": null,
+      "current_pot_temperature": 2
+    },
+    "is_opted_in": true,
+    "is_auto_opt_in": true,
+    "ach_related_game_allow_all": true,
+    "registration_count": 32968,
+    "contribution_rules": [
+      {
+        "ruleId": 3,
+        "jpTemplateId": 4,
+        "type": 2,
+        "extEntityIds": [
+          "999"
+        ],
+        "contributionValue": 8
+      }
+    ],
+    "expose_winners_over_api": false
+  },
+  {
+    "jp_template_id": 8,
+    "jp_type_id": 2,
+    "jp_public_meta": {
+      "image_url": "https://cdn.example/f8b68a18473c437e32a860-Jackpot1.jpg",
+      "placeholder1": "111111111111111111",
+      "placeholder2": "XXXXXXXXXXXXXXXXX",
+      "name": "Personal Jackpot For All Games",
+      "description": "For every bet, 2% is added to the jackpot pot—split 50/50 between the player’s contribution and the house. Plus, 20% of each jackpot goes toward seeding the next pot, keeping the excitement rolling…",
+      "not_winner_template": {
+        "content": "\n<style>\n    @keyframes reveal {\n        0% {\n            transform: translateX(100%);\n        }\n        100% {\n            transform: translateX(0%);\n        }\n    }\n\n    @keyframes hide {\n       …",
+        "id": "1"
+      },
+      "winner_template": {
+        "content": "\n<script>\n    document.addEventListener('DOMContentLoaded', () => {\n        const counter = document.getElementById('counter'); \n        const duration = 2000; \n        const targetValue = \"{{winni…",
+        "id": "1"
+      },
+      "custom_data": {}
+    },
+    "jp_currency": "EUR",
+    "user_currency": "EUR",
+    "related_games": [],
+    "contribution_type": 2,
+    "contribution_value": 2,
+    "pot": {
+      "jp_template_id": 8,
+      "jp_pot_id": null,
+      "user_id": null,
+      "current_pot_amount": 0,
+      "current_pot_amount_user_currency": 0,
+      "explode_date_ts": null,
+      "current_pot_temperature": 0
+    },
+    "is_opted_in": false,
+    "is_auto_opt_in": false,
+    "ach_related_game_allow_all": true,
+    "registration_count": 1,
+    "contribution_rules": [
+      {
+        "ruleId": 4,
+        "jpTemplateId": 8,
+        "type": 2,
+        "extEntityIds": [
+          "123"
+        ],
+        "contributionValue": 12
+      },
+      {
+        "ruleId": 6,
+        "jpTemplateId": 8,
+        "type": 1,
+        "extEntityIds": [
+          "5555,6666,8888"
+        ],
+        "contributionValue": 1
+      }
+    ],
+    "expose_winners_over_api": false
+  },
+  {
+    "jp_template_id": 3,
+    "jp_type_id": 1,
+    "jp_public_meta": {
+      "image_url": "https://cdn.example/25fd52c03b8a71b214966b-Jackpot2.jpg",
+      "name": "Grand",
+      "description": "In this jackpot<br/>\n1. There is no minimum bet restriction<br/>\n2. From every bet you will contribute 1% on top of the bet amount<br/>\n3. Jackpot is in the EUR currency, but you can bet in any<br/…",
+      "not_winner_template": {
+        "content": "\n<style>\n    @keyframes reveal {\n        0% {\n            transform: translateX(100%);\n        }\n        100% {\n            transform: translateX(0%);\n        }\n    }\n    :root {\n        --popup-si…",
+        "id": "1"
+      },
+      "priority": "3",
+      "winner_template": {
+        "content": "\n<script>\n    document.addEventListener('DOMContentLoaded', () => {\n        const counter = document.getElementById('counter'); \n        const duration = 2000; \n        const targetValue = \"{{winni…",
+        "id": "1"
+      },
+      "custom_data": {}
+    },
+    "jp_currency": "EUR",
+    "user_currency": "EUR",
+    "related_games": [],
+    "contribution_type": 2,
+    "contribution_value": 1,
+    "pot": {
+      "jp_template_id": 3,
+      "jp_pot_id": 306104,
+      "user_id": null,
+      "current_pot_amount": 153.061294,
+      "current_pot_amount_user_currency": 153.061294,
+      "explode_date_ts": null,
+      "current_pot_temperature": 2
+    },
+    "is_opted_in": true,
+    "is_auto_opt_in": true,
+    "ach_related_game_allow_all": true,
+    "registration_count": 33991,
+    "contribution_rules": [],
+    "expose_winners_over_api": false
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 7771,
+    "name": "Do not the cat",
+    "purchase_type": "points",
+    "price": 69,
+    "image": "https://cdn.example/83109b74be861920197eb8-cat-space.gif",
+    "description": "Please do not the cat",
+    "ribbon": "hot",
+    "priority": 10,
+    "type": "unknown",
+    "can_buy": false,
+    "category_ids": [
+      234
+    ],
+    "pool": 69,
+    "custom_data": {},
+    "active_till_date": 9223372036854776000,
+    "show_timer": false,
+    "only_in_custom_section": false,
+    "cant_buy_message": "Please do not the cat. Thank you.",
+    "related_games": []
+  },
+  {
+    "id": 1355,
+    "name": "iPhone 15 Pro",
+    "purchase_type": "diamonds",
+    "price": 1000,
+    "image": "https://cdn.example/b87e2e7c27e645aa1843d2-Storeitem.png",
+    "description": "The marvel of technology, the pinnacle of style",
+    "ribbon": "vip",
+    "priority": 0,
+    "hint_text": "No hidden catch, no strings attached. Just an iPhone",
+    "type": "tangible",
+    "can_buy": true,
+    "category_ids": [
+      230,
+      234
+    ],
+    "pool": 37,
+    "custom_data": {},
+    "active_till_date": 9223372036854776000,
+    "show_timer": false,
+    "only_in_custom_section": false,
+    "related_games": []
+  }
+]

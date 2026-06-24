@@ -1,0 +1,20 @@
+{
+  "id": 698,
+  "name": "Silver",
+  "description": "Now you’re playing! Enjoy exclusive missions and exciting rewards.",
+  "image": "https://cdn.example/665b45d5a01e2191288091-3silver.png",
+  "required_points": 500,
+  "visibility_points": 0,
+  "required_level_counter_1": null,
+  "required_level_counter_2": null,
+  "custom_data": {
+    "reward": "1000 EUR + 300 Free Spins",
+    "image_inactive": "https://cdn.example/bdf58fecfda5a1b9627f8f-LevelLevel3Enabledfalse.png",
+    "image_active": "https://cdn.example/90a40da1c5e201f8fa1d3c-LevelLevel3Enabledtrue.png",
+    "rakeback": 5,
+    "has_vip_club": true,
+    "cashback": 2
+  },
+  "ordinal_position": 3,
+  "progress": 38
+}

@@ -1,0 +1,40 @@
+[
+  {
+    "id": 696,
+    "name": "Stone",
+    "description": "Your journey begins here! Step into the game and start climbing the ranks.",
+    "image": "https://cdn.example/1a4199871dc30acf09374a-1stone.png",
+    "required_points": 0,
+    "visibility_points": 0,
+    "required_level_counter_1": 0,
+    "required_level_counter_2": 0,
+    "custom_data": {
+      "reward": "100 Free Spins",
+      "image_inactive": "https://cdn.example/e917989495185e3fed695d-LevelLevel1Enabledfalse.png",
+      "image_active": "https://cdn.example/a961023ab3f6441ac19dfc-LevelLevel1Enabledtrue.png",
+      "rakeback": 0,
+      "has_vip_club": false,
+      "cashback": 0
+    },
+    "ordinal_position": 1
+  },
+  {
+    "id": 699,
+    "name": "Gold",
+    "description": "You’ve hit gold status! VIP perks and special bonuses await.",
+    "image": "https://cdn.example/23155a8ee9fe0c4784dcf2-4gold.png",
+    "required_points": 1000,
+    "visibility_points": 0,
+    "required_level_counter_1": null,
+    "required_level_counter_2": null,
+    "custom_data": {
+      "reward": "3000 EUR",
+      "image_inactive": "https://cdn.example/e917989495185e3fed695d-LevelLevel1Enabledfalse.png",
+      "image_active": "https://cdn.example/a961023ab3f6441ac19dfc-LevelLevel1Enabledtrue.png",
+      "rakeback": 4,
+      "has_vip_club": true,
+      "cashback": 4
+    },
+    "ordinal_position": 4
+  }
+]

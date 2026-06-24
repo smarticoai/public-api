@@ -1,0 +1,50 @@
+[
+  {
+    "id": 7158,
+    "name": "Okayish Drop",
+    "price": 25,
+    "purchase_type": "points",
+    "image": "https://cdn.example/33fa1a793eac4a807041ac-Gamificationpoints10.webp",
+    "description": "A chance to win one out of 6 totally fine prizes",
+    "ribbon": "sale",
+    "priority": 3,
+    "type": "prizedrop",
+    "can_buy": true,
+    "category_ids": [
+      567,
+      234
+    ],
+    "pool": 1000,
+    "purchase_ts": 1781880583706,
+    "purchase_points_amount": 25,
+    "purchased_today": false,
+    "purchased_this_week": false,
+    "purchased_this_month": true,
+    "show_timer": false,
+    "related_games": []
+  },
+  {
+    "id": 7158,
+    "name": "Okayish Drop",
+    "price": 25,
+    "purchase_type": "points",
+    "image": "https://cdn.example/33fa1a793eac4a807041ac-Gamificationpoints10.webp",
+    "description": "A chance to win one out of 6 totally fine prizes",
+    "ribbon": "sale",
+    "priority": 3,
+    "type": "prizedrop",
+    "can_buy": true,
+    "category_ids": [
+      567,
+      234
+    ],
+    "pool": 1000,
+    "purchase_ts": 1781880407214,
+    "purchase_points_amount": 25,
+    "purchased_today": false,
+    "purchased_this_week": false,
+    "purchased_this_month": true,
+    "show_timer": false,
+    "related_games": []
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "errCode": 0,
+  "data": {
+    "ext_user_id": "361368543",
+    "int_user_id": "216289785",
+    "public_username": "Antonio",
+    "avatar_url": "https://cdn.example/avatars/12/00000000-0000-0000-0000-000000000000.png",
+    "last_wallet_sync_time": "2026-06-24T07:43:26.979Z",
+    "ach_points_balance": 326,
+    "ach_gems_balance": 0,
+    "ach_diamonds_balance": 1,
+    "pubic_username_set": true
+  }
+}

@@ -1,0 +1,16 @@
+[
+  {
+    "prompt_id": 1,
+    "name": "Crown",
+    "icon_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1776958855960-1.webp",
+    "cost_currency_type_id": 0,
+    "cost_value": 1
+  },
+  {
+    "prompt_id": 3,
+    "name": "Clown nose",
+    "icon_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1776959270420-1.webp",
+    "cost_currency_type_id": 1,
+    "cost_value": 1
+  }
+]

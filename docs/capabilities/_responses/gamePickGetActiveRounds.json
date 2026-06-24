@@ -1,0 +1,1111 @@
+{
+  "errCode": 0,
+  "data": [
+    {
+      "round_id": 42115,
+      "round_row_id": 2,
+      "public_meta": {
+        "round_name": "Group stage 15-28 June",
+        "_translations": {
+          "BR": {},
+          "TH": {}
+        },
+        "allow_edit_answers": true,
+        "final_screen_cta_dp": "dp:ok",
+        "hide_resolved_round": false
+      },
+      "score_type_id": 1,
+      "open_date": 1782200297406,
+      "last_bet_date": 1782691140000,
+      "is_active_now": true,
+      "is_resolved": false,
+      "round_status_id": -1,
+      "score_full_win": 0,
+      "score_part_win": 0,
+      "score_lost": 0,
+      "events_total": "28",
+      "events_resolved": "0",
+      "show_users_preference": true,
+      "order_events": 1,
+      "board_users_count": 20,
+      "hide_users_predictions": false,
+      "round_name": "Group stage 15-28 June",
+      "user_score": 0,
+      "user_placed_bet": false,
+      "events": [
+        {
+          "gp_event_id": 147400,
+          "market_type_id": 4,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Czech Republic",
+            "team2_name": "Mexico",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/1299262.png",
+            "team2_image": "https://cdn.example/games/teams-images/4781.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-25T01:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 22,
+              "2": 35,
+              "x": 43
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147401,
+          "market_type_id": 6,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "South Africa",
+            "team2_name": "Republic of Korea",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4736.png",
+            "team2_image": "https://cdn.example/games/teams-images/4735.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-25T01:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 31,
+              "2": 62,
+              "x": 7
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147402,
+          "market_type_id": 25,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Switzerland",
+            "team2_name": "Canada",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/1299086.png",
+            "team2_image": "https://cdn.example/games/teams-images/4752.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-24T19:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 55,
+              "2": 45
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147403,
+          "market_type_id": 7,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Bosnia & Herzegovina",
+            "team2_name": "Qatar",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/1299283.png",
+            "team2_image": "https://cdn.example/games/teams-images/4792.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-24T19:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1/2": 41,
+              "1/x": 44,
+              "2/x": 15
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147404,
+          "market_type_id": 3,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Scotland",
+            "team2_name": "Brazil",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/1299513.png",
+            "team2_image": "https://cdn.example/games/teams-images/4748.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-24T22:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 11,
+              "2": 70,
+              "x": 19
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147405,
+          "market_type_id": 8,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Morocco",
+            "team2_name": "Haiti",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4778.png",
+            "team2_image": "https://cdn.example/games/teams-images/7229.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-24T22:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147406,
+          "market_type_id": 9,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Turkey",
+            "team2_name": "USA",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4700.png",
+            "team2_image": "https://cdn.example/games/teams-images/4724.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-26T02:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147407,
+          "market_type_id": 2,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Paraguay",
+            "team2_name": "Australia",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4789.png",
+            "team2_image": "https://cdn.example/games/teams-images/4741.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-26T02:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "yes": 15,
+              "no": 85
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147408,
+          "market_type_id": 11,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Tunisia",
+            "team2_name": "Netherlands",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4729.png",
+            "team2_image": "https://cdn.example/games/teams-images/4705.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-25T23:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147409,
+          "market_type_id": 12,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Japan",
+            "team2_name": "Sweden",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4770.png",
+            "team2_image": "https://cdn.example/games/teams-images/4688.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-25T23:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147410,
+          "market_type_id": 10,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "New Zealand",
+            "team2_name": "Belgium",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4784.png",
+            "team2_image": "https://cdn.example/games/teams-images/1299087.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T03:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147411,
+          "market_type_id": 13,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Egypt",
+            "team2_name": "Iran",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4758.png",
+            "team2_image": "https://cdn.example/games/teams-images/4766.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T03:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 47,
+              "2": 41,
+              "x": 12
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147412,
+          "market_type_id": 3,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Uruguay",
+            "team2_name": "Spain",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4725.png",
+            "team2_image": "https://cdn.example/games/teams-images/4698.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T00:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 14,
+              "2": 64,
+              "x": 22
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147413,
+          "market_type_id": 4,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Cape Verde",
+            "team2_name": "Saudi Arabia",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4753.png",
+            "team2_image": "https://cdn.example/games/teams-images/4834.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T00:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 31,
+              "2": 26,
+              "x": 43
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147414,
+          "market_type_id": 6,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Norway",
+            "team2_name": "France",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/1299515.png",
+            "team2_image": "https://cdn.example/games/teams-images/4481.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-26T19:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 33,
+              "2": 62,
+              "x": 5
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147415,
+          "market_type_id": 25,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Senegal",
+            "team2_name": "Iraq",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4739.png",
+            "team2_image": "https://cdn.example/games/teams-images/4767.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-26T19:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 79,
+              "2": 21
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147416,
+          "market_type_id": 7,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Jordan",
+            "team2_name": "Argentina",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4771.png",
+            "team2_image": "https://cdn.example/games/teams-images/4819.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-28T02:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1/2": 43,
+              "1/x": 11,
+              "2/x": 46
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147417,
+          "market_type_id": 8,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Algeria",
+            "team2_name": "Austria",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4691.png",
+            "team2_image": "https://cdn.example/games/teams-images/4718.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-28T02:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147418,
+          "market_type_id": 2,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Portugal",
+            "team2_name": "Uzbekistan",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4704.png",
+            "team2_image": "https://cdn.example/games/teams-images/4723.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-23T17:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "yes": 17,
+              "no": 83
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147419,
+          "market_type_id": 9,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Colombia",
+            "team2_name": "DR Congo",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4820.png",
+            "team2_image": "https://cdn.example/games/teams-images/4823.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-24T02:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147420,
+          "market_type_id": 12,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Colombia",
+            "team2_name": "Portugal",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4820.png",
+            "team2_image": "https://cdn.example/games/teams-images/4704.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T23:30:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147421,
+          "market_type_id": 3,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "DR Congo",
+            "team2_name": "Uzbekistan",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4823.png",
+            "team2_image": "https://cdn.example/games/teams-images/4723.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T23:30:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 45,
+              "2": 28,
+              "x": 27
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147422,
+          "market_type_id": 2,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "England",
+            "team2_name": "Ghana",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4713.png",
+            "team2_image": "https://cdn.example/games/teams-images/4764.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-23T20:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "yes": 18,
+              "no": 82
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147423,
+          "market_type_id": 11,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Panama",
+            "team2_name": "Croatia",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/5164.png",
+            "team2_image": "https://cdn.example/games/teams-images/1299163.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-23T23:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147424,
+          "market_type_id": 6,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Panama",
+            "team2_name": "England",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/5164.png",
+            "team2_image": "https://cdn.example/games/teams-images/4713.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T21:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 19,
+              "2": 77,
+              "x": 4
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147425,
+          "market_type_id": 3,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Croatia",
+            "team2_name": "Ghana",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/1299163.png",
+            "team2_image": "https://cdn.example/games/teams-images/4764.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-27T21:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 57,
+              "2": 17,
+              "x": 26
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147426,
+          "market_type_id": 9,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Ecuador",
+            "team2_name": "Germany",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4757.png",
+            "team2_image": "https://cdn.example/games/teams-images/4711.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-25T20:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 147427,
+          "market_type_id": 10,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Curacao",
+            "team2_name": "Ivory Coast",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/55827.png",
+            "team2_image": "https://cdn.example/games/teams-images/4768.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-25T20:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": true,
+          "resolution_type_id": 0
+        }
+      ],
+      "has_open_for_bet_events": true,
+      "has_not_submitted_changes": false
+    },
+    {
+      "round_id": 40564,
+      "round_row_id": 1,
+      "public_meta": {
+        "round_name": "Group stage 11-14 June",
+        "_translations": {
+          "BR": {}
+        },
+        "allow_edit_answers": true,
+        "final_screen_cta_dp": "dp:ok",
+        "hide_resolved_round": false
+      },
+      "score_type_id": 1,
+      "open_date": 1779269280999,
+      "last_bet_date": 1781481540000,
+      "is_active_now": false,
+      "is_resolved": true,
+      "round_status_id": 4,
+      "resolution_date": 1782200293679,
+      "score_full_win": 0,
+      "score_part_win": 0,
+      "score_lost": 0,
+      "events_total": "11",
+      "events_resolved": "11",
+      "show_users_preference": true,
+      "order_events": 1,
+      "board_users_count": 20,
+      "hide_users_predictions": false,
+      "round_name": "Group stage 11-14 June",
+      "user_score": 0,
+      "user_placed_bet": false,
+      "events": [
+        {
+          "gp_event_id": 132891,
+          "market_type_id": 4,
+          "event_meta": {
+            "result": "1",
+            "event_name": "World Cup",
+            "team1_name": "Mexico",
+            "team2_name": "South Africa",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4781.png",
+            "team2_image": null,
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-11T22:09:59.536Z",
+          "match_date": "2026-06-11T19:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 48,
+              "2": 11,
+              "x": 42
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132892,
+          "market_type_id": 6,
+          "event_meta": {
+            "result": "2",
+            "event_name": "World Cup",
+            "team1_name": "Republic of Korea",
+            "team2_name": "Czech Republic",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4735.png",
+            "team2_image": null,
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-12T04:50:43.260Z",
+          "match_date": "2026-06-12T02:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 48,
+              "2": 44,
+              "x": 8
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132893,
+          "market_type_id": 25,
+          "event_meta": {
+            "result": "1",
+            "event_name": "World Cup",
+            "team1_name": "Canada",
+            "team2_name": "Bosnia & Herzegovina",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4752.png",
+            "team2_image": null,
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-13T00:02:11.903Z",
+          "match_date": "2026-06-12T19:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 64,
+              "2": 36
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132894,
+          "market_type_id": 7,
+          "event_meta": {
+            "result": "x",
+            "event_name": "World Cup",
+            "team1_name": "Qatar",
+            "team2_name": "Switzerland",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4792.png",
+            "team2_image": "https://cdn.example/games/teams-images/1299086.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-13T23:47:22.282Z",
+          "match_date": "2026-06-13T19:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1/2": 44,
+              "1/x": 9,
+              "2/x": 47
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132895,
+          "market_type_id": 3,
+          "event_meta": {
+            "result": "x",
+            "event_name": "World Cup",
+            "team1_name": "Brazil",
+            "team2_name": "Morocco",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4748.png",
+            "team2_image": "https://cdn.example/games/teams-images/4778.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-14T02:31:31.938Z",
+          "match_date": "2026-06-13T22:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 57,
+              "2": 17,
+              "x": 26
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132896,
+          "market_type_id": 8,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "Haiti",
+            "team2_name": "Scotland",
+            "is_canceled": true,
+            "team1_image": null,
+            "team2_image": null,
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/c7877cf61d820ebf372382-Artboard4.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-14T01:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132897,
+          "market_type_id": 2,
+          "event_meta": {
+            "event_name": "World Cup",
+            "team1_name": "USA",
+            "team2_name": "Paraguay",
+            "is_canceled": true,
+            "team1_image": "https://cdn.example/games/teams-images/4724.png",
+            "team2_image": null,
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": null,
+          "match_date": "2026-06-13T01:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "yes": 20,
+              "no": 80
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132898,
+          "market_type_id": 11,
+          "event_meta": {
+            "result": "yes",
+            "event_name": "World Cup",
+            "team1_name": "Australia",
+            "team2_name": "Turkey",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4741.png",
+            "team2_image": null,
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-14T08:30:17.543Z",
+          "match_date": "2026-06-14T04:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132899,
+          "market_type_id": 13,
+          "event_meta": {
+            "result": "1",
+            "event_name": "World Cup",
+            "team1_name": "Netherlands",
+            "team2_name": "Japan",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4705.png",
+            "team2_image": "https://cdn.example/games/teams-images/4770.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-15T00:06:20.245Z",
+          "match_date": "2026-06-14T20:00:00.000Z",
+          "odds_details": {
+            "odd_value": {
+              "1": 52,
+              "2": 36,
+              "x": 11
+            }
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132900,
+          "market_type_id": 12,
+          "event_meta": {
+            "result": "no",
+            "event_name": "World Cup",
+            "team1_name": "Germany",
+            "team2_name": "Curacao",
+            "is_canceled": false,
+            "team1_image": "https://cdn.example/games/teams-images/4711.png",
+            "team2_image": null,
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/3a22b9a97062fba0932cc7-Artboard5.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-14T21:20:49.413Z",
+          "match_date": "2026-06-14T17:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        },
+        {
+          "gp_event_id": 132901,
+          "market_type_id": 9,
+          "event_meta": {
+            "result": "no",
+            "event_name": "World Cup",
+            "team1_name": "Ivory Coast",
+            "team2_name": "Ecuador",
+            "is_canceled": false,
+            "team1_image": null,
+            "team2_image": "https://cdn.example/games/teams-images/4757.png",
+            "sport_type_id": 1,
+            "question_image": "https://cdn.example/bd063e9699f104a3648235-Artboard6.png",
+            "scores_manually_adjusted": false
+          },
+          "event_resolution_date": "2026-06-15T02:55:35.306Z",
+          "match_date": "2026-06-14T23:00:00.000Z",
+          "odds_details": {
+            "odd_value": null
+          },
+          "user_placed_bet": false,
+          "resolution_score": 0,
+          "is_open_for_bets": false,
+          "resolution_type_id": 0
+        }
+      ],
+      "has_open_for_bet_events": false,
+      "has_not_submitted_changes": false
+    }
+  ]
+}

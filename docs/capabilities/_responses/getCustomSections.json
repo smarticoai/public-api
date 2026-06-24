@@ -1,0 +1,26 @@
+[
+  {
+    "id": 625,
+    "body": "<!-- Google Font -->\n<link href=\"https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,100..900;1,100..900&display=swap\" rel=\"stylesheet\">\n\n<style>\n  * {\n    scrollbar-width: none;\n  }\n\n…",
+    "menu_img": "https://cdn.example/9f1d1ae8915eef1f5db75c-Storeitemcopy21ice.png",
+    "menu_name": "Custom overview",
+    "section_type_id": 4,
+    "liquid_entity_data": [
+      1,
+      2,
+      4
+    ],
+    "liquid_template": 1
+  },
+  {
+    "id": 663,
+    "body": "<!-- Google Font -->\n<link href=\"https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@100..900&display=swap\" rel=\"stylesheet\">\n\n{% assign level_map_desktop = \"https://d146b4m7rkvjkw.cloudfront…",
+    "menu_img": "https://cdn.example/48d9243b06748dbe9881ce-map.png",
+    "menu_name": "Liquid Level Map",
+    "section_type_id": 4,
+    "liquid_entity_data": [
+      5
+    ],
+    "liquid_template": 2
+  }
+]

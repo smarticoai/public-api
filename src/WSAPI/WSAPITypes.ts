@@ -261,6 +261,40 @@ export interface TUserProfile {
 	/** AI-recommended casino bet amount for this user. Undefined when no
 	 * recommendation is currently available. */
 	core_recommended_casino_bet_amount?: number;
+	/** Display name of the user's current level (e.g. `"Silver"`); resolve the id via `getCurrentLevel()`. */
+	ach_level_current?: string;
+	/** `true` when the user is in the gamification A/B control group (gamification UI suppressed). */
+	ach_gamification_in_control_group?: boolean;
+	/** Smartico-internal numeric user id. */
+	user_id?: number;
+	/** ISO country code of the user (e.g. `"BG"`). */
+	user_country?: string;
+	/** Wallet currency code (e.g. `"EUR"`). */
+	core_wallet_currency?: string;
+	/** Registration timestamp (epoch ms); `0` when unknown. */
+	core_registration_date?: number;
+	/** Last-session browser push-permission state (e.g. `"BLOCKED"`, `"GRANTED"`). */
+	user_last_session_push_state?: string;
+	/** `true` when the account is flagged as a bonus abuser. */
+	acc_bonus_abuser?: boolean;
+	/** Selected avatar id (catalogue avatar or AI-variant base). */
+	avatar_id?: string;
+	/** `avatar_real_id` of the selected avatar; `0` when none. */
+	avatar_real_id?: number;
+	/** `avatar_real_id` of the user's core avatar; null when unset. */
+	core_avatar_real_id?: number | null;
+	/** Current clan id (string); empty/null when not in a clan. */
+	core_clan_id?: string;
+	/** `true` when the user was kicked from their clan; null when not applicable. */
+	core_clan_is_kicked?: boolean | null;
+	/** Id of the clan the user was kicked from; null when not applicable. */
+	core_clan_kicked_out_id?: number | null;
+	/** ext_user_id of the friend who referred this user; null when none. */
+	aff_referred_by_friend_ext_user_id?: string | null;
+	/** Refer-a-friend share URL; null when the feature is disabled. */
+	aff_refer_friend_url?: string | null;
+	/** Count of friends this user has referred. */
+	aff_refered_friends_count?: number;
 }
 
 /**

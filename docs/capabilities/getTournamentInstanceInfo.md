@@ -1,0 +1,224 @@
+# getTournamentInstanceInfo — API (TTournamentDetailed)
+
+> Returns the full detail of a single tournament instance — adds the player leaderboard, the full prize structure, and (for clan tournaments) the clan leaderboard and per-clan prize structure on top of everything already in `TTournament`.
+> Import: `import { TTournamentDetailed } from '@smartico/public-api'`
+> Search terms: getTournamentInstanceInfo, tournaments, TTournamentDetailed, instance_id, tournament_id, name, description, image1, image2, image2_mobile, prize_pool_short
+
+## Signature
+```ts
+_smartico.api.getTournamentInstanceInfo(tournamentInstanceId: number): Promise<TTournamentDetailed>
+```
+
+## Parameters
+- `tournamentInstanceId` — The `instance_id` from a `TTournament` returned by `getTournamentsList`.
+
+## Returns — `Promise<TTournamentDetailed>`
+- `instance_id` (number) — ID of tournament instance. Generated every time when tournament based on specific template is scheduled for run
+- `tournament_id` (number) — ID of tournament template
+- `name` (string) — Name of the tournament, translated to the user language
+- `description` (string) — Description of the tournament, translated to the user language
+- `image1` (string) — 1st image URL representing the tournament, 544×216px
+- `image2` (string) — 2nd image URL representing the tournament, 920x200px
+- `image2_mobile` (string) — 2nd image URL representing the tournament for mobile, 720x400px
+- `prize_pool_short` (string) — The message indicating the prize pool of the tournament
+- `custom_data` (object) — The custom data of the tournament defined by operator. Can be a JSON object, string or number
+- `is_featured` (boolean) — The indicator if the tournament is 'Featured'
+- `start_time` (number) — The time when tournament is going to start, epoch with milliseconds
+- `end_time` (number) — The time when tournament is going to finish, epoch with milliseconds
+- `registration_count` (number) — Number of users registered in the tournament
+- `is_user_registered` (boolean) — flag indicating if current user is registered in the tournament
+- `players_min_count` (number) — Minimum number of participant for this tournament. If tournament doesnt have enough registrations, it will not start
+- `players_max_count` (number) — Maximum number of participant for this tournament. When reached, new users won't be able to register
+- `registration_status` (string) — Status of registration in the tournament for current user
+- `registration_type` (string) — Type of registration in the tournament
+- `registration_cost_gems` (number) — Cost of registration in the tournament in gems
+- `duration_ms` (number) — Tournament duration in millisecnnds
+- `is_active` (boolean) — Indicator if tournament instance is active, means in one of the statues - PUBLISHED, REGISTED, STARTED
+- `is_can_register` (boolean) — Indicator if user can register in this tournament instance, e.g tournament is active, max users is not reached, user is not registered yet
+- `is_cancelled` (boolean) — Indicator if tournament instance is cancelled (status CANCELLED)
+- `is_finished` (boolean) — Indicator if tournament instance is finished (status FINISHED, CANCELLED OR FINIALIZING)
+- `is_in_progress` (boolean) — Indicator if tournament instance is running (status STARTED)
+- `is_upcoming` (boolean) — Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER)
+- `min_scores_win` (number) — The minimum amount of score points that the user should get in order to be qualified for the prize
+- `hide_leaderboard_min_scores` (boolean) — When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard
+- `total_scores` (null) — Total scores across all participants in the tournament
+- `is_clan_based` (boolean) — True when this tournament groups participants by clan
+- `related_games` (object[]) — List of casino games (or other types of entities) related to the tournament
+  - `ext_game_id` (string) — The ID of the related game
+  - `game_public_meta` (object) — Game public meta information
+- `players` (array) — The list of the tournament participants
+- `prizes` (object[])
+  - `gems` (number)
+  - `image_url` (string)
+  - `name` (string)
+  - `id` (number)
+  - `type` (string)
+  - `place_from` (number)
+  - `place_to` (number)
+
+## Behavioral contract
+**Preconditions**
+Pass a valid `tournamentInstanceId` read from `TTournament.instance_id`
+on an item returned by `getTournamentsList`. The method works
+standalone — calling `getTournamentsList()` first is not required by
+the SDK, but is the only stable source of valid IDs.
+
+**Refresh model**
+- **No subscription.** This is a one-shot promise; call again to
+ refresh.
+- **No client cache.** Every call sends a network request and
+ returns the latest server snapshot. Safe to poll on an interval —
+ the default Smartico UI uses 3 s while the detail view is visible.
+- **No push event** invalidates or refreshes detail state. Score
+ changes, registration count changes, lifecycle transitions — all
+ require a fresh `getTournamentInstanceInfo` call.
+
+**Returned shape — beyond `TTournament`**
+`TTournamentDetailed` extends `TTournament` with the following
+additional data: a `players[]` leaderboard sorted server-side by
+score (only members with at least one recorded score); the user's
+own `me` block carrying their rank and score (undefined when not
+registered or when the user has no score yet); a full per-place
+`prizes[]` array (place range, type, points / gems / diamonds
+amounts, image, name); and `related_games[]` if the operator has
+associated games with this tournament. For clan tournaments
+(`is_clan_based === true`), the response also carries
+`clan_leaderboard[]` (ranked clans with `total_score` and
+`contributing_members`), `clan_prize_structure[]` (per-clan-place
+prize tiers — Fixed vs Dynamic, with ScoreWeighted /
+EqualSplit distribution for Dynamic prizes), `user_clan_id` (the
+user's own clan), and the advisory `user_position_in_clan` /
+`user_score_in_clan` fields.
+
+**Idempotency**: safe. Read-only. Each call returns the latest
+server snapshot.
+
+**Side effects**: none — pure metadata read.
+
+**UI guidance**: see [UI Guide — `getTournamentInstanceInfo`](../../docs/ui/tournaments/UIGuide_getTournamentInstanceInfo.md).
+
+**Visitor mode**: not supported. Use `getTournamentsList` for
+the public lobby list in visitor mode; the detail endpoint requires
+an authenticated session.
+
+## Example
+```ts
+const tournaments = await window._smartico.api.getTournamentsList();
+const tournament = tournaments[0];
+
+console.log('[smartico] loading detail view for tournament', tournament.instance_id);
+const detail = await window._smartico.api.getTournamentInstanceInfo(tournament.instance_id);
+
+console.log('[smartico] render detail with', detail.players?.length ?? 0,
+  'players,', detail.prizes?.length ?? 0, 'prize tiers');
+
+if (detail.is_clan_based && detail.clan_leaderboard) {
+  console.log('[smartico] clan tournament — render clan leaderboard tab with',
+    detail.clan_leaderboard.length, 'clans');
+  if (detail.user_clan_id != null) {
+    console.log('[smartico] user belongs to clan', detail.user_clan_id,
+      '— highlight that row in the clan leaderboard');
+  }
+}
+
+// Live leaderboard updates — poll every 3 seconds while the detail view is open.
+const pollId = setInterval(async () => {
+  try {
+    const fresh = await window._smartico.api.getTournamentInstanceInfo(tournament.instance_id);
+    console.log('[smartico] detail refreshed — re-render player + clan leaderboards from this new snapshot:', fresh);
+  } catch (e) {
+    console.error('[smartico] tournament detail poll failed — keep showing last snapshot, retry on next tick:', e);
+  }
+}, 3_000);
+// clearInterval(pollId) when the detail view closes.
+
+if (detail.me) {
+  console.log('[smartico] current user is rank', detail.me.position,
+    'with', detail.me.scores, 'points — render the sticky "me" panel below the leaderboard');
+}
+```
+
+### Example response (REAL shape)
+```json
+{
+  "instance_id": 585461,
+  "tournament_id": 4450,
+  "name": "Old Dragon's Hoard",
+  "description": "   <style>\n        /* Add your CSS here */\n        .custom-rules {\n            font-family: inherit;\n            background-color: #2c295c !important;\n      …",
+  "image1": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1773753066010-1.png",
+  "image2": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1773755039087-0.png",
+  "image2_mobile": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1773755761006-0.png",
+  "prize_pool_short": "The Dragon's treasure",
+  "custom_data": {},
+  "is_featured": false,
+  "start_time": 1782216000000,
+  "end_time": 1782302400000,
+  "registration_count": 0,
+  "is_user_registered": false,
+  "players_min_count": 0,
+  "players_max_count": 200,
+  "registration_status": "UNKNOWN",
+  "registration_type": "BUY_IN_GEMS",
+  "registration_cost_gems": 3,
+  "duration_ms": 86400000,
+  "is_active": true,
+  "is_can_register": false,
+  "is_cancelled": false,
+  "is_finished": false,
+  "is_in_progress": true,
+  "is_upcoming": false,
+  "min_scores_win": 1,
+  "hide_leaderboard_min_scores": false,
+  "total_scores": null,
+  "is_clan_based": false,
+  "related_games": [
+    {
+      "ext_game_id": "dragon-fortune",
+      "game_public_meta": {
+        "name": "Dragon Fortune",
+        "link": "/game/dragon-fortune",
+        "image": "https://cdn.example/e93b87dfd94d462de49bc3-china.png",
+        "enabled": true,
+        "priority": 1
+      }
+    },
+    {
+      "ext_game_id": "treasure-seeker",
+      "game_public_meta": {
+        "name": "Treasure Seeker",
+        "link": "/game/treasure-seeker",
+        "image": "https://cdn.example/e9918412abb33c15a174fc-pirate_game_thumbnail.png",
+        "enabled": true,
+        "priority": 2
+      }
+    }
+  ],
+  "players": [],
+  "prizes": [
+    {
+      "gems": 10,
+      "image_url": "https://cdn.example/ecec44e4c2d0555b4d8a32-Gems10.webp",
+      "name": "10 gems",
+      "id": 38778,
+      "type": "GEMS_AND_DIAMONDS_ADD",
+      "place_from": 1,
+      "place_to": 1
+    },
+    {
+      "diamonds": 10,
+      "image_url": "https://cdn.example/7014b5850d63423ba67957-Diamonds10.webp",
+      "name": "10 Diamonds",
+      "id": 38779,
+      "type": "GEMS_AND_DIAMONDS_ADD",
+      "place_from": 2,
+      "place_to": 2
+    }
+  ]
+}
+```
+
+## Errors
+See this method's TSDoc / the mutation pages for `err_code` handling.
+
+## Related
+- `getTournamentsList`

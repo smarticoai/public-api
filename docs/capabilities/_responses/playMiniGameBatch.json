@@ -1,0 +1,9 @@
+[
+  {
+    "errCode": 40004,
+    "errMessage": "Failed to spin. Max spins reached",
+    "saw_prize_id": null,
+    "jackpot_amount": null,
+    "first_spin_in_period": 1782287011000
+  }
+]

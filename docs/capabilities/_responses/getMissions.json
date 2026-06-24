@@ -1,0 +1,217 @@
+[
+  {
+    "id": 4015,
+    "name": "Looking good!",
+    "image": "https://cdn.example/be339e036eea69ecef4246-Mission4.png",
+    "is_completed": true,
+    "is_locked": false,
+    "is_requires_optin": false,
+    "is_opted_in": true,
+    "time_limit_ms": null,
+    "active_from_ts": null,
+    "active_till_ts": null,
+    "dt_start": 1780586690767,
+    "reward": "10 pt",
+    "progress": 100,
+    "type": "mission",
+    "cta_action": "dp:gf_change_avatar",
+    "cta_text": "Pick an avatar",
+    "only_in_custom_section": false,
+    "custom_data": {},
+    "position": 1,
+    "tasks": [
+      {
+        "id": 9107,
+        "name": "Change your avatar",
+        "points_reward": 10,
+        "gems_reward": null,
+        "diamonds_reward": null,
+        "is_completed": true,
+        "progress": 100,
+        "execution_count_expected": 1,
+        "execution_count_actual": 1
+      }
+    ],
+    "related_games": [],
+    "category_ids": [],
+    "ach_completed_id": 3407657653,
+    "requires_prize_claim": false,
+    "prize_claimed_date_ts": null,
+    "complete_date": "08/06/2026 14:52:48",
+    "complete_date_ts": 1780930368099,
+    "completed_today": false,
+    "completed_this_week": false,
+    "completed_this_month": true,
+    "availability_status": 2,
+    "hide_locked_mission": true,
+    "prize_claim_expiration_date": null,
+    "prize_claim_period_type_id": null
+  },
+  {
+    "id": 3901,
+    "name": "Get the reels spinning!",
+    "image": "https://cdn.example/90767120581308241f8a9c-Mission21.png",
+    "is_completed": true,
+    "is_locked": false,
+    "is_requires_optin": false,
+    "is_opted_in": false,
+    "time_limit_ms": null,
+    "active_from_ts": null,
+    "active_till_ts": null,
+    "dt_start": null,
+    "reward": "20 pt + 1 attempt on the Spin and Love",
+    "progress": 100,
+    "type": "mission",
+    "only_in_custom_section": false,
+    "custom_data": {},
+    "position": 1,
+    "tasks": [
+      {
+        "id": 8915,
+        "name": "Make your first casino bet",
+        "points_reward": 20,
+        "gems_reward": null,
+        "diamonds_reward": null,
+        "is_completed": true,
+        "progress": 100,
+        "execution_count_expected": 1,
+        "execution_count_actual": 1
+      }
+    ],
+    "related_games": [
+      {
+        "ext_game_id": "treasure-seeker",
+        "game_public_meta": {
+          "name": "Treasure Seeker",
+          "link": "/game/treasure-seeker",
+          "image": "https://cdn.example/e9918412abb33c15a174fc-pirate_game_thumbnail.png",
+          "enabled": true,
+          "priority": 1
+        }
+      },
+      {
+        "ext_game_id": "dragon-fortune",
+        "game_public_meta": {
+          "name": "Dragon Fortune",
+          "link": "/game/dragon-fortune",
+          "image": "https://cdn.example/e93b87dfd94d462de49bc3-china.png",
+          "enabled": true,
+          "priority": 2
+        }
+      },
+      {
+        "ext_game_id": "ocean-riches",
+        "game_public_meta": {
+          "name": "Ocean Riches",
+          "link": "/game/ocean-riches",
+          "image": "https://cdn.example/653bebaa0f7918ea747375-clam_game_thumbnail.png",
+          "enabled": true,
+          "priority": 3
+        }
+      },
+      {
+        "ext_game_id": "donut-delight",
+        "game_public_meta": {
+          "name": "Donut Delight",
+          "link": "/game/donut-delight",
+          "image": "https://cdn.example/8fe4bc7b7f0d40d566eaae-donuts_game_thumbnail.png",
+          "enabled": true,
+          "priority": 4
+        }
+      },
+      {
+        "ext_game_id": "pharaohs-fortune",
+        "game_public_meta": {
+          "name": "Pharaohs Fortune",
+          "link": "/game/pharaohs-fortune",
+          "image": "https://cdn.example/6ab6aa9c51549a39fdfe5c-egypt.png",
+          "enabled": true,
+          "priority": 5
+        }
+      },
+      {
+        "ext_game_id": "mystic-woods",
+        "game_public_meta": {
+          "name": "Mystic Woods",
+          "link": "/game/mystic-woods",
+          "image": "https://cdn.example/332aba4bc4653f1e757b54-wild_game_thumbnail.png",
+          "enabled": true,
+          "priority": 6
+        }
+      },
+      {
+        "ext_game_id": "mystic-spin",
+        "game_public_meta": {
+          "name": "Mystic Spin",
+          "link": "/game/mystic-spin",
+          "image": "https://cdn.example/7a65483e76597e689f269b-india.png",
+          "enabled": true,
+          "priority": 7
+        }
+      },
+      {
+        "ext_game_id": "love-spin",
+        "game_public_meta": {
+          "name": "Love Spin",
+          "link": "/game/love-spin",
+          "image": "https://cdn.example/86d974518c40d9d292adf9-valentines.png",
+          "enabled": true,
+          "priority": 8
+        }
+      },
+      {
+        "ext_game_id": "luxe-spins",
+        "game_public_meta": {
+          "name": "Luxe Spins",
+          "link": "/game/luxe-spins",
+          "image": "https://cdn.example/4e267b06fa0e1e3500215b-suits_game_thumbnail.png",
+          "enabled": true,
+          "priority": 9
+        }
+      },
+      {
+        "ext_game_id": "viking-fortune",
+        "game_public_meta": {
+          "name": "Viking Fortune",
+          "link": "/game/viking-fortune",
+          "image": "https://cdn.example/288c2516f0c6aa57a093b0-viking.png",
+          "enabled": true,
+          "priority": 10
+        }
+      },
+      {
+        "ext_game_id": "witchs-spell",
+        "game_public_meta": {
+          "name": "Witchs Spell",
+          "link": "/game/witchs-spell",
+          "image": "https://cdn.example/496394deccfd08daacd8b4-witch.png",
+          "enabled": true,
+          "priority": 11
+        }
+      },
+      {
+        "ext_game_id": "olympian-riches",
+        "game_public_meta": {
+          "name": "Olympian Riches",
+          "link": "/game/olympian-riches",
+          "image": "https://cdn.example/644b64030f7dbfac1b4976-GreekImage.png",
+          "enabled": true,
+          "priority": 12
+        }
+      }
+    ],
+    "category_ids": [],
+    "ach_completed_id": 3410338775,
+    "requires_prize_claim": false,
+    "prize_claimed_date_ts": null,
+    "complete_date": "08/06/2026 20:59:17",
+    "complete_date_ts": 1780952357385,
+    "completed_today": false,
+    "completed_this_week": false,
+    "completed_this_month": true,
+    "availability_status": 0,
+    "hide_locked_mission": false,
+    "prize_claim_expiration_date": null,
+    "prize_claim_period_type_id": null
+  }
+]

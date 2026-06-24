@@ -1,0 +1,47 @@
+{
+  "errCode": 0,
+  "data": {
+    "round_id": 42115,
+    "round_row_id": 2,
+    "public_meta": {
+      "round_name": "Group stage 15-28 June",
+      "_translations": {
+        "BR": {},
+        "TH": {}
+      },
+      "allow_edit_answers": true,
+      "final_screen_cta_dp": "dp:ok",
+      "hide_resolved_round": false
+    },
+    "score_type_id": 1,
+    "open_date": 1782200297406,
+    "last_bet_date": 1782691140000,
+    "is_active_now": true,
+    "is_resolved": false,
+    "round_status_id": -1,
+    "score_full_win": 0,
+    "score_part_win": 0,
+    "score_lost": 0,
+    "events_total": "28",
+    "events_resolved": "0",
+    "show_users_preference": true,
+    "order_events": 1,
+    "board_users_count": 20,
+    "hide_users_predictions": false,
+    "round_name": "Group stage 15-28 June",
+    "users": [
+      {
+        "ext_user_id": "222849599",
+        "int_user_id": "228975556",
+        "public_username": "Alex*****",
+        "avatar_url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+        "gp_position": null,
+        "resolution_score": 0,
+        "full_wins_count": 0,
+        "part_wins_count": 0,
+        "lost_count": 0
+      }
+    ],
+    "my_user": null
+  }
+}

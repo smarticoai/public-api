@@ -1,0 +1,24 @@
+[
+  {
+    "avatar_real_id": 1,
+    "is_default": false,
+    "hide_until_achieved": false,
+    "priority": 1,
+    "description": "The Pink toast cat, in space, leaving rainbow trails. What else do you need?",
+    "url": "https://cdn.example/83109b74be861920197eb8-cat-space.gif",
+    "avatar_url": "https://cdn.example/83109b74be861920197eb8-cat-space.gif",
+    "avatar_source_type_id": 7,
+    "is_given": false
+  },
+  {
+    "avatar_real_id": 11,
+    "is_default": true,
+    "hide_until_achieved": true,
+    "priority": 1,
+    "description": "Green Lizards rule the world, are you one of them?",
+    "url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+    "avatar_url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+    "avatar_source_type_id": 0,
+    "is_given": true
+  }
+]

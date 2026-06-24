@@ -1,0 +1,305 @@
+{
+  "board_id": 143,
+  "name": "Daily Leaderboard",
+  "description": "This <b>Leaderboard</b> is showing the names and current scores of the leading competitors of the day.<br>\nYou can put any text here to describe this Leaderboard from Smartico backoffice. HTML is s…",
+  "rules": "Leaderboards are the simplest form of tournaments. Easy to set up in 5 minutes or less. Boards only calculate gamification point progress, and award points for prize places. The points can later be…",
+  "period_type_id": 1,
+  "version_id": 0,
+  "create_date": 0,
+  "rewards": [
+    {
+      "place": 1,
+      "points": 100
+    },
+    {
+      "place": 2,
+      "points": 75
+    },
+    {
+      "place": 3,
+      "points": 50
+    },
+    {
+      "place": 4,
+      "points": 25
+    },
+    {
+      "place": 5,
+      "points": 10
+    }
+  ],
+  "users": [
+    {
+      "public_username": "Matt*****",
+      "avatar_url": "https://cdn.example/avatar/344499363",
+      "level_id": 700,
+      "position": 1,
+      "points": 1525,
+      "is_me": false
+    },
+    {
+      "public_username": "Edwa*****",
+      "avatar_url": "https://cdn.example/avatar/362451457",
+      "level_id": 698,
+      "position": 2,
+      "points": 380,
+      "is_me": false
+    },
+    {
+      "public_username": "jair*****",
+      "avatar_url": "https://cdn.example/d1a960365f8a3716aa5a72-Lionmale.webp",
+      "level_id": 698,
+      "position": 3,
+      "points": 260,
+      "is_me": false
+    },
+    {
+      "public_username": "Anna*****",
+      "avatar_url": "https://cdn.example/avatar/183751470",
+      "level_id": 701,
+      "position": 4,
+      "points": 230,
+      "is_me": false
+    },
+    {
+      "public_username": "VS P*****",
+      "avatar_url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+      "level_id": 697,
+      "position": 5,
+      "points": 130,
+      "is_me": false
+    },
+    {
+      "public_username": "Meli*****",
+      "avatar_url": "https://cdn.example/avatar/183749132",
+      "level_id": 701,
+      "position": 6,
+      "points": 80,
+      "is_me": false
+    },
+    {
+      "public_username": "Hele*****",
+      "avatar_url": "https://cdn.example/avatar/183748237",
+      "level_id": 699,
+      "position": 7,
+      "points": 50,
+      "is_me": false
+    },
+    {
+      "public_username": "Lind*****",
+      "avatar_url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+      "level_id": 696,
+      "position": 7,
+      "points": 50,
+      "is_me": false
+    },
+    {
+      "public_username": "Ashl*****",
+      "avatar_url": "https://cdn.example/avatar/227407288",
+      "level_id": 700,
+      "position": 8,
+      "points": 40,
+      "is_me": false
+    },
+    {
+      "public_username": "Stev*****",
+      "avatar_url": "https://cdn.example/avatar/183751438",
+      "level_id": 699,
+      "position": 9,
+      "points": 30,
+      "is_me": false
+    },
+    {
+      "public_username": "Debr*****",
+      "avatar_url": "https://cdn.example/avatar/183750506",
+      "level_id": 700,
+      "position": 9,
+      "points": 30,
+      "is_me": false
+    },
+    {
+      "public_username": "Benj*****",
+      "avatar_url": "https://cdn.example/avatar/183749768",
+      "level_id": 700,
+      "position": 9,
+      "points": 30,
+      "is_me": false
+    },
+    {
+      "public_username": "Benj*****",
+      "avatar_url": "https://cdn.example/avatar/358118309",
+      "level_id": 696,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Dona*****",
+      "avatar_url": "https://cdn.example/avatar/183750908",
+      "level_id": 701,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Jose*****",
+      "avatar_url": "https://cdn.example/avatar/183735326",
+      "level_id": 696,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Cynt*****",
+      "avatar_url": "https://cdn.example/avatar/183748003",
+      "level_id": 698,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Jane*****",
+      "avatar_url": "https://cdn.example/avatar/183750964",
+      "level_id": 700,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Caro*****",
+      "avatar_url": "https://cdn.example/avatar/183745983",
+      "level_id": 698,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Jaso*****",
+      "avatar_url": "https://cdn.example/avatar/183751503",
+      "level_id": 701,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Jerr*****",
+      "avatar_url": "https://cdn.example/avatar/183717393",
+      "level_id": 699,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Doro*****",
+      "avatar_url": "https://cdn.example/avatar/183715039",
+      "level_id": 696,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Kimb*****",
+      "avatar_url": "https://cdn.example/avatar/183751150",
+      "level_id": 698,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Meli*****",
+      "avatar_url": "https://cdn.example/avatar/183648413",
+      "level_id": 696,
+      "position": 10,
+      "points": 20,
+      "is_me": false
+    },
+    {
+      "public_username": "Nich*****",
+      "avatar_url": "https://cdn.example/avatar/193868169",
+      "level_id": 697,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Step*****",
+      "avatar_url": "https://cdn.example/avatar/183745878",
+      "level_id": 698,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Susa*****",
+      "avatar_url": "https://cdn.example/avatar/183751083",
+      "level_id": 700,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Davi*****",
+      "avatar_url": "https://cdn.example/avatar/200964726",
+      "level_id": 701,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Fran*****",
+      "avatar_url": "https://cdn.example/avatar/183750620",
+      "level_id": 698,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Caro*****",
+      "avatar_url": "https://cdn.example/avatar/183294177",
+      "level_id": 700,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Yuva*****",
+      "avatar_url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+      "level_id": 697,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Mich*****",
+      "avatar_url": "https://cdn.example/avatar/183750782",
+      "level_id": 698,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Yoan*****",
+      "avatar_url": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+      "level_id": 697,
+      "position": 11,
+      "points": 10,
+      "is_me": false
+    },
+    {
+      "public_username": "Antonio",
+      "avatar_url": "https://cdn.example/avatars/12/00000000-0000-0000-0000-000000000000.png",
+      "level_id": 698,
+      "position": -1,
+      "points": 0,
+      "is_me": true
+    }
+  ],
+  "me": {
+    "public_username": "Antonio",
+    "avatar_url": "https://cdn.example/avatars/12/00000000-0000-0000-0000-000000000000.png",
+    "level_id": 698,
+    "position": -1,
+    "points": 0,
+    "is_me": true
+  }
+}

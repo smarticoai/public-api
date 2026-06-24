@@ -1,0 +1,237 @@
+{
+  "clan_id": 6,
+  "public_meta": {
+    "name": "Joker Clan",
+    "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash and show them that you don't even care. We…",
+    "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
+  },
+  "member_count": 884,
+  "capacity_limit": 1000,
+  "entry_fee_currency_type_id": 0,
+  "entry_fee_amount": 100,
+  "rating_position": 1,
+  "rating_score": 87,
+  "cooldown_until": null,
+  "members": [
+    {
+      "user_id": 183751733,
+      "public_username": "Daniel",
+      "avatar_id": "183751733",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183751733",
+      "position": 1,
+      "contribution_score": 450460,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 339588750,
+      "public_username": "Carolyn",
+      "avatar_id": "339588750",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/339588750",
+      "position": 2,
+      "contribution_score": 310342,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 331124982,
+      "public_username": "Joseph",
+      "avatar_id": "331124982",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/331124982",
+      "position": 3,
+      "contribution_score": 68153,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 259178666,
+      "public_username": "Dorothy",
+      "avatar_id": "259178666",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/259178666",
+      "position": 4,
+      "contribution_score": 63490,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 200964726,
+      "public_username": "David",
+      "avatar_id": "200964726",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/200964726",
+      "position": 5,
+      "contribution_score": 57928,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183750964,
+      "public_username": "Janet",
+      "avatar_id": "183750964",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183750964",
+      "position": 6,
+      "contribution_score": 29888,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 227372825,
+      "public_username": "Emma",
+      "avatar_id": "227372825",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/227372825",
+      "position": 7,
+      "contribution_score": 26131,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183747913,
+      "public_username": "Rebecca",
+      "avatar_id": "183747913",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183747913",
+      "position": 8,
+      "contribution_score": 24829,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183751464,
+      "public_username": "Kimberly",
+      "avatar_id": "183751464",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183751464",
+      "position": 9,
+      "contribution_score": 24630,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183734163,
+      "public_username": "Eric",
+      "avatar_id": "183734163",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183734163",
+      "position": 10,
+      "contribution_score": 22420,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 209969574,
+      "public_username": "Michael",
+      "avatar_id": "209969574",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/209969574",
+      "position": 11,
+      "contribution_score": 19416,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 196815525,
+      "public_username": "Samuel",
+      "avatar_id": "196815525",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/196815525",
+      "position": 12,
+      "contribution_score": 19361,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183750372,
+      "public_username": "Charles",
+      "avatar_id": "183750372",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183750372",
+      "position": 13,
+      "contribution_score": 17261,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183751058,
+      "public_username": "Kenneth",
+      "avatar_id": "183751058",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183751058",
+      "position": 14,
+      "contribution_score": 15173,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 327349309,
+      "public_username": "Carol",
+      "avatar_id": "327349309",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/327349309",
+      "position": 15,
+      "contribution_score": 13854,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183751448,
+      "public_username": "Ashley",
+      "avatar_id": "183751448",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183751448",
+      "position": 16,
+      "contribution_score": 13733,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183748089,
+      "public_username": "George",
+      "avatar_id": "183748089",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183748089",
+      "position": 17,
+      "contribution_score": 12721,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183751438,
+      "public_username": "Steven",
+      "avatar_id": "183751438",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183751438",
+      "position": 18,
+      "contribution_score": 11986,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183751631,
+      "public_username": "Nicole",
+      "avatar_id": "183751631",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183751631",
+      "position": 19,
+      "contribution_score": 11901,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    },
+    {
+      "user_id": 183751308,
+      "public_username": "Helen",
+      "avatar_id": "183751308",
+      "avatar_real_id": null,
+      "avatar_url": "https://cdn.example/avatar/183751308",
+      "position": 20,
+      "contribution_score": 10969,
+      "is_me": false,
+      "clean_ext_user_id": "0"
+    }
+  ]
+}
