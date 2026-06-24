@@ -62,29 +62,23 @@ function tagText(comment) {
 	}).join('').replace(/[ \t]+/g, ' ').trim();
 }
 
-const jsType = (v) =>
-	v === null ? 'null'
-	: Array.isArray(v) ? (v.length && v[0] && typeof v[0] === 'object' ? 'object[]' : 'array')
-	: typeof v;
-
 // Example-response trimming so a method returning a huge map/array (e.g.
 // getTranslations → ~800 keys) doesn't dump a 900-line page. Long strings are
 // clipped; arrays show 2 items; "dictionary-sized" objects (> OBJ_CAP keys, i.e.
 // a key→value map rather than a struct) are truncated to a representative sample.
-const EX_ARR = 1, EX_OBJ_CAP = 40, EX_OBJ_KEEP = 12, EX_DEPTH = 3;
-function trimVal(v, d = 0) {
+// Example-response trimming. NO depth collapse (the real nested shape is the point
+// — e.g. gamePickGetGameInfo.sawTemplate / allRounds). Only bound the pathological
+// cases: long strings, wide arrays, and dictionary-sized maps (getTranslations → 800
+// keys). The full structural definition lives in the type-driven Returns section.
+const EX_ARR = 1, EX_OBJ_CAP = 40, EX_OBJ_KEEP = 12;
+function trimVal(v) {
 	if (typeof v === 'string') return v.length > 160 ? v.slice(0, 157) + '…' : v;
-	if (Array.isArray(v)) {
-		if (!v.length) return [];
-		if (d >= EX_DEPTH) return ['…'];
-		return v.slice(0, EX_ARR).map(x => trimVal(x, d + 1));
-	}
+	if (Array.isArray(v)) return v.slice(0, EX_ARR).map(trimVal);
 	if (v && typeof v === 'object') {
 		const keys = Object.keys(v);
-		if (d >= EX_DEPTH) return keys.length ? { '…': '(nested)' } : {};
 		const capped = keys.length > EX_OBJ_CAP;
 		const o = {};
-		for (const k of keys.slice(0, capped ? EX_OBJ_KEEP : keys.length)) o[k] = trimVal(v[k], d + 1);
+		for (const k of keys.slice(0, capped ? EX_OBJ_KEEP : keys.length)) o[k] = trimVal(v[k]);
 		if (capped) o['…'] = `(+${keys.length - EX_OBJ_KEEP} more keys)`;
 		return o;
 	}
@@ -187,36 +181,41 @@ function splitRemarks(remarks) {
 	return m ? { contract: remarks.replace(m[0], '').trim(), errors: m[0].trim() } : { contract: remarks, errors: '' };
 }
 
-function returnsSection(respJson, reg, typeName, isArrayReturn) {
-	const sample = Array.isArray(respJson) ? respJson[0] : respJson;
-	// With a captured response: annotate the REAL field shape.
-	if (sample && typeof sample === 'object') {
-		const fields = resolveFields(typeName, reg);
-		const lines = Array.isArray(respJson) ? [`Array of \`${typeName || 'objects'}\`. Each item:`] : [];
-		for (const [k, v] of Object.entries(sample)) {
-			const c = fields[k]?.comment;
-			lines.push(`- \`${k}\` (${jsType(v)})${c ? ` — ${c}` : ''}`);
-			if (Array.isArray(v) && v.length && v[0] && typeof v[0] === 'object') {
-				const nested = resolveFields(baseTypeName(fields[k]?.typeText), reg);
-				for (const [nk, nv] of Object.entries(v[0])) {
-					const nc = nested[nk]?.comment;
-					lines.push(`  - \`${nk}\` (${jsType(nv)})${nc ? ` — ${nc}` : ''}`);
-				}
-			}
+// Recursively render a type's fields from the registry, expanding nested object /
+// array field types (bounded by depth + a per-branch cycle guard) so the full
+// structure is described, not collapsed.
+const RT_MAX_DEPTH = 4;
+function renderType(typeName, reg, seen, depth) {
+	const out = [];
+	const pad = '  '.repeat(depth);
+	for (const [k, info] of Object.entries(resolveFields(typeName, reg))) {
+		const tt = info.typeText || '';
+		out.push(`${pad}- \`${k}\` (${tt})${info.comment ? ` — ${info.comment}` : ''}`);
+		const base = baseTypeName(tt);
+		if (base && reg[base] && !seen.has(base) && depth < RT_MAX_DEPTH) {
+			out.push(...renderType(base, reg, new Set([...seen, base]), depth + 1));
 		}
-		return lines.join('\n');
 	}
-	if (respJson !== null && respJson !== undefined && typeof respJson !== 'object') {
-		return `Resolves to \`${JSON.stringify(respJson)}\` (${jsType(respJson)}).`;
+	return out;
+}
+
+// The full RETURN TYPE definition — unwraps Promise<…> and GamesApiResponse<…> so
+// the page describes the actual payload type (e.g. GamePickGameInfo), not just the
+// wrapper, with nested types expanded.
+function returnsSection(ret, reg) {
+	if (!ret || ret === 'void') return '_No return value._';
+	let inner = ret.replace(/^Promise\s*<([\s\S]*)>\s*$/, '$1').trim();
+	let prefix = '';
+	const gm = inner.match(/^GamesApiResponse\s*<([\s\S]*)>\s*$/);
+	if (gm) {
+		prefix = 'Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage?` (string), `data?` — the payload:\n\n';
+		inner = gm[1].trim();
 	}
-	// No captured response — fall back to the resolved TYPE shape (still complete).
-	const fields = resolveFields(typeName, reg);
-	const keys = Object.keys(fields);
-	if (!keys.length) return `See \`${typeName || 'the domain types'}\`.`;
-	const lines = [`${isArrayReturn ? `Array of \`${typeName}\`. Each item` : `\`${typeName}\``} (shape from the type — capture a response into \`_responses/\` for a real example):`];
-	for (const [k, info] of Object.entries(fields)) {
-		lines.push(`- \`${k}\` (${info.typeText || '?'})${info.comment ? ` — ${info.comment}` : ''}`);
-	}
+	const isArr = /\[\]\s*$/.test(inner) || /^Array\s*</.test(inner);
+	const base = baseTypeName(inner);
+	if (!base || !reg[base]) return prefix + `Resolves to \`${inner}\`.`;
+	const lines = [prefix + (isArr ? `Array of \`${base}\`. Each item:` : `\`${base}\`:`)];
+	lines.push(...renderType(base, reg, new Set([base]), 0));
 	return lines.join('\n');
 }
 
@@ -286,8 +285,7 @@ function buildPage(method, reg) {
 	o.push('## Parameters', doc.params.length
 		? doc.params.map(p => `- ${p.name ? `\`${p.name}\` — ` : ''}${p.text}`.replace(/\s+/g, ' ').trim()).join('\n')
 		: '_None._', '');
-	const isArrayReturn = /\[\]/.test(ret) || /Array\s*</.test(ret);
-	o.push(`## Returns${typeName ? ` — \`${ret}\`` : ''}`, returnsSection(respJson, reg, typeName, isArrayReturn), '');
+	o.push(`## Returns${typeName ? ` — \`${ret}\`` : ''}`, returnsSection(ret, reg), '');
 	o.push('## Behavioral contract', contract || `See the [UI guide](../ui/${domain}/UIGuide_${name}.md) if present.`, '');
 	if (doc.example) o.push('## Example', doc.example.trim(), '');
 	if (respJson) o.push('### Example response (REAL shape)', '```json',

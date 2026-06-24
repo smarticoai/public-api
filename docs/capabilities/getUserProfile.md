@@ -13,36 +13,37 @@ _smartico.api.getUserProfile(): TUserProfile
 _None._
 
 ## Returns — `TUserProfile`
-- `core_public_tags` (array) — Server-stored public tags on the user (uppercase strings). Modify via `_smartico.updatePublicTags(operation, tags)`.
-- `ach_points_ever` (number) — All-time cumulative points earned. Monotonic — NOT decremented by store purchases or clan/tournament fees.
-- `core_clan_is_kicked` (null) — `true` when the user was kicked from their clan; null when not applicable.
-- `user_last_session_push_state` (string) — Last-session browser push-permission state (e.g. `"BLOCKED"`, `"GRANTED"`).
-- `aff_referred_by_friend_ext_user_id` (null) — ext_user_id of the friend who referred this user; null when none.
-- `core_inbox_unread_count` (number) — Unread inbox messages count. Push-updated in real time.
+`TUserProfile`:
 - `core_user_language` (string) — Language code stored server-side for the user (e.g. `"en"`, `"de"`).
-- `ach_level_current` (string) — Display name of the user's current level (e.g. `"Silver"`); resolve the id via `getCurrentLevel()`.
-- `ach_gems_balance` (number) — Current gems balance (secondary currency).
-- `ach_level_current_id` (number) — FK into the level ladder; resolve via `getCurrentLevel()` or `getLevels()`.
-- `user_country` (string) — ISO country code of the user (e.g. `"BG"`).
 - `ach_points_balance` (number) — Current spendable points balance — decremented by store purchases, tournament buy-ins, and clan entry fees.
-- `core_registration_date` (number) — Registration timestamp (epoch ms); `0` when unknown.
+- `ach_points_ever` (number) — All-time cumulative points earned. Monotonic — NOT decremented by store purchases or clan/tournament fees.
+- `ach_gems_balance` (number) — Current gems balance (secondary currency).
+- `ach_diamonds_balance` (number) — Current diamonds balance (tertiary currency).
+- `core_public_tags` (string[]) — Server-stored public tags on the user (uppercase strings). Modify via `_smartico.updatePublicTags(operation, tags)`.
+- `ach_level_current_id` (number) — FK into the level ladder; resolve via `getCurrentLevel()` or `getLevels()`.
+- `core_is_test_account` (boolean) — `true` when the user is flagged as a test account.
+- `avatar_url` (string) — Resolved CDN URL for the user's avatar.
+- `public_username` (string) — Display username (operator-defined alias).
+- `core_inbox_unread_count` (number) — Unread inbox messages count. Push-updated in real time.
 - `core_recommended_deposit_amount` (number) — AI-recommended deposit amount for this user. Undefined when no recommendation is currently available.
 - `core_recommended_casino_bet_amount` (number) — AI-recommended casino bet amount for this user. Undefined when no recommendation is currently available.
+- `ach_level_current` (string) — Display name of the user's current level (e.g. `"Silver"`); resolve the id via `getCurrentLevel()`.
 - `ach_gamification_in_control_group` (boolean) — `true` when the user is in the gamification A/B control group (gamification UI suppressed).
-- `core_avatar_real_id` (null) — `avatar_real_id` of the user's core avatar; null when unset.
-- `core_wallet_currency` (string) — Wallet currency code (e.g. `"EUR"`).
-- `ach_diamonds_balance` (number) — Current diamonds balance (tertiary currency).
-- `aff_refer_friend_url` (null) — Refer-a-friend share URL; null when the feature is disabled.
-- `acc_bonus_abuser` (boolean) — `true` when the account is flagged as a bonus abuser.
-- `aff_refered_friends_count` (number) — Count of friends this user has referred.
-- `core_clan_kicked_out_id` (null) — Id of the clan the user was kicked from; null when not applicable.
-- `core_clan_id` (string) — Current clan id (string); empty/null when not in a clan.
-- `core_is_test_account` (boolean) — `true` when the user is flagged as a test account.
 - `user_id` (number) — Smartico-internal numeric user id.
+- `user_country` (string) — ISO country code of the user (e.g. `"BG"`).
+- `core_wallet_currency` (string) — Wallet currency code (e.g. `"EUR"`).
+- `core_registration_date` (number) — Registration timestamp (epoch ms); `0` when unknown.
+- `user_last_session_push_state` (string) — Last-session browser push-permission state (e.g. `"BLOCKED"`, `"GRANTED"`).
+- `acc_bonus_abuser` (boolean) — `true` when the account is flagged as a bonus abuser.
 - `avatar_id` (string) — Selected avatar id (catalogue avatar or AI-variant base).
 - `avatar_real_id` (number) — `avatar_real_id` of the selected avatar; `0` when none.
-- `public_username` (string) — Display username (operator-defined alias).
-- `avatar_url` (string) — Resolved CDN URL for the user's avatar.
+- `core_avatar_real_id` (number | null) — `avatar_real_id` of the user's core avatar; null when unset.
+- `core_clan_id` (string) — Current clan id (string); empty/null when not in a clan.
+- `core_clan_is_kicked` (boolean | null) — `true` when the user was kicked from their clan; null when not applicable.
+- `core_clan_kicked_out_id` (number | null) — Id of the clan the user was kicked from; null when not applicable.
+- `aff_referred_by_friend_ext_user_id` (string | null) — ext_user_id of the friend who referred this user; null when none.
+- `aff_refer_friend_url` (string | null) — Refer-a-friend share URL; null when the feature is disabled.
+- `aff_refered_friends_count` (number) — Count of friends this user has referred.
 
 ## Behavioral contract
 **Preconditions**
@@ -149,7 +150,7 @@ if (balance < price) {
   "core_inbox_unread_count": 0,
   "core_user_language": "EN",
   "ach_level_current": "Silver",
-  "ach_gems_balance": 0,
+  "ach_gems_balance": 10,
   "ach_level_current_id": 698,
   "user_country": "BG",
   "ach_points_balance": 326,

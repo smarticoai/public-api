@@ -13,14 +13,7 @@ _smartico.api.miniGameWinAcknowledgeRequest(request_id: string): void
 - `request_id` — Correlation id of the spin to finalise: the `request_id` from a `playMiniGame` result (played with `acknowledge: false`), or the `client_request_id` of a `getMiniGamesHistory` row.
 
 ## Returns
-- `request_id` (string)
-- `errCode` (number)
-- `errMsg` (string)
-- `cid` (number)
-- `ts` (number)
-- `uuid` (string)
-- `payload` (null)
-- `duration` (null)
+_No return value._
 
 ## Behavioral contract
 **When to call**

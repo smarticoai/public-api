@@ -13,7 +13,8 @@ _smartico.api.getTranslations(lang_code: string): Promise<TGetTranslations>
 - `lang_code` — ISO language code (e.g. `"EN"`, `"FR"`). Defaults to `"EN"` server-side if empty.
 
 ## Returns — `Promise<TGetTranslations>`
-- `translations` (object) — Flat dictionary of operator-defined translation key → translated string.
+`TGetTranslations`:
+- `translations` ({ [key: string]: string }) — Flat dictionary of operator-defined translation key → translated string.
 
 ## Behavioral contract
 **Preconditions**

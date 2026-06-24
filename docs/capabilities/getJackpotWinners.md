@@ -25,9 +25,15 @@ _None._
 
 ## Returns — `Promise<JackpotWinnerHistory[]>`
 Array of `JackpotWinnerHistory`. Each item:
-- `winner` (object) — Info about jackpot winner
-- `win_date_ts` (number) — Date of winning in milliseconds
 - `jp_pot_id` (number) — Id of the jackpot pot
+- `win_date_ts` (number) — Date of winning in milliseconds
+- `winner` (JackPotWinner) — Info about jackpot winner
+  - `is_me` (boolean) — Flag indicating that this winner is the currently logged in user
+  - `public_username` (string) — Name of the winner, note that for all users except is_me, the name is masked by default, but masking can be disabled by request to Smartico AM team
+  - `winning_amount_jp_currency` (number) — Won amount in the Jackpot currency
+  - `winning_amount_wallet_currency` (number) — Won amount in the user Wallet currency
+  - `winning_position` (number) — Position of the winner. Relevant for jackpots where there could be multiple winners
+  - `avatar_id` (string) — Avatar of the winner
 
 ## Behavioral contract
 **Preconditions**
@@ -85,14 +91,14 @@ console.log('[smartico] render', winners.length, 'recent winner rows (amounts in
     "winner": {
       "is_me": false,
       "public_username": "731:*****",
-      "winning_amount_jp_currency": 14.30613568,
-      "winning_amount_wallet_currency": 84.29993939,
+      "winning_amount_jp_currency": 16.720332488,
+      "winning_amount_wallet_currency": 98.525768722,
       "winning_position": 1,
-      "avatar_id": "183751682",
+      "avatar_id": "183751796",
       "avatar_real_id": null
     },
-    "win_date_ts": 1782274146343,
-    "jp_pot_id": 306000
+    "win_date_ts": 1782295329703,
+    "jp_pot_id": 306053
   }
 ]
 ```

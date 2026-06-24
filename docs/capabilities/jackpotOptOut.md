@@ -13,13 +13,12 @@ _smartico.api.jackpotOptOut(filter: { jp_template_id: number }): Promise<Jackpot
 - `filter.jp_template_id` — ID of the jackpot template to leave.
 
 ## Returns — `Promise<JackpotsOptoutResponse>`
-- `errCode` (number)
-- `errMsg` (string)
+`JackpotsOptoutResponse`:
 - `cid` (number)
 - `ts` (number)
 - `uuid` (string)
-- `payload` (null)
-- `duration` (null)
+- `errCode` (number)
+- `errMsg` (string)
 
 ## Behavioral contract
 **Preconditions**

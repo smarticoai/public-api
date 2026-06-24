@@ -28,7 +28,7 @@
           "saw_prize_id": 65862,
           "saw_template_id": 11487,
           "saw_prize_ui_definition": {
-            "…": "(nested)"
+            "name": "€ 100 Free"
           },
           "prize_value": 1,
           "prize_type_id": 3,
@@ -38,7 +38,8 @@
           "prize_ref_id": 0,
           "is_surcharge": false,
           "prize_details_json": {
-            "…": "(nested)"
+            "bonus_amount": 1,
+            "label_bonus_template_id": 2152
           },
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
@@ -63,7 +64,7 @@
           "saw_prize_id": 65863,
           "saw_template_id": 11487,
           "saw_prize_ui_definition": {
-            "…": "(nested)"
+            "name": "25 Free Spins on Book of Cleopatra"
           },
           "prize_value": 1,
           "prize_type_id": 3,
@@ -73,7 +74,9 @@
           "prize_ref_id": 0,
           "is_surcharge": false,
           "prize_details_json": {
-            "…": "(nested)"
+            "ui_amount": "",
+            "bonus_coupon_code": "",
+            "label_bonus_template_id": 2156
           },
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
@@ -98,7 +101,7 @@
           "saw_prize_id": 65864,
           "saw_template_id": 11487,
           "saw_prize_ui_definition": {
-            "…": "(nested)"
+            "name": "300 Points"
           },
           "prize_value": 300,
           "prize_type_id": 2,
@@ -131,7 +134,7 @@
           "saw_prize_id": 65865,
           "saw_template_id": 11487,
           "saw_prize_ui_definition": {
-            "…": "(nested)"
+            "name": "50 Points"
           },
           "prize_value": 50,
           "prize_type_id": 2,
@@ -166,7 +169,7 @@
           "saw_prize_id": 65863,
           "saw_template_id": 11487,
           "saw_prize_ui_definition": {
-            "…": "(nested)"
+            "name": "25 Free Spins on Book of Cleopatra"
           },
           "prize_value": 1,
           "prize_type_id": 3,
@@ -176,7 +179,9 @@
           "prize_ref_id": 0,
           "is_surcharge": false,
           "prize_details_json": {
-            "…": "(nested)"
+            "ui_amount": "",
+            "bonus_coupon_code": "",
+            "label_bonus_template_id": 2156
           },
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
@@ -201,7 +206,7 @@
           "saw_prize_id": 65862,
           "saw_template_id": 11487,
           "saw_prize_ui_definition": {
-            "…": "(nested)"
+            "name": "€ 100 Free"
           },
           "prize_value": 1,
           "prize_type_id": 3,
@@ -211,7 +216,8 @@
           "prize_ref_id": 0,
           "is_surcharge": false,
           "prize_details_json": {
-            "…": "(nested)"
+            "bonus_amount": 1,
+            "label_bonus_template_id": 2152
           },
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
@@ -275,7 +281,8 @@
         "public_meta": {
           "round_name": "Group stage 15-28 June",
           "_translations": {
-            "…": "(nested)"
+            "BR": {},
+            "TH": {}
           },
           "allow_edit_answers": true,
           "final_screen_cta_dp": "dp:ok",
@@ -291,7 +298,7 @@
         "score_part_win": 0,
         "score_lost": 0,
         "events_total": "28",
-        "events_resolved": "0",
+        "events_resolved": "1",
         "show_users_preference": true,
         "order_events": 1,
         "board_users_count": 20,
@@ -333,11 +340,11 @@
       "errCode": 0,
       "errMsg": null,
       "cid": 4,
-      "ts": 1782287007134,
+      "ts": 1782302214755,
       "uuid": "00000000-0000-0000-0000-000000000000",
       "payload": {
         "country": "IE",
-        "s": "cha_AS@ip-172-24-1-186",
+        "s": "cha_AS@ip-172-24-1-111",
         "city": "Dublin",
         "ip": "63.34.126.10",
         "sessionId": "xxxxxxx"

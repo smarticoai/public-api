@@ -13,8 +13,10 @@ _smartico.api.claimBonus(bonus_id: number): Promise<TClaimBonusResult>
 - `bonus_id` — The `bonus_id` from a `TBonus` returned by `getBonuses`.
 
 ## Returns — `Promise<TClaimBonusResult>`
+`TClaimBonusResult`:
 - `err_code` (number) — Error code. `0` = success. See `claimBonus` TSDoc for the full table.
 - `err_message` (string) — Optional error message; populated on non-zero `err_code`.
+- `success` (boolean) — Unreliable on the wire — prefer `err_code === 0` as the success check.
 
 ## Behavioral contract
 **Preconditions**

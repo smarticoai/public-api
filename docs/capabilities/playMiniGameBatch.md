@@ -16,10 +16,10 @@ _smartico.api.playMiniGameBatch(template_id: number, spin_count: number, { onUpd
 
 ## Returns — `Promise<TMiniGamePlayBatchResult[]>`
 Array of `TMiniGamePlayBatchResult`. Each item:
-- `errCode` (number) — Error code. `0` = success. See `playMiniGameBatch` TSDoc for the full table.
+- `saw_prize_id` (number) — ID of the won prize for this spin. Look up in `template.prizes`.
+- `errCode` (SAWSpinErrorCode) — Error code. `0` = success. See `playMiniGameBatch` TSDoc for the full table.
 - `errMessage` (string) — Optional server-side error message.
-- `saw_prize_id` (null) — ID of the won prize for this spin. Look up in `template.prizes`.
-- `jackpot_amount` (null) — Jackpot amount the user won, populated when the prize type is `'jackpot'`.
+- `jackpot_amount` (number) — Jackpot amount the user won, populated when the prize type is `'jackpot'`.
 - `first_spin_in_period` (number) — Epoch ms of the user's first spin in the current cooldown period; populated when `errCode === SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED`.
 
 ## Behavioral contract

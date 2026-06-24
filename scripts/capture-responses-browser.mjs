@@ -58,15 +58,14 @@ const anon = (v) => {
 // generous than the page generator (which re-trims to depth 3 / 1 item): keeps a
 // representative sample. strings→200 · arrays→2 · dictionary objects (>50 keys)→20
 // · nesting beyond depth 5 collapses.
-const bound = (v, d = 0) => {
+const bound = (v) => {
 	if (typeof v === 'string') return v.length > 200 ? v.slice(0, 197) + '…' : v;
-	if (Array.isArray(v)) { if (!v.length) return []; if (d >= 5) return ['…']; return v.slice(0, 2).map(x => bound(x, d + 1)); }
+	if (Array.isArray(v)) return v.slice(0, 2).map(bound);   // no depth collapse — keep the real nested shape
 	if (v && typeof v === 'object') {
 		const keys = Object.keys(v);
-		if (d >= 5) return keys.length ? { '…': '(nested)' } : {};
-		const cap = keys.length > 50;
+		const cap = keys.length > 50;   // only dictionary-sized maps (getTranslations) are capped
 		const o = {};
-		for (const k of keys.slice(0, cap ? 20 : keys.length)) o[k] = bound(v[k], d + 1);
+		for (const k of keys.slice(0, cap ? 20 : keys.length)) o[k] = bound(v[k]);
 		if (cap) o['…'] = `(+${keys.length - 20} more keys)`;
 		return o;
 	}

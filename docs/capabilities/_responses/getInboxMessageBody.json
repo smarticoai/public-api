@@ -2,6 +2,6 @@
   "action": "dp:close",
   "icon": "https://cdn.example/d0f46ded3f7c9439fa0239-home-gems.webp",
   "title": "Congratulations!",
-  "preview_body": "You have received 1 Gems to your balance!",
+  "preview_body": "You have received 10 Gems to your balance!",
   "custom_data": {}
 }

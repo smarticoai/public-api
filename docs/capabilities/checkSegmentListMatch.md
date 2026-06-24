@@ -13,7 +13,7 @@ _smartico.api.checkSegmentListMatch(segment_ids: number[]): Promise<TSegmentChec
 - `segment_ids` — Array of segment IDs to check. Duplicates are silently de-duplicated server-side. Segment IDs are label-scoped — use the IDs configured for your label.
 
 ## Returns — `Promise<TSegmentCheckResult[]>`
-Array of `TSegmentCheckResult`. Each item (shape from the type — capture a response into `_responses/` for a real example):
+Array of `TSegmentCheckResult`. Each item:
 - `segment_id` (number) — The segment ID this result refers to (label-scoped).
 - `is_matching` (boolean) — `true` if the user currently matches this segment. `false` also covers the case where the segment doesn't exist for the label — the two are not distinguishable.
 

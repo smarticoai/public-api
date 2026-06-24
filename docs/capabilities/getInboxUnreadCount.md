@@ -14,7 +14,7 @@ _smartico.api.getInboxUnreadCount({ onUpdate }: { onUpdate?: (unread_count: numb
 - `params.onUpdate` — Callback invoked with the new unread count whenever it changes (push-driven).
 
 ## Returns
-Resolves to `0` (number).
+Resolves to `number`.
 
 ## Behavioral contract
 **Subscription model**

@@ -13,7 +13,8 @@ _smartico.api.buyStoreItem(item_id: number): Promise<TBuyStoreItemResult>
 - `item_id` — The store item `id` (from `getStoreItems()`).
 
 ## Returns — `Promise<TBuyStoreItemResult>`
-- `err_code` (number) — Error code. `0` = success. See `buyStoreItem` TSDoc for the full table.
+`TBuyStoreItemResult`:
+- `err_code` (BuyStoreItemErrorCode) — Error code. `0` = success. See `buyStoreItem` TSDoc for the full table.
 - `err_message` (string) — Optional error message; populated on non-zero `err_code`.
 
 ## Behavioral contract

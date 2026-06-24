@@ -13,25 +13,38 @@ _smartico.api.getClanInfo(clanId: number): Promise<TClanInfo>
 - `clanId` — The clan ID from `TClans.clans[i].clan_id`.
 
 ## Returns — `Promise<TClanInfo>`
+`TClanInfo`:
 - `clan_id` (number) — Clan ID.
-- `public_meta` (object) — Translated clan metadata (name, description, image URL).
+- `public_meta` ({ name: string; description: string; image_url: string }) — Translated clan metadata (name, description, image URL).
 - `member_count` (number) — Current number of members in clan.
 - `capacity_limit` (number) — Max number of members allowed in clan.
 - `entry_fee_currency_type_id` (number) — Currency type for `entry_fee_amount`. `0` = points, `1` = gems, `2` = diamonds, `3` = free.
 - `entry_fee_amount` (number) — Entry fee amount in the currency indicated by `entry_fee_currency_type_id`.
 - `rating_position` (number) — Global rank among all active clans in the label, by `rating_score` DESC. `1` = highest-rated.
 - `rating_score` (number) — Clan rating score (higher is better).
-- `cooldown_until` (null) — User-level switch-cooldown expiry as ISO 8601 UTC string ("YYYY-MM-DDTHH:MM:SS" with no timezone suffix). `null` when no cooldown. Same semantic as `TClans.cooldown_until` but always fresh (the list version may be up to 30 s stale).
-- `members` (object[]) — Members of this clan, server-ordered by `contribution_score` DESC (i.e. `position` ASC).
-  - `user_id` (number)
-  - `public_username` (string)
-  - `avatar_id` (string)
-  - `avatar_real_id` (null)
-  - `avatar_url` (string)
-  - `position` (number)
-  - `contribution_score` (number)
-  - `is_me` (boolean)
-  - `clean_ext_user_id` (string)
+- `cooldown_until` (string | null) — User-level switch-cooldown expiry as ISO 8601 UTC string ("YYYY-MM-DDTHH:MM:SS" with no timezone suffix). `null` when no cooldown. Same semantic as `TClans.cooldown_until` but always fresh (the list version may be up to 30 s stale).
+- `members` ({
+		/** Member's internal user ID. */
+		user_id: number;
+		/** Member's display username. */
+		public_username: string;
+		/** Avatar identifier; resolve via `avatar_url` below or rebuild
+		 * from `avatar_id` + brand avatar domain. */
+		avatar_id: string;
+		/** Numeric avatar ID (alternative identifier). */
+		avatar_real_id: number;
+		/** Pre-resolved CDN URL for the avatar. */
+		avatar_url?: string;
+		/** Member's rank within this clan; `1` = top contributor. */
+		position: number;
+		/** Member's contribution to the clan rating score. */
+		contribution_score: number;
+		/** `true` when this row is the current authenticated user. */
+		is_me?: boolean;
+		/** External user identifier (operator-provided alias);
+		 * preferred over `public_username` on some surfaces. */
+		clean_ext_user_id?: string;
+	}[]) — Members of this clan, server-ordered by `contribution_score` DESC (i.e. `position` ASC).
 
 ## Behavioral contract
 **Preconditions**
@@ -120,12 +133,12 @@ if (isMyClan) {
     "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash an…",
     "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
   },
-  "member_count": 884,
+  "member_count": 885,
   "capacity_limit": 1000,
   "entry_fee_currency_type_id": 0,
   "entry_fee_amount": 100,
   "rating_position": 1,
-  "rating_score": 87,
+  "rating_score": 90,
   "cooldown_until": null,
   "members": [
     {
@@ -135,7 +148,7 @@ if (isMyClan) {
       "avatar_real_id": null,
       "avatar_url": "https://cdn.example/avatar/183751733",
       "position": 1,
-      "contribution_score": 450460,
+      "contribution_score": 456786,
       "is_me": false,
       "clean_ext_user_id": "0"
     }

@@ -13,11 +13,19 @@ _smartico.api.getInboxMessageBody(messageGuid: string): Promise<TInboxMessageBod
 - `messageGuid` — The `message_guid` from a `TInboxMessage` returned by `getInboxMessages`.
 
 ## Returns — `Promise<TInboxMessageBody>`
-- `action` (string) — Click-action — either a deep-link (e.g. `'dp:deposit'`) or a plain URL. The literal `'dp:inbox'` indicates the message has a rich `html_body`; for any other value `html_body` and `buttons` are absent. Pass to `_smartico.dp(action)` for safe execution.
-- `icon` (string) — Message icon URL (128×128 px recommended).
+`TInboxMessageBody`:
 - `title` (string) — Display title.
 - `preview_body` (string) — Short preview text (typically rendered alongside the title in list items).
-- `custom_data` (object) — Operator-defined custom data. The SDK auto-parses JSON-looking strings, so at runtime this is `any` despite the `string` type.
+- `icon` (string) — Message icon URL (128×128 px recommended).
+- `action` (string) — Click-action — either a deep-link (e.g. `'dp:deposit'`) or a plain URL. The literal `'dp:inbox'` indicates the message has a rich `html_body`; for any other value `html_body` and `buttons` are absent. Pass to `_smartico.dp(action)` for safe execution.
+- `html_body` (string) — Rich HTML body. Populated only when `action === 'dp:inbox'`.
+- `buttons` ({
+		/** Button click-action (deep-link or URL). */
+		action: string;
+		/** Button label. */
+		text: string;
+	}[]) — Up to 2 additional action buttons. Populated only when `action === 'dp:inbox'`.
+- `custom_data` (string) — Operator-defined custom data. The SDK auto-parses JSON-looking strings, so at runtime this is `any` despite the `string` type.
 
 ## Behavioral contract
 **Rich vs simple messages**
@@ -66,7 +74,7 @@ if (body.action === 'dp:inbox' && body.html_body) {
   "action": "dp:close",
   "icon": "https://cdn.example/d0f46ded3f7c9439fa0239-home-gems.webp",
   "title": "Congratulations!",
-  "preview_body": "You have received 1 Gems to your balance!",
+  "preview_body": "You have received 10 Gems to your balance!",
   "custom_data": {}
 }
 ```

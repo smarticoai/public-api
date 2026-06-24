@@ -13,7 +13,7 @@ _smartico.api.checkSegmentMatch(segment_id: number): Promise<boolean>
 - `segment_id` — The segment ID. Segment IDs are label-scoped; the same numeric ID can refer to different segments under different labels. Use the IDs configured for your label.
 
 ## Returns
-See `the domain types`.
+Resolves to `boolean`.
 
 ## Behavioral contract
 **Refresh model**

@@ -14,6 +14,7 @@ _smartico.api.markUnmarkInboxMessageAsFavorite(messageGuid: string, mark: boolea
 - `mark` — `true` to favorite, `false` to unfavorite.
 
 ## Returns — `Promise<InboxMarkMessageAction>`
+`InboxMarkMessageAction`:
 - `err_code` (number) — Error code. `0` = success. See the calling method's TSDoc for the full error semantics (server returns generic codes; the five inbox mutations share the same shape).
 - `err_message` (string) — Optional server-side error message. Present only on non-zero `err_code`; may be empty even then.
 

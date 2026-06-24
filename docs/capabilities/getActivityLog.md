@@ -30,7 +30,7 @@ _smartico.api.getActivityLog({
 _None._
 
 ## Returns — `Promise<TActivityLog[]>`
-Array of `TActivityLog`. Each item (shape from the type — capture a response into `_responses/` for a real example):
+Array of `TActivityLog`. Each item:
 - `create_date` (number) — Date when the change was created (epoch timestamp in seconds)
 - `user_ext_id` (string) — External user ID
 - `crm_brand_id` (number) — CRM brand ID

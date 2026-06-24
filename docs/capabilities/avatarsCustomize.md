@@ -21,7 +21,7 @@ _smartico.api.avatarsCustomize(props: {
 - `props.avatar_real_id` — `avatar_real_id` of the base avatar.
 
 ## Returns — `Promise<AvatarCustomizeResponse>`
-`AvatarCustomizeResponse` (shape from the type — capture a response into `_responses/` for a real example):
+`AvatarCustomizeResponse`:
 - `cdn_url` (string) — CDN URL of the generated avatar variant. Present on success.
 - `errCode` (AvatarCustomizeErrorCode | number) — Error code. Present on failure. Typed values are members of `AvatarCustomizeErrorCode`; `-1` is a generic failure. See the `avatarsCustomize` TSDoc for the full table.
 - `errMessage` (string) — Optional error message. Present on failure; the generic (`-1`) message is fixed text, so branch on `errCode`, not this string.

@@ -14,24 +14,31 @@ _smartico.api.getLeaderBoard(periodType: LeaderBoardPeriodType, getPreviousPerio
 - `getPreviousPeriod` — Which period to fetch. `false` (default) = current in-progress period; `true` = the most recent finalized snapshot; a number `n` = the n-th previous snapshot (`1` = previous, `2` = the one before, …).
 
 ## Returns — `Promise<LeaderBoardDetailsT>`
+`LeaderBoardDetailsT`:
 - `board_id` (number) — Stable ID of the leaderboard.
 - `name` (string) — Operator-defined display name.
 - `description` (string) — Operator-defined description (HTML allowed).
 - `rules` (string) — Operator-defined rules / terms (HTML allowed).
-- `period_type_id` (number) — Period type this board is bound to (`LeaderBoardPeriodType`).
+- `period_type_id` (LeaderBoardPeriodType) — Period type this board is bound to (`LeaderBoardPeriodType`).
 - `version_id` (number) — Snapshot version. `0` for the live current period; a positive value identifies a finalized previous-period snapshot (see `getPreviousPeriod`).
 - `create_date` (number) — Snapshot creation timestamp (Unix ms). `0` for the live current period; the finalization time for a previous-period snapshot.
-- `rewards` (object[]) — Per-place prize table; the array length is the number of paid places.
+- `rewards` (LeaderBoardsRewardsT[]) — Per-place prize table; the array length is the number of paid places.
   - `place` (number) — Place number (1-based).
   - `points` (number) — Gamification points awarded to the user occupying this place at period finalization.
-- `users` (object[]) — Top-20 ranked entries (server-capped), sorted by `position` ASC. Empty when fetched via `getLeaderBoards()` (metadata-only list).
+- `users` (LeaderBoardUserT[]) — Top-20 ranked entries (server-capped), sorted by `position` ASC. Empty when fetched via `getLeaderBoards()` (metadata-only list).
   - `public_username` (string) — Display username (operator-defined alias).
   - `avatar_url` (string) — Resolved CDN URL for the participant's avatar. May be empty when the participant has no custom avatar — fall back to a level-based default using `level_id`.
   - `level_id` (number) — The participant's level id — use it to resolve a level-based default avatar when `avatar_url` is empty.
   - `position` (number) — Rank in the leaderboard (DENSE_RANK over all participants). `-1` on the `me` entry signals "unranked / outside the window".
   - `points` (number) — Participant's points for this period.
   - `is_me` (boolean) — `true` when this row is the current authenticated user. Always `true` on the `me` entry.
-- `me` (object) — Current user's own entry. `undefined` for visitor sessions. For authenticated users, `position === -1` means the user is unranked / outside the ranked window.
+- `me` (LeaderBoardUserT) — Current user's own entry. `undefined` for visitor sessions. For authenticated users, `position === -1` means the user is unranked / outside the ranked window.
+  - `public_username` (string) — Display username (operator-defined alias).
+  - `avatar_url` (string) — Resolved CDN URL for the participant's avatar. May be empty when the participant has no custom avatar — fall back to a level-based default using `level_id`.
+  - `level_id` (number) — The participant's level id — use it to resolve a level-based default avatar when `avatar_url` is empty.
+  - `position` (number) — Rank in the leaderboard (DENSE_RANK over all participants). `-1` on the `me` entry signals "unranked / outside the window".
+  - `points` (number) — Participant's points for this period.
+  - `is_me` (boolean) — `true` when this row is the current authenticated user. Always `true` on the `me` entry.
 
 ## Behavioral contract
 **Return value note** — the runtime may return `undefined` if no
@@ -156,7 +163,7 @@ console.log('[smartico] previous-week standings — render with greyed-out "ende
       "avatar_url": "https://cdn.example/avatar/344499363",
       "level_id": 700,
       "position": 1,
-      "points": 1525,
+      "points": 2155,
       "is_me": false
     }
   ],

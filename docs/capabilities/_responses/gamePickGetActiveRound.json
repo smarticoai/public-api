@@ -23,7 +23,7 @@
     "score_part_win": 0,
     "score_lost": 0,
     "events_total": "28",
-    "events_resolved": "0",
+    "events_resolved": "1",
     "show_users_preference": true,
     "order_events": 1,
     "board_users_count": 20,
@@ -50,7 +50,9 @@
         "match_date": "2026-06-25T01:00:00.000Z",
         "odds_details": {
           "odd_value": {
-            "…": "(nested)"
+            "1": 22,
+            "2": 35,
+            "x": 43
           }
         },
         "user_placed_bet": false,
@@ -76,7 +78,9 @@
         "match_date": "2026-06-25T01:00:00.000Z",
         "odds_details": {
           "odd_value": {
-            "…": "(nested)"
+            "1": 31,
+            "2": 62,
+            "x": 7
           }
         },
         "user_placed_bet": false,

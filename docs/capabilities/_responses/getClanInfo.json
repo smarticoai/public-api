@@ -5,12 +5,12 @@
     "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash and show them that you don't even care. We…",
     "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
   },
-  "member_count": 884,
+  "member_count": 885,
   "capacity_limit": 1000,
   "entry_fee_currency_type_id": 0,
   "entry_fee_amount": 100,
   "rating_position": 1,
-  "rating_score": 87,
+  "rating_score": 90,
   "cooldown_until": null,
   "members": [
     {
@@ -20,7 +20,7 @@
       "avatar_real_id": null,
       "avatar_url": "https://cdn.example/avatar/183751733",
       "position": 1,
-      "contribution_score": 450460,
+      "contribution_score": 456786,
       "is_me": false,
       "clean_ext_user_id": "0"
     },
@@ -31,7 +31,7 @@
       "avatar_real_id": null,
       "avatar_url": "https://cdn.example/avatar/339588750",
       "position": 2,
-      "contribution_score": 310342,
+      "contribution_score": 314574,
       "is_me": false,
       "clean_ext_user_id": "0"
     }

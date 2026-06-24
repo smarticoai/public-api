@@ -20,9 +20,14 @@ Array of `TBonus`. Each item:
 - `create_date` (string) — Bonus creation timestamp as ISO 8601 UTC string ("YYYY-MM-DDTHH:MM:SS", no timezone suffix).
 - `redeem_date` (string) — Bonus redemption timestamp as ISO 8601 UTC string. Absent until the bonus reaches `BonusStatus.REDEEMED`.
 - `label_bonus_template_id` (number) — ID of the bonus template used to issue this bonus.
-- `bonus_status_id` (number) — Lifecycle status; see `BonusStatus`.
-- `label_bonus_template_meta_map` (object) — Template-level display metadata (operator-configured, identical across all bonuses from the same template).
-- `bonus_meta_map` (object) — Instance-level display metadata (per-issuance; carries the dynamic amount computed at award time).
+- `bonus_status_id` (BonusStatus) — Lifecycle status; see `BonusStatus`.
+- `label_bonus_template_meta_map` (BonusTemplateMetaMap) — Template-level display metadata (operator-configured, identical across all bonuses from the same template).
+  - `description` (string) — Operator-set description / display text. May include HTML.
+  - `acknowledge` (string) — Operator-set additional message shown to the player at claim time (e.g. wagering terms). May include deep-links.
+  - `image_url` (string) — Bonus icon URL (1:1 aspect ratio recommended).
+  - `redirect_url` (string) — Optional redirect — external HTTP URL (opens in new tab) or internal deep-link (handled by the SDK's deep-link router).
+- `bonus_meta_map` (BonusMetaMap) — Instance-level display metadata (per-issuance; carries the dynamic amount computed at award time).
+  - `uiAmount` (string) — Display-ready amount string (e.g. "€50", "100 free spins").
 
 ## Behavioral contract
 **Subscription model (`onUpdate`)**

@@ -23,18 +23,56 @@ Array of `TTournament`. Each item:
 - `image2` (string) — 2nd image URL representing the tournament, 920x200px
 - `image2_mobile` (string) — 2nd image URL representing the tournament for mobile, 720x400px
 - `prize_pool_short` (string) — The message indicating the prize pool of the tournament
-- `custom_data` (object) — The custom data of the tournament defined by operator. Can be a JSON object, string or number
+- `custom_price_text` (string) — The message indicating the price to register in the tournament
+- `segment_dont_match_message` (string) — The message that should be shown to the user when the user cannot register in tournament with error code TOURNAMENT_USER_DONT_MATCH_CONDITIONS
+- `custom_section_id` (number) — The ID of the custom section where the tournament is assigned The list of custom sections can be retrieved using _smartico.api.getCustomSections() method
+- `custom_data` (any) — The custom data of the tournament defined by operator. Can be a JSON object, string or number
 - `is_featured` (boolean) — The indicator if the tournament is 'Featured'
+- `ribbon` (TRibbon) — The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250×300px
+- `priority` (number) — A number is used to order the tournaments, representing their priority in the list
+- `me` ({
+		/** The username of the participant */
+		public_username: string;
+		/** The URL to the avatar of the participant */
+		avatar_url: string;
+		/** The position of the participant in the tournament */
+		position: number;
+		/** The scores of the participant in the tournament */
+		scores: number;
+		/** The external user id of the participant */
+		user_ext_id: string;
+		/** The crm brand id of the participant */
+		crm_brand_id: number;
+		/** The user id of the participant */
+		user_id: number;
+	}) — Info about current player in tournament
+- `prizes` ({
+		/** The name of the prize */
+		name: string;
+		/** The description of the prize */
+		description: string;
+		/** The image of the prize, 1:1 aspect ratio */
+		image_url: string;
+		/** from-to range of the places to which this prize */
+		place_from: number;
+		place_to: number;
+		/** type of the prize: TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS */
+		type: string;
+		/** if the prize is points related, indicates amount of points */
+		points?: number;
+	}[]) — Prize structure
 - `start_time` (number) — The time when tournament is going to start, epoch with milliseconds
 - `end_time` (number) — The time when tournament is going to finish, epoch with milliseconds
+- `registration_type` (TournamentRegistrationTypeName) — Type of registration in the tournament
 - `registration_count` (number) — Number of users registered in the tournament
 - `is_user_registered` (boolean) — flag indicating if current user is registered in the tournament
 - `players_min_count` (number) — Minimum number of participant for this tournament. If tournament doesnt have enough registrations, it will not start
 - `players_max_count` (number) — Maximum number of participant for this tournament. When reached, new users won't be able to register
-- `registration_status` (string) — Status of registration in the tournament for current user
-- `registration_type` (string) — Type of registration in the tournament
-- `registration_cost_gems` (number) — Cost of registration in the tournament in gems
+- `registration_status` (TournamentRegistrationStatusName) — Status of registration in the tournament for current user
 - `duration_ms` (number) — Tournament duration in millisecnnds
+- `registration_cost_points` (number) — Cost of registration in the tournament in gamification points
+- `registration_cost_gems` (number) — Cost of registration in the tournament in gems
+- `registration_cost_diamonds` (number) — Cost of registration in the tournament in diamonds
 - `is_active` (boolean) — Indicator if tournament instance is active, means in one of the statues - PUBLISHED, REGISTED, STARTED
 - `is_can_register` (boolean) — Indicator if user can register in this tournament instance, e.g tournament is active, max users is not reached, user is not registered yet
 - `is_cancelled` (boolean) — Indicator if tournament instance is cancelled (status CANCELLED)
@@ -43,7 +81,7 @@ Array of `TTournament`. Each item:
 - `is_upcoming` (boolean) — Indicator if tournament instance is upcoming (status PUBLISHED or REGISTER)
 - `min_scores_win` (number) — The minimum amount of score points that the user should get in order to be qualified for the prize
 - `hide_leaderboard_min_scores` (boolean) — When enabled, users who don’t meet the minimum qualifying score will be hidden from the Leaderboard
-- `total_scores` (null) — Total scores across all participants in the tournament
+- `total_scores` (number) — Total scores across all participants in the tournament
 - `is_clan_based` (boolean) — True when this tournament groups participants by clan
 
 ## Behavioral contract

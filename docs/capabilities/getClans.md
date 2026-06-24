@@ -14,18 +14,23 @@ _smartico.api.getClans({ onUpdate }: { onUpdate?: (data: TClans) => void } = {})
 - `params.onUpdate` — Callback invoked with the full refreshed `TClans` payload whenever the 30 s cache expires and a subsequent fetch lands. Each call to `getClans` overwrites the prior callback.
 
 ## Returns — `Promise<TClans>`
-- `clans` (object[]) — List of active clans available to the user
+`TClans`:
+- `clans` (TClan[]) — List of active clans available to the user
   - `clan_id` (number) — Clan ID
-  - `public_meta` (object) — Translated clan metadata
+  - `public_meta` ({
+		name: string;
+		description: string;
+		image_url: string;
+	}) — Translated clan metadata
   - `member_count` (number) — Current number of members in clan
   - `capacity_limit` (number) — Max number of members allowed in clan
   - `entry_fee_currency_type_id` (number) — Currency type for `entry_fee_amount`. `0` = points, `1` = gems, `2` = diamonds, `3` = free (no fee).
   - `entry_fee_amount` (number) — Entry fee amount in the currency indicated by `entry_fee_currency_type_id`. `0` (or `entry_fee_currency_type_id === 3`) means the clan is free to join.
   - `rating_position` (number) — Global rank among all active clans in the label, by `rating_score` DESC. `1` = highest-rated. May skip positions when some clans are hidden by per-user visibility (e.g. user sees positions 1, 3, 7).
   - `rating_score` (number) — Clan rating score (higher is better).
-- `user_clan_id` (null) — The clan ID the current user belongs to; null if clanless
-- `cooldown_until` (null) — Switch-cooldown expiry as ISO 8601 UTC string ("YYYY-MM-DDTHH:MM:SS" with no timezone suffix; interpret as UTC). `null` when no cooldown. User-level: while set, the user cannot join any clan.
-- `join_date` (null) — Epoch ms when the current user joined their clan; null if clanless
+- `user_clan_id` (number | null) — The clan ID the current user belongs to; null if clanless
+- `cooldown_until` (string | null) — Switch-cooldown expiry as ISO 8601 UTC string ("YYYY-MM-DDTHH:MM:SS" with no timezone suffix; interpret as UTC). `null` when no cooldown. User-level: while set, the user cannot join any clan.
+- `join_date` (number | null) — Epoch ms when the current user joined their clan; null if clanless
 
 ## Behavioral contract
 **Subscription model (`onUpdate`)**
@@ -136,14 +141,16 @@ for (const clan of result.clans) {
     {
       "clan_id": 6,
       "public_meta": {
-        "…": "(nested)"
+        "name": "Joker Clan",
+        "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash an…",
+        "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
       },
-      "member_count": 884,
+      "member_count": 885,
       "capacity_limit": 1000,
       "entry_fee_currency_type_id": 0,
       "entry_fee_amount": 100,
       "rating_position": 1,
-      "rating_score": 87
+      "rating_score": 90
     }
   ],
   "user_clan_id": null,

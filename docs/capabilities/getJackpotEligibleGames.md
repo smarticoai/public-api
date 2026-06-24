@@ -18,12 +18,17 @@ _smartico.api.getJackpotEligibleGames({ jp_template_id, onUpdate } : {
 _None._
 
 ## Returns — `Promise<TGetJackpotEligibleGamesResponse>`
-- `eligible_games` (object[])
+`TGetJackpotEligibleGamesResponse`:
+- `eligible_games` (JackpotEligibleGame[])
   - `game_id` (number) — ID of the game on Smartico side
   - `ext_game_id` (string) — ID of the game on operator side
   - `name` (string) — Name of the game
+  - `link` (string) — Link to the game
   - `image` (string) — Image of the game
   - `enabled` (boolean) — Whether the game is enabled
+  - `game_categories` (string[]) — Categories of the game
+  - `game_provider` (string) — Provider of the game
+  - `mobile_spec_link` (string) — The link to the mobile game
   - `priority` (number) — The priority of the game
 
 ## Behavioral contract

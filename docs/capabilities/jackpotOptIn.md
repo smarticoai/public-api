@@ -13,13 +13,12 @@ _smartico.api.jackpotOptIn(filter: { jp_template_id: number }): Promise<Jackpots
 - `filter.jp_template_id` — ID of the jackpot template to join.
 
 ## Returns — `Promise<JackpotsOptinResponse>`
-- `errCode` (number)
-- `errMsg` (string)
+`JackpotsOptinResponse`:
 - `cid` (number)
 - `ts` (number)
 - `uuid` (string)
-- `payload` (null)
-- `duration` (null)
+- `errCode` (number)
+- `errMsg` (string)
 
 ## Behavioral contract
 **Preconditions**

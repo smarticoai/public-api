@@ -24,7 +24,7 @@ _smartico.api.reportClickEvent({
 _None._
 
 ## Returns
-See `the domain types`.
+_No return value._
 
 ## Behavioral contract
 **When to call**

@@ -18,9 +18,21 @@ Array of `TUICustomSection`. Each item:
 - `body` (string) — Raw HTML body for `HTML_PAGE` sections; Liquid template body for `LEVELS` (Liquid) sections.
 - `menu_img` (string) — CDN URL of the section's nav icon, 64x64 px square.
 - `menu_name` (string) — Display name shown next to the nav icon. Pre-translated server-side.
-- `section_type_id` (number) — Dispatch key — see `AchCustomSectionType`.
-- `liquid_entity_data` (array) — Data-context selectors for Liquid templates; see `LiquidEntityData`.
+- `custom_skin_images` (string) — JSON-serialized list of skin image overrides for themed sections (e.g. `MISSION_CUSTOM_LAYOUT`).
+- `section_type_id` (AchCustomSectionType) — Dispatch key — see `AchCustomSectionType`.
+- `theme` (AchCustomLayoutTheme) — Themed-layout name for `MISSION_CUSTOM_LAYOUT` sections; see `AchCustomLayoutTheme`.
+- `generic_custom_css` (string) — Custom CSS for themed layouts.
+- `mission_tabs_options` (AchMissionsTabsOptions) — Which tabs to render for `MISSIONS_CATEGORY` sections; see `AchMissionsTabsOptions`.
+- `overview_missions_filter` (AchOverviewMissionsFilter) — Mission-filter rule for the Overview tab; see `AchOverviewMissionsFilter`.
+- `overview_missions_count` (number) — Maximum number of missions shown in the Overview tab.
+- `url_or_dp` (string) — Click target for `REDIRECT_LINK` sections — either a Smartico DP string (`dp:…`) or an external URL.
+- `liquid_entity_data` (LiquidEntityData[]) — Data-context selectors for Liquid templates; see `LiquidEntityData`.
+- `ach_tournament_id` (number) — Tournament ID for a single-tournament Liquid template (`LiquidEntityData.Tournament`).
+- `show_raw_data` (boolean) — Operator debug flag — when `true`, Liquid renders raw context data instead of the templated HTML.
 - `liquid_template` (number) — Liquid template ID resolved server-side; the rendered body is delivered in `body`.
+- `ach_category_ids` (number[]) — Category IDs the section filters badges by — correlate with `getAchCategories()`.
+- `shop_category_ids` (number[]) — Category IDs the section filters store items by — correlate with `getStoreCategories()`.
+- `raffle_id` (number) — Raffle ID for `RAFFLE` sections (and `LiquidEntityData.SingleRaffle` Liquid templates).
 
 ## Behavioral contract
 **Preconditions**

@@ -14,7 +14,7 @@ _smartico.api.getClanTournamentPlayers(tournamentInstanceId: number, clanId: num
 - `clanId` — The clan ID from `TTournamentDetailed.clan_leaderboard[].clan_id`.
 
 ## Returns — `Promise<TClanTournamentPlayers>`
-`TClanTournamentPlayers` (shape from the type — capture a response into `_responses/` for a real example):
+`TClanTournamentPlayers`:
 - `clan_id` (number) — Clan ID
 - `clan_public_meta` ({ name: string; image_url: string }) — Clan display metadata
 - `players` ({

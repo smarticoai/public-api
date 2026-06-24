@@ -3,6 +3,19 @@
     "winner": {
       "is_me": false,
       "public_username": "731:*****",
+      "winning_amount_jp_currency": 16.720332488,
+      "winning_amount_wallet_currency": 98.525768722,
+      "winning_position": 1,
+      "avatar_id": "183751796",
+      "avatar_real_id": null
+    },
+    "win_date_ts": 1782295329703,
+    "jp_pot_id": 306053
+  },
+  {
+    "winner": {
+      "is_me": false,
+      "public_username": "731:*****",
       "winning_amount_jp_currency": 14.30613568,
       "winning_amount_wallet_currency": 84.29993939,
       "winning_position": 1,
@@ -11,18 +24,5 @@
     },
     "win_date_ts": 1782274146343,
     "jp_pot_id": 306000
-  },
-  {
-    "winner": {
-      "is_me": false,
-      "public_username": "731:*****",
-      "winning_amount_jp_currency": 12.892351,
-      "winning_amount_wallet_currency": 75.969110891,
-      "winning_position": 1,
-      "avatar_id": "227407288",
-      "avatar_real_id": null
-    },
-    "win_date_ts": 1782268291936,
-    "jp_pot_id": 305990
   }
 ]

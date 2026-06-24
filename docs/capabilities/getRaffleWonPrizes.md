@@ -15,14 +15,29 @@ _smartico.api.getRaffleWonPrizes(props: { raffle_id: number; offset?: number; li
 - `props.limit` — Page size. Defaults to `20`.
 
 ## Returns — `Promise<GetRaffleWonPrizesResponse>`
-`GetRaffleWonPrizesResponse` (shape from the type — capture a response into `_responses/` for a real example):
+`GetRaffleWonPrizesResponse`:
 - `cid` (number)
 - `ts` (number)
 - `uuid` (string)
 - `errCode` (number)
 - `errMsg` (string)
 - `user` (RaffleWonPrizeUser | null) — The user the won prizes belong to; `null` when `won_prizes` is empty.
+  - `user_id` (number) — Internal user ID.
+  - `avatar_id` (string) — Avatar image: a full URL for a system avatar, otherwise an avatar token to resolve against the widget's avatar domain.
+  - `avatar_real_id` (number) — Numeric ID of the user's selected avatar definition.
+  - `public_username` (string) — Public username; server-masked for other users (e.g. `"32:r*****"`).
+  - `avatar_url` (string | null) — Always `null` on the wire — use `avatar_id`.
 - `won_prizes` (RaffleWonPrize[]) — Page of won prizes for the requested raffle, newest-first.
+  - `raf_won_id` (number) — Unique ID of the winning row (pass to `claimRafflePrize` when `requires_claim` is `true`).
+  - `prize_id` (number) — ID of the prize definition.
+  - `raffle_run_id` (number) — Run-instance ID of the draw that awarded this prize.
+  - `draw_id` (number) — Schedule ID of the draw that awarded this prize.
+  - `public_meta` (RaffleWonPrizePublicMeta) — Presentation meta (name / image).
+    - `name` (string) — Name of the prize, e.g. '1 $'.
+    - `hide_chance_to_win` (boolean) — Indicates whether the chance to win should be hidden in the UI.
+    - `image_url` (string) — URL of the image that represents the prize.
+  - `requires_claim` (boolean) — Whether this prize requires a claim action from the user.
+  - `claimed_date` (number | null) — Epoch ms when the prize was claimed; `null` when not yet claimed.
 - `total` (number) — Total number of won prizes for this user/raffle across all draws (for pagination).
 - `offset` (number) — Zero-based offset of this page (echoes the resolved request).
 - `limit` (number) — Page size (echoes the resolved request).

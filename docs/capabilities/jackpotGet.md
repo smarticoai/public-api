@@ -17,24 +17,34 @@ _smartico.api.jackpotGet(filter?: { related_game_id?: string; jp_template_id?: n
 ## Returns — `Promise<JackpotDetails[]>`
 Array of `JackpotDetails`. Each item:
 - `jp_template_id` (number) — Stable numeric ID of the template; pass to opt-in / opt-out / winners / eligible-games methods.
-- `jp_type_id` (number) — Whether the jackpot has a shared pot or one independent per user; see `JackpotType`.
-- `jp_public_meta` (object) — Display data: name, description, image_url, winner / not-winner HTML templates, custom_data (JSON-parsed).
+- `jp_type_id` (JackpotType) — Whether the jackpot has a shared pot or one independent per user; see `JackpotType`.
+- `jp_public_meta` (JackpotPublicMeta) — Display data: name, description, image_url, winner / not-winner HTML templates, custom_data (JSON-parsed).
+  - `name` (string) — name of the jackpot
+  - `description` (string) — description/rules of the jackpot
+  - `image_url` (string) — image url of the jackpot
+  - `winner_template` (JackpotHtmlTemplate) — HTML template for the winner of the jackpt
+    - `id` (string)
+    - `content` (string)
+  - `not_winner_template` (JackpotHtmlTemplate) — HTML template for the not winner of the jackpot
+    - `id` (string)
+    - `content` (string)
+  - `placeholder1` (string) — custom value of placeholder1 defined by operator and can be used in the HTML templates
+  - `placeholder2` (string) — custom value of placeholder2 defined by operator and can be used in the HTML templates
+  - `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - <https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes>
 - `jp_currency` (string) — Native jackpot currency (ISO 4217). Used for winner-history amounts.
 - `user_currency` (string) — Current user's wallet currency. Used to display the pot via `pot.current_pot_amount_user_currency`.
-- `related_games` (array)
-- `contribution_type` (number) — Whether the contribution is a fixed amount or a percentage of the bet; see `JackpotContributionType`.
+- `contribution_type` (JackpotContributionType) — Whether the contribution is a fixed amount or a percentage of the bet; see `JackpotContributionType`.
 - `contribution_value` (number) — Amount of contribution per qualifying bet — fixed value or percentage depending on `contribution_type`.
-- `pot` (object) — Live pot snapshot (amount, temperature, last explosion timestamp).
+- `pot` (JackpotPot) — Live pot snapshot (amount, temperature, last explosion timestamp).
+  - `jp_template_id` (number) — Template ID this pot belongs to.
+  - `jp_pot_id` (number) — Stable numeric ID of the current pot instance (rotates when the pot explodes).
+  - `current_pot_amount` (number) — Current pot amount in the jackpot's native currency (`jp_currency`).
+  - `current_pot_amount_user_currency` (number) — Current pot amount converted to the user's wallet currency (`user_currency`).
+  - `explode_date_ts` (number) — Unix ms timestamp of when this pot last exploded; `0` if it has never exploded.
+  - `current_pot_temperature` (JackPotTemparature) — Heat band of the pot relative to its explosion range; see `JackPotTemparature`.
 - `is_opted_in` (boolean) — `true` when the current user is currently opted in.
-- `is_auto_opt_in` (boolean)
 - `ach_related_game_allow_all` (boolean) — `true` when every game in the operator catalog contributes; if `true`, skip `getJackpotEligibleGames`.
 - `registration_count` (number) — Number of users currently opted in; always `1` for `JackpotType.Personal`.
-- `contribution_rules` (object[])
-  - `ruleId` (number)
-  - `jpTemplateId` (number)
-  - `type` (number)
-  - `extEntityIds` (array)
-  - `contributionValue` (number)
 - `expose_winners_over_api` (boolean) — Operator flag: whether the winners list should be displayed. Enforced client-side only — gate `getJackpotWinners` calls on this.
 
 ## Behavioral contract
@@ -127,24 +137,24 @@ console.log('[smartico] linked jackpots for game:', linked.length);
     "contribution_value": 0.2,
     "pot": {
       "jp_template_id": 6,
-      "jp_pot_id": 306053,
+      "jp_pot_id": 306140,
       "user_id": null,
-      "current_pot_amount": 13.08704704,
-      "current_pot_amount_user_currency": 13.08704704,
+      "current_pot_amount": 12.28367028,
+      "current_pot_amount_user_currency": 12.28367028,
       "explode_date_ts": null,
       "current_pot_temperature": 2
     },
-    "is_opted_in": true,
+    "is_opted_in": false,
     "is_auto_opt_in": true,
     "ach_related_game_allow_all": true,
-    "registration_count": 17260,
+    "registration_count": 17262,
     "contribution_rules": [
       {
         "ruleId": 1,
         "jpTemplateId": 6,
         "type": 2,
         "extEntityIds": [
-          "…"
+          "1111"
         ],
         "contributionValue": 4
       }

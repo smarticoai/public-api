@@ -17,22 +17,55 @@ _smartico.api.getStoreItems({ onUpdate }: { onUpdate?: (data: TStoreItem[]) => v
 Array of `TStoreItem`. Each item:
 - `id` (number) — ID of the store item
 - `name` (string) — Name of the store item, translated to the user language
-- `purchase_type` (string) — The type of the purchase
-- `price` (number) — The price of the store item in the gamification points
-- `image` (string) — URL of the image of the store item, 256x256px
 - `description` (string) — Description of the store item, translated to the user language
-- `ribbon` (string) — The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px
+- `image` (string) — URL of the image of the store item, 256x256px
+- `type` ('bonus' | 'tangible' | 'minigamespin' | 'changelevel' | 'prizedrop' | 'unknown' | 'raffleticket') — Type of the store item. Can be 'bonus' or 'tangible' or different others.
+- `price` (number) — The price of the store item in the gamification points
+- `ribbon` (TRibbon) — The ribbon of the store item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250x300px
+- `limit_message` (string) — The message that should be shown to the user if he is not eligible to buy it. this message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item' and can be used in case can_buy property is false. The message is translated to the user language. *Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
+- `purchase_limit_message` (string) — The message that should be shown to the user if they are not eligible to buy it because of purchase limitation. This message can be used to explain the reason why user cannot buy the item, e.g. 'Item is no more available today. Come back Friday'. The message is translated to the user language. *Note**: when user is trying to buy the item, the response from server can return custom error messages that can be shown to the user as well
 - `priority` (number) — The priority of the store item. Can be used to sort the items in the store
-- `type` (string) — Type of the store item. Can be 'bonus' or 'tangible' or different others.
+- `related_item_ids` (number[]) — The list of IDs of the related items. Can be used to show the related items in the store
+- `related_games` (AchRelatedGame[]) — List of casino games (or other types of entities) related to the store item
+  - `ext_game_id` (string) — The ID of the related game
+  - `game_public_meta` ({
+		/** The name of the game */
+		name: string;
+		/** The URL to the game */
+		link: string;
+		/** The URL to the image of the game, 1:1 aspect ratio */
+		image: string;
+		/** The indicator if the game is enabled */
+		enabled: boolean;
+		/** The list of categories of the game */
+		game_categories: string[];
+		/** The name of the game provider */
+		game_provider: string;
+		/** The URL to the mobile game */
+		mobile_spec_link: string;
+		/** The priority of the game */
+		priority?: number;
+	}) — Game public meta information
 - `can_buy` (boolean) — The indicator if the user can buy the item This indicator is taking into account the segment conditions for the store item, the price of item towards users balance,
-- `category_ids` (array) — The list of IDs of the categories where the store item is assigned, information about categories can be retrieved with getStoreCategories method
+- `category_ids` (number[]) — The list of IDs of the categories where the store item is assigned, information about categories can be retrieved with getStoreCategories method
 - `pool` (number) — Items remaining in the pool available for purchase. `null` = unlimited supply. Positive integer = remaining stock. `0` = sold out but still returned (operator may instead hide pool-empty items entirely).
-- `custom_data` (object) — The custom data of the store item defined by operator. Can be a JSON object, string or number
+- `custom_data` (any) — The custom data of the store item defined by operator. Can be a JSON object, string or number
+- `hint_text` (string) — The T&C text for the store item
+- `purchase_ts` (number) — Purchase time to show in purchase history screen
+- `purchase_points_amount` (number) — The amount of points you can purchase an item
+- `purchased_today` (boolean) — Flag for store item indicating that it was purchased today
+- `purchased_this_week` (boolean) — Flag for store item indicating that it was purchased this week
+- `purchased_this_month` (boolean) — Flag for store item indicating that it was purchased this month
+- `purchase_type` ('points' | 'gems' | 'diamonds') — The type of the purchase
 - `active_till_date` (number) — The date when the store item will be available till
 - `show_timer` (boolean) — Should countdown timer be shown when `active_till_date` is present
+- `discounted_price` (number) — The discounted price of the store item
+- `discount_price_ribbon` (string) — The ribbon of the discounted price.
+- `custom_ribbon_image` (string) — The custom ribbon image of the discounted price, 250x300px
+- `custom_section_id` (number) — The ID of the custom section where the store item is assigned
 - `only_in_custom_section` (boolean) — The indicator if the store item is visible only in the custom section and should be hidden from the main overview of store items
+- `custom_section_type_id` (number) — ID of specific Custom Section type
 - `cant_buy_message` (string) — The message that should be shown to the user if they are not eligible to buy it. This message can be used to explain the reason why user cannot buy the item, e.g. 'You should be VIP to buy this item'.
-- `related_games` (array) — List of casino games (or other types of entities) related to the store item
 
 ## Behavioral contract
 **Preconditions**

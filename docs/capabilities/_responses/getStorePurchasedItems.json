@@ -24,27 +24,26 @@
     "related_games": []
   },
   {
-    "id": 7158,
-    "name": "Okayish Drop",
+    "id": 1358,
+    "name": "5 EUR Free Chip",
     "price": 25,
     "purchase_type": "points",
-    "image": "https://cdn.example/33fa1a793eac4a807041ac-Gamificationpoints10.webp",
-    "description": "A chance to win one out of 6 totally fine prizes",
-    "ribbon": "sale",
-    "priority": 3,
-    "type": "prizedrop",
+    "image": "https://cdn.example/9d8dcc5707702e3c3a5edf-Storeitemcopy3.png",
+    "limit_message": "This item can be purchased up to 5 times per day",
+    "priority": 0,
+    "hint_text": "Wagering x50, max. cashout x3 the bonus amount, restricted games: Gold Quest, Book of Cleopatra, Live Roulette",
+    "type": "bonus",
     "can_buy": true,
     "category_ids": [
-      567,
+      231,
       234
     ],
-    "pool": 1000,
-    "purchase_ts": 1781880407214,
+    "pool": null,
+    "purchase_ts": 1782287010699,
     "purchase_points_amount": 25,
-    "purchased_today": false,
-    "purchased_this_week": false,
+    "purchased_today": true,
+    "purchased_this_week": true,
     "purchased_this_month": true,
-    "show_timer": false,
     "related_games": []
   }
 ]

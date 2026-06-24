@@ -14,6 +14,7 @@ _smartico.api.setAvatar(props: { avatar_url: string; avatar_real_id: number }): 
 - `props.avatar_real_id` — Numeric ID of the base avatar from `TAvatarDefinition.avatar_real_id`. For AI variants, this is the `avatar_real_id` of the base they were derived from.
 
 ## Returns — `Promise<TSetAvatarResult>`
+`TSetAvatarResult`:
 - `err_code` (number) — Error code. `0` = success. See `setAvatar` TSDoc for the full table.
 - `err_message` (string) — Optional error message; populated on non-zero `err_code`.
 

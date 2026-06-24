@@ -7,26 +7,26 @@
         "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash and show them that you don't even care. We…",
         "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
       },
-      "member_count": 884,
+      "member_count": 885,
       "capacity_limit": 1000,
       "entry_fee_currency_type_id": 0,
       "entry_fee_amount": 100,
       "rating_position": 1,
-      "rating_score": 87
+      "rating_score": 90
     },
     {
-      "clan_id": 9,
+      "clan_id": 5,
       "public_meta": {
-        "name": "Lucky Penny Clan",
-        "description": "Join the clan if you're in it for the money and money is what brings you luck.<br>\n\nCompete in the Tournaments, team up with other money-loving Scrooges, and hope to win more money!\n\nJoining this o…",
-        "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780064807814-0.webp"
+        "name": "Horseshoe Clan",
+        "description": "Join the clan if you believe in the lucky powers of horseshoes! Or just if you are a horse, this works as well.\n\nCrush the tournament leaderboards at full gallop, and ride into the sunset with your…",
+        "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780055765844-1.png"
       },
-      "member_count": 855,
+      "member_count": 887,
       "capacity_limit": 1000,
-      "entry_fee_currency_type_id": 0,
+      "entry_fee_currency_type_id": 3,
       "entry_fee_amount": 1,
       "rating_position": 2,
-      "rating_score": 92
+      "rating_score": 94
     }
   ],
   "user_clan_id": null,

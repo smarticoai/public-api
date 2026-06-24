@@ -13,8 +13,9 @@ _smartico.api.getUserLevelExtraCounters(): Promise<UserLevelExtraCountersT>
 _None._
 
 ## Returns — `Promise<UserLevelExtraCountersT>`
-- `level_counter_1` (null) — Current value of the user's first level counter. Operator-defined semantics per label. `undefined` on points-only labels.
-- `level_counter_2` (null) — Current value of the user's second level counter. Operator-defined semantics per label. `undefined` on points-only labels.
+`UserLevelExtraCountersT`:
+- `level_counter_1` (number) — Current value of the user's first level counter. Operator-defined semantics per label. `undefined` on points-only labels.
+- `level_counter_2` (number) — Current value of the user's second level counter. Operator-defined semantics per label. `undefined` on points-only labels.
 
 ## Behavioral contract
 **When this matters**

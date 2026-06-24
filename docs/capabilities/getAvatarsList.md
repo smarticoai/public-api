@@ -22,7 +22,10 @@ Array of `TAvatarDefinition`. Each item:
 - `url` (string) — Raw image path as returned by the server (relative or absolute).
 - `avatar_url` (string) — Absolute CDN URL of the avatar image; built from the configured avatar domain + `url`.
 - `avatar_source_type_id` (number) — Source type. `0` = free / always available; non-zero = earned or purchased.
+- `active_from_date` (string) — ISO date string from which the avatar becomes available; undefined when no start window.
+- `active_till_date` (string) — ISO date string until which the avatar is available; undefined when no end window.
 - `is_given` (boolean) — True when the user owns / has unlocked this avatar.
+- `is_in_use` (boolean) — True when this avatar is the user's currently active profile avatar.
 
 ## Behavioral contract
 **Preconditions**

@@ -16,7 +16,8 @@ _smartico.api.playMiniGame(template_id: number, { onUpdate, acknowledge = true }
 - `params.acknowledge` — Whether the SDK automatically sends and awaits the win acknowledge after the spin. Defaults to `true` (recommended). Set `false` to finalise the win yourself via `miniGameWinAcknowledgeRequest`— see "Acknowledge" above for the request-id caveat.
 
 ## Returns — `Promise<TMiniGamePlayResult>`
-- `err_code` (number) — Error code. `0` = success (`SAWSpinErrorCode.SAW_OK`). See `playMiniGame` TSDoc for the full table.
+`TMiniGamePlayResult`:
+- `err_code` (SAWSpinErrorCode) — Error code. `0` = success (`SAWSpinErrorCode.SAW_OK`). See `playMiniGame` TSDoc for the full table.
 - `err_message` (string) — Optional server-side error message. Present only on non-zero `err_code`; may be empty even then.
 - `prize_id` (number) — ID of the won prize. Look up in `template.prizes` to interpret (including `prize_type === 'no-prize'` for a configured loss slot). Always populated, even when `err_code !== 0`.
 - `request_id` (string) — Correlation id of this spin. Pass it to `miniGameWinAcknowledgeRequest` to finalise the win when playing with `acknowledge: false` — no need to look it up via `getMiniGamesHistory`.

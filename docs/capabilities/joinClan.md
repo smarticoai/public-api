@@ -13,7 +13,7 @@ _smartico.api.joinClan(clanId: number): Promise<TClanJoinResult>
 - `clanId` — The clan ID from `TClans.clans[i].clan_id` (or `TClanInfo.clan_id`).
 
 ## Returns — `Promise<TClanJoinResult>`
-`TClanJoinResult` (shape from the type — capture a response into `_responses/` for a real example):
+`TClanJoinResult`:
 - `errCode` (number) — Error code. `0` = success. Typed values are members of `JoinClanErrorCode`. See `joinClan` TSDoc for the full table and per-code UI guidance.
 - `errMsg` (string) — Optional server-side error message. Present only on non-zero `errCode`; may be empty even then.
 

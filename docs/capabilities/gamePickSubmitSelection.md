@@ -14,7 +14,9 @@ _smartico.api.gamePickSubmitSelection(props: GamePickRequestParams & { round: Pa
 - `props.round` — Round object with `round_id` + `events[]` carrying the user's score predictions.
 
 ## Returns — `Promise<GamesApiResponse<GamePickRound>>`
-`GamePickRound` (shape from the type — capture a response into `_responses/` for a real example):
+Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage?` (string), `data?` — the payload:
+
+`GamePickRound`:
 - `round_id` (number) — Unique round identifier
 - `round_row_id` (number) — Sequential row ID used for ordering rounds
 - `round_name` (string) — Localized display name of the round
@@ -41,9 +43,83 @@ _smartico.api.gamePickSubmitSelection(props: GamePickRequestParams & { round: Pa
 - `board_users_count` (number) — Maximum number of users shown on the leaderboard
 - `hide_users_predictions` (boolean) — Whether other users' predictions are hidden until resolution
 - `public_meta` (GamePickRoundPublicMeta) — Public metadata including translations and display settings from the BackOffice
+  - `round_name` (string) — Localized round name
+  - `round_description` (string) — Localized round description
+  - `promo_image` (string) — URL of the promotional image for the round
+  - `promo_text` (string) — Promotional text displayed with the round
+  - `hide_resolved_round` (boolean) — Whether to hide the round from the UI after it has been resolved
+  - `final_screen_image_desktop` (string) — URL of the final screen image for desktop
+  - `final_screen_image_mobile` (string) — URL of the final screen image for mobile
+  - `final_screen_message` (string) — Message displayed on the final/results screen
+  - `final_screen_cta_button_title` (string) — Label for the CTA button on the final screen
+  - `final_screen_cta_dp` (string) — Deep link triggered by the CTA button on the final screen
+  - `allow_edit_answers` (boolean) — Whether users can edit their answers after initial submission (within betting window)
+  - `_translations` ({
+		[key: string]: {
+			round_name: string;
+			round_description: string;
+			promo_image: string;
+			promo_text: string;
+			final_screen_image_desktop: string;
+			final_screen_image_mobile: string;
+			final_screen_message: string;
+			final_screen_cta_button_title: string;
+		};
+	}) — Per-language overrides for round display content
 - `next_round_open_date` (number) — Timestamp (ms) when the next round opens, if available
 - `show_users_preference` (boolean) — Whether to show aggregated user preference percentages for each outcome
 - `events` (GamePickEvent[]) — List of events (matches/questions) in this round
+  - `gp_event_id` (number) — Unique identifier of the event
+  - `event_resolution_date` (string) — ISO 8601 date-time string when the event was resolved; null until resolved.
+  - `match_date` (string) — ISO 8601 date-time string of the match/event start time.
+  - `market_type_id` (SAWGPMarketType) — Market type defining the prediction format (e.g. two-team score, quiz question, custom)
+  - `event_meta` (GamePickEventMeta) — Event metadata containing team names, images, sport type, and question details
+    - `answers` ({
+		/** Answer identifier value sent on submission */
+		value: string;
+		/** Localized display text of the answer */
+		text: string;
+		/** Per-language overrides for the answer text */
+		_translations: {
+			[key: string]: {
+				text: string;
+			};
+		};
+	}[]) — List of possible answer options for the quiz question
+    - `question_image` (string) — URL of an image associated with the question
+    - `result` (QuizAnswersValueType) — Correct answer value after resolution
+    - `custom_question` (string) — Custom question text displayed to the user
+    - `event_name` (string) — Display name of the event/match
+    - `team1_name` (string) — Name of the first team (home)
+    - `team1_image` (string) — URL of the first team's logo image
+    - `team2_name` (string) — Name of the second team (away)
+    - `team2_image` (string) — URL of the second team's logo image
+    - `team1_result` (number) — Actual result score for team 1 after resolution
+    - `team2_result` (number) — Actual result score for team 2 after resolution
+    - `sport_type_id` (number) — Betradar sport type ID for the event
+    - `is_canceled` (boolean) — Whether the event has been canceled
+    - `auto_resolve_enabled` (boolean) — Whether auto-resolution from live data feed is enabled
+    - `auto_resolve_date` (string) — ISO date string for when auto-resolution is expected
+    - `team1_auto_result` (number) — Auto-resolved score for team 1 from live data feed
+    - `team2_auto_result` (number) — Auto-resolved score for team 2 from live data feed
+    - `auto_result` (string) — Auto-resolved answer value from live data feed (for quiz events)
+    - `_translations` ({
+		[key: string]: {
+			team1_name: string;
+			team2_name: string;
+			event_name: string;
+			custom_question: string;
+		};
+	}) — Per-language overrides for team names, event name, and custom question
+  - `user_placed_bet` (boolean) — Whether the current user has submitted a prediction for this event
+  - `team1_user_selection` (number | { from: number; to: number }) — User's predicted score for team 1 (MatchX only). Can be a number or a range object
+  - `team2_user_selection` (number | { from: number; to: number }) — User's predicted score for team 2 (MatchX only). Can be a number or a range object
+  - `user_selection` (QuizAnswersValueType) — User's selected answer (Quiz only). Value depends on market type (e.g. '1', '2', 'x', 'yes', 'no')
+  - `resolution_type_id` (GamePickResolutionType) — How the user's prediction was scored after resolution
+  - `resolution_score` (number) — Points awarded for this event based on prediction accuracy
+  - `is_open_for_bets` (boolean) — Whether this event is still accepting predictions
+  - `odds_details` ({ odd_value: { [key: string]: number } }) — Betting odds details for the event outcomes
+  - `question_image` (string) — URL of a question-specific image (quiz events)
 - `user_score` (number) — Current user's total score in this round
 - `user_placed_bet` (boolean) — Whether the current user has submitted any predictions in this round
 - `has_open_for_bet_events` (boolean) — Whether there are events still open for betting

@@ -13,7 +13,7 @@ _smartico.api.claimRafflePrize(props: { won_id: number }): Promise<TransformedRa
 - `props.won_id` — The winning row's `raf_won_id` (from `TRafflePrizeWinner` returned by `getRaffleDrawRun`).
 
 ## Returns — `Promise<TransformedRaffleClaimPrizeResponse>`
-`TransformedRaffleClaimPrizeResponse` (shape from the type — capture a response into `_responses/` for a real example):
+`TransformedRaffleClaimPrizeResponse`:
 - `errorCode` (number) — Error code. `0` = success. See `claimRafflePrize` TSDoc for the full table.
 - `errorMessage` (string) — Optional error message; populated on non-zero `errorCode`.
 

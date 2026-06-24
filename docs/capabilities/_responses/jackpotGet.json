@@ -26,17 +26,17 @@
     "contribution_value": 0.2,
     "pot": {
       "jp_template_id": 6,
-      "jp_pot_id": 306053,
+      "jp_pot_id": 306140,
       "user_id": null,
-      "current_pot_amount": 13.08704704,
-      "current_pot_amount_user_currency": 13.08704704,
+      "current_pot_amount": 12.28367028,
+      "current_pot_amount_user_currency": 12.28367028,
       "explode_date_ts": null,
       "current_pot_temperature": 2
     },
-    "is_opted_in": true,
+    "is_opted_in": false,
     "is_auto_opt_in": true,
     "ach_related_game_allow_all": true,
-    "registration_count": 17260,
+    "registration_count": 17262,
     "contribution_rules": [
       {
         "ruleId": 1,
@@ -86,17 +86,17 @@
     "contribution_value": 6.7,
     "pot": {
       "jp_template_id": 4,
-      "jp_pot_id": 306106,
+      "jp_pot_id": 306164,
       "user_id": null,
-      "current_pot_amount": 814.33570322,
-      "current_pot_amount_user_currency": 814.33570322,
+      "current_pot_amount": 780.319207992,
+      "current_pot_amount_user_currency": 780.319207992,
       "explode_date_ts": null,
       "current_pot_temperature": 2
     },
     "is_opted_in": true,
     "is_auto_opt_in": true,
     "ach_related_game_allow_all": true,
-    "registration_count": 32968,
+    "registration_count": 32971,
     "contribution_rules": [
       {
         "ruleId": 3,

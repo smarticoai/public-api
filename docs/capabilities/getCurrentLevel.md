@@ -13,15 +13,16 @@ _smartico.api.getCurrentLevel(): Promise<TLevelCurrent>
 _None._
 
 ## Returns — `Promise<TLevelCurrent>`
+`TLevelCurrent`:
 - `id` (number) — Stable ID of the level.
 - `name` (string) — Display name of the level, pre-translated to the user's language.
 - `description` (string) — Display description of the level, pre-translated to the user's language.
 - `image` (string) — URL of the level image (256x256 px source).
 - `required_points` (number) — Total `ach_points_ever` required to reach this level.
 - `visibility_points` (number) — Visibility threshold — clients hide the level from the user until `ach_points_ever >= visibility_points`. `null` means always visible.
-- `required_level_counter_1` (null) — Required value of the first level counter for sliding-window leveling. `null` on points-only labels. See `UserLevelExtraCountersT`.
-- `required_level_counter_2` (null) — Required value of the second level counter for sliding-window leveling. `null` on points-only labels.
-- `custom_data` (object) — Operator-defined custom data. The SDK auto-parses JSON-looking strings, so at runtime this is `any` despite the `string` type.
+- `required_level_counter_1` (number) — Required value of the first level counter for sliding-window leveling. `null` on points-only labels. See `UserLevelExtraCountersT`.
+- `required_level_counter_2` (number) — Required value of the second level counter for sliding-window leveling. `null` on points-only labels.
+- `custom_data` (string) — Operator-defined custom data. The SDK auto-parses JSON-looking strings, so at runtime this is `any` despite the `string` type.
 - `ordinal_position` (number) — 1-based position in the ladder (matches the order of the returned array, which is sorted by `required_points` ASC).
 - `progress` (number) — Progress to the next level as a 0–100 integer percentage. `100` at the highest level.
 

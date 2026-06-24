@@ -14,7 +14,7 @@ _smartico.api.requestMissionClaimReward(mission_id: number, ach_completed_id: nu
 - `ach_completed_id` — The completion-row identifier, read from `mission.ach_completed_id` on the same mission object fetched via `getMissions()`. Never fabricate or cache across sessions.
 
 ## Returns — `Promise<TMissionClaimRewardResult>`
-`TMissionClaimRewardResult` (shape from the type — capture a response into `_responses/` for a real example):
+`TMissionClaimRewardResult`:
 - `err_code` (number) — Error code. `0` = success (rewards credited). See `requestMissionClaimReward` TSDoc for the full table.
 - `err_message` (string) — Optional error message; populated on non-zero `err_code`.
 

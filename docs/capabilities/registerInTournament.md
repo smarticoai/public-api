@@ -13,7 +13,8 @@ _smartico.api.registerInTournament(tournamentInstanceId: number): Promise<TTourn
 - `tournamentInstanceId` — The `instance_id` from `TTournament` (NOT the template `tournament_id`).
 
 ## Returns — `Promise<TTournamentRegistrationResult>`
-- `err_code` (number) — Error code. `0` = success. See `registerInTournament` TSDoc for the full table.
+`TTournamentRegistrationResult`:
+- `err_code` (TournamentRegistrationError) — Error code. `0` = success. See `registerInTournament` TSDoc for the full table.
 - `err_message` (string) — Optional error message; populated on non-zero `err_code`.
 
 ## Behavioral contract

@@ -34,11 +34,11 @@ _smartico.api.getInboxMessages({
 
 ## Returns — `Promise<TInboxMessage[]>`
 Array of `TInboxMessage`. Each item:
-- `sent_date` (string) — Date-time the message was sent, as a `"dd/MM/yyyy HH:mm:ss"` string (server local — NOT ISO-8601, so `new Date(sent_date)` will not parse it).
 - `message_guid` (string) — Unique identifier of the message. Pass to `getInboxMessageBody` and the mark / favorite / delete mutations.
+- `sent_date` (string) — Date-time the message was sent, as a `"dd/MM/yyyy HH:mm:ss"` string (server local — NOT ISO-8601, so `new Date(sent_date)` will not parse it).
 - `read` (boolean) — `true` when the message has been marked read.
 - `favorite` (boolean) — `true` when the message has been starred (favorited).
-- `category_id` (number) — Operator-assigned category (`InboxCategories`).
+- `category_id` (InboxCategories) — Operator-assigned category (`InboxCategories`).
 - `expire_on_dt` (number) — Expiry timestamp as Unix-ms epoch. Server filters out expired messages from list responses — consumers rarely see this set unless the expiry is upcoming.
 
 ## Behavioral contract
@@ -126,12 +126,12 @@ const onlyUnread = await window._smartico.api.getInboxMessages({ read_status: 1 
 ```json
 [
   {
-    "sent_date": "19/06/2026 14:46:52",
+    "sent_date": "24/06/2026 07:43:31",
     "message_guid": "00000000-0000-0000-0000-000000000000",
     "read": true,
-    "favorite": true,
+    "favorite": false,
     "category_id": 0,
-    "expire_on_dt": 1784472412391
+    "expire_on_dt": 1784879011491
   }
 ]
 ```

@@ -21,11 +21,12 @@ Array of `TRaffle`. Each item:
 - `custom_section_id` (number) — ID of the custom section that is linked to the raffle in the Gamification widget
 - `image_url` (string) — URL of the image that represents the raffle, 890x193px
 - `image_url_mobile` (string) — URL of the mobile image that represents the raffle, 300x142px
+- `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
 - `start_date` (number) — Date of start
 - `end_date` (number) — Date of end
 - `max_tickets_count` (number) — Maximum numer of tickets that can be given to all users for the whole period of raffle
 - `current_tickets_count` (number) — Number of tickets that are already given to all users for this raffle
-- `draws` (object[]) — List of draws that are available for this raffle. For example, if the raffle is containg one hourly draw, one daily draw and one draw on fixed date like 01/01/2022, Then the list will always return 3 draws, no matter if the draws are already executed or they are in the future.
+- `draws` (TRaffleDraw[]) — List of draws that are available for this raffle. For example, if the raffle is containg one hourly draw, one daily draw and one draw on fixed date like 01/01/2022, Then the list will always return 3 draws, no matter if the draws are already executed or they are in the future.
   - `id` (number) — Id of the Draw definition, for the repetative draws (e.g. daily), this number will be the same for all draws that are repeating daily (internal name: schedule_id)
   - `name` (string) — Name of the draw, e.g. 'Daily draw'
   - `description` (string) — Description of the draw
@@ -35,10 +36,35 @@ Array of `TRaffle`. Each item:
   - `background_image_url` (string) — URL of the background image that will be used in the draw list item
   - `background_image_url_mobile` (string) — URL of the moible background image that will be used in the draw list item
   - `is_grand` (boolean) — Show if the draw is grand and is marked as special
-  - `prizes` (object[]) — Information about prizes in the draw
-  - `current_state` (number) — State of current instance of Draw
+  - `prizes` (TRafflePrize[]) — Information about prizes in the draw
+    - `id` (string) — The unique identifier for the prize definition
+    - `name` (string) — Name of the prize
+    - `description` (string) — Description of the prize
+    - `image_url` (string) — URL of the image that represents the prize, 256x256px
+    - `custom_data` (string) — Custom data field set in the backoffice prize setup. Can be used to build custom UI for gamification.
+    - `prizes_per_run` (number) — The number of prizes available per run of the draw. E.g. if the draw is run daily, this is the number of prizes available each day, for example 3 iPhones.
+    - `prizes_per_run_actual` (number) — The actual number of prizes for the current instance. This value is taking into account follwing values: - min_required_total_tickets, - add_one_prize_per_each_x_tickets - stock_items_per_draw - total_tickets_count (from Draw instance) - cap_prizes_per_run For example: - prizes_per_run = 1 - min_required_total_tickets = 1000 - add_one_prize_per_each_x_tickets = 1000 - stock_items_per_draw = 5 - total_tickets_count = 7000 - cap_prizes_per_run = 6 prizes_per_run_actual will be 5, because 7000 tickets are collected, so 7 iPhones are available, but the cap is 6 and the stock is 5.
+    - `chances_to_win_perc` (number) — The chances to win the prize by current player. Calculated as the ratio of the number of tickets collected by the current player to the total number of tickets collected by all players and multiplied by number of actual prizes of this kind.
+    - `min_required_total_tickets` (number) — The minimum number of total tickets collected during draw period required to unlock the prize. If the number of tickets collected is less than this value, the prize is not available. Under total tickets we understand the number of tickets collected by all users. The 'draw period' is the time between the ticket_start_date value of the draw and the current time.
+    - `add_one_prize_per_each_x_tickets` (number) — One additional prize will be awarded for each X tickets. E.g. if the prize is 1 iPhone and the value is set to 1000, then for every 1000 tickets collected, an additional iPhone is awarded. If min_required_total_tickets is set to 1000, then next iPhone is awarded when 2000 tickets are collected, and so on. If min_required_total_tickets is not set, then the next iPhone will be awarded when 1000 tickets are collected.
+    - `requires_claim` (boolean) — Indicates whether the prize requires a claim action from the user.
+    - `min_required_tickets_for_user` (number) — The minimum number of tickets a user must have to be eligible for the prize. For example iPhone prize may require 10 tickets to be collected, only users with 10 or more tickets will be eligible for the prize. More tickets are better, as they increase the chances of winning.
+    - `cap_prizes_per_run` (number) — The maximum number of prizes that can be given withing one instance/run of draw. For example the prize is iPhone and add_one_prize_per_each_x_tickets is set to 1000, cap_prizes_per_run is set to 3, and the total number of tickets collected is 7000. In this case, the prizes_per_run_actual will be limitted by 3
+    - `priority` (number) — The priority of the prize. The low number means higher priority (e.g. 1 is higher priority than 2). If there are multiple prizes available, the prize with the highest priority (lowest number) will be awarded first.
+    - `stock_items_per_draw` (number) — Optional field that indicates total remaining number of the prize for all draws of the type. For example, the Daily draw has 1 iPhone daily, and the total number of iPhones is 10. the stock_items_per_draw will be decreasing by 1 each day (assuming there is enough tickets and it is won every day), and when it reaches 0, the prize is not available anymore.
+    - `should_claim` (boolean) — Shows if the prize has been claimed
+    - `winners` (TRafflePrizeWinner[])
+      - `id` (number) — Id of the winner definition, for the repetative winners (e.g. same winner won two prizes), this number will be the same for all winner that are repeating (internal name: schedule_id)
+      - `username` (string) — Winner user name
+      - `avatar_url` (string) — URL of the image of user avatar
+      - `ticket` (TRaffleTicket) — Ticket information (number string and integer)
+        - `ticekt_id` (number) — Int presentation of the ticket
+        - `ticket_id_string` (string) — String presentation of the ticket
+      - `raf_won_id` (number) — Unique ID of winning
+      - `claimed_date` (number) — Date when the prize was claimed
+  - `current_state` (RaffleDrawInstanceState) — State of current instance of Draw
   - `run_id` (number) — Field indicates the ID of the latest instance/run of draw
-  - `execution_type` (number) — Type of the draw execution, indicating how and when the draw is executed. - ExecDate: Draw is executed only once at a specific date and time. - Recurring: Draw is executed on a recurring basis (e.g., daily, weekly). - Grand: Draw is executed once and is marked as grand, often with larger prizes or more importance.
+  - `execution_type` (RaffleDrawTypeExecution) — Type of the draw execution, indicating how and when the draw is executed. - ExecDate: Draw is executed only once at a specific date and time. - Recurring: Draw is executed on a recurring basis (e.g., daily, weekly). - Grand: Draw is executed once and is marked as grand, often with larger prizes or more importance.
   - `execution_ts` (number) — Date/time of the draw execution
   - `previous_run_ts` (number) — Date of the previously executed draw (if there is such)
   - `previous_run_id` (number) — Unique ID of the previusly executed draw (if there is such)
@@ -46,13 +72,16 @@ Array of `TRaffle`. Each item:
   - `allow_multi_prize_per_ticket` (boolean) — Field is indicating if same ticket can win multiple prizes in the same draw For example there are 3 types of prizes in the draw - iPhone, iPad, MacBook If this field is true, then one ticket can win all 3 prizes (depending on the chances of course), if false, then one ticket can win only one prize. The distribution of the prizes is start from top (assuming on top are the most valuable prizes) to bottom (less valuable prizes) If specific prize has multiple values, e.g. we have 3 iPhones, then the same ticket can win only one prize of a kind, but can win multiple prizes of different kind (if allow_multi_prize_per_ticket is true)
   - `total_tickets_count` (number) — The number of tickets that are already given to all users for this instance of draw. In other words tickets that are collected between ticket_start_date and current time (or till current_execution_ts is the instance is executed).
   - `my_tickets_count` (number) — The number of tickets collected by current user for this instance of draw.
-  - `my_last_tickets` (array)
+  - `my_last_tickets` (TRaffleTicket[])
+    - `ticekt_id` (number) — Int presentation of the ticket
+    - `ticket_id_string` (string) — String presentation of the ticket
   - `user_opted_in` (boolean) — If true, the user has opted-in to the raffle.
   - `requires_optin` (boolean) — If true, the user needs to opt-in to the raffle before they can participate.
   - `is_active` (boolean) — If true, the draw is active and can be participated in.
   - `winners_limit` (number) — The number of winners to return
   - `winners_offset` (number) — The offset of the winners to return
   - `winners_total` (number) — The total number of winners
+- `ticket_cap_visualization` (RaffleTicketCapVisualization) — Ticket cap visualization
 
 ## Behavioral contract
 **Subscription model (`onUpdate`)**
@@ -154,7 +183,7 @@ for (const raffle of raffles) {
     "start_date": 1780669800000,
     "end_date": 1796157059000,
     "max_tickets_count": 2000000,
-    "current_tickets_count": 13066,
+    "current_tickets_count": 13198,
     "draws": [
       {
         "id": 322,
@@ -167,17 +196,32 @@ for (const raffle of raffles) {
         "background_image_url_mobile": "https://cdn.example/9ec0cc0bcf58d038ab59f9-DrawBackgroundMobilecopy.png",
         "is_grand": false,
         "prizes": [
-          "…"
+          {
+            "id": 1244,
+            "name": "16\" Lenovo laptop",
+            "image_url": "https://cdn.example/6b4690ea0429208b244f7c-DailyDraw-516inchLaptopLenovoPrizeimage.png",
+            "prizes_per_run": 1,
+            "prizes_per_run_actual": 1,
+            "chances_to_win_perc": 0,
+            "min_required_total_tickets": 100,
+            "cap_prizes_per_run": 3,
+            "priority": 1,
+            "stock_items_per_draw": 9991,
+            "should_claim": false,
+            "winners": [],
+            "requires_claim": false,
+            "min_required_tickets_for_user": 10
+          }
         ],
         "current_state": 1,
-        "run_id": 771353,
+        "run_id": 775459,
         "execution_type": 2,
-        "execution_ts": 1782291600000,
-        "previous_run_ts": 1782205200000,
-        "previous_run_id": 767471,
-        "ticket_start_ts": 1782205200000,
+        "execution_ts": 1782378000000,
+        "previous_run_ts": 1782291600000,
+        "previous_run_id": 771353,
+        "ticket_start_ts": 1782291600000,
         "allow_multi_prize_per_ticket": false,
-        "total_tickets_count": 1409,
+        "total_tickets_count": 93,
         "my_tickets_count": 0,
         "my_last_tickets": [],
         "user_opted_in": true,
