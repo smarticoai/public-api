@@ -2,7 +2,7 @@
 
 > Returns all mini-game templates ("SAW" = Spin And Win — the umbrella term for wheel-spin, scratch-card, lootbox, gift-box, treasure-hunt, plinko, coin-flip, quiz, and several other formats) configured for the label.
 > Import: `import { TMiniGameTemplate } from '@smartico/public-api'`
-> Search terms: getMiniGames, minigames, getSAW, spins, wheel, TMiniGameTemplate, SAWGameTypeName, SAWBuyInTypeName, TMiniGamePrize, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, PrizeModifiers, AttemptPeriodType, SAWTemplateUI, SAWAskForUsername, SAWGameLayoutName, SAWExposeUserSpinIdName, onUpdate, subscription, id, name, description, thumbnail, visibile_when_can_spin, saw_game_type, saw_buyin_type, jackpot_add_on_attempt
+> Search terms: getMiniGames, minigames, getSAW, spins, wheel, SAWPrizeType, TMiniGameTemplate, SAWGameTypeName, SAWBuyInTypeName, TMiniGamePrize, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, PrizeModifiers, AttemptPeriodType, SAWTemplateUI, SAWAskForUsername, SAWGameLayoutName, SAWExposeUserSpinIdName, onUpdate, subscription, id, name, description, thumbnail, visibile_when_can_spin, saw_game_type, saw_buyin_type, jackpot_add_on_attempt
 
 ## Signature
 ```ts

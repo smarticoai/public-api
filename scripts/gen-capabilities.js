@@ -230,7 +230,7 @@ const ALIASES = {
 	getLeaderBoard: ['getLeaderboard', 'leaderboard'],
 	getLeaderBoards: ['getLeaderboards'],
 	getAvatarsList: ['getAvatars'],
-	getMiniGames: ['getSAW', 'spins', 'minigames', 'wheel'],
+	getMiniGames: ['getSAW', 'spins', 'minigames', 'wheel', 'SAWPrizeType'],
 	playMiniGame: ['doSAWSpin', 'SAWSpin', 'spin'],
 	playMiniGameBatch: ['doSAWSpinBatch'],
 	getMiniGamesHistory: ['getSAWHistory'],
