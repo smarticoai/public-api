@@ -171,6 +171,16 @@ export interface TMiniGameTemplate {
 	 * */
 	next_available_spin_ts: number;
 
+	/** Soonest-expiring spin's expiration time for the current user, as an epoch-ms timestamp.
+	 * `null` when the user has no expirable spins for this template — spins only expire when the
+	 * template defines a spin-expiration rule (Wheel of Fortune, Loot Boxes, etc.). Pair with
+	 * `latest_expiration_dt` to render a "spins expire between X and Y" window. */
+	earliest_expiration_dt?: number | null;
+	/** Latest-expiring spin's expiration time for the current user, as an epoch-ms timestamp.
+	 * `null` when the user has no expirable spins; equals `earliest_expiration_dt` when a single
+	 * expiration applies. */
+	latest_expiration_dt?: number | null;
+
 	/** The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED */
 	over_limit_message: string;
 	/** The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points. */

@@ -31,6 +31,11 @@ export interface SAWTemplate {
 
 	next_available_spin_ts?: number;
 
+	/** Soonest-expiring spin's expiration time for this user (epoch ms); `null`/absent when no expirable spins. */
+	earliest_expiration_dt?: number | null;
+	/** Latest-expiring spin's expiration time for this user (epoch ms); `null`/absent when no expirable spins. */
+	latest_expiration_dt?: number | null;
+
 	saw_skin_key: string;
 	saw_skin_ui_definition: {
 		skin_folder: string;

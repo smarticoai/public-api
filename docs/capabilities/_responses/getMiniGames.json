@@ -18,6 +18,8 @@
     "activeFromDate": -9223372036854776000,
     "activeTillDate": 9223372036854776000,
     "next_available_spin_ts": null,
+    "earliest_expiration_dt": 1952155860877,
+    "latest_expiration_dt": 1952155860877,
     "custom_section_id": 491,
     "saw_template_ui_definition": {
       "scratch_bg_mobile": "",

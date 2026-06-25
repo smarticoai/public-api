@@ -31,6 +31,8 @@ Array of `TMiniGameTemplate`. Each item:
 - `buyin_cost_diamonds` (number) — in case of charging type 'Diamonds', what is the diamonds amount will be deducted from user balance
 - `spin_count` (number) — in case of charging type 'Spin attempts', shows the current number of spin attempts that user has
 - `next_available_spin_ts` (number) — if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available. Note that you need to enable 'Show time to the next available spin' setting on mini-game template in the backoffice Important: this field will not be populated if “Max number of attempts a user can do” is set to value different from 1
+- `earliest_expiration_dt` (number | null) — Soonest-expiring spin's expiration time for the current user, as an epoch-ms timestamp. `null` when the user has no expirable spins for this template — spins only expire when the template defines a spin-expiration rule (Wheel of Fortune, Loot Boxes, etc.). Pair with `latest_expiration_dt` to render a "spins expire between X and Y" window.
+- `latest_expiration_dt` (number | null) — Latest-expiring spin's expiration time for the current user, as an epoch-ms timestamp. `null` when the user has no expirable spins; equals `earliest_expiration_dt` when a single expiration applies.
 - `over_limit_message` (string) — The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED
 - `no_attempts_message` (string) — The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points.
 - `jackpot_current` (number) — Current jackpont amount, if jackpot is enabled.
@@ -222,6 +224,8 @@ for (const g of visible) {
     "activeFromDate": -9223372036854776000,
     "activeTillDate": 9223372036854776000,
     "next_available_spin_ts": null,
+    "earliest_expiration_dt": 1952155860877,
+    "latest_expiration_dt": 1952155860877,
     "custom_section_id": 491,
     "saw_template_ui_definition": {
       "scratch_bg_mobile": "",
