@@ -110,6 +110,22 @@
 
 ***
 
+### earliest\_expiration\_dt?
+
+> `optional` **earliest\_expiration\_dt?**: `number`
+
+Soonest-expiring spin's expiration time for this user (epoch ms); `null`/absent when no expirable spins.
+
+***
+
+### latest\_expiration\_dt?
+
+> `optional` **latest\_expiration\_dt?**: `number`
+
+Latest-expiring spin's expiration time for this user (epoch ms); `null`/absent when no expirable spins.
+
+***
+
 ### saw\_skin\_key
 
 > **saw\_skin\_key**: `string`

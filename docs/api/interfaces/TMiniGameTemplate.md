@@ -103,6 +103,27 @@ Important: this field will not be populated if “Max number of attempts a user 
 
 ***
 
+### earliest\_expiration\_dt?
+
+> `optional` **earliest\_expiration\_dt?**: `number`
+
+Soonest-expiring spin's expiration time for the current user, as an epoch-ms timestamp.
+`null` when the user has no expirable spins for this template — spins only expire when the
+template defines a spin-expiration rule (Wheel of Fortune, Loot Boxes, etc.). Pair with
+`latest_expiration_dt` to render a "spins expire between X and Y" window.
+
+***
+
+### latest\_expiration\_dt?
+
+> `optional` **latest\_expiration\_dt?**: `number`
+
+Latest-expiring spin's expiration time for the current user, as an epoch-ms timestamp.
+`null` when the user has no expirable spins; equals `earliest_expiration_dt` when a single
+expiration applies.
+
+***
+
 ### over\_limit\_message
 
 > **over\_limit\_message**: `string`
