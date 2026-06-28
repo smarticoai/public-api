@@ -2,7 +2,7 @@
 
 > Returns the ranked players of a specific clan within a clan-based tournament instance.
 > Import: `import { TClanTournamentPlayers } from '@smartico/public-api'`
-> Search terms: getClanTournamentPlayers, tournaments, TClanTournamentPlayers
+> Search terms: getClanTournamentPlayers, tournaments, TClanTournamentPlayers, Smartico, User, External, Public, Avatar, Position, Score, Indicator
 
 ## Signature
 ```ts
@@ -15,18 +15,26 @@ _smartico.api.getClanTournamentPlayers(tournamentInstanceId: number, clanId: num
 
 ## Returns — `Promise<TClanTournamentPlayers>`
 `TClanTournamentPlayers`:
-- `clan_id` (number) — Clan ID
-- `clan_public_meta` ({ name: string; image_url: string }) — Clan display metadata
+- `tournament_instance_id` (number) — Tournament instance ID
 - `players` ({
+		/** Smartico User ID */
 		user_id: number;
-		public_username: string;
-		avatar_id: string;
-		avatar_real_id: number;
-		avatar_url?: string;
-		position: number;
-		scores: number;
-		is_me: boolean;
+		/** External User ID */
 		clean_ext_user_id: string;
+		/** Public username */
+		public_username: string;
+		/** Avatar ID */
+		avatar_id: string;
+		/** Avatar real ID */
+		avatar_real_id: number;
+		/** Avatar URL */
+		avatar_url?: string;
+		/** Position in the leaderboard */
+		position: number;
+		/** Score of the player */
+		scores: number;
+		/** Indicator if record is the current user */
+		is_me: boolean;
 	}[]) — Top players of this clan ranked by score DESC
 
 ## Behavioral contract
@@ -51,16 +59,13 @@ non-clan tournament typically returns an empty `players` array.
  polling cadence.
 
 **Returned shape**
-`TClanTournamentPlayers` carries the requested clan's identity
-(`clan_id`, `clan_public_meta.name`, `clan_public_meta.image_url`)
+`TClanTournamentPlayers` carries the `tournament_instance_id`
 alongside the `players[]` array — each entry has `position`,
 `scores`, `public_username`, `clean_ext_user_id`, `avatar_id`,
 `avatar_real_id`, the resolved `avatar_url`, `user_id`, and the
-`is_me` flag identifying the current user's row. The `clan_id` and
-`clan_public_meta` on the response echo the input clan — the
-default Smartico UI ignores them and renders the header from the
-caller-side `ClanLeaderboardEntry` object, but they're available
-for consumers that don't already have that context.
+`is_me` flag identifying the current user's row. The response does
+NOT echo the clan's identity — render the clan header from the
+caller-side `ClanLeaderboardEntry` object you passed in.
 
 **Username display**: prefer `clean_ext_user_id` when set, falling
 back to `public_username`. The default Smartico UI uses

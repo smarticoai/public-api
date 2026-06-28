@@ -15,8 +15,7 @@ export interface ClanTournamentPlayerRaw {
 }
 
 export interface GetClanTournamentPlayersResponse extends ProtocolResponse {
-	clan_id: number;
-	clan_public_meta: { name: string; image_url: string };
+	tournament_instance_id: number;
 	players: ClanTournamentPlayerRaw[];
 }
 
@@ -33,18 +32,13 @@ export interface TClanTournamentPlayer {
 }
 
 export interface TClanTournamentPlayersResult {
-	clan_id: number;
-	clan_public_meta: { name: string; image_url: string };
+	tournament_instance_id: number;
 	players: TClanTournamentPlayer[];
 }
 
 export const clanTournamentPlayersTransform = (response: GetClanTournamentPlayersResponse): TClanTournamentPlayersResult => {
 	return {
-		clan_id: response.clan_id,
-		clan_public_meta: {
-			name: response.clan_public_meta.name,
-			image_url: response.clan_public_meta.image_url,
-		},
+		tournament_instance_id: response.tournament_instance_id,
 		players: (response.players || []).map((p) => ({
 			user_id: p.userId,
 			clean_ext_user_id: p.cleanExtUserId,

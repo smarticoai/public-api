@@ -4,27 +4,11 @@ TClanTournamentPlayers describes the players of a specific clan in a clan-based 
 
 ## Properties
 
-### clan\_id
+### tournament\_instance\_id
 
-> **clan\_id**: `number`
+> **tournament\_instance\_id**: `number`
 
-Clan ID
-
-***
-
-### clan\_public\_meta
-
-> **clan\_public\_meta**: `object`
-
-Clan display metadata
-
-#### name
-
-> **name**: `string`
-
-#### image\_url
-
-> **image\_url**: `string`
+Tournament instance ID
 
 ***
 
@@ -38,34 +22,52 @@ Top players of this clan ranked by score DESC
 
 > **user\_id**: `number`
 
+Smartico User ID
+
+#### clean\_ext\_user\_id
+
+> **clean\_ext\_user\_id**: `string`
+
+External User ID
+
 #### public\_username
 
 > **public\_username**: `string`
+
+Public username
 
 #### avatar\_id
 
 > **avatar\_id**: `string`
 
+Avatar ID
+
 #### avatar\_real\_id
 
 > **avatar\_real\_id**: `number`
+
+Avatar real ID
 
 #### avatar\_url?
 
 > `optional` **avatar\_url?**: `string`
 
+Avatar URL
+
 #### position
 
 > **position**: `number`
+
+Position in the leaderboard
 
 #### scores
 
 > **scores**: `number`
 
+Score of the player
+
 #### is\_me
 
 > **is\_me**: `boolean`
 
-#### clean\_ext\_user\_id
-
-> **clean\_ext\_user\_id**: `string`
+Indicator if record is the current user

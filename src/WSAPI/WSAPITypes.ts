@@ -574,21 +574,28 @@ export interface TTournamentDetailed extends TTournament {
  * TClanTournamentPlayers describes the players of a specific clan in a clan-based tournament.
  */
 export interface TClanTournamentPlayers {
-	/** Clan ID */
-	clan_id: number;
-	/** Clan display metadata */
-	clan_public_meta: { name: string; image_url: string };
+	/** Tournament instance ID */
+	tournament_instance_id: number;
 	/** Top players of this clan ranked by score DESC */
 	players: {
+		/** Smartico User ID */
 		user_id: number;
-		public_username: string;
-		avatar_id: string;
-		avatar_real_id: number;
-		avatar_url?: string;
-		position: number;
-		scores: number;
-		is_me: boolean;
+		/** External User ID */
 		clean_ext_user_id: string;
+		/** Public username */
+		public_username: string;
+		/** Avatar ID */
+		avatar_id: string;
+		/** Avatar real ID */
+		avatar_real_id: number;
+		/** Avatar URL */
+		avatar_url?: string;
+		/** Position in the leaderboard */
+		position: number;
+		/** Score of the player */
+		scores: number;
+		/** Indicator if record is the current user */
+		is_me: boolean;
 	}[];
 }
 
