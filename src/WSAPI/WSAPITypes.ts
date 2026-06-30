@@ -53,6 +53,10 @@ export interface TMiniGamePrize {
 	acknowledge_dp_additional?: string;
 	/** The name of the action button in modal pop-up (additional) */
 	acknowledge_action_title_additional?: string;
+	/** Deep link that will trigger some action in modal pop-up (second button) */
+	second_btn?: string,
+	/** The name of the action button in modal pop-up (second button) */
+	second_btn_action_title?: string;
 	/** Message when the prize pool is empty for that specific prize */
 	out_of_stock_message?: string;
 	/** Number of items in stock */

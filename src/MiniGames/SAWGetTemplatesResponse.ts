@@ -77,6 +77,8 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					acknowledge_action_title: p.saw_prize_ui_definition.acknowledge_action_title,
 					acknowledge_dp_additional: p.saw_prize_ui_definition.acknowledge_dp_additional,
 					acknowledge_action_title_additional: p.saw_prize_ui_definition.acknowledge_action_title_additional,
+					second_btn: p.saw_prize_ui_definition.second_btn,
+					second_btn_action_title: p.saw_prize_ui_definition.second_btn_action_title,
 					out_of_stock_message: p.saw_prize_ui_definition.out_of_stock_message,
 					pool: p.pool,
 					pool_initial: p.pool_initial,
