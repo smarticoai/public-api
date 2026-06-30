@@ -1,6 +1,6 @@
 # Function: clanTournamentPlayersTransform()
 
-> **clanTournamentPlayersTransform**(`response`): [`TClanTournamentPlayersResult`](../interfaces/TClanTournamentPlayersResult.md)
+> **clanTournamentPlayersTransform**(`response`): [`TClanTournamentPlayers`](../interfaces/TClanTournamentPlayers.md)
 
 ## Parameters
 
@@ -10,4 +10,4 @@
 
 ## Returns
 
-[`TClanTournamentPlayersResult`](../interfaces/TClanTournamentPlayersResult.md)
+[`TClanTournamentPlayers`](../interfaces/TClanTournamentPlayers.md)

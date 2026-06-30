@@ -1,4 +1,5 @@
 import { ProtocolResponse } from '../Base/ProtocolResponse';
+import { TClanTournamentPlayers } from '../WSAPI/WSAPITypes';
 
 export interface ClanTournamentPlayerRaw {
 	userId: number;
@@ -19,24 +20,10 @@ export interface GetClanTournamentPlayersResponse extends ProtocolResponse {
 	players: ClanTournamentPlayerRaw[];
 }
 
-export interface TClanTournamentPlayer {
-	user_id: number;
-	clean_ext_user_id: string;
-	public_username: string;
-	avatar_id: string;
-	avatar_real_id: number;
-	avatar_url?: string;
-	position: number;
-	scores: number;
-	is_me: boolean;
-}
-
-export interface TClanTournamentPlayersResult {
-	tournament_instance_id: number;
-	players: TClanTournamentPlayer[];
-}
-
-export const clanTournamentPlayersTransform = (response: GetClanTournamentPlayersResponse): TClanTournamentPlayersResult => {
+// Consumer-facing types live in WSAPITypes.ts (`TClanTournamentPlayers`) — the
+// single source documented + emitted to docs. This transform maps the raw wire
+// shape onto it; do not re-declare a parallel result/player type here.
+export const clanTournamentPlayersTransform = (response: GetClanTournamentPlayersResponse): TClanTournamentPlayers => {
 	return {
 		tournament_instance_id: response.tournament_instance_id,
 		players: (response.players || []).map((p) => ({

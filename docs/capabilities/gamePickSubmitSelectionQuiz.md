@@ -118,7 +118,7 @@ Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage
   - `resolution_type_id` (GamePickResolutionType) — How the user's prediction was scored after resolution
   - `resolution_score` (number) — Points awarded for this event based on prediction accuracy
   - `is_open_for_bets` (boolean) — Whether this event is still accepting predictions
-  - `odds_details` ({ odd_value: { [key: string]: number } }) — Betting odds details for the event outcomes
+  - `odds_details` ({ odd_value: { [key: string]: number } }) — Per-outcome numbers keyed by the outcome value (`'1'` / `'x'` / `'2'`, `'yes'` / `'no'`, …). Dual-purpose by event type: - Sports / MatchX: decimal **betting odds** (e.g. `{ "1": 2.45, "x": 3.26, "2": 3.01 }`). - Quiz: when the round's `show_users_preference` is `true`, these are aggregated **user-preference percentages** — what other users predicted, summing to ~100 (e.g. `{ "1": 33, "x": 25, "2": 42 }`). Render as the "what others predicted" bar.
   - `question_image` (string) — URL of a question-specific image (quiz events)
 - `user_score` (number) — Current user's total score in this round
 - `user_placed_bet` (boolean) — Whether the current user has submitted any predictions in this round

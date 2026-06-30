@@ -195,8 +195,6 @@
 - [StoreItemPublicMeta](interfaces/StoreItemPublicMeta.md)
 - [ClanTournamentPlayerRaw](interfaces/ClanTournamentPlayerRaw.md)
 - [GetClanTournamentPlayersResponse](interfaces/GetClanTournamentPlayersResponse.md)
-- [TClanTournamentPlayer](interfaces/TClanTournamentPlayer.md)
-- [TClanTournamentPlayersResult](interfaces/TClanTournamentPlayersResult.md)
 - [GetTournamentInfoResponse](interfaces/GetTournamentInfoResponse.md)
 - [Tournament](interfaces/Tournament.md)
 - [ClanLeaderboardEntry](interfaces/ClanLeaderboardEntry.md)

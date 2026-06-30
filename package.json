@@ -24,7 +24,7 @@
 		"bump-ach": "cd ../tracker/ach && npm install @smartico/public-api@latest --legacy-peer-deps",
 		"bump-bo-server": "cd ../bo_server/server && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
 		"bump-bo-client": "cd ../bo_server/client && source ~/.nvm/nvm.sh && nvm use v13.13.0 && npm install @smartico/public-api@latest",
-		"doc": "typedoc && node scripts/postdoc-cleanup.js",
+		"doc": "node scripts/gen-capabilities.js && typedoc && node scripts/postdoc-cleanup.js",
 		"gen-capabilities": "node scripts/gen-capabilities.js"
 	},
 	"author": "",

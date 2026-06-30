@@ -104,7 +104,12 @@ Whether this event is still accepting predictions
 
 > `optional` **odds\_details?**: `object`
 
-Betting odds details for the event outcomes
+Per-outcome numbers keyed by the outcome value (`'1'` / `'x'` / `'2'`, `'yes'` / `'no'`, …).
+Dual-purpose by event type:
+- Sports / MatchX: decimal **betting odds** (e.g. `{ "1": 2.45, "x": 3.26, "2": 3.01 }`).
+- Quiz: when the round's `show_users_preference` is `true`, these are aggregated
+  **user-preference percentages** — what other users predicted, summing to ~100
+  (e.g. `{ "1": 33, "x": 25, "2": 42 }`). Render as the "what others predicted" bar.
 
 #### odd\_value
 
