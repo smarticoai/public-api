@@ -57,6 +57,8 @@ Array of `TMiniGameTemplate`. Each item:
   - `acknowledge_action_title` (string) — The name of the action button in modal pop-up
   - `acknowledge_dp_additional` (string) — Deep link that will trigger some action in modal pop-up (additional)
   - `acknowledge_action_title_additional` (string) — The name of the action button in modal pop-up (additional)
+  - `second_btn` (string) — Deep link that will trigger some action in modal pop-up (second button)
+  - `second_btn_action_title` (string) — The name of the action button in modal pop-up (second button)
   - `out_of_stock_message` (string) — Message when the prize pool is empty for that specific prize
   - `pool` (number) — Number of items in stock
   - `pool_initial` (number) — Initial number of items in stock

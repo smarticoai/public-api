@@ -33,7 +33,7 @@ _None._
 
 ## Behavioral contract
 **Preconditions**
-- User must be authenticated. Visitor mode not supported.
+- No authentication required — works in both identified and visitor mode.
 - `jp_template_id` is mandatory.
 
 **`onUpdate` caveat**
@@ -51,7 +51,12 @@ Treat it as a no-op for now.
 Non-zero `errCode` on control-group users or generic server errors.
 Branch on `errCode === 0` and surface `errMsg` on failure.
 
-**Visitor mode**: not supported.
+**Visitor mode**: supported via
+`_smartico.vapi(lang).getJackpotEligibleGames(...)`. The eligible-games
+list is template-level (which games contribute to the pot) and carries no
+per-user fields, so a visitor session receives the same list an identified
+user would. The `lang` passed to `_smartico.vapi(lang)` drives the
+translation of game names.
 
 **UI guidance**: see [UI Guide — `getJackpotEligibleGames`](../../docs/ui/jackpots/UIGuide_getJackpotEligibleGames.md).
 
@@ -66,6 +71,10 @@ if (jp?.ach_related_game_allow_all) {
 
 const r = await window._smartico.api.getJackpotEligibleGames({ jp_template_id: 42 });
 console.log('[smartico] render', r.eligible_games.length, 'eligible game tiles');
+
+// Visitor mode — same shape, language driven by the vapi(lang) argument
+const visitor = await window._smartico.vapi('EN').getJackpotEligibleGames({ jp_template_id: 42 });
+console.log('[smartico] visitor eligible games:', visitor.eligible_games.length);
 ```
 
 ### Example response (REAL shape)

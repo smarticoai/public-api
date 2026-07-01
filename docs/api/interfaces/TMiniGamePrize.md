@@ -125,6 +125,22 @@ The name of the action button in modal pop-up (additional)
 
 ***
 
+### second\_btn?
+
+> `optional` **second\_btn?**: `string`
+
+Deep link that will trigger some action in modal pop-up (second button)
+
+***
+
+### second\_btn\_action\_title?
+
+> `optional` **second\_btn\_action\_title?**: `string`
+
+The name of the action button in modal pop-up (second button)
+
+***
+
 ### out\_of\_stock\_message?
 
 > `optional` **out\_of\_stock\_message?**: `string`
