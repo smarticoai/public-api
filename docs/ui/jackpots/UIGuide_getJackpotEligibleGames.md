@@ -61,6 +61,14 @@ manually if needed.
 - For long sessions, re-call when reopening the tab past the 30 s
   window.
 
+## Visitor mode
+
+Supported via `_smartico.vapi(lang).getJackpotEligibleGames(...)`. The
+eligible-games list is template-level (which games contribute to the
+pot) and carries no per-user fields, so a visitor session sees the same
+list an identified user would. The `lang` passed to `_smartico.vapi(lang)`
+drives the translation of game names.
+
 ## Mobile vs desktop
 
 - **Mobile**: 2- or 3-column tile grid.
