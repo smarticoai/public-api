@@ -1434,6 +1434,8 @@ Each item in `results`:
 
 Acknowledge a mini-game win. Should be called after displaying the win result to the user.
 
+Optionally finalises the spin as **lost** instead: with `lose: true` the prize is not credited, it is returned to the game's prize pool, and the mini-game "lose" engagement event fires instead of the win one. Only possible while the spin is not yet acknowledged — once the automatic server-side acknowledge fallback has finalised it, `lose: true` is a no-op and the prize stays credited.
+
 #### Request
 
 **ClassId:** `704` (SAW_AKNOWLEDGE_REQUEST)
@@ -1441,6 +1443,7 @@ Acknowledge a mini-game win. Should be called after displaying the win result to
 | Field | Type | Description |
 |-------|------|-------------|
 | `request_id` | `string` | Request ID from the spin response |
+| `lose` | `boolean` | Optional. `true` finalises the spin as lost: prize not credited, returned to the prize pool. Omit or `false` to deliver the win |
 
 #### Response
 

@@ -39,3 +39,11 @@
 ### request\_id
 
 > **request\_id**: `string`
+
+***
+
+### lose?
+
+> `optional` **lose?**: `boolean`
+
+When true, finalises the spin as lost: the prize is not credited and is returned to the prize pool.

@@ -91,7 +91,9 @@ with the `request_id` from that play result when the user taps Claim.
 [`getMiniGamesHistory`](../../api/classes/WSAPIMiniGames.md#getminigameshistory)
 row if you need to recover it later.) Note: "explicit claim" prizes
 are NOT covered by the server-side auto-acknowledge fallback, so for
-these you MUST acknowledge or the prize is never credited.
+these you MUST acknowledge or the prize is never credited. To let
+the user decline the prize instead of claiming it, see "Decline /
+forfeit" below.
 
 Modal contents per prize:
 
@@ -104,6 +106,31 @@ Modal contents per prize:
   execution)
 - Optional additional CTA: `prize.acknowledge_action_title_additional`
   + `prize.acknowledge_dp_additional`
+
+## Decline / forfeit ("lose") flows
+
+Some game mechanics let the player decline or forfeit the drawn
+prize — a gamble/discard step, a "keep it or risk it" offer, or a
+game where the player's final action decides whether the pre-drawn
+prize is actually won. Implement these with manual finalisation:
+
+1. Play with `acknowledge: false` so the SDK does not auto-finalise.
+2. Run the game / choice UI.
+3. Finalise per the outcome:
+   - Keep / win →
+     `miniGameWinAcknowledgeRequest(request_id)` — prize credited.
+   - Decline / lose →
+     `miniGameWinAcknowledgeRequest(request_id, { lose: true })` —
+     prize NOT credited, returned to the prize pool for other
+     players. Show the same "Better luck next time" treatment as a
+     `no-prize` slot (below).
+
+Timing: standard prizes are auto-finalised as WON by the
+server-side fallback after ~1–3 minutes, so send the lose decision
+promptly — after the fallback fires, `lose: true` is a no-op and
+the prize stays credited. "Explicit claim" prizes are exempt from
+the fallback, so those have no time pressure. Once a spin is
+finalised either way, further acknowledge calls are no-ops.
 
 ## "No prize" handling
 

@@ -67,14 +67,19 @@ without waiting for the win to be marked delivered. You finalise
 it later by calling `miniGameWinAcknowledgeRequest` with the
 `request_id` returned on this result.
 
-What `acknowledge: false` does and does NOT defer:
-- For STANDARD prizes the value is credited at spin time
- regardless, so opting out does NOT delay the balance change —
- it only defers the "delivered" bookkeeping and the `is_claimed`
- flag flipping in `getMiniGamesHistory`.
-- For operator-configured "explicit claim" prizes the credit IS
- deferred until the spin is acknowledged, so those require an
- explicit acknowledge to finalise.
+What `acknowledge: false` defers:
+- For STANDARD prizes the value is credited when the spin is
+ finalised — by your later acknowledge or, failing that, by the
+ server-side fallback below — so opting out delays the balance
+ change by at most that fallback window. The `is_claimed` flag in
+ `getMiniGamesHistory` flips on the same finalisation.
+- For operator-configured "explicit claim" prizes the credit is
+ deferred until your explicit acknowledge — the fallback does not
+ cover them.
+
+While the spin is un-finalised it can also be finalised as LOST —
+prize discarded back to the pool — via
+`miniGameWinAcknowledgeRequest` with `{ lose: true }`.
 
 A server-side fallback auto-acknowledges ordinary un-acknowledged
 spins after a short delay (about 1–3 minutes), so an ordinary
@@ -105,8 +110,10 @@ refreshed array.
  time the call resolves. Balance updates flow via the
  user-properties channel (observe via `getUserProfile`).
 - Prize value credited per the prize's type (see "Prize handling"
- above). Standard prizes are credited at spin time; "explicit
- claim" prizes are credited when the spin is acknowledged.
+ above) when the spin is finalised — with the default
+ auto-acknowledge that happens before the call resolves;
+ "explicit claim" prizes are credited only by an explicit
+ acknowledge.
 - The play is recorded server-side for analytics / reporting.
 
 **UI guidance**: see [UI Guide — `playMiniGame`](../../docs/ui/minigames/UIGuide_playMiniGame.md).
@@ -153,18 +160,24 @@ if (r.err_code === 0) {
 ```
 
 Manual finalisation (`acknowledge: false`) — e.g. an explicit
-"Claim" CTA, or finalising on your own schedule:
+"Claim" CTA, a decline/forfeit flow, or finalising on your own
+schedule:
 ```ts
 const r = await window._smartico.api.playMiniGame(game.id, { acknowledge: false });
 if (r.err_code === 0) {
-  // Spin resolved but not yet acknowledged. For standard prizes the
-  // balance already changed server-side; "explicit claim" prizes
-  // are credited only by the acknowledge below.
+  // Spin resolved but not yet finalised — the prize is not credited
+  // yet. Your acknowledge below credits it (for standard prizes the
+  // server-side fallback would eventually do the same).
   console.log('[smartico] prize won — show the result / Claim CTA, then finalise');
 
   // On the user's Claim click, finalise with the request_id from the result.
   await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id);
   console.log('[smartico] win finalised — refresh getUserProfile / getMiniGames to reflect it');
+
+  // Or, if the game flow ends in the player declining / losing the
+  // drawn prize, finalise the spin as lost instead — the prize is
+  // not credited and returns to the prize pool:
+  // await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id, { lose: true });
 }
 ```
 

@@ -2021,7 +2021,7 @@ declare class SmarticoAPI {
 	coreCheckSegments(user_ext_id: string, segment_id: number[]): Promise<TSegmentCheckResult[]>;
 	sawGetTemplates(user_ext_id: string, lang?: string, is_visitor_mode?: boolean): Promise<SAWGetTemplatesResponse>;
 	sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]>;
-	doAcknowledgeRequest(user_ext_id: string, request_id: string): Promise<SAWDoAknowledgeResponse>;
+	doAcknowledgeRequest(user_ext_id: string, request_id: string, lose?: boolean): Promise<SAWDoAknowledgeResponse>;
 	sawSpinRequest(user_ext_id: string, saw_template_id: number, round_id?: number): Promise<SAWDoSpinResponse>;
 	missionOptIn(user_ext_id: string, mission_id: number): Promise<AchievementOptinResponse>;
 	missionClaimPrize(user_ext_id: string, mission_id: number, ach_completed_id: number): Promise<AchClaimPrizeResponse>;

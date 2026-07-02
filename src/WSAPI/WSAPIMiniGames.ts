@@ -290,14 +290,19 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * it later by calling {@link miniGameWinAcknowledgeRequest} with the
 	 * `request_id` returned on this result.
 	 *
-	 * What `acknowledge: false` does and does NOT defer:
-	 * - For STANDARD prizes the value is credited at spin time
-	 *   regardless, so opting out does NOT delay the balance change —
-	 *   it only defers the "delivered" bookkeeping and the `is_claimed`
-	 *   flag flipping in {@link getMiniGamesHistory}.
-	 * - For operator-configured "explicit claim" prizes the credit IS
-	 *   deferred until the spin is acknowledged, so those require an
-	 *   explicit acknowledge to finalise.
+	 * What `acknowledge: false` defers:
+	 * - For STANDARD prizes the value is credited when the spin is
+	 *   finalised — by your later acknowledge or, failing that, by the
+	 *   server-side fallback below — so opting out delays the balance
+	 *   change by at most that fallback window. The `is_claimed` flag in
+	 *   {@link getMiniGamesHistory} flips on the same finalisation.
+	 * - For operator-configured "explicit claim" prizes the credit is
+	 *   deferred until your explicit acknowledge — the fallback does not
+	 *   cover them.
+	 *
+	 * While the spin is un-finalised it can also be finalised as LOST —
+	 * prize discarded back to the pool — via
+	 * {@link miniGameWinAcknowledgeRequest} with `{ lose: true }`.
 	 *
 	 * A server-side fallback auto-acknowledges ordinary un-acknowledged
 	 * spins after a short delay (about 1–3 minutes), so an ordinary
@@ -328,8 +333,10 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *   time the call resolves. Balance updates flow via the
 	 *   user-properties channel (observe via {@link getUserProfile}).
 	 * - Prize value credited per the prize's type (see "Prize handling"
-	 *   above). Standard prizes are credited at spin time; "explicit
-	 *   claim" prizes are credited when the spin is acknowledged.
+	 *   above) when the spin is finalised — with the default
+	 *   auto-acknowledge that happens before the call resolves;
+	 *   "explicit claim" prizes are credited only by an explicit
+	 *   acknowledge.
 	 * - The play is recorded server-side for analytics / reporting.
 	 *
 	 * **UI guidance**: see [UI Guide — `playMiniGame`](../../docs/ui/minigames/UIGuide_playMiniGame.md).
@@ -394,18 +401,24 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *
 	 * @example
 	 * Manual finalisation (`acknowledge: false`) — e.g. an explicit
-	 * "Claim" CTA, or finalising on your own schedule:
+	 * "Claim" CTA, a decline/forfeit flow, or finalising on your own
+	 * schedule:
 	 * ```ts
 	 * const r = await window._smartico.api.playMiniGame(game.id, { acknowledge: false });
 	 * if (r.err_code === 0) {
-	 *   // Spin resolved but not yet acknowledged. For standard prizes the
-	 *   // balance already changed server-side; "explicit claim" prizes
-	 *   // are credited only by the acknowledge below.
+	 *   // Spin resolved but not yet finalised — the prize is not credited
+	 *   // yet. Your acknowledge below credits it (for standard prizes the
+	 *   // server-side fallback would eventually do the same).
 	 *   console.log('[smartico] prize won — show the result / Claim CTA, then finalise');
 	 *
 	 *   // On the user's Claim click, finalise with the request_id from the result.
 	 *   await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id);
 	 *   console.log('[smartico] win finalised — refresh getUserProfile / getMiniGames to reflect it');
+	 *
+	 *   // Or, if the game flow ends in the player declining / losing the
+	 *   // drawn prize, finalise the spin as lost instead — the prize is
+	 *   // not credited and returns to the prize pool:
+	 *   // await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id, { lose: true });
 	 * }
 	 * ```
 	 */
@@ -433,9 +446,10 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 
 	/**
 	 * Manually acknowledges a mini-game spin — marks the win delivered
-	 * server-side. Most consumers do NOT need this: {@link playMiniGame}
-	 * acknowledges by default (`acknowledge: true`) and
-	 * {@link playMiniGameBatch} acknowledges automatically. Call this
+	 * server-side, or (with `lose: true`) finalises it as lost and
+	 * returns the prize to the pool. Most consumers do NOT need this:
+	 * {@link playMiniGame} acknowledges by default (`acknowledge: true`)
+	 * and {@link playMiniGameBatch} acknowledges automatically. Call this
 	 * directly only when you took ownership of the acknowledge step or
 	 * need to recover a lost one.
 	 *
@@ -458,6 +472,23 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * `client_request_id` on a {@link getMiniGamesHistory} row are the
 	 * same correlation id — this method accepts either.
 	 *
+	 * **Finalising as lost (`lose: true`)**
+	 * Pass `{ lose: true }` to finalise the spin as LOST instead of won:
+	 * the prize is NOT credited and is returned to the game's prize pool
+	 * (available again for other players), and the spin fires the
+	 * mini-game "lose" engagement event instead of the win one. On the
+	 * next {@link getMiniGamesHistory} fetch the row shows `is_claimed:
+	 * true` with no prize attached. Use this for game mechanics where the
+	 * player can decline or forfeit the drawn prize — e.g. a
+	 * gamble/discard step, or a client-driven game where the user's final
+	 * action decides whether the pre-drawn prize is actually won. It only
+	 * works on a spin that is not yet finalised, so it requires playing
+	 * with `acknowledge: false` and calling promptly — once the automatic
+	 * acknowledge or the server-side fallback (below) has finalised the
+	 * spin, `lose: true` is a no-op and the prize stays credited.
+	 * ("Explicit claim" prizes are exempt from the fallback, so for them
+	 * there is no time pressure.)
+	 *
 	 * **Idempotency**: safe. Acknowledging a spin that is already
 	 * finalised — by you, by the automatic acknowledge, or by the
 	 * fallback — is a no-op with no double credit. Acknowledging a
@@ -472,11 +503,12 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * call here.
 	 *
 	 * **Side effects** (first successful call for an un-acknowledged spin)
-	 * - For "explicit claim" prizes, the prize value is credited on this
-	 *   call. For standard prizes the value was already credited at spin
-	 *   time (see {@link playMiniGame} "Prize handling"); this call only
-	 *   marks the win delivered.
-	 * - The spin's `is_claimed` flips to `true` on the next
+	 * - Default (win): the prize value is credited on this call — this is
+	 *   the finalisation step that credits standard and "explicit claim"
+	 *   prizes alike (see {@link playMiniGame} "Prize handling").
+	 * - With `lose: true`: no credit; the prize returns to the prize pool
+	 *   and the "lose" engagement event fires.
+	 * - Either way the spin's `is_claimed` flips to `true` on the next
 	 *   {@link getMiniGamesHistory} fetch.
 	 *
 	 * **Visitor mode**: not supported.
@@ -486,6 +518,10 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *                    (played with `acknowledge: false`), or the
 	 *                    `client_request_id` of a
 	 *                    {@link getMiniGamesHistory} row.
+	 * @param options.lose  Optional. When `true`, finalises the spin as
+	 *                      lost — the prize is not credited and returns
+	 *                      to the prize pool (see "Finalising as lost").
+	 *                      Omit (or pass `false`) to deliver the win.
 	 *
 	 * @example
 	 * ```ts
@@ -496,6 +532,10 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *   await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id);
 	 * }
 	 *
+	 * // Decline / forfeit — finalise the same spin as lost instead:
+	 * // the prize is not credited and goes back to the prize pool.
+	 * await window._smartico.api.miniGameWinAcknowledgeRequest(r.request_id, { lose: true });
+	 *
 	 * // Recovery — re-acknowledge any spins a batch acknowledge missed.
 	 * const history = await window._smartico.api.getMiniGamesHistory({ limit: 20 });
 	 * for (const row of history.filter(h => !h.is_claimed)) {
@@ -504,8 +544,8 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * }
 	 * ```
 	 */
-	public async miniGameWinAcknowledgeRequest(request_id: string) {
-		return this.api.doAcknowledgeRequest(this.userExtId, request_id);
+	public async miniGameWinAcknowledgeRequest(request_id: string, { lose }: { lose?: boolean } = {}) {
+		return this.api.doAcknowledgeRequest(this.userExtId, request_id, lose);
 	}
 
 	/**

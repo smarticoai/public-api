@@ -680,12 +680,13 @@ class SmarticoAPI {
 		return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates);
 	}
 
-	public async doAcknowledgeRequest(user_ext_id: string, request_id: string): Promise<SAWDoAknowledgeResponse> {
+	public async doAcknowledgeRequest(user_ext_id: string, request_id: string, lose?: boolean): Promise<SAWDoAknowledgeResponse> {
 		const message = this.buildMessage<SAWDoAknowledgeRequest, SAWDoAknowledgeResponse>(
 			user_ext_id,
 			ClassId.SAW_AKNOWLEDGE_REQUEST,
 			{
 				request_id,
+				lose,
 			},
 		);
 
