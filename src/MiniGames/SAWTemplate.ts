@@ -44,6 +44,7 @@ export interface SAWTemplate {
 		lottie_animation_speed?: number;
 	};
 
+	/** Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes`; when disabled (default) the server strips them from the response (`pool` is kept for MatchX / Quiz games). */
 	expose_game_stat_on_api?: boolean;
 
 	// AA: releavnt only in the context of the SAWPrizeDropWinPush

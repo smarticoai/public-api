@@ -158,6 +158,8 @@ Latest-expiring spin's expiration time for this user (epoch ms); `null`/absent w
 
 > `optional` **expose\_game\_stat\_on\_api?**: `boolean`
 
+Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes`; when disabled (default) the server strips them from the response (`pool` is kept for MatchX / Quiz games).
+
 ***
 
 ### requires\_prize\_claim?

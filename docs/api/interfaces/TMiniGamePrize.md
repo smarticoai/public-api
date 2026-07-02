@@ -153,7 +153,7 @@ Message when the prize pool is empty for that specific prize
 
 > `optional` **pool?**: `number`
 
-Number of items in stock
+Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz games
 
 ***
 
@@ -161,7 +161,7 @@ Number of items in stock
 
 > `optional` **pool\_initial?**: `number`
 
-Initial number of items in stock
+Initial (configured) stock of the prize. Populated regardless of `expose_game_stat_on_api`
 
 ***
 
@@ -169,7 +169,7 @@ Initial number of items in stock
 
 > `optional` **wins\_count?**: `number`
 
-Number of wins in game
+Number of times the prize has been won, across all players. Populated only when the template's `expose_game_stat_on_api` is enabled
 
 ***
 
@@ -177,7 +177,7 @@ Number of wins in game
 
 > `optional` **weekdays?**: `number`[]
 
-Number of days of week, when the prize can be available
+ISO weekday numbers (1 = Monday … 7 = Sunday) on which the prize can be won; absent = any day. Populated only when the template's `expose_game_stat_on_api` is enabled
 
 ***
 
@@ -185,7 +185,7 @@ Number of days of week, when the prize can be available
 
 > `optional` **active\_from\_ts?**: `number`
 
-Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp)
+Time from which the prize can be won (epoch ms), evaluated against `relative_period_timezone`. Populated only when the template's `expose_game_stat_on_api` is enabled
 
 ***
 
@@ -193,7 +193,7 @@ Holds time from which prize will become available, for the prizes that are targe
 
 > `optional` **active\_till\_ts?**: `number`
 
-Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp)
+Time until which the prize can be won (epoch ms), evaluated against `relative_period_timezone`. Populated only when the template's `expose_game_stat_on_api` is enabled
 
 ***
 
@@ -201,7 +201,7 @@ Holds time till which prize will become available, for the prizes that are targe
 
 > `optional` **relative\_period\_timezone?**: `number`
 
-Time zone to ensure each day aligns with your local midnight.
+Timezone offset in minutes used to evaluate `weekdays` and the active window (UTC minus local, as in JS `Date.getTimezoneOffset()` — e.g. `-180` for UTC+3)
 
 ***
 
@@ -209,7 +209,7 @@ Time zone to ensure each day aligns with your local midnight.
 
 > `optional` **is\_surcharge?**: `boolean`
 
-Flag indicating that the prize is surcharged (available all the time, despite pool numbers)
+When true, the prize stays winnable even when its `pool` reaches 0 (effectively unlimited stock)
 
 ***
 
@@ -217,7 +217,7 @@ Flag indicating that the prize is surcharged (available all the time, despite po
 
 > `optional` **is\_deleted?**: `boolean`
 
-Flag indicating the state of the prize
+Always `false` in API responses — deleted prizes are excluded server-side
 
 ***
 

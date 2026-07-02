@@ -99,6 +99,30 @@ error.
 | `promo_image` | ~2:1 wide, 500×240 px | Featured / hero artwork |
 | `prizes[].icon` | 1:1 (square) | Per-prize icon |
 
+## Prize stock / scarcity UI (`expose_game_stat_on_api`)
+
+When the operator enables "expose game statistics" on a template
+(`template.expose_game_stat_on_api === true`), each prize carries
+live stock statistics you can build scarcity affordances from:
+
+- `pool` — remaining stock → "Only 3 left!" badges; pair with
+  `pool_initial` for a depletion bar (`pool / pool_initial`).
+- `wins_count` — total wins across all players → social proof
+  ("won 120 times").
+- `weekdays` (ISO 1–7) and `active_from_ts` / `active_till_ts` —
+  the prize's availability schedule → grey out prizes not winnable
+  today, or show "available Mon–Fri" hints. Evaluate against
+  `relative_period_timezone` (minutes, JS `getTimezoneOffset`
+  convention), not the device timezone.
+
+The values refresh after every play, so re-render stock badges
+from the `onUpdate` callback. When the setting is disabled (the
+default) these fields are absent — build the prize strip from the
+definition fields only and don't reserve empty space for stock
+badges. Exception: `pool` is always present for MatchX / Quiz
+templates. A prize with `is_surcharge: true` never runs out —
+skip stock badges for it.
+
 ## Status-specific visual treatments
 
 - **Playable**: full-color card; Play CTA enabled.

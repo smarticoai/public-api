@@ -200,7 +200,7 @@ List of prizes for mini-games
 
 > `optional` **expose\_game\_stat\_on\_api?**: `boolean`
 
-When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets
+Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes` and kept current after every play; when disabled (default) those fields are omitted. See `getMiniGames` "Per-prize statistics"
 
 ***
 
@@ -240,7 +240,7 @@ The amount of steps to complete the game and gather the prize
 
 > `optional` **custom\_section\_id?**: `number`
 
-Hold the id of the custom section
+ID of the operator-defined custom section (widget menu grouping) the mini-game is assigned to
 
 ***
 
@@ -288,4 +288,4 @@ The period of time in milliseconds during which the user can do the maximum numb
 
 > `optional` **expose\_user\_spin\_id?**: [`SAWExposeUserSpinIdName`](../enumerations/SAWExposeUserSpinIdName.md)
 
-The ID of the user spin id to expose on the game
+Which identifier to show next to a win result for transparency/audit — 'userId' (the player's external user id) or 'spinId' (the spin's transaction id). Absent when the operator disabled it

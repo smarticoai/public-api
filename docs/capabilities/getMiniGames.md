@@ -60,27 +60,27 @@ Array of `TMiniGameTemplate`. Each item:
   - `second_btn` (string) — Deep link that will trigger some action in modal pop-up (second button)
   - `second_btn_action_title` (string) — The name of the action button in modal pop-up (second button)
   - `out_of_stock_message` (string) — Message when the prize pool is empty for that specific prize
-  - `pool` (number) — Number of items in stock
-  - `pool_initial` (number) — Initial number of items in stock
-  - `wins_count` (number) — Number of wins in game
-  - `weekdays` (number[]) — Number of days of week, when the prize can be available
-  - `active_from_ts` (number) — Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp)
-  - `active_till_ts` (number) — Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp)
-  - `relative_period_timezone` (number) — Time zone to ensure each day aligns with your local midnight.
-  - `is_surcharge` (boolean) — Flag indicating that the prize is surcharged (available all the time, despite pool numbers)
-  - `is_deleted` (boolean) — Flag indicating the state of the prize
+  - `pool` (number) — Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz games
+  - `pool_initial` (number) — Initial (configured) stock of the prize. Populated regardless of `expose_game_stat_on_api`
+  - `wins_count` (number) — Number of times the prize has been won, across all players. Populated only when the template's `expose_game_stat_on_api` is enabled
+  - `weekdays` (number[]) — ISO weekday numbers (1 = Monday … 7 = Sunday) on which the prize can be won; absent = any day. Populated only when the template's `expose_game_stat_on_api` is enabled
+  - `active_from_ts` (number) — Time from which the prize can be won (epoch ms), evaluated against `relative_period_timezone`. Populated only when the template's `expose_game_stat_on_api` is enabled
+  - `active_till_ts` (number) — Time until which the prize can be won (epoch ms), evaluated against `relative_period_timezone`. Populated only when the template's `expose_game_stat_on_api` is enabled
+  - `relative_period_timezone` (number) — Timezone offset in minutes used to evaluate `weekdays` and the active window (UTC minus local, as in JS `Date.getTimezoneOffset()` — e.g. `-180` for UTC+3)
+  - `is_surcharge` (boolean) — When true, the prize stays winnable even when its `pool` reaches 0 (effectively unlimited stock)
+  - `is_deleted` (boolean) — Always `false` in API responses — deleted prizes are excluded server-side
   - `custom_data` (any) — The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number
   - `prize_modifiers` (PrizeModifiers[]) — Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded.
   - `allow_split_decimal` (boolean) — When enabled, you can split prize value by decimal values
   - `hide_prize_from_history` (boolean) — When enabled, you can hide prize from prize history
   - `requirements_to_get_prize` (string) — Requirements to claim the prize (lootbox specific)
   - `max_give_period_type_id` (AttemptPeriodType) — The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime
-- `expose_game_stat_on_api` (boolean) — When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets
+- `expose_game_stat_on_api` (boolean) — Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes` and kept current after every play; when disabled (default) those fields are omitted. See `getMiniGames` "Per-prize statistics"
 - `relative_period_timezone` (number) — Time zone to ensure each day aligns with your local midnight.
 - `activeFromDate` (number) — Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp)
 - `activeTillDate` (number) — Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp)
 - `steps_to_finish_game` (number) — The amount of steps to complete the game and gather the prize
-- `custom_section_id` (number) — Hold the id of the custom section
+- `custom_section_id` (number) — ID of the operator-defined custom section (widget menu grouping) the mini-game is assigned to
 - `saw_template_ui_definition` (SAWTemplateUI) — The UI definition of the mini-game
   - `skin` (string)
   - `name` (string)
@@ -130,7 +130,7 @@ Array of `TMiniGameTemplate`. Each item:
 - `show_prize_history` (boolean) — When enabled the prize history icon is visible on a certain template
 - `max_number_of_attempts` (number) — The maximum number of attempts that user can do during period of time
 - `max_spins_period_ms` (number) — The period of time in milliseconds during which the user can do the maximum number of attempts
-- `expose_user_spin_id` (SAWExposeUserSpinIdName) — The ID of the user spin id to expose on the game
+- `expose_user_spin_id` (SAWExposeUserSpinIdName) — Which identifier to show next to a win result for transparency/audit — 'userId' (the player's external user id) or 'spinId' (the spin's transaction id). Absent when the operator disabled it
 
 ## Behavioral contract
 **Subscription model (`onUpdate`)**
@@ -167,6 +167,27 @@ played via `playMiniGame`; the exceptions are:
 - `MatchX` / `Quiz` — predictions are submitted via a separate
  games server (not this SDK); the SAW spin is fired
  server-internally to deduct the buy-in.
+
+**Per-prize statistics (`expose_game_stat_on_api`)**
+Each template's `prizes` array always carries the definition
+fields — name, icon, `prize_type`, `prize_value`, acknowledge
+configuration. The stock-statistics fields are gated by an
+operator template setting, surfaced as
+`expose_game_stat_on_api`:
+- Populated when enabled: `pool` (remaining stock),
+ `wins_count` (total wins across all players), `weekdays`
+ (ISO 1–7 days the prize can be won), `active_from_ts` /
+ `active_till_ts` (prize availability window).
+- Omitted when disabled (the default) — this keeps the live
+ prize economy (stock levels, win rates, schedules) hidden
+ from players.
+- Exception: `pool` is always populated for `MatchX` / `Quiz`
+ templates, whose game flow needs the remaining stock.
+- `pool_initial` is populated regardless of the setting.
+When enabled, the values are also kept current — the server
+refreshes the prize rows on each fetch and drops its template
+caches after every play, so `pool` / `wins_count` are safe to
+drive an "X prizes left" scarcity UI.
 
 **Cache TTL**: the SDK caches the response for 30 seconds. Cache
 is fully cleared on login / logout.

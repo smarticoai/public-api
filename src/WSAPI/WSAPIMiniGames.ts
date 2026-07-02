@@ -64,6 +64,27 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *   games server (not this SDK); the SAW spin is fired
 	 *   server-internally to deduct the buy-in.
 	 *
+	 * **Per-prize statistics (`expose_game_stat_on_api`)**
+	 * Each template's `prizes` array always carries the definition
+	 * fields — name, icon, `prize_type`, `prize_value`, acknowledge
+	 * configuration. The stock-statistics fields are gated by an
+	 * operator template setting, surfaced as
+	 * `expose_game_stat_on_api`:
+	 * - Populated when enabled: `pool` (remaining stock),
+	 *   `wins_count` (total wins across all players), `weekdays`
+	 *   (ISO 1–7 days the prize can be won), `active_from_ts` /
+	 *   `active_till_ts` (prize availability window).
+	 * - Omitted when disabled (the default) — this keeps the live
+	 *   prize economy (stock levels, win rates, schedules) hidden
+	 *   from players.
+	 * - Exception: `pool` is always populated for `MatchX` / `Quiz`
+	 *   templates, whose game flow needs the remaining stock.
+	 * - `pool_initial` is populated regardless of the setting.
+	 * When enabled, the values are also kept current — the server
+	 * refreshes the prize rows on each fetch and drops its template
+	 * caches after every play, so `pool` / `wins_count` are safe to
+	 * drive an "X prizes left" scarcity UI.
+	 *
 	 * **Cache TTL**: the SDK caches the response for 30 seconds. Cache
 	 * is fully cleared on login / logout.
 	 *

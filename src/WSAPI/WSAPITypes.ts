@@ -59,23 +59,23 @@ export interface TMiniGamePrize {
 	second_btn_action_title?: string;
 	/** Message when the prize pool is empty for that specific prize */
 	out_of_stock_message?: string;
-	/** Number of items in stock */
+	/** Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz games */
 	pool?: number;
-	/** Initial number of items in stock */
+	/** Initial (configured) stock of the prize. Populated regardless of `expose_game_stat_on_api` */
 	pool_initial?: number;
-	/** Number of wins in game */
+	/** Number of times the prize has been won, across all players. Populated only when the template's `expose_game_stat_on_api` is enabled */
 	wins_count?: number;
-	/** Number of days of week, when the prize can be available */
+	/** ISO weekday numbers (1 = Monday … 7 = Sunday) on which the prize can be won; absent = any day. Populated only when the template's `expose_game_stat_on_api` is enabled */
 	weekdays?: number[];
-	/** Holds time from which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
+	/** Time from which the prize can be won (epoch ms), evaluated against `relative_period_timezone`. Populated only when the template's `expose_game_stat_on_api` is enabled */
 	active_from_ts?: number;
-	/** Holds time till which prize will become available, for the prizes that are targeted to be available from specific time (UNIX timestamp) */
+	/** Time until which the prize can be won (epoch ms), evaluated against `relative_period_timezone`. Populated only when the template's `expose_game_stat_on_api` is enabled */
 	active_till_ts?: number;
-	/** Time zone to ensure each day aligns with your local midnight. */
+	/** Timezone offset in minutes used to evaluate `weekdays` and the active window (UTC minus local, as in JS `Date.getTimezoneOffset()` — e.g. `-180` for UTC+3) */
 	relative_period_timezone?: number;
-	/** Flag indicating that the prize is surcharged (available all the time, despite pool numbers) */
+	/** When true, the prize stays winnable even when its `pool` reaches 0 (effectively unlimited stock) */
 	is_surcharge?: boolean;
-	/** Flag indicating the state of the prize */
+	/** Always `false` in API responses — deleted prizes are excluded server-side */
 	is_deleted?: boolean;
 	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
 	custom_data?: any;
@@ -208,7 +208,7 @@ export interface TMiniGameTemplate {
 	/** List of prizes for mini-games */
 	prizes: TMiniGamePrize[];
 
-	/** When enabled, the number of items in the pool and number of won items will be exposed in the Retention API and in the UI Widgets */
+	/** Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes` and kept current after every play; when disabled (default) those fields are omitted. See `getMiniGames` "Per-prize statistics" */
 	expose_game_stat_on_api?: boolean;
 
 	/** Time zone to ensure each day aligns with your local midnight. */
@@ -219,7 +219,7 @@ export interface TMiniGameTemplate {
 	activeTillDate?: number;
 	/** The amount of steps to complete the game and gather the prize */
 	steps_to_finish_game?: number;
-	/** Hold the id of the custom section */
+	/** ID of the operator-defined custom section (widget menu grouping) the mini-game is assigned to */
 	custom_section_id?: number;
 
 	/** The UI definition of the mini-game */
@@ -232,7 +232,7 @@ export interface TMiniGameTemplate {
 	max_number_of_attempts?: number;
 	/** The period of time in milliseconds during which the user can do the maximum number of attempts */
 	max_spins_period_ms?: number;
-	/** The ID of the user spin id to expose on the game */
+	/** Which identifier to show next to a win result for transparency/audit — 'userId' (the player's external user id) or 'spinId' (the spin's transaction id). Absent when the operator disabled it */
 	expose_user_spin_id?: SAWExposeUserSpinIdName;
 }
 
