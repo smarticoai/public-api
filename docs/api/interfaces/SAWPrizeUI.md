@@ -36,6 +36,8 @@
 
 > `optional` **aknowledge\_message\_lose?**: `string`
 
+Message shown instead of `aknowledge_message` when the spin is finalised as lost (`lose: true` acknowledge — games with a client-decided outcome, e.g. Voyager)
+
 ***
 
 ### sectors?

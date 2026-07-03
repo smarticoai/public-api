@@ -96,10 +96,9 @@ in case of charging type 'Spin attempts', shows the current number of spin attem
 
 > **next\_available\_spin\_ts**: `number`
 
-if the game is limit to the number of spins that user can do during period of time,
-this property shows the epoch time in UTC when the next attempt will be available.
-Note that you need to enable 'Show time to the next available spin' setting on mini-game template in the backoffice
-Important: this field will not be populated if “Max number of attempts a user can do” is set to value different from 1
+If the game limits the number of attempts per period of time, the epoch-ms time (UTC) when the next attempt becomes available.
+Populated only when the operator enabled the "show time to the next available spin" template setting, and only when the
+template's maximum attempts per period is 1.
 
 ***
 
@@ -144,7 +143,7 @@ The message that should be shown to the user when he cannot play the game becaus
 
 > **jackpot\_current**: `number`
 
-Current jackpont amount, if jackpot is enabled.
+Current jackpot amount, if jackpot is enabled.
 
 ***
 
@@ -192,7 +191,7 @@ The custom data of the mini-game defined by operator in the BackOffice. Can be a
 
 > **prizes**: [`TMiniGamePrize`](TMiniGamePrize.md)[]
 
-List of prizes for mini-games
+Prizes configured for this game — see [TMiniGamePrize](TMiniGamePrize.md)
 
 ***
 
@@ -208,7 +207,7 @@ Operator template setting. When enabled, the per-prize stock statistics (`pool`,
 
 > `optional` **relative\_period\_timezone?**: `number`
 
-Time zone to ensure each day aligns with your local midnight.
+Timezone offset in minutes used to evaluate the template's period-based rules (UTC minus local, as in JS `Date.getTimezoneOffset()` — e.g. `-180` for UTC+3)
 
 ***
 
@@ -216,7 +215,7 @@ Time zone to ensure each day aligns with your local midnight.
 
 > `optional` **activeFromDate?**: `number`
 
-Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp)
+Time from which the template becomes available (epoch ms); absent when not restricted
 
 ***
 
@@ -224,7 +223,7 @@ Holds time from which template will become available, for the template that are 
 
 > `optional` **activeTillDate?**: `number`
 
-Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp)
+Time until which the template stays available (epoch ms); absent when not restricted
 
 ***
 
@@ -232,7 +231,7 @@ Holds time till which template will become available, for the templates that are
 
 > `optional` **steps\_to\_finish\_game?**: `number`
 
-The amount of steps to complete the game and gather the prize
+Number of steps to complete the game and collect the prize (step games — Voyager / Treasure Hunt)
 
 ***
 
@@ -248,7 +247,7 @@ ID of the operator-defined custom section (widget menu grouping) the mini-game i
 
 > **saw\_template\_ui\_definition**: [`SAWTemplateUI`](SAWTemplateUI.md)
 
-The UI definition of the mini-game
+Full raw UI definition of the mini-game (skin, colors, per-game visual settings) — see [SAWTemplateUI](SAWTemplateUI.md). The commonly needed values are already lifted onto this template object
 
 ***
 
@@ -256,7 +255,7 @@ The UI definition of the mini-game
 
 > `optional` **game\_layout?**: [`SAWGameLayoutName`](../enumerations/SAWGameLayoutName.md)
 
-The layout of the game
+Grid layout of the game. Populated only for Lootbox game types (LootboxWeekdays / LootboxCalendarDays)
 
 ***
 
@@ -264,7 +263,7 @@ The layout of the game
 
 > `optional` **show\_prize\_history?**: `boolean`
 
-When enabled the prize history icon is visible on a certain template
+Operator setting: show a prize-history entry point (icon / button) on this game's view
 
 ***
 

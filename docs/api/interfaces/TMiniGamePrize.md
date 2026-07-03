@@ -16,7 +16,7 @@ ID of the prize
 
 > **name**: `string`
 
-The visual name of the prize
+Display name of the prize, pre-translated; any jackpot placeholder in it arrives resolved to the live jackpot value
 
 ***
 
@@ -24,7 +24,7 @@ The visual name of the prize
 
 > **prize\_type**: [`MiniGamePrizeTypeName`](../enumerations/MiniGamePrizeTypeName.md)
 
-The type of the prize,  no-prize, points, bonus, manual, spin, jackpot
+The type of the prize — see [MiniGamePrizeTypeName](../enumerations/MiniGamePrizeTypeName.md) ('no-prize', 'points', 'gems-and-diamonds', 'spin', 'bonus', 'jackpot', 'raffle-ticket', 'mission', 'change-level', 'manual')
 
 ***
 
@@ -32,7 +32,7 @@ The type of the prize,  no-prize, points, bonus, manual, spin, jackpot
 
 > `optional` **prize\_value?**: `number`
 
-Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant. 
+Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant.
 For example for prize  '100 points' the prize_value will be 100. For '100 free spins' the prize_value will be 100.
 
 ***
@@ -41,7 +41,7 @@ For example for prize  '100 points' the prize_value will be 100. For '100 free s
 
 > `optional` **font\_size?**: `number`
 
-Custom font size for the prize (desktop)
+Custom font size in px for rendering the prize name on the game surface (e.g. a wheel sector), desktop
 
 ***
 
@@ -49,7 +49,7 @@ Custom font size for the prize (desktop)
 
 > `optional` **font\_size\_mobile?**: `number`
 
-Custom font size for the prize (mobile)
+Custom font size in px for the prize name, mobile; falls back to `font_size` when absent
 
 ***
 
@@ -65,7 +65,7 @@ The URL of the icon of the prize, aspect ratio 1:1
 
 > **position**: `number`
 
-for scratch card defines position of prize in the list
+For Scratch Card games — relative order of the prize in the scratch grid (lower first). May be absent for other game types
 
 ***
 
@@ -73,7 +73,7 @@ for scratch card defines position of prize in the list
 
 > **sectors**: `number`[]
 
-List of sectors for the prize
+For Spin-a-Wheel games — wheel sector indices this prize occupies. Absent for non-wheel games
 
 ***
 
@@ -81,7 +81,7 @@ List of sectors for the prize
 
 > **acknowledge\_type**: [`SAWAcknowledgeTypeName`](../enumerations/SAWAcknowledgeTypeName.md)
 
-Type of acknowledge message for users
+Which win modal the prize uses — see [SAWAcknowledgeTypeName](../enumerations/SAWAcknowledgeTypeName.md) (Silent / QuickMessage / FullMessage / ExplicitAcknowledge)
 
 ***
 
@@ -93,11 +93,19 @@ Message that will be shown to user in modal pop-up
 
 ***
 
+### aknowledge\_message\_lose?
+
+> `optional` **aknowledge\_message\_lose?**: `string`
+
+Message shown instead of `aknowledge_message` when the spin is finalised as lost (`lose: true` acknowledge flows — games with a client-decided outcome, e.g. Voyager). Absent unless configured
+
+***
+
 ### acknowledge\_dp
 
 > **acknowledge\_dp**: `string`
 
-Deep link that will trigger some action in modal pop-up
+Deep link executed when the user taps the main action button in the win modal (run it via `_smartico.dp()`)
 
 ***
 
@@ -105,7 +113,7 @@ Deep link that will trigger some action in modal pop-up
 
 > **acknowledge\_action\_title**: `string`
 
-The name of the action button in modal pop-up
+Label of the main action button in the win modal
 
 ***
 
@@ -113,7 +121,7 @@ The name of the action button in modal pop-up
 
 > `optional` **acknowledge\_dp\_additional?**: `string`
 
-Deep link that will trigger some action in modal pop-up (additional)
+Deep link of the additional action button in the win modal
 
 ***
 
@@ -121,7 +129,7 @@ Deep link that will trigger some action in modal pop-up (additional)
 
 > `optional` **acknowledge\_action\_title\_additional?**: `string`
 
-The name of the action button in modal pop-up (additional)
+Label of the additional action button in the win modal
 
 ***
 
@@ -129,7 +137,7 @@ The name of the action button in modal pop-up (additional)
 
 > `optional` **second\_btn?**: `string`
 
-Deep link that will trigger some action in modal pop-up (second button)
+Deep link of the secondary button in the win modal
 
 ***
 
@@ -137,7 +145,7 @@ Deep link that will trigger some action in modal pop-up (second button)
 
 > `optional` **second\_btn\_action\_title?**: `string`
 
-The name of the action button in modal pop-up (second button)
+Label of the secondary button in the win modal
 
 ***
 
@@ -225,7 +233,7 @@ Always `false` in API responses — deleted prizes are excluded server-side
 
 > `optional` **custom\_data?**: `any`
 
-The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number
+The custom data of the prize defined by the operator. Can be a JSON object, string or number
 
 ***
 
@@ -233,7 +241,7 @@ The custom data of the mini-game defined by operator in the BackOffice. Can be a
 
 > `optional` **prize\_modifiers?**: [`PrizeModifiers`](../enumerations/PrizeModifiers.md)[]
 
-Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded.
+Step-modifier tiles for step games (Treasure Hunt / Voyager) — see [PrizeModifiers](../enumerations/PrizeModifiers.md) (2x / 5x / 10x, /2 / /5 / /10, 0, reset) applied to the running total revealed during the game. Presentation only — the awarded amount is still `prize_value`
 
 ***
 
@@ -241,7 +249,7 @@ Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will
 
 > `optional` **allow\_split\_decimal?**: `boolean`
 
-When enabled, you can split prize value by decimal values
+Step games (Treasure Hunt / Voyager): when true, the per-step revealed amounts of the prize value may be fractional; when false the split uses whole numbers
 
 ***
 
@@ -249,7 +257,7 @@ When enabled, you can split prize value by decimal values
 
 > `optional` **hide\_prize\_from\_history?**: `boolean`
 
-When enabled, you can hide prize from prize history
+Operator hint to hide this prize when rendering prize-history UIs. Informational only — API responses are not filtered by it
 
 ***
 
@@ -257,7 +265,7 @@ When enabled, you can hide prize from prize history
 
 > `optional` **requirements\_to\_get\_prize?**: `string`
 
-Requirements to claim the prize  (lootbox specific)
+Operator text describing what the user must do to be eligible for this prize (lootbox games); shown when the prize is not yet available to the user
 
 ***
 
@@ -265,4 +273,4 @@ Requirements to claim the prize  (lootbox specific)
 
 > `optional` **max\_give\_period\_type\_id?**: [`AttemptPeriodType`](../enumerations/AttemptPeriodType.md)
 
-The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime
+Period basis for the prize availability restriction — see [AttemptPeriodType](../enumerations/AttemptPeriodType.md). `CalendarDaysUserTimeZone` evaluates `weekdays` / the active window in the user's timezone; the other types use `relative_period_timezone`

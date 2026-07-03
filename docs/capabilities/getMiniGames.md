@@ -30,35 +30,36 @@ Array of `TMiniGameTemplate`. Each item:
 - `buyin_cost_gems` (number) — in case of charging type 'Gems', what is the gems amount will be deducted from user balance
 - `buyin_cost_diamonds` (number) — in case of charging type 'Diamonds', what is the diamonds amount will be deducted from user balance
 - `spin_count` (number) — in case of charging type 'Spin attempts', shows the current number of spin attempts that user has
-- `next_available_spin_ts` (number) — if the game is limit to the number of spins that user can do during period of time, this property shows the epoch time in UTC when the next attempt will be available. Note that you need to enable 'Show time to the next available spin' setting on mini-game template in the backoffice Important: this field will not be populated if “Max number of attempts a user can do” is set to value different from 1
+- `next_available_spin_ts` (number) — If the game limits the number of attempts per period of time, the epoch-ms time (UTC) when the next attempt becomes available. Populated only when the operator enabled the "show time to the next available spin" template setting, and only when the template's maximum attempts per period is 1.
 - `earliest_expiration_dt` (number | null) — Soonest-expiring spin's expiration time for the current user, as an epoch-ms timestamp. `null` when the user has no expirable spins for this template — spins only expire when the template defines a spin-expiration rule (Wheel of Fortune, Loot Boxes, etc.). Pair with `latest_expiration_dt` to render a "spins expire between X and Y" window.
 - `latest_expiration_dt` (number | null) — Latest-expiring spin's expiration time for the current user, as an epoch-ms timestamp. `null` when the user has no expirable spins; equals `earliest_expiration_dt` when a single expiration applies.
 - `over_limit_message` (string) — The message that should be shown to the user when he cannot play the game, server rejected attempt with error code SAWSpinErrorCode.SAW_FAILED_MAX_SPINS_REACHED
 - `no_attempts_message` (string) — The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points.
-- `jackpot_current` (number) — Current jackpont amount, if jackpot is enabled.
+- `jackpot_current` (number) — Current jackpot amount, if jackpot is enabled.
 - `jackpot_add_on_attempt` (number) — The amount that will be added to the jackpot every time when somebody plays the game. Note that the contribution amount is abstract, means that no money or points are deducted from the user balance.
 - `jackpot_symbol` (string) — The symbol of jackpot that is giving the sense to the 'amount' E.g. the symbol could be EUR and connected to the amount it can indicate that amount is monetary, e.g. '100 EUR'. Or the symbol can be 'Free spins' and connected to the amount it can indicate that amount is number of free spins, e.g. '100 Free spins'.
 - `promo_image` (string) — The promo image, 500x240px
 - `promo_text` (string) — The promo text
 - `custom_data` (any) — The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number
-- `prizes` (TMiniGamePrize[]) — List of prizes for mini-games
+- `prizes` (TMiniGamePrize[]) — Prizes configured for this game — see `TMiniGamePrize`
   - `id` (number) — ID of the prize
-  - `name` (string) — The visual name of the prize
-  - `prize_type` (MiniGamePrizeTypeName) — The type of the prize, no-prize, points, bonus, manual, spin, jackpot
+  - `name` (string) — Display name of the prize, pre-translated; any jackpot placeholder in it arrives resolved to the live jackpot value
+  - `prize_type` (MiniGamePrizeTypeName) — The type of the prize — see `MiniGamePrizeTypeName` ('no-prize', 'points', 'gems-and-diamonds', 'spin', 'bonus', 'jackpot', 'raffle-ticket', 'mission', 'change-level', 'manual')
   - `prize_value` (number) — Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant. For example for prize '100 points' the prize_value will be 100. For '100 free spins' the prize_value will be 100.
-  - `font_size` (number) — Custom font size for the prize (desktop)
-  - `font_size_mobile` (number) — Custom font size for the prize (mobile)
+  - `font_size` (number) — Custom font size in px for rendering the prize name on the game surface (e.g. a wheel sector), desktop
+  - `font_size_mobile` (number) — Custom font size in px for the prize name, mobile; falls back to `font_size` when absent
   - `icon` (string) — The URL of the icon of the prize, aspect ratio 1:1
-  - `position` (number) — for scratch card defines position of prize in the list
-  - `sectors` (number[]) — List of sectors for the prize
-  - `acknowledge_type` (SAWAcknowledgeTypeName) — Type of acknowledge message for users
+  - `position` (number) — For Scratch Card games — relative order of the prize in the scratch grid (lower first). May be absent for other game types
+  - `sectors` (number[]) — For Spin-a-Wheel games — wheel sector indices this prize occupies. Absent for non-wheel games
+  - `acknowledge_type` (SAWAcknowledgeTypeName) — Which win modal the prize uses — see `SAWAcknowledgeTypeName` (Silent / QuickMessage / FullMessage / ExplicitAcknowledge)
   - `aknowledge_message` (string) — Message that will be shown to user in modal pop-up
-  - `acknowledge_dp` (string) — Deep link that will trigger some action in modal pop-up
-  - `acknowledge_action_title` (string) — The name of the action button in modal pop-up
-  - `acknowledge_dp_additional` (string) — Deep link that will trigger some action in modal pop-up (additional)
-  - `acknowledge_action_title_additional` (string) — The name of the action button in modal pop-up (additional)
-  - `second_btn` (string) — Deep link that will trigger some action in modal pop-up (second button)
-  - `second_btn_action_title` (string) — The name of the action button in modal pop-up (second button)
+  - `aknowledge_message_lose` (string) — Message shown instead of `aknowledge_message` when the spin is finalised as lost (`lose: true` acknowledge flows — games with a client-decided outcome, e.g. Voyager). Absent unless configured
+  - `acknowledge_dp` (string) — Deep link executed when the user taps the main action button in the win modal (run it via `_smartico.dp()`)
+  - `acknowledge_action_title` (string) — Label of the main action button in the win modal
+  - `acknowledge_dp_additional` (string) — Deep link of the additional action button in the win modal
+  - `acknowledge_action_title_additional` (string) — Label of the additional action button in the win modal
+  - `second_btn` (string) — Deep link of the secondary button in the win modal
+  - `second_btn_action_title` (string) — Label of the secondary button in the win modal
   - `out_of_stock_message` (string) — Message when the prize pool is empty for that specific prize
   - `pool` (number) — Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz games
   - `pool_initial` (number) — Initial (configured) stock of the prize. Populated regardless of `expose_game_stat_on_api`
@@ -69,19 +70,19 @@ Array of `TMiniGameTemplate`. Each item:
   - `relative_period_timezone` (number) — Timezone offset in minutes used to evaluate `weekdays` and the active window (UTC minus local, as in JS `Date.getTimezoneOffset()` — e.g. `-180` for UTC+3)
   - `is_surcharge` (boolean) — When true, the prize stays winnable even when its `pool` reaches 0 (effectively unlimited stock)
   - `is_deleted` (boolean) — Always `false` in API responses — deleted prizes are excluded server-side
-  - `custom_data` (any) — The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number
-  - `prize_modifiers` (PrizeModifiers[]) — Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded.
-  - `allow_split_decimal` (boolean) — When enabled, you can split prize value by decimal values
-  - `hide_prize_from_history` (boolean) — When enabled, you can hide prize from prize history
-  - `requirements_to_get_prize` (string) — Requirements to claim the prize (lootbox specific)
-  - `max_give_period_type_id` (AttemptPeriodType) — The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime
+  - `custom_data` (any) — The custom data of the prize defined by the operator. Can be a JSON object, string or number
+  - `prize_modifiers` (PrizeModifiers[]) — Step-modifier tiles for step games (Treasure Hunt / Voyager) — see `PrizeModifiers` (2x / 5x / 10x, /2 / /5 / /10, 0, reset) applied to the running total revealed during the game. Presentation only — the awarded amount is still `prize_value`
+  - `allow_split_decimal` (boolean) — Step games (Treasure Hunt / Voyager): when true, the per-step revealed amounts of the prize value may be fractional; when false the split uses whole numbers
+  - `hide_prize_from_history` (boolean) — Operator hint to hide this prize when rendering prize-history UIs. Informational only — API responses are not filtered by it
+  - `requirements_to_get_prize` (string) — Operator text describing what the user must do to be eligible for this prize (lootbox games); shown when the prize is not yet available to the user
+  - `max_give_period_type_id` (AttemptPeriodType) — Period basis for the prize availability restriction — see `AttemptPeriodType`. `CalendarDaysUserTimeZone` evaluates `weekdays` / the active window in the user's timezone; the other types use `relative_period_timezone`
 - `expose_game_stat_on_api` (boolean) — Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes` and kept current after every play; when disabled (default) those fields are omitted. See `getMiniGames` "Per-prize statistics"
-- `relative_period_timezone` (number) — Time zone to ensure each day aligns with your local midnight.
-- `activeFromDate` (number) — Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp)
-- `activeTillDate` (number) — Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp)
-- `steps_to_finish_game` (number) — The amount of steps to complete the game and gather the prize
+- `relative_period_timezone` (number) — Timezone offset in minutes used to evaluate the template's period-based rules (UTC minus local, as in JS `Date.getTimezoneOffset()` — e.g. `-180` for UTC+3)
+- `activeFromDate` (number) — Time from which the template becomes available (epoch ms); absent when not restricted
+- `activeTillDate` (number) — Time until which the template stays available (epoch ms); absent when not restricted
+- `steps_to_finish_game` (number) — Number of steps to complete the game and collect the prize (step games — Voyager / Treasure Hunt)
 - `custom_section_id` (number) — ID of the operator-defined custom section (widget menu grouping) the mini-game is assigned to
-- `saw_template_ui_definition` (SAWTemplateUI) — The UI definition of the mini-game
+- `saw_template_ui_definition` (SAWTemplateUI) — Full raw UI definition of the mini-game (skin, colors, per-game visual settings) — see `SAWTemplateUI`. The commonly needed values are already lifted onto this template object
   - `skin` (string)
   - `name` (string)
   - `description` (string)
@@ -126,8 +127,8 @@ Array of `TMiniGameTemplate`. Each item:
 		id: string;
 		content: string;
 	})
-- `game_layout` (SAWGameLayoutName) — The layout of the game
-- `show_prize_history` (boolean) — When enabled the prize history icon is visible on a certain template
+- `game_layout` (SAWGameLayoutName) — Grid layout of the game. Populated only for Lootbox game types (LootboxWeekdays / LootboxCalendarDays)
+- `show_prize_history` (boolean) — Operator setting: show a prize-history entry point (icon / button) on this game's view
 - `max_number_of_attempts` (number) — The maximum number of attempts that user can do during period of time
 - `max_spins_period_ms` (number) — The period of time in milliseconds during which the user can do the maximum number of attempts
 - `expose_user_spin_id` (SAWExposeUserSpinIdName) — Which identifier to show next to a win result for transparency/audit — 'userId' (the player's external user id) or 'spinId' (the spin's transaction id). Absent when the operator disabled it
