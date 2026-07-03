@@ -502,7 +502,11 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * true` with no prize attached. Use this for game mechanics where the
 	 * player can decline or forfeit the drawn prize — e.g. a
 	 * gamble/discard step, or a client-driven game where the user's final
-	 * action decides whether the pre-drawn prize is actually won. It only
+	 * action decides whether the pre-drawn prize is actually won (the
+	 * default Smartico UI does this for the Voyager game: failing the
+	 * star-collection run finalises the spin as lost). When configured,
+	 * the prize's `aknowledge_message_lose` is the operator's result copy
+	 * for this case — show it instead of `aknowledge_message`. It only
 	 * works on a spin that is not yet finalised, so it requires playing
 	 * with `acknowledge: false` and calling promptly — once the automatic
 	 * acknowledge or the server-side fallback (below) has finalised the
@@ -531,6 +535,8 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *   and the "lose" engagement event fires.
 	 * - Either way the spin's `is_claimed` flips to `true` on the next
 	 *   {@link getMiniGamesHistory} fetch.
+	 *
+	 * **UI guidance**: see [UI Guide — `miniGameWinAcknowledgeRequest`](../../docs/ui/minigames/UIGuide_miniGameWinAcknowledgeRequest.md).
 	 *
 	 * **Visitor mode**: not supported.
 	 *

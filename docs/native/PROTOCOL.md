@@ -1329,6 +1329,8 @@ No method-specific fields. Send only the common fields (see [Common Message Fiel
 |-------|------|-------------|
 | `templates` | [`SAWTemplate[]`](../api/interfaces/SAWTemplate.md) | Array of mini-game templates |
 
+Note: per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are present on each template's `prizes` only when the template's `expose_game_stat_on_api` is enabled; otherwise the server strips them (`pool` is kept for MatchX / Quiz game types).
+
 ---
 
 ### playMiniGame
@@ -1508,6 +1510,8 @@ Acknowledge a mini-game spin push. Sent after handling `SAW_SHOW_SPIN_PUSH` (707
 ### miniGameWinAcknowledgeBatch
 
 Acknowledge multiple mini-game wins at once. Used after `playMiniGameBatch`.
+
+The batch acknowledge always finalises spins as **won** — `lose` is not supported here. To finalise a spin as lost, send a single [miniGameWinAcknowledge](#minigamewinacknowledge) (704) with `lose: true`.
 
 #### Request
 

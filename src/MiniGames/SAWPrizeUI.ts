@@ -8,7 +8,8 @@ export interface SAWPrizeUI {
 	name_original?: string; // keeps original name, how it came from the servers. This is needed for the Jackpot value replacemenet
 	hide_prize_popup: boolean; // if true, prize popup on Prize Drop will not be shown
 	aknowledge_message?: string;
-	aknowledge_message_lose?: string; // voyager specific
+	/** Message shown instead of `aknowledge_message` when the spin is finalised as lost (`lose: true` acknowledge — games with a client-decided outcome, e.g. Voyager) */
+	aknowledge_message_lose?: string;
 	sectors?: number[];
 	acknowledge_type?: SAWAcknowledgeType;
 	acknowledge_dp?: string;

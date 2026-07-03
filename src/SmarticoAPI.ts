@@ -668,6 +668,11 @@ class SmarticoAPI {
 							'{{jackpot}}',
 							jackpotValue,
 						);
+						p.saw_prize_ui_definition.aknowledge_message_lose = IntUtils.replaceAll(
+							p.saw_prize_ui_definition.aknowledge_message_lose,
+							'{{jackpot}}',
+							jackpotValue,
+						);
 					});
 				}
 			});

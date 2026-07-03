@@ -100,7 +100,10 @@ Modal contents per prize:
 - Icon: `prize.icon` (1:1)
 - Title: `prize.name`
 - Message: `prize.aknowledge_message` (note the typo in the field
-  name — `aknowledge` not `acknowledge`)
+  name — `aknowledge` not `acknowledge`). When the spin is finalised
+  as lost (see "Decline / forfeit" below), show
+  `prize.aknowledge_message_lose` instead, falling back to a generic
+  "Better luck next time" when not configured.
 - CTA: `prize.acknowledge_action_title` with action
   `prize.acknowledge_dp` (pass through `_smartico.dp()` for safe
   execution)
@@ -112,7 +115,9 @@ Modal contents per prize:
 Some game mechanics let the player decline or forfeit the drawn
 prize — a gamble/discard step, a "keep it or risk it" offer, or a
 game where the player's final action decides whether the pre-drawn
-prize is actually won. Implement these with manual finalisation:
+prize is actually won (the default Smartico UI does this for the
+Voyager game: failing the star-collection run forfeits the drawn
+prize). Implement these with manual finalisation:
 
 1. Play with `acknowledge: false` so the SDK does not auto-finalise.
 2. Run the game / choice UI.
@@ -122,7 +127,8 @@ prize is actually won. Implement these with manual finalisation:
    - Decline / lose →
      `miniGameWinAcknowledgeRequest(request_id, { lose: true })` —
      prize NOT credited, returned to the prize pool for other
-     players. Show the same "Better luck next time" treatment as a
+     players. Show `prize.aknowledge_message_lose` when configured,
+     else the same "Better luck next time" treatment as a
      `no-prize` slot (below).
 
 Timing: standard prizes are auto-finalised as WON by the
@@ -131,6 +137,9 @@ promptly — after the fallback fires, `lose: true` is a no-op and
 the prize stays credited. "Explicit claim" prizes are exempt from
 the fallback, so those have no time pressure. Once a spin is
 finalised either way, further acknowledge calls are no-ops.
+
+Full CTA / retry / timing patterns: see
+[UI Guide — `miniGameWinAcknowledgeRequest`](UIGuide_miniGameWinAcknowledgeRequest.md).
 
 ## "No prize" handling
 

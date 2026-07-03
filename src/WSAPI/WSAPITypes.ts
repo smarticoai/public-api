@@ -23,39 +23,41 @@ type TRibbon = 'sale' | 'hot' | 'new' | 'vip' | string;
 export interface TMiniGamePrize {
 	/** ID of the prize */
 	id: number;
-	/** The visual name of the prize */
+	/** Display name of the prize, pre-translated; any jackpot placeholder in it arrives resolved to the live jackpot value */
 	name: string;
-	/** The type of the prize,  no-prize, points, bonus, manual, spin, jackpot */
+	/** The type of the prize — see {@link MiniGamePrizeTypeName} ('no-prize', 'points', 'gems-and-diamonds', 'spin', 'bonus', 'jackpot', 'raffle-ticket', 'mission', 'change-level', 'manual') */
 	prize_type: MiniGamePrizeTypeName;
-	/** Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant. 
+	/** Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant.
 	 * For example for prize  '100 points' the prize_value will be 100. For '100 free spins' the prize_value will be 100.
 	*/
 	prize_value?: number;
-	/** Custom font size for the prize (desktop) */
+	/** Custom font size in px for rendering the prize name on the game surface (e.g. a wheel sector), desktop */
 	font_size?: number;
-	/** Custom font size for the prize (mobile) */
+	/** Custom font size in px for the prize name, mobile; falls back to `font_size` when absent */
 	font_size_mobile?: number;
 	/** The URL of the icon of the prize, aspect ratio 1:1 */
 	icon?: string;
-	/** for scratch card defines position of prize in the list */
+	/** For Scratch Card games — relative order of the prize in the scratch grid (lower first). May be absent for other game types */
 	position: number;
-	/** List of sectors for the prize */
+	/** For Spin-a-Wheel games — wheel sector indices this prize occupies. Absent for non-wheel games */
 	sectors: number[];
-	/** Type of acknowledge message for users */
+	/** Which win modal the prize uses — see {@link SAWAcknowledgeTypeName} (Silent / QuickMessage / FullMessage / ExplicitAcknowledge) */
 	acknowledge_type: SAWAcknowledgeTypeName;
 	/** Message that will be shown to user in modal pop-up */
 	aknowledge_message: string;
-	/** Deep link that will trigger some action in modal pop-up */
+	/** Message shown instead of `aknowledge_message` when the spin is finalised as lost (`lose: true` acknowledge flows — games with a client-decided outcome, e.g. Voyager). Absent unless configured */
+	aknowledge_message_lose?: string;
+	/** Deep link executed when the user taps the main action button in the win modal (run it via `_smartico.dp()`) */
 	acknowledge_dp: string;
-	/** The name of the action button in modal pop-up */
+	/** Label of the main action button in the win modal */
 	acknowledge_action_title: string;
-	/** Deep link that will trigger some action in modal pop-up (additional) */
+	/** Deep link of the additional action button in the win modal */
 	acknowledge_dp_additional?: string;
-	/** The name of the action button in modal pop-up (additional) */
+	/** Label of the additional action button in the win modal */
 	acknowledge_action_title_additional?: string;
-	/** Deep link that will trigger some action in modal pop-up (second button) */
+	/** Deep link of the secondary button in the win modal */
 	second_btn?: string,
-	/** The name of the action button in modal pop-up (second button) */
+	/** Label of the secondary button in the win modal */
 	second_btn_action_title?: string;
 	/** Message when the prize pool is empty for that specific prize */
 	out_of_stock_message?: string;
@@ -77,17 +79,17 @@ export interface TMiniGamePrize {
 	is_surcharge?: boolean;
 	/** Always `false` in API responses — deleted prizes are excluded server-side */
 	is_deleted?: boolean;
-	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
+	/** The custom data of the prize defined by the operator. Can be a JSON object, string or number */
 	custom_data?: any;
-	/** Prize modifiers that will multiply by 2x, 5x or 10x the current total. This will not affect the final Prize Amount that will be awarded. */
+	/** Step-modifier tiles for step games (Treasure Hunt / Voyager) — see {@link PrizeModifiers} (2x / 5x / 10x, /2 / /5 / /10, 0, reset) applied to the running total revealed during the game. Presentation only — the awarded amount is still `prize_value` */
 	prize_modifiers?: PrizeModifiers[];
-	/** When enabled, you can split prize value by decimal values */
+	/** Step games (Treasure Hunt / Voyager): when true, the per-step revealed amounts of the prize value may be fractional; when false the split uses whole numbers */
 	allow_split_decimal?: boolean;
-	/** When enabled, you can hide prize from prize history */
+	/** Operator hint to hide this prize when rendering prize-history UIs. Informational only — API responses are not filtered by it */
 	hide_prize_from_history?: boolean;
-	/** Requirements to claim the prize  (lootbox specific)*/
+	/** Operator text describing what the user must do to be eligible for this prize (lootbox games); shown when the prize is not yet available to the user */
 	requirements_to_get_prize?: string;
-	/** The period type for the prize to be given: Time from last attempt, Calendar days UTC, Calendar days user time zone, Lifetime */
+	/** Period basis for the prize availability restriction — see {@link AttemptPeriodType}. `CalendarDaysUserTimeZone` evaluates `weekdays` / the active window in the user's timezone; the other types use `relative_period_timezone` */
 	max_give_period_type_id?: AttemptPeriodType;
 }
 
@@ -167,11 +169,10 @@ export interface TMiniGameTemplate {
 	/** in case of charging type 'Spin attempts', shows the current number of spin attempts that user has */
 	spin_count?: number;
 
-	/** 
-	 * if the game is limit to the number of spins that user can do during period of time,
-	 * this property shows the epoch time in UTC when the next attempt will be available.
-	 * Note that you need to enable 'Show time to the next available spin' setting on mini-game template in the backoffice
-	 * Important: this field will not be populated if “Max number of attempts a user can do” is set to value different from 1
+	/**
+	 * If the game limits the number of attempts per period of time, the epoch-ms time (UTC) when the next attempt becomes available.
+	 * Populated only when the operator enabled the "show time to the next available spin" template setting, and only when the
+	 * template's maximum attempts per period is 1.
 	 * */
 	next_available_spin_ts: number;
 
@@ -190,7 +191,7 @@ export interface TMiniGameTemplate {
 	/** The message that should be shown to the user when he cannot play the game because he doesn't have spin attempts or points. */
 	no_attempts_message: string;
 
-	/** Current jackpont amount, if jackpot is enabled. */
+	/** Current jackpot amount, if jackpot is enabled. */
 	jackpot_current: number;
 	/** The amount that will be added to the jackpot every time when somebody plays the game. Note that the contribution amount is abstract, means that no money or points are deducted from the user balance. */
 	jackpot_add_on_attempt: number;
@@ -205,28 +206,28 @@ export interface TMiniGameTemplate {
 	/** The custom data of the mini-game defined by operator in the BackOffice. Can be a JSON object, string or number */
 	custom_data: any;
 
-	/** List of prizes for mini-games */
+	/** Prizes configured for this game — see {@link TMiniGamePrize} */
 	prizes: TMiniGamePrize[];
 
 	/** Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes` and kept current after every play; when disabled (default) those fields are omitted. See `getMiniGames` "Per-prize statistics" */
 	expose_game_stat_on_api?: boolean;
 
-	/** Time zone to ensure each day aligns with your local midnight. */
+	/** Timezone offset in minutes used to evaluate the template's period-based rules (UTC minus local, as in JS `Date.getTimezoneOffset()` — e.g. `-180` for UTC+3) */
 	relative_period_timezone?: number;
-	/** Holds time from which template will become available, for the template that are targeted to be available from specific time (UNIX timestamp) */
+	/** Time from which the template becomes available (epoch ms); absent when not restricted */
 	activeFromDate?: number;
-	/** Holds time till which template will become available, for the templates that are targeted to be available from specific time (UNIX timestamp) */
+	/** Time until which the template stays available (epoch ms); absent when not restricted */
 	activeTillDate?: number;
-	/** The amount of steps to complete the game and gather the prize */
+	/** Number of steps to complete the game and collect the prize (step games — Voyager / Treasure Hunt) */
 	steps_to_finish_game?: number;
 	/** ID of the operator-defined custom section (widget menu grouping) the mini-game is assigned to */
 	custom_section_id?: number;
 
-	/** The UI definition of the mini-game */
+	/** Full raw UI definition of the mini-game (skin, colors, per-game visual settings) — see {@link SAWTemplateUI}. The commonly needed values are already lifted onto this template object */
 	saw_template_ui_definition: SAWTemplateUI;
-	/** The layout of the game */
+	/** Grid layout of the game. Populated only for Lootbox game types (LootboxWeekdays / LootboxCalendarDays) */
 	game_layout?: SAWGameLayoutName;
-	/** When enabled the prize history icon is visible on a certain template */
+	/** Operator setting: show a prize-history entry point (icon / button) on this game's view */
 	show_prize_history?: boolean;
 	/** The maximum number of attempts that user can do during period of time */
 	max_number_of_attempts?: number;

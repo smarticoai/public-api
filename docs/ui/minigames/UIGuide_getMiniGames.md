@@ -75,6 +75,28 @@ keyed on `saw_game_type`. For custom UIs, render the matching
 component per game type — they share the same `playMiniGame`
 trigger (except `PrizeDrop`, `MatchX`, `Quiz` as noted).
 
+## Prize-field usage per game type
+
+Several `prizes[]` fields only matter for specific renderers:
+
+| Prize field | Used by | How |
+|---|---|---|
+| `sectors` | Spin-a-Wheel | Wheel sector indices the prize occupies — place the prize label/icon on those sectors. |
+| `position` | Scratch Card | Sort prizes ascending by `position` to lay out the scratch grid. |
+| `font_size` / `font_size_mobile` | Wheel, Scratch | Px size for the prize label on the game surface; mobile falls back to desktop. |
+| `prize_modifiers` | Treasure Hunt, Voyager | Modifier tiles (2x…/10, 0, reset) applied to the running revealed total — presentation only; the award is still `prize_value`. |
+| `allow_split_decimal` | Treasure Hunt, Voyager | Whether per-step revealed amounts may be fractional. |
+| `requirements_to_get_prize` | Lootboxes | Text shown when the prize isn't yet available to the user. |
+| `out_of_stock_message` | All (with stock) | Shown when the prize's pool is depleted. |
+| `icon`, `name` | All | Prize strip, game surface, win modal. `name` arrives with the live jackpot value inlined. |
+| `acknowledge_*`, `second_btn*`, `aknowledge_message(_lose)` | All | Win-modal contents — see [UI Guide — `playMiniGame`](UIGuide_playMiniGame.md) "Prize reveal modals". |
+
+Template-side companions: `game_layout` picks the Lootbox grid
+variant, `steps_to_finish_game` sizes step games, and
+`expose_user_spin_id` asks the win view to display the player's
+external user id (`'userId'`) or the spin's transaction id
+(`'spinId'`) for transparency/audit.
+
 ## Action button decision matrix
 
 CTA on the card / detail view (evaluate in priority order):
