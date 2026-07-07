@@ -873,21 +873,21 @@ export interface TLevel {
 	/**
 	 * The counter of 1st metric used to reach the Level.
 	 * Relevant in case of using advanced leveling logic
-	 * https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
+	 * https://help.smartico.ai/welcome/products/release-notes/september-2022#new-logic-for-leveling-users
 	 *
 	 */
 	required_level_counter_1: number;
 	/**
 	 * The counter of 2nd metric used to reach the Level.
 	 * Relevant in case of using advanced leveling logic
-	 * https://help.smartico.ai/welcome/more/release-notes/september-2022#new-logic-for-leveling-users
+	 * https://help.smartico.ai/welcome/products/release-notes/september-2022#new-logic-for-leveling-users
 	 *
 	 */
 	required_level_counter_2: number;
 	/** 
 	 * Custom data as string or JSON string that can be used in API to build custom UI
 	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
-	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+	 * Read more here - https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes
 	 */
 	custom_data: string;
 }

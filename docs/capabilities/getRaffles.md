@@ -21,7 +21,7 @@ Array of `TRaffle`. Each item:
 - `custom_section_id` (number) — ID of the custom section that is linked to the raffle in the Gamification widget
 - `image_url` (string) — URL of the image that represents the raffle, 890x193px
 - `image_url_mobile` (string) — URL of the mobile image that represents the raffle, 300x142px
-- `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+- `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes
 - `start_date` (number) — Date of start
 - `end_date` (number) — Date of end
 - `max_tickets_count` (number) — Maximum numer of tickets that can be given to all users for the whole period of raffle

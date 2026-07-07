@@ -13,31 +13,43 @@
   field. Consumers apply the bucketing filter chain below themselves.
 
 ## Status bucketing
-Partition the array using this **priority order — first match wins**:
+Partition the array using this **priority order — first match wins** —
+reading the raw state fields directly (NOT `availability_status`; see the
+note below):
 
-  1. **Missed** — time window passed before completion. Test:
-     `(!is_completed) && ((is_requires_optin && is_opted_in || !is_requires_optin)`
-     ` && time_limit_ms && dt_start && (dt_start + time_limit_ms) < Date.now())`
-     `|| (active_till_ts && active_till_ts < Date.now())`.
-     Sort: `position` ASC.
-  2. **Completed** — `is_completed === true`, OR for missions of type
-     `AchievementStatus.RecurringUponCompletion`,
-     `max_completion_count === completion_count` (cap reached) OR
-     `completion_count > 0` (at least one cycle completed).
+  1. **Missed / Expired** — not completed and the window has closed:
+     `(!is_completed) && ((time_limit_ms && dt_start && (dt_start + time_limit_ms) < Date.now())`
+     `|| (active_till_ts && active_till_ts < Date.now()))`.
+     Do NOT gate this on opt-in — an opt-in mission whose window closed
+     before the user ever opted in still belongs in Missed. Sort: `position` ASC.
+  2. **Completed** — `is_completed === true`, OR (recurring-upon-completion
+     missions) at least one cycle done / the cap reached:
+     `completion_count > 0`, or `max_completion_count != null && completion_count >= max_completion_count`.
+     `is_completed` NEVER flips for recurring-upon-completion missions, so use
+     `completion_count`; a non-null `completion_count` is what identifies the
+     type, and `max_completion_count === null` means an INFINITE cap (still
+     recurring), so only compare against it when it is set.
      Sort: `complete_date_ts` DESC (most recent first).
   3. **Locked** — `is_locked === true`, OR not yet available
      (`active_from_ts > Date.now()`). Sort: `position` ASC.
-  4. **Available (in-progress)** — none of the above.
-     Sort: `position` ASC.
+  4. **In progress** — `is_opted_in === true`, OR (no opt-in required and
+     `progress > 0`). Sort: `position` ASC.
+  5. **Available** — everything else: opt-in required but not yet joined, or
+     an unrestricted mission not yet started. Sort: `position` ASC.
 
 Each mission belongs to exactly ONE bucket. Many UIs render these as
-status tabs / sections. The `availability_status` field
-([AchievementAvailabilityStatus](../../api/enumerations/AchievementAvailabilityStatus.md)) is authoritative for **timer /
-window state** (which countdown to show, whether the window has
-elapsed) — but it is NOT a substitute for bucketing: distinguishing
-"locked" from "opt-in required" requires reading `is_locked` and
-`is_opted_in` directly. An "Overview" tab curating featured +
-in-progress + a sample locked is a common pattern.
+status tabs / sections; an "Overview" tab curating featured + in-progress +
+a sample locked is a common pattern.
+
+**Do not bucket by `availability_status`.** That field
+([AchievementAvailabilityStatus](../../api/enumerations/AchievementAvailabilityStatus.md))
+is the **timer / window** signal only — which countdown to show, whether the
+window elapsed. It does NOT read `completion_count`, so for
+recurring-upon-completion missions it reports a stale `Missed*` value from the
+just-elapsed cycle even after `dt_start` / `active_till_ts` are cleared for the
+next attempt — using it to bucket sends recurring missions to the wrong tab.
+Distinguishing "locked" from "opt-in required" likewise needs `is_locked` /
+`is_opted_in` read directly.
 
 ## Mission card / tile (list view)
 
@@ -53,7 +65,10 @@ Fields to render on the card:
 - Description (fallback chain): `description` → `unlock_mission_description`
   (when `is_locked`) → `tasks[0].name` (when no description and tasks
   exist).
-- Progress bar — render only when `progress > 0` (the 0–100 integer).
+- Progress bar — render only when `progress > 0` (the 0–100 integer),
+  with one exception: a mission that requires opt-in and isn't opted in
+  yet (`is_requires_optin && !is_opted_in`) shows the bar at 0%, so the
+  card/modal signals it has a progress track waiting behind opt-in.
   Hide for completed recurring missions (`AchievementStatus.RecurringUponCompletion`
   on the Completed tab) to avoid showing residual percentage from a
   prior cycle.
@@ -103,8 +118,11 @@ Top-to-bottom structure (omit sections whose source field is empty):
       list is redundant). Each task row: completion indicator
       (checkbox/circle) + `task.name`. Append "N / M" using
       `execution_count_actual / execution_count_expected` when the
-      operator has enabled count display. Show a points stamp for
-      tasks with `points_reward > 0`.
+      operator has enabled count display. A single task can grant MORE
+      THAN ONE reward type — render one reward badge per non-zero amount
+      among `points_reward`, `gems_reward` and `diamonds_reward` (stack
+      them when a task grants several), each with that reward type's icon.
+      Don't assume points-only.
   13. Progress bar (conditional, same rule as card).
   14. Reward block (`reward`).
   15. Related games — only games where `game_public_meta.enabled === true`.
@@ -193,8 +211,10 @@ on click — it does NOT wait for the claim RPC to succeed. Consequences:
   Missions stay visible in the Missed bucket unless an operator
   config hides expired missions after N days.
 - **In progress**: default styling.
-- **Opt-in required**: same as in-progress; the status chip alone
-  signals "opt-in required".
+- **Opt-in required** (`is_requires_optin && !is_opted_in`): styled like
+  in-progress, but the status chip carries a "Requires opt-in" label
+  (not "Available") to signal the mission needs opt-in before progress
+  starts; pair it with the 0%-progress bar noted above.
 - **Featured**: replace the ribbon (when no `ribbon` is set) with a
   "featured" modifier; some brands use a gold border / glow.
 - **Claimable** (claim button visible): add a "claimable" modifier

@@ -853,7 +853,9 @@ export interface TMissionOrBadge {
 	reward: string;
 	/** URL of the image of the mission or badge, 256x256px */
 	image: string;
-	/** Indicator if the mission is completed or badge is granted */
+	/** Indicator if the mission is completed or badge is granted. Stays `false` for
+	 * Recurring-upon-completion missions even after cycles complete — use `completion_count`
+	 * to detect completed cycles (see `getMissions` bucketing). */
 	is_completed: boolean;
 	/** Indicator if the mission is locked. Means that it's visible to the user, but he cannot progress in it until it's unlocked.
 	 * Mission may optionally contain the explanation of what should be done to unlock it in the unlock_mission_description property
@@ -945,10 +947,10 @@ export interface TMissionOrBadge {
 	/** ID of specific Custom Section type */
 	custom_section_type_id?: number;
 
-	/** Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite. */
+	/** Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite (still recurring — not "no cap disables recurring"). */
 	max_completion_count?: number;
 
-	/** Current completion count for Recurring upon completion missions */
+	/** Current completion count for Recurring-upon-completion missions. Non-null ONLY for that mission type, so its presence identifies one; `> 0` means at least one cycle completed. */
 	completion_count?: number;
 
 	/** The date/timestamp for recurring missions, which indicating the time remaining until the next recurrence of the mission.
@@ -956,7 +958,7 @@ export interface TMissionOrBadge {
 	*/
 	next_recurrence_date_ts?: number;
 
-	/** Availability status of the mission depends on the defined time limits */
+	/** Timer/window state derived from the mission's time limits (which countdown to show / whether the window elapsed). NOT a tab-bucketing signal — it ignores `completion_count`, so bucket sections from the raw fields instead (see `getMissions`). */
 	availability_status?: AchievementAvailabilityStatus;
 
 	/** Title for the claim reward button */
@@ -1418,7 +1420,7 @@ export interface TRaffle {
 	/**
 	 * Custom data as string or JSON string that can be used in API to build custom UI
 	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
-	 * Read more here - https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes
+	 * Read more here - https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes
 	 */
 	custom_data: string;
 	/** Date of start */

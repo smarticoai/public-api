@@ -22,7 +22,7 @@ Array of `TMissionOrBadge`. Each item:
 - `description` (string) — Description of the mission or badge, translated to the user language
 - `reward` (string) — Description of the mission reward if defined
 - `image` (string) — URL of the image of the mission or badge, 256x256px
-- `is_completed` (boolean) — Indicator if the mission is completed or badge is granted
+- `is_completed` (boolean) — Indicator if the mission is completed or badge is granted. Stays `false` for Recurring-upon-completion missions even after cycles complete — use `completion_count` to detect completed cycles (see `getMissions` bucketing).
 - `is_locked` (boolean) — Indicator if the mission is locked. Means that it's visible to the user, but he cannot progress in it until it's unlocked. Mission may optionally contain the explanation of what should be done to unlock it in the unlock_mission_description property
 - `unlock_mission_description` (string) — Optional explaination of what should be done to unlock the mission
 - `is_requires_optin` (boolean) — Indicator if the mission requires opt-in. Means that user should explicitly opt-in to the mission in order to start progressing in it
@@ -80,10 +80,10 @@ Array of `TMissionOrBadge`. Each item:
 - `completed_this_week` (boolean) — Flag for mission/badge indicating that mission/badge completed this week
 - `completed_this_month` (boolean) — Flag for mission/badge indicating that mission/badge completed this month
 - `custom_section_type_id` (number) — ID of specific Custom Section type
-- `max_completion_count` (number) — Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite.
-- `completion_count` (number) — Current completion count for Recurring upon completion missions
+- `max_completion_count` (number) — Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite (still recurring — not "no cap disables recurring").
+- `completion_count` (number) — Current completion count for Recurring-upon-completion missions. Non-null ONLY for that mission type, so its presence identifies one; `> 0` means at least one cycle completed.
 - `next_recurrence_date_ts` (number) — The date/timestamp for recurring missions, which indicating the time remaining until the next recurrence of the mission. Note that if a mission has an "Active till" date defined, this field is not relevant after that date.
-- `availability_status` (AchievementAvailabilityStatus) — Availability status of the mission depends on the defined time limits
+- `availability_status` (AchievementAvailabilityStatus) — Timer/window state derived from the mission's time limits (which countdown to show / whether the window elapsed). NOT a tab-bucketing signal — it ignores `completion_count`, so bucket sections from the raw fields instead (see `getMissions`).
 - `claim_button_title` (string) — Title for the claim reward button
 - `claim_button_action` (string) — Action for the claim reward button
 - `prize_claim_expiration_date` (number) — The date/timestamp indicating when the mission claim will expire
@@ -132,18 +132,46 @@ Client-side filtering you may still want: missions with
 `only_in_custom_section: true` are intended for their custom-section
 view only and should be hidden from the main mission list.
 
-**Reading state from the returned mission**
-Drive availability chips ("missed", "coming soon", "needs opt-in",
-"in progress", "expired") from `availability_status` (enum
-`AchievementAvailabilityStatus`) — it's the canonical derived
-state and reflects all server-side timing/visibility rules in one
-field. For time-limited and recurring missions, `dt_start` doubles
-as the opt-in timestamp (for opt-in missions) or unlock timestamp
-(for previously-locked missions); the expiration of a time-limited
-mission is `dt_start + time_limit_ms`. `next_recurrence_date_ts`
-is populated for `RECURRING` / `RECURRING_QUANTITY` missions but
-is no longer meaningful once the mission's `active_till_ts` has
-passed.
+**Status bucketing (which tab / section a mission belongs to)**
+There is no pre-computed bucket field — assign each mission to exactly
+ONE section reading the raw state fields directly (NOT `availability_status`;
+see "Timers" below). Priority order, FIRST match wins:
+1. **Missed / Expired** — not completed and the window has closed:
+ `!is_completed && ((time_limit_ms && dt_start && dt_start + time_limit_ms < Date.now())`
+ `|| (active_till_ts && active_till_ts < Date.now()))`. Do NOT gate this on
+ opt-in — an opt-in mission whose window closed before the user ever
+ opted in is still Missed. Sort by `position` ASC.
+2. **Completed** — `is_completed === true`, OR (recurring-upon-completion
+ missions) at least one cycle done / the cap reached — see the recurring
+ caveats below. Sort by `complete_date_ts` DESC.
+3. **Locked** — `is_locked === true`, OR not yet started
+ (`active_from_ts > Date.now()`). Sort by `position` ASC.
+4. **In-progress** — `is_opted_in === true`, OR (no opt-in required and
+ `progress > 0`). Sort by `position` ASC.
+5. **Available** — everything else (opt-in required but not yet joined, or
+ an unrestricted mission not yet started). Sort by `position` ASC.
+
+**Recurring-upon-completion caveats** (the common mis-bucketing trap):
+- `is_completed` NEVER flips true for a recurring-upon-completion mission
+ (only for one-shot missions) — detect a completed cycle from
+ `completion_count > 0`, not `is_completed`.
+- A non-null `completion_count` is what identifies a recurring-upon-completion
+ mission. `max_completion_count === null` means an INFINITE cap (still
+ recurring — never read null as "not recurring"), so only test
+ `completion_count >= max_completion_count` when `max_completion_count` is set.
+
+**Timers & timestamps** (display only — NOT bucketing)
+`availability_status` (enum `AchievementAvailabilityStatus`) is the
+timer/window signal: use it to pick WHICH countdown to show and whether the
+window has elapsed — NOT to choose the section. It does not read
+`completion_count`, and between cycles the server may keep reporting the
+just-elapsed cycle's `Missed*` value even after `dt_start` / `active_till_ts`
+are cleared for the next attempt, so bucketing by it sends recurring missions
+to the wrong tab. For time-limited / opt-in missions `dt_start` is the opt-in
+timestamp (or unlock timestamp for previously-locked missions), and a
+time-limited mission expires at `dt_start + time_limit_ms`.
+`next_recurrence_date_ts` is populated for `RECURRING` / `RECURRING_QUANTITY`
+missions but is no longer meaningful once `active_till_ts` has passed.
 
 **Refresh after a mutation**
 After `requestMissionOptIn(...)` or `requestMissionClaimReward(...)`

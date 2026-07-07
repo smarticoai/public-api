@@ -66,18 +66,46 @@ export class WSAPIMissions extends WSAPIGeneral {
 	 * `only_in_custom_section: true` are intended for their custom-section
 	 * view only and should be hidden from the main mission list.
 	 *
-	 * **Reading state from the returned mission**
-	 * Drive availability chips ("missed", "coming soon", "needs opt-in",
-	 * "in progress", "expired") from `availability_status` (enum
-	 * {@link AchievementAvailabilityStatus}) — it's the canonical derived
-	 * state and reflects all server-side timing/visibility rules in one
-	 * field. For time-limited and recurring missions, `dt_start` doubles
-	 * as the opt-in timestamp (for opt-in missions) or unlock timestamp
-	 * (for previously-locked missions); the expiration of a time-limited
-	 * mission is `dt_start + time_limit_ms`. `next_recurrence_date_ts`
-	 * is populated for `RECURRING` / `RECURRING_QUANTITY` missions but
-	 * is no longer meaningful once the mission's `active_till_ts` has
-	 * passed.
+	 * **Status bucketing (which tab / section a mission belongs to)**
+	 * There is no pre-computed bucket field — assign each mission to exactly
+	 * ONE section reading the raw state fields directly (NOT `availability_status`;
+	 * see "Timers" below). Priority order, FIRST match wins:
+	 * 1. **Missed / Expired** — not completed and the window has closed:
+	 *    `!is_completed && ((time_limit_ms && dt_start && dt_start + time_limit_ms < Date.now())`
+	 *    `|| (active_till_ts && active_till_ts < Date.now()))`. Do NOT gate this on
+	 *    opt-in — an opt-in mission whose window closed before the user ever
+	 *    opted in is still Missed. Sort by `position` ASC.
+	 * 2. **Completed** — `is_completed === true`, OR (recurring-upon-completion
+	 *    missions) at least one cycle done / the cap reached — see the recurring
+	 *    caveats below. Sort by `complete_date_ts` DESC.
+	 * 3. **Locked** — `is_locked === true`, OR not yet started
+	 *    (`active_from_ts > Date.now()`). Sort by `position` ASC.
+	 * 4. **In-progress** — `is_opted_in === true`, OR (no opt-in required and
+	 *    `progress > 0`). Sort by `position` ASC.
+	 * 5. **Available** — everything else (opt-in required but not yet joined, or
+	 *    an unrestricted mission not yet started). Sort by `position` ASC.
+	 *
+	 * **Recurring-upon-completion caveats** (the common mis-bucketing trap):
+	 * - `is_completed` NEVER flips true for a recurring-upon-completion mission
+	 *   (only for one-shot missions) — detect a completed cycle from
+	 *   `completion_count > 0`, not `is_completed`.
+	 * - A non-null `completion_count` is what identifies a recurring-upon-completion
+	 *   mission. `max_completion_count === null` means an INFINITE cap (still
+	 *   recurring — never read null as "not recurring"), so only test
+	 *   `completion_count >= max_completion_count` when `max_completion_count` is set.
+	 *
+	 * **Timers & timestamps** (display only — NOT bucketing)
+	 * `availability_status` (enum {@link AchievementAvailabilityStatus}) is the
+	 * timer/window signal: use it to pick WHICH countdown to show and whether the
+	 * window has elapsed — NOT to choose the section. It does not read
+	 * `completion_count`, and between cycles the server may keep reporting the
+	 * just-elapsed cycle's `Missed*` value even after `dt_start` / `active_till_ts`
+	 * are cleared for the next attempt, so bucketing by it sends recurring missions
+	 * to the wrong tab. For time-limited / opt-in missions `dt_start` is the opt-in
+	 * timestamp (or unlock timestamp for previously-locked missions), and a
+	 * time-limited mission expires at `dt_start + time_limit_ms`.
+	 * `next_recurrence_date_ts` is populated for `RECURRING` / `RECURRING_QUANTITY`
+	 * missions but is no longer meaningful once `active_till_ts` has passed.
 	 *
 	 * **Refresh after a mutation**
 	 * After `requestMissionOptIn(...)` or `requestMissionClaimReward(...)`

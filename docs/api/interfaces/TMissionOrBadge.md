@@ -64,7 +64,9 @@ URL of the image of the mission or badge, 256x256px
 
 > **is\_completed**: `boolean`
 
-Indicator if the mission is completed or badge is granted
+Indicator if the mission is completed or badge is granted. Stays `false` for
+Recurring-upon-completion missions even after cycles complete — use `completion_count`
+to detect completed cycles (see `getMissions` bucketing).
 
 ***
 
@@ -311,7 +313,7 @@ ID of specific Custom Section type
 
 > `optional` **max\_completion\_count?**: `number`
 
-Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite.
+Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite (still recurring — not "no cap disables recurring").
 
 ***
 
@@ -319,7 +321,7 @@ Max number of times the user can complete a mission in case if mission type is R
 
 > `optional` **completion\_count?**: `number`
 
-Current completion count for Recurring upon completion missions
+Current completion count for Recurring-upon-completion missions. Non-null ONLY for that mission type, so its presence identifies one; `> 0` means at least one cycle completed.
 
 ***
 
@@ -336,7 +338,7 @@ Note that if a mission has an "Active till" date defined, this field is not rele
 
 > `optional` **availability\_status?**: [`AchievementAvailabilityStatus`](../enumerations/AchievementAvailabilityStatus.md)
 
-Availability status of the mission depends on the defined time limits
+Timer/window state derived from the mission's time limits (which countdown to show / whether the window elapsed). NOT a tab-bucketing signal — it ignores `completion_count`, so bucket sections from the raw fields instead (see `getMissions`).
 
 ***
 

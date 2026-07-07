@@ -30,7 +30,7 @@ Array of `JackpotDetails`. Each item:
     - `content` (string)
   - `placeholder1` (string) — custom value of placeholder1 defined by operator and can be used in the HTML templates
   - `placeholder2` (string) — custom value of placeholder2 defined by operator and can be used in the HTML templates
-  - `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - <https://help.smartico.ai/welcome/products/general-concepts/custom-fields-attributes>
+  - `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - <https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes>
 - `jp_currency` (string) — Native jackpot currency (ISO 4217). Used for winner-history amounts.
 - `user_currency` (string) — Current user's wallet currency. Used to display the pot via `pot.current_pot_amount_user_currency`.
 - `contribution_type` (JackpotContributionType) — Whether the contribution is a fixed amount or a percentage of the bet; see `JackpotContributionType`.

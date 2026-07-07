@@ -21,7 +21,7 @@ Array of `TMissionOrBadge`. Each item:
 - `description` (string) — Description of the mission or badge, translated to the user language
 - `reward` (string) — Description of the mission reward if defined
 - `image` (string) — URL of the image of the mission or badge, 256x256px
-- `is_completed` (boolean) — Indicator if the mission is completed or badge is granted
+- `is_completed` (boolean) — Indicator if the mission is completed or badge is granted. Stays `false` for Recurring-upon-completion missions even after cycles complete — use `completion_count` to detect completed cycles (see `getMissions` bucketing).
 - `is_locked` (boolean) — Indicator if the mission is locked. Means that it's visible to the user, but he cannot progress in it until it's unlocked. Mission may optionally contain the explanation of what should be done to unlock it in the unlock_mission_description property
 - `unlock_mission_description` (string) — Optional explaination of what should be done to unlock the mission
 - `is_requires_optin` (boolean) — Indicator if the mission requires opt-in. Means that user should explicitly opt-in to the mission in order to start progressing in it
@@ -79,10 +79,10 @@ Array of `TMissionOrBadge`. Each item:
 - `completed_this_week` (boolean) — Flag for mission/badge indicating that mission/badge completed this week
 - `completed_this_month` (boolean) — Flag for mission/badge indicating that mission/badge completed this month
 - `custom_section_type_id` (number) — ID of specific Custom Section type
-- `max_completion_count` (number) — Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite.
-- `completion_count` (number) — Current completion count for Recurring upon completion missions
+- `max_completion_count` (number) — Max number of times the user can complete a mission in case if mission type is Recurring upon completion. NULL equals infinite (still recurring — not "no cap disables recurring").
+- `completion_count` (number) — Current completion count for Recurring-upon-completion missions. Non-null ONLY for that mission type, so its presence identifies one; `> 0` means at least one cycle completed.
 - `next_recurrence_date_ts` (number) — The date/timestamp for recurring missions, which indicating the time remaining until the next recurrence of the mission. Note that if a mission has an "Active till" date defined, this field is not relevant after that date.
-- `availability_status` (AchievementAvailabilityStatus) — Availability status of the mission depends on the defined time limits
+- `availability_status` (AchievementAvailabilityStatus) — Timer/window state derived from the mission's time limits (which countdown to show / whether the window elapsed). NOT a tab-bucketing signal — it ignores `completion_count`, so bucket sections from the raw fields instead (see `getMissions`).
 - `claim_button_title` (string) — Title for the claim reward button
 - `claim_button_action` (string) — Action for the claim reward button
 - `prize_claim_expiration_date` (number) — The date/timestamp indicating when the mission claim will expire
