@@ -332,7 +332,9 @@ export class WSAPIJackpots extends WSAPIClans {
 	 * user-currency display is needed, the consumer must convert client-side.
 	 *
 	 * **Refresh**
-	 * - The SDK caches per `jp_template_id` for 30 seconds.
+	 * - The SDK caches each page separately (per `jp_template_id` +
+	 *   `limit` + `offset`) for 30 seconds, so paging back and forth is
+	 *   served from cache and each page keeps its own fresh copy.
 	 * - Caches clear on jackpot-win push events and on opt-in / opt-out.
 	 *
 	 * **Error handling**
@@ -375,8 +377,11 @@ export class WSAPIJackpots extends WSAPIClans {
 		/** Jackpot template ID (required). */
 		jp_template_id?: number;
 	}): Promise<JackpotWinnerHistory[]> {
+		// Cache per (jp_template_id, limit, offset) so paging or switching
+		// jackpot within the TTL doesn't return a colliding winners list.
+		const cacheKey = `${onUpdateContextKey.JackpotWinners}${jp_template_id}:${limit}:${offset}`;
 		return OCache.use(
-			onUpdateContextKey.JackpotWinners + jp_template_id,
+			cacheKey,
 			ECacheContext.WSAPI,
 			() => this.api.getJackpotWinnersT(this.userExtId, limit, offset, jp_template_id),
 			JACKPOT_WINNERS_CACHE_SEC,

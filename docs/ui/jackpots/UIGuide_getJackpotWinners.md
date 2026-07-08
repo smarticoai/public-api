@@ -4,7 +4,7 @@
 - Paginated list of past winners of a specific jackpot template.
 - Powers the "Recent Winners" / "Win History" tab inside the jackpot
   detail modal.
-- 30 s cache per template.
+- 30 s cache per page (template + `limit`/`offset`).
 - Gated by the operator's `expose_winners_over_api` flag — but only on
   the client side. Custom UIs must check this flag before calling.
 
@@ -59,7 +59,8 @@ client-side using the exchange rate available on the platform.
 
 ## Refresh
 
-- 30 s SDK cache per `jp_template_id`.
+- 30 s SDK cache per page — keyed by `jp_template_id` + `limit` +
+  `offset`, so each page is cached independently.
 - Cache clears on jackpot-win push events — when the pot explodes, the
   new winner row appears on the next call.
 - Cache also clears on opt-in / opt-out.
