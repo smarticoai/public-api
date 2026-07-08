@@ -210,6 +210,14 @@ Prize Drop only: when true, the pushed prize requires an explicit claim by the u
 
 ***
 
+### requires\_manual\_claim?
+
+> `optional` **requires\_manual\_claim?**: `boolean`
+
+Prize Drop only: when true, the pushed prize requires a manual claim by the user before it is credited. The difference between this and `requires_prize_claim` is that requires_manual_claim gives the user the ability to cancel the claim.
+
+***
+
 ### relative\_period\_timezone?
 
 > `optional` **relative\_period\_timezone?**: `number`
