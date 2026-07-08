@@ -20,6 +20,8 @@ export * from './SAWSpinsCountPush';
 export * from './SAWPrizeDropWinPush';
 export * from './SAWPrizeDropAknowledgeRequest';
 export * from './SAWPrizeDropAknowledgeResponse';
+export * from './SAWPrizeDropAknowledgeCancelRequest';
+export * from './SAWPrizeDropAknowledgeCancelResponse';
 export * from './SAWEventSawPush';
 export * from './SAWAcknowledgeSpinPushRequest';
 export * from './SAWWinningHistoryRequest';
