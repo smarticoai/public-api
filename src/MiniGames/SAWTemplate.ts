@@ -69,6 +69,8 @@ export interface SAWTemplate {
 
 	/** Prize Drop only: when true, the pushed prize requires an explicit claim by the user before it is credited */
 	requires_prize_claim?: boolean;
+	/** Prize Drop only: when true, the pushed prize requires a manual claim by the user before it is credited. The difference between this and `requires_prize_claim` is that requires_manual_claim gives the user the ability to cancel the claim. */
+	requires_manual_claim?: boolean;
 
 	/** Timezone offset in minutes used to evaluate the template's period-based rules (UTC minus local, as in JS `Date.getTimezoneOffset()`) */
 	relative_period_timezone?: number;
