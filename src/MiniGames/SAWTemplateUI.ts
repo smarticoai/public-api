@@ -460,7 +460,7 @@ export interface SAWTemplateUI {
     /**
      * URL of the operator-hosted custom mini-game, loaded inside an iframe by
      * the widget for `SAWGameType.CustomMinigame`.  The operator is trusted
-     * (the URL resolves to the operator's own published Web Studio game), but
+     * (the URL resolves to the operator's own published Vibe Studio game), but
      * the iframe is still rendered with a restrictive sandbox as defence in
      * depth: `sandbox="allow-scripts allow-forms allow-same-origin allow-popups
      * allow-pointer-lock"`. Top-level navigation is intentionally not allowed,
