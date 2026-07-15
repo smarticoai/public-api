@@ -29,6 +29,7 @@ export enum AnalyticsScreenNameId {
 	TreasureHunt = 22,
 	LiquidSection = 23,
 	ActivityLog = 24,
+	MiniGamesHistory = 25,
 
 	ModalMission = 31,
 	ModalLevel = 32,
