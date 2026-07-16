@@ -12,7 +12,7 @@ export * from './CookieStore';
 // AchRelatedGame, BonusStatus, BonusMetaMap, BonusTemplateMetaMap — are intentionally
 // omitted; import those from their domain module.)
 export type {
-	TAchCategory, TActivityLog, TAvatarCustomized, TAvatarDefinition, TAvatarPrompt,
+	TAchCategory, TActivityLog, TActivityLogEntry, TAvatarCustomized, TAvatarDefinition, TAvatarPrompt,
 	TBonus, TBuyStoreItemResult, TClaimBonusResult, TClan, TClanInfo, TClanJoinResult,
 	TClanTournamentPlayers, TClans, TGetTranslations, TInboxMessage, TInboxMessageBody,
 	TLevel, TLevelCurrent, TMiniGamePlayBatchResult, TMiniGamePlayResult, TMiniGamePrize,

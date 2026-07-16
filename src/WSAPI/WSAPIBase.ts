@@ -40,6 +40,7 @@ export enum onUpdateContextKey {
 	CurrentLevel = 'currentLevel',
 	InboxUnreadCount = 'inboxUnreadCount',
 	ActivityLog = 'activityLog',
+	ActivityLogV2 = 'activityLogV2',
 	AvatarsList = 'avatarsList',
 	AvatarsCustomized = 'avatarsCustomized',
 	AvatarPrompts = 'avatarPrompts',

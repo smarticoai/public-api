@@ -2,6 +2,7 @@ import { CoreUtils } from '../Core';
 import { ECacheContext, OCache } from '../OCache';
 import {
 	TActivityLog,
+	TActivityLogEntry,
 	TLevel,
 	TLevelCurrent,
 	TSegmentCheckResult,
@@ -638,5 +639,44 @@ export class WSAPIUser extends WSAPIBase {
 		if (typeof onUpdate === 'function') {
 			onUpdate(payload);
 		}
+	}
+
+	/**
+	 * Returns the full activity log (v2) — wallet changes **and** non-wallet
+	 * activities (missions, badges, levels, tournaments, avatars, …).
+	 *
+	 * **Backwards compatibility**: existing integrations should keep using
+	 * {@link getActivityLog}, which returns wallet-only {@link TActivityLog}
+	 * rows with the original field contract unchanged.
+	 *
+	 * **Pagination** — same `from` / `to` offset model as {@link getActivityLog}
+	 * (server caps a single response at 50 entries).
+	 *
+	 * **Filtering** — pass `types` with {@link ActivityLogActivities} values to
+	 * request a server-side subset (e.g. missions only). Omit for all activity types.
+	 *
+	 * @returns Array of {@link TActivityLogEntry} ordered newest-first.
+	 */
+	public async getActivityLogV2({
+		startTimeSeconds,
+		endTimeSeconds,
+		from,
+		to,
+		types,
+	}: {
+		startTimeSeconds: number;
+		endTimeSeconds: number;
+		from: number;
+		to: number;
+		types?: number[];
+	}): Promise<TActivityLogEntry[]> {
+		const cacheKey = `${onUpdateContextKey.ActivityLogV2}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}`;
+
+		return await OCache.use(
+			cacheKey,
+			ECacheContext.WSAPI,
+			() => this.api.getActivityLogV2T(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types),
+			CACHE_DATA_SEC,
+		);
 	}
 }

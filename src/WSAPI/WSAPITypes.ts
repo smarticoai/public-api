@@ -7,6 +7,8 @@ import { AchCustomLayoutTheme, AchCustomSectionType, AchMissionsTabsOptions, Ach
 import { PrizeModifiers } from '../MiniGames/PrizeModifiers';
 import { InboxCategories } from '../Inbox/InboxCategories';
 import { RaffleDrawInstanceState, RaffleDrawTypeExecution, RaffleTicketCapVisualization } from '../Raffle';
+import { ActivityLogActivities } from '../ActivityLog/ActivityLogActivities';
+import { ActivityLogMeta } from '../ActivityLog/ActivityLogMeta';
 import { PointChangeSourceType } from '../ActivityLog/PointChangeSourceType';
 import { UserBalanceType } from '../ActivityLog/UserBalanceType';
 import { SAWGPMarketType } from '../GamePick/MarketsType';
@@ -1802,6 +1804,31 @@ export interface TActivityLog {
 	total_ever?: number;
 	/** Source type ID indicating what triggered this change */
 	source_type_id: PointChangeSourceType;
+}
+
+/**
+ * Full activity-log row returned by {@link WSAPIUser.getActivityLogV2}.
+ * Includes wallet changes and non-wallet activities (missions, badges, levels, …).
+ */
+export interface TActivityLogEntry {
+	entry_key: string;
+	create_date: number;
+	user_ext_id: string;
+	crm_brand_id: number;
+	type: UserBalanceType;
+	amount: number;
+	balance: number;
+	total_ever?: number;
+	source_type_id: PointChangeSourceType;
+	activity_type_id?: ActivityLogActivities;
+	context_value_1?: number;
+	meta?: ActivityLogMeta;
+	source_entity_name?: string;
+	source_entity_id?: number;
+	source_reference_id?: number;
+	source_root_id?: number;
+	is_wallet_entry: boolean;
+	is_level_entry?: boolean;
 }
 
 
