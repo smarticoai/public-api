@@ -1811,7 +1811,6 @@ export interface TActivityLog {
  * Includes wallet changes and non-wallet activities (missions, badges, levels, …).
  */
 export interface TActivityLogEntry {
-	entry_key: string;
 	create_date: number;
 	user_ext_id: string;
 	crm_brand_id: number;
@@ -1828,7 +1827,6 @@ export interface TActivityLogEntry {
 	source_reference_id?: number;
 	source_root_id?: number;
 	is_wallet_entry: boolean;
-	is_level_entry?: boolean;
 }
 
 
