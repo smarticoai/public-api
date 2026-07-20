@@ -2956,7 +2956,7 @@ Register a push notifications token for the current user. Required for receiving
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `token` | `string` | Push notification token (FCM token for Android, APNs token for iOS). Set to `null` to unregister. |
+| `token` | `string` | Push notification token (FCM token for Android, APNs token for iOS). |
 | `platform` | `number` | Platform: `6`=NATIVE_IOS, `7`=NATIVE_ANDROID |
 | `pushNotificationUserStatus` | `number` | Status: `0`=ALLOWED, `1`=ASK, `2`=BLOCKED, `3`=SUSPENDED |
 | `app_package_id` | `string` | Application package ID (e.g. "com.example.app") |
