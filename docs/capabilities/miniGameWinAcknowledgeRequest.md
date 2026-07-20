@@ -11,7 +11,7 @@ _smartico.api.miniGameWinAcknowledgeRequest(request_id: string, { lose }: { lose
 
 ## Parameters
 - `request_id` — Correlation id of the spin to finalise: the `request_id` from a `playMiniGame` result (played with `acknowledge: false`), or the `client_request_id` of a `getMiniGamesHistory` row.
-- `options.lose` — Optional. When `true`, finalises the spin as lost — the prize is not credited and returns to the prize pool (see "Finalising as lost"). Omit (or pass `false`) to deliver the win.
+- `lose` — Optional. When `true`, finalises the spin as lost — the prize is not credited and returns to the prize pool (see "Finalising as lost"). Omit (or pass `false`) to deliver the win.
 
 ## Returns
 _No return value._

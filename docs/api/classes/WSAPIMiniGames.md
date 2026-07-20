@@ -485,7 +485,7 @@ if (r.err_code === 0) {
 
 ### miniGameWinAcknowledgeRequest()
 
-> **miniGameWinAcknowledgeRequest**(`request_id`, `__namedParameters?`): `Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
+> **miniGameWinAcknowledgeRequest**(`request_id`, `lose?`): `Promise`\<[`SAWDoAknowledgeResponse`](../interfaces/SAWDoAknowledgeResponse.md)\>
 
 Manually acknowledges a mini-game spin — marks the win delivered
 server-side, or (with `lose: true`) finalises it as lost and
@@ -507,7 +507,12 @@ Correlation id of the spin to finalise: the
                    `client_request_id` of a
                    [getMiniGamesHistory](#getminigameshistory) row.
 
-##### \_\_namedParameters?
+##### lose?
+
+Optional. When `true`, finalises the spin as
+             lost — the prize is not credited and returns
+             to the prize pool (see "Finalising as lost").
+             Omit (or pass `false`) to deliver the win.
 
 ###### lose?
 

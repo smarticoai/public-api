@@ -328,7 +328,9 @@ in the jackpot's NATIVE currency, NOT the user's wallet currency. If a
 user-currency display is needed, the consumer must convert client-side.
 
 **Refresh**
-- The SDK caches per `jp_template_id` for 30 seconds.
+- The SDK caches each page separately (per `jp_template_id` +
+  `limit` + `offset`) for 30 seconds, so paging back and forth is
+  served from cache and each page keeps its own fresh copy.
 - Caches clear on jackpot-win push events and on opt-in / opt-out.
 
 **Error handling**

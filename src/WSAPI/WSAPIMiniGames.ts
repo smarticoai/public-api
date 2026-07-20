@@ -545,10 +545,10 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *                    (played with `acknowledge: false`), or the
 	 *                    `client_request_id` of a
 	 *                    {@link getMiniGamesHistory} row.
-	 * @param options.lose  Optional. When `true`, finalises the spin as
-	 *                      lost — the prize is not credited and returns
-	 *                      to the prize pool (see "Finalising as lost").
-	 *                      Omit (or pass `false`) to deliver the win.
+	 * @param lose  Optional. When `true`, finalises the spin as
+	 *              lost — the prize is not credited and returns
+	 *              to the prize pool (see "Finalising as lost").
+	 *              Omit (or pass `false`) to deliver the win.
 	 *
 	 * @example
 	 * ```ts

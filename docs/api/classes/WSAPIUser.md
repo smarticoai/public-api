@@ -646,3 +646,52 @@ for (const row of log) {
     console.log('[smartico] activity row — render with', row.type === 0 ? 'points' : row.type === 1 ? 'gems' : 'diamonds', 'icon, color by sign:', sign + row.amount, 'balance after:', row.balance, 'source:', row.source_type_id);
 }
 ```
+
+***
+
+### getActivityLogV2()
+
+> **getActivityLogV2**(`__namedParameters`): `Promise`\<[`TActivityLogEntry`](../interfaces/TActivityLogEntry.md)[]\>
+
+Returns the full activity log (v2) — wallet changes **and** non-wallet
+activities (missions, badges, levels, tournaments, avatars, …).
+
+**Backwards compatibility**: existing integrations should keep using
+[getActivityLog](#getactivitylog), which returns wallet-only [TActivityLog](../interfaces/TActivityLog.md)
+rows with the original field contract unchanged.
+
+**Pagination** — same `from` / `to` offset model as [getActivityLog](#getactivitylog)
+(server caps a single response at 50 entries).
+
+**Filtering** — pass `types` with [ActivityLogActivities](../enumerations/ActivityLogActivities.md) values to
+request a server-side subset (e.g. missions only). Omit for all activity types.
+
+#### Parameters
+
+##### \_\_namedParameters
+
+###### startTimeSeconds
+
+`number`
+
+###### endTimeSeconds
+
+`number`
+
+###### from
+
+`number`
+
+###### to
+
+`number`
+
+###### types?
+
+`number`[]
+
+#### Returns
+
+`Promise`\<[`TActivityLogEntry`](../interfaces/TActivityLogEntry.md)[]\>
+
+Array of [TActivityLogEntry](../interfaces/TActivityLogEntry.md) ordered newest-first.

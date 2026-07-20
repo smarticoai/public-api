@@ -8,6 +8,7 @@
 
 ## Enumerations
 
+- [ActivityLogActivities](enumerations/ActivityLogActivities.md)
 - [PointChangeSourceType](enumerations/PointChangeSourceType.md)
 - [UserBalanceType](enumerations/UserBalanceType.md)
 - [AvatarCustomizeErrorCode](enumerations/AvatarCustomizeErrorCode.md)
@@ -85,6 +86,7 @@
 
 - [PointsLog](interfaces/PointsLog.md)
 - [GemsDiamondsLog](interfaces/GemsDiamondsLog.md)
+- [ActivityLogMeta](interfaces/ActivityLogMeta.md)
 - [AvatarCustomizeResponse](interfaces/AvatarCustomizeResponse.md)
 - [AvatarCustomized](interfaces/AvatarCustomized.md)
 - [AvatarDefinition](interfaces/AvatarDefinition.md)
@@ -147,6 +149,8 @@
 - [SAWGetTemplatesRequest](interfaces/SAWGetTemplatesRequest.md)
 - [SAWGetTemplatesResponse](interfaces/SAWGetTemplatesResponse.md)
 - [SAWPrize](interfaces/SAWPrize.md)
+- [SAWPrizeDropAknowledgeCancelRequest](interfaces/SAWPrizeDropAknowledgeCancelRequest.md)
+- [SAWPrizeDropAknowledgeCancelResponse](interfaces/SAWPrizeDropAknowledgeCancelResponse.md)
 - [SAWPrizeDropAknowledgeRequest](interfaces/SAWPrizeDropAknowledgeRequest.md)
 - [SAWPrizeDropAknowledgeResponse](interfaces/SAWPrizeDropAknowledgeResponse.md)
 - [SAWPrizeDropWinPush](interfaces/SAWPrizeDropWinPush.md)
@@ -251,6 +255,7 @@
 - [TRaffleDrawRun](interfaces/TRaffleDrawRun.md)
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
 - [TActivityLog](interfaces/TActivityLog.md)
+- [TActivityLogEntry](interfaces/TActivityLogEntry.md)
 - [TRaffleOptinResponse](interfaces/TRaffleOptinResponse.md)
 - [TAvatarDefinition](interfaces/TAvatarDefinition.md)
 - [TAvatarCustomized](interfaces/TAvatarCustomized.md)
