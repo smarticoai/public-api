@@ -19,4 +19,5 @@ export enum ActivityLogActivities {
 	Leaderboard = 17,
 	Tournament = 18,
 	ClanTournament = 19,
+	Clan = 20,
 }
