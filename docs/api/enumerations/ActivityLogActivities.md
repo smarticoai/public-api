@@ -115,3 +115,9 @@ Activity-log entry type as returned on the v2 wire (`type_id`).
 ### ClanTournament
 
 > **ClanTournament**: `19`
+
+***
+
+### Clan
+
+> **Clan**: `20`

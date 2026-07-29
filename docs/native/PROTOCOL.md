@@ -25,6 +25,7 @@ This document describes the low-level protocol for communicating with Smartico b
 - [SAW_SHOW_SPIN_PUSH](#saw_show_spin_push)
 - [JP_WIN_PUSH](#jp_win_push)
 - [SAW_PRIZE_DROP_WIN_PUSH](#saw_prize_drop_win_push)
+- [FORM_SHOW_PUSH](#form_show_push)
 - [CLIENT_EXECUTE_DEEPLINK_EVENT](#client_execute_deeplink_event)
 - [CLIENT_EXECUTE_JS_EVENT](#client_execute_js_event)
 
@@ -409,6 +410,7 @@ Unlike request/response methods, server initiated messages can arrive at any tim
 | `707` | SAW_SHOW_SPIN_PUSH | Trigger to show mini-game |
 | `808` | JP_WIN_PUSH | Jackpot win notification |
 | `708` | SAW_PRIZE_DROP_WIN_PUSH | Prize drop win notification |
+| `1050` | FORM_SHOW_PUSH | Trigger to show a data-collection form |
 | `105` | CLIENT_EXECUTE_DEEPLINK_EVENT | Execute deep link on client |
 | `107` | CLIENT_EXECUTE_JS_EVENT | Execute JavaScript on client |
 
@@ -623,6 +625,36 @@ Sent when a prize drop is won by the user.
 ```
 
 **Recommended action:** Display prize drop win notification and call `prizeDropWinAcknowledge` to acknowledge.
+
+---
+
+## FORM_SHOW_PUSH
+
+Sent as a trigger to display a data-collection form to the user, fired by a campaign's "Show Form" activity. Fire-and-forget — there is no response ClassId; the client reports the funnel back through the regular EVENT channel (`form_viewed` / `form_submitted`).
+
+**ClassId:** `1050`
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | Message type identifier |
+| `form_id` | `number` | ID of the form to display |
+| `engagement_uid` | `string` | Engagement instance uid — pass it back on the form content request and submit so the server ties the display to the campaign engagement |
+| `uuid` | `string` | Message correlation id (not the engagement uid) |
+
+**Example:**
+
+```json
+{
+  "cid": 1050,
+  "form_id": 11,
+  "engagement_uid": "1322b558-9bd8-4514-9adb-e6c9f8210c1f",
+  "uuid": "c6ed2c18-0e76-4863-a090-c17ac5959785"
+}
+```
+
+**Recommended action:** Fetch and render the form for `form_id`, forwarding `engagement_uid` on the content fetch and on submit.
 
 ---
 
