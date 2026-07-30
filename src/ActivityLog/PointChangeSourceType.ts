@@ -15,6 +15,7 @@ export enum PointChangeSourceType {
 	WinMiniGame = 17,
 	API = 18,
 	DynamicFormula = 19,
+	Jackpot = 20,
 	Raffle = 21,
 	Avatars = 22,
 	Clan = 23,

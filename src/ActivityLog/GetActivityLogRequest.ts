@@ -6,8 +6,6 @@ export interface GetActivityLogRequest extends ProtocolMessage {
 	endTimeSeconds: number;
 	limit: number;
 	offset: number;
-	/** Optional v2 filter — {@link ActivityLogActivities} values to include. */
 	types?: number[];
+	src_types?: number[];
 }
-
-

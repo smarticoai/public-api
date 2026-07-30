@@ -535,13 +535,18 @@ export class WSAPIUser extends WSAPIBase {
 	 * `from` by 50 between calls. Both `startTimeSeconds` and `endTimeSeconds`
 	 * are epoch seconds bounding the window the server scans.
 	 *
+	 * **Filtering** — optional server-side filters (SMR-52608):
+	 * - `types` — {@link ActivityLogActivities} / `type_id` values (e.g. Points=3, Gems=1)
+	 * - `src_types` — {@link PointChangeSourceType} / `source_type_id` values
+	 * Omit both for an unfiltered window.
+	 *
 	 * **Subscription model (`onUpdate`)**
 	 * The callback fires when the user's `ach_points_balance`,
 	 * `ach_gems_balance`, or `ach_diamonds_balance` changes (i.e. whenever a
 	 * wallet event lands). The pushed payload is a FIXED re-fetch of the
 	 * **last 10 minutes / first 50 entries** — it does NOT honor the original
-	 * call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to`. Consumers
-	 * maintaining a long historical view must re-call `getActivityLog` with
+	 * call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to` / filters.
+	 * Consumers maintaining a long historical view must re-call `getActivityLog` with
 	 * their own params after receiving an `onUpdate` notification.
 	 *
 	 * **Refresh**
@@ -565,6 +570,8 @@ export class WSAPIUser extends WSAPIBase {
 	 *     endTimeSeconds:   now,
 	 *     from: 0,
 	 *     to:   50,
+	 *     types: [1], // Gems only (ActivityLogActivities.Gems)
+	 *     src_types: [11], // Tournament wins only (PointChangeSourceType.Tournament)
 	 *     onUpdate: (refreshed) => {
 	 *         console.log('[smartico] wallet changed — refreshed payload is last 10 min / 50 entries:', refreshed.length, 'rows');
 	 *         // If the consumer is showing a full 30-day view, re-call getActivityLog with the original params here.
@@ -582,6 +589,8 @@ export class WSAPIUser extends WSAPIBase {
 		endTimeSeconds,
 		from,
 		to,
+		types,
+		src_types,
 		onUpdate,
 	}: {
 		/** Window start in epoch seconds. */
@@ -592,30 +601,41 @@ export class WSAPIUser extends WSAPIBase {
 		from: number;
 		/** Pagination ceiling (exclusive); server caps `to - from` at 50. */
 		to: number;
+		/** Optional — filter by {@link ActivityLogActivities} / `type_id`. */
+		types?: number[];
+		/** Optional — filter by {@link PointChangeSourceType} / `source_type_id`. */
+		src_types?: number[];
 		/** Optional push callback; payload is a fixed 10-min / 50-entry refresh on every wallet change (see Subscription model). */
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]> {
 
-		const cacheKey = `${onUpdateContextKey.ActivityLog}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}`;
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}:${src_types?.join(',') ?? ''}`;
 
 		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.ActivityLog, onUpdate);
 			// Remember the requested window so a push refresh re-fetches THIS window
 			// and writes the matching composite cache key (see notifyActivityLogUpdate).
-			this.activityLogOnUpdateParams = { startTimeSeconds, endTimeSeconds, from, to };
+			this.activityLogOnUpdateParams = { startTimeSeconds, endTimeSeconds, from, to, types, src_types };
 		}
 
 		return await OCache.use(
 			cacheKey,
 			ECacheContext.WSAPI,
-			() => this.api.getActivityLogT(this.userExtId, startTimeSeconds, endTimeSeconds, from, to),
+			() => this.api.getActivityLogT(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types, src_types),
 			CACHE_DATA_SEC,
 		);
 	}
 
 	/** @hidden Last window passed to `getActivityLog` with an `onUpdate`, so a push
 	 * refresh re-fetches the same window and updates its matching composite cache key. */
-	private activityLogOnUpdateParams: { startTimeSeconds: number; endTimeSeconds: number; from: number; to: number } | undefined;
+	private activityLogOnUpdateParams: {
+		startTimeSeconds: number;
+		endTimeSeconds: number;
+		from: number;
+		to: number;
+		types?: number[];
+		src_types?: number[];
+	} | undefined;
 
 	protected async notifyActivityLogUpdate() {
 		const params = this.activityLogOnUpdateParams;
@@ -630,8 +650,10 @@ export class WSAPIUser extends WSAPIBase {
 			params.endTimeSeconds,
 			params.from,
 			params.to,
+			params.types,
+			params.src_types,
 		);
-		const cacheKey = `${onUpdateContextKey.ActivityLog}:${params.startTimeSeconds}:${params.endTimeSeconds}:${params.from}:${params.to}`;
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${params.startTimeSeconds}:${params.endTimeSeconds}:${params.from}:${params.to}:${params.types?.join(',') ?? ''}:${params.src_types?.join(',') ?? ''}`;
 
 		OCache.set(cacheKey, payload, ECacheContext.WSAPI);
 
@@ -652,8 +674,10 @@ export class WSAPIUser extends WSAPIBase {
 	 * **Pagination** — same `from` / `to` offset model as {@link getActivityLog}
 	 * (server caps a single response at 50 entries).
 	 *
-	 * **Filtering** — pass `types` with {@link ActivityLogActivities} values to
-	 * request a server-side subset (e.g. missions only). Omit for all activity types.
+	 * **Filtering** — optional server-side filters:
+	 * - `types` — {@link ActivityLogActivities} values (`type_id`)
+	 * - `src_types` — {@link PointChangeSourceType} values (`source_type_id`)
+	 * Omit both for all activity types / sources.
 	 *
 	 * @returns Array of {@link TActivityLogEntry} ordered newest-first.
 	 */
@@ -663,19 +687,21 @@ export class WSAPIUser extends WSAPIBase {
 		from,
 		to,
 		types,
+		src_types,
 	}: {
 		startTimeSeconds: number;
 		endTimeSeconds: number;
 		from: number;
 		to: number;
 		types?: number[];
+		src_types?: number[];
 	}): Promise<TActivityLogEntry[]> {
-		const cacheKey = `${onUpdateContextKey.ActivityLogV2}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}`;
+		const cacheKey = `${onUpdateContextKey.ActivityLogV2}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}:${src_types?.join(',') ?? ''}`;
 
 		return await OCache.use(
 			cacheKey,
 			ECacheContext.WSAPI,
-			() => this.api.getActivityLogV2T(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types),
+			() => this.api.getActivityLogV2T(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types, src_types),
 			CACHE_DATA_SEC,
 		);
 	}

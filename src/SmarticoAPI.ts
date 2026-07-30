@@ -1764,6 +1764,8 @@ class SmarticoAPI {
 		endTimeSeconds: number,
 		limit: number,
 		offset: number,
+		types?: number[],
+		src_types?: number[],
 	): Promise<GetActivityLogResponse> {
 		const message = this.buildMessage<GetActivityLogRequest, GetActivityLogResponse>(
 			user_ext_id,
@@ -1773,6 +1775,8 @@ class SmarticoAPI {
 				endTimeSeconds: Math.floor(endTimeSeconds),
 				limit,
 				offset,
+				...(types ? { types } : {}),
+				...(src_types ? { src_types } : {}),
 			},
 		);
 
@@ -1786,6 +1790,7 @@ class SmarticoAPI {
 		limit: number,
 		offset: number,
 		types?: number[],
+		src_types?: number[],
 	): Promise<GetActivityLogResponse> {
 		const message = this.buildMessage<GetActivityLogRequest, GetActivityLogResponse>(
 			user_ext_id,
@@ -1796,6 +1801,7 @@ class SmarticoAPI {
 				limit,
 				offset,
 				...(types ? { types } : {}),
+				...(src_types ? { src_types } : {}),
 			},
 		);
 
@@ -1808,12 +1814,14 @@ class SmarticoAPI {
 		endTimeSeconds: number,
 		from: number = 0,
 		to: number = 50,
+		types?: number[],
+		src_types?: number[],
 	): Promise<TActivityLog[]> {
 		const limit = to - from > 50 ? 50 : to - from;
 		const offset = from;
 
 		return ActivityLogTransform(
-			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset)).logHistory,
+			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset, types, src_types)).logHistory,
 		);
 	}
 
@@ -1824,12 +1832,13 @@ class SmarticoAPI {
 		from: number = 0,
 		to: number = 50,
 		types?: number[],
+		src_types?: number[],
 	): Promise<TActivityLogEntry[]> {
 		const limit = to - from > 50 ? 50 : to - from;
 		const offset = from;
 
 		return ActivityLogV2Transform(
-			(await this.getActivityLogV2(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset, types)).logHistory,
+			(await this.getActivityLogV2(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset, types, src_types)).logHistory,
 		);
 	}
 }
