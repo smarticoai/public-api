@@ -47,6 +47,12 @@ await window._smartico.api.getInboxUnreadCount({
 });
 ```
 
+### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
+```json
+8
+```
+
 ## Errors
 See this method's TSDoc / the mutation pages for `err_code` handling.
 

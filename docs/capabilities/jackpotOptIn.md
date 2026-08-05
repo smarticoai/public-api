@@ -27,6 +27,8 @@ _smartico.api.jackpotOptIn(filter: { jp_template_id: number }): Promise<Jackpots
 - The jackpot must currently be active and the user must be in its
  eligibility segment. Ineligible jackpots are filtered out of
  `jackpotGet` entirely, so a card the user sees is opt-in-able.
+- Skip the opt-in CTA when the template reports `is_auto_opt_in: true` —
+ eligible users are enrolled automatically and there is nothing to join.
 
 **Error handling**
 The server returns a non-zero `errCode` with a human-readable `errMsg`

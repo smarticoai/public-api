@@ -175,58 +175,57 @@ for (const round of r.data ?? []) {
   "errCode": 0,
   "data": [
     {
-      "round_id": 42115,
-      "round_row_id": 2,
+      "round_id": 40920,
+      "round_row_id": 1,
       "public_meta": {
-        "round_name": "Group stage 15-28 June",
+        "round_name": "Final",
         "_translations": {
           "BR": {},
           "TH": {}
         },
         "allow_edit_answers": true,
-        "final_screen_cta_dp": "dp:ok",
+        "final_screen_cta_dp": null,
         "hide_resolved_round": false
       },
       "score_type_id": 1,
-      "open_date": 1782200297406,
-      "last_bet_date": 1782691140000,
+      "open_date": 1780282219930,
+      "last_bet_date": 1786665540000,
       "is_active_now": true,
       "is_resolved": false,
       "round_status_id": -1,
-      "score_full_win": 0,
-      "score_part_win": 0,
+      "score_full_win": 4,
+      "score_part_win": 2,
       "score_lost": 0,
-      "events_total": "28",
-      "events_resolved": "1",
+      "events_total": "8",
+      "events_resolved": "7",
       "show_users_preference": true,
       "order_events": 1,
       "board_users_count": 20,
       "hide_users_predictions": false,
-      "round_name": "Group stage 15-28 June",
+      "round_name": "Final",
       "user_score": 0,
       "user_placed_bet": false,
       "events": [
         {
-          "gp_event_id": 147400,
-          "market_type_id": 4,
+          "gp_event_id": 136181,
+          "market_type_id": 1,
           "event_meta": {
-            "event_name": "World Cup",
-            "team1_name": "Czech Republic",
-            "team2_name": "Mexico",
+            "event_name": "UEFA Super Cup",
+            "team1_name": "Paris Saint-Germain FC",
+            "team2_name": "Aston Villa FC",
             "is_canceled": false,
-            "team1_image": "https://cdn.example/games/teams-images/1299262.png",
-            "team2_image": "https://cdn.example/games/teams-images/4781.png",
+            "team1_image": "https://cdn.example/gp-images-ai/16018/1783346543507-xtewml.png",
+            "team2_image": "https://cdn.example/gp-images-ai/16018/1783346545290-i42wsu.png",
             "sport_type_id": 1,
-            "question_image": "https://cdn.example/5ff1fc35b419e43886d227-Artboard3.png",
             "scores_manually_adjusted": false
           },
           "event_resolution_date": null,
-          "match_date": "2026-06-25T01:00:00.000Z",
+          "match_date": "2026-08-12T19:00:00.000Z",
           "odds_details": {
             "odd_value": {
-              "1": 22,
-              "2": 35,
-              "x": 43
+              "1": 1.81,
+              "2": 4.43,
+              "X": 3.83
             }
           },
           "user_placed_bet": false,

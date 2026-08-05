@@ -2,7 +2,7 @@
 
 > Returns a paginated, newest-first list of the user's past mini-game spins — each row carries the won prize ID, the client-side `request_id` used for the spin, and a server-recorded `is_claimed` flag (`true` if the spin has been acknowledged).
 > Import: `import { TSawHistory } from '@smartico/public-api'`
-> Search terms: getMiniGamesHistory, minigames, getSAWHistory, TSawHistory, SAWTemplate, SAWGameType, SAWTemplateUI, SAWBuyInType, SAWPrize
+> Search terms: getMiniGamesHistory, minigames, getSAWHistory, TSawHistory, SAWTemplate, SAWGameType, SAWTemplateUI, SAWBuyInType, SAWPrize, template, saw_template_id, saw_prize_id, prize_amount, client_request_id, is_claimed, create_date_ts, acknowledge_date_ts
 
 ## Signature
 ```ts
@@ -172,7 +172,88 @@ console.log('[smartico] page 2 loaded —', page2.length, 'more rows;',
 > Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 [
-  null
+  {
+    "template": {
+      "saw_template_id": 12658,
+      "saw_game_type_id": 13,
+      "saw_template_ui_definition": {
+        "show_countdown_for_next_availability": false,
+        "promo_text": "Guess the shell, grab your iPhone",
+        "promo_image": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1783600519171-1.png",
+        "custom_game_url": "https://00000000-0000-0000-0000-000000000000.ld-int.dev/index.html",
+        "name": "Pinyata",
+        "description": "Remember that shell with the prize, follow it, and open the right cap to grab it",
+        "flow_builder_only": false,
+        "priority": 1
+      },
+      "saw_buyin_type_id": 1,
+      "buyin_cost_points": 0,
+      "visibile_when_can_spin": false,
+      "spin_count": null,
+      "prizesMap": "…(keyed duplicate of `prizes[]`)",
+      "prizes": [
+        {
+          "saw_prize_id": 75905,
+          "saw_template_id": 12658,
+          "saw_prize_ui_definition": {
+            "aknowledge_message_lose": "Lost",
+            "sectors": [
+              ""
+            ],
+            "name": "3 diamonds",
+            "second_btn": "",
+            "acknowledge_dp": "dp:ok",
+            "sound_type": 2,
+            "aknowledge_message": "You won 3 diamonds!!!",
+            "acknowledge_action_title": "OK",
+            "acknowledge_type": 3,
+            "second_btn_action_title": ""
+          },
+          "prize_value": 1,
+          "prize_type_id": 10,
+          "pool": 98,
+          "wins_count": 7,
+          "pool_initial": 100,
+          "prize_ref_id": 0,
+          "is_surcharge": false,
+          "prize_details_json": {
+            "diamonds": 3,
+            "amount_type": 0,
+            "_gems_diamonds_type": 1
+          },
+          "affects_points_progress": true,
+          "affects_leaderboard_progress": true,
+          "affects_level_progress": true,
+          "affects_current_balance_progress": true,
+          "place_from": null,
+          "place_to": null,
+          "weekdays": null,
+          "active_from": null,
+          "active_till": null,
+          "active_from_ts": null,
+          "active_till_ts": null,
+          "is_deleted": false,
+          "relative_period_timezone": 0,
+          "show_prize_history": true,
+          "needed_tag_replacement": false,
+          "win_segment_id": null,
+          "win_conditions": "[]",
+          "max_give_period_type_id": 2
+        }
+      ],
+      "segment_id": 44162,
+      "label_id": 16018,
+      "maxActiveSpinsAllowed": null,
+      "…": "(+29 more keys)"
+    },
+    "saw_template_id": 12658,
+    "saw_prize_id": 75907,
+    "prize_amount": 1,
+    "client_request_id": "00000000-0000-0000-0000-000000000000",
+    "is_claimed": true,
+    "create_date_ts": 1785917360000,
+    "acknowledge_date_ts": 1785917360000
+  }
 ]
 ```
 

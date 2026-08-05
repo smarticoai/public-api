@@ -127,12 +127,12 @@ const onlyUnread = await window._smartico.api.getInboxMessages({ read_status: 1 
 ```json
 [
   {
-    "sent_date": "24/06/2026 07:43:31",
+    "sent_date": "04/08/2026 09:00:08",
     "message_guid": "00000000-0000-0000-0000-000000000000",
-    "read": true,
+    "read": false,
     "favorite": false,
     "category_id": 0,
-    "expire_on_dt": 1784879011491
+    "expire_on_dt": 1788426008061
   }
 ]
 ```

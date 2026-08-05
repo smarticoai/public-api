@@ -176,6 +176,8 @@ export class WSAPIJackpots extends WSAPIClans {
 	 * - The jackpot must currently be active and the user must be in its
 	 *   eligibility segment. Ineligible jackpots are filtered out of
 	 *   {@link jackpotGet} entirely, so a card the user sees is opt-in-able.
+	 * - Skip the opt-in CTA when the template reports `is_auto_opt_in: true` —
+	 *   eligible users are enrolled automatically and there is nothing to join.
 	 *
 	 * **Error handling**
 	 * The server returns a non-zero `errCode` with a human-readable `errMsg`

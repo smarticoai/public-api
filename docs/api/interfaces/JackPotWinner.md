@@ -46,4 +46,12 @@ Position of the winner. Relevant for jackpots where there could be multiple winn
 
 > **avatar\_id**: `string`
 
-Avatar of the winner
+Avatar image URL of the winner
+
+***
+
+### avatar\_real\_id
+
+> **avatar\_real\_id**: `number`
+
+Numeric ID of the winner's avatar; `null` when the winner has not picked one

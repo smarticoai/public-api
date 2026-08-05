@@ -146,17 +146,17 @@ for (const clan of result.clans) {
         "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash an…",
         "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
       },
-      "member_count": 885,
+      "member_count": 899,
       "capacity_limit": 1000,
       "entry_fee_currency_type_id": 0,
       "entry_fee_amount": 100,
       "rating_position": 1,
-      "rating_score": 90
+      "rating_score": 56
     }
   ],
-  "user_clan_id": null,
+  "user_clan_id": 5,
   "cooldown_until": null,
-  "join_date": null
+  "join_date": 1783546987268
 }
 ```
 

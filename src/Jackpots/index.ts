@@ -3,6 +3,8 @@ export * from './GetJackpotsPotsResponse';
 export * from './GetJackpotsRequest';
 export * from './GetJackpotsResponse';
 export * from './JackPotWinner';
+export * from './JackPotWinPushWinner';
+export * from './JackpotContributionRule';
 export * from './JackpotContributionType';
 export * from './JackpotDetails';
 export * from './JackpotPot';

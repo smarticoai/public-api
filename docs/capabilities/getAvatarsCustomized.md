@@ -78,9 +78,9 @@ console.log('[smartico] AI variants by base avatar — render as a carousel unde
 ```json
 [
   {
-    "avatar_real_id": 12,
-    "url": "https://cdn.example/avatars/12/00000000-0000-0000-0000-000000000000.png",
-    "dt_created": 1782248067048
+    "avatar_real_id": 11,
+    "url": "https://cdn.example/avatars/11/00000000-0000-0000-0000-000000000000.png",
+    "dt_created": 1782732126394
   }
 ]
 ```

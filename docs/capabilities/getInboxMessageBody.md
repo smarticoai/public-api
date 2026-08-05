@@ -73,9 +73,9 @@ if (body.action === 'dp:inbox' && body.html_body) {
 ```json
 {
   "action": "dp:close",
-  "icon": "https://cdn.example/d0f46ded3f7c9439fa0239-home-gems.webp",
+  "icon": "https://cdn.example/b6e45cf4ae00002865d406-home-diamonds.webp",
   "title": "Congratulations!",
-  "preview_body": "You have received 10 Gems to your balance!",
+  "preview_body": "You have received 1 Diamonds to your balance!",
   "custom_data": {}
 }
 ```

@@ -259,12 +259,12 @@ try {
     "category_ids": [
       567
     ],
-    "pool": 1000,
+    "pool": 999,
     "purchase_ts": 1781880583706,
     "purchase_points_amount": 25,
     "purchased_today": false,
     "purchased_this_week": false,
-    "purchased_this_month": true,
+    "purchased_this_month": false,
     "show_timer": false,
     "related_games": []
   }

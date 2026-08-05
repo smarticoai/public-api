@@ -92,7 +92,7 @@ console.log('[smartico] render history rows for the daily draw — newest first:
 [
   {
     "id": 323,
-    "run_id": 688934,
+    "run_id": 861842,
     "name": "Hourly draw",
     "description": "💰 Every hour, the luck could be yours! 🍀 Participate in our hourly draw for a chance to WIN BIG! 💸 Don't miss out!",
     "image_url": "https://cdn.example/5bcd2fd9bf96f3709d96b5-HourlyDraw-Promoimage.png",
@@ -101,8 +101,8 @@ console.log('[smartico] render history rows for the daily draw — newest first:
     "background_image_url": "https://cdn.example/867db7f6791f0a45039608-DrawBackground.png",
     "background_image_url_mobile": "https://cdn.example/d31a8d4708a17723d57b4b-DrawBackgroundMobilecopy.png",
     "is_grand": false,
-    "execution_ts": 1780876800000,
-    "ticket_start_ts": 1780873200000,
+    "execution_ts": 1784012400000,
+    "ticket_start_ts": 1784008800000,
     "is_winner": false,
     "has_unclaimed_prize": false
   }

@@ -22,8 +22,10 @@ interface JackpotPot {
 	current_pot_amount: number;
 	/** Current pot amount converted to the user's wallet currency (`user_currency`). */
 	current_pot_amount_user_currency: number;
-	/** Unix ms timestamp of when this pot last exploded; `0` if it has never exploded. */
-	explode_date_ts: number;
+	/** Unix ms timestamp of when this pot last exploded; `null` while the pot is still running. */
+	explode_date_ts: number | null;
+	/** Owning user for `JackpotType.Personal` pots; `null` for shared `MultiUser` pots. */
+	user_id: number | null;
 	/** Heat band of the pot relative to its explosion range; see {@link JackPotTemparature}. */
 	current_pot_temperature: JackPotTemparature;
 }

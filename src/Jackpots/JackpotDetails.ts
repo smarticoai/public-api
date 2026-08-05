@@ -1,3 +1,5 @@
+import { AchRelatedGame } from '../Base/AchRelatedGame';
+import { JackpotContributionRule } from './JackpotContributionRule';
 import { JackpotContributionType } from './JackpotContributionType';
 import { JackpotPot } from './JackpotPot';
 import { JackpotPublicMeta } from './JackpotPublicMeta';
@@ -22,10 +24,16 @@ interface JackpotDetails {
 	contribution_type: JackpotContributionType;
 	/** Amount of contribution per qualifying bet — fixed value or percentage depending on `contribution_type`. */
 	contribution_value: number;
+	/** Per-game / per-provider overrides of `contribution_type` + `contribution_value`; see {@link JackpotContributionRule}. Empty when the template contributes at a flat rate. */
+	contribution_rules: JackpotContributionRule[];
+	/** Reserved — the server currently always sends an empty array. Use `getJackpotEligibleGames()` for the eligible-games list. */
+	related_games: AchRelatedGame[];
 	/** Live pot snapshot (amount, temperature, last explosion timestamp). */
 	pot: JackpotPot;
 	/** `true` when the current user is currently opted in. */
 	is_opted_in: boolean;
+	/** `true` when eligible users are opted in automatically, so no opt-in CTA is needed; `false` means `jackpotOptIn()` must be called explicitly. */
+	is_auto_opt_in: boolean;
 	/** `true` when every game in the operator catalog contributes; if `true`, skip `getJackpotEligibleGames`. */
 	ach_related_game_allow_all: boolean;
 	/** Number of users currently opted in; always `1` for `JackpotType.Personal`. */

@@ -12,12 +12,14 @@ _smartico.api.getActivityLogV2({
 		from,
 		to,
 		types,
+		src_types,
 	}: {
 		startTimeSeconds: number;
 		endTimeSeconds: number;
 		from: number;
 		to: number;
 		types?: number[];
+		src_types?: number[];
 	}): Promise<TActivityLogEntry[]>
 ```
 
@@ -52,6 +54,14 @@ Array of `TActivityLogEntry`. Each item:
 ## Behavioral contract
 See the [UI guide](../ui/user/UIGuide_getActivityLogV2.md) if present.
 
+### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
+```json
+[
+  null
+]
+```
+
 ## Errors
 See this method's TSDoc / the mutation pages for `err_code` handling.
 
@@ -59,4 +69,5 @@ See this method's TSDoc / the mutation pages for `err_code` handling.
 - `getActivityLog`
 - `TActivityLog`
 - `ActivityLogActivities`
+- `PointChangeSourceType`
 - `TActivityLogEntry`

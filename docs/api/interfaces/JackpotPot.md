@@ -41,7 +41,15 @@ Current pot amount converted to the user's wallet currency (`user_currency`).
 
 > **explode\_date\_ts**: `number`
 
-Unix ms timestamp of when this pot last exploded; `0` if it has never exploded.
+Unix ms timestamp of when this pot last exploded; `null` while the pot is still running.
+
+***
+
+### user\_id
+
+> **user\_id**: `number`
+
+Owning user for `JackpotType.Personal` pots; `null` for shared `MultiUser` pots.
 
 ***
 

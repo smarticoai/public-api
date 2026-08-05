@@ -34,13 +34,14 @@
 		"typescript-map": "^0.1.0"
 	},
 	"devDependencies": {
+		"@types/node": "^22.9.0",
 		"@types/node-fetch": "^2.6.2",
 		"microbundle": "0.15.0",
 		"npm-run-all": "4.1.5",
+		"playwright": "^1.62.1",
 		"typedoc": "^0.28.17",
 		"typedoc-plugin-markdown": "^4.11.0",
 		"typedoc-plugin-merge-modules": "^7.0.0",
-		"typescript": "~5.1.0",
-		"@types/node": "^22.9.0"
+		"typescript": "~5.1.0"
 	}
 }

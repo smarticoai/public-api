@@ -535,7 +535,7 @@ export class WSAPIUser extends WSAPIBase {
 	 * `from` by 50 between calls. Both `startTimeSeconds` and `endTimeSeconds`
 	 * are epoch seconds bounding the window the server scans.
 	 *
-	 * **Filtering** — optional server-side filters (SMR-52608):
+	 * **Filtering** — optional server-side filters:
 	 * - `types` — {@link ActivityLogActivities} / `type_id` values (e.g. Points=3, Gems=1)
 	 * - `src_types` — {@link PointChangeSourceType} / `source_type_id` values
 	 * Omit both for an unfiltered window.

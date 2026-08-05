@@ -178,10 +178,10 @@ setInterval(async () => {
 ```json
 [
   {
-    "id": 40733,
-    "name": "Deep Blue Bet",
-    "description": "Place a bet on Ocean Riches",
-    "image": "https://cdn.example/843b3b60ad20cb6df257c5-puzzle_01.webp",
+    "id": 11531,
+    "name": "Tournament Champion",
+    "description": "Ace in any of the monthly tournaments ",
+    "image": "https://cdn.example/6113640d8787c6cee50f8b-monthlychampion.png",
     "is_completed": true,
     "is_locked": false,
     "is_requires_optin": false,
@@ -192,14 +192,12 @@ setInterval(async () => {
     "dt_start": null,
     "progress": 100,
     "type": "badge",
-    "custom_section_id": 1128,
-    "only_in_custom_section": true,
     "custom_data": {},
     "position": 1,
     "tasks": [
       {
-        "id": 71250,
-        "name": "Place a bet on Ocean Riches",
+        "id": 25033,
+        "name": "Take the first place in a tournament",
         "points_reward": 0,
         "gems_reward": null,
         "diamonds_reward": null,
@@ -210,16 +208,17 @@ setInterval(async () => {
       }
     ],
     "related_games": [],
-    "category_ids": [],
-    "ach_completed_id": 3410338746,
+    "category_ids": [
+      30
+    ],
+    "ach_completed_id": 3630232284,
     "requires_prize_claim": false,
     "prize_claimed_date_ts": null,
-    "complete_date": "08/06/2026 20:59:17",
-    "complete_date_ts": 1780952357322,
+    "complete_date": "05/07/2026 08:00:03",
+    "complete_date_ts": 1783238403731,
     "completed_today": false,
     "completed_this_week": false,
-    "completed_this_month": true,
-    "custom_section_type_id": 14,
+    "completed_this_month": false,
     "availability_status": 0,
     "hide_locked_mission": true,
     "prize_claim_expiration_date": null,

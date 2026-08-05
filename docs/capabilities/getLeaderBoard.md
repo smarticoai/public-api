@@ -160,18 +160,18 @@ console.log('[smartico] previous-week standings — render with greyed-out "ende
   ],
   "users": [
     {
-      "public_username": "Matt*****",
-      "avatar_url": "https://cdn.example/avatar/344499363",
+      "public_username": "Maxi*****",
+      "avatar_url": "https://cdn.example/d1a960365f8a3716aa5a72-Lionmale.webp",
       "level_id": 700,
       "position": 1,
-      "points": 2155,
+      "points": 1200,
       "is_me": false
     }
   ],
   "me": {
     "public_username": "Antonio",
-    "avatar_url": "https://cdn.example/avatars/12/00000000-0000-0000-0000-000000000000.png",
-    "level_id": 698,
+    "avatar_url": "https://cdn.example/avatars/11/00000000-0000-0000-0000-000000000000.png",
+    "level_id": 701,
     "position": -1,
     "points": 0,
     "is_me": true

@@ -558,9 +558,36 @@ Sent as a trigger to display a mini-game to the user (Spin-A-Wheel, Scratch Card
 
 ## JP_WIN_PUSH
 
-Sent when a jackpot is won (can be the current user or another player).
+Sent when a jackpot is won. Delivered both to the winner and to other players taking
+part in the same jackpot — `winners[].is_me` distinguishes the two, and the copy sent
+to other players has its `public_username` masked.
 
 **ClassId:** `808`
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | Message type identifier |
+| `jackpot` | [`JackpotDetails`](../api/interfaces/JackpotDetails.md) | The jackpot that exploded, including its live `pot` snapshot. `pot.explode_date_ts` is the explosion time (epoch ms). `jp_public_meta.custom_data` arrives here as a raw JSON string |
+| `winners` | [`JackPotWinPushWinner[]`](../api/interfaces/JackPotWinPushWinner.md) | Winner entries — currently always a single entry |
+
+**`winners[]` entry:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `user_id` | `number` | Smartico user ID of the winner |
+| `ext_user_id` | `string` | Operator's external user ID of the winner |
+| `is_me` | `boolean` | `true` when this copy was delivered to the winner themselves |
+| `public_username` | `string` | Winner display name; masked unless `is_me` (masking can be disabled per brand on request) |
+| `public_username_custom` | `string` | Custom display name; falls back to `public_username` when not set |
+| `winning_amount_jp_currency` | `number` | Won amount in the jackpot currency (real + bonus combined) |
+| `winning_amount_wallet_currency` | `number` | Won amount in the user's wallet currency (real + bonus combined) |
+| `winning_position` | `number` | Winner position; currently always `1` |
+| `winning_game_id` | `string \| null` | External game ID of the game whose bet triggered the win. `null` when the triggering bet context is unavailable |
+| `winning_provider_id` | `string \| null` | External provider ID of that game's provider. `null` when the triggering bet context is unavailable |
+| `bet_original_date` | `number \| null` | Placement time of the triggering bet as reported by the operator (epoch ms) — not the time Smartico processed it. `null` when unavailable |
+| `pending_approve` | `boolean` | Present only on the `is_me: true` copy; `true` while the win awaits manual approval before payout |
 
 **Example:**
 
@@ -568,29 +595,65 @@ Sent when a jackpot is won (can be the current user or another player).
 {
   "cid": 808,
   "jackpot": {
-    "jp_id": 456,
-    "name": "Mega Jackpot",
-    "current_value": 10000
+    "jp_template_id": 1183,
+    "jp_type_id": 1,
+    "jp_public_meta": {
+      "name": "Major",
+      "description": "1% on top of your bet amount will be contributed to the Jackpot",
+      "image_url": "https://cdn.example/Jackpot2.jpg",
+      "winner_template": { "id": "0", "content": "" },
+      "not_winner_template": { "id": "0", "content": "" },
+      "placeholder1": null,
+      "placeholder2": null,
+      "priority": "2",
+      "custom_data": "{}"
+    },
+    "jp_currency": "EUR",
+    "user_currency": "USD",
+    "related_games": [],
+    "contribution_type": 2,
+    "contribution_value": 0.5,
+    "contribution_rules": [],
+    "pot": {
+      "jp_template_id": 1183,
+      "jp_pot_id": 306053,
+      "user_id": null,
+      "current_pot_amount": 0,
+      "current_pot_amount_user_currency": 0,
+      "explode_date_ts": 1782295329703,
+      "current_pot_temperature": 0
+    },
+    "is_opted_in": true,
+    "is_auto_opt_in": true,
+    "ach_related_game_allow_all": true,
+    "registration_count": 412,
+    "expose_winners_over_api": true
   },
   "winners": [
     {
-      "user_id": "user123",
-      "amount": 10000,
-      "won_at": 1704067200000
+      "user_id": 731,
+      "ext_user_id": "player-731",
+      "is_me": true,
+      "public_username": "LuckyPlayer",
+      "public_username_custom": "LuckyPlayer",
+      "winning_amount_jp_currency": 16.720332488,
+      "winning_amount_wallet_currency": 98.525768722,
+      "winning_position": 1,
+      "winning_game_id": "book-of-ra-deluxe",
+      "winning_provider_id": "novomatic",
+      "bet_original_date": 1782295327112,
+      "pending_approve": false
     }
   ]
 }
 ```
 
-**Fields:**
-
-| Field | Type | Description |
-|-------|------|-------------|
-| `cid` | `number` | Message type identifier |
-| `jackpot` | [`JackpotDetails`](../api/interfaces/JackpotDetails.md) | Jackpot information |
-| `winners` | [`JackPotWinner[]`](../api/interfaces/JackPotWinner.md) | Array of winners |
-
-**Recommended action:** Show jackpot win notification/celebration. Re-fetch jackpot data to update UI.
+**Recommended action:** Show the jackpot win notification / celebration. Use
+`winners[0].is_me` to pick the winner vs. other-player presentation, and
+`jackpot.jp_public_meta.winner_template` / `not_winner_template` for the HTML.
+`winning_game_id` / `winning_provider_id` let you link back to the triggering game in
+your lobby — treat both, and `bet_original_date`, as optional. Re-fetch jackpot data
+afterwards to refresh the pot amount.
 
 ---
 
@@ -2158,6 +2221,64 @@ Get all available jackpots.
 |-------|------|-------------|
 | `items` | [`JackpotDetails[]`](../api/interfaces/JackpotDetails.md) | Array of jackpots |
 
+Note for native clients: `jp_public_meta.custom_data` arrives as a **JSON-encoded
+string** and must be parsed by the client. `related_games` is reserved and is always
+sent empty — use `getJackpotEligibleGames` for the eligible-games list.
+
+**Example:**
+
+```json
+{
+  "cid": 801,
+  "errCode": 0,
+  "items": [
+    {
+      "jp_template_id": 6,
+      "jp_type_id": 1,
+      "jp_public_meta": {
+        "name": "Minor",
+        "description": "1% on top of your bet amount will be contributed to the Jackpot",
+        "image_url": "https://cdn.example/Jackpot1.jpg",
+        "winner_template": { "id": "0", "content": "" },
+        "not_winner_template": { "id": "0", "content": "" },
+        "placeholder1": null,
+        "placeholder2": null,
+        "priority": "1",
+        "custom_data": "{}"
+      },
+      "jp_currency": "EUR",
+      "user_currency": "EUR",
+      "related_games": [],
+      "contribution_type": 2,
+      "contribution_value": 0.2,
+      "contribution_rules": [
+        { "ruleId": 1, "jpTemplateId": 6, "type": 2, "extEntityIds": ["1111"], "contributionValue": 4 },
+        { "ruleId": 2, "jpTemplateId": 6, "type": 1, "extEntityIds": ["666666"], "contributionValue": 3 }
+      ],
+      "pot": {
+        "jp_template_id": 6,
+        "jp_pot_id": 306140,
+        "user_id": null,
+        "current_pot_amount": 12.28367028,
+        "current_pot_amount_user_currency": 12.28367028,
+        "explode_date_ts": null,
+        "current_pot_temperature": 2
+      },
+      "is_opted_in": false,
+      "is_auto_opt_in": true,
+      "ach_related_game_allow_all": true,
+      "registration_count": 17262,
+      "expose_winners_over_api": false
+    }
+  ]
+}
+```
+
+`contribution_rules` override `contribution_type` / `contribution_value` for the
+operator-side game or provider IDs listed in `extEntityIds`; the server applies them,
+so clients only need them to explain rates in the UI. Note these entries are camelCase
+while the rest of the payload is snake_case.
+
 ---
 
 ### jackpotOptIn
@@ -2285,7 +2406,8 @@ Each `JackpotPot`:
 | `jp_pot_id` | `number` | Jackpot pot ID |
 | `current_pot_amount` | `number` | Current pot amount in base currency |
 | `current_pot_amount_user_currency` | `number` | Current pot amount in user's currency |
-| `explode_date_ts` | `number` | Timestamp when pot exploded (0 if not yet) |
+| `explode_date_ts` | `number \| null` | Timestamp (epoch ms) when the pot exploded; `null` while the pot is still running |
+| `user_id` | `number \| null` | Owning user for Personal pots; `null` for shared MultiUser pots |
 | `current_pot_temperature` | `number` | Temperature: 0=Cold, 1=Warm, 2=Hot, 3=Burning |
 
 **Example:**
@@ -2301,7 +2423,8 @@ Each `JackpotPot`:
       "jp_pot_id": 100,
       "current_pot_amount": 50000,
       "current_pot_amount_user_currency": 50000,
-      "explode_date_ts": 0,
+      "explode_date_ts": null,
+      "user_id": null,
       "current_pot_temperature": 2
     }
   ]

@@ -31,7 +31,7 @@ stagger-fade in at 100 ms per index.
 | Currency symbol | `user_currency` | Looked up by translation key |
 | Status pill | derived | "Opted in" if `is_opted_in`, otherwise nothing |
 | Registration count | `registration_count` | Shown on the home-card variant only |
-| CTA button | derived | "Join Jackpot" if `!is_opted_in`, otherwise "Details" |
+| CTA button | derived | "Join Jackpot" if `!is_opted_in`, otherwise "Details" — but skip the join CTA entirely when `is_auto_opt_in` is `true`; eligible users are enrolled automatically and have nothing to join |
 
 **Click target**: whole-card tap → open detail modal.
 

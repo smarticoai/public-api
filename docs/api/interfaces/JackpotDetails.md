@@ -61,6 +61,22 @@ Amount of contribution per qualifying bet — fixed value or percentage dependin
 
 ***
 
+### contribution\_rules
+
+> **contribution\_rules**: [`JackpotContributionRule`](JackpotContributionRule.md)[]
+
+Per-game / per-provider overrides of `contribution_type` + `contribution_value`; see [JackpotContributionRule](JackpotContributionRule.md). Empty when the template contributes at a flat rate.
+
+***
+
+### related\_games
+
+> **related\_games**: [`AchRelatedGame`](AchRelatedGame.md)[]
+
+Reserved — the server currently always sends an empty array. Use `getJackpotEligibleGames()` for the eligible-games list.
+
+***
+
 ### pot
 
 > **pot**: [`JackpotPot`](JackpotPot.md)
@@ -74,6 +90,14 @@ Live pot snapshot (amount, temperature, last explosion timestamp).
 > **is\_opted\_in**: `boolean`
 
 `true` when the current user is currently opted in.
+
+***
+
+### is\_auto\_opt\_in
+
+> **is\_auto\_opt\_in**: `boolean`
+
+`true` when eligible users are opted in automatically, so no opt-in CTA is needed; `false` means `jackpotOptIn()` must be called explicitly.
 
 ***
 

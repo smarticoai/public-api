@@ -1,21 +1,20 @@
 [
   {
-    "jp_template_id": 6,
-    "jp_type_id": 1,
+    "jp_template_id": 8,
+    "jp_type_id": 2,
     "jp_public_meta": {
       "image_url": "https://cdn.example/f8b68a18473c437e32a860-Jackpot1.jpg",
-      "placeholder1": null,
-      "placeholder2": null,
-      "name": "Minor",
-      "description": "1% on top of your bet amount will be contributed to the Jackpot",
+      "placeholder1": "111111111111111111",
+      "placeholder2": "XXXXXXXXXXXXXXXXX",
+      "name": "Personal Jackpot For All Games",
+      "description": "For every bet, 2% is added to the jackpot pot—split 50/50 between the player’s contribution and the house. Plus, 20% of each jackpot goes toward seeding the next pot, keeping the excitement rolling…",
       "not_winner_template": {
-        "id": "0",
-        "content": ""
+        "content": "\n<style>\n    @keyframes reveal {\n        0% {\n            transform: translateX(100%);\n        }\n        100% {\n            transform: translateX(0%);\n        }\n    }\n\n    @keyframes hide {\n       …",
+        "id": "1"
       },
-      "priority": "1",
       "winner_template": {
-        "id": "0",
-        "content": ""
+        "content": "\n<script>\n    document.addEventListener('DOMContentLoaded', () => {\n        const counter = document.getElementById('counter'); \n        const duration = 2000; \n        const targetValue = \"{{winni…",
+        "id": "1"
       },
       "custom_data": {}
     },
@@ -23,41 +22,41 @@
     "user_currency": "EUR",
     "related_games": [],
     "contribution_type": 2,
-    "contribution_value": 0.2,
+    "contribution_value": 2,
     "pot": {
-      "jp_template_id": 6,
-      "jp_pot_id": 306140,
+      "jp_template_id": 8,
+      "jp_pot_id": null,
       "user_id": null,
-      "current_pot_amount": 12.28367028,
-      "current_pot_amount_user_currency": 12.28367028,
+      "current_pot_amount": 0,
+      "current_pot_amount_user_currency": 0,
       "explode_date_ts": null,
-      "current_pot_temperature": 2
+      "current_pot_temperature": 0
     },
-    "is_opted_in": false,
-    "is_auto_opt_in": true,
+    "is_opted_in": true,
+    "is_auto_opt_in": false,
     "ach_related_game_allow_all": true,
-    "registration_count": 17262,
+    "registration_count": 1,
     "contribution_rules": [
       {
-        "ruleId": 1,
-        "jpTemplateId": 6,
+        "ruleId": 4,
+        "jpTemplateId": 8,
         "type": 2,
         "extEntityIds": [
-          "1111"
+          "123"
         ],
-        "contributionValue": 4
+        "contributionValue": 12
       },
       {
-        "ruleId": 2,
-        "jpTemplateId": 6,
+        "ruleId": 6,
+        "jpTemplateId": 8,
         "type": 1,
         "extEntityIds": [
-          "666666"
+          "5555,6666,8888"
         ],
-        "contributionValue": 3
+        "contributionValue": 1
       }
     ],
-    "expose_winners_over_api": false
+    "expose_winners_over_api": true
   },
   {
     "jp_template_id": 4,
@@ -86,17 +85,17 @@
     "contribution_value": 6.7,
     "pot": {
       "jp_template_id": 4,
-      "jp_pot_id": 306164,
+      "jp_pot_id": 321189,
       "user_id": null,
-      "current_pot_amount": 780.319207992,
-      "current_pot_amount_user_currency": 780.319207992,
+      "current_pot_amount": 658.8972,
+      "current_pot_amount_user_currency": 658.8972,
       "explode_date_ts": null,
       "current_pot_temperature": 2
     },
     "is_opted_in": true,
     "is_auto_opt_in": true,
     "ach_related_game_allow_all": true,
-    "registration_count": 32971,
+    "registration_count": 33496,
     "contribution_rules": [
       {
         "ruleId": 3,
@@ -108,6 +107,6 @@
         "contributionValue": 8
       }
     ],
-    "expose_winners_over_api": false
+    "expose_winners_over_api": true
   }
 ]

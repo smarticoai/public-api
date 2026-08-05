@@ -98,6 +98,12 @@
 
 ***
 
+### Jackpot
+
+> **Jackpot**: `20`
+
+***
+
 ### Raffle
 
 > **Raffle**: `21`

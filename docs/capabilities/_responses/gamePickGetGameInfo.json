@@ -2,45 +2,51 @@
   "errCode": 0,
   "data": {
     "sawTemplate": {
-      "saw_template_id": 11487,
-      "saw_game_type_id": 6,
+      "saw_template_id": 11729,
+      "saw_game_type_id": 3,
       "saw_template_ui_definition": {
         "show_prize_board": true,
+        "thumbnail": "",
+        "promo_text": "Dive into European football excitement and test your predictions in the UEFA Super Cup showdown.",
         "matchx_is_completed": false,
-        "description": "<style>\n    .custom-rules {\n        font-family: inherit;\n        background-color: #27244F !important;\n        margin: 0;\n        padding: 4px;  \n        color: white;\n        display: flex;\n     …",
-        "priority": 1,
+        "matchx_banner": "",
+        "description": "<style>\n    /* Add your CSS here */\n    .custom-rules {\n        font-family: inherit;\n        background-color: #27244F !important;\n        margin: 0;\n        padding: 4px;  \n        color: white;\n…",
+        "background_image_mobile": "",
+        "priority": 2,
         "ask_for_username": "no-ask",
+        "background_image": "",
+        "sectors_count": 6,
         "show_countdown_for_next_availability": false,
-        "promo_image": "https://cdn.example/b1cddefabccba88a16fad7-Artboard4.png",
+        "promo_image": "https://cdn.example/96fbb962429b5f3c6b18ee-matchx-featured.png",
         "matchx_hide_ranking": false,
+        "disable_background_music": false,
+        "background_sound": "",
         "matchx_remove_ties_in_leaders": false,
-        "name": "FIFA World Cup",
+        "name": "UEFA Super Cup",
         "matchx_seasonal_ranking": true,
+        "spin_animation_duration": 15,
         "flow_builder_only": false,
-        "custom_section_id": null
+        "matchx_general_board_users_count": 21
       },
       "saw_buyin_type_id": 1,
       "buyin_cost_points": 0,
       "visibile_when_can_spin": false,
       "spin_count": 0,
       "prizesMap": {
-        "65862": {
-          "saw_prize_id": 65862,
-          "saw_template_id": 11487,
+        "68289": {
+          "saw_prize_id": 68289,
+          "saw_template_id": 11729,
           "saw_prize_ui_definition": {
-            "name": "€ 100 Free"
+            "name": "iPhone 27 Max"
           },
           "prize_value": 1,
-          "prize_type_id": 3,
+          "prize_type_id": 4,
           "pool": 1000000,
           "wins_count": null,
           "pool_initial": null,
           "prize_ref_id": 0,
           "is_surcharge": false,
-          "prize_details_json": {
-            "bonus_amount": 1,
-            "label_bonus_template_id": 2152
-          },
+          "prize_details_json": null,
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
           "affects_level_progress": true,
@@ -60,11 +66,44 @@
           "win_conditions": null,
           "max_give_period_type_id": 2
         },
-        "65863": {
-          "saw_prize_id": 65863,
-          "saw_template_id": 11487,
+        "68290": {
+          "saw_prize_id": 68290,
+          "saw_template_id": 11729,
           "saw_prize_ui_definition": {
-            "name": "25 Free Spins on Book of Cleopatra"
+            "name": "500 Points"
+          },
+          "prize_value": 500,
+          "prize_type_id": 2,
+          "pool": 1000000,
+          "wins_count": null,
+          "pool_initial": null,
+          "prize_ref_id": 0,
+          "is_surcharge": false,
+          "prize_details_json": null,
+          "affects_points_progress": true,
+          "affects_leaderboard_progress": true,
+          "affects_level_progress": true,
+          "affects_current_balance_progress": true,
+          "place_from": 2,
+          "place_to": 2,
+          "weekdays": null,
+          "active_from": null,
+          "active_till": null,
+          "active_from_ts": null,
+          "active_till_ts": null,
+          "is_deleted": false,
+          "relative_period_timezone": 0,
+          "show_prize_history": true,
+          "needed_tag_replacement": false,
+          "win_segment_id": null,
+          "win_conditions": null,
+          "max_give_period_type_id": 2
+        },
+        "68291": {
+          "saw_prize_id": 68291,
+          "saw_template_id": 11729,
+          "saw_prize_ui_definition": {
+            "name": "€5 Free Cash"
           },
           "prize_value": 1,
           "prize_type_id": 3,
@@ -74,76 +113,47 @@
           "prize_ref_id": 0,
           "is_surcharge": false,
           "prize_details_json": {
-            "ui_amount": "",
+            "ui_amount": "€5 Free Cash",
+            "bonus_amount": 1,
+            "label_bonus_template_id": 2151
+          },
+          "affects_points_progress": true,
+          "affects_leaderboard_progress": true,
+          "affects_level_progress": true,
+          "affects_current_balance_progress": true,
+          "place_from": 3,
+          "place_to": 3,
+          "weekdays": null,
+          "active_from": null,
+          "active_till": null,
+          "active_from_ts": null,
+          "active_till_ts": null,
+          "is_deleted": false,
+          "relative_period_timezone": 0,
+          "show_prize_history": true,
+          "needed_tag_replacement": false,
+          "win_segment_id": null,
+          "win_conditions": null,
+          "max_give_period_type_id": 2
+        },
+        "68292": {
+          "saw_prize_id": 68292,
+          "saw_template_id": 11729,
+          "saw_prize_ui_definition": {
+            "name": "50 Free Spins"
+          },
+          "prize_value": 1,
+          "prize_type_id": 3,
+          "pool": 1000000,
+          "wins_count": null,
+          "pool_initial": null,
+          "prize_ref_id": 0,
+          "is_surcharge": false,
+          "prize_details_json": {
+            "ui_amount": "50 Free Spins",
             "bonus_coupon_code": "",
-            "label_bonus_template_id": 2156
+            "label_bonus_template_id": 2157
           },
-          "affects_points_progress": true,
-          "affects_leaderboard_progress": true,
-          "affects_level_progress": true,
-          "affects_current_balance_progress": true,
-          "place_from": 2,
-          "place_to": 2,
-          "weekdays": null,
-          "active_from": null,
-          "active_till": null,
-          "active_from_ts": null,
-          "active_till_ts": null,
-          "is_deleted": false,
-          "relative_period_timezone": 0,
-          "show_prize_history": true,
-          "needed_tag_replacement": false,
-          "win_segment_id": null,
-          "win_conditions": null,
-          "max_give_period_type_id": 2
-        },
-        "65864": {
-          "saw_prize_id": 65864,
-          "saw_template_id": 11487,
-          "saw_prize_ui_definition": {
-            "name": "300 Points"
-          },
-          "prize_value": 300,
-          "prize_type_id": 2,
-          "pool": 1000000,
-          "wins_count": null,
-          "pool_initial": null,
-          "prize_ref_id": 0,
-          "is_surcharge": false,
-          "prize_details_json": null,
-          "affects_points_progress": true,
-          "affects_leaderboard_progress": true,
-          "affects_level_progress": true,
-          "affects_current_balance_progress": true,
-          "place_from": 2,
-          "place_to": 2,
-          "weekdays": null,
-          "active_from": null,
-          "active_till": null,
-          "active_from_ts": null,
-          "active_till_ts": null,
-          "is_deleted": false,
-          "relative_period_timezone": 0,
-          "show_prize_history": true,
-          "needed_tag_replacement": false,
-          "win_segment_id": null,
-          "win_conditions": null,
-          "max_give_period_type_id": 2
-        },
-        "65865": {
-          "saw_prize_id": 65865,
-          "saw_template_id": 11487,
-          "saw_prize_ui_definition": {
-            "name": "50 Points"
-          },
-          "prize_value": 50,
-          "prize_type_id": 2,
-          "pool": 1000000,
-          "wins_count": null,
-          "pool_initial": null,
-          "prize_ref_id": 0,
-          "is_surcharge": false,
-          "prize_details_json": null,
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
           "affects_level_progress": true,
@@ -166,29 +176,25 @@
       },
       "prizes": [
         {
-          "saw_prize_id": 65863,
-          "saw_template_id": 11487,
+          "saw_prize_id": 68289,
+          "saw_template_id": 11729,
           "saw_prize_ui_definition": {
-            "name": "25 Free Spins on Book of Cleopatra"
+            "name": "iPhone 27 Max"
           },
           "prize_value": 1,
-          "prize_type_id": 3,
+          "prize_type_id": 4,
           "pool": 1000000,
           "wins_count": null,
           "pool_initial": null,
           "prize_ref_id": 0,
           "is_surcharge": false,
-          "prize_details_json": {
-            "ui_amount": "",
-            "bonus_coupon_code": "",
-            "label_bonus_template_id": 2156
-          },
+          "prize_details_json": null,
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
           "affects_level_progress": true,
           "affects_current_balance_progress": true,
-          "place_from": 2,
-          "place_to": 2,
+          "place_from": 1,
+          "place_to": 1,
           "weekdays": null,
           "active_from": null,
           "active_till": null,
@@ -203,10 +209,10 @@
           "max_give_period_type_id": 2
         },
         {
-          "saw_prize_id": 65862,
-          "saw_template_id": 11487,
+          "saw_prize_id": 68291,
+          "saw_template_id": 11729,
           "saw_prize_ui_definition": {
-            "name": "€ 100 Free"
+            "name": "€5 Free Cash"
           },
           "prize_value": 1,
           "prize_type_id": 3,
@@ -216,15 +222,16 @@
           "prize_ref_id": 0,
           "is_surcharge": false,
           "prize_details_json": {
+            "ui_amount": "€5 Free Cash",
             "bonus_amount": 1,
-            "label_bonus_template_id": 2152
+            "label_bonus_template_id": 2151
           },
           "affects_points_progress": true,
           "affects_leaderboard_progress": true,
           "affects_level_progress": true,
           "affects_current_balance_progress": true,
-          "place_from": 1,
-          "place_to": 1,
+          "place_from": 3,
+          "place_to": 3,
           "weekdays": null,
           "active_from": null,
           "active_till": null,
@@ -251,7 +258,11 @@
       "jackpot_add_on_attempt": null,
       "jackpot_current": null,
       "saw_skin_key": null,
-      "saw_skin_ui_definition": null,
+      "saw_skin_ui_definition": {
+        "skin_css": "/* text of the prize on sector */\n.saw-view .wheel-sector-name .sector-text {\n\n}\n\n/* the name of the game shown under the wheel */\n.saw-info-name {\n   \n}\n\n/* style of the \"?\" mark opening descripti…",
+        "skin_folder": "https://cdn.example/00000000-0000-0000-0000-000000000000",
+        "use_new_popups": true
+      },
       "maxSpinPeriodTypeId": 1,
       "expireSpinsMs": 0,
       "next_available_spin_ts": null,
@@ -261,13 +272,16 @@
       "activeFromDate": -9223372036854776000,
       "activeTillDate": 9223372036854776000,
       "requires_prize_claim": false,
+      "requires_manual_claim": false,
       "expose_game_stat_on_api": false,
       "relative_period_timezone": 0,
-      "templateName": "FIFA World Cup",
+      "templateName": "UEFA Super Cup",
       "show_prize_history": true,
       "visibility_conditions": "[]",
       "active_start_time": null,
-      "active_end_time": null
+      "active_end_time": null,
+      "earliest_expiration_dt": null,
+      "latest_expiration_dt": null
     },
     "allRounds": [
       {
@@ -276,34 +290,34 @@
         "hide_users_predictions": true
       },
       {
-        "round_id": 42115,
-        "round_row_id": 2,
+        "round_id": 40920,
+        "round_row_id": 1,
         "public_meta": {
-          "round_name": "Group stage 15-28 June",
+          "round_name": "Final",
           "_translations": {
             "BR": {},
             "TH": {}
           },
           "allow_edit_answers": true,
-          "final_screen_cta_dp": "dp:ok",
+          "final_screen_cta_dp": null,
           "hide_resolved_round": false
         },
         "score_type_id": 1,
-        "open_date": 1782200297406,
-        "last_bet_date": 1782691140000,
+        "open_date": 1780282219930,
+        "last_bet_date": 1786665540000,
         "is_active_now": true,
         "is_resolved": false,
         "round_status_id": -1,
-        "score_full_win": 0,
-        "score_part_win": 0,
+        "score_full_win": 4,
+        "score_part_win": 2,
         "score_lost": 0,
-        "events_total": "28",
-        "events_resolved": "1",
+        "events_total": "8",
+        "events_resolved": "7",
         "show_users_preference": true,
         "order_events": 1,
         "board_users_count": 20,
         "hide_users_predictions": false,
-        "round_name": "Group stage 15-28 June"
+        "round_name": "Final"
       }
     ],
     "labelInfo": {
@@ -331,8 +345,8 @@
         "…": "(+46 more keys)"
       },
       "products": [
-        9000,
-        20
+        384,
+        385
       ],
       "theme_style_desktop": null,
       "theme_style_mobile": null,
@@ -340,13 +354,13 @@
       "errCode": 0,
       "errMsg": null,
       "cid": 4,
-      "ts": 1782302214755,
+      "ts": 1785936713201,
       "uuid": "00000000-0000-0000-0000-000000000000",
       "payload": {
         "country": "IE",
-        "s": "cha_AS@ip-172-24-1-111",
+        "s": "cha_AS@ip-172-24-1-24",
         "city": "Dublin",
-        "ip": "63.34.126.10",
+        "ip": "3.249.27.21",
         "sessionId": "xxxxxxx"
       },
       "duration": null

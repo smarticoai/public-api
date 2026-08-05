@@ -14,12 +14,16 @@ interface JackpotPublicMeta {
 	placeholder1: string;
 	/** custom value of placeholder2 defined by operator and can be used in the HTML templates */
 	placeholder2: string;
+	/** operator-defined display order, ascending; sent as a string */
+	priority: string;
 	/**
-	 * Custom data as string or JSON string that can be used in API to build custom UI
+	 * Custom data that can be used in API to build custom UI.
+	 * `jackpotGet()` returns this already parsed — an object when the operator stored JSON,
+	 * otherwise the raw string. Elsewhere (e.g. the jackpot-win push) it arrives unparsed.
 	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
 	 * Read more here - <https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes>
 	*/
-	custom_data: string;
+	custom_data: any;
 }
 
 export { JackpotPublicMeta };

@@ -83,7 +83,7 @@ console.log('[smartico] localized label "missions_title" →', t('missions_title
     "totalPool": "total pool",
     "placesPaid": "Places paid",
     "sawSpinCostSpins": "{value} spins available",
-    "…": "(+804 more keys)"
+    "…": "(+842 more keys)"
   }
 }
 ```

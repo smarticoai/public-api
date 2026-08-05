@@ -2,7 +2,7 @@
 
 > Returns the user-eligible jackpots active for the label, fused with their live pot values.
 > Import: `import { JackpotDetails } from '@smartico/public-api'`
-> Search terms: jackpotGet, jackpots, JackpotDetails, JackpotType, JackpotPublicMeta, JackpotHtmlTemplate, JackpotContributionType, JackpotPot, JackPotTemparature, jp_template_id, jp_type_id, jp_public_meta, jp_currency, user_currency, related_games, contribution_type, contribution_value
+> Search terms: jackpotGet, jackpots, JackpotDetails, JackpotType, JackpotPublicMeta, JackpotHtmlTemplate, JackpotContributionType, JackpotContributionRule, AchRelatedGame, JackpotPot, JackPotTemparature, jp_template_id, jp_type_id, jp_public_meta, jp_currency, user_currency, related_games, contribution_type, contribution_value
 
 ## Signature
 ```ts
@@ -30,19 +30,48 @@ Array of `JackpotDetails`. Each item:
     - `content` (string)
   - `placeholder1` (string) — custom value of placeholder1 defined by operator and can be used in the HTML templates
   - `placeholder2` (string) — custom value of placeholder2 defined by operator and can be used in the HTML templates
-  - `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - <https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes>
+  - `priority` (string) — operator-defined display order, ascending; sent as a string
+  - `custom_data` (any) — Custom data that can be used in API to build custom UI. `jackpotGet()` returns this already parsed — an object when the operator stored JSON, otherwise the raw string. Elsewhere (e.g. the jackpot-win push) it arrives unparsed. You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - <https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes>
 - `jp_currency` (string) — Native jackpot currency (ISO 4217). Used for winner-history amounts.
 - `user_currency` (string) — Current user's wallet currency. Used to display the pot via `pot.current_pot_amount_user_currency`.
 - `contribution_type` (JackpotContributionType) — Whether the contribution is a fixed amount or a percentage of the bet; see `JackpotContributionType`.
 - `contribution_value` (number) — Amount of contribution per qualifying bet — fixed value or percentage depending on `contribution_type`.
+- `contribution_rules` (JackpotContributionRule[]) — Per-game / per-provider overrides of `contribution_type` + `contribution_value`; see `JackpotContributionRule`. Empty when the template contributes at a flat rate.
+  - `ruleId` (number) — Stable ID of the rule within its template
+  - `jpTemplateId` (number) — Template this rule belongs to
+  - `type` (JackpotContributionType) — Whether `contributionValue` is a fixed amount or a percentage; see `JackpotContributionType`
+  - `extEntityIds` (string[]) — Operator-side game or provider IDs this rule applies to
+  - `contributionValue` (number) — Contribution to apply for matching bets — fixed amount or percentage depending on `type`
+- `related_games` (AchRelatedGame[]) — Reserved — the server currently always sends an empty array. Use `getJackpotEligibleGames()` for the eligible-games list.
+  - `ext_game_id` (string) — The ID of the related game
+  - `game_public_meta` ({
+		/** The name of the game */
+		name: string;
+		/** The URL to the game */
+		link: string;
+		/** The URL to the image of the game, 1:1 aspect ratio */
+		image: string;
+		/** The indicator if the game is enabled */
+		enabled: boolean;
+		/** The list of categories of the game */
+		game_categories: string[];
+		/** The name of the game provider */
+		game_provider: string;
+		/** The URL to the mobile game */
+		mobile_spec_link: string;
+		/** The priority of the game */
+		priority?: number;
+	}) — Game public meta information
 - `pot` (JackpotPot) — Live pot snapshot (amount, temperature, last explosion timestamp).
   - `jp_template_id` (number) — Template ID this pot belongs to.
   - `jp_pot_id` (number) — Stable numeric ID of the current pot instance (rotates when the pot explodes).
   - `current_pot_amount` (number) — Current pot amount in the jackpot's native currency (`jp_currency`).
   - `current_pot_amount_user_currency` (number) — Current pot amount converted to the user's wallet currency (`user_currency`).
-  - `explode_date_ts` (number) — Unix ms timestamp of when this pot last exploded; `0` if it has never exploded.
+  - `explode_date_ts` (number | null) — Unix ms timestamp of when this pot last exploded; `null` while the pot is still running.
+  - `user_id` (number | null) — Owning user for `JackpotType.Personal` pots; `null` for shared `MultiUser` pots.
   - `current_pot_temperature` (JackPotTemparature) — Heat band of the pot relative to its explosion range; see `JackPotTemparature`.
 - `is_opted_in` (boolean) — `true` when the current user is currently opted in.
+- `is_auto_opt_in` (boolean) — `true` when eligible users are opted in automatically, so no opt-in CTA is needed; `false` means `jackpotOptIn()` must be called explicitly.
 - `ach_related_game_allow_all` (boolean) — `true` when every game in the operator catalog contributes; if `true`, skip `getJackpotEligibleGames`.
 - `registration_count` (number) — Number of users currently opted in; always `1` for `JackpotType.Personal`.
 - `expose_winners_over_api` (boolean) — Operator flag: whether the winners list should be displayed. Enforced client-side only — gate `getJackpotWinners` calls on this.
@@ -112,22 +141,21 @@ console.log('[smartico] linked jackpots for game:', linked.length);
 ```json
 [
   {
-    "jp_template_id": 6,
-    "jp_type_id": 1,
+    "jp_template_id": 8,
+    "jp_type_id": 2,
     "jp_public_meta": {
       "image_url": "https://cdn.example/f8b68a18473c437e32a860-Jackpot1.jpg",
-      "placeholder1": null,
-      "placeholder2": null,
-      "name": "Minor",
-      "description": "1% on top of your bet amount will be contributed to the Jackpot",
+      "placeholder1": "111111111111111111",
+      "placeholder2": "XXXXXXXXXXXXXXXXX",
+      "name": "Personal Jackpot For All Games",
+      "description": "For every bet, 2% is added to the jackpot pot—split 50/50 between the player’s contribution and the house. Plus, 20% of each jackpot goes toward seeding the …",
       "not_winner_template": {
-        "id": "0",
-        "content": ""
+        "content": "\n<style>\n    @keyframes reveal {\n        0% {\n            transform: translateX(100%);\n        }\n        100% {\n            transform: translateX(0%);\n      …",
+        "id": "1"
       },
-      "priority": "1",
       "winner_template": {
-        "id": "0",
-        "content": ""
+        "content": "\n<script>\n    document.addEventListener('DOMContentLoaded', () => {\n        const counter = document.getElementById('counter'); \n        const duration = 200…",
+        "id": "1"
       },
       "custom_data": {}
     },
@@ -135,32 +163,32 @@ console.log('[smartico] linked jackpots for game:', linked.length);
     "user_currency": "EUR",
     "related_games": [],
     "contribution_type": 2,
-    "contribution_value": 0.2,
+    "contribution_value": 2,
     "pot": {
-      "jp_template_id": 6,
-      "jp_pot_id": 306140,
+      "jp_template_id": 8,
+      "jp_pot_id": null,
       "user_id": null,
-      "current_pot_amount": 12.28367028,
-      "current_pot_amount_user_currency": 12.28367028,
+      "current_pot_amount": 0,
+      "current_pot_amount_user_currency": 0,
       "explode_date_ts": null,
-      "current_pot_temperature": 2
+      "current_pot_temperature": 0
     },
-    "is_opted_in": false,
-    "is_auto_opt_in": true,
+    "is_opted_in": true,
+    "is_auto_opt_in": false,
     "ach_related_game_allow_all": true,
-    "registration_count": 17262,
+    "registration_count": 1,
     "contribution_rules": [
       {
-        "ruleId": 1,
-        "jpTemplateId": 6,
+        "ruleId": 4,
+        "jpTemplateId": 8,
         "type": 2,
         "extEntityIds": [
-          "1111"
+          "123"
         ],
-        "contributionValue": 4
+        "contributionValue": 12
       }
     ],
-    "expose_winners_over_api": false
+    "expose_winners_over_api": true
   }
 ]
 ```

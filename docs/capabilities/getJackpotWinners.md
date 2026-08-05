@@ -33,7 +33,8 @@ Array of `JackpotWinnerHistory`. Each item:
   - `winning_amount_jp_currency` (number) — Won amount in the Jackpot currency
   - `winning_amount_wallet_currency` (number) — Won amount in the user Wallet currency
   - `winning_position` (number) — Position of the winner. Relevant for jackpots where there could be multiple winners
-  - `avatar_id` (string) — Avatar of the winner
+  - `avatar_id` (string) — Avatar image URL of the winner
+  - `avatar_real_id` (number | null) — Numeric ID of the winner's avatar; `null` when the winner has not picked one
 
 ## Behavioral contract
 **Preconditions**
@@ -93,15 +94,15 @@ console.log('[smartico] render', winners.length, 'recent winner rows (amounts in
   {
     "winner": {
       "is_me": false,
-      "public_username": "731:*****",
-      "winning_amount_jp_currency": 16.720332488,
-      "winning_amount_wallet_currency": 98.525768722,
+      "public_username": "Asut*****",
+      "winning_amount_jp_currency": 8.32,
+      "winning_amount_wallet_currency": 8.32,
       "winning_position": 1,
-      "avatar_id": "183751796",
-      "avatar_real_id": null
+      "avatar_id": "https://cdn.example/d58c99035fadf00dcfe638-Dragongenderless.webp",
+      "avatar_real_id": 11
     },
-    "win_date_ts": 1782295329703,
-    "jp_pot_id": 306053
+    "win_date_ts": 1785909778120,
+    "jp_pot_id": 321186
   }
 ]
 ```

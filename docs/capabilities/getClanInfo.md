@@ -134,22 +134,22 @@ if (isMyClan) {
     "description": "Join the clan if you're a wild card and are completely out of control! Or if you just hate Bruce Wayne very much.\n\nPlay in the tournaments, grab that cash an…",
     "image_url": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780057181857-1.png"
   },
-  "member_count": 885,
+  "member_count": 899,
   "capacity_limit": 1000,
   "entry_fee_currency_type_id": 0,
   "entry_fee_amount": 100,
   "rating_position": 1,
-  "rating_score": 90,
+  "rating_score": 56,
   "cooldown_until": null,
   "members": [
     {
-      "user_id": 183751733,
-      "public_username": "Daniel",
-      "avatar_id": "183751733",
-      "avatar_real_id": null,
-      "avatar_url": "https://cdn.example/avatar/183751733",
+      "user_id": 162749132,
+      "public_username": "Toby*****",
+      "avatar_id": "https://cdn.example/avatars/12/00000000-0000-0000-0000-000000000000.png",
+      "avatar_real_id": 12,
+      "avatar_url": "https://cdn.example/avatars/12/00000000-0000-0000-0000-000000000000.png",
       "position": 1,
-      "contribution_score": 456786,
+      "contribution_score": 0,
       "is_me": false,
       "clean_ext_user_id": "0"
     }

@@ -582,6 +582,18 @@ Pagination offset (0-based).
 
 Pagination ceiling (exclusive); server caps `to - from` at 50.
 
+###### types?
+
+`number`[]
+
+Optional — filter by [ActivityLogActivities](../enumerations/ActivityLogActivities.md) / `type_id`.
+
+###### src_types?
+
+`number`[]
+
+Optional — filter by [PointChangeSourceType](../enumerations/PointChangeSourceType.md) / `source_type_id`.
+
 ###### onUpdate?
 
 (`data`) => `void`
@@ -606,13 +618,18 @@ hard-caps a single response at 50 entries. For infinite scroll, advance
 `from` by 50 between calls. Both `startTimeSeconds` and `endTimeSeconds`
 are epoch seconds bounding the window the server scans.
 
+**Filtering** — optional server-side filters:
+- `types` — [ActivityLogActivities](../enumerations/ActivityLogActivities.md) / `type_id` values (e.g. Points=3, Gems=1)
+- `src_types` — [PointChangeSourceType](../enumerations/PointChangeSourceType.md) / `source_type_id` values
+Omit both for an unfiltered window.
+
 **Subscription model (`onUpdate`)**
 The callback fires when the user's `ach_points_balance`,
 `ach_gems_balance`, or `ach_diamonds_balance` changes (i.e. whenever a
 wallet event lands). The pushed payload is a FIXED re-fetch of the
 **last 10 minutes / first 50 entries** — it does NOT honor the original
-call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to`. Consumers
-maintaining a long historical view must re-call `getActivityLog` with
+call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to` / filters.
+Consumers maintaining a long historical view must re-call `getActivityLog` with
 their own params after receiving an `onUpdate` notification.
 
 **Refresh**
@@ -635,6 +652,8 @@ const log = await window._smartico.api.getActivityLog({
     endTimeSeconds:   now,
     from: 0,
     to:   50,
+    types: [1], // Gems only (ActivityLogActivities.Gems)
+    src_types: [11], // Tournament wins only (PointChangeSourceType.Tournament)
     onUpdate: (refreshed) => {
         console.log('[smartico] wallet changed — refreshed payload is last 10 min / 50 entries:', refreshed.length, 'rows');
         // If the consumer is showing a full 30-day view, re-call getActivityLog with the original params here.
@@ -663,8 +682,10 @@ rows with the original field contract unchanged.
 **Pagination** — same `from` / `to` offset model as [getActivityLog](#getactivitylog)
 (server caps a single response at 50 entries).
 
-**Filtering** — pass `types` with [ActivityLogActivities](../enumerations/ActivityLogActivities.md) values to
-request a server-side subset (e.g. missions only). Omit for all activity types.
+**Filtering** — optional server-side filters:
+- `types` — [ActivityLogActivities](../enumerations/ActivityLogActivities.md) values (`type_id`)
+- `src_types` — [PointChangeSourceType](../enumerations/PointChangeSourceType.md) values (`source_type_id`)
+Omit both for all activity types / sources.
 
 #### Parameters
 
@@ -687,6 +708,10 @@ request a server-side subset (e.g. missions only). Omit for all activity types.
 `number`
 
 ###### types?
+
+`number`[]
+
+###### src_types?
 
 `number`[]
 

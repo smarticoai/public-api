@@ -264,7 +264,7 @@ console.log('[smartico] initial mission list ready — render', generalView.leng
     "complete_date_ts": 1780930368099,
     "completed_today": false,
     "completed_this_week": false,
-    "completed_this_month": true,
+    "completed_this_month": false,
     "availability_status": 2,
     "hide_locked_mission": true,
     "prize_claim_expiration_date": null,

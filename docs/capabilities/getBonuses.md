@@ -2,7 +2,7 @@
 
 > Returns the bonuses awarded to the current user — both pending (player-claim required) and already-redeemed.
 > Import: `import { TBonus } from '@smartico/public-api'`
-> Search terms: getBonuses, bonuses, TBonus, BonusStatus, BonusTemplateMetaMap, BonusMetaMap, onUpdate, subscription, bonus_id, is_redeemable, create_date, redeem_date, label_bonus_template_id, bonus_status_id, label_bonus_template_meta_map, bonus_meta_map
+> Search terms: getBonuses, bonuses, TBonus, BonusStatus, BonusTemplateMetaMap, BonusMetaMap, onUpdate, subscription
 
 ## Signature
 ```ts
@@ -132,22 +132,7 @@ setInterval(async () => {
 > Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 [
-  {
-    "bonus_id": 910171929,
-    "is_redeemable": false,
-    "create_date": "09/06/2026 23:05:03",
-    "redeem_date": "09/06/2026 23:05:03",
-    "label_bonus_template_id": 2152,
-    "bonus_status_id": 3,
-    "label_bonus_template_meta_map": {
-      "name": "",
-      "description": "100 Euro Free Chip",
-      "image_url": "https://cdn.example/4011a701f070093978f2df-Storeitemcopy12.png"
-    },
-    "bonus_meta_map": {
-      "uiAmount": "100 EUR Big Bonus "
-    }
-  }
+  null
 ]
 ```
 

@@ -2,7 +2,7 @@
 
 > Returns the full detail of a single tournament instance — adds the player leaderboard, the full prize structure, and (for clan tournaments) the clan leaderboard and per-clan prize structure on top of everything already in `TTournament`.
 > Import: `import { TTournamentDetailed } from '@smartico/public-api'`
-> Search terms: getTournamentInstanceInfo, tournaments, getTournament, TTournamentDetailed, TRibbon, TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS, TournamentRegistrationTypeName, TournamentRegistrationStatusName, AchRelatedGame, Fixed, Dynamic, instance_id, tournament_id, name, description, image1, image2, image2_mobile, prize_pool_short
+> Search terms: getTournamentInstanceInfo, tournaments, getTournament, TTournamentDetailed, TRibbon, TANGIBLE, POINTS_ADD, POINTS_DEDUCT, POINTS_RESET, MINI_GAME_ATTEMPT, BONUS, TournamentRegistrationTypeName, TournamentRegistrationStatusName, AchRelatedGame, Fixed, Dynamic, instance_id, tournament_id, name, description, image1, image2, custom_data, is_featured
 
 ## Signature
 ```ts
@@ -237,58 +237,66 @@ if (detail.me) {
 > Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 {
-  "instance_id": 585461,
-  "tournament_id": 4450,
-  "name": "Old Dragon's Hoard",
-  "description": "   <style>\n        /* Add your CSS here */\n        .custom-rules {\n            font-family: inherit;\n            background-color: #2c295c !important;\n      …",
-  "image1": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1773753066010-1.png",
-  "image2": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1773755039087-0.png",
-  "image2_mobile": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1773755761006-0.png",
-  "prize_pool_short": "The Dragon's treasure",
+  "instance_id": 589587,
+  "tournament_id": 5285,
+  "name": "Lucky Charm Tournament",
+  "description": "    <style>\n        /* Add your CSS here */\n        .custom-rules {\n            font-family: inherit;\n            background-color: #1b193e !important;\n     …",
+  "image1": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780497274026-2.png",
+  "image2": "https://cdn.example/00000000-0000-0000-0000-000000000000/entity-image-1780498012321-2.png",
   "custom_data": {},
   "is_featured": false,
-  "start_time": 1782216000000,
-  "end_time": 1782302400000,
+  "start_time": 1786004100000,
+  "end_time": 1786090500000,
   "registration_count": 0,
   "is_user_registered": false,
   "players_min_count": 0,
-  "players_max_count": 200,
+  "players_max_count": 5000,
   "registration_status": "UNKNOWN",
-  "registration_type": "BUY_IN_GEMS",
-  "registration_cost_gems": 3,
+  "registration_type": "AUTO",
   "duration_ms": 86400000,
   "is_active": true,
   "is_can_register": false,
   "is_cancelled": false,
   "is_finished": false,
-  "is_in_progress": true,
-  "is_upcoming": false,
+  "is_in_progress": false,
+  "is_upcoming": true,
   "min_scores_win": 1,
   "hide_leaderboard_min_scores": false,
   "total_scores": null,
-  "is_clan_based": false,
-  "related_games": [
-    {
-      "ext_game_id": "dragon-fortune",
-      "game_public_meta": {
-        "name": "Dragon Fortune",
-        "link": "/game/dragon-fortune",
-        "image": "https://cdn.example/e93b87dfd94d462de49bc3-china.png",
-        "enabled": true,
-        "priority": 1
-      }
-    }
-  ],
+  "is_clan_based": true,
+  "related_games": [],
   "players": [],
-  "prizes": [
+  "prizes": [],
+  "user_clan_id": 5,
+  "clan_leaderboard": [],
+  "clan_prize_structure": [
     {
-      "gems": 10,
-      "image_url": "https://cdn.example/ecec44e4c2d0555b4d8a32-Gems10.webp",
-      "name": "10 gems",
-      "id": 38778,
-      "type": "GEMS_AND_DIAMONDS_ADD",
-      "place_from": 1,
-      "place_to": 1
+      "clan_place": 1,
+      "prize_type_id": 2,
+      "prize_pool_amount": 200,
+      "prize_pool_currency_code": null,
+      "activity_type_id": 25,
+      "details_json": {
+        "gems_diamonds_type": 0
+      },
+      "public_meta": {
+        "prize_name": ""
+      },
+      "tiers": [
+        {
+          "player_place_from": 1,
+          "player_place_to": 3,
+          "pool_amount": 100,
+          "distribution_type": 1,
+          "activity_type_id": 25,
+          "details_json": {
+            "gems_diamonds_type": 0
+          },
+          "public_meta": {
+            "name": "100 Gems"
+          }
+        }
+      ]
     }
   ]
 }

@@ -11,6 +11,8 @@ _smartico.api.getActivityLog({
 		endTimeSeconds,
 		from,
 		to,
+		types,
+		src_types,
 		onUpdate,
 	}: {
 		/** Window start in epoch seconds. */
@@ -21,6 +23,10 @@ _smartico.api.getActivityLog({
 		from: number;
 		/** Pagination ceiling (exclusive); server caps `to - from` at 50. */
 		to: number;
+		/** Optional — filter by {@link ActivityLogActivities} / `type_id`. */
+		types?: number[];
+		/** Optional — filter by {@link PointChangeSourceType} / `source_type_id`. */
+		src_types?: number[];
 		/** Optional push callback; payload is a fixed 10-min / 50-entry refresh on every wallet change (see Subscription model). */
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]>
@@ -43,7 +49,7 @@ Array of `TActivityLog`. Each item:
 ## Behavioral contract
 **Preconditions**
 - User must be authenticated. Visitor mode is not guarded at the SDK level
-  but is not meaningful — activity is per-user.
+ but is not meaningful — activity is per-user.
 
 **Pagination — `from` / `to` are offset + ceiling, not timestamps**
 The SDK derives `offset = from`, `limit = min(to - from, 50)` — the server
@@ -51,19 +57,24 @@ hard-caps a single response at 50 entries. For infinite scroll, advance
 `from` by 50 between calls. Both `startTimeSeconds` and `endTimeSeconds`
 are epoch seconds bounding the window the server scans.
 
+**Filtering** — optional server-side filters:
+- `types` — `ActivityLogActivities` / `type_id` values (e.g. Points=3, Gems=1)
+- `src_types` — `PointChangeSourceType` / `source_type_id` values
+Omit both for an unfiltered window.
+
 **Subscription model (`onUpdate`)**
 The callback fires when the user's `ach_points_balance`,
 `ach_gems_balance`, or `ach_diamonds_balance` changes (i.e. whenever a
 wallet event lands). The pushed payload is a FIXED re-fetch of the
 **last 10 minutes / first 50 entries** — it does NOT honor the original
-call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to`. Consumers
-maintaining a long historical view must re-call `getActivityLog` with
+call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to` / filters.
+Consumers maintaining a long historical view must re-call `getActivityLog` with
 their own params after receiving an `onUpdate` notification.
 
 **Refresh**
 - The SDK caches results for 30 seconds.
 - Push triggers fire only on balance changes; transactions that don't
-  alter a balance (theoretical zero-amount entries) won't refresh.
+ alter a balance (theoretical zero-amount entries) won't refresh.
 
 **Visitor mode**: not meaningful (no per-user history available).
 
@@ -79,6 +90,8 @@ const log = await window._smartico.api.getActivityLog({
     endTimeSeconds:   now,
     from: 0,
     to:   50,
+    types: [1], // Gems only (ActivityLogActivities.Gems)
+    src_types: [11], // Tournament wins only (PointChangeSourceType.Tournament)
     onUpdate: (refreshed) => {
         console.log('[smartico] wallet changed — refreshed payload is last 10 min / 50 entries:', refreshed.length, 'rows');
         // If the consumer is showing a full 30-day view, re-call getActivityLog with the original params here.
@@ -105,4 +118,5 @@ See this method's TSDoc / the mutation pages for `err_code` handling.
 ## Related
 - `UserBalanceType`
 - `PointChangeSourceType`
+- `ActivityLogActivities`
 - `TActivityLog`
