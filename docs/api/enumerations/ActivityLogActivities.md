@@ -1,6 +1,6 @@
 # Enumeration: ActivityLogActivities
 
-Activity-log entry type as returned on the v2 wire (`type_id`).
+Activity-log entry type as returned on the wire (`type_id`).
 
 ## Enumeration Members
 

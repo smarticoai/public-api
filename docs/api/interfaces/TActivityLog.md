@@ -1,7 +1,11 @@
 # Interface: TActivityLog
 
-TActivityLog describes a unified history log entry for points, gems, or diamonds changes.
-The structure is the same regardless of balance type, making it easy to iterate and display.
+One activity-log row from [WSAPIUser.getActivityLog](../classes/WSAPIUser.md#getactivitylog).
+
+Always includes the wallet fields (`type` / `amount` / `balance` / …). When the
+server returns richer activity rows (missions, badges, levels, …), the optional
+fields below are populated — same method, same CID; clients that ignore unknown
+fields keep working.
 
 ## Properties
 
@@ -66,3 +70,67 @@ Total ever collected (only relevant for type points)
 > **source\_type\_id**: [`PointChangeSourceType`](../enumerations/PointChangeSourceType.md)
 
 Source type ID indicating what triggered this change
+
+***
+
+### activity\_type\_id?
+
+> `optional` **activity\_type\_id?**: [`ActivityLogActivities`](../enumerations/ActivityLogActivities.md)
+
+Activity kind — see [ActivityLogActivities](../enumerations/ActivityLogActivities.md) (`type` on the wire).
+
+***
+
+### context\_value\_1?
+
+> `optional` **context\_value\_1?**: `number`
+
+Sub-action for `activity_type_id` (e.g. unlock vs complete, add vs deduct, raffle win vs register).
+
+***
+
+### meta?
+
+> `optional` **meta?**: [`ActivityLogMeta`](ActivityLogMeta.md)
+
+Extra display payload for the row (name, image, position, …) — see [ActivityLogMeta](ActivityLogMeta.md).
+
+***
+
+### source\_entity\_name?
+
+> `optional` **source\_entity\_name?**: `string`
+
+Human-readable name of the source entity (mission, tournament, raffle, …).
+
+***
+
+### source\_entity\_id?
+
+> `optional` **source\_entity\_id?**: `number`
+
+Primary id of the source entity (mission / badge / tournament / …).
+
+***
+
+### source\_reference\_id?
+
+> `optional` **source\_reference\_id?**: `number`
+
+More specific id within the source (e.g. level id, draw id, win id).
+
+***
+
+### source\_root\_id?
+
+> `optional` **source\_root\_id?**: `number`
+
+Root / parent entity id when the source is nested (e.g. raffle id owning a draw).
+
+***
+
+### is\_wallet\_entry?
+
+> `optional` **is\_wallet\_entry?**: `boolean`
+
+True when the row is a points/gems/diamonds wallet change.

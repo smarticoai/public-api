@@ -84,8 +84,7 @@
 
 ## Interfaces
 
-- [PointsLog](interfaces/PointsLog.md)
-- [GemsDiamondsLog](interfaces/GemsDiamondsLog.md)
+- [ActivityLogEntry](interfaces/ActivityLogEntry.md)
 - [ActivityLogMeta](interfaces/ActivityLogMeta.md)
 - [AvatarCustomizeResponse](interfaces/AvatarCustomizeResponse.md)
 - [AvatarCustomized](interfaces/AvatarCustomized.md)
@@ -257,7 +256,6 @@
 - [TRaffleDrawRun](interfaces/TRaffleDrawRun.md)
 - [TransformedRaffleClaimPrizeResponse](interfaces/TransformedRaffleClaimPrizeResponse.md)
 - [TActivityLog](interfaces/TActivityLog.md)
-- [TActivityLogEntry](interfaces/TActivityLogEntry.md)
 - [TRaffleOptinResponse](interfaces/TRaffleOptinResponse.md)
 - [TAvatarDefinition](interfaces/TAvatarDefinition.md)
 - [TAvatarCustomized](interfaces/TAvatarCustomized.md)
@@ -266,8 +264,8 @@
 
 ## Type Aliases
 
-- [ActivityLogEntry](type-aliases/ActivityLogEntry.md)
 - [TournamentRegistrationTypeName](type-aliases/TournamentRegistrationTypeName.md)
+- [~~TActivityLogEntry~~](type-aliases/TActivityLogEntry.md)
 
 ## Variables
 

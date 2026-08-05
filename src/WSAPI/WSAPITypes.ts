@@ -1808,7 +1808,7 @@ export interface TActivityLog {
 	total_ever?: number;
 	/** Source type ID indicating what triggered this change */
 	source_type_id: PointChangeSourceType;
-	/** Activity kind — see {@link ActivityLogActivities} (`type_id` on the wire). */
+	/** Activity kind — see {@link ActivityLogActivities} (`type` on the wire). */
 	activity_type_id?: ActivityLogActivities;
 	/** Sub-action for `activity_type_id` (e.g. unlock vs complete, add vs deduct, raffle win vs register). */
 	context_value_1?: number;

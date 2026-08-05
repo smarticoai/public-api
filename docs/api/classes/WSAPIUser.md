@@ -544,15 +544,16 @@ if (next) {
 
 > **getActivityLog**(`__namedParameters`): `Promise`\<[`TActivityLog`](../interfaces/TActivityLog.md)[]\>
 
-Returns the user's unified balance-change history — every points, gems, and
-diamonds transaction within the requested time window, ordered newest-first.
-Use to power an "Activity" / "History" tab showing wins, claims, purchases,
-level-up rewards, and operator adjustments.
+Returns the user's activity history within the requested time window,
+ordered newest-first. Today that is primarily wallet changes (points /
+gems / diamonds); when the server starts returning richer activity rows
+(missions, badges, levels, …), the same method surfaces them via optional
+fields on [TActivityLog](../interfaces/TActivityLog.md) — no separate call, same wire CID.
 
-The returned shape is the same regardless of currency type — `type` (see
-[UserBalanceType](../enumerations/UserBalanceType.md)) distinguishes points / gems / diamonds and
-`source_type_id` (see [PointChangeSourceType](../enumerations/PointChangeSourceType.md)) names the originating
-event.
+Existing wallet fields (`type`, `amount`, `balance`, `source_type_id`, …)
+stay stable. Clients that only read those keep working; clients that want
+the fuller feed can also read `activity_type_id`, `meta`,
+`source_entity_*`, and `is_wallet_entry` when present.
 
 #### Parameters
 
@@ -665,58 +666,3 @@ for (const row of log) {
     console.log('[smartico] activity row — render with', row.type === 0 ? 'points' : row.type === 1 ? 'gems' : 'diamonds', 'icon, color by sign:', sign + row.amount, 'balance after:', row.balance, 'source:', row.source_type_id);
 }
 ```
-
-***
-
-### getActivityLogV2()
-
-> **getActivityLogV2**(`__namedParameters`): `Promise`\<[`TActivityLogEntry`](../interfaces/TActivityLogEntry.md)[]\>
-
-Returns the full activity log (v2) — wallet changes **and** non-wallet
-activities (missions, badges, levels, tournaments, avatars, …).
-
-**Backwards compatibility**: existing integrations should keep using
-[getActivityLog](#getactivitylog), which returns wallet-only [TActivityLog](../interfaces/TActivityLog.md)
-rows with the original field contract unchanged.
-
-**Pagination** — same `from` / `to` offset model as [getActivityLog](#getactivitylog)
-(server caps a single response at 50 entries).
-
-**Filtering** — optional server-side filters:
-- `types` — [ActivityLogActivities](../enumerations/ActivityLogActivities.md) values (`type_id`)
-- `src_types` — [PointChangeSourceType](../enumerations/PointChangeSourceType.md) values (`source_type_id`)
-Omit both for all activity types / sources.
-
-#### Parameters
-
-##### \_\_namedParameters
-
-###### startTimeSeconds
-
-`number`
-
-###### endTimeSeconds
-
-`number`
-
-###### from
-
-`number`
-
-###### to
-
-`number`
-
-###### types?
-
-`number`[]
-
-###### src_types?
-
-`number`[]
-
-#### Returns
-
-`Promise`\<[`TActivityLogEntry`](../interfaces/TActivityLogEntry.md)[]\>
-
-Array of [TActivityLogEntry](../interfaces/TActivityLogEntry.md) ordered newest-first.

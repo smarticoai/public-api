@@ -1,8 +1,8 @@
 # getActivityLog — API (TActivityLog)
 
-> Returns the user's activity history — wallet changes today, and richer activity rows (missions, badges, levels, …) when the server starts emitting them. Same method / CID either way; new fields are additive.
+> Returns the user's activity history within the requested time window, ordered newest-first.
 > Import: `import { TActivityLog } from '@smartico/public-api'`
-> Search terms: getActivityLog, user, TActivityLog, UserBalanceType, PointChangeSourceType, ActivityLogActivities, ActivityLogMeta, onUpdate, subscription
+> Search terms: getActivityLog, user, TActivityLog, UserBalanceType, PointChangeSourceType, ActivityLogActivities, ActivityLogMeta, onUpdate, subscription, create_date, user_ext_id, crm_brand_id, type, amount, balance, total_ever, source_type_id
 
 ## Signature
 ```ts
@@ -37,26 +37,39 @@ _None._
 
 ## Returns — `Promise<TActivityLog[]>`
 Array of `TActivityLog`. Each item:
-
-Stable wallet fields (always present for wallet rows):
-- `create_date` (number) — epoch seconds
-- `user_ext_id` (string)
-- `crm_brand_id` (number)
-- `type` (UserBalanceType) — Points = 0, Gems = 1, Diamonds = 2
-- `amount` (number)
-- `balance` (number)
-- `total_ever` (number) — points only
-- `source_type_id` (PointChangeSourceType)
-
-Additive fields (populated when the server returns richer activity rows):
-- `activity_type_id` (ActivityLogActivities)
-- `context_value_1` (number)
-- `meta` (ActivityLogMeta)
-- `source_entity_name` (string)
-- `source_entity_id` (number)
-- `source_reference_id` (number)
-- `source_root_id` (number)
-- `is_wallet_entry` (boolean)
+- `create_date` (number) — Date when the change was created (epoch timestamp in seconds)
+- `user_ext_id` (string) — External user ID
+- `crm_brand_id` (number) — CRM brand ID
+- `type` (UserBalanceType) — Type of balance: Points = 0, Gems = 1, Diamonds = 2
+- `amount` (number) — Amount changed (positive or negative)
+- `balance` (number) — Current balance after this change
+- `total_ever` (number) — Total ever collected (only relevant for type points)
+- `source_type_id` (PointChangeSourceType) — Source type ID indicating what triggered this change
+- `activity_type_id` (ActivityLogActivities) — Activity kind — see `ActivityLogActivities` (`type` on the wire).
+- `context_value_1` (number) — Sub-action for `activity_type_id` (e.g. unlock vs complete, add vs deduct, raffle win vs register).
+- `meta` (ActivityLogMeta) — Extra display payload for the row (name, image, position, …) — see `ActivityLogMeta`.
+  - `name` (string) — Display name of the source entity (mission, tournament, raffle, …).
+  - `image_url` (string)
+  - `position` (number)
+  - `user_points_balance_before` (number) — Points balance before this row; points rows.
+  - `points_requested` (number) — Points the awarding rule asked for; points rows.
+  - `user_points_ever` (number) — Total points ever collected after this row; points rows.
+  - `amount_requested` (number) — Gems / diamonds the awarding rule asked for; gems / diamonds rows.
+  - `balance_before` (number) — Gems / diamonds balance before this row.
+  - `affects_level` (boolean) — Whether this row counts toward level progress.
+  - `affects_leaderboard` (boolean) — Whether this row counts toward leaderboards.
+  - `affects_current_balance` (boolean) — Whether this row moved the spendable balance.
+  - `user_initialization` (boolean) — Set on the row that seeds a brand-new user's wallet.
+  - `is_recurring` (boolean) — Set on mission rows for repeatable missions.
+  - `from_level_id` (number) — Level moved from; level-change rows.
+  - `to_level_id` (number) — Level moved to; level-change rows.
+  - `from_level_public_meta` (any) — Public meta of the level moved from; level-change rows.
+  - `to_level_public_meta` (any) — Public meta of the level moved to; level-change rows.
+- `source_entity_name` (string) — Human-readable name of the source entity (mission, tournament, raffle, …).
+- `source_entity_id` (number) — Primary id of the source entity (mission / badge / tournament / …).
+- `source_reference_id` (number) — More specific id within the source (e.g. level id, draw id, win id).
+- `source_root_id` (number) — Root / parent entity id when the source is nested (e.g. raffle id owning a draw).
+- `is_wallet_entry` (boolean) — True when the row is a points/gems/diamonds wallet change.
 
 ## Behavioral contract
 **Preconditions**
@@ -120,7 +133,29 @@ for (const row of log) {
 > Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
 ```json
 [
-  null
+  {
+    "create_date": 1785955065,
+    "user_ext_id": "test12562034",
+    "crm_brand_id": 31,
+    "type": 0,
+    "amount": 150,
+    "balance": 5372,
+    "total_ever": 5372,
+    "source_type_id": 12,
+    "activity_type_id": 3,
+    "context_value_1": 1,
+    "meta": {
+      "user_points_balance_before": 5222,
+      "user_points_ever": 5372,
+      "affects_level": true,
+      "points_requested": 150,
+      "affects_leaderboard": true,
+      "affects_current_balance": true
+    },
+    "source_reference_id": 675,
+    "source_root_id": 675,
+    "is_wallet_entry": true
+  }
 ]
 ```
 
@@ -128,8 +163,6 @@ for (const row of log) {
 See this method's TSDoc / the mutation pages for `err_code` handling.
 
 ## Related
-- `UserBalanceType`
-- `PointChangeSourceType`
-- `ActivityLogActivities`
-- `ActivityLogMeta`
 - `TActivityLog`
+- `ActivityLogActivities`
+- `PointChangeSourceType`

@@ -196,14 +196,14 @@ const bound = (v) => {
 		await safe('getCurrentLevel', () => api.getCurrentLevel(), clip);
 		await safe('getLevels', () => api.getLevels());
 		await safe('getUserLevelExtraCounters', () => api.getUserLevelExtraCounters(), clip);
-		// Both come back [] today, on env4 and env8 alike, and it is NOT the request: the outbound
-		// 545 frame carries api_key, ext_user_id, startTimeSeconds, endTimeSeconds, limit and offset
-		// (verified by intercepting WebSocket.send), yet the server answers errCode 0 with an empty
-		// logHistory for users that demonstrably have rows. Server-side gap — re-capture once it is
-		// fixed. Wide window so a sparse account still yields a shape.
+		// Comes back [] today, on env4 and env8 alike, and it is NOT the request: the outbound 545
+		// frame carries api_key, ext_user_id, startTimeSeconds, endTimeSeconds, limit and offset,
+		// yet the server answers errCode 0 with an empty logHistory for users that demonstrably
+		// have rows (verified on env8 label 2283 against a session bound to the right user_id).
+		// Server-side gap — re-capture once it is fixed. Wide window so a sparse account still
+		// yields a shape.
 		const activityWindow = { startTimeSeconds: now - 63072000, endTimeSeconds: now, from: 0, to: 20 };
 		await safe('getActivityLog', () => api.getActivityLog({ ...activityWindow }));
-		await safe('getActivityLogV2', () => api.getActivityLogV2({ ...activityWindow }));
 
 		// ---- detail / param methods — every id harvested from the lists above (no hardcodes) ----
 		const ids = {};

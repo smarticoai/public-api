@@ -1,1 +1,106 @@
-[]
+[
+	{
+		"create_date": 1785955065,
+		"user_ext_id": "test12562034",
+		"crm_brand_id": 31,
+		"type": 0,
+		"amount": 150,
+		"balance": 5372,
+		"total_ever": 5372,
+		"source_type_id": 12,
+		"activity_type_id": 3,
+		"context_value_1": 1,
+		"meta": {
+			"user_points_balance_before": 5222,
+			"user_points_ever": 5372,
+			"affects_level": true,
+			"points_requested": 150,
+			"affects_leaderboard": true,
+			"affects_current_balance": true
+		},
+		"source_reference_id": 675,
+		"source_root_id": 675,
+		"is_wallet_entry": true
+	},
+	{
+		"create_date": 1785946500,
+		"user_ext_id": "test12562034",
+		"crm_brand_id": 31,
+		"type": 1,
+		"amount": 11,
+		"balance": 11,
+		"source_type_id": 12,
+		"activity_type_id": 1,
+		"context_value_1": 1,
+		"meta": {
+			"amount_requested": 11,
+			"balance_before": 0
+		},
+		"source_reference_id": 606,
+		"source_root_id": 606,
+		"is_wallet_entry": true
+	},
+	{
+		"create_date": 1785942399,
+		"user_ext_id": "test12562034",
+		"crm_brand_id": 31,
+		"type": 0,
+		"amount": 5,
+		"balance": 867,
+		"total_ever": 867,
+		"source_type_id": 3,
+		"activity_type_id": 3,
+		"context_value_1": 1,
+		"meta": {
+			"user_points_balance_before": 862,
+			"user_points_ever": 867,
+			"affects_level": true,
+			"points_requested": 5,
+			"affects_leaderboard": true,
+			"name": "Test recurring hidden 1",
+			"affects_current_balance": true
+		},
+		"source_entity_name": "Test recurring hidden 1",
+		"source_reference_id": 5016,
+		"source_root_id": 5016,
+		"is_wallet_entry": true
+	},
+	{
+		"create_date": 1785942398,
+		"user_ext_id": "test12562034",
+		"crm_brand_id": 31,
+		"type": 0,
+		"amount": 0,
+		"balance": 0,
+		"source_type_id": 3,
+		"activity_type_id": 11,
+		"context_value_1": 1,
+		"meta": {
+			"name": "Test recurring hidden 1",
+			"is_recurring": true
+		},
+		"source_entity_name": "Test recurring hidden 1",
+		"source_reference_id": 5016,
+		"source_root_id": 5016,
+		"is_wallet_entry": false
+	},
+	{
+		"create_date": 1785942398,
+		"user_ext_id": "test12562034",
+		"crm_brand_id": 31,
+		"type": 0,
+		"amount": 0,
+		"balance": 0,
+		"source_type_id": 4,
+		"activity_type_id": 4,
+		"context_value_1": 1,
+		"meta": {
+			"user_points_ever": 411,
+			"to_level_id": 99,
+			"from_level_id": 72
+		},
+		"source_reference_id": 99,
+		"source_root_id": 673,
+		"is_wallet_entry": false
+	}
+]
