@@ -1784,8 +1784,12 @@ export interface TransformedRaffleClaimPrizeResponse {
 	errorMessage?: string
 }
 /**
- * TActivityLog describes a unified history log entry for points, gems, or diamonds changes.
- * The structure is the same regardless of balance type, making it easy to iterate and display.
+ * One activity-log row from {@link WSAPIUser.getActivityLog}.
+ *
+ * Always includes the wallet fields (`type` / `amount` / `balance` / …). When the
+ * server returns richer activity rows (missions, badges, levels, …), the optional
+ * fields below are populated — same method, same CID; clients that ignore unknown
+ * fields keep working.
  */
 export interface TActivityLog {
 	/** Date when the change was created (epoch timestamp in seconds) */
@@ -1804,30 +1808,26 @@ export interface TActivityLog {
 	total_ever?: number;
 	/** Source type ID indicating what triggered this change */
 	source_type_id: PointChangeSourceType;
+	/** Activity kind — see {@link ActivityLogActivities} (`type_id` on the wire). */
+	activity_type_id?: ActivityLogActivities;
+	/** Sub-action for `activity_type_id` (e.g. unlock vs complete, add vs deduct, raffle win vs register). */
+	context_value_1?: number;
+	/** Extra display payload for the row (name, image, position, …) — see {@link ActivityLogMeta}. */
+	meta?: ActivityLogMeta;
+	/** Human-readable name of the source entity (mission, tournament, raffle, …). */
+	source_entity_name?: string;
+	/** Primary id of the source entity (mission / badge / tournament / …). */
+	source_entity_id?: number;
+	/** More specific id within the source (e.g. level id, draw id, win id). */
+	source_reference_id?: number;
+	/** Root / parent entity id when the source is nested (e.g. raffle id owning a draw). */
+	source_root_id?: number;
+	/** True when the row is a points/gems/diamonds wallet change. */
+	is_wallet_entry?: boolean;
 }
 
-/**
- * Full activity-log row returned by {@link WSAPIUser.getActivityLogV2}.
- * Includes wallet changes and non-wallet activities (missions, badges, levels, …).
- */
-export interface TActivityLogEntry {
-	create_date: number;
-	user_ext_id: string;
-	crm_brand_id: number;
-	type: UserBalanceType;
-	amount: number;
-	balance: number;
-	total_ever?: number;
-	source_type_id: PointChangeSourceType;
-	activity_type_id?: ActivityLogActivities;
-	context_value_1?: number;
-	meta?: ActivityLogMeta;
-	source_entity_name?: string;
-	source_entity_id?: number;
-	source_reference_id?: number;
-	source_root_id?: number;
-	is_wallet_entry: boolean;
-}
+/** @deprecated Use {@link TActivityLog} — same shape; kept as an alias for early adopters. */
+export type TActivityLogEntry = TActivityLog;
 
 
 /**

@@ -1,8 +1,10 @@
 # UI Guide — `getActivityLog`
 
 ## Overview
-- Returns the user's unified balance-change history — every points / gems /
-  diamonds transaction in the requested window, newest-first.
+- Returns the user's activity history in the requested window, newest-first.
+  Wallet rows (points / gems / diamonds) are always available; richer activity
+  rows (missions, badges, levels, …) appear on the same method when the
+  server starts emitting them — optional fields on `TActivityLog`.
 - Power an "Activity" / "History" tab showing wins, claims, purchases,
   level-up rewards, and operator adjustments.
 - 30 s SDK cache + push refresh on every wallet change (with a caveat —

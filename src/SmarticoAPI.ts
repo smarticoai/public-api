@@ -102,7 +102,6 @@ import {
 	TRaffle,
 	TLevelCurrent,
 	TActivityLog,
-	TActivityLogEntry,
 	TRaffleDraw,
 	TAvatarDefinition,
 	TAvatarCustomized,
@@ -137,7 +136,7 @@ import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
 import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse, raffleTransform } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
-import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform, ActivityLogV2Transform } from './ActivityLog';
+import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform } from './ActivityLog';
 import { GetClanListRequest, GetClanListResponse, GetClanInfoRequest, GetClanInfoResponse, JoinClanRequest, JoinClanResponse } from './Clans';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform, GetRaffleWonPrizesRequest, GetRaffleWonPrizesResponse } from './Raffle';
@@ -1783,31 +1782,6 @@ class SmarticoAPI {
 		return await this.send<GetActivityLogResponse>(message, ClassId.GET_POINT_HISTORY_RESPONSE);
 	}
 
-	public async getActivityLogV2(
-		user_ext_id: string,
-		startTimeSeconds: number,
-		endTimeSeconds: number,
-		limit: number,
-		offset: number,
-		types?: number[],
-		src_types?: number[],
-	): Promise<GetActivityLogResponse> {
-		const message = this.buildMessage<GetActivityLogRequest, GetActivityLogResponse>(
-			user_ext_id,
-			ClassId.GET_POINT_HISTORY_REQUEST,
-			{
-				startTimeSeconds: Math.floor(startTimeSeconds),
-				endTimeSeconds: Math.floor(endTimeSeconds),
-				limit,
-				offset,
-				...(types ? { types } : {}),
-				...(src_types ? { src_types } : {}),
-			},
-		);
-
-		return await this.send<GetActivityLogResponse>(message, ClassId.GET_POINT_HISTORY_RESPONSE);
-	}
-
 	public async getActivityLogT(
 		user_ext_id: string,
 		startTimeSeconds: number,
@@ -1822,23 +1796,6 @@ class SmarticoAPI {
 
 		return ActivityLogTransform(
 			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset, types, src_types)).logHistory,
-		);
-	}
-
-	public async getActivityLogV2T(
-		user_ext_id: string,
-		startTimeSeconds: number,
-		endTimeSeconds: number,
-		from: number = 0,
-		to: number = 50,
-		types?: number[],
-		src_types?: number[],
-	): Promise<TActivityLogEntry[]> {
-		const limit = to - from > 50 ? 50 : to - from;
-		const offset = from;
-
-		return ActivityLogV2Transform(
-			(await this.getActivityLogV2(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset, types, src_types)).logHistory,
 		);
 	}
 }

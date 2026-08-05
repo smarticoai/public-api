@@ -1,8 +1,8 @@
 # getActivityLog — API (TActivityLog)
 
-> Returns the user's unified balance-change history — every points, gems, and diamonds transaction within the requested time window, ordered newest-first.
+> Returns the user's activity history — wallet changes today, and richer activity rows (missions, badges, levels, …) when the server starts emitting them. Same method / CID either way; new fields are additive.
 > Import: `import { TActivityLog } from '@smartico/public-api'`
-> Search terms: getActivityLog, user, TActivityLog, UserBalanceType, PointChangeSourceType, onUpdate, subscription
+> Search terms: getActivityLog, user, TActivityLog, UserBalanceType, PointChangeSourceType, ActivityLogActivities, ActivityLogMeta, onUpdate, subscription
 
 ## Signature
 ```ts
@@ -37,14 +37,26 @@ _None._
 
 ## Returns — `Promise<TActivityLog[]>`
 Array of `TActivityLog`. Each item:
-- `create_date` (number) — Date when the change was created (epoch timestamp in seconds)
-- `user_ext_id` (string) — External user ID
-- `crm_brand_id` (number) — CRM brand ID
-- `type` (UserBalanceType) — Type of balance: Points = 0, Gems = 1, Diamonds = 2
-- `amount` (number) — Amount changed (positive or negative)
-- `balance` (number) — Current balance after this change
-- `total_ever` (number) — Total ever collected (only relevant for type points)
-- `source_type_id` (PointChangeSourceType) — Source type ID indicating what triggered this change
+
+Stable wallet fields (always present for wallet rows):
+- `create_date` (number) — epoch seconds
+- `user_ext_id` (string)
+- `crm_brand_id` (number)
+- `type` (UserBalanceType) — Points = 0, Gems = 1, Diamonds = 2
+- `amount` (number)
+- `balance` (number)
+- `total_ever` (number) — points only
+- `source_type_id` (PointChangeSourceType)
+
+Additive fields (populated when the server returns richer activity rows):
+- `activity_type_id` (ActivityLogActivities)
+- `context_value_1` (number)
+- `meta` (ActivityLogMeta)
+- `source_entity_name` (string)
+- `source_entity_id` (number)
+- `source_reference_id` (number)
+- `source_root_id` (number)
+- `is_wallet_entry` (boolean)
 
 ## Behavioral contract
 **Preconditions**
@@ -119,4 +131,5 @@ See this method's TSDoc / the mutation pages for `err_code` handling.
 - `UserBalanceType`
 - `PointChangeSourceType`
 - `ActivityLogActivities`
+- `ActivityLogMeta`
 - `TActivityLog`

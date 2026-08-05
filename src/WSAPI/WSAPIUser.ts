@@ -2,7 +2,6 @@ import { CoreUtils } from '../Core';
 import { ECacheContext, OCache } from '../OCache';
 import {
 	TActivityLog,
-	TActivityLogEntry,
 	TLevel,
 	TLevelCurrent,
 	TSegmentCheckResult,
@@ -514,15 +513,16 @@ export class WSAPIUser extends WSAPIBase {
 	}
 
 	/**
-	 * Returns the user's unified balance-change history — every points, gems, and
-	 * diamonds transaction within the requested time window, ordered newest-first.
-	 * Use to power an "Activity" / "History" tab showing wins, claims, purchases,
-	 * level-up rewards, and operator adjustments.
+	 * Returns the user's activity history within the requested time window,
+	 * ordered newest-first. Today that is primarily wallet changes (points /
+	 * gems / diamonds); when the server starts returning richer activity rows
+	 * (missions, badges, levels, …), the same method surfaces them via optional
+	 * fields on {@link TActivityLog} — no separate call, same wire CID.
 	 *
-	 * The returned shape is the same regardless of currency type — `type` (see
-	 * {@link UserBalanceType}) distinguishes points / gems / diamonds and
-	 * `source_type_id` (see {@link PointChangeSourceType}) names the originating
-	 * event.
+	 * Existing wallet fields (`type`, `amount`, `balance`, `source_type_id`, …)
+	 * stay stable. Clients that only read those keep working; clients that want
+	 * the fuller feed can also read `activity_type_id`, `meta`,
+	 * `source_entity_*`, and `is_wallet_entry` when present.
 	 *
 	 * @remarks
 	 * **Preconditions**
@@ -661,48 +661,5 @@ export class WSAPIUser extends WSAPIBase {
 		if (typeof onUpdate === 'function') {
 			onUpdate(payload);
 		}
-	}
-
-	/**
-	 * Returns the full activity log (v2) — wallet changes **and** non-wallet
-	 * activities (missions, badges, levels, tournaments, avatars, …).
-	 *
-	 * **Backwards compatibility**: existing integrations should keep using
-	 * {@link getActivityLog}, which returns wallet-only {@link TActivityLog}
-	 * rows with the original field contract unchanged.
-	 *
-	 * **Pagination** — same `from` / `to` offset model as {@link getActivityLog}
-	 * (server caps a single response at 50 entries).
-	 *
-	 * **Filtering** — optional server-side filters:
-	 * - `types` — {@link ActivityLogActivities} values (`type_id`)
-	 * - `src_types` — {@link PointChangeSourceType} values (`source_type_id`)
-	 * Omit both for all activity types / sources.
-	 *
-	 * @returns Array of {@link TActivityLogEntry} ordered newest-first.
-	 */
-	public async getActivityLogV2({
-		startTimeSeconds,
-		endTimeSeconds,
-		from,
-		to,
-		types,
-		src_types,
-	}: {
-		startTimeSeconds: number;
-		endTimeSeconds: number;
-		from: number;
-		to: number;
-		types?: number[];
-		src_types?: number[];
-	}): Promise<TActivityLogEntry[]> {
-		const cacheKey = `${onUpdateContextKey.ActivityLogV2}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}:${src_types?.join(',') ?? ''}`;
-
-		return await OCache.use(
-			cacheKey,
-			ECacheContext.WSAPI,
-			() => this.api.getActivityLogV2T(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types, src_types),
-			CACHE_DATA_SEC,
-		);
 	}
 }
