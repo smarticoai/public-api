@@ -180,6 +180,17 @@ import { SmarticoAPI, WSAPI } from '@smartico/public-api';
 
 // publicApiUrl is resolved automatically by SmarticoAPI from your label key
 const messageSender = async (message: any, publicApiUrl?: string): Promise<any> => {
+
+    // if label has user hash protection enabled, calculate hash and add in the message, e.g.
+    const hashValidityTimestampMs = ~~(+new Date() / 1000) * 1000 + 24 * 3600 * 1000;
+    const userExtId = message.user_ext_id;
+    const saltKey = 'your_secret_salt_key_setup_on_smartico_side';
+    const hashValue = md5((userExtId + ':' + saltKey + ':' + hashValidityTimestampMs).toLowerCase()) +
+		':' +
+		hashValidityTimestampMs;
+
+	message.hash = hashValue;
+
     const res = await fetch(publicApiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -228,6 +239,9 @@ You can make HTTP calls to the Smartico public endpoint to interact with user da
 ### Example: check segment membership
 
 This example checks whether a user belongs to specific segments. It corresponds to `checkSegmentListMatch` (cid: 161 / response cid: 162) described in [Native Protocol](docs/native/PROTOCOL.md).
+
+Note: in case your label has user hash protection enabled, you need to calculate it using secret salt key and pass it in the data under "hash" value.
+Check for more details here - https://help.smartico.ai/welcome/technical-guides/front-end-integration/extended-integration#protecting-user-identification-on-the-public-front-end
 
 **Request:**
 
