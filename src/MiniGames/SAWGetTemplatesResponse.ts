@@ -47,6 +47,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 			earliest_expiration_dt: r.earliest_expiration_dt,
 			latest_expiration_dt: r.latest_expiration_dt,
 			steps_to_finish_game: r.saw_template_ui_definition.steps_to_finish_game,
+			min_steps_to_finish_game: r.saw_template_ui_definition.min_steps_to_finish_game,
 			custom_section_id: r.saw_template_ui_definition.custom_section_id,
 			saw_template_ui_definition: r.saw_template_ui_definition,
 			...(r.saw_game_type_id === SAWGameType.LootboxCalendarDays || r.saw_game_type_id === SAWGameType.LootboxWeekdays

@@ -222,6 +222,8 @@ export interface TMiniGameTemplate {
 	activeTillDate?: number;
 	/** Number of steps to complete the game and collect the prize (step games — Voyager / Treasure Hunt) */
 	steps_to_finish_game?: number;
+	/** Minimum number of path steps / collectible prizes a session must include before the game can finish (step games — Voyager / Treasure Hunt). `>= 1` and `<= steps_to_finish_game`; when omitted, no minimum is enforced */
+	min_steps_to_finish_game?: number;
 	/** ID of the operator-defined custom section (widget menu grouping) the mini-game is assigned to */
 	custom_section_id?: number;
 
