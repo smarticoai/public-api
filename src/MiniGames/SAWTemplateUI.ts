@@ -469,6 +469,23 @@ export interface SAWTemplateUI {
      */
     custom_game_url?: string;
 
+    /**
+     * Whether this template is played as a custom mini-game.
+     *
+     * A template of any regular game type (wheel, scratch card, treasure hunt,
+     * …) can be switched over to a custom game while keeping its own type,
+     * prizes and buy-in settings — only the way it is played changes: the
+     * widget loads `custom_game_url` in an iframe instead of rendering the
+     * built-in game.  `saw_game_type_id` still reports the original type, so
+     * treat this flag — not the type — as the answer to "is this played as a
+     * custom game", together with `SAWGameType.CustomMinigame`, which is always
+     * played that way.
+     *
+     * When `false` or omitted, the template is played as its own game type.
+     * Back-Office label: _"Use Custom Game"_.
+     */
+    use_custom?: boolean;
+
 	/**
 	 * Minutes for the Voyager seed window.
 	 * The seed window is the range of seeds that can be used to generate the map.
