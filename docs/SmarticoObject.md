@@ -286,12 +286,12 @@ to have run.
 Renders an operator-configured banner into a host element, and pushes runtime
 data into a rendered banner placement.
 
-### `suspendPopups(flag)` · `suspendInbox(flag)` · `suspendMiniGames(flag)`
+### `suspendPopups(flag)` · `suspendInbox(flag)` · `suspendMiniGames(flag)` · `suspendForms(flag)`
 
 Temporarily suppress (or re-enable) automatically-triggered surfaces — popups,
-inbox prompts, and server-triggered mini-game pop-ups respectively. Pass `true`
-to suspend, `false` to resume. Useful while the user is mid-flow (e.g. on a
-deposit page or completing a KYC form) and you don't want Smartico surfaces
+inbox prompts, server-triggered mini-game pop-ups, and forms respectively. Pass
+`true` to suspend, `false` to resume. Useful while the user is mid-flow (e.g. on
+a deposit page or completing a KYC step) and you don't want Smartico surfaces
 interrupting. Require an identified user.
 
 ```js
@@ -303,6 +303,11 @@ _smartico.suspendPopups(false);  // back to a safe screen
 When suspension is turned off, the first surface that was missed while
 suspended is shown — provided the session is still active (the user hasn't
 refreshed or navigated away).
+
+`suspendForms` is the exception: a form requested while forms are suspended is
+dropped, not queued, so nothing replays when you resume. A campaign-triggered
+form that is dropped this way is reported as failed to deliver, which fires the
+journey's failure branch.
 
 ---
 

@@ -171,6 +171,8 @@ export interface SmarticoGlobal {
 	suspendInbox(flag: boolean): void;
 	/** Temporarily suspend/resume mini-games. */
 	suspendMiniGames(flag: boolean): void;
+	/** Temporarily suspend/resume forms. */
+	suspendForms(flag: boolean): void;
 
 	/** Show a visitor-mode game. */
 	showVisitorGame(params: Record<string, unknown>): void;
