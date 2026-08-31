@@ -52,6 +52,12 @@ export class WSAPITournaments extends WSAPIStore {
 	 * tournaments not yet published. SDK consumers receive only items
 	 * the user is eligible to see; no client-side gating is required.
 	 *
+	 * Client-side filtering you may still want: tournaments with
+	 * `only_in_custom_section: true` are intended for their custom-section
+	 * view only and should be hidden from the main lobby list — including
+	 * from any per-tab counters rendered next to the tab labels, otherwise
+	 * the counts disagree with the number of cards the user can see.
+	 *
 	 * **Reading state from the returned item**
 	 * Drive list bucketing and CTA labels from the SDK-computed booleans
 	 * (`is_active`, `is_can_register`, `is_cancelled`, `is_finished`,
@@ -116,19 +122,22 @@ export class WSAPITournaments extends WSAPIStore {
 	 *   },
 	 * });
 	 *
+	 * // Main lobby list — custom-section-only tournaments belong to that section's own view.
+	 * const lobby = tournaments.filter(t => !t.only_in_custom_section);
+	 *
 	 * // Bucket items by lifecycle state for a tabbed UI.
-	 * const live = tournaments.filter(t => t.is_in_progress);
-	 * const upcoming = tournaments
+	 * const live = lobby.filter(t => t.is_in_progress);
+	 * const upcoming = lobby
 	 *   .filter(t => t.is_upcoming && !t.is_user_registered)
 	 *   .sort((a, b) => a.start_time - b.start_time);
-	 * const mine = tournaments.filter(t => t.is_user_registered);
-	 * const finished = tournaments.filter(t => t.is_finished);
+	 * const mine = lobby.filter(t => t.is_user_registered);
+	 * const finished = lobby.filter(t => t.is_finished);
 	 *
 	 * console.log('[smartico] render lobby tabs with these counts: live=', live.length,
 	 *   'upcoming=', upcoming.length, 'mine=', mine.length, 'finished=', finished.length);
 	 *
 	 * // Featured tournament: pin to position 0 of the Overview/Top tabs.
-	 * const featured = tournaments.find(t => t.is_featured && !t.is_cancelled);
+	 * const featured = lobby.find(t => t.is_featured && !t.is_cancelled);
 	 * if (featured) {
 	 *   console.log('[smartico] featured tournament — pin to position 0 of the Overview tab:', featured.name);
 	 * }

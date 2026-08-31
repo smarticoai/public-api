@@ -90,6 +90,7 @@ export const TournamentItemsTransform = (items: Tournament[]): TTournament[] => 
 				prize_pool_short: r.publicMeta.prize_pool_short,
 				custom_price_text: r.publicMeta.custom_price_text,
 				custom_section_id: r.publicMeta.custom_section_id,
+				only_in_custom_section: r.publicMeta.only_in_custom_section,
 				custom_data: IntUtils.JsonOrText(r.publicMeta.custom_data),
 				is_featured: r.publicMeta.featured,
 				ribbon: r.publicMeta.label_tag === 'custom' ? r.publicMeta.custom_label_tag : r.publicMeta.label_tag,

@@ -34,10 +34,15 @@ tabs only. No visual difference on the card itself — just position.
 - Desktop: Overview · MyTournaments · InProgress · Finished
 - Mobile: Overview · MyTournaments · InProgress
 
-**Custom section filtering**: if your UI scopes the lobby to a
-specific custom section (e.g. a deep-link `?custom_section_id=42`),
-filter to tournaments whose `custom_section_id` matches; the SDK does
-not filter for you.
+**Custom section filtering**: the SDK does not filter by placement —
+do it yourself, and apply the same filter to the tab counters, not just
+to the rendered cards:
+
+- Main lobby: drop custom-section-only entries —
+  `tournaments.filter(t => !t.only_in_custom_section)`.
+- A lobby scoped to one custom section (e.g. a deep-link
+  `?custom_section_id=42`): keep the entries whose `custom_section_id`
+  matches that section instead.
 
 **Bucketing helper** (raw-state to bucket — for reference):
 
@@ -81,8 +86,9 @@ Fields rendered on the card (top-to-bottom):
     `registration_cost_gems` / `registration_cost_diamonds` (only
     one is set per tournament) — show "Free" if all are falsy.
     `custom_price_text` (operator-supplied string) overrides if set.
-  - Prize pool: `prize_pool_short` if set, else a derived label
-    from `prizes[]` (or "Mixed" / "—" as fallback).
+  - Prize pool: `prize_pool_short` if set, else "Mixed". The default
+    Smartico UI does not derive a card label from `prizes[]` and never
+    renders a bare dash — keep the fallback a single stable string.
 - **CTA button** — see "Action button decision matrix".
 
 **Mobile card variant**: ribbon renders ABOVE the image (not as an

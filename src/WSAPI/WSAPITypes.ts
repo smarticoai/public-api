@@ -389,6 +389,8 @@ export interface TTournament {
 	 * The list of custom sections can be retrieved using _smartico.api.getCustomSections() method
 	 */
 	custom_section_id: number;
+	/** The indicator if the tournament is visible only in the custom section and should be hidden from the main overview of tournaments */
+	only_in_custom_section?: boolean;
 	/** The custom data of the tournament defined by operator. Can be a JSON object, string or number */
 	custom_data: any;
 
