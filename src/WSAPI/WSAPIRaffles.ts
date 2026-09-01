@@ -68,8 +68,12 @@ export class WSAPIRaffles extends WSAPIJackpots {
 	 *   sold-out message).
 	 * - Within each draw, `current_state`
 	 *   ({@link RaffleDrawInstanceState}) buckets the draw into Open
-	 *   (accepting tickets), WinnerSelection (currently drawing), or
-	 *   Executed (winners selected).
+	 *   (accepting tickets), WinnerSelection (currently drawing),
+	 *   Executed (winners selected), or Cancelled (will never run).
+	 *   Treat every state other than Open and WinnerSelection as
+	 *   terminal — stop polling the draw run and clear any
+	 *   "drawing in progress" indicator, otherwise a cancelled draw
+	 *   leaves the UI spinning forever.
 	 * - `execution_type` ({@link RaffleDrawTypeExecution}) distinguishes
 	 *   one-shot (`ExecDate`), repeating (`Recurring`), or special
 	 *   one-shot (`Grand`) draws. Recurring draws share a stable

@@ -9,19 +9,25 @@ export enum RaffleDrawInstanceState {
     WinnerSelection = 2,
     /** Draw is executed and the winners are selected */
     Executed = 3,
+    /**
+     * Draw was cancelled and will never be executed.
+     * Treat it as a terminal state: stop any polling of the draw run
+     * and do not show the winner-selection progress UI.
+     */
+    Cancelled = 4,
 }
 
 export enum RaffleDrawTypeExecution {
     /** Draw is executed only once */
-    ExecDate = 0,
+    ExecDate = 1,
     /** Draw is executed on a recurring basis */
-    Recurring = 1,
-    /** 
+    Recurring = 2,
+    /**
      * Draw is executed once and is marked as grand.
      * This means it is a special or significant draw,
      * often with larger prizes or more importance.
      */
-    Grand = 2,
+    Grand = 3,
 }
 
 

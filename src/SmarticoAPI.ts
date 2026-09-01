@@ -95,6 +95,7 @@ import {
 	TTournament,
 	TTournamentDetailed,
 	LeaderBoardDetailsT,
+	LeaderBoardSettingsT,
 	UserLevelExtraCountersT,
 	TSegmentCheckResult,
 	TUICustomSection,
@@ -1242,6 +1243,49 @@ class SmarticoAPI {
 
 	public async leaderboardsGetListT(user_ext_id: string): Promise<LeaderBoardDetailsT[]> {
 		return (await this.leaderboardsGetList(user_ext_id)).map(getLeaderBoardTransform);
+	}
+
+	public leaderboardsGetSettings(): LeaderBoardSettingsT {
+		// Defaults match the default Smartico UI when the operator has not
+		// configured the gamification UI settings: avatars and levels are
+		// shown, other players' points are not.
+		const settings = this.getGamificationUISettings();
+
+		return {
+			hide_avatars: settings?.hide_avatars_leaderboards === true,
+			hide_levels: settings?.leaderboard_hide_levels === true,
+			// Deliberately asymmetric: points stay hidden unless the operator
+			// explicitly opted in by setting the flag to false. This mirrors the
+			// default Smartico UI, so a consumer rendering both surfaces agrees
+			// with it on an unconfigured label.
+			hide_other_points: settings?.leaderboard_hide_other_points !== false,
+		};
+	}
+
+	private getGamificationUISettings(): Record<string, any> {
+		if (!this.tracker) {
+			return null;
+		}
+
+		const parse = (raw: any): Record<string, any> => {
+			if (typeof raw !== 'string' || raw.length === 0) {
+				return null;
+			}
+
+			try {
+				const parsed = JSON.parse(raw);
+				return parsed && Object.keys(parsed).length ? parsed : null;
+			} catch (e) {
+				return null;
+			}
+		};
+
+		// Test accounts read the operator's test variant when one is configured;
+		// everyone else reads the live settings.
+		const isTestAccount = this.tracker.userPublicProps?.core_is_test_account === true;
+		const testSettings = isTestAccount ? parse(this.tracker.getLabelSetting(PublicLabelSettings.GAMIFICATION_UI_SETTINGS_TEST_V2)) : null;
+
+		return testSettings || parse(this.tracker.getLabelSetting(PublicLabelSettings.GAMIFICATION_UI_SETTINGS_V2));
 	}
 
 	public async levelsGet(user_ext_id: string, force_language?: string): Promise<GetLevelMapResponse> {

@@ -45,10 +45,25 @@ Columns per row (in the Leaders tab):
 | Column | Source | Notes |
 |---|---|---|
 | Position | `user.position` | Server-computed DENSE_RANK. Show as `01`, `02`, … `20`. |
-| Avatar | `user.avatar_url` | Hide via operator config `hide_avatars_leaderboards` if applicable. |
+| Avatar | `user.avatar_url` | Hidden when `getLeaderBoardSettings().hide_avatars`. |
 | Username | `user.public_username` | |
-| Points | `user.points` | Operator config `leaderboard_hide_other_points` may suppress points for everyone except the current user. |
-| Level badge | (Drives from separate `getCurrentLevel` lookup, not on this type) | Operator config `leaderboard_hide_levels` may suppress. |
+| Points | `user.points` | Hidden for every row except the current user's when `getLeaderBoardSettings().hide_other_points`. |
+| Level badge | (Drives from separate `getCurrentLevel` lookup, not on this type) | Hidden when `getLeaderBoardSettings().hide_levels`. |
+
+**Privacy flags are the consumer's job.** `getLeaderBoard` always returns
+`avatar_url`, `level_id` and `points` on every row — the server does not
+strip them. Read the operator's configuration with the synchronous
+`getLeaderBoardSettings()` and apply it while rendering:
+
+```ts
+const settings = window._smartico.api.getLeaderBoardSettings();
+const showPoints = (row: LeaderBoardUserT) => row.is_me || !settings.hide_other_points;
+```
+
+Note the default on an unconfigured label: `hide_avatars` and
+`hide_levels` are `false` (show), but `hide_other_points` is `true`
+(hide). Rendering points unconditionally is therefore a divergence from
+the default Smartico UI, not just a missed setting.
 
 **Top-3 podium styling**: apply distinct CSS classes (`place-1`,
 `place-2`, `place-3`) to rows with `position <= 3` (and

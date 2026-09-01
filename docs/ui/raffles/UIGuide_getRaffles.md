@@ -20,10 +20,15 @@ raffle expanding to show its draws. There are no top-level tabs.
 
 Per-raffle, draws are bucketed within the detail panel:
 
-  1. **Active / Upcoming** — `draws.filter(d => d.current_state !== 3)`
+  1. **Active / Upcoming** — `draws.filter(d => d.current_state === 1 || d.current_state === 2)`
      (1 = Open, 2 = WinnerSelection); sort by `execution_ts` ASC.
   2. **Executed** — `draws.filter(d => d.current_state === 3)`;
      rendered after the active draws.
+
+Bucket on the active states explicitly rather than on
+`current_state !== 3`: Cancelled (4) is also terminal, and a
+`!== 3` test files it under Active, where it renders as a live draw
+that never resolves.
 
 ## Ticket-cap banner
 
@@ -48,6 +53,18 @@ Fields rendered on each raffle row:
 `custom_section_id` lets the consumer place the raffle into an
 operator-defined custom section. `custom_data` is operator-defined
 JSON / string for custom UI extensions.
+
+**Rules / Terms & Conditions**: `hint_text` is the operator-authored
+rules text for the raffle. The default Smartico UI surfaces it behind a
+"Rules" button next to the draw-history entry point. It may be empty —
+in that case hide the button entirely. Never substitute generic
+boilerplate for it: the text is a legal artefact the operator is
+responsible for, and inventing your own makes the widget state terms
+the operator never agreed to.
+
+**Per-prize privacy**: `hide_chance_to_win` is set per prize. When it
+is `true`, do not render that prize's `chances_to_win_perc` anywhere —
+neither on the card nor in the expanded draw.
 
 ## Draw card (per-raffle children)
 

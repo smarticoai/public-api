@@ -1195,6 +1195,22 @@ export interface LeaderBoardDetailsT {
 }
 
 /**
+ * LeaderBoardSettingsT carries the operator's privacy configuration for
+ * leaderboard rendering. Every flag means "hide" when `true`.
+ */
+export interface LeaderBoardSettingsT {
+	/** When `true`, render leaderboard rows without player avatars. */
+	hide_avatars: boolean;
+	/** When `true`, render leaderboard rows without player level names. */
+	hide_levels: boolean;
+	/**
+	 * When `true`, hide the points of every player except the current user.
+	 * The current user's own points are always shown, regardless of this flag.
+	 */
+	hide_other_points: boolean;
+}
+
+/**
  * LeaderBoardsRewardsT describes one place's prize on a leaderboard.
  * Leaderboard prizes are always gamification points (never gems / diamonds / items).
  */
@@ -1424,6 +1440,13 @@ export interface TRaffle {
 	/** URL of the mobile image that represents the raffle, 300x142px */
 	image_url_mobile: string;
 	/**
+	 * Terms and Conditions text configured by the operator for this raffle.
+	 * Render it as the raffle rules. It is absent or empty when the operator
+	 * configured none — hide the rules section in that case rather than
+	 * substituting your own copy.
+	 */
+	hint_text?: string;
+	/**
 	 * Custom data as string or JSON string that can be used in API to build custom UI
 	 * You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice
 	 * Read more here - https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes
@@ -1479,6 +1502,12 @@ export interface TRafflePrize {
 	 * Can be used to build custom UI for gamification.
 	 */
 	custom_data?: string;
+	/**
+	 * Indicates whether the chance to win should be hidden in the UI.
+	 * When `true`, do not render `chances_to_win_perc` for this prize.
+	 * Absent means "not hidden".
+	 */
+	hide_chance_to_win?: boolean;
 	/**
 	 * The number of prizes available per run of the draw.
 	 * E.g. if the draw is run daily, this is the number of prizes available each day, for example 3 iPhones.

@@ -22,7 +22,7 @@ export type {
 	TSetAvatarResult, TStoreCategory, TStoreItem, TTournament, TTournamentDetailed,
 	TTournamentRegistrationResult, TUICustomSection, TUserProfile,
 	TransformedRaffleClaimPrizeResponse, InboxMarkMessageAction, LeaderBoardDetailsT,
-	LeaderBoardUserT, LeaderBoardsRewardsT, UserLevelExtraCountersT,
+	LeaderBoardUserT, LeaderBoardsRewardsT, LeaderBoardSettingsT, UserLevelExtraCountersT,
 } from './WSAPI/WSAPITypes';
 
 export * from './Analytics';

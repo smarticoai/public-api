@@ -302,8 +302,8 @@ export class MissionUtils {
             if (progress === 0) {
                 return BadgesTimeLimitStates.AfterStartDateNoProgress;
             }
-            // If infinite and with progress → this state does not exist in enum
-            // (but if needed we can add one)
+
+            return BadgesTimeLimitStates.AfterStartDateWithProgress;
         }
       
         // 3. AFTER START, BEFORE END DATE

@@ -216,7 +216,11 @@ export class WSAPIMissions extends WSAPIGeneral {
 	 * as undefined / default. Time windows are absolute calendar timestamps
 	 * (`active_from_ts` / `active_till_ts`), not opt-in-relative durations —
 	 * drive availability chips from the SDK-computed `badgeTimeLimitState`
-	 * (enum {@link BadgesTimeLimitStates}), not `time_limit_ms`. Locking for
+	 * (enum {@link BadgesTimeLimitStates}), not `time_limit_ms`. A badge
+	 * with no `active_till_ts` is open-ended and never reaches the
+	 * "after end date" states — it reports `AfterStartDateNoProgress`
+	 * or `AfterStartDateWithProgress` — so it must never be rendered as
+	 * expired. Locking for
 	 * badges is purely time-based: `is_locked` is `true` only when
 	 * `badgeTimeLimitState === BadgesTimeLimitStates.BeforeStartDate` (the
 	 * time window hasn't started yet). The primary navigation field is

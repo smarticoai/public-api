@@ -137,6 +137,12 @@ top.
 | `AfterStartDateWithProgressAndEndDate` (3) — active with progress, has end date | Full-color | `"<countdown>"` to `active_till_ts` (see "Countdown / timing format") |
 | `AfterEndDateNotStarted` (4) — expired, never started | Grayscale + dim overlay + slash/X overlay | `"Expired"` |
 | `AfterEndDateWithProgress` (5) — expired with some progress | Grayscale + dim overlay | `"Ended"` (or `"Expired"`) |
+| `AfterStartDateWithProgress` (6) — active with progress, no end date | Full-color, no overlay | No chip |
+
+States 1 and 6 are the open-ended pair: a badge with no `active_till_ts`
+can only ever report one of them, never states 4 or 5. Never render an
+open-ended badge as expired, and never key an "expired" treatment off
+the absence of a countdown.
 
 On top of the time-window treatment, layer the completion state:
 
