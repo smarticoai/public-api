@@ -192,6 +192,7 @@ interface Tracker {
 	getLabelSetting: (key: PublicLabelSettings) => any;
 	triggerExternalCallBack: (callBackKey: string, payload: any) => void;
 	getExtUserId: () => string;
+	getHash?: () => string;
 }
 interface IOptions {
 	logger?: ILogger;
@@ -1498,6 +1499,11 @@ class SmarticoAPI {
 			smartico_ext_user_id: this.tracker.getExtUserId(),
 			lang: this.tracker.userPublicProps?.core_user_language,
 		});
+
+		const user_hash = this.tracker.getHash?.();
+		if (user_hash) {
+			params.user_hash = user_hash;
+		}
 
 		return params;
 	}
