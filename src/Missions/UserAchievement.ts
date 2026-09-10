@@ -128,6 +128,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 							is_completed: t.isCompleted,
 							progress: t.userProgress,
 							execution_count_expected: t.executionCount,
+							priority: t.task_public_meta.priority ?? 0,
 							execution_count_actual: t.userExecutedCount,
 							display_progress_as_count: t.task_public_meta.display_progress_as_count,
 							stage_image: t.task_public_meta.stage_image,
