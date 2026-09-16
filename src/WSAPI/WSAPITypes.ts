@@ -280,6 +280,9 @@ export interface TUserProfile {
 	/** AI-recommended casino bet amount for this user. Undefined when no
 	 * recommendation is currently available. */
 	core_recommended_casino_bet_amount?: number;
+	/** AI-recommended sport bet amount for this user. Undefined when no
+	 * recommendation is currently available. */
+	core_recommended_sport_bet_amount?: number;
 	/** Display name of the user's current level (e.g. `"Silver"`); resolve the id via `getCurrentLevel()`. */
 	ach_level_current?: string;
 	/** `true` when the user is in the gamification A/B control group (gamification UI suppressed). */

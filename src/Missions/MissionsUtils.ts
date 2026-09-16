@@ -5,11 +5,12 @@ import { UserAchievement } from "./UserAchievement";
 import { UserAchievementTask } from "./UserAchievementTask";
 import { BadgesTimeLimitStates } from "./BadgesTimeLimitStates";
 
-type UserStateParamsKeys = 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount';
+type UserStateParamsKeys = 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount' | 'core_recommended_sport_bet_amount';
 const USER_STATE_PARAMS_KEYS_GAMES: UserStateParamsKeys[] = ['core_fav_game_top3', 'core_fav_game_type_top3', 'core_fav_game_provider_top3'];
 const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = [
     'core_recommended_deposit_amount',
     'core_recommended_casino_bet_amount',
+    'core_recommended_sport_bet_amount',
 ];
 
 const MINOR_WORDS = new Set([

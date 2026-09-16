@@ -166,8 +166,9 @@ the client-side fallback.
 
 ## AI-recommended amounts
 
-`core_recommended_deposit_amount` and
-`core_recommended_casino_bet_amount` are AI-computed for the user.
+`core_recommended_deposit_amount`,
+`core_recommended_casino_bet_amount` and
+`core_recommended_sport_bet_amount` are AI-computed for the user.
 The default Smartico UI doesn't render them — they're exposed for
 custom integrations (e.g. operator-specific deposit prompts,
 personalized bet suggestions).

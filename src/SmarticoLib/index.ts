@@ -119,6 +119,7 @@ export interface PublicProperties {
 	core_registration_date?: number;
 	core_recommended_deposit_amount?: number;
 	core_recommended_casino_bet_amount?: number;
+	core_recommended_sport_bet_amount?: number;
 }
 declare enum ClassId {
 	PING = 1,
@@ -849,6 +850,8 @@ export interface TUserProfile {
 	core_recommended_deposit_amount?: number;
 	/** The recommended casino bet amount for the user */
 	core_recommended_casino_bet_amount?: number;
+	/** The recommended sport bet amount for the user */
+	core_recommended_sport_bet_amount?: number;
 }
 
 /**
