@@ -201,6 +201,9 @@ export enum ClassId {
 	BNR_GET_BANNER_CONTENT_REQUEST = 952,
 	BNR_GET_BANNER_CONTENT_RESPONSE = 953,
 
+	TERMS_AND_CONDITIONS_REQUEST = 954,
+	TERMS_AND_CONDITIONS_RESPONSE = 955,
+
 	/*
         !Important, if adding new messages that are 'acting' on behalf of the client,
         you need to include them in the CLASS_ID_IGNORE_FOR_SIMULATION

@@ -6,5 +6,7 @@ export * from './GetTranslationsRequest';
 export * from './GetTranslationsResponse';
 export * from './PublicLabelSettings';
 export * from './PublicProperties';
+export * from './TermsAndConditionsRequest';
+export * from './TermsAndConditionsResponse';
 export * from './ResponseIdentify';
 export * from './TranslationArea';
