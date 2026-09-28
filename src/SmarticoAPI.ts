@@ -146,7 +146,13 @@ import { GetAvatarsCustomizedResponse, avatarCustomizedTransform } from './Avata
 import { GetAvatarPromptsResponse, avatarPromptTransform } from './Avatars/GetAvatarPromptsResponse';
 import { SetAvatarRequest, SetAvatarResponse } from './Avatars';
 import { AvatarCustomizeResponse } from './Avatars/AvatarCustomizeResponse';
-import { GetJackpotWinnersResponse, GetJackpotWinnersResponseTransform, JackpotWinnerHistory } from './Jackpots/GetJackpotWinnersResponse';
+import {
+	GetJackpotWinnersResponse,
+	GetJackpotWinnersResponseTransform,
+	GetJackpotWinStatsResponseTransform,
+	JackpotWinnerHistory,
+	TGetJackpotWinStatsResponse,
+} from './Jackpots/GetJackpotWinnersResponse';
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
 import { GetJackpotEligibleGamesResponse, GetJackpotEligibleGamesResponseTransform, JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from './Jackpots/GetJackpotEligibleGamesResponse';
@@ -609,6 +615,10 @@ class SmarticoAPI {
 
 	public async getJackpotWinnersT(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number): Promise<JackpotWinnerHistory[]> {
 		return GetJackpotWinnersResponseTransform((await this.getJackpotWinners(user_ext_id, limit, offset, jp_template_id)).winners);
+	}
+
+	public async getJackpotWinStatsT(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number): Promise<TGetJackpotWinStatsResponse> {
+		return GetJackpotWinStatsResponseTransform(await this.getJackpotWinners(user_ext_id, limit, offset, jp_template_id));
 	}
 
 	public async getJackpotEligibleGames(user_ext_id: string, { jp_template_id }: { jp_template_id: number }): Promise<GetJackpotEligibleGamesResponse> {

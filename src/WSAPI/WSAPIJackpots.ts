@@ -8,6 +8,7 @@ import {
 } from '../Jackpots';
 import { IntUtils } from '../IntUtils';
 import { TGetJackpotEligibleGamesResponse } from '../Jackpots/GetJackpotEligibleGamesResponse';
+import { TGetJackpotWinStatsResponse } from '../Jackpots/GetJackpotWinnersResponse';
 import {
 	JACKPOT_TEMPLATE_CACHE_SEC,
 	JACKPOT_POT_CACHE_SEC,
@@ -386,6 +387,94 @@ export class WSAPIJackpots extends WSAPIClans {
 			cacheKey,
 			ECacheContext.WSAPI,
 			() => this.api.getJackpotWinnersT(this.userExtId, limit, offset, jp_template_id),
+			JACKPOT_WINNERS_CACHE_SEC,
+		);
+	}
+
+	/**
+	 * Returns past winners of a specific jackpot template, paginated, together
+	 * with the win statistics of that template: total number of wins, the
+	 * biggest win and the most recent win. Use it for a jackpot info modal /
+	 * tooltip that shows "Total wins", "Highest win" and "Latest win" next to
+	 * the winners list.
+	 *
+	 * @remarks
+	 * **Preconditions**
+	 * - User must be authenticated. Visitor mode not supported.
+	 * - `jp_template_id` is mandatory.
+	 * - The consumer SHOULD check
+	 *   `JackpotDetails.expose_winners_over_api` before calling, since
+	 *   the server does not enforce it.
+	 *
+	 * **Statistics**
+	 * - `win_stats` describes the whole jackpot template and does not depend
+	 *   on `limit` / `offset`. Pass `limit: 1` when only the statistics are needed.
+	 * - Only issued wins are counted — a pot that exploded but still waits for
+	 *   manual approval is not included.
+	 * - `highest_win` / `last_win` are `null` while the jackpot has no wins,
+	 *   `total_wins` is `0` in that case.
+	 * - `public_username` of `highest_win` / `last_win` is masked by the same
+	 *   label setting as the winners list, and is `null` when the template
+	 *   doesn't expose winners over API.
+	 * - The server refreshes the statistics once per minute.
+	 *
+	 * **Currency caveat**
+	 * All amounts (`win_stats.*.winning_amount`,
+	 * `winners[].winner.winning_amount_jp_currency`) are in the jackpot's
+	 * NATIVE currency, NOT the user's wallet currency.
+	 *
+	 * **Refresh**
+	 * - The SDK caches each page separately (per `jp_template_id` +
+	 *   `limit` + `offset`) for 30 seconds.
+	 * - Caches clear on jackpot-win push events and on opt-in / opt-out.
+	 *
+	 * **Error handling**
+	 * Non-zero `errCode` on control-group users or generic server errors. The
+	 * SDK does NOT enumerate distinct codes — branch on `errCode === 0` and
+	 * surface `errMsg` on failure.
+	 *
+	 * **Visitor mode**: not supported.
+	 *
+	 * @returns {@link TGetJackpotWinStatsResponse} —
+	 * `{ winners: JackpotWinnerHistory[], win_stats: JackpotWinStats }`.
+	 *
+	 * @example
+	 * ```ts
+	 * const [jp] = await window._smartico.api.jackpotGet({ jp_template_id: 42 });
+	 *
+	 * if (!jp || !jp.expose_winners_over_api) {
+	 *     console.log('[smartico] winners hidden by operator config — hide the stats');
+	 *     return;
+	 * }
+	 *
+	 * const { winners, win_stats } = await window._smartico.api.getJackpotWinStats({
+	 *     jp_template_id: 42,
+	 *     limit:          10,
+	 *     offset:         0,
+	 * });
+	 * console.log('[smartico] total wins', win_stats.total_wins);
+	 * console.log('[smartico] highest win', win_stats.highest_win?.winning_amount, jp.jp_currency);
+	 * console.log('[smartico] latest win', win_stats.last_win?.public_username, win_stats.last_win?.win_date_ts);
+	 * console.log('[smartico] render', winners.length, 'recent winner rows');
+	 * ```
+	 */
+	public async getJackpotWinStats({
+		limit,
+		offset,
+		jp_template_id,
+	}: {
+		/** Page size of the winners list (default 20). */
+		limit?: number;
+		/** Pagination offset of the winners list (default 0). */
+		offset?: number;
+		/** Jackpot template ID (required). */
+		jp_template_id?: number;
+	}): Promise<TGetJackpotWinStatsResponse> {
+		const cacheKey = `${onUpdateContextKey.JackpotWinners}stats:${jp_template_id}:${limit}:${offset}`;
+		return OCache.use(
+			cacheKey,
+			ECacheContext.WSAPI,
+			() => this.api.getJackpotWinStatsT(this.userExtId, limit, offset, jp_template_id),
 			JACKPOT_WINNERS_CACHE_SEC,
 		);
 	}

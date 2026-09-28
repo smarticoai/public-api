@@ -69,3 +69,11 @@ The list of jackpot winners
 > **has\_more**: `boolean`
 
 Whether there are more winners to fetch
+
+***
+
+### win\_stats?
+
+> `optional` **win\_stats?**: [`JackpotWinStats`](JackpotWinStats.md)
+
+Win statistics of the jackpot template
