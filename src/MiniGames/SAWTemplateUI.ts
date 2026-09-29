@@ -486,6 +486,35 @@ export interface SAWTemplateUI {
      */
     use_custom?: boolean;
 
+    /**
+     * Whether a custom mini-game fills the whole mini-game window instead of
+     * the default fixed-size frame (800×516 on desktop, 400×745 on mobile).
+     *
+     * Applies wherever the game is opened — a spin attempt shown to the user,
+     * a deep link, or `_smartico.miniGame()` in standalone or inline mode.
+     * The `fullscreen` option of `_smartico.miniGame()` overrides it per call.
+     *
+     * When `false` or omitted, the default frame size is used.
+     * Back-Office label: _"Standalone full screen"_.
+     */
+    standalone_fullscreen?: boolean;
+
+    /**
+     * Width of the custom mini-game frame on desktop when opened standalone or inline,
+     * as a CSS size (`800px`, `100%`, `90vw`; a bare number is treated as pixels).
+     * Empty or invalid values fall back to the default 800px. Ignored on mobile.
+     * Back-Office label: _"Standalone width"_.
+     */
+    standalone_width?: string;
+
+    /**
+     * Height of the custom mini-game frame on desktop when opened standalone or inline,
+     * as a CSS size (`516px`, `100%`, `90vh`; a bare number is treated as pixels).
+     * Empty or invalid values fall back to the default 516px. Ignored on mobile.
+     * Back-Office label: _"Standalone height"_.
+     */
+    standalone_height?: string;
+
 	/**
 	 * Minutes for the Voyager seed window.
 	 * The seed window is the range of seeds that can be used to generate the map.

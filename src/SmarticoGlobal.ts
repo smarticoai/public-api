@@ -50,6 +50,24 @@ export interface SmarticoWidgetParams {
 	zoom?: number;
 	/** Force the mobile layout regardless of viewport. */
 	force_mobile?: boolean;
+	/**
+	 * Custom mini-games only ({@link SmarticoGlobal.miniGame}): `true` fills the whole mini-game window,
+	 * `false` keeps the default fixed-size frame. Overrides the template's "Standalone full screen" setting;
+	 * when omitted, the template setting is used.
+	 */
+	fullscreen?: boolean;
+	/**
+	 * Custom mini-games only ({@link SmarticoGlobal.miniGame}): desktop width of the game frame as a CSS size
+	 * (`1000px`, `100%`, `90vw`; a number is treated as pixels). Overrides the template's "Standalone width"
+	 * and "Standalone full screen" settings. Ignored on mobile.
+	 */
+	frame_width?: string | number;
+	/**
+	 * Custom mini-games only ({@link SmarticoGlobal.miniGame}): desktop height of the game frame as a CSS size
+	 * (`600px`, `100%`, `90vh`; a number is treated as pixels). Overrides the template's "Standalone height"
+	 * and "Standalone full screen" settings. Ignored on mobile.
+	 */
+	frame_height?: string | number;
 }
 
 /**
