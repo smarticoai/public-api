@@ -23,7 +23,7 @@ export interface InboxMessageBody {
 	// default is 'true'
 	show_preview?: boolean;
 	// duration in seconds for how long to show preview, default is 7 seconds
-	show_duration_sec?: number;
+	show_duration_sec?: number | null;
 	// indicator if the image in html_body can be zoomed out
 	// default is 'false'
 	enable_zoom_mode?: boolean;
@@ -62,6 +62,8 @@ export const InboxMessageBodyTransform = (item: InboxMessageBody): TInboxMessage
 		title: item.title,
 		preview_body: item.body,
 		custom_data: IntUtils.JsonOrText(item?.custom_data),
+		show_preview: item.show_preview,
+		show_duration_sec: item.show_duration_sec,
 	};
 
 	if (item.action === 'dp:inbox') {

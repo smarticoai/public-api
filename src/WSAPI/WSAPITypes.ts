@@ -1146,6 +1146,12 @@ export interface TInboxMessageBody {
 	/** Operator-defined custom data. The SDK auto-parses JSON-looking
 	 * strings, so at runtime this is `any` despite the `string` type. */
 	custom_data?: string;
+	/** Whether to show a short preview popup when the message arrives.
+	 * `false` means store it in the inbox silently; missing means `true`. */
+	show_preview?: boolean;
+	/** How long the preview popup stays visible, in seconds.
+	 * `null` or missing means 7 seconds. */
+	show_duration_sec?: number | null;
 }
 
 /**

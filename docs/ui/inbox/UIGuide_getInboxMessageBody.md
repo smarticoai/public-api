@@ -2,8 +2,9 @@
 
 ## Overview
 - Returns the rich body (title, preview, icon, action, html_body,
-  buttons, custom_data) for one message identified by its
-  `message_guid`.
+  buttons, custom_data) and the preview-popup settings
+  (`show_preview`, `show_duration_sec`) for one message identified
+  by its `message_guid`.
 - Fetched from a CDN, NOT over the WebSocket — latency depends on
   CDN proximity. No SDK-level cache (browser HTTP cache may apply
   via CDN Cache-Control headers).
@@ -41,6 +42,27 @@ payload has `html_body` or `buttons` but the action isn't
 `'dp:inbox'`, those fields are stripped before reaching the SDK
 consumer. Don't try to render `html_body` for non-`'dp:inbox'`
 messages — it will be `undefined`.
+
+## Preview popup vs silent delivery
+
+Every message is stored in the inbox list. The preview settings
+decide whether a newly arrived message also pops up briefly (the
+"toast" the default Smartico UI shows while the user is online).
+
+| Field | Value | Behaviour |
+|---|---|---|
+| `show_preview` | `true` or missing | Show a preview popup and store the message in the list |
+| `show_preview` | `false` | Store the message silently, with no popup |
+| `show_duration_sec` | number | Hide the popup after this many seconds |
+| `show_duration_sec` | `null` or missing | Hide the popup after 7 seconds (the default Smartico UI's default) |
+
+Values are returned exactly as the operator configured them, so
+apply the defaults above yourself (e.g. `body.show_preview !== false`,
+`body.show_duration_sec ?? 7`).
+
+Only show the popup for messages that arrive while the user is
+online. Messages loaded from history via {@link getInboxMessages}
+should go straight into the list.
 
 ## Sandboxed iframe (for `html_body`)
 
