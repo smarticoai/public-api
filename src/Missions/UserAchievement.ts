@@ -76,13 +76,13 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 			if (missionName?.includes('{{suggested_') || missionSubHeader?.includes('{{suggested_') || missionDescription?.includes('{{suggested_')) {
 				r.achievementTasks.forEach(t => {
 					if (r.ach_public_meta.name?.includes('{{suggested_')) {
-						missionName = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: r.ach_public_meta.name });
+						missionName = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: missionName });
 					}
 					if (r.ach_public_meta.sub_header?.includes('{{suggested_')) {
-						missionSubHeader = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: r.ach_public_meta.sub_header });
+						missionSubHeader = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: missionSubHeader });
 					}
 					if (r.ach_public_meta.description?.includes('{{suggested_')) {
-						missionDescription = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: r.ach_public_meta.description });
+						missionDescription = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: missionDescription });
 					}
 				});
 			}

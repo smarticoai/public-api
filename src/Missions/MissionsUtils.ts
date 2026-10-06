@@ -1,12 +1,19 @@
-import { IntUtils } from "../IntUtils";
 import { AchievementAvailabilityStatus } from "./AchievementAvailabilityStatus";
 import { AchievementStatus } from "./AchievementStatus";
 import { UserAchievement } from "./UserAchievement";
 import { UserAchievementTask } from "./UserAchievementTask";
 import { BadgesTimeLimitStates } from "./BadgesTimeLimitStates";
 
-type UserStateParamsKeys = 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3' | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount' | 'core_recommended_sport_bet_amount';
-const USER_STATE_PARAMS_KEYS_GAMES: UserStateParamsKeys[] = ['core_fav_game_top3', 'core_fav_game_type_top3', 'core_fav_game_provider_top3'];
+type UserStateParamsKeys =
+    | 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3'
+    | 'core_fav_sport_type_top3' | 'core_fav_sport_league_top3'
+    | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount' | 'core_recommended_sport_bet_amount';
+
+// tag -> favorites (top 3 arrays) that fill it; a task has at most one condition per tag (enforced in the BO)
+const FAV_TAGS: [string, UserStateParamsKeys[]][] = [
+    ['{{suggested_games}}', ['core_fav_game_top3', 'core_fav_game_type_top3', 'core_fav_game_provider_top3']],
+    ['{{suggested_sport}}', ['core_fav_sport_type_top3', 'core_fav_sport_league_top3']],
+];
 const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = [
     'core_recommended_deposit_amount',
     'core_recommended_casino_bet_amount',
@@ -212,64 +219,47 @@ export class MissionUtils {
 
         const userStateParams = (task.user_state_params || {});
         const userStateOperator = task.task_public_meta?.user_state_operations;
-        const userStateParamsKeys = Object.keys(userStateParams);
-
-        if (userStateParamsKeys.length === 0 || !userStateOperator) {
+        if (Object.keys(userStateParams).length === 0 || !userStateOperator) {
             return result;
         }
 
-        const operatorsMulti = ['has', '!has'];
-        const operatorsPos = ['pos1', 'pos2', 'pos3'];
+        const formatFav = (v: string): string => toGameTitleCase(v.replace(/_/g, ' '));
 
-        let suggestedGames: string = '';
-        let suggestedValue: string = '';
+        // 'has' / '!has' -> all favorites, 'posN' -> the N-th one
+        const favValue = (k: UserStateParamsKeys): string => {
+            const values = userStateParams[k];
+            const operator: string = userStateOperator[k]?.op;
 
-        userStateParamsKeys.forEach((k: UserStateParamsKeys) => {
-            const operator = userStateOperator[k]?.op;
-
-            if (USER_STATE_PARAMS_KEYS_GAMES.includes(k)) {
-                if (operatorsMulti.includes(operator)) {
-                    const value = userStateParams[k]?.filter(v => Boolean(v));
-                    if (value && value.length > 0) {
-                        suggestedGames = value.map((v: string) => {
-                            const cleaned = v.replace(/_/g, ' ');
-                            return toGameTitleCase(cleaned);
-                        }).join(', ');
-                    }
-                }
-
-                if (operatorsPos.includes(operator)) {
-                    const value = userStateParams[k];
-                    const pos = Number(operator.replace('pos', '')) - 1;
-
-                    if (IntUtils.isNotNull(pos) && value && value[pos]) {
-                        suggestedGames = value[pos];
-
-                        if (suggestedGames) {
-                            suggestedGames = toGameTitleCase(suggestedGames.replace(/_/g, ' '));
-                        }
-
-                    }
-                }
+            if (!Array.isArray(values)) {
+                return '';
             }
 
-            if (USER_STATE_PARAMS_KEYS_BET_AMOUNT.includes(k)) { 
-                suggestedValue = userStateParams[k];
-
-                if (suggestedValue) {
-                    const currencyFromTheTask = userStateParams?.core_wallet_currency;
-
-                    suggestedValue = `${suggestedValue} ${currencySymbol || currencyFromTheTask || ''}`;
-                }
+            if (operator === 'has' || operator === '!has') {
+                return values.filter(Boolean).map(formatFav).join(', ');
             }
+
+            const pos = /^pos[1-3]$/.test(operator) ? values[Number(operator.substring(3)) - 1] : null;
+
+            return pos ? formatFav(pos) : '';
+        };
+
+        // split/join replaces every occurrence of the tag, not only the first one
+        const replaceTag = (tag: string, value: string) => {
+            if (value && result) {
+                result = result.split(tag).join(value);
+            }
+        };
+
+        FAV_TAGS.forEach(([tag, keys]) => {
+            replaceTag(tag, keys.map(favValue).find(Boolean));
         });
 
-        if (suggestedGames && result) {
-            result = result.replace('{{suggested_games}}', suggestedGames);
-        }
+        const amountKey = USER_STATE_PARAMS_KEYS_BET_AMOUNT.find((k) => userStateParams[k]);
 
-        if (suggestedValue && result) {
-            result = result.replace('{{suggested_value}}', suggestedValue);
+        if (amountKey) {
+            const currencyFromTheTask = userStateParams.core_wallet_currency;
+
+            replaceTag('{{suggested_value}}', `${userStateParams[amountKey]} ${currencySymbol || currencyFromTheTask || ''}`);
         }
 
         return result;
