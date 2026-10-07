@@ -25,7 +25,7 @@ Fields rendered per row:
 |---|---|---|
 | Template icon | `template.thumbnail` (or similar) | 1:1 |
 | Prize name | Look up `template.prizes[i]` by `saw_prize_id` | Display the prize's `name`. A spin finalised as lost (`miniGameWinAcknowledgeRequest` with `lose: true`) has no prize attached — render it as a loss. |
-| Prize amount | `template.prizes[i].prize_value` or `prize_amount` | E.g. "100 points" |
+| Prize amount | `template.prizes[i].prize_value` or `prize_amount`; for gems/diamonds prizes `prize_details_json.gems` / `.diamonds`, for raffle-ticket prizes `prize_details_json.tickets_count` | E.g. "100 points", "50 Diamonds". The history row carries the template as sent by the server, where `prize_value` of a gems/diamonds or raffle-ticket prize is only a default — `getMiniGames()` already resolves it into `prize_value` |
 | Spin date | `create_date_ts` | Format as user-local relative time ("2h ago") or short date |
 | Claim status | `is_claimed` | Show check-mark when true; "Pending claim" CTA when false |
 | Acknowledge date | `acknowledge_date_ts` | Only when `is_claimed === true` |

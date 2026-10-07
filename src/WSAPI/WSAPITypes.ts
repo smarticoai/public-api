@@ -29,8 +29,8 @@ export interface TMiniGamePrize {
 	name: string;
 	/** The type of the prize — see {@link MiniGamePrizeTypeName} ('no-prize', 'points', 'gems-and-diamonds', 'spin', 'bonus', 'jackpot', 'raffle-ticket', 'mission', 'change-level', 'manual') */
 	prize_type: MiniGamePrizeTypeName;
-	/** Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant.
-	 * For example for prize  '100 points' the prize_value will be 100. For '100 free spins' the prize_value will be 100.
+	/** Amount of the prize: points for 'points', attempts for 'spin', gems or diamonds for 'gems-and-diamonds' (their sum when the prize gives both), tickets for 'raffle-ticket'. Not relevant for other types.
+	 * For example for prize '100 points' the prize_value will be 100, for '100 free spins' 100, for '50 Diamonds' 50.
 	*/
 	prize_value?: number;
 	/** Custom font size in px for rendering the prize name on the game surface (e.g. a wheel sector), desktop */

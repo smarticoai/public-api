@@ -6,12 +6,30 @@ import { SAWBuyInType, SAWBuyInTypeNamed } from './SAWBuyInType';
 import { SAWExposeUserSpinIdNamed } from './SAWExposeUserSpinId';
 import { SAWGameLayoutNamed } from './SAWGameLayout';
 import { SAWGameType, SAWGameTypeNamed } from './SAWGameType';
-import { MiniGamePrizeTypeNamed } from './SAWPrizeType';
+import { SAWPrize } from './SAWPrize';
+import { MiniGamePrizeTypeNamed, SAWPrizeType } from './SAWPrizeType';
 import { SAWTemplate } from './SAWTemplate';
 
 export interface SAWGetTemplatesResponse extends ProtocolResponse {
 	templates: SAWTemplate[];
 }
+
+/**
+ * The amount a prize gives. Gems/diamonds and raffle-ticket prizes carry it in
+ * `prize_details_json` (their `prize_value` is only a default), the same way the
+ * default Smartico UI reads it; every other type keeps `prize_value`.
+ */
+const sawPrizeValue = (p: SAWPrize): number => {
+	const d = p.prize_details_json;
+	let n = 0;
+	if (p.prize_type_id === SAWPrizeType.GEMS_AND_DIAMONDS && d) {
+		// _gems_diamonds_type: 0 gems, 1 diamonds, 2 both
+		n = (d._gems_diamonds_type === 1 ? 0 : d.gems || 0) + (d._gems_diamonds_type === 0 ? 0 : d.diamonds || 0);
+	} else if (p.prize_type_id === SAWPrizeType.RAFFLE_TICKET && d) {
+		n = d.tickets_count || 0;
+	}
+	return n > 0 ? n : p.prize_value;
+};
 
 export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[] => {
 	return items.map((r) => {
@@ -66,7 +84,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					id: p.saw_prize_id,
 					name: p.saw_prize_ui_definition.name,
 					prize_type: MiniGamePrizeTypeNamed(p.prize_type_id),
-					prize_value: p.prize_value,
+					prize_value: sawPrizeValue(p),
 					font_size: p.saw_prize_ui_definition.font_size,
 					font_size_mobile: p.saw_prize_ui_definition.font_size_mobile,
 					icon: p.saw_prize_ui_definition.icon,
