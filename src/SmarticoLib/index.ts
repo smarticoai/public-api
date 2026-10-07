@@ -77,6 +77,7 @@ declare enum PushClientPlatform {
 	FIREFOX_MOBILE = 9,
 	SAFARI_MOBILE = 10,
 	OPERA_MOBILE = 11,
+	NATIVE_HARMONY = 12,
 }
 declare enum ClientActivityRequestId {
 	MINI_WIDGET_SHOWN = 1,
