@@ -33,6 +33,8 @@ export interface TMiniGamePrize {
 	 * For example for prize '100 points' the prize_value will be 100, for '100 free spins' 100, for '50 Diamonds' 50.
 	*/
 	prize_value?: number;
+	/** For 'gems-and-diamonds' prizes — which currency the prize gives: 'gems', 'diamonds', or 'gems-and-diamonds' (both; `prize_value` is then their sum). Absent for other types */
+	gems_diamonds_type?: 'gems' | 'diamonds' | 'gems-and-diamonds';
 	/** Custom font size in px for rendering the prize name on the game surface (e.g. a wheel sector), desktop */
 	font_size?: number;
 	/** Custom font size in px for the prize name, mobile; falls back to `font_size` when absent */

@@ -31,6 +31,15 @@ const sawPrizeValue = (p: SAWPrize): number => {
 	return n > 0 ? n : p.prize_value;
 };
 
+const GEMS_DIAMONDS_TYPES: TMiniGamePrize['gems_diamonds_type'][] = ['gems', 'diamonds', 'gems-and-diamonds'];
+
+/** Which currency a gems-and-diamonds prize gives (`_gems_diamonds_type`: 0 gems, 1 diamonds, 2 both). */
+const sawGemsDiamondsType = (p: SAWPrize): TMiniGamePrize['gems_diamonds_type'] => {
+	if (p.prize_type_id !== SAWPrizeType.GEMS_AND_DIAMONDS) return undefined;
+	const d = p.prize_details_json;
+	return GEMS_DIAMONDS_TYPES[d?._gems_diamonds_type] ?? (d?.gems && d?.diamonds ? 'gems-and-diamonds' : d?.diamonds ? 'diamonds' : 'gems');
+};
+
 export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[] => {
 	return items.map((r) => {
 		const x: TMiniGameTemplate = {
@@ -85,6 +94,7 @@ export const SAWTemplatesTransform = (items: SAWTemplate[]): TMiniGameTemplate[]
 					name: p.saw_prize_ui_definition.name,
 					prize_type: MiniGamePrizeTypeNamed(p.prize_type_id),
 					prize_value: sawPrizeValue(p),
+					gems_diamonds_type: sawGemsDiamondsType(p),
 					font_size: p.saw_prize_ui_definition.font_size,
 					font_size_mobile: p.saw_prize_ui_definition.font_size_mobile,
 					icon: p.saw_prize_ui_definition.icon,
