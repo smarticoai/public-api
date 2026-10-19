@@ -31,7 +31,9 @@ note below):
      recurring), so only compare against it when it is set.
      Sort: `complete_date_ts` DESC (most recent first).
   3. **Locked** — `is_locked === true`, OR not yet available
-     (`active_from_ts > Date.now()`). Sort: `position` ASC.
+     (`active_from_ts > Date.now()`), OR outside its active weekdays /
+     days of the month (`activity_period_next_start_ts > Date.now()`).
+     Sort: `position` ASC.
   4. **In progress** — `is_opted_in === true`, OR (no opt-in required and
      `progress > 0`). Sort: `position` ASC.
   5. **Available** — everything else: opt-in required but not yet joined, or
@@ -108,6 +110,8 @@ Top-to-bottom structure (omit sections whose source field is empty):
   7. Lock icon overlay on the image when `is_locked === true`.
   8. Time-remaining block — "Available again in" countdown for
      recurring waiting; "Starts on" for `active_from_ts > now`;
+     "Opens in" countdown to `activity_period_next_start_ts` while it is
+     in the future (refetch with `getMissions` when it elapses);
      "Expired on" for missed; countdown for in-window.
   9. Full `description` (HTML).
   10. Action button — see the decision matrix below.
@@ -152,6 +156,8 @@ Apply in priority order; **first match wins**:
   5. `is_requires_optin && !is_opted_in` (and not locked) →
      **"Opt In" button**. Disable when:
        - `active_from_ts > Date.now()` (not yet started),
+       - `activity_period_next_start_ts > Date.now()` (outside its active
+         days — the server refuses the opt-in with `40013`),
        - the mission falls in the Missed bucket,
        - `active_till_ts && active_till_ts < Date.now()` (expired).
      While the opt-in request is in flight, show a loading indicator

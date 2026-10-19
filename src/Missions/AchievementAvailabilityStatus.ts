@@ -14,8 +14,8 @@ export enum AchievementAvailabilityStatus {
     /** Mission without date/time restrictions or with passed active from date, opt-in is required, user is opted-in or mission is unlocked*/
     AvailableActive = 2,
 
-    /** Mission with active from date defined, date is in future.
-     * Field: active_from_ts
+    /** Mission with active from date defined, date is in future, or a mission available only on some weekdays / days of the month that is outside its active days.
+     * Field: activity_period_next_start_ts when set (the time the mission opens next), otherwise active_from_ts
     */
     UnavailableWithActiveFrom = 3,
 

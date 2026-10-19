@@ -61,6 +61,10 @@ export class WSAPIMissions extends WSAPIGeneral {
 	 * - `RECURRING` missions between cycles, until the next cycle starts.
 	 * - `RECURRING_QUANTITY` missions outside their `active_from_ts` /
 	 *   `active_till_ts` window.
+	 * - Missions available only on some weekdays or days of the month, while
+	 *   outside those days — unless the mission is configured to be shown
+	 *   before it opens (then it arrives with `activity_period_next_start_ts`),
+	 *   and always once it will not open again. Completed missions stay.
 	 *
 	 * Client-side filtering you may still want: missions with
 	 * `only_in_custom_section: true` are intended for their custom-section
@@ -79,7 +83,9 @@ export class WSAPIMissions extends WSAPIGeneral {
 	 *    missions) at least one cycle done / the cap reached — see the recurring
 	 *    caveats below. Sort by `complete_date_ts` DESC.
 	 * 3. **Locked** — `is_locked === true`, OR not yet started
-	 *    (`active_from_ts > Date.now()`). Sort by `position` ASC.
+	 *    (`active_from_ts > Date.now()`), OR outside its active days
+	 *    (`activity_period_next_start_ts > Date.now()` — show an "opens in"
+	 *    countdown to it, and refetch when it elapses). Sort by `position` ASC.
 	 * 4. **In-progress** — `is_opted_in === true`, OR (no opt-in required and
 	 *    `progress > 0`). Sort by `position` ASC.
 	 * 5. **Available** — everything else (opt-in required but not yet joined, or
@@ -416,8 +422,9 @@ export class WSAPIMissions extends WSAPIGeneral {
 	 *   means local mission state was stale (e.g. user opted in from another
 	 *   session/tab).
 	 * - `40013` — mission not opt-in-able: missing `requires_optin`, in
-	 *   DRAFT/ARCHIVED state, or outside its `active_from_ts` /
-	 *   `active_till_ts` window.
+	 *   DRAFT/ARCHIVED state, outside its `active_from_ts` /
+	 *   `active_till_ts` window, or outside its active weekdays / days of the
+	 *   month (`activity_period_next_start_ts` is set).
 	 * - `40014` — mission is locked; user has unlock-tasks remaining.
 	 *   Surface the mission's `unlock_mission_description` to guide them.
 	 * - other non-zero — generic server error. Surface `err_message` if any.

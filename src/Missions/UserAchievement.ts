@@ -35,6 +35,7 @@ export interface UserAchievement {
 	related_games?: AchRelatedGame[];
 	active_from_ts?: number; // indicates when 'scheduled' mission is active from,
 	active_till_ts?: number; // indicates when 'scheduled' mission is active till,
+	activity_period_next_start_ts?: number; // when a mission limited to some weekdays / days of the month opens next; set only while it is outside its active days
 	ach_categories?: number[];
 	recurring_quantity?: number; // max completion count for Recurring upon completion
 	completed_count?: number; // completion count for Recurring upon completion
@@ -102,6 +103,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				time_limit_ms: r.time_limit_ms,
 				active_from_ts: r.active_from_ts,
 				active_till_ts: r.active_till_ts,
+				activity_period_next_start_ts: r.activity_period_next_start_ts,
 				dt_start: r.start_date_ts,
 				reward: r.ach_public_meta.reward,
 				progress: r.progress,

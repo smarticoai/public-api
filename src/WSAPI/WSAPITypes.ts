@@ -887,6 +887,9 @@ export interface TMissionOrBadge {
 	/** Holds time till mission will become unavailable, for the missions that are targeted to be available from specific date/time */
 	active_till_ts: number;
 
+	/** Time (epoch ms) when a mission that is available only on some weekdays or days of the month opens next. Set only while the mission is outside its active days and is shown before it opens; absent when it is open now or has no such limit */
+	activity_period_next_start_ts?: number;
+
 	/** The date when the mission was started, relevant for the time limited missions, also indicating opt-it date for mission that requires opt-in and unlock date for Locked mission. */
 	dt_start: number;
 	/** The progress of the mission in percents calculated as the aggregated relative percentage of all tasks */

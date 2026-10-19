@@ -56,6 +56,11 @@ export class MissionUtils {
             return null;
         }
 
+        // a mission available only on some weekdays / days of the month, currently outside them
+        if (mission.activity_period_next_start_ts && MissionUtils.getMs(mission.activity_period_next_start_ts) > Date.now()) {
+            return AchievementAvailabilityStatus.UnavailableWithActiveFrom;
+        }
+
         const activeFrom = mission.active_from_ts ? MissionUtils.getMs(mission.active_from_ts) : null
         const activeTill = mission.active_till_ts ? MissionUtils.getMs(mission.active_till_ts) : null;
         const startDate = mission.start_date_ts ? MissionUtils.getMs(mission.start_date_ts) : null;
