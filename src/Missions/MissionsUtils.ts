@@ -224,7 +224,7 @@ export class MissionUtils {
 
         const userStateParams = (task.user_state_params || {});
         const userStateOperator = task.task_public_meta?.user_state_operations;
-        if (Object.keys(userStateParams).length === 0 || !userStateOperator) {
+        if (Object.keys(userStateParams).length === 0) {
             return result;
         }
 
@@ -255,16 +255,21 @@ export class MissionUtils {
             }
         };
 
-        FAV_TAGS.forEach(([tag, keys]) => {
-            replaceTag(tag, keys.map(favValue).find(Boolean));
-        });
+        // favorites need the operator; the amount does not - a Prop to Prop target comes without one
+        if (userStateOperator) {
+            FAV_TAGS.forEach(([tag, keys]) => {
+                replaceTag(tag, keys.map(favValue).find(Boolean));
+            });
+        }
 
-        const amountKey = USER_STATE_PARAMS_KEYS_BET_AMOUNT.find((k) => userStateParams[k]);
+        // a condition's amount first, then the Prop to Prop target's, which Java nests under 'r'
+        const amountOf = (src: { [key: string]: any }) => src && src[USER_STATE_PARAMS_KEYS_BET_AMOUNT.find((k) => src[k])];
+        const amount = amountOf(userStateParams) || amountOf(userStateParams.r);
 
-        if (amountKey) {
+        if (amount) {
             const currencyFromTheTask = userStateParams.core_wallet_currency;
 
-            replaceTag('{{suggested_value}}', `${userStateParams[amountKey]} ${currencySymbol || currencyFromTheTask || ''}`);
+            replaceTag('{{suggested_value}}', `${amount} ${currencySymbol || currencyFromTheTask || ''}`);
         }
 
         return result;
