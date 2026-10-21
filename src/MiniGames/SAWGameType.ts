@@ -12,6 +12,7 @@ export enum SAWGameType {
 	Plinko = 11,
 	CoinFlip = 12,
 	CustomMinigame = 13,
+	Bingo = 14,
 }
 
 export enum SAWGameTypeName {
@@ -28,6 +29,7 @@ export enum SAWGameTypeName {
 	Plinko = 'plinko',
 	CoinFlip = 'coin_flip',
 	CustomMinigame = 'custom_minigame',
+	Bingo = 'bingo',
 	Unknown = 'unknown',
 }
 
@@ -48,6 +50,7 @@ export const SAWGameTypeNamed = (type: SAWGameType): SAWGameTypeName => {
 			[SAWGameType.Plinko]: SAWGameTypeName.Plinko,
 			[SAWGameType.CoinFlip]: SAWGameTypeName.CoinFlip,
 			[SAWGameType.CustomMinigame]: SAWGameTypeName.CustomMinigame,
+			[SAWGameType.Bingo]: SAWGameTypeName.Bingo,
 		}[type] || SAWGameTypeName.Unknown
 	);
 };

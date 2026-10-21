@@ -65,7 +65,7 @@ export interface TMiniGamePrize {
 	second_btn_action_title?: string;
 	/** Message when the prize pool is empty for that specific prize */
 	out_of_stock_message?: string;
-	/** Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz games */
+	/** Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz / Bingo games */
 	pool?: number;
 	/** Initial (configured) stock of the prize. Populated regardless of `expose_game_stat_on_api` */
 	pool_initial?: number;

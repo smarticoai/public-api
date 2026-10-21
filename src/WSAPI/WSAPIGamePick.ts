@@ -4,7 +4,7 @@ import { WSAPIAvatars } from './WSAPIAvatars';
 /** @group GamePick */
 export class WSAPIGamePick extends WSAPIAvatars {
 	/**
-	 * Returns every open round for a MatchX or Quiz game template, with the full
+	 * Returns every open round for a MatchX, Quiz or Bingo game template, with the full
 	 * event list (matches / questions) and the current user's selections per event.
 	 *
 	 * Use to power the rounds-lobby screen — typically a list of round cards a user
@@ -14,7 +14,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 * @remarks
 	 * **Preconditions**
 	 * - User must be authenticated.
-	 * - `saw_template_id` must reference a MatchX or Quiz game template. The SDK
+	 * - `saw_template_id` must reference a MatchX, Quiz or Bingo game template. The SDK
 	 *   throws synchronously if it's missing.
 	 *
 	 * **Transport**
@@ -47,7 +47,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *
 	 * **UI guidance**: see [UI Guide — `gamePickGetActiveRounds`](../../docs/ui/gamepick/UIGuide_gamePickGetActiveRounds.md).
 	 *
-	 * @param props.saw_template_id  ID of the MatchX or Quiz game template.
+	 * @param props.saw_template_id  ID of the MatchX, Quiz or Bingo game template.
 	 * @returns Wrapped {@link GamesApiResponse} of {@link GamePickRound} array.
 	 *
 	 * @example
@@ -73,7 +73,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 
 	/**
 	 * Returns a single round (events, user selections, scoring rules) for a
-	 * MatchX or Quiz game. Use to power the round-detail / prediction-input
+	 * MatchX, Quiz or Bingo game. Use to power the round-detail / prediction-input
 	 * screen the user lands on after picking a round from the lobby.
 	 *
 	 * Same shape as one entry of {@link gamePickGetActiveRounds}; cheaper when the
@@ -105,7 +105,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *
 	 * **UI guidance**: see [UI Guide — `gamePickGetActiveRound`](../../docs/ui/gamepick/UIGuide_gamePickGetActiveRound.md).
 	 *
-	 * @param props.saw_template_id  ID of the MatchX or Quiz game template.
+	 * @param props.saw_template_id  ID of the MatchX, Quiz or Bingo game template.
 	 * @param props.round_id         ID of the round to fetch.
 	 * @returns Wrapped {@link GamesApiResponse} of a single {@link GamePickRound}.
 	 *
@@ -134,7 +134,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	}
 
 	/**
-	 * Returns the full round history (active + resolved) for a MatchX or Quiz game
+	 * Returns the full round history (active + resolved) for a MatchX, Quiz or Bingo game
 	 * template, newest-first. Each round carries the user's predictions plus the
 	 * server-resolved outcome on each event.
 	 *
@@ -168,7 +168,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *
 	 * **UI guidance**: see [UI Guide — `gamePickGetHistory`](../../docs/ui/gamepick/UIGuide_gamePickGetHistory.md).
 	 *
-	 * @param props.saw_template_id  ID of the MatchX or Quiz game template.
+	 * @param props.saw_template_id  ID of the MatchX, Quiz or Bingo game template.
 	 * @returns Wrapped {@link GamesApiResponse} of {@link GamePickRound} array,
 	 * newest-first.
 	 *
@@ -189,7 +189,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	}
 
 	/**
-	 * Returns the leaderboard for a MatchX or Quiz game round — ranked list of
+	 * Returns the leaderboard for a MatchX, Quiz or Bingo game round — ranked list of
 	 * players plus the current user's entry (`my_user`). Pass `round_id: -1` for
 	 * the season / overall leaderboard across every round in the template.
 	 *
@@ -229,7 +229,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *
 	 * **UI guidance**: see [UI Guide — `gamePickGetBoard`](../../docs/ui/gamepick/UIGuide_gamePickGetBoard.md).
 	 *
-	 * @param props.saw_template_id  ID of the MatchX or Quiz game template.
+	 * @param props.saw_template_id  ID of the MatchX, Quiz or Bingo game template.
 	 * @param props.round_id         Round ID, or `-1` for the season leaderboard.
 	 * @returns Wrapped {@link GamesApiResponse} of {@link GamePickRoundBoard}.
 	 *
@@ -497,7 +497,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *
 	 * **UI guidance**: see [UI Guide — `gamePickGetUserInfo`](../../docs/ui/gamepick/UIGuide_gamePickGetUserInfo.md).
 	 *
-	 * @param props.saw_template_id  ID of the MatchX or Quiz game template.
+	 * @param props.saw_template_id  ID of the MatchX, Quiz or Bingo game template.
 	 * @returns Wrapped {@link GamesApiResponse} of {@link GamePickUserInfo}.
 	 *
 	 * @example
@@ -555,7 +555,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *
 	 * **UI guidance**: see [UI Guide — `gamePickGetGameInfo`](../../docs/ui/gamepick/UIGuide_gamePickGetGameInfo.md).
 	 *
-	 * @param props.saw_template_id  ID of the MatchX or Quiz game template.
+	 * @param props.saw_template_id  ID of the MatchX, Quiz or Bingo game template.
 	 * @returns Wrapped {@link GamesApiResponse} of {@link GamePickGameInfo}.
 	 *
 	 * @example
@@ -616,7 +616,7 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *
 	 * **UI guidance**: see [UI Guide — `gamePickGetRoundInfoForUser`](../../docs/ui/gamepick/UIGuide_gamePickGetRoundInfoForUser.md).
 	 *
-	 * @param props.saw_template_id  ID of the MatchX or Quiz game template.
+	 * @param props.saw_template_id  ID of the MatchX, Quiz or Bingo game template.
 	 * @param props.round_id         ID of the round to inspect.
 	 * @param props.int_user_id      Internal user ID from
 	 *                                `gamePickGetBoard.users[].int_user_id`.

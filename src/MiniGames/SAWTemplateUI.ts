@@ -478,8 +478,8 @@ export interface SAWTemplateUI {
      * widget loads `custom_game_url` in an iframe instead of rendering the
      * built-in game.  `saw_game_type_id` still reports the original type, so
      * treat this flag — not the type — as the answer to "is this played as a
-     * custom game", together with `SAWGameType.CustomMinigame`, which is always
-     * played that way.
+     * custom game", together with `SAWGameType.CustomMinigame` and
+     * `SAWGameType.Bingo`, which are always played that way.
      *
      * When `false` or omitted, the template is played as its own game type.
      * Back-Office label: _"Use Custom Game"_.

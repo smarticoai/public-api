@@ -163,7 +163,7 @@ export interface QuizEventMeta {
 }
 
 /**
- * GamePickEventMeta describes metadata for a MatchX or Quiz event, including team info and sport context
+ * GamePickEventMeta describes metadata for a MatchX, Quiz or Bingo event, including team info and sport context
  */
 export interface GamePickEventMeta extends QuizEventMeta {
 	/** Display name of the event/match */
@@ -457,7 +457,7 @@ export interface GamesApiResponse<T> {
  * GamePickRequestParams describes the base parameters required for GamePick API calls
  */
 export interface GamePickRequestParams {
-	/** ID of the MatchX or Quiz game template. The only field the consumer supplies. */
+	/** ID of the MatchX, Quiz or Bingo game template. The only field the consumer supplies. */
 	saw_template_id: number;
 	/** External user ID. Injected by the SDK from the active session; consumers omit it. */
 	ext_user_id?: string;
