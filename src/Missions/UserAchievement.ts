@@ -73,8 +73,9 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 			let missionName = r.ach_public_meta.name;
 			let missionSubHeader = r.ach_public_meta.sub_header;
 			let missionDescription = r.ach_public_meta.description;
+			let missionHintText = r.ach_public_meta.hint_text;
 
-			if (missionName?.includes('{{suggested_') || missionSubHeader?.includes('{{suggested_') || missionDescription?.includes('{{suggested_')) {
+			if (missionName?.includes('{{suggested_') || missionSubHeader?.includes('{{suggested_') || missionDescription?.includes('{{suggested_') || missionHintText?.includes('{{suggested_')) {
 				r.achievementTasks.forEach(t => {
 					if (r.ach_public_meta.name?.includes('{{suggested_')) {
 						missionName = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: missionName });
@@ -85,6 +86,9 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 					if (r.ach_public_meta.description?.includes('{{suggested_')) {
 						missionDescription = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: missionDescription });
 					}
+					if (r.ach_public_meta.hint_text?.includes('{{suggested_')) {
+						missionHintText = MissionUtils.replaceTagsFavMissionTask({ task: t, valueToReplace: missionHintText });
+					}
 				});
 			}
 
@@ -93,7 +97,7 @@ export const UserAchievementTransform = (items: UserAchievement[]): TMissionOrBa
 				name: missionName,
 				sub_header: missionSubHeader,
 				description: missionDescription,
-				hint_text: r.ach_public_meta.hint_text,
+				hint_text: missionHintText,
 				unlock_mission_description: r.ach_public_meta.unlock_mission_description,
 				image: r.ach_public_meta.image_url,
 				is_completed: r.isCompleted,
