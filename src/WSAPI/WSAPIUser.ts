@@ -514,15 +514,16 @@ export class WSAPIUser extends WSAPIBase {
 
 	/**
 	 * Returns the user's activity history within the requested time window,
-	 * ordered newest-first. Today that is primarily wallet changes (points /
-	 * gems / diamonds); when the server starts returning richer activity rows
-	 * (missions, badges, levels, …), the same method surfaces them via optional
-	 * fields on {@link TActivityLog} — no separate call, same wire CID.
+	 * ordered newest-first. By default it returns wallet changes only (points /
+	 * gems / diamonds). Pass `new_format: true` to get the full activity feed,
+	 * which also includes missions, badges, levels, tournaments and other
+	 * activity rows — no separate call.
 	 *
 	 * Existing wallet fields (`type`, `amount`, `balance`, `source_type_id`, …)
-	 * stay stable. Clients that only read those keep working; clients that want
-	 * the fuller feed can also read `activity_type_id`, `meta`,
-	 * `source_entity_*`, and `is_wallet_entry` when present.
+	 * stay stable. Clients that only read those keep working without
+	 * `new_format`; clients that opt in should use `is_wallet_entry` to tell
+	 * wallet rows from other activity, and can read `activity_type_id`, `meta`
+	 * and `source_entity_*` to render them.
 	 *
 	 * @remarks
 	 * **Preconditions**
@@ -538,7 +539,8 @@ export class WSAPIUser extends WSAPIBase {
 	 * **Filtering** — optional server-side filters:
 	 * - `types` — {@link ActivityLogActivities} / `type_id` values (e.g. Points=3, Gems=1)
 	 * - `src_types` — {@link PointChangeSourceType} / `source_type_id` values
-	 * Omit both for an unfiltered window.
+	 * Omit both for an unfiltered window. Both filters apply only together with
+	 * `new_format: true`.
 	 *
 	 * **Subscription model (`onUpdate`)**
 	 * The callback fires when the user's `ach_points_balance`,
@@ -591,6 +593,7 @@ export class WSAPIUser extends WSAPIBase {
 		to,
 		types,
 		src_types,
+		new_format,
 		onUpdate,
 	}: {
 		/** Window start in epoch seconds. */
@@ -605,23 +608,25 @@ export class WSAPIUser extends WSAPIBase {
 		types?: number[];
 		/** Optional — filter by {@link PointChangeSourceType} / `source_type_id`. */
 		src_types?: number[];
+		/** Optional — `true` returns the full activity feed (all activity kinds); omitted returns wallet changes only. */
+		new_format?: boolean;
 		/** Optional push callback; payload is a fixed 10-min / 50-entry refresh on every wallet change (see Subscription model). */
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]> {
 
-		const cacheKey = `${onUpdateContextKey.ActivityLog}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}:${src_types?.join(',') ?? ''}`;
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}:${src_types?.join(',') ?? ''}:${new_format ? 1 : 0}`;
 
 		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.ActivityLog, onUpdate);
 			// Remember the requested window so a push refresh re-fetches THIS window
 			// and writes the matching composite cache key (see notifyActivityLogUpdate).
-			this.activityLogOnUpdateParams = { startTimeSeconds, endTimeSeconds, from, to, types, src_types };
+			this.activityLogOnUpdateParams = { startTimeSeconds, endTimeSeconds, from, to, types, src_types, new_format };
 		}
 
 		return await OCache.use(
 			cacheKey,
 			ECacheContext.WSAPI,
-			() => this.api.getActivityLogT(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types, src_types),
+			() => this.api.getActivityLogT(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types, src_types, new_format),
 			CACHE_DATA_SEC,
 		);
 	}
@@ -635,6 +640,7 @@ export class WSAPIUser extends WSAPIBase {
 		to: number;
 		types?: number[];
 		src_types?: number[];
+		new_format?: boolean;
 	} | undefined;
 
 	protected async notifyActivityLogUpdate() {
@@ -652,8 +658,9 @@ export class WSAPIUser extends WSAPIBase {
 			params.to,
 			params.types,
 			params.src_types,
+			params.new_format,
 		);
-		const cacheKey = `${onUpdateContextKey.ActivityLog}:${params.startTimeSeconds}:${params.endTimeSeconds}:${params.from}:${params.to}:${params.types?.join(',') ?? ''}:${params.src_types?.join(',') ?? ''}`;
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${params.startTimeSeconds}:${params.endTimeSeconds}:${params.from}:${params.to}:${params.types?.join(',') ?? ''}:${params.src_types?.join(',') ?? ''}:${params.new_format ? 1 : 0}`;
 
 		OCache.set(cacheKey, payload, ECacheContext.WSAPI);
 

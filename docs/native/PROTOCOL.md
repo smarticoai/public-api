@@ -3208,6 +3208,9 @@ Get user's points history.
 | `endTimeSeconds` | `number` | End time (Unix timestamp in seconds) |
 | `limit` | `number` | Max items to return |
 | `offset` | `number` | Offset for pagination |
+| `types` | `number[]` | Optional. Activity kinds to include (`ActivityLogActivities` values). Applied only with `new_format: true` |
+| `src_types` | `number[]` | Optional. Sources to include (`PointChangeSourceType` values). Applied only with `new_format: true` |
+| `new_format` | `boolean` | Optional. `true` returns the full activity feed (all activity kinds); omitted returns wallet changes only (points / gems / diamonds) |
 
 #### Response
 

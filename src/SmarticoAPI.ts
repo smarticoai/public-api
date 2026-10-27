@@ -1825,6 +1825,7 @@ class SmarticoAPI {
 		offset: number,
 		types?: number[],
 		src_types?: number[],
+		new_format?: boolean,
 	): Promise<GetActivityLogResponse> {
 		const message = this.buildMessage<GetActivityLogRequest, GetActivityLogResponse>(
 			user_ext_id,
@@ -1836,6 +1837,7 @@ class SmarticoAPI {
 				offset,
 				...(types ? { types } : {}),
 				...(src_types ? { src_types } : {}),
+				...(new_format ? { new_format } : {}),
 			},
 		);
 
@@ -1850,12 +1852,13 @@ class SmarticoAPI {
 		to: number = 50,
 		types?: number[],
 		src_types?: number[],
+		new_format?: boolean,
 	): Promise<TActivityLog[]> {
 		const limit = to - from > 50 ? 50 : to - from;
 		const offset = from;
 
 		return ActivityLogTransform(
-			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset, types, src_types)).logHistory,
+			(await this.getActivityLog(user_ext_id, startTimeSeconds, endTimeSeconds, limit, offset, types, src_types, new_format)).logHistory,
 		);
 	}
 }

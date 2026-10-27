@@ -10,4 +10,6 @@ export interface GetActivityLogRequest extends ProtocolMessage {
 	types?: number[];
 	/** Optional filter — {@link PointChangeSourceType} values to include. */
 	src_types?: number[];
+	/** Optional — `true` requests the full activity feed (all activity kinds); omitted returns wallet changes only. */
+	new_format?: boolean;
 }
