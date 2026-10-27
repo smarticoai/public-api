@@ -6,13 +6,14 @@ import { BadgesTimeLimitStates } from "./BadgesTimeLimitStates";
 
 type UserStateParamsKeys =
     | 'core_fav_game_top3' | 'core_fav_game_type_top3' | 'core_fav_game_provider_top3'
-    | 'core_fav_sport_type_top3' | 'core_fav_sport_league_top3'
+    | 'core_fav_sport_type_top3' | 'core_fav_sport_league_top3' | 'core_fav_sport_market_top3'
     | 'core_recommended_deposit_amount' | 'core_recommended_casino_bet_amount' | 'core_recommended_sport_bet_amount';
 
 // tag -> favorites (top 3 arrays) that fill it; a task has at most one condition per tag (enforced in the BO)
 const FAV_TAGS: [string, UserStateParamsKeys[]][] = [
     ['{{suggested_games}}', ['core_fav_game_top3', 'core_fav_game_type_top3', 'core_fav_game_provider_top3']],
     ['{{suggested_sport}}', ['core_fav_sport_type_top3', 'core_fav_sport_league_top3']],
+    ['{{suggested_market}}', ['core_fav_sport_market_top3']],
 ];
 const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = [
     'core_recommended_deposit_amount',
