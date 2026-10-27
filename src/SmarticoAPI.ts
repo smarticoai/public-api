@@ -694,7 +694,7 @@ class SmarticoAPI {
 	}
 
 	public async sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]> {
-		return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates);
+		return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates ?? []);
 	}
 
 	public async doAcknowledgeRequest(user_ext_id: string, request_id: string, lose?: boolean): Promise<SAWDoAknowledgeResponse> {

@@ -28,7 +28,17 @@ export class WSAPI extends WSAPIInbox {
 		// domain classes; only the terminator has visibility into all of
 		// them via the prototype chain.
 		if (this.api.tracker) {
-			const on = this.api.tracker.on;
+			// Push handlers run in the background and nothing awaits them, so a
+			// failed refresh must be caught here instead of becoming an unhandled
+			// rejection. The data is refreshed again on the next push or API call.
+			const trackerOn = this.api.tracker.on;
+			const on = (cid: ClassId, handler: (data: any) => any) =>
+				trackerOn(cid, (data: any) => {
+					const result = handler(data);
+					if (result && typeof result.catch === 'function') {
+						result.catch((e: unknown) => console.warn('[smartico] background refresh failed for push', cid, e));
+					}
+				});
 
 			on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
 			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.reloadMiniGameTemplate());
