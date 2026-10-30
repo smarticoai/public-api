@@ -87,7 +87,12 @@ export abstract class WSAPIBase {
 
 		const onUpdate = this.onUpdateCallback.get(contextKey);
 		if (typeof onUpdate === 'function') {
-			onUpdate(payload);
+			// The callback is consumer code; an error in it must not fail the refresh.
+			try {
+				onUpdate(payload);
+			} catch (e) {
+				console.warn('[smartico] onUpdate callback failed', contextKey, e);
+			}
 		}
 	}
 }

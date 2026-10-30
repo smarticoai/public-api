@@ -36,7 +36,7 @@ export interface GetTournamentInfoResponse extends ProtocolResponse {
 export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTournamentDetailed => {
 	const response: TTournamentDetailed = {
 		...TournamentItemsTransform([t.tournamentInfo?.tournamentLobbyInfo ?? null])?.[0],
-		related_games: (t.tournamentInfo.tournamentLobbyInfo.related_games || []).map((g, i) => ({
+		related_games: (t.tournamentInfo?.tournamentLobbyInfo?.related_games || []).map((g, i) => ({
 			ext_game_id: g.ext_game_id,
 			game_public_meta: {
 				name: g.game_public_meta.name,
@@ -49,7 +49,7 @@ export const tournamentInfoItemTransform = (t: GetTournamentInfoResponse): TTour
 				priority: i + 1,
 			},
 		})),
-		players: t.tournamentInfo.players.map((p) => TournamentUtils.getPlayerTransformed(p)),
+		players: (t.tournamentInfo?.players || []).map((p) => TournamentUtils.getPlayerTransformed(p)),
 	};
 
 	if (t.prizeStructure) {

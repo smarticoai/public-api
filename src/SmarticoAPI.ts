@@ -232,11 +232,11 @@ class SmarticoAPI {
 		private messageSender: MessageSender,
 		options: IOptions = {},
 	) {
-		this.logger = options.logger || (console as any);
+		const logger = options.logger || (console as any);
 
-		if (this.logger.always === undefined) {
-			this.logger.always = this.logger.info;
-		}
+		// Add `always` on a wrapper instead of the logger itself: the default
+		// logger is the page's console, which the host page may have frozen.
+		this.logger = logger.always === undefined ? Object.assign(Object.create(logger), { always: logger.info }) : logger;
 
 		this.logCIDs = options.logCIDs || [];
 		this.logHTTPTiming = options.logHTTPTiming || false;
@@ -336,6 +336,11 @@ class SmarticoAPI {
 		try {
 			const timeStart = new Date().getTime();
 			result = await this.messageSender(message, this.publicUrl, expectCID);
+
+			// The sender has no connection to use, e.g. after the tracker was cleared.
+			if (!result) {
+				throw new Error('Tracker is not initialized');
+			}
 
 			if (result.errCode && result.errSetup) {
 				throw new Error(result.errMessage);
