@@ -58,7 +58,7 @@ inside the generated `docs/api` site alongside the reference.
 - **`npm run doc` is human-triggered after a batch of approved doc edits — do
   not run it as part of a code change, and never edit `docs/api/**` by hand.**
 
-### Authoring rules (from the `api-tsdoc` / `api-tsdoc-final` skills)
+### Authoring rules (from the `smr-api-tsdoc` / `smr-api-tsdoc-final` skills)
 
 These docs are the **public SDK contract** read by 3rd-party integrators, so all
 TSDoc and concept-doc content is strictly consumer-facing:
@@ -78,7 +78,7 @@ TSDoc and concept-doc content is strictly consumer-facing:
 - `@example` blocks use `console.log` / `console.error` with descriptive
   messages stating what the consumer's UI should do — never pseudo-handlers
   (`toast`, `showError`) or internal types.
-- `/api-tsdoc <method>` enriches one method (+ its UI guide); `/api-tsdoc-final`
+- `/smr-api-tsdoc <method>` enriches one method (+ its UI guide); `/smr-api-tsdoc-final`
   runs the whole release doc batch (callbacks, `_smartico` object, native
   protocol, transforms, method TSDocs) and stops at a prepared commit message.
   Both **never commit and never run `npm run doc`.**
@@ -98,6 +98,6 @@ docs document), plus a visitor-mode `_smartico.vapi`. Consequences:
   `../tracker`) and re-bundles.
 - `docs/SmarticoObject.md` documents the *other* half — the core `_smartico.*`
   methods that live in the tracker's `Smartico.ts`, not in this repo. Keeping it
-  current means reading that tracker file (the `api-tsdoc-final` batch diffs it).
+  current means reading that tracker file (the `smr-api-tsdoc-final` batch diffs it).
 - `docs/Callbacks.md` likewise tracks the tracker's external-callback enum and
   emit sites.

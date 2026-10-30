@@ -1,24 +1,24 @@
 ---
-name: api-tsdoc-final
-description: Run the FULL Smartico public-api documentation-refresh batch in one pass — actualize the `_smartico.on` callback list, refresh the `_smartico` object reference, extend the native WebSocket protocol doc, enrich WSAPI method TSDocs (via the api-tsdoc skill), keep the transforms concept + doc-build wiring current, and finish by preparing a commit message for human review. Use when the user types `/api-tsdoc-final`, or asks to "do the full docs batch", "refresh all SDK docs", or "actualize the public-api docs".
+name: smr-api-tsdoc-final
+description: Run the FULL Smartico public-api documentation-refresh batch in one pass — actualize the `_smartico.on` callback list, refresh the `_smartico` object reference, extend the native WebSocket protocol doc, enrich WSAPI method TSDocs (via the smr-api-tsdoc skill), keep the transforms concept + doc-build wiring current, and finish by preparing a commit message for human review. Use when the user types `/smr-api-tsdoc-final`, or asks to "do the full docs batch", "refresh all SDK docs", or "actualize the public-api docs".
 ---
 
-# api-tsdoc-final
+# smr-api-tsdoc-final
 
 The end-to-end documentation refresh for the Smartico **public-api** SDK
 (`/Users/aa/Desktop/SM/public-api/`). It orchestrates every documentation
 action performed per release into one ordered batch, then stops at a prepared
 commit message for a human to review.
 
-This skill **wraps** the per-method [`api-tsdoc`](../api-tsdoc/SKILL.md) skill —
-it does not replace it. `api-tsdoc` enriches one domain/method (hive extraction,
+This skill **wraps** the per-method [`smr-api-tsdoc`](../smr-api-tsdoc/SKILL.md) skill —
+it does not replace it. `smr-api-tsdoc` enriches one domain/method (hive extraction,
 validation, UI guides, spillover, README + doc-todo housekeeping). This skill
 adds the surrounding documentation surfaces that aren't tied to a single WSAPI
 method: callbacks, the `_smartico` object, the native protocol, the transforms
 concept, and the doc-build wiring — and ties it all off with a review-ready
 commit message.
 
-## Hard rules (same spirit as api-tsdoc)
+## Hard rules (same spirit as smr-api-tsdoc)
 
 - **NEVER commit, stage, or push.** This skill ENDS by *preparing* a commit
   message for human review (step 7). Do not run `git commit` / `git push`.
@@ -52,7 +52,7 @@ commit message.
 | Vendored callback enum | `public-api/src/SmarticoLib/index.ts` (`declare enum EXTERNAL_CALLBACK_KEY`) | Same `ExternalCallbackKey.ts` (keep in sync; it's a generated bundle — see step 1) |
 | `_smartico` object (`docs/SmarticoObject.md`) | `public-api/docs/SmarticoObject.md` | `tracker/src/tracker/Smartico.ts` (grep `public static`); deep-link values from `DpType` + widget types from `EWidgetType` (verify against `public-api/src/SmarticoLib/index.ts` / `tracker/src/shared/Enums.ts`) |
 | Native protocol (`docs/native/PROTOCOL.md`) | `public-api/docs/native/PROTOCOL.md` | Concept in `public-api/docs/native/ADDING_METHODS.md`; ClassIds from `public-api/src/Base/ClassId.ts`; raw request/response shapes from `public-api/src/SmarticoAPI.ts` + the per-domain `*Request.ts` / `*Response.ts` |
-| WSAPI method TSDocs + UI guides | `public-api/src/WSAPI/*.ts`, `docs/ui/<domain>/` | Delegated to the `api-tsdoc` skill |
+| WSAPI method TSDocs + UI guides | `public-api/src/WSAPI/*.ts`, `docs/ui/<domain>/` | Delegated to the `smr-api-tsdoc` skill |
 | Transforms concept (`docs/Transforms.md`) | `public-api/docs/Transforms.md` | `grep -rn "export const .*Transform" src/` + `*T` methods in `public-api/src/SmarticoAPI.ts` |
 | Build wiring | `public-api/tsconfig.json`, `public-api/scripts/postdoc-cleanup.js` | — |
 
@@ -133,11 +133,11 @@ in PROTOCOL.md**:
    `GET_ACHIEVEMENT_MAP_REQUEST` from `getMissions`) needs no new section —
    just confirm the shared section documents the distinction.
 
-### Step 4 — Enrich WSAPI method TSDocs (delegate to `api-tsdoc`)
+### Step 4 — Enrich WSAPI method TSDocs (delegate to `smr-api-tsdoc`)
 
-Run the `api-tsdoc` skill for the target domain(s)/method(s) the user named (or,
+Run the `smr-api-tsdoc` skill for the target domain(s)/method(s) the user named (or,
 with no target, scan `src/WSAPI/WSAPI<Domain>.ts` for thin TSDocs and propose a
-list). `api-tsdoc` owns: hive extraction + mandatory validation pass, the
+list). `smr-api-tsdoc` owns: hive extraction + mandatory validation pass, the
 TSDoc/UI-guide contract, UI guides under `docs/ui/<domain>/`, spillover into
 `WSAPITypes.ts`, and the README "UI Guides" column + `doc-todo.md` tally + SDK
 gaps list. Do not duplicate that work here — invoke the skill.
@@ -187,7 +187,7 @@ Reconcile the doc-build wiring so the next human `npm run doc` is clean:
    - callbacks: add <N> events to Callbacks.md; sync EXTERNAL_CALLBACK_KEY vendored enum
    - _smartico object: <added/updated methods>
    - native protocol: document <methods> (ClassIds <…>); +<N> interface entry points
-   - WSAPI TSDoc: enrich <domain> (<N> methods, <N> UI guides) via api-tsdoc
+   - WSAPI TSDoc: enrich <domain> (<N> methods, <N> UI guides) via smr-api-tsdoc
    - transforms: <delta or "verified current">
    - build: projectDocuments/entryPoints wiring; fixed <N> typedoc warnings
    ```
@@ -219,7 +219,7 @@ grep -rn "../../docs/ui/" docs/api/classes/ && echo BROKEN || echo OK
 - **The prepared commit message** (for review — not committed).
 - **Open items / caveats**: SmarticoLib enum regen, links pending `npm run doc`,
   any unverified hive claims, the help-page (llm-sources) source caveat.
-- **Cost**: hive totals from the `api-tsdoc` sub-run.
+- **Cost**: hive totals from the `smr-api-tsdoc` sub-run.
 
 Then **stop**. No commit, no push, no `npm run doc`.
 
@@ -229,7 +229,7 @@ Then **stop**. No commit, no push, no `npm run doc`.
 - `getBadges` shares `GET_ACHIEVEMENT_MAP_REQUEST` with `getMissions` — no
   separate native section.
 - `doc-todo.md` (running tally + numbered SDK-gaps list) is maintained by the
-  `api-tsdoc` sub-run in step 4; the batch just confirms it's updated.
+  `smr-api-tsdoc` sub-run in step 4; the batch just confirms it's updated.
 
 ## Step 6.5 — Capability pages (RAG ingestion lane)
 
@@ -240,7 +240,7 @@ repo's `scripts/gen-capabilities.js`). The IDE's `api` search lane is wired to
 read **only** these (bo_server `LLMSourceTypeId.PUBLIC_API_CAPABILITY`), not the
 raw source — so a method with no capability page is invisible to the agent.
 
-Two sub-steps (see the `api-tsdoc` skill's "Capability pages" section for the full
+Two sub-steps (see the `smr-api-tsdoc` skill's "Capability pages" section for the full
 recipe — capture conventions, anonymization, the `run_public_api` creds, the
 `getUserProfile`/tracker-state browser fallback):
 

@@ -41,9 +41,9 @@ live in `../bo_server/server/src/ide/SMARTICO_DOC_STRUCTURE_GUIDE.md`.
 
 | Edit | For | Owned by |
 |---|---|---|
-| `src/WSAPI/WSAPI<Domain>.ts` method TSDoc | narrative usage: preconditions, error tables, refresh/cache, idempotency, `@example`, `{@link}` | `api-tsdoc` skill |
-| `src/WSAPI/WSAPITypes.ts` + `src/<Domain>/*.ts` field comments | terse one-line field definitions (what + type/units + null semantics) | `api-tsdoc` skill |
-| `docs/ui/<domain>/UIGuide_<method>.md` | UI/behavioral contract prose | `api-tsdoc` skill |
+| `src/WSAPI/WSAPI<Domain>.ts` method TSDoc | narrative usage: preconditions, error tables, refresh/cache, idempotency, `@example`, `{@link}` | `smr-api-tsdoc` skill |
+| `src/WSAPI/WSAPITypes.ts` + `src/<Domain>/*.ts` field comments | terse one-line field definitions (what + type/units + null semantics) | `smr-api-tsdoc` skill |
+| `docs/ui/<domain>/UIGuide_<method>.md` | UI/behavioral contract prose | `smr-api-tsdoc` skill |
 | `docs/capabilities/_responses/<method>.json` | the **captured real response** (anonymized) | capture scripts (§4) |
 | `tsconfig.json` `typedocOptions.entryPoints` | add new public types/classes so they appear in `docs/api` | manual |
 
@@ -57,7 +57,7 @@ live in `../bo_server/server/src/ide/SMARTICO_DOC_STRUCTURE_GUIDE.md`.
 
 Run after any change to a method's signature, behavior, or types.
 
-1. **Enrich the source** — TSDoc + field comments + UI guide. Use `/api-tsdoc <method>` (one method) or `/api-tsdoc-final` (whole release batch). These never commit and never run the build steps below.
+1. **Enrich the source** — TSDoc + field comments + UI guide. Use `/smr-api-tsdoc <method>` (one method) or `/smr-api-tsdoc-final` (whole release batch). These never commit and never run the build steps below.
 2. **Capture / refresh the real response** for the method → `docs/capabilities/_responses/<method>.json` (§4).
 3. **Generate capability pages**: `npm run gen-capabilities`. Rewrites all `docs/capabilities/*.md` from TSDoc + types + the captured responses.
 4. **(Reference site)** `npm run doc` — TypeDoc → `docs/api/**` (+ `postdoc-cleanup.js`). Human-triggered; confirm zero new warnings.
@@ -155,10 +155,10 @@ The IDE `api` lane reads **only** capability pages. A method with no capability 
 
 ## 7. Skills
 
-- **`/api-tsdoc <method>`** — enrich one method end-to-end (TSDoc + UI guide + capture a response + regenerate the page). Never commits / never runs `npm run doc`.
-- **`/api-tsdoc-final`** — the whole release doc batch (callbacks, `_smartico` object, native protocol, all method TSDocs, capability capture + generation), stops at a prepared commit message.
+- **`/smr-api-tsdoc <method>`** — enrich one method end-to-end (TSDoc + UI guide + capture a response + regenerate the page). Never commits / never runs `npm run doc`.
+- **`/smr-api-tsdoc-final`** — the whole release doc batch (callbacks, `_smartico` object, native protocol, all method TSDocs, capability capture + generation), stops at a prepared commit message.
 
-Skill files: `~/.claude/skills/api-tsdoc/SKILL.md`, `~/.claude/skills/api-tsdoc-final/SKILL.md`.
+Skill files: `~/.claude/skills/smr-api-tsdoc/SKILL.md`, `~/.claude/skills/smr-api-tsdoc-final/SKILL.md`.
 
 ---
 
@@ -166,7 +166,7 @@ Skill files: `~/.claude/skills/api-tsdoc/SKILL.md`, `~/.claude/skills/api-tsdoc-
 
 1. Implement the method in `src/WSAPI/WSAPI<Domain>.ts`; add return/types to `WSAPITypes.ts` (or a domain types file).
 2. Add new public types to `tsconfig.json` `typedocOptions.entryPoints`.
-3. `/api-tsdoc <method>` → TSDoc + field comments + UI guide.
+3. `/smr-api-tsdoc <method>` → TSDoc + field comments + UI guide.
 4. Capture a real response (§4) → `_responses/<method>.json`.
 5. `npm run gen-capabilities` → new `docs/capabilities/<method>.md`. Spot-check Returns has the right per-domain field comments + a real example.
 6. Commit; `npm publish`; `npm run bump-tracker`. RAG re-indexes automatically.

@@ -1,9 +1,9 @@
 ---
-name: api-tsdoc-howto
-description: Inspect the Smartico public-api working tree (uncommitted changes + recent commits), determine which docs / capability pages / captured responses are now stale, and output the EXACT ordered commands to bring the docs + RAG pipeline back in sync. Read-only — never edits, never runs the build/capture/commit steps itself. Use when the user types /api-tsdoc-howto, or asks "what docs need updating", "how do I sync the SDK docs", "what's stale", "what do I run to finish the docs".
+name: smr-api-tsdoc-howto
+description: Inspect the Smartico public-api working tree (uncommitted changes + recent commits), determine which docs / capability pages / captured responses are now stale, and output the EXACT ordered commands to bring the docs + RAG pipeline back in sync. Read-only — never edits, never runs the build/capture/commit steps itself. Use when the user types /smr-api-tsdoc-howto, or asks "what docs need updating", "how do I sync the SDK docs", "what's stale", "what do I run to finish the docs".
 ---
 
-# api-tsdoc-howto
+# smr-api-tsdoc-howto
 
 A **read-only diagnostic** for the `@smartico/public-api` docs + RAG pipeline.
 It looks at what changed (uncommitted + recent commits), works out what is now

@@ -1,14 +1,14 @@
 ---
-name: api-tsdoc
+name: smr-api-tsdoc
 description: Enrich TSDoc comments in Smartico's public-api SDK (`/Users/aa/Desktop/SM/public-api/src/`) by mining real-world usage from the `ach` codebase and validating against server-side handlers. Use when the user asks to document, enrich, or improve TSDoc for any `_smartico.api.*` method or related WSAPI type.
 ---
 
-# api-tsdoc
+# smr-api-tsdoc
 
 Enrich a Smartico public-api SDK method's TSDoc with real-world implementation insights from `ach` (the in-tracker gamification UI) + `r-server` (the protocol-handler backend). Apply edits directly, never commit.
 
 ## When to invoke
-- User types `/api-tsdoc <method-or-feature>`
+- User types `/smr-api-tsdoc <method-or-feature>`
 - User asks: "enrich TSDoc for X", "document X using ach", "improve SDK docs for X"
 - User points at a `_smartico.api.*` method whose TSDoc is thin
 
@@ -672,4 +672,4 @@ Run `npm run gen-capabilities`, then spot-check the new
   one appears, fix the source field comment (it violates the public-contract rule).
 
 Do NOT run `gen-capabilities` as part of an unrelated code change, and do not
-commit. It is part of the doc batch (see `api-tsdoc-final`).
+commit. It is part of the doc batch (see `smr-api-tsdoc-final`).
