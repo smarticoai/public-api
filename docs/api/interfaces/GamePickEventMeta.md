@@ -1,6 +1,6 @@
 # Interface: GamePickEventMeta
 
-GamePickEventMeta describes metadata for a MatchX or Quiz event, including team info and sport context
+GamePickEventMeta describes metadata for a MatchX, Quiz or Bingo event, including team info and sport context
 
 ## Extends
 

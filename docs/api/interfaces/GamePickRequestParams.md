@@ -12,7 +12,7 @@ GamePickRequestParams describes the base parameters required for GamePick API ca
 
 > **saw\_template\_id**: `number`
 
-ID of the MatchX or Quiz game template. The only field the consumer supplies.
+ID of the MatchX, Quiz or Bingo game template. The only field the consumer supplies.
 
 ***
 

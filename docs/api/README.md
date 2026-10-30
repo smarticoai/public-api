@@ -241,6 +241,7 @@
 - [TInboxMessageBody](interfaces/TInboxMessageBody.md)
 - [InboxMarkMessageAction](interfaces/InboxMarkMessageAction.md)
 - [LeaderBoardDetailsT](interfaces/LeaderBoardDetailsT.md)
+- [LeaderBoardSettingsT](interfaces/LeaderBoardSettingsT.md)
 - [LeaderBoardsRewardsT](interfaces/LeaderBoardsRewardsT.md)
 - [LeaderBoardUserT](interfaces/LeaderBoardUserT.md)
 - [UserLevelExtraCountersT](interfaces/UserLevelExtraCountersT.md)

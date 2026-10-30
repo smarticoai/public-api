@@ -235,6 +235,14 @@ Number of steps to complete the game and collect the prize (step games — Voyag
 
 ***
 
+### min\_steps\_to\_finish\_game?
+
+> `optional` **min\_steps\_to\_finish\_game?**: `number`
+
+Minimum number of path steps / collectible prizes a session must include before the game can finish (step games — Voyager / Treasure Hunt). `>= 1` and `<= steps_to_finish_game`; when omitted, no minimum is enforced
+
+***
+
 ### custom\_section\_id?
 
 > `optional` **custom\_section\_id?**: `number`

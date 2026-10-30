@@ -151,8 +151,16 @@ export interface SmarticoGlobal {
 	showBanner(params: { dom_id: string; placement_key: string }): void;
 	/** Push data into an already-rendered banner. */
 	sendDataToBanner(params: { placement_key: string; data: Record<string, unknown> }): void;
-	/** Embed the gamification block into a host element. */
-	gamificationBlock(params: { dom_id: string; url: string; fit?: 'content' | 'fill' }): void;
+	/**
+	 * Embed the gamification block into a host element. When the element leaves the page the
+	 * widget keeps running for `keep_alive_sec` seconds (default 30, `0` = unmount at once,
+	 * `Infinity` = never) and is then unmounted; it is mounted again if the element comes back.
+	 */
+	gamificationBlock(params: { dom_id: string; url: string; fit?: 'content' | 'fill'; keep_alive_sec?: number }): void;
+	/** Open an operator-built form popup by its id (`engagement_uid` is set when a campaign opens it). */
+	showForm(params: { id: number; engagement_uid?: string }): void;
+	/** Close the form that is currently on screen. */
+	closeForm(): void;
 
 	/** Snapshot of the user's public gamification properties. */
 	getPublicProps(): PublicProperties;

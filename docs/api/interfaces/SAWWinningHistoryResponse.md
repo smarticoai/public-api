@@ -6,18 +6,6 @@
 
 ## Properties
 
-### prizes
-
-> **prizes**: [`SAWPrizesHistory`](SAWPrizesHistory.md)[]
-
-***
-
-### hasMore
-
-> **hasMore**: `boolean`
-
-***
-
 ### cid
 
 > **cid**: `number`
@@ -65,3 +53,15 @@
 #### Inherited from
 
 `ProtocolResponse.errMsg`
+
+***
+
+### prizes
+
+> **prizes**: [`SAWPrizesHistory`](SAWPrizesHistory.md)[]
+
+***
+
+### hasMore
+
+> **hasMore**: `boolean`

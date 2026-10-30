@@ -2,7 +2,7 @@
 
 > The `window._smartico` control surface: init/identify, events, deep links, widgets, visitor-mode `vapi`, push, and utilities — everything that is NOT `_smartico.api.*` (those have their own capability pages).
 > Import: typed via `SmarticoGlobal` from '@smartico/public-api'; at runtime the object is on `window._smartico` (no import).
-> Search terms: api, vapi, checkSuccessfullyIdentify, init, initVisitorMode, identify, online, login, logout, clear, changeLanguage, on, off, dp, showWidget, miniGame, showBanner, sendDataToBanner, gamificationBlock, getPublicProps, updatePublicTags, setUTMs, setLoginEntry, setAvatar, setNickname, setSkin, requestPushPermissions, registerNativePushToken, event, action, sendServerError, sendServerDebug, suspendPopups, suspendInbox, suspendMiniGames, showVisitorGame, convertVisitorGame, startLpAnalytics, sendAnalytics, isMobile, parseUrl, parseUrlHash, _smartico, global, window._smartico, SmarticoGlobal, visitor mode, callbacks, events, onWin, onReady, deep link, getWidgetParams, IWidgetParams, widget params, readiness, lifecycle, push
+> Search terms: api, vapi, checkSuccessfullyIdentify, init, initVisitorMode, identify, online, login, logout, clear, changeLanguage, on, off, dp, showWidget, miniGame, showBanner, sendDataToBanner, gamificationBlock, showForm, closeForm, getPublicProps, updatePublicTags, setUTMs, setLoginEntry, setAvatar, setNickname, setSkin, requestPushPermissions, registerNativePushToken, event, action, sendServerError, sendServerDebug, suspendPopups, suspendInbox, suspendMiniGames, suspendForms, showVisitorGame, convertVisitorGame, startLpAnalytics, sendAnalytics, isMobile, parseUrl, parseUrlHash, _smartico, global, window._smartico, SmarticoGlobal, visitor mode, callbacks, events, onWin, onReady, deep link, getWidgetParams, IWidgetParams, widget params, readiness, lifecycle, push
 
 ## Readiness gate
 Call `window._smartico?.checkSuccessfullyIdentify()` (synchronous) before any `_smartico.api.*` — `true` once init + identify completed. Or subscribe `_smartico.on('identify', cb)` (see the callbacks page).
@@ -26,7 +26,9 @@ Call `window._smartico?.checkSuccessfullyIdentify()` (synchronous) before any `_
 - `_smartico.miniGame(sawTemplateId: string, params: SmarticoWidgetParams, pendingMessageId?: string | number): void` — Open a mini-game widget for the given template.
 - `_smartico.showBanner(params: { dom_id: string; placement_key: string }): void` — Render a banner into a host element.
 - `_smartico.sendDataToBanner(params: { placement_key: string; data: Record<string, unknown> }): void` — Push data into an already-rendered banner.
-- `_smartico.gamificationBlock(params: { dom_id: string; url: string; fit?: 'content' | 'fill' }): void` — Embed the gamification block into a host element.
+- `_smartico.gamificationBlock(params: { dom_id: string; url: string; fit?: 'content' | 'fill'; keep_alive_sec?: number }): void` — Embed the gamification block into a host element. When the element leaves the page the widget keeps running for `keep_alive_sec` seconds (default 30, `0` = unmount at once, `Infinity` = never) and is then unmounted; it is mounted again if the element comes back.
+- `_smartico.showForm(params: { id: number; engagement_uid?: string }): void` — Open an operator-built form popup by its id (`engagement_uid` is set when a campaign opens it).
+- `_smartico.closeForm(): void` — Close the form that is currently on screen.
 - `_smartico.getPublicProps(): PublicProperties` — Snapshot of the user's public gamification properties.
 - `_smartico.updatePublicTags(operation: 'add' | 'remove' | 'replace' | 'clear', tags?: string[]): void` — Add/remove/replace/clear the user's public tags.
 - `_smartico.setUTMs(source: string, campaign: string): void` — Set UTM attribution for the session.
@@ -43,6 +45,7 @@ Call `window._smartico?.checkSuccessfullyIdentify()` (synchronous) before any `_
 - `_smartico.suspendPopups(flag: boolean): void` — Temporarily suspend/resume automatic popups.
 - `_smartico.suspendInbox(flag: boolean): void` — Temporarily suspend/resume the inbox.
 - `_smartico.suspendMiniGames(flag: boolean): void` — Temporarily suspend/resume mini-games.
+- `_smartico.suspendForms(flag: boolean): void` — Temporarily suspend/resume forms.
 - `_smartico.showVisitorGame(params: Record<string, unknown>): void` — Show a visitor-mode game.
 - `_smartico.convertVisitorGame(visitorWinUuid: string): void` — Convert a visitor-mode win into an identified reward.
 - `_smartico.startLpAnalytics(params: { lp_template_uuid: string; shadow_root?: ShadowRoot | null }): void` — Start landing-page analytics for a template.

@@ -67,14 +67,14 @@ field — the SDK inlines the live value into template `name` /
 substitution at fetch time.
 
 **Game-type variants**
-All twelve `SAWGameType` values (`SpinAWheel`, `ScratchCard`,
+All `SAWGameType` values (`SpinAWheel`, `ScratchCard`,
 `MatchX`, `GiftBox`, `PrizeDrop`, `Quiz`, `LootboxWeekdays`,
 `LootboxCalendarDays`, `TreasureHunt`, `Voyager`, `Plinko`,
-`CoinFlip`) surface through the same template shape. Most are
+`CoinFlip`, `CustomMinigame`, `Bingo`) surface through the same template shape. Most are
 played via [playMiniGame](#playminigame); the exceptions are:
 - `PrizeDrop` — server-push only; the consumer does NOT call
   `playMiniGame`. Prizes arrive via the prize-drop push channel.
-- `MatchX` / `Quiz` — predictions are submitted via a separate
+- `MatchX` / `Quiz` / `Bingo` — predictions are submitted via a separate
   games server (not this SDK); the SAW spin is fired
   server-internally to deduct the buy-in.
 
@@ -252,7 +252,7 @@ yourself later (see the `acknowledge` parameter).
 Works for all `SAWGameType` values EXCEPT:
 - `PrizeDrop` — prizes arrive server-pushed; do NOT call
   `playMiniGame` for this type.
-- `MatchX` / `Quiz` — prediction submission goes through a
+- `MatchX` / `Quiz` / `Bingo` — prediction submission goes through a
   separate games server; `playMiniGame` is not the entry point.
 
 #### Parameters

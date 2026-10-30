@@ -244,8 +244,9 @@ Works for identified users, and for visitors when visitor mode is enabled.
 If called before the user is ready, it logs a console error and no-ops.
 
 Special deep links beyond the gamification screens include
-`dp:ask_push_permissions` (trigger the browser push-permission dialog) and
-`dp:action&action=YOUR_ACTION` (fire a named client action).
+`dp:ask_push_permissions` (trigger the browser push-permission dialog),
+`dp:action&action=YOUR_ACTION` (fire a named client action) and
+`dp:form&id=<form id>` (open a form, same as `showForm`).
 
 **Triggering a deep link from a URL**: pass a URL-encoded deep link in the
 page URL hash as `_smartico_dp=...` and the SDK executes it automatically
@@ -273,25 +274,64 @@ Embeds a pre-built Smartico widget. `widgetType` is one of:
 `params` controls embedding (e.g. `iframe` target element id, `height`,
 `theme`, `inline`, `force_mobile`). Requires an identified user.
 
-### `gamificationBlock({ dom_id, url })`
+### `gamificationBlock({ dom_id, url, fit?, keep_alive_sec? })`
 
 Mounts a Smartico landing-page widget bundle (built in the LP IDE) into a host
-element on your page. `dom_id` is the id of the container; `url` is the
-absolute URL of the published `widget.js`. Re-calling with the same `dom_id`
-cleanly remounts (the previous widget is torn down first). Requires `init`
-to have run.
+element on your page. Re-calling with the same `dom_id` cleanly remounts (the
+previous widget is torn down first). Requires `init` to have run.
+
+| Param | Meaning |
+|---|---|
+| `dom_id` | Id of the host element. It must exist when you call the method. |
+| `url` | Absolute URL of the published `widget.js`. |
+| `fit` | `'content'` (default) — the widget grows with its content; `'fill'` — it fills the element's width and height. |
+| `keep_alive_sec` | Seconds a widget keeps running after its element leaves the page. Default `30`. `0` unmounts as soon as the SDK notices (within about a second); `Infinity` never unmounts. Any other value (negative, not a number) is refused with a console error and the widget is not mounted. |
+
+**Single-page apps need no teardown call.** When the host element leaves the
+page (e.g. a route change), the widget keeps running for `keep_alive_sec`
+seconds and is then unmounted — its timers and requests stop. If the same
+element comes back later, the widget is mounted into it again, fresh, without
+its previous state. Coming back within `keep_alive_sec` changes nothing.
+
+```js
+_smartico.gamificationBlock({
+  dom_id: 'rewards-block',
+  url: 'https://<your-domain>/<slug>/widget/widget.js',
+  fit: 'fill',
+  keep_alive_sec: 60, // keep it alive for a minute after the user navigates away
+});
+```
+
+### `showForm({ id, engagement_uid? })` · `closeForm()`
+
+Opens an operator-built data-collection form (by its form id) as a popup, and
+closes the form that is currently on screen. Campaigns open forms by
+themselves; call `showForm` only when your own UI should open one. The same
+form can be opened with the deep link `dp:form&id=<form id>`. Requires `init`
+to have run. While forms are suspended (`suspendForms(true)`, below), a form
+waits and is shown when forms are resumed.
+
+Subscribe to `form_viewed`, `form_submitted` and `form_closed` (see the
+callbacks reference) to react to what the user does with the form.
+
+```js
+_smartico.showForm({ id: 123 });
+_smartico.on('form_submitted', (data) => {
+  console.log('[smartico] form', data.core_form_id, 'submitted — continue your own flow');
+});
+```
 
 ### `showBanner({ dom_id, placement_key })` · `sendDataToBanner({ placement_key, data })`
 
 Renders an operator-configured banner into a host element, and pushes runtime
 data into a rendered banner placement.
 
-### `suspendPopups(flag)` · `suspendInbox(flag)` · `suspendMiniGames(flag)`
+### `suspendPopups(flag)` · `suspendInbox(flag)` · `suspendMiniGames(flag)` · `suspendForms(flag)`
 
 Temporarily suppress (or re-enable) automatically-triggered surfaces — popups,
-inbox prompts, and server-triggered mini-game pop-ups respectively. Pass `true`
-to suspend, `false` to resume. Useful while the user is mid-flow (e.g. on a
-deposit page or completing a KYC form) and you don't want Smartico surfaces
+inbox prompts, server-triggered mini-game pop-ups, and forms respectively. Pass
+`true` to suspend, `false` to resume. Useful while the user is mid-flow (e.g. on
+a deposit page or completing a KYC step) and you don't want Smartico surfaces
 interrupting. Require an identified user.
 
 ```js
@@ -303,6 +343,11 @@ _smartico.suspendPopups(false);  // back to a safe screen
 When suspension is turned off, the first surface that was missed while
 suspended is shown — provided the session is still active (the user hasn't
 refreshed or navigated away).
+
+`suspendForms` is the exception: a form requested while forms are suspended is
+dropped, not queued, so nothing replays when you resume. A campaign-triggered
+form that is dropped this way is reported as failed to deliver, which fires the
+journey's failure branch.
 
 ---
 

@@ -2,9 +2,11 @@
 
 ## Overview
 - Returns the user's activity history in the requested window, newest-first.
-  Wallet rows (points / gems / diamonds) are always available; richer activity
-  rows (missions, badges, levels, …) appear on the same method when the
-  server starts emitting them — optional fields on `TActivityLog`.
+  By default only wallet rows (points / gems / diamonds). Pass
+  `new_format: true` for the full activity feed (missions, badges, levels,
+  tournaments, …) — the extra data comes in optional fields on `TActivityLog`.
+  The full feed must be enabled on the Smartico side; where it is not,
+  `new_format: true` still returns wallet rows only.
 - Power an "Activity" / "History" tab showing wins, claims, purchases,
   level-up rewards, and operator adjustments.
 - 30 s SDK cache + push refresh on every wallet change (with a caveat —
@@ -75,32 +77,33 @@ the returned array length is less than the requested page size.
 ## Subscription model — `onUpdate` caveat
 
 The `onUpdate` callback fires whenever the user's points / gems / diamonds
-balance changes. **The pushed payload is a FIXED re-fetch** of:
+balance changes. The SDK then re-fetches **the same window you subscribed
+with** — the same `startTimeSeconds`, `endTimeSeconds`, `from`, `to`,
+`types`, `src_types` and `new_format` — and passes that result to the
+callback.
 
-- `startTimeSeconds = now - 600` (last 10 minutes)
-- `endTimeSeconds = now`
-- `from = 0`, `to = 50`
+Two things follow from that:
 
-It does NOT use the original call's parameters. Consumers maintaining a long
-historical view (e.g. 30 days) should treat `onUpdate` as a "new transactions
-arrived" hint and re-call `getActivityLog` with their own params:
+- **The window end is fixed.** Rows created after your `endTimeSeconds` are
+  not in the pushed payload. If your window ends at "now", treat `onUpdate`
+  as a "new activity arrived" signal and call `getActivityLog` again with a
+  fresh `endTimeSeconds` (the default Smartico UI uses `now + 60 s` for its
+  open-ended chips, which covers only the next minute).
+- **One subscription at a time.** Only the most recent call that passed an
+  `onUpdate` is refreshed. Calling again with a different window (e.g. the
+  user switched the period chip) moves the subscription to that window.
 
 ```ts
-const log = await window._smartico.api.getActivityLog({
+const subscribe = () => window._smartico.api.getActivityLog({
   startTimeSeconds: thirtyDaysAgo,
-  endTimeSeconds:   now,
+  endTimeSeconds: Math.floor(Date.now() / 1000) + 60,
   from: 0, to: 50,
-  onUpdate: async (refreshed) => {
-    console.log('[smartico] wallet changed — refreshed last-10-min payload arrived');
-    // To keep the 30-day view current, re-fetch with the original params:
-    const fresh = await window._smartico.api.getActivityLog({
-      startTimeSeconds: thirtyDaysAgo,
-      endTimeSeconds: Math.floor(Date.now() / 1000),
-      from: 0, to: 50,
-    });
-    console.log('[smartico] re-rendered full 30-day list with', fresh.length, 'rows');
+  onUpdate: () => {
+    console.log('[smartico] wallet changed — re-fetch with a fresh window end and re-render the list');
+    subscribe().then((rows) => console.log('[smartico] render', rows.length, 'rows'));
   },
 });
+const log = await subscribe();
 ```
 
 ## Empty / loading / error states

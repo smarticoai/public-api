@@ -23,3 +23,13 @@ Winner selection is in progress
 > **Executed**: `3`
 
 Draw is executed and the winners are selected
+
+***
+
+### Cancelled
+
+> **Cancelled**: `4`
+
+Draw was cancelled and will never be executed.
+Treat it as a terminal state: stop any polling of the draw run
+and do not show the winner-selection progress UI.

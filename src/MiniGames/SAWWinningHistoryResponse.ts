@@ -1,4 +1,4 @@
-import { ProtocolResponse } from "../SmarticoLib";
+import { ProtocolResponse } from "../Base/ProtocolResponse";
 import { TSawHistory } from "../WSAPI/WSAPITypes";
 import { SAWTemplate } from "./SAWTemplate";
 

@@ -1,6 +1,6 @@
 # gamePickGetBoard — API (GamePickRoundBoard)
 
-> Returns the leaderboard for a MatchX or Quiz game round — ranked list of players plus the current user's entry (`my_user`).
+> Returns the leaderboard for a MatchX, Quiz or Bingo game round — ranked list of players plus the current user's entry (`my_user`).
 > Import: `import { GamePickRoundBoard } from '@smartico/public-api'`
 > Search terms: gamePickGetBoard, gamepick, GamePickRoundBoard, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickBoardUser, errCode, data
 
@@ -10,7 +10,7 @@ _smartico.api.gamePickGetBoard(props: GamePickRoundRequestParams): Promise<Games
 ```
 
 ## Parameters
-- `props.saw_template_id` — ID of the MatchX or Quiz game template.
+- `props.saw_template_id` — ID of the MatchX, Quiz or Bingo game template.
 - `props.round_id` — Round ID, or `-1` for the season leaderboard.
 
 ## Returns — `Promise<GamesApiResponse<GamePickRoundBoard>>`

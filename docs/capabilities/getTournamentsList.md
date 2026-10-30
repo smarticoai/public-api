@@ -26,6 +26,7 @@ Array of `TTournament`. Each item:
 - `custom_price_text` (string) — The message indicating the price to register in the tournament
 - `segment_dont_match_message` (string) — The message that should be shown to the user when the user cannot register in tournament with error code TOURNAMENT_USER_DONT_MATCH_CONDITIONS
 - `custom_section_id` (number) — The ID of the custom section where the tournament is assigned The list of custom sections can be retrieved using _smartico.api.getCustomSections() method
+- `only_in_custom_section` (boolean) — The indicator if the tournament is visible only in the custom section and should be hidden from the main overview of tournaments
 - `custom_data` (any) — The custom data of the tournament defined by operator. Can be a JSON object, string or number
 - `is_featured` (boolean) — The indicator if the tournament is 'Featured'
 - `ribbon` (TRibbon) — The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250×300px
@@ -111,6 +112,12 @@ tournaments past their post-finish display window, and excludes
 tournaments not yet published. SDK consumers receive only items
 the user is eligible to see; no client-side gating is required.
 
+Client-side filtering you may still want: tournaments with
+`only_in_custom_section: true` are intended for their custom-section
+view only and should be hidden from the main lobby list — including
+from any per-tab counters rendered next to the tab labels, otherwise
+the counts disagree with the number of cards the user can see.
+
 **Reading state from the returned item**
 Drive list bucketing and CTA labels from the SDK-computed booleans
 (`is_active`, `is_can_register`, `is_cancelled`, `is_finished`,
@@ -165,19 +172,22 @@ const tournaments = await window._smartico.api.getTournamentsList({
   },
 });
 
+// Main lobby list — custom-section-only tournaments belong to that section's own view.
+const lobby = tournaments.filter(t => !t.only_in_custom_section);
+
 // Bucket items by lifecycle state for a tabbed UI.
-const live = tournaments.filter(t => t.is_in_progress);
-const upcoming = tournaments
+const live = lobby.filter(t => t.is_in_progress);
+const upcoming = lobby
   .filter(t => t.is_upcoming && !t.is_user_registered)
   .sort((a, b) => a.start_time - b.start_time);
-const mine = tournaments.filter(t => t.is_user_registered);
-const finished = tournaments.filter(t => t.is_finished);
+const mine = lobby.filter(t => t.is_user_registered);
+const finished = lobby.filter(t => t.is_finished);
 
 console.log('[smartico] render lobby tabs with these counts: live=', live.length,
   'upcoming=', upcoming.length, 'mine=', mine.length, 'finished=', finished.length);
 
 // Featured tournament: pin to position 0 of the Overview/Top tabs.
-const featured = tournaments.find(t => t.is_featured && !t.is_cancelled);
+const featured = lobby.find(t => t.is_featured && !t.is_cancelled);
 if (featured) {
   console.log('[smartico] featured tournament — pin to position 0 of the Overview tab:', featured.name);
 }

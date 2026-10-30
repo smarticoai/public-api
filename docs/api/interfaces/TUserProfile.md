@@ -116,6 +116,15 @@ recommendation is currently available.
 
 ***
 
+### core\_recommended\_sport\_bet\_amount?
+
+> `optional` **core\_recommended\_sport\_bet\_amount?**: `number`
+
+AI-recommended sport bet amount for this user. Undefined when no
+recommendation is currently available.
+
+***
+
 ### ach\_level\_current?
 
 > `optional` **ach\_level\_current?**: `string`

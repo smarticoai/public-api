@@ -77,3 +77,9 @@
 ### CustomMinigame
 
 > **CustomMinigame**: `13`
+
+***
+
+### Bingo
+
+> **Bingo**: `14`

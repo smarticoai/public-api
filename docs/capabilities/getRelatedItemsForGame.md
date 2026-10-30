@@ -2,7 +2,7 @@
 
 > Returns the missions and tournaments associated with a casino / sportsbook game in the operator's games catalog — the reverse of "given this mission, which games count for it" — so you can surface "play this game to progress mission X" / "tournament Y features this game" badges on game tiles or detail screens.
 > Import: `import { GetRelatedAchTourResponse } from '@smartico/public-api'`
-> Search terms: getRelatedItemsForGame, general, GetRelatedAchTourResponse, UserAchievement, AchievementType, AchievementPublicMeta, UserAchievementTask, AchievementStatus, ScheduledMissionType, AchRelatedGame, BadgesTimeLimitStates, Tournament, TournamentType, TournamentPublicMeta, TournamentRegistrationType
+> Search terms: getRelatedItemsForGame, general, GetRelatedAchTourResponse, UserAchievement, AchievementType, AchievementPublicMeta, UserAchievementTask, AchievementStatus, ScheduledMissionType, AchRelatedGame, BadgesTimeLimitStates, AchievementClaimPeriodTypeId, Tournament, TournamentType, TournamentPublicMeta
 
 ## Signature
 ```ts
@@ -14,7 +14,7 @@ _smartico.api.getRelatedItemsForGame(related_game_id: string): Promise<GetRelate
 
 ## Returns — `Promise<GetRelatedAchTourResponse>`
 `GetRelatedAchTourResponse`:
-- `cid` (number)
+- `cid` (number) — can be ClassId when we move all ClassIds from ach to use @smartico
 - `ts` (number)
 - `uuid` (string)
 - `errCode` (number)
@@ -23,6 +23,7 @@ _smartico.api.getRelatedItemsForGame(related_game_id: string): Promise<GetRelate
   - `ach_id` (number)
   - `ach_type_id` (AchievementType)
   - `ach_public_meta` (AchievementPublicMeta)
+    - `sub_header` (string)
     - `description` (string)
     - `unlock_mission_description` (string)
     - `custom_data` (string)
@@ -41,6 +42,9 @@ _smartico.api.getRelatedItemsForGame(related_game_id: string): Promise<GetRelate
     - `hint_text` (string)
     - `hide_badge_from_ui` (boolean)
     - `show_badge_first_task_completed` (boolean)
+    - `custom_section_type_id` (number)
+    - `claim_button_title` (string)
+    - `claim_button_action` (string)
   - `isCompleted` (boolean)
   - `isLocked` (boolean)
   - `requiresOptin` (boolean)
@@ -49,23 +53,40 @@ _smartico.api.getRelatedItemsForGame(related_game_id: string): Promise<GetRelate
   - `start_date_ts` (number)
   - `time_limit_ms` (number)
   - `progress` (number)
-  - `complete_date` (string)
+  - `complete_date` (string) — "dd/MM/yyyy HH:mm:ss" string (not ISO-8601); use complete_date_ts for epoch-ms
   - `complete_date_ts` (number)
-  - `unlock_date` (string)
+  - `unlock_date` (string) — "dd/MM/yyyy HH:mm:ss" string (not ISO-8601)
   - `milliseconds_till_available` (number)
   - `completed_tasks` (number)
   - `achievementTasks` (UserAchievementTask[])
     - `task_id` (number)
     - `task_public_meta` (AchievementTaskPublicMeta)
       - `name` (string)
+      - `display_progress_as_count` (boolean)
+      - `stage_image` (string)
+      - `priority` (number)
+      - `user_state_operations` ({
+		[key: string]: {
+			op: string;
+		};
+	})
     - `points_reward` (number)
+    - `gems_reward` (number) — Gems awarded when this task is completed.
+    - `diamonds_reward` (number) — Diamonds awarded when this task is completed.
     - `task_type_id` (AchievementTaskType)
     - `isCompleted` (boolean)
-    - `userExecutedCount` (number)
+    - `userExecutedCount` (number) — This is the number of times the user has executed 'activity' of the task. e.g. he bet 5 times out of 100. here will be 5
+    - `executionCount` (number) — This is the total number of times the user needs to execute to complete task. e.g. he needs to bet 100 times. here will be 100
     - `userProgress` (number)
     - `lastExecutionDate` (string)
     - `unlocked_by_mission_id` (number)
     - `unlocked_by_level_id` (number)
+    - `user_state_params` ({ [key: string]: any })
+    - `affects_progress` (AffectsProgress | null)
+      - `affects_level` (boolean)
+      - `affects_leaderboard` (boolean)
+      - `affects_current_balance` (boolean)
+      - `rewardPoints` (number)
   - `next_recurrence_date_ts` (number)
   - `ach_status_id` (AchievementStatus)
   - `scheduledMissionType` (ScheduledMissionType)
@@ -91,6 +112,7 @@ _smartico.api.getRelatedItemsForGame(related_game_id: string): Promise<GetRelate
 	}) — Game public meta information
   - `active_from_ts` (number) — indicates when 'scheduled' mission is active from,
   - `active_till_ts` (number) — indicates when 'scheduled' mission is active till,
+  - `activity_period_next_start_ts` (number) — when a mission limited to some weekdays / days of the month opens next; set only while it is outside its active days
   - `ach_categories` (number[])
   - `recurring_quantity` (number) — max completion count for Recurring upon completion
   - `completed_count` (number) — completion count for Recurring upon completion
@@ -102,6 +124,8 @@ _smartico.api.getRelatedItemsForGame(related_game_id: string): Promise<GetRelate
   - `completed_this_month` (boolean)
   - `custom_section_type_id` (number)
   - `badgeTimeLimitState` (BadgesTimeLimitStates)
+  - `prize_claim_expiration_date` (number)
+  - `prize_claim_period_type_id` (AchievementClaimPeriodTypeId)
 - `tournaments` (Tournament[])
   - `tournamentId` (number) — ID of tournament template
   - `tournamentInstanceId` (number) — ID of tournament instance. Generated every time when tournament based on specific template is scheduled for run

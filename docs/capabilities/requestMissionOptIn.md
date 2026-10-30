@@ -91,8 +91,9 @@ if (r.err_code === 0 || r.err_code === 40010) {
   means local mission state was stale (e.g. user opted in from another
   session/tab).
 - `40013` — mission not opt-in-able: missing `requires_optin`, in
-  DRAFT/ARCHIVED state, or outside its `active_from_ts` /
-  `active_till_ts` window.
+  DRAFT/ARCHIVED state, outside its `active_from_ts` /
+  `active_till_ts` window, or outside its active weekdays / days of the
+  month (`activity_period_next_start_ts` is set).
 - `40014` — mission is locked; user has unlock-tasks remaining.
   Surface the mission's `unlock_mission_description` to guide them.
 - other non-zero — generic server error. Surface `err_message` if any.

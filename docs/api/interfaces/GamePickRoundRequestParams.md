@@ -12,7 +12,7 @@ GamePickRoundRequestParams extends base params with a specific round ID
 
 > **saw\_template\_id**: `number`
 
-ID of the MatchX or Quiz game template. The only field the consumer supplies.
+ID of the MatchX, Quiz or Bingo game template. The only field the consumer supplies.
 
 #### Inherited from
 

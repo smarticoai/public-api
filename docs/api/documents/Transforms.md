@@ -39,7 +39,9 @@ Transforms normalize the raw shape in a handful of recurring ways:
    consistent snake_case (`user_id`, `public_username`, `is_me`, `can_buy`).
 3. **Compute convenience fields** — e.g. build an absolute `avatar_url` from a
    relative image path plus the label's avatar domain, so the consumer can use
-   it directly in an `<img>`.
+   it directly in an `<img>`; or put the real amount of a gems / diamonds or
+   raffle-ticket mini-game prize (read from its type-specific details) into
+   `prize_value`.
 4. **Resolve opaque ids to named values** — numeric type ids become named enum
    values (e.g. a raw `itemTypeId` becomes a friendly `type`).
 5. **Parse string-encoded JSON** — fields the server sends as JSON strings

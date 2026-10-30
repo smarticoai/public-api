@@ -44,7 +44,12 @@ inside the generated `docs/api` site alongside the reference.
 
 ### Build
 
-- `npm run doc` = `typedoc && node scripts/postdoc-cleanup.js`.
+- `npm run doc` = `sync-smartico-lib && gen-capabilities && typedoc && postdoc-cleanup`.
+- `scripts/sync-smartico-lib.js` regenerates `src/SmarticoLib/index.ts` (the
+  tracker's `_smartico` typings: callback enum, deep links, widget params) from
+  `../tracker/src/tracker/Smartico.ts`. It needs the tracker checked out next to
+  this repo and fails loudly otherwise. Never hand-edit that file — fix the
+  tracker and re-run `npm run sync-smartico-lib`.
 - `typedoc` is driven entirely by `typedocOptions` in `tsconfig.json`:
   `entryPoints` (the `src/**` files whose exports become reference pages —
   **add new public types/classes here or they won't appear in `docs/api`**),

@@ -140,6 +140,12 @@
 
 ***
 
+### activity\_period\_next\_start\_ts?
+
+> `optional` **activity\_period\_next\_start\_ts?**: `number`
+
+***
+
 ### ach\_categories?
 
 > `optional` **ach\_categories?**: `number`[]

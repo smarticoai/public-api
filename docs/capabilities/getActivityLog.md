@@ -13,6 +13,7 @@ _smartico.api.getActivityLog({
 		to,
 		types,
 		src_types,
+		new_format,
 		onUpdate,
 	}: {
 		/** Window start in epoch seconds. */
@@ -27,7 +28,9 @@ _smartico.api.getActivityLog({
 		types?: number[];
 		/** Optional — filter by {@link PointChangeSourceType} / `source_type_id`. */
 		src_types?: number[];
-		/** Optional push callback; payload is a fixed 10-min / 50-entry refresh on every wallet change (see Subscription model). */
+		/** Optional — `true` returns the full activity feed (all activity kinds) where it is enabled; omitted returns wallet changes only. */
+		new_format?: boolean;
+		/** Optional push callback; on every wallet change it receives a re-fetch of this same window (see Subscription model). */
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]>
 ```
@@ -85,16 +88,19 @@ are epoch seconds bounding the window the server scans.
 **Filtering** — optional server-side filters:
 - `types` — `ActivityLogActivities` / `type_id` values (e.g. Points=3, Gems=1)
 - `src_types` — `PointChangeSourceType` / `source_type_id` values
-Omit both for an unfiltered window.
+Omit both for an unfiltered window. Both filters apply only together with
+`new_format: true`.
 
 **Subscription model (`onUpdate`)**
 The callback fires when the user's `ach_points_balance`,
 `ach_gems_balance`, or `ach_diamonds_balance` changes (i.e. whenever a
-wallet event lands). The pushed payload is a FIXED re-fetch of the
-**last 10 minutes / first 50 entries** — it does NOT honor the original
-call's `startTimeSeconds` / `endTimeSeconds` / `from` / `to` / filters.
-Consumers maintaining a long historical view must re-call `getActivityLog` with
-their own params after receiving an `onUpdate` notification.
+wallet event lands). The pushed payload is a re-fetch of the SAME window
+the subscribing call used (`startTimeSeconds` / `endTimeSeconds` / `from` /
+`to` / filters / `new_format`). Because `endTimeSeconds` is fixed, rows
+created after it are not in the payload — when your window ends at "now",
+treat `onUpdate` as a "new activity arrived" signal and re-call
+`getActivityLog` with a fresh `endTimeSeconds`. Only the most recent call
+that passed an `onUpdate` stays subscribed.
 
 **Refresh**
 - The SDK caches results for 30 seconds.
@@ -115,11 +121,12 @@ const log = await window._smartico.api.getActivityLog({
     endTimeSeconds:   now,
     from: 0,
     to:   50,
+    new_format: true, // the filters below apply only with new_format
     types: [1], // Gems only (ActivityLogActivities.Gems)
     src_types: [11], // Tournament wins only (PointChangeSourceType.Tournament)
     onUpdate: (refreshed) => {
-        console.log('[smartico] wallet changed — refreshed payload is last 10 min / 50 entries:', refreshed.length, 'rows');
-        // If the consumer is showing a full 30-day view, re-call getActivityLog with the original params here.
+        console.log('[smartico] wallet changed — payload re-fetched for the same window:', refreshed.length, 'rows');
+        // The window ends at the original `now` — re-call getActivityLog with a fresh endTimeSeconds to include the new row.
     },
 });
 
@@ -163,6 +170,6 @@ for (const row of log) {
 See this method's TSDoc / the mutation pages for `err_code` handling.
 
 ## Related
-- `TActivityLog`
 - `ActivityLogActivities`
 - `PointChangeSourceType`
+- `TActivityLog`

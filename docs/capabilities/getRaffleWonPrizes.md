@@ -16,7 +16,7 @@ _smartico.api.getRaffleWonPrizes(props: { raffle_id: number; offset?: number; li
 
 ## Returns — `Promise<GetRaffleWonPrizesResponse>`
 `GetRaffleWonPrizesResponse`:
-- `cid` (number)
+- `cid` (number) — can be ClassId when we move all ClassIds from ach to use @smartico
 - `ts` (number)
 - `uuid` (string)
 - `errCode` (number)

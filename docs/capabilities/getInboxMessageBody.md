@@ -26,6 +26,8 @@ _smartico.api.getInboxMessageBody(messageGuid: string): Promise<TInboxMessageBod
 		text: string;
 	}[]) — Up to 2 additional action buttons. Populated only when `action === 'dp:inbox'`.
 - `custom_data` (string) — Operator-defined custom data. The SDK auto-parses JSON-looking strings, so at runtime this is `any` despite the `string` type.
+- `show_preview` (boolean) — Whether to show a short preview popup when the message arrives. `false` means store it in the inbox silently; missing means `true`.
+- `show_duration_sec` (number | null) — How long the preview popup stays visible, in seconds. `null` or missing means 7 seconds.
 
 ## Behavioral contract
 **Rich vs simple messages**
@@ -44,6 +46,16 @@ For both shapes, `action` carries either a deep-link
 (`'dp:gf_missions'`) or a plain URL. Pass it to `_smartico.dp()`
 for safe execution — that helper handles URL vs deep-link
 routing.
+
+**Preview vs silent delivery**
+Every message belongs in your inbox list. `show_preview` decides
+whether it should also pop up briefly when it arrives:
+- `show_preview !== false` → show a preview popup for
+  `show_duration_sec ?? 7` seconds.
+- `show_preview === false` → store it silently, with no popup.
+These fields are returned exactly as the operator configured them;
+a missing value means the default above, the same as the default
+Smartico UI.
 
 **Idempotency / Side effects**: safe. Read-only HTTP fetch.
 
@@ -65,6 +77,12 @@ if (body.action === 'dp:inbox' && body.html_body) {
 } else {
   console.log('[smartico] simple message — show preview_body + single CTA wired to:', body.action,
     '— execute via _smartico.dp(body.action)');
+}
+
+if (body.show_preview !== false) {
+  console.log('[smartico] new message — show a preview popup for', body.show_duration_sec ?? 7, 'seconds');
+} else {
+  console.log('[smartico] new message — store it in the inbox silently, no popup');
 }
 ```
 

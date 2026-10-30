@@ -47,3 +47,12 @@ After End Date (not started)
 > **AfterEndDateWithProgress**: `5`
 
 After End Date (player has some progress, but not completed)
+
+***
+
+### AfterStartDateWithProgress
+
+> **AfterStartDateWithProgress**: `6`
+
+After Start Date, player has some progress, and the badge has no End Date.
+The badge is still earnable — do not render it as expired.

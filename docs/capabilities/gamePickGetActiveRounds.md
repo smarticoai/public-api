@@ -1,6 +1,6 @@
 # gamePickGetActiveRounds — API (GamePickRound)
 
-> Returns every open round for a MatchX or Quiz game template, with the full event list (matches / questions) and the current user's selections per event.
+> Returns every open round for a MatchX, Quiz or Bingo game template, with the full event list (matches / questions) and the current user's selections per event.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
 > Search terms: gamePickGetActiveRounds, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType, errCode, data
 
@@ -10,7 +10,7 @@ _smartico.api.gamePickGetActiveRounds(props: GamePickRequestParams): Promise<Gam
 ```
 
 ## Parameters
-- `props.saw_template_id` — ID of the MatchX or Quiz game template.
+- `props.saw_template_id` — ID of the MatchX, Quiz or Bingo game template.
 
 ## Returns — `Promise<GamesApiResponse<GamePickRound[]>>`
 Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage?` (string), `data?` — the payload:
@@ -127,7 +127,7 @@ Array of `GamePickRound`. Each item:
 ## Behavioral contract
 **Preconditions**
 - User must be authenticated.
-- `saw_template_id` must reference a MatchX or Quiz game template. The SDK
+- `saw_template_id` must reference a MatchX, Quiz or Bingo game template. The SDK
  throws synchronously if it's missing.
 
 **Transport**

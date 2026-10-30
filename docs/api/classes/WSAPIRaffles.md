@@ -71,8 +71,12 @@ during an in-progress draw.
   sold-out message).
 - Within each draw, `current_state`
   ([RaffleDrawInstanceState](../enumerations/RaffleDrawInstanceState.md)) buckets the draw into Open
-  (accepting tickets), WinnerSelection (currently drawing), or
-  Executed (winners selected).
+  (accepting tickets), WinnerSelection (currently drawing),
+  Executed (winners selected), or Cancelled (will never run).
+  Treat every state other than Open and WinnerSelection as
+  terminal — stop polling the draw run and clear any
+  "drawing in progress" indicator, otherwise a cancelled draw
+  leaves the UI spinning forever.
 - `execution_type` ([RaffleDrawTypeExecution](../enumerations/RaffleDrawTypeExecution.md)) distinguishes
   one-shot (`ExecDate`), repeating (`Recurring`), or special
   one-shot (`Grand`) draws. Recurring draws share a stable

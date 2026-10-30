@@ -27,6 +27,7 @@ _None._
 - `core_inbox_unread_count` (number) — Unread inbox messages count. Push-updated in real time.
 - `core_recommended_deposit_amount` (number) — AI-recommended deposit amount for this user. Undefined when no recommendation is currently available.
 - `core_recommended_casino_bet_amount` (number) — AI-recommended casino bet amount for this user. Undefined when no recommendation is currently available.
+- `core_recommended_sport_bet_amount` (number) — AI-recommended sport bet amount for this user. Undefined when no recommendation is currently available.
 - `ach_level_current` (string) — Display name of the user's current level (e.g. `"Silver"`); resolve the id via `getCurrentLevel()`.
 - `ach_gamification_in_control_group` (boolean) — `true` when the user is in the gamification A/B control group (gamification UI suppressed).
 - `user_id` (number) — Smartico-internal numeric user id.

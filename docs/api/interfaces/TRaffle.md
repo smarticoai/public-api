@@ -50,6 +50,17 @@ URL of the mobile image that represents the raffle, 300x142px
 
 ***
 
+### hint\_text?
+
+> `optional` **hint\_text?**: `string`
+
+Terms and Conditions text configured by the operator for this raffle.
+Render it as the raffle rules. It is absent or empty when the operator
+configured none — hide the rules section in that case rather than
+substituting your own copy.
+
+***
+
 ### custom\_data
 
 > **custom\_data**: `string`

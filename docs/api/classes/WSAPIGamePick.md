@@ -5,7 +5,7 @@
 
 > **gamePickGetActiveRounds**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
-Returns every open round for a MatchX or Quiz game template, with the full
+Returns every open round for a MatchX, Quiz or Bingo game template, with the full
 event list (matches / questions) and the current user's selections per event.
 
 Use to power the rounds-lobby screen — typically a list of round cards a user
@@ -28,7 +28,7 @@ Wrapped [GamesApiResponse](../interfaces/GamesApiResponse.md) of [GamePickRound]
 
 **Preconditions**
 - User must be authenticated.
-- `saw_template_id` must reference a MatchX or Quiz game template. The SDK
+- `saw_template_id` must reference a MatchX, Quiz or Bingo game template. The SDK
   throws synchronously if it's missing.
 
 **Transport**
@@ -83,7 +83,7 @@ for (const round of r.data ?? []) {
 > **gamePickGetActiveRound**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)\>\>
 
 Returns a single round (events, user selections, scoring rules) for a
-MatchX or Quiz game. Use to power the round-detail / prediction-input
+MatchX, Quiz or Bingo game. Use to power the round-detail / prediction-input
 screen the user lands on after picking a round from the lobby.
 
 Same shape as one entry of [gamePickGetActiveRounds](#gamepickgetactiverounds); cheaper when the
@@ -149,7 +149,7 @@ if (r.errCode === 0 && r.data) {
 
 > **gamePickGetHistory**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRound`](../interfaces/GamePickRound.md)[]\>\>
 
-Returns the full round history (active + resolved) for a MatchX or Quiz game
+Returns the full round history (active + resolved) for a MatchX, Quiz or Bingo game
 template, newest-first. Each round carries the user's predictions plus the
 server-resolved outcome on each event.
 
@@ -213,7 +213,7 @@ for (const round of r.data ?? []) {
 
 > **gamePickGetBoard**(`props`): `Promise`\<[`GamesApiResponse`](../interfaces/GamesApiResponse.md)\<[`GamePickRoundBoard`](../interfaces/GamePickRoundBoard.md)\>\>
 
-Returns the leaderboard for a MatchX or Quiz game round — ranked list of
+Returns the leaderboard for a MatchX, Quiz or Bingo game round — ranked list of
 players plus the current user's entry (`my_user`). Pass `round_id: -1` for
 the season / overall leaderboard across every round in the template.
 

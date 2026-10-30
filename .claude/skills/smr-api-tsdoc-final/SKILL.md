@@ -25,8 +25,8 @@ commit message.
 - **NEVER run `npm run doc`.** It is human-triggered. The skill leaves a
   verification checklist for the human to run it and confirm a clean build.
 - **Edit only:**
-  - `.ts` under `public-api/src/` (domain classes, `WSAPITypes.ts`, and the
-    vendored `SmarticoLib/index.ts` enum — see step 1 caveat),
+  - `.ts` under `public-api/src/` (domain classes, `WSAPITypes.ts`;
+    `SmarticoLib/index.ts` only via `npm run sync-smartico-lib`, never by hand),
   - UI guides under `public-api/docs/ui/<domain>/`,
   - the hand-authored concept docs `public-api/docs/{Callbacks,SmarticoObject,Transforms}.md`,
   - the native protocol `public-api/docs/native/PROTOCOL.md` (+ `ADDING_METHODS.md`),
@@ -49,7 +49,7 @@ commit message.
 | Artifact | Edit | Canonical source(s) to read |
 |---|---|---|
 | Callback list (`docs/Callbacks.md`) | `public-api/docs/Callbacks.md` | `tracker/submodule/client-common-libs/src/lib-common/enum/ExternalCallbackKey.ts` (the 18-key enum) + trigger sites: `tracker/src/tracker/{Tracker,Gamification,Smartico,TrackerVisitor}.ts` (grep `triggerExternalCallBack`) + iframe-origin emitters in `tracker/ach/src/core/engine/{SawEngine,UserEngine}.ts` |
-| Vendored callback enum | `public-api/src/SmarticoLib/index.ts` (`declare enum EXTERNAL_CALLBACK_KEY`) | Same `ExternalCallbackKey.ts` (keep in sync; it's a generated bundle — see step 1) |
+| Tracker typings (`SmarticoLib`) | generated — `npm run sync-smartico-lib` (also first step of `npm run doc`) | `tracker/src/tracker/Smartico.ts` via `scripts/sync-smartico-lib.js` (dts-bundle-generator from the tracker's node_modules) |
 | `_smartico` object (`docs/SmarticoObject.md`) | `public-api/docs/SmarticoObject.md` | `tracker/src/tracker/Smartico.ts` (grep `public static`); deep-link values from `DpType` + widget types from `EWidgetType` (verify against `public-api/src/SmarticoLib/index.ts` / `tracker/src/shared/Enums.ts`) |
 | Native protocol (`docs/native/PROTOCOL.md`) | `public-api/docs/native/PROTOCOL.md` | Concept in `public-api/docs/native/ADDING_METHODS.md`; ClassIds from `public-api/src/Base/ClassId.ts`; raw request/response shapes from `public-api/src/SmarticoAPI.ts` + the per-domain `*Request.ts` / `*Response.ts` |
 | WSAPI method TSDocs + UI guides | `public-api/src/WSAPI/*.ts`, `docs/ui/<domain>/` | Delegated to the `smr-api-tsdoc` skill |
@@ -62,24 +62,56 @@ Run the steps in order. Each step is idempotent — it reconciles the doc agains
 the current code, so re-running the skill just picks up the delta. Track
 progress with TaskCreate/TaskUpdate (one task per step).
 
+### Step 0 — Rescue hand edits in generated files (ALWAYS, before anything else)
+
+People sometimes edit `docs/capabilities/*.md` or `docs/api/**` directly. The
+next `npm run doc` silently wipes those edits. Find them first and move any
+detail worth keeping into its source (TSDoc / type comment / UI guide /
+concept doc), so the regen reproduces it.
+
+1. Find the last full regen: `git log -3 --format='%h %ad %s' --date=short -- docs/api docs/capabilities`.
+2. Rebuild in a throwaway worktree (never in the real tree), with the repo's
+   `node_modules` symlinked:
+   ```sh
+   S=<scratchpad>; git worktree add --detach $S/wt <regen-commit>
+   ln -s "$PWD/node_modules" $S/wt/node_modules
+   (cd $S/wt && node scripts/gen-capabilities.js && npx typedoc && node scripts/postdoc-cleanup.js)
+   git -C $S/wt diff -- docs/capabilities docs/api   # '-' lines = committed text the generator does not produce
+   ```
+   `-` lines that are NOT simply older wording replaced by a `+` line are hand
+   edits. Repeat at HEAD to see what the next regen changes overall.
+3. To catch hand edits made earlier (and maybe already lost), loop over every
+   commit that touched `docs/capabilities/*.md` / `docs/api` since the last
+   check: check out that commit in the worktree, regenerate with that
+   commit's own scripts, and flag lines the commit ADDED that its own regen does
+   not produce. Then check whether each flagged line's content still exists in
+   the HEAD source or output. Commits older than the current TypeDoc config
+   (unknown options `entryDocument` / `hideInPageTOC`) cannot be regenerated —
+   say so instead of guessing.
+4. For each real hand edit: verify it against code (hive / tracker / server),
+   then move it to the right source file. Report each one with its commit and
+   author, and say what was moved where (or why it was dropped).
+5. Also review hand-authored doc changes by other people since the last regen
+   (`git log <regen-commit>..HEAD -- docs/ui docs/native docs/*.md`): the claims
+   must match code, and narrative belongs in the right file (method TSDoc vs
+   type field comment vs UI guide).
+6. Remove the worktree when done (`git worktree remove --force $S/wt`).
+
 ### Step 1 — Actualize callbacks (`_smartico.on`)
 
-1. Read the canonical enum `ExternalCallbackKey.ts`. Diff its keys against:
-   - the events documented in `docs/Callbacks.md`, and
-   - the `declare enum EXTERNAL_CALLBACK_KEY` in `src/SmarticoLib/index.ts`.
+1. Regenerate the tracker typings: `npm run sync-smartico-lib` (rewrites
+   `src/SmarticoLib/index.ts` from `../tracker/src/tracker/Smartico.ts` — the
+   callback enum, deep links, widget params, `_smartico` statics). Then
+   `npx tsc --noEmit -p tsconfig.json` must pass. Never hand-edit that file.
+   Then read the canonical enum `ExternalCallbackKey.ts` and diff its keys
+   against the events documented in `docs/Callbacks.md`.
 2. For each **new** key: grep the tracker for its `triggerExternalCallBack(EXTERNAL_CALLBACK_KEY.X, ...)`
    site(s) to capture the exact handler arguments; for iframe-origin events
    (`MNIGAME_WIN`, `ACH_GAME_OPENING`, `GF_UX`) read the ach emit sites. Add a
    row to the Callbacks.md event table (grouped: Lifecycle / User state / Widget
    lifecycle / Wins & launches / Errors) with when-it-fires + handler args.
 3. For **removed/renamed** keys: remove/adjust the row.
-4. Sync `src/SmarticoLib/index.ts`'s enum to match canonical (keep canonical
-   order). **Caveat:** that file is `// Generated by dts-bundle-generator` — there
-   is no regen script in this repo, so it's a committed vendored artifact;
-   editing it aligns the committed copy with canonical, but flag in the return
-   summary that the upstream smartico.js `.d.ts` bundle should be regenerated so
-   it doesn't drift back.
-5. Keep Callbacks.md links plain-text (no relative `.md` links — see step 6
+4. Keep Callbacks.md links plain-text (no relative `.md` links — see step 6
    "media-copy" note).
 
 ### Step 2 — Update the `_smartico` object reference
@@ -192,7 +224,7 @@ Reconcile the doc-build wiring so the next human `npm run doc` is clean:
    - build: projectDocuments/entryPoints wiring; fixed <N> typedoc warnings
    ```
 3. **Present it for review. Do not run `git commit`.** Surface, separately: the
-   SmarticoLib enum regen caveat (step 1), any hive-sourced claims not directly
+   whether `npm run sync-smartico-lib` changed `SmarticoLib` (step 1), any hive-sourced claims not directly
    verified, and any links pending the next `npm run doc`.
 
 ### Step 8 — Verification checklist (for the human)
@@ -217,7 +249,7 @@ grep -rn "../../docs/ui/" docs/api/classes/ && echo BROKEN || echo OK
   build wiring).
 - **Files edited** (paths).
 - **The prepared commit message** (for review — not committed).
-- **Open items / caveats**: SmarticoLib enum regen, links pending `npm run doc`,
+- **Open items / caveats**: SmarticoLib sync result, links pending `npm run doc`,
   any unverified hive claims, the help-page (llm-sources) source caveat.
 - **Cost**: hive totals from the `smr-api-tsdoc` sub-run.
 

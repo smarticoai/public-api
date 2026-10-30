@@ -127,6 +127,14 @@ Holds time till mission will become unavailable, for the missions that are targe
 
 ***
 
+### activity\_period\_next\_start\_ts?
+
+> `optional` **activity\_period\_next\_start\_ts?**: `number`
+
+Time (epoch ms) when a mission that is available only on some weekdays or days of the month opens next. Set only while the mission is outside its active days and is shown before it opens; absent when it is open now or has no such limit
+
+***
+
 ### dt\_start
 
 > **dt\_start**: `number`

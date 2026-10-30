@@ -43,6 +43,16 @@ Can be used to build custom UI for gamification.
 
 ***
 
+### hide\_chance\_to\_win?
+
+> `optional` **hide\_chance\_to\_win?**: `boolean`
+
+Indicates whether the chance to win should be hidden in the UI.
+When `true`, do not render `chances_to_win_perc` for this prize.
+Absent means "not hidden".
+
+***
+
 ### prizes\_per\_run
 
 > **prizes\_per\_run**: `number`

@@ -91,7 +91,8 @@ console.log("methods:",methods.size,"| no capability page:",noPage.join(", ")||"
 
 # (c) New exported public types not yet in TypeDoc entryPoints.
 grep -oE "export (interface|class|enum|type) [A-Z][A-Za-z0-9_]+" "$PUB"/src/WSAPI/WSAPITypes.ts | awk '{print $3}' | sort -u > /tmp/_types.txt
-node -e 'const o=require("'"$PUB"'/tsconfig.json");console.log("entryPoints:",(o.typedocOptions.entryPoints||[]).join(" "))'
+# tsconfig.json has trailing commas (JSONC) — require() fails on it; parse with the TypeScript reader:
+node -e 'const ts=require("'"$PUB"'/node_modules/typescript");const f=ts.readConfigFile("'"$PUB"'/tsconfig.json",ts.sys.readFile);if(f.error)throw new Error("tsconfig.json does not parse");console.log("entryPoints:",(f.config.typedocOptions.entryPoints||[]).join(" "))'
 ```
 
 Interpretation:
@@ -113,11 +114,11 @@ Docs sync plan (run from /Users/aa/Desktop/SM/public-api):
 SM_MUTATIONS=1 node scripts/capture-responses-browser.mjs   # omit SM_MUTATIONS for read-only
 #    (one-time: npm i -D playwright && npx playwright install chromium)
 
-# 2. regenerate capability pages   (REQUIRED whenever any source/type/ui/response changed)
-npm run gen-capabilities
-
-# 3. regenerate the TypeDoc reference   (only if TSDoc or tsconfig entryPoints changed)
+# 2+3. regenerate capability pages AND the TypeDoc reference in one go
+#    (`npm run doc` = sync-smartico-lib + gen-capabilities + typedoc + postdoc-cleanup;
+#     sync-smartico-lib regenerates src/SmarticoLib from ../tracker — commit it if it changed)
 npm run doc
+#    only capability pages changed (e.g. a new captured response)? `npm run gen-capabilities` is enough
 
 # 4. verify
 ls docs/capabilities/_responses/*.json | wc -l   # coverage vs method count
@@ -130,7 +131,7 @@ npm run bump-tracker                       # flow into live _smartico.api
 #    RAG re-indexes automatically (JobLLM2, env2 cron) — no manual step.
 ```
 
-Drop steps that don't apply (e.g. no entryPoints change → skip `npm run doc`;
+Drop steps that don't apply (e.g. only a captured response changed → `gen-capabilities` instead of `doc`;
 no method change → skip capture). If hand-edited generated files were found,
 lead with a ⚠️ telling the human to move the edit into the source first.
 

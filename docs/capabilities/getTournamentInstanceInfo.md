@@ -25,6 +25,7 @@ _smartico.api.getTournamentInstanceInfo(tournamentInstanceId: number): Promise<T
 - `custom_price_text` (string) — The message indicating the price to register in the tournament
 - `segment_dont_match_message` (string) — The message that should be shown to the user when the user cannot register in tournament with error code TOURNAMENT_USER_DONT_MATCH_CONDITIONS
 - `custom_section_id` (number) — The ID of the custom section where the tournament is assigned The list of custom sections can be retrieved using _smartico.api.getCustomSections() method
+- `only_in_custom_section` (boolean) — The indicator if the tournament is visible only in the custom section and should be hidden from the main overview of tournaments
 - `custom_data` (any) — The custom data of the tournament defined by operator. Can be a JSON object, string or number
 - `is_featured` (boolean) — The indicator if the tournament is 'Featured'
 - `ribbon` (TRibbon) — The ribbon of the tournament item. Can be 'sale', 'hot', 'new', 'vip' or URL to the image in case of custom ribbon, 250×300px

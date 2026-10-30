@@ -141,6 +141,18 @@ The list of custom sections can be retrieved using _smartico.api.getCustomSectio
 
 ***
 
+### only\_in\_custom\_section?
+
+> `optional` **only\_in\_custom\_section?**: `boolean`
+
+The indicator if the tournament is visible only in the custom section and should be hidden from the main overview of tournaments
+
+#### Inherited from
+
+[`TTournament`](TTournament.md).[`only_in_custom_section`](TTournament.md#only_in_custom_section)
+
+***
+
 ### custom\_data
 
 > **custom\_data**: `any`

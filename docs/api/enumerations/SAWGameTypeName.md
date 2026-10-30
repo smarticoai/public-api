@@ -80,6 +80,12 @@
 
 ***
 
+### Bingo
+
+> **Bingo**: `"bingo"`
+
+***
+
 ### Unknown
 
 > **Unknown**: `"unknown"`

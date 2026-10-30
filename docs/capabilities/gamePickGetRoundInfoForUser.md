@@ -10,7 +10,7 @@ _smartico.api.gamePickGetRoundInfoForUser(props: GamePickRoundRequestParams & { 
 ```
 
 ## Parameters
-- `props.saw_template_id` — ID of the MatchX or Quiz game template.
+- `props.saw_template_id` — ID of the MatchX, Quiz or Bingo game template.
 - `props.round_id` — ID of the round to inspect.
 - `props.int_user_id` — Internal user ID from `gamePickGetBoard.users[].int_user_id`.
 

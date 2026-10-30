@@ -32,8 +32,16 @@ The type of the prize — see [MiniGamePrizeTypeName](../enumerations/MiniGamePr
 
 > `optional` **prize\_value?**: `number`
 
-Numeric value of the prize in case it's 'points' or 'spin' type. For other types of prizes this value is not relevant.
-For example for prize  '100 points' the prize_value will be 100. For '100 free spins' the prize_value will be 100.
+Amount of the prize: points for 'points', attempts for 'spin', gems or diamonds for 'gems-and-diamonds' (their sum when the prize gives both), tickets for 'raffle-ticket'. Not relevant for other types.
+For example for prize '100 points' the prize_value will be 100, for '100 free spins' 100, for '50 Diamonds' 50.
+
+***
+
+### gems\_diamonds\_type?
+
+> `optional` **gems\_diamonds\_type?**: `"gems"` \| `"diamonds"` \| `"gems-and-diamonds"`
+
+For 'gems-and-diamonds' prizes — which currency the prize gives: 'gems', 'diamonds', or 'gems-and-diamonds' (both; `prize_value` is then their sum). Absent for other types
 
 ***
 
@@ -161,7 +169,7 @@ Message when the prize pool is empty for that specific prize
 
 > `optional` **pool?**: `number`
 
-Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz games
+Remaining stock of the prize — decrements on each win, refunded if the spin is finalised as lost. Populated only when the template's `expose_game_stat_on_api` is enabled; always populated for MatchX / Quiz / Bingo games
 
 ***
 

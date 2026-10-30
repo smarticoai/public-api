@@ -1093,6 +1093,8 @@ No method-specific fields. Send only the common fields (see [Common Message Fiel
 |-------|------|-------------|
 | `achievements` | [`UserAchievement[]`](../api/interfaces/UserAchievement.md) | Array of achievements (missions + badges) |
 
+Note: a mission available only on some weekdays or days of the month carries `activity_period_next_start_ts` (epoch ms) while it is outside its active days and is configured to be shown before it opens. Show it as locked with an "opens in" countdown and request the list again when that time passes. Opt-in is refused with error `40013` until then.
+
 **Example:**
 
 ```json
@@ -1424,7 +1426,12 @@ No method-specific fields. Send only the common fields (see [Common Message Fiel
 |-------|------|-------------|
 | `templates` | [`SAWTemplate[]`](../api/interfaces/SAWTemplate.md) | Array of mini-game templates |
 
-Note: per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are present on each template's `prizes` only when the template's `expose_game_stat_on_api` is enabled; otherwise the server strips them (`pool` is kept for MatchX / Quiz game types).
+Note: per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are present on each template's `prizes` only when the template's `expose_game_stat_on_api` is enabled; otherwise the server strips them (`pool` is kept for MatchX / Quiz / Bingo game types).
+
+Note: for gems / diamonds prizes and raffle-ticket prizes, `prize_value` is only a default — read the real amount from `prize_details_json`, the same way the default Smartico UI does:
+- gems / diamonds prize: `prize_details_json._gems_diamonds_type` is `0` (gems only — use `gems`), `1` (diamonds only — use `diamonds`) or `2` (both — the prize gives `gems` and `diamonds`).
+- raffle-ticket prize: `prize_details_json.tickets_count`.
+Fall back to `prize_value` when these are missing or `0`.
 
 ---
 
@@ -3218,7 +3225,7 @@ Get user's points history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `logHistory` | [`PointsLog[]`](../api/interfaces/PointsLog.md) \| [`GemsDiamondsLog[]`](../api/interfaces/GemsDiamondsLog.md) | Array of points history entries |
+| `logHistory` | [`ActivityLogEntry[]`](../api/interfaces/ActivityLogEntry.md) | Activity rows, newest first. Without `new_format` only wallet rows (points / gems / diamonds); with `new_format: true` all activity kinds, where the full feed is enabled on the Smartico side |
 
 #### Example
 
@@ -3241,13 +3248,19 @@ Get user's points history.
   "errCode": 0,
   "logHistory": [
     {
-      "create_date": 1699950000,
+      "create_date": { "seconds": 1699950000 },
       "user_ext_id": "user123",
-      "crm_brand_id": 1,
-      "points_collected": 100,
-      "user_points_ever": 5000,
+      "crm_brand_id": "1",
+      "type": 3,
+      "ctx_1": 0,
+      "source_type_id": 1,
+      "source_ref_id": 0,
+      "source_root_id": 0,
+      "amount": 100,
+      "balance": 1500,
       "user_points_balance": 1500,
-      "source_type_id": 1
+      "user_points_ever": 5000,
+      "points_collected": -1
     }
   ]
 }

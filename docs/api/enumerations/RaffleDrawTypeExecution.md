@@ -4,7 +4,7 @@
 
 ### ExecDate
 
-> **ExecDate**: `0`
+> **ExecDate**: `1`
 
 Draw is executed only once
 
@@ -12,7 +12,7 @@ Draw is executed only once
 
 ### Recurring
 
-> **Recurring**: `1`
+> **Recurring**: `2`
 
 Draw is executed on a recurring basis
 
@@ -20,7 +20,7 @@ Draw is executed on a recurring basis
 
 ### Grand
 
-> **Grand**: `2`
+> **Grand**: `3`
 
 Draw is executed once and is marked as grand.
 This means it is a special or significant draw,

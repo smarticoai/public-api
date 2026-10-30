@@ -1,6 +1,6 @@
 # gamePickGetHistory — API (GamePickRound)
 
-> Returns the full round history (active + resolved) for a MatchX or Quiz game template, newest-first.
+> Returns the full round history (active + resolved) for a MatchX, Quiz or Bingo game template, newest-first.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
 > Search terms: gamePickGetHistory, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType, errCode, data
 
@@ -10,7 +10,7 @@ _smartico.api.gamePickGetHistory(props: GamePickRequestParams): Promise<GamesApi
 ```
 
 ## Parameters
-- `props.saw_template_id` — ID of the MatchX or Quiz game template.
+- `props.saw_template_id` — ID of the MatchX, Quiz or Bingo game template.
 
 ## Returns — `Promise<GamesApiResponse<GamePickRound[]>>`
 Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage?` (string), `data?` — the payload:

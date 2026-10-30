@@ -61,7 +61,6 @@
 			"src/Leaderboard/LeaderBoardPeriodType.ts",
 			"src/Base/AchRelatedGame.ts",
 			"src/Core/ActivityTypeLimited.ts",
-			"src/ActivityLog/ActivityLogEntry.ts",
 			"src/Jackpots/index.ts",
 			"src/Raffle/index.ts",
 			"src/Missions/AchievementAvailabilityStatus.ts",

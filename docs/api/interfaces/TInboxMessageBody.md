@@ -76,3 +76,21 @@ Button label.
 
 Operator-defined custom data. The SDK auto-parses JSON-looking
 strings, so at runtime this is `any` despite the `string` type.
+
+***
+
+### show\_preview?
+
+> `optional` **show\_preview?**: `boolean`
+
+Whether to show a short preview popup when the message arrives.
+`false` means store it in the inbox silently; missing means `true`.
+
+***
+
+### show\_duration\_sec?
+
+> `optional` **show\_duration\_sec?**: `number`
+
+How long the preview popup stays visible, in seconds.
+`null` or missing means 7 seconds.

@@ -10,7 +10,7 @@ _smartico.api.gamePickGetUserInfo(props: GamePickRequestParams): Promise<GamesAp
 ```
 
 ## Parameters
-- `props.saw_template_id` — ID of the MatchX or Quiz game template.
+- `props.saw_template_id` — ID of the MatchX, Quiz or Bingo game template.
 
 ## Returns — `Promise<GamesApiResponse<GamePickUserInfo>>`
 Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage?` (string), `data?` — the payload:

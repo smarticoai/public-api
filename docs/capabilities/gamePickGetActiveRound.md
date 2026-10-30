@@ -1,6 +1,6 @@
 # gamePickGetActiveRound — API (GamePickRound)
 
-> Returns a single round (events, user selections, scoring rules) for a MatchX or Quiz game.
+> Returns a single round (events, user selections, scoring rules) for a MatchX, Quiz or Bingo game.
 > Import: `import { GamePickRound } from '@smartico/public-api'`
 > Search terms: gamePickGetActiveRound, gamepick, GamePickRound, GPRoundStatus, GamePickScoreType, GameRoundOrderType, GamePickRoundPublicMeta, GamePickEvent, SAWGPMarketType, GamePickEventMeta, QuizAnswersValueType, GamePickResolutionType, errCode, data
 
@@ -10,7 +10,7 @@ _smartico.api.gamePickGetActiveRound(props: GamePickRoundRequestParams): Promise
 ```
 
 ## Parameters
-- `props.saw_template_id` — ID of the MatchX or Quiz game template.
+- `props.saw_template_id` — ID of the MatchX, Quiz or Bingo game template.
 - `props.round_id` — ID of the round to fetch.
 
 ## Returns — `Promise<GamesApiResponse<GamePickRound>>`

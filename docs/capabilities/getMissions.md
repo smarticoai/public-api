@@ -30,6 +30,7 @@ Array of `TMissionOrBadge`. Each item:
 - `time_limit_ms` (number) — The amount of time in milliseconds that user has to complete the mission
 - `active_from_ts` (number) — Holds time from which mission will become available, for the missions that are targeted to be available from specific date/time
 - `active_till_ts` (number) — Holds time till mission will become unavailable, for the missions that are targeted to be available from specific date/time
+- `activity_period_next_start_ts` (number) — Time (epoch ms) when a mission that is available only on some weekdays or days of the month opens next. Set only while the mission is outside its active days and is shown before it opens; absent when it is open now or has no such limit
 - `dt_start` (number) — The date when the mission was started, relevant for the time limited missions, also indicating opt-it date for mission that requires opt-in and unlock date for Locked mission.
 - `progress` (number) — The progress of the mission in percents calculated as the aggregated relative percentage of all tasks
 - `cta_action` (string) — The action that should be performed when user clicks on the mission or badge Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action); The 'dp' function will handle the CTA and will execute it in the most safe way
@@ -127,6 +128,10 @@ reaching the SDK:
 - `RECURRING` missions between cycles, until the next cycle starts.
 - `RECURRING_QUANTITY` missions outside their `active_from_ts` /
  `active_till_ts` window.
+- Missions available only on some weekdays or days of the month, while
+ outside those days — unless the mission is configured to be shown
+ before it opens (then it arrives with `activity_period_next_start_ts`),
+ and always once it will not open again. Completed missions stay.
 
 Client-side filtering you may still want: missions with
 `only_in_custom_section: true` are intended for their custom-section
@@ -145,7 +150,9 @@ see "Timers" below). Priority order, FIRST match wins:
  missions) at least one cycle done / the cap reached — see the recurring
  caveats below. Sort by `complete_date_ts` DESC.
 3. **Locked** — `is_locked === true`, OR not yet started
- (`active_from_ts > Date.now()`). Sort by `position` ASC.
+ (`active_from_ts > Date.now()`), OR outside its active days
+ (`activity_period_next_start_ts > Date.now()` — show an "opens in"
+ countdown to it, and refetch when it elapses). Sort by `position` ASC.
 4. **In-progress** — `is_opted_in === true`, OR (no opt-in required and
  `progress > 0`). Sort by `position` ASC.
 5. **Available** — everything else (opt-in required but not yet joined, or

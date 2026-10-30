@@ -198,7 +198,7 @@ Skin assets of the game: `skin_folder` is the base URL for the skin's images, `s
 
 > `optional` **expose\_game\_stat\_on\_api?**: `boolean`
 
-Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes`; when disabled (default) the server strips them from the response (`pool` is kept for MatchX / Quiz games).
+Operator template setting. When enabled, the per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are populated on `prizes`; when disabled (default) the server strips them from the response (`pool` is kept for MatchX / Quiz / Bingo games).
 
 ***
 

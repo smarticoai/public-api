@@ -29,6 +29,7 @@ Array of `TMissionOrBadge`. Each item:
 - `time_limit_ms` (number) — The amount of time in milliseconds that user has to complete the mission
 - `active_from_ts` (number) — Holds time from which mission will become available, for the missions that are targeted to be available from specific date/time
 - `active_till_ts` (number) — Holds time till mission will become unavailable, for the missions that are targeted to be available from specific date/time
+- `activity_period_next_start_ts` (number) — Time (epoch ms) when a mission that is available only on some weekdays or days of the month opens next. Set only while the mission is outside its active days and is shown before it opens; absent when it is open now or has no such limit
 - `dt_start` (number) — The date when the mission was started, relevant for the time limited missions, also indicating opt-it date for mission that requires opt-in and unlock date for Locked mission.
 - `progress` (number) — The progress of the mission in percents calculated as the aggregated relative percentage of all tasks
 - `cta_action` (string) — The action that should be performed when user clicks on the mission or badge Can be URL or deep link, e.g. 'dp:deposit'. The most safe to execute CTA is to pass it to _smartico.dp(cta_action); The 'dp' function will handle the CTA and will execute it in the most safe way
@@ -120,7 +121,11 @@ the returned objects are not populated for badges; treat their values
 as undefined / default. Time windows are absolute calendar timestamps
 (`active_from_ts` / `active_till_ts`), not opt-in-relative durations —
 drive availability chips from the SDK-computed `badgeTimeLimitState`
-(enum `BadgesTimeLimitStates`), not `time_limit_ms`. Locking for
+(enum `BadgesTimeLimitStates`), not `time_limit_ms`. A badge
+with no `active_till_ts` is open-ended and never reaches the
+"after end date" states — it reports `AfterStartDateNoProgress`
+or `AfterStartDateWithProgress` — so it must never be rendered as
+expired. Locking for
 badges is purely time-based: `is_locked` is `true` only when
 `badgeTimeLimitState === BadgesTimeLimitStates.BeforeStartDate` (the
 time window hasn't started yet). The primary navigation field is

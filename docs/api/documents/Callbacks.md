@@ -3,7 +3,8 @@
 Beyond the request/response `_smartico.api.*` methods, the SDK emits **lifecycle
 and engagement events** you can subscribe to. Register a handler with
 `_smartico.on(...)` and it fires whenever that event occurs — user identified,
-balance changed, gamification widget opened, mini-game won, jackpot hit, etc.
+balance changed, gamification widget opened, mini-game won, jackpot hit, form
+submitted, etc.
 
 This is the push side of the SDK: instead of polling, you react to events as
 they happen.
@@ -90,6 +91,17 @@ strings below.
 | `mini_game_win` | A mini-game spin finishes and a prize is determined. Fires for both real and visitor-mode plays. | `({ prize_id, name, visitor_win_uuid })` — `name` is the prize display name. In visitor mode, `visitor_win_uuid` can be passed to `_smartico.convertVisitorGame(uuid)` to attach the win to a real account on registration. |
 | `jackpot_win` | A jackpot the user participates in is hit (the pot explodes). Fires both for the winner and for other players taking part in the same jackpot. | `(message)` — the win payload: `jackpot` (template + live `pot`, where `pot.explode_date_ts` is the explosion time) and `winners` (currently a single entry). `winners[0].is_me` tells you whether the recipient is the winner; `winning_game_id` / `winning_provider_id` / `bet_original_date` describe the bet that triggered the win and are `null` when unavailable. See the Jackpots UI guide (`docs/ui/jackpots/`) for how the default Smartico UI surfaces wins. |
 | `ach_game_opening` | The user taps a related / eligible casino game tile from inside the gamification widget (mission, tournament, jackpot, or store context). Use this to launch the game in your own casino lobby. | `(game)` — the game object (catalog id, name, launch links, plus a `context` field naming where it was opened from). If you do not handle this event, the default Smartico UI opens the game's configured link itself. |
+
+### Forms
+
+Forms are operator-built data-collection popups, opened by a campaign, by
+`_smartico.showForm(...)` or by the `dp:form&id=<form id>` deep link.
+
+| Event key | Fires when | Handler arguments |
+|---|---|---|
+| `form_viewed` | A form has rendered and is shown to the user. | `({ core_form_id, engagement_uid? })` — `engagement_uid` is present when a campaign opened the form. |
+| `form_submitted` | The user submitted a form and the submission was accepted. The form then closes by itself about one second later (`form_closed` follows). | `({ core_form_id, engagement_uid?, frm_data_<field>... })` — one `frm_data_<field>` key per submitted field, holding the value the user entered. |
+| `form_closed` | A form that was on screen is closed — by the user, after a successful submit, or by `_smartico.closeForm()`. | `({ core_form_id })` |
 
 ### Errors
 

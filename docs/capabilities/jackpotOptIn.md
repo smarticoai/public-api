@@ -14,7 +14,7 @@ _smartico.api.jackpotOptIn(filter: { jp_template_id: number }): Promise<Jackpots
 
 ## Returns — `Promise<JackpotsOptinResponse>`
 `JackpotsOptinResponse`:
-- `cid` (number)
+- `cid` (number) — can be ClassId when we move all ClassIds from ach to use @smartico
 - `ts` (number)
 - `uuid` (string)
 - `errCode` (number)

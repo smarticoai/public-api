@@ -581,6 +581,64 @@ Back-Office label: _"Game URL"_.
 
 ***
 
+### use\_custom?
+
+> `optional` **use\_custom?**: `boolean`
+
+Whether this template is played as a custom mini-game.
+
+A template of any regular game type (wheel, scratch card, treasure hunt,
+…) can be switched over to a custom game while keeping its own type,
+prizes and buy-in settings — only the way it is played changes: the
+widget loads `custom_game_url` in an iframe instead of rendering the
+built-in game.  `saw_game_type_id` still reports the original type, so
+treat this flag — not the type — as the answer to "is this played as a
+custom game", together with `SAWGameType.CustomMinigame` and
+`SAWGameType.Bingo`, which are always played that way.
+
+When `false` or omitted, the template is played as its own game type.
+Back-Office label: _"Use Custom Game"_.
+
+***
+
+### standalone\_fullscreen?
+
+> `optional` **standalone\_fullscreen?**: `boolean`
+
+Whether a custom mini-game fills the whole mini-game window instead of
+the default fixed-size frame (800×516 on desktop, 400×745 on mobile).
+
+Applies wherever the game is opened — a spin attempt shown to the user,
+a deep link, or `_smartico.miniGame()` in standalone or inline mode.
+The `fullscreen` option of `_smartico.miniGame()` overrides it per call.
+
+When `false` or omitted, the default frame size is used.
+Back-Office label: _"Standalone full screen"_.
+
+***
+
+### standalone\_width?
+
+> `optional` **standalone\_width?**: `string`
+
+Width of the custom mini-game frame on desktop when opened standalone or inline,
+as a CSS size (`800px`, `100%`, `90vw`; a bare number is treated as pixels).
+Empty or invalid values fall back to the default 800px. Ignored on mobile.
+Back-Office label: _"Standalone width"_.
+
+***
+
+### standalone\_height?
+
+> `optional` **standalone\_height?**: `string`
+
+Height of the custom mini-game frame on desktop when opened standalone or inline,
+as a CSS size (`516px`, `100%`, `90vh`; a bare number is treated as pixels).
+Empty or invalid values fall back to the default 516px. Ignored on mobile.
+Back-Office label: _"Standalone height"_.
+
+***
+
 ### voyager\_seed\_window\_min?
 
 > `optional` **voyager\_seed\_window\_min?**: `number`

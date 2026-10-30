@@ -434,6 +434,16 @@ For both shapes, `action` carries either a deep-link
 for safe execution — that helper handles URL vs deep-link
 routing.
 
+**Preview vs silent delivery**
+Every message belongs in your inbox list. `show_preview` decides
+whether it should also pop up briefly when it arrives:
+- `show_preview !== false` → show a preview popup for
+  `show_duration_sec ?? 7` seconds.
+- `show_preview === false` → store it silently, with no popup.
+These fields are returned exactly as the operator configured them;
+a missing value means the default above, the same as the default
+Smartico UI.
+
 **Idempotency / Side effects**: safe. Read-only HTTP fetch.
 
 **UI guidance**: see [UI Guide — `getInboxMessageBody`](../_media/UIGuide_getInboxMessageBody.md).
@@ -455,6 +465,12 @@ if (body.action === 'dp:inbox' && body.html_body) {
 } else {
   console.log('[smartico] simple message — show preview_body + single CTA wired to:', body.action,
     '— execute via _smartico.dp(body.action)');
+}
+
+if (body.show_preview !== false) {
+  console.log('[smartico] new message — show a preview popup for', body.show_duration_sec ?? 7, 'seconds');
+} else {
+  console.log('[smartico] new message — store it in the inbox silently, no popup');
 }
 ```
 

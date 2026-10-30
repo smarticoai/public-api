@@ -21,6 +21,7 @@ Array of `TRaffle`. Each item:
 - `custom_section_id` (number) — ID of the custom section that is linked to the raffle in the Gamification widget
 - `image_url` (string) — URL of the image that represents the raffle, 890x193px
 - `image_url_mobile` (string) — URL of the mobile image that represents the raffle, 300x142px
+- `hint_text` (string) — Terms and Conditions text configured by the operator for this raffle. Render it as the raffle rules. It is absent or empty when the operator configured none — hide the rules section in that case rather than substituting your own copy.
 - `custom_data` (string) — Custom data as string or JSON string that can be used in API to build custom UI You can request from Smartico to define fields for your specific case that will be managed from Smartico BackOffice Read more here - https://help.smartico.ai/welcome/products/tools-and-guides/custom-fields-attributes
 - `start_date` (number) — Date of start
 - `end_date` (number) — Date of end
@@ -42,6 +43,7 @@ Array of `TRaffle`. Each item:
     - `description` (string) — Description of the prize
     - `image_url` (string) — URL of the image that represents the prize, 256x256px
     - `custom_data` (string) — Custom data field set in the backoffice prize setup. Can be used to build custom UI for gamification.
+    - `hide_chance_to_win` (boolean) — Indicates whether the chance to win should be hidden in the UI. When `true`, do not render `chances_to_win_perc` for this prize. Absent means "not hidden".
     - `prizes_per_run` (number) — The number of prizes available per run of the draw. E.g. if the draw is run daily, this is the number of prizes available each day, for example 3 iPhones.
     - `prizes_per_run_actual` (number) — The actual number of prizes for the current instance. This value is taking into account follwing values: - min_required_total_tickets, - add_one_prize_per_each_x_tickets - stock_items_per_draw - total_tickets_count (from Draw instance) - cap_prizes_per_run For example: - prizes_per_run = 1 - min_required_total_tickets = 1000 - add_one_prize_per_each_x_tickets = 1000 - stock_items_per_draw = 5 - total_tickets_count = 7000 - cap_prizes_per_run = 6 prizes_per_run_actual will be 5, because 7000 tickets are collected, so 7 iPhones are available, but the cap is 6 and the stock is 5.
     - `chances_to_win_perc` (number) — The chances to win the prize by current player. Calculated as the ratio of the number of tickets collected by the current player to the total number of tickets collected by all players and multiplied by number of actual prizes of this kind.
@@ -114,8 +116,12 @@ during an in-progress draw.
  sold-out message).
 - Within each draw, `current_state`
  (`RaffleDrawInstanceState`) buckets the draw into Open
- (accepting tickets), WinnerSelection (currently drawing), or
- Executed (winners selected).
+ (accepting tickets), WinnerSelection (currently drawing),
+ Executed (winners selected), or Cancelled (will never run).
+ Treat every state other than Open and WinnerSelection as
+ terminal — stop polling the draw run and clear any
+ "drawing in progress" indicator, otherwise a cancelled draw
+ leaves the UI spinning forever.
 - `execution_type` (`RaffleDrawTypeExecution`) distinguishes
  one-shot (`ExecDate`), repeating (`Recurring`), or special
  one-shot (`Grand`) draws. Recurring draws share a stable
