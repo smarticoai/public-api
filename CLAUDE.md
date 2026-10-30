@@ -65,6 +65,9 @@ inside the generated `docs/api` site alongside the reference.
 
 ### Authoring rules (from the `smr-api-tsdoc` / `smr-api-tsdoc-final` skills)
 
+The skills, the response-capture scripts and the internal dev notes live in the
+git-ignored `.claude/skills/` and `.private/` (owner-only, not in the public repo).
+
 These docs are the **public SDK contract** read by 3rd-party integrators, so all
 TSDoc and concept-doc content is strictly consumer-facing:
 

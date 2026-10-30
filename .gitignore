@@ -11,3 +11,8 @@ dist/
 .idea/
 
 package-lock.json
+# Owner-only tooling, kept out of the public repo and the npm package:
+# test-label scripts, internal dev notes, Claude Code skills / settings
+.private/
+.claude/
+doc-todo.md
