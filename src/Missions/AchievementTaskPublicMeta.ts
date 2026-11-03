@@ -8,5 +8,6 @@ export interface AchievementTaskPublicMeta {
 			op: string;
 		};
 	}
-
+	/** Multiplier of the Prop to Prop target ("Total amount should reach" = multiplier x a recommended amount). */
+	prop_to_prop_multiplier?: number;
 }

@@ -266,8 +266,8 @@ export class MissionUtils {
         // a condition's amount first, then the Prop to Prop target's, which Java nests under 'r'
         const amountOf = (src: { [key: string]: any }) => src && src[USER_STATE_PARAMS_KEYS_BET_AMOUNT.find((k) => src[k])];
         const amount = amountOf(userStateParams) || amountOf(userStateParams.r);
-        // {{suggested_amount}} is the target's own amount, so a task with a condition can show both
-        const targetAmount = amountOf(userStateParams.r);
+        // {{suggested_amount}} is the target itself (multiplier x its recommended amount), so a task with a condition can show both
+        const targetAmount = MissionUtils.targetAmountOf(task, amountOf(userStateParams.r));
         const currency = currencySymbol || userStateParams.core_wallet_currency || '';
 
         if (amount) {
@@ -279,6 +279,51 @@ export class MissionUtils {
         }
 
         return result;
+    }
+
+    // The BO stores the multiplier in task_public_meta. A task saved before that falls back to Java's goal,
+    // which Java sends only until the task is completed, and then to the recommended amount itself.
+    private static targetAmountOf = (task: UserAchievementTask, recommended: string | number): string | number => {
+        if (!recommended || isNaN(Number(recommended))) {
+            return recommended;
+        }
+
+        const multiplier = Number(task.task_public_meta?.prop_to_prop_multiplier);
+
+        if (multiplier > 0) {
+            return MissionUtils.formatAmount(recommended, multiplier);
+        }
+
+        return MissionUtils.formatAmount(!task.isCompleted && task.executionCount > 0 ? task.executionCount : recommended);
+    }
+
+    // value x multiplier, rounded half up to at most 2 decimals, no trailing zeros: 49.995 -> '50', 45.45123 -> '45.45', 1500 -> '1500'.
+    // Done on scaled integers: floats give 443568.98 x 3.75 = 1663383.6749999998 and round it down. A product too long
+    // for a safe integer (amounts around 1e12, where a double holds no 2 decimals anyway) falls back to floats.
+    private static formatAmount = (value: number | string, multiplier: number = 1): string => {
+        const decimal = (v: number | string) => {
+            const s = String(Number(v));
+
+            return /^\d+(\.\d+)?$/.test(s) ? { int: Number(s.replace('.', '')), scale: (s.split('.')[1] || '').length } : null;
+        };
+        const a = decimal(value);
+        const b = decimal(multiplier);
+        const int = a && b ? a.int * b.int : NaN;
+
+        if (!Number.isSafeInteger(int)) {
+            return String(Number((Number(value) * multiplier).toFixed(2)));
+        }
+
+        const scale = a.scale + b.scale;
+
+        if (scale <= 2) {
+            return String(int / 10 ** scale);
+        }
+
+        const div = 10 ** (scale - 2);
+        const rem = int % div;
+
+        return String(((int - rem) / div + (rem * 2 >= div ? 1 : 0)) / 100);
     }
 
     public static replaceFavGameNameTag = ({ task, currencySymbol }: { task: UserAchievementTask, currencySymbol?: string }): UserAchievementTask => {
