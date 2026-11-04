@@ -605,17 +605,31 @@ class SmarticoAPI {
 		return await this.send<JackpotsOptoutResponse>(message, ClassId.JP_OPTOUT_RESPONSE);
 	}
 
-	public async getJackpotWinners(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number): Promise<GetJackpotWinnersResponse> {
-		const message = this.buildMessage<GetJackpotWinnersRequest, GetJackpotWinnersResponse>(
-			user_ext_id,
-			ClassId.JP_GET_WINNERS_REQUEST,
-			{
-				limit,
-				offset,
-				jp_template_id,
-			},
-		);
-		return await this.send<GetJackpotWinnersResponse>(message, ClassId.JP_GET_WINNERS_RESPONSE);
+	/**
+	 * The tracker pairs a ws-api reply with its request by response class id (JP_GET_WINNERS_RESPONSE), not by uuid,
+	 * and the server does not echo the request uuid in this reply. So when several winners requests are in flight
+	 * (one per jackpot, or winners + win stats), every caller gets the first reply that arrives: all jackpots showed
+	 * the same winners. Send them one at a time: each reply then belongs to the only request in flight.
+	 * A failed request rejects for its own caller; the queue only moves on.
+	 */
+	private jackpotWinnersQueue: Promise<unknown> = Promise.resolve();
+
+	public getJackpotWinners(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number): Promise<GetJackpotWinnersResponse> {
+		const run = async () => {
+			const message = this.buildMessage<GetJackpotWinnersRequest, GetJackpotWinnersResponse>(
+				user_ext_id,
+				ClassId.JP_GET_WINNERS_REQUEST,
+				{
+					limit,
+					offset,
+					jp_template_id,
+				},
+			);
+			return await this.send<GetJackpotWinnersResponse>(message, ClassId.JP_GET_WINNERS_RESPONSE);
+		};
+		const result = this.jackpotWinnersQueue.then(run);
+		this.jackpotWinnersQueue = result.catch(() => undefined);
+		return result;
 	}
 
 	public async getJackpotWinnersT(user_ext_id: string, limit: number = 20, offset: number = 0, jp_template_id: number): Promise<JackpotWinnerHistory[]> {
