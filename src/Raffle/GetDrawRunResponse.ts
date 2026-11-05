@@ -9,6 +9,10 @@ export interface GetDrawRunResponse extends ProtocolResponse {
 
 /** @hidden */
 export const drawRunTransform = (res: GetDrawRunResponse): TRaffleDraw => {
+	// No draw in the response when the requested run does not exist (or no longer does).
+	if (!res?.draw) {
+		return null;
+	}
 	return {
 		id: res.draw.draw_id,
 		name: res.draw.public_meta.name,

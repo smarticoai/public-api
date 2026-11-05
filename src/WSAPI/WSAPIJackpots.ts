@@ -155,7 +155,8 @@ export class WSAPIJackpots extends WSAPIClans {
 		return jackpots.map((jp) => {
 			let _jp: JackpotDetails = {
 				...jp,
-				pot: pots.find((p) => p.jp_template_id === jp.jp_template_id),
+				// The pot response can come back without items.
+				pot: (pots || []).find((p) => p.jp_template_id === jp.jp_template_id),
 			};
 			return _jp;
 		});

@@ -14,6 +14,9 @@ import {
 } from './WSAPIBase';
 import { WSAPIBase } from './WSAPIBase';
 
+// Cache-key part for an id filter; callers sometimes pass a single id instead of an array.
+const idsKey = (ids: unknown): string => (Array.isArray(ids) ? ids.join(',') : ids == null ? '' : String(ids));
+
 /** @group User */
 export class WSAPIUser extends WSAPIBase {
 	/**
@@ -619,7 +622,7 @@ export class WSAPIUser extends WSAPIBase {
 		onUpdate?: (data: TActivityLog[]) => void;
 	}): Promise<TActivityLog[]> {
 
-		const cacheKey = `${onUpdateContextKey.ActivityLog}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${types?.join(',') ?? ''}:${src_types?.join(',') ?? ''}:${new_format ? 1 : 0}`;
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${startTimeSeconds}:${endTimeSeconds}:${from}:${to}:${idsKey(types)}:${idsKey(src_types)}:${new_format ? 1 : 0}`;
 
 		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.ActivityLog, onUpdate);
@@ -665,7 +668,7 @@ export class WSAPIUser extends WSAPIBase {
 			params.src_types,
 			params.new_format,
 		);
-		const cacheKey = `${onUpdateContextKey.ActivityLog}:${params.startTimeSeconds}:${params.endTimeSeconds}:${params.from}:${params.to}:${params.types?.join(',') ?? ''}:${params.src_types?.join(',') ?? ''}:${params.new_format ? 1 : 0}`;
+		const cacheKey = `${onUpdateContextKey.ActivityLog}:${params.startTimeSeconds}:${params.endTimeSeconds}:${params.from}:${params.to}:${idsKey(params.types)}:${idsKey(params.src_types)}:${params.new_format ? 1 : 0}`;
 
 		OCache.set(cacheKey, payload, ECacheContext.WSAPI);
 
