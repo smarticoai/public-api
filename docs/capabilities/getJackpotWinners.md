@@ -39,7 +39,7 @@ Array of `JackpotWinnerHistory`. Each item:
 ## Behavioral contract
 **Preconditions**
 - User must be authenticated. Visitor mode not supported.
-- `jp_template_id` is mandatory — the SDK throws synchronously if missing.
+- `jp_template_id` is required. The SDK does not check it — always pass it.
 - The consumer SHOULD check
  `JackpotDetails.expose_winners_over_api` before calling, since
  the server does not enforce it.
@@ -61,10 +61,19 @@ user-currency display is needed, the consumer must convert client-side.
  served from cache and each page keeps its own fresh copy.
 - Caches clear on jackpot-win push events and on opt-in / opt-out.
 
+**Several jackpots at once**
+The SDK sends winners requests (this method and `getJackpotWinStats`)
+to the server one at a time. Calling it for 10 jackpots in parallel is
+safe — each call gets its own jackpot's winners — but the calls resolve
+one after another, one server round trip each. Pages already in the
+cache return at once.
+
 **Error handling**
-Non-zero `errCode` on control-group users or generic server errors. The
-SDK does NOT enumerate distinct codes — branch on `errCode === 0` and
-surface `errMsg` on failure.
+The result is the winners array only — there is no `errCode` to check.
+When the server refuses the request (the user is in a control group,
+or a server error), the returned promise rejects. Wrap the call in
+`try` / `catch` and hide or keep the previous winners list on failure.
+A failed call is not cached, so the next call asks the server again.
 
 **Visitor mode**: not supported.
 
@@ -79,12 +88,16 @@ if (!jp || !jp.expose_winners_over_api) {
     return;
 }
 
-const winners = await window._smartico.api.getJackpotWinners({
-    jp_template_id: 42,
-    limit:          20,
-    offset:         0,
-});
-console.log('[smartico] render', winners.length, 'recent winner rows (amounts in', jp.jp_currency + ')');
+try {
+    const winners = await window._smartico.api.getJackpotWinners({
+        jp_template_id: 42,
+        limit:          20,
+        offset:         0,
+    });
+    console.log('[smartico] render', winners.length, 'recent winner rows (amounts in', jp.jp_currency + ')');
+} catch (e) {
+    console.error('[smartico] winners not available — keep the previous list or hide the winners tab', e);
+}
 ```
 
 ### Example response (REAL shape)

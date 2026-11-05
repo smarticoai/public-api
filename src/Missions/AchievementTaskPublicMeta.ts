@@ -8,6 +8,6 @@ export interface AchievementTaskPublicMeta {
 			op: string;
 		};
 	}
-	/** Multiplier of the Prop to Prop target ("Total amount should reach" = multiplier x a recommended amount). */
+	/** Multiplier for a task whose target is relative to the player's recommended deposit or bet amount (target = multiplier × recommended amount). Used to fill the `{{suggested_amount}}` tag in the task texts. */
 	prop_to_prop_multiplier?: number;
 }

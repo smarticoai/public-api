@@ -23,7 +23,7 @@ _smartico.api.jackpotOptOut(filter: { jp_template_id: number }): Promise<Jackpot
 ## Behavioral contract
 **Preconditions**
 - User must be authenticated. Visitor mode not supported.
-- `jp_template_id` is mandatory — the SDK throws synchronously if missing.
+- `jp_template_id` is mandatory — the returned promise rejects if it is missing.
 
 **Error handling**
 The server returns a non-zero `errCode` with a human-readable `errMsg` for

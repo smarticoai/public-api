@@ -1,0 +1,30 @@
+{
+  "winners": [
+    {
+      "winner": {
+        "is_me": false,
+        "public_username": "Play*****",
+        "winning_amount_jp_currency": 7.60325,
+        "winning_amount_wallet_currency": 46.693899986,
+        "winning_position": 1,
+        "avatar_id": "183747926",
+        "avatar_real_id": null
+      },
+      "win_date_ts": 1793755224890,
+      "jp_pot_id": 325831
+    }
+  ],
+  "win_stats": {
+    "total_wins": 4914,
+    "highest_win": {
+      "winning_amount": 101.2761008,
+      "win_date_ts": 1732493827984,
+      "public_username": "Play*****"
+    },
+    "last_win": {
+      "winning_amount": 7.1731468,
+      "win_date_ts": 1793750863449,
+      "public_username": "Play*****"
+    }
+  }
+}

@@ -2,7 +2,7 @@
 
 > Returns past winners of a specific jackpot template, paginated, together with the win statistics of that template: total number of wins, the biggest win and the most recent win.
 > Import: `import { TGetJackpotWinStatsResponse } from '@smartico/public-api'`
-> Search terms: getJackpotWinStats, jackpots, TGetJackpotWinStatsResponse, JackpotWinnerHistory, JackPotWinner, JackpotWinStats, JackpotWin
+> Search terms: getJackpotWinStats, jackpots, TGetJackpotWinStatsResponse, JackpotWinnerHistory, JackPotWinner, JackpotWinStats, JackpotWin, winners, win_stats
 
 ## Signature
 ```ts
@@ -77,10 +77,17 @@ NATIVE currency, NOT the user's wallet currency.
   `limit` + `offset`) for 30 seconds.
 - Caches clear on jackpot-win push events and on opt-in / opt-out.
 
+**Several jackpots at once**
+Shares the one-at-a-time request line with `getJackpotWinners`: parallel
+calls for several jackpots are safe but resolve one after another.
+
 **Error handling**
-Non-zero `errCode` on control-group users or generic server errors. The
-SDK does NOT enumerate distinct codes — branch on `errCode === 0` and
-surface `errMsg` on failure.
+The result has no `errCode`. When the server refuses the request (the
+user is in a control group, or a server error), the method does NOT
+reject: it resolves with an empty `winners` list and empty statistics
+(`total_wins: 0`, `highest_win` / `last_win` `null`) — the same result
+as a jackpot with no wins yet — and the SDK caches it for 30 seconds
+like any other page.
 
 **Visitor mode**: not supported.
 
@@ -102,6 +109,41 @@ console.log('[smartico] total wins', win_stats.total_wins);
 console.log('[smartico] highest win', win_stats.highest_win?.winning_amount, jp.jp_currency);
 console.log('[smartico] latest win', win_stats.last_win?.public_username, win_stats.last_win?.win_date_ts);
 console.log('[smartico] render', winners.length, 'recent winner rows');
+```
+
+### Example response (REAL shape)
+> Where this real payload differs from the typed Returns above (TS interface vs raw wire), the REAL shape is the runtime truth.
+```json
+{
+  "winners": [
+    {
+      "winner": {
+        "is_me": false,
+        "public_username": "Play*****",
+        "winning_amount_jp_currency": 7.60325,
+        "winning_amount_wallet_currency": 46.693899986,
+        "winning_position": 1,
+        "avatar_id": "183747926",
+        "avatar_real_id": null
+      },
+      "win_date_ts": 1793755224890,
+      "jp_pot_id": 325831
+    }
+  ],
+  "win_stats": {
+    "total_wins": 4914,
+    "highest_win": {
+      "winning_amount": 101.2761008,
+      "win_date_ts": 1732493827984,
+      "public_username": "Play*****"
+    },
+    "last_win": {
+      "winning_amount": 7.1731468,
+      "win_date_ts": 1793750863449,
+      "public_username": "Play*****"
+    }
+  }
+}
 ```
 
 ## Errors

@@ -377,7 +377,7 @@ All **request** messages must include the following base fields:
 | Field | Type | Description |
 |-------|------|-------------|
 | `cid` | `number` | ClassId — message type identifier |
-| `uuid` | `string` | Unique request identifier (used to match request with response) |
+| `uuid` | `string` | Unique request identifier |
 | `ts` | `number` | Timestamp in milliseconds |
 
 All **response** messages include the following base fields:
@@ -385,11 +385,18 @@ All **response** messages include the following base fields:
 | Field | Type | Description |
 |-------|------|-------------|
 | `cid` | `number` | ClassId — message type identifier |
-| `uuid` | `string` | Same identifier from the request |
+| `uuid` | `string` | Message identifier. Usually a new value set by the server, **not** the request's `uuid` — see [Matching responses to requests](#matching-responses-to-requests) |
 | `errCode` | `number` | Error code (`0` = success) |
 | `errMsg` | `string` | Error message (optional, present when `errCode` != 0) |
 
 > **Note:** These common fields are omitted from individual method descriptions below to avoid duplication. Only method-specific fields are listed.
+
+### Matching responses to requests
+
+- Match a response to its request by the response `cid` (each method below names its response ClassId).
+- Do not rely on `uuid` for this: only a few responses copy the request's `uuid`, most carry a new one.
+- Keep at most one request in flight per response ClassId. To call the same method several times (for example, winners of several jackpots), send the next request after the previous response has arrived. Otherwise you cannot tell which response belongs to which request.
+- Responses to different methods can arrive in a different order than the requests were sent.
 
 ---
 
@@ -2330,7 +2337,7 @@ No method-specific fields. Returns only the common response fields (see [Common 
 
 ### getJackpotWinners
 
-Get jackpot winners history.
+Get jackpot winners history, together with the win statistics of the jackpot template.
 
 #### Request
 
@@ -2348,7 +2355,13 @@ Get jackpot winners history.
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `winners` | [`JackpotWinnerHistory[]`](../api/interfaces/JackpotWinnerHistory.md) | Array of winners |
+| `winners` | [`JackpotWinnerHistory[]`](../api/interfaces/JackpotWinnerHistory.md) | Array of winners, newest first |
+| `has_more` | `boolean` | `true` when more winners exist after this page |
+| `win_stats` | [`JackpotWinStats`](../api/interfaces/JackpotWinStats.md) | Statistics of the whole jackpot template (total wins, highest win, latest win); does not depend on `limit` / `offset` |
+
+On an error (`errCode` != 0, e.g. a control-group user) `winners`, `has_more` and `win_stats` are `null`.
+
+> **Note:** The response does not copy the request's `uuid`. When you load winners of several jackpots, send one request at a time (see [Matching responses to requests](#matching-responses-to-requests)).
 
 ---
 

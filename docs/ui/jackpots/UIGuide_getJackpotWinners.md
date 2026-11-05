@@ -55,7 +55,8 @@ client-side using the exchange rate available on the platform.
 - **Empty (page 0)**: "No winners yet — be the first!"
 - **Empty (subsequent pages)**: end-of-list — stop pagination.
 - **Loading (cold fetch)**: skeleton row list (3–5 placeholders).
-- **Error**: keep prior list if any; non-blocking banner.
+- **Error**: the call rejects (e.g. control-group users) — catch it, keep
+  the prior list if any, otherwise hide the winners tab; non-blocking banner.
 
 ## Refresh
 
@@ -82,3 +83,6 @@ client-side using the exchange rate available on the platform.
 - Paginate via `limit`/`offset` — default `limit: 20` is typically
   sufficient.
 - Don't pre-fetch — the winners tab is opened on demand.
+- Several jackpots on one screen: the SDK sends winners requests one at a
+  time, so N jackpots take N server round trips. Load the visible
+  jackpots first.

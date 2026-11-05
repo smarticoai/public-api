@@ -136,7 +136,7 @@ ID of the jackpot template to join.
 
 **Preconditions**
 - User must be authenticated. Visitor mode not supported.
-- `jp_template_id` is mandatory — the SDK throws synchronously if missing.
+- `jp_template_id` is mandatory — the returned promise rejects if it is missing.
 - The jackpot must currently be active and the user must be in its
   eligibility segment. Ineligible jackpots are filtered out of
   [jackpotGet](#jackpotget) entirely, so a card the user sees is opt-in-able.
@@ -220,7 +220,7 @@ ID of the jackpot template to leave.
 
 **Preconditions**
 - User must be authenticated. Visitor mode not supported.
-- `jp_template_id` is mandatory — the SDK throws synchronously if missing.
+- `jp_template_id` is mandatory — the returned promise rejects if it is missing.
 
 **Error handling**
 The server returns a non-zero `errCode` with a human-readable `errMsg` for
@@ -313,7 +313,7 @@ Array of [JackpotWinnerHistory](../interfaces/JackpotWinnerHistory.md) entries n
 
 **Preconditions**
 - User must be authenticated. Visitor mode not supported.
-- `jp_template_id` is mandatory — the SDK throws synchronously if missing.
+- `jp_template_id` is required. The SDK does not check it — always pass it.
 - The consumer SHOULD check
   [JackpotDetails.expose\_winners\_over\_api](../interfaces/JackpotDetails.md#expose_winners_over_api) before calling, since
   the server does not enforce it.
@@ -335,10 +335,19 @@ user-currency display is needed, the consumer must convert client-side.
   served from cache and each page keeps its own fresh copy.
 - Caches clear on jackpot-win push events and on opt-in / opt-out.
 
+**Several jackpots at once**
+The SDK sends winners requests (this method and `getJackpotWinStats`)
+to the server one at a time. Calling it for 10 jackpots in parallel is
+safe — each call gets its own jackpot's winners — but the calls resolve
+one after another, one server round trip each. Pages already in the
+cache return at once.
+
 **Error handling**
-Non-zero `errCode` on control-group users or generic server errors. The
-SDK does NOT enumerate distinct codes — branch on `errCode === 0` and
-surface `errMsg` on failure.
+The result is the winners array only — there is no `errCode` to check.
+When the server refuses the request (the user is in a control group,
+or a server error), the returned promise rejects. Wrap the call in
+`try` / `catch` and hide or keep the previous winners list on failure.
+A failed call is not cached, so the next call asks the server again.
 
 **Visitor mode**: not supported.
 
@@ -354,12 +363,16 @@ if (!jp || !jp.expose_winners_over_api) {
     return;
 }
 
-const winners = await window._smartico.api.getJackpotWinners({
-    jp_template_id: 42,
-    limit:          20,
-    offset:         0,
-});
-console.log('[smartico] render', winners.length, 'recent winner rows (amounts in', jp.jp_currency + ')');
+try {
+    const winners = await window._smartico.api.getJackpotWinners({
+        jp_template_id: 42,
+        limit:          20,
+        offset:         0,
+    });
+    console.log('[smartico] render', winners.length, 'recent winner rows (amounts in', jp.jp_currency + ')');
+} catch (e) {
+    console.error('[smartico] winners not available — keep the previous list or hide the winners tab', e);
+}
 ```
 
 ***
@@ -434,10 +447,17 @@ NATIVE currency, NOT the user's wallet currency.
   `limit` + `offset`) for 30 seconds.
 - Caches clear on jackpot-win push events and on opt-in / opt-out.
 
+**Several jackpots at once**
+Shares the one-at-a-time request line with `getJackpotWinners`: parallel
+calls for several jackpots are safe but resolve one after another.
+
 **Error handling**
-Non-zero `errCode` on control-group users or generic server errors. The
-SDK does NOT enumerate distinct codes — branch on `errCode === 0` and
-surface `errMsg` on failure.
+The result has no `errCode`. When the server refuses the request (the
+user is in a control group, or a server error), the method does NOT
+reject: it resolves with an empty `winners` list and empty statistics
+(`total_wins: 0`, `highest_win` / `last_win` `null`) — the same result
+as a jackpot with no wins yet — and the SDK caches it for 30 seconds
+like any other page.
 
 **Visitor mode**: not supported.
 

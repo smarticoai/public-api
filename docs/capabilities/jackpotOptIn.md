@@ -23,7 +23,7 @@ _smartico.api.jackpotOptIn(filter: { jp_template_id: number }): Promise<Jackpots
 ## Behavioral contract
 **Preconditions**
 - User must be authenticated. Visitor mode not supported.
-- `jp_template_id` is mandatory — the SDK throws synchronously if missing.
+- `jp_template_id` is mandatory — the returned promise rejects if it is missing.
 - The jackpot must currently be active and the user must be in its
  eligibility segment. Ineligible jackpots are filtered out of
  `jackpotGet` entirely, so a card the user sees is opt-in-able.

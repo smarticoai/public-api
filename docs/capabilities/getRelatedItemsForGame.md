@@ -70,6 +70,7 @@ _smartico.api.getRelatedItemsForGame(related_game_id: string): Promise<GetRelate
 			op: string;
 		};
 	})
+      - `prop_to_prop_multiplier` (number) — Multiplier for a task whose target is relative to the player's recommended deposit or bet amount (target = multiplier × recommended amount). Used to fill the `{{suggested_amount}}` tag in the task texts.
     - `points_reward` (number)
     - `gems_reward` (number) — Gems awarded when this task is completed.
     - `diamonds_reward` (number) — Diamonds awarded when this task is completed.

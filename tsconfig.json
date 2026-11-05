@@ -95,7 +95,7 @@
 			"src/Avatars/AvatarCustomizeErrorCode.ts",
 			"src/ActivityLog/ActivityLogEntry.ts",
 			"src/ActivityLog/ActivityLogActivities.ts",
-			"src/ActivityLog/ActivityLogMeta.ts",
+			"src/ActivityLog/ActivityLogMeta.ts"
 		],
 		"out": "docs/api",
 		"projectDocuments": ["docs/SmarticoObject.md", "docs/Callbacks.md", "docs/Transforms.md"],
