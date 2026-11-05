@@ -214,6 +214,10 @@ export enum ClassId {
 
 	FORM_SHOW_PUSH = 1050,
 
+	// SMR-57198: an event the operator's own server pushed to this user (Node → Java internal cid 20108), delivered on
+	// every open connection of the user. `data` is passed as sent.
+	CUSTOM_EVENT_PUSH = 1051,
+
 	CLIENT_DEBUG_REQUEST = 77777,
 
 	/*

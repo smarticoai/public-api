@@ -103,6 +103,15 @@ Forms are operator-built data-collection popups, opened by a campaign, by
 | `form_submitted` | The user submitted a form and the submission was accepted. The form then closes by itself about one second later (`form_closed` follows). | `({ core_form_id, engagement_uid?, frm_data_<field>... })` — one `frm_data_<field>` key per submitted field, holding the value the user entered. |
 | `form_closed` | A form that was on screen is closed — by the user, after a successful submit, or by `_smartico.closeForm()`. | `({ core_form_id })` |
 
+### Custom events
+
+An operator's own server can push an event to a user through Smartico. It reaches every open
+connection of that user, and the SDK hands it to this callback as it came.
+
+| Event key | Fires when | Handler arguments |
+|---|---|---|
+| `custom_event` | The operator's server pushed an event to this user. Delivery is at most once per connection: an event is never delivered twice to one connection, but it can be lost when the connection dropped silently. | `(data, message)` — `data` is exactly the object the operator's server sent (up to 64 KB); `message` carries `uuid` (the same on every connection of the user and on a resend after a short reconnect, so a site open in two tabs can dedupe on it) and `ts` (server time, epoch milliseconds). |
+
 ### Errors
 
 | Event key | Fires when | Handler arguments |

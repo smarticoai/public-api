@@ -1,5 +1,6 @@
 export * from './ActivityTypeLimited';
 export * from './CoreUtils';
+export * from './CustomEventPush';
 export * from './GetLabelInfoRequest';
 export * from './GetLabelInfoResponse';
 export * from './GetTranslationsRequest';

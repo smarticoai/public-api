@@ -26,6 +26,7 @@ This document describes the low-level protocol for communicating with Smartico b
 - [JP_WIN_PUSH](#jp_win_push)
 - [SAW_PRIZE_DROP_WIN_PUSH](#saw_prize_drop_win_push)
 - [FORM_SHOW_PUSH](#form_show_push)
+- [CUSTOM_EVENT_PUSH](#custom_event_push)
 - [CLIENT_EXECUTE_DEEPLINK_EVENT](#client_execute_deeplink_event)
 - [CLIENT_EXECUTE_JS_EVENT](#client_execute_js_event)
 
@@ -418,6 +419,7 @@ Unlike request/response methods, server initiated messages can arrive at any tim
 | `808` | JP_WIN_PUSH | Jackpot win notification |
 | `708` | SAW_PRIZE_DROP_WIN_PUSH | Prize drop win notification |
 | `1050` | FORM_SHOW_PUSH | Trigger to show a data-collection form |
+| `1051` | CUSTOM_EVENT_PUSH | An event the operator's own server pushed to this user |
 | `105` | CLIENT_EXECUTE_DEEPLINK_EVENT | Execute deep link on client |
 | `107` | CLIENT_EXECUTE_JS_EVENT | Execute JavaScript on client |
 
@@ -725,6 +727,36 @@ Sent as a trigger to display a data-collection form to the user, fired by a camp
 ```
 
 **Recommended action:** Fetch and render the form for `form_id`, forwarding `engagement_uid` on the content fetch and on submit.
+
+---
+
+## CUSTOM_EVENT_PUSH
+
+Sent when the operator's own server pushes an event to this user through Smartico. It arrives on every open connection of the user. Fire-and-forget — there is no response ClassId and no acknowledgement.
+
+**ClassId:** `1051`
+
+**Fields:**
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `cid` | `number` | Message type identifier |
+| `data` | `object` | The payload exactly as the operator's server sent it (up to 64 KB). Smartico does not read or change it |
+| `uuid` | `string` | Unique per event; the same on every connection of the user and on the resend after a short reconnect — dedupe on it when the user has several connections |
+| `ts` | `number` | Server time of the push, epoch milliseconds |
+
+**Example:**
+
+```json
+{
+  "cid": 1051,
+  "data": { "type": "cashback_ready", "amount": 42 },
+  "uuid": "be761e1b-4278-4a19-bc96-370df4660ba3",
+  "ts": 1793917753436
+}
+```
+
+**Recommended action:** Hand `data` to the part of the app that owns that kind of event. Delivery is at most once per connection: an event is never sent twice to one connection, but it can be lost when a connection drops silently, so do not rely on it for anything the app cannot fetch again.
 
 ---
 
