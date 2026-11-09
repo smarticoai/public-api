@@ -969,7 +969,7 @@ class SmarticoAPI {
 	}
 
 	public async missionsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
-		return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements);
+		return UserAchievementTransform((await this.missionsGetItems(user_ext_id)).achievements ?? []);
 	}
 
 	public async getUserGamificationInfo(user_ext_id: string): Promise<GetAchievementsUserInfoResponse> {
@@ -1057,7 +1057,7 @@ class SmarticoAPI {
 	}
 
 	public async badgetsGetItemsT(user_ext_id: string): Promise<TMissionOrBadge[]> {
-		return UserAchievementTransform((await this.badgetsGetItems(user_ext_id)).achievements);
+		return UserAchievementTransform((await this.badgetsGetItems(user_ext_id)).achievements ?? []);
 	}
 
 	public async tournamentsGetLobby(user_ext_id: string, force_language?: string): Promise<GetTournamentsResponse> {
