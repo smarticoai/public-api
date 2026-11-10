@@ -119,6 +119,7 @@ This document describes the low-level protocol for communicating with Smartico b
 #### Other
 - [getTranslations](#gettranslations)
 - [getActivityLog](#getActivityLog)
+- [getActivityLogAvailableTypes](#getactivitylogavailabletypes)
 - [getRelatedItemsForGame](#getrelateditemsforgame)
 
 #### Raffles
@@ -3500,6 +3501,54 @@ A JSON object whose keys depend on the entry. Numbers in it are returned with a 
   "eventErrors": []
 }
 ```
+
+---
+
+### getActivityLogAvailableTypes
+
+Get the activity types that exist for the user's brand, to build an activity-type filter that offers only the features the brand uses (see [Activity type filter](#activity-type-filter)). There is no separate message for this: send a [getActivityLog](#getActivityLog) request with `new_format: true` and read `availableTypes` from the response. The list is brand-wide, so the smallest request is enough. The JS SDK equivalent is `_smartico.api.getActivityLogAvailableTypes()`.
+
+#### Request
+
+**ClassId:** `545` (GET_ACTIVITY_LOG_REQUEST)
+
+| Field | Type | Required | Value |
+|-------|------|----------|-------|
+| `new_format` | `boolean` | yes | `true` — `availableTypes` is sent only in this format. |
+| `startTimeSeconds` | `integer` | no | A short period, e.g. now − 60. |
+| `endTimeSeconds` | `integer` | no | Now. |
+| `limit` | `integer` | no | `1` — the entries are not needed. |
+
+```json
+{
+  "cid": 545,
+  "new_format": true,
+  "startTimeSeconds": 1794301600,
+  "endTimeSeconds": 1794301660,
+  "limit": 1,
+  "offset": 0
+}
+```
+
+#### Response
+
+**ClassId:** `546` (GET_ACTIVITY_LOG_RESPONSE)
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `availableTypes` | `array of integers` | The [`type`](#type) values that exist for the user's brand. Absent when the server does not report it — then show all filters. |
+| `logHistory` | [`ActivityLog[]`](#activitylog) | At most `limit` entries; can be ignored. |
+
+```json
+{
+  "cid": 546,
+  "availableTypes": [1, 2, 3, 4, 6, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20],
+  "logHistory": [],
+  "eventErrors": []
+}
+```
+
+The list changes rarely; read it once when the activity screen opens.
 
 ---
 

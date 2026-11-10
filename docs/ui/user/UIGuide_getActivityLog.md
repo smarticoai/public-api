@@ -11,6 +11,10 @@
   level-up rewards, and operator adjustments.
 - 30 s SDK cache + push refresh on every wallet change (with a caveat —
   see below).
+- Companion method
+  [`getActivityLogAvailableTypes`](../../api/classes/WSAPIUser.md#getactivitylogavailabletypes)
+  returns the activity types the brand uses, to build the activity-type
+  filter (see [Activity type filter](#activity-type-filter)).
 
 ## List view organization
 
@@ -58,6 +62,27 @@ and show an option when at least one of its types is in the list. Always show
 Don't use `TangiblePrize` (13) to decide visibility — it can come from the
 store, mini-games, raffles or prize drops. Selecting an option passes its
 types as the `types` filter of `getActivityLog`.
+
+```ts
+const OPTIONS = [
+  { label: 'Missions', types: [10, 11] },
+  { label: 'Tournaments', types: [18, 19] },
+  { label: 'Raffles', types: [8] },
+];
+const available = await window._smartico.api.getActivityLogAvailableTypes();
+const visible = OPTIONS.filter((o) => available.length === 0 || o.types.some((t) => available.includes(t)));
+console.log('[smartico] render the filter dropdown with "All", these options and Points:', visible.map((o) => o.label));
+
+const now = Math.floor(Date.now() / 1000);
+const rows = await window._smartico.api.getActivityLog({
+  startTimeSeconds: now - 7 * 86400,
+  endTimeSeconds: now + 60,
+  from: 0, to: 50,
+  new_format: true,
+  types: visible[0]?.types,
+});
+console.log('[smartico] render', rows.length, 'rows for the selected option');
+```
 
 ## Item card / row
 
