@@ -3278,6 +3278,7 @@ Only `cid` is mandatory; every field below is optional.
 | Field | Type | Description |
 |-------|------|-------------|
 | `logHistory` | [`ActivityLog[]`](#activitylog) | The entries found, newest first. Empty when nothing matches or the request failed. |
+| `availableTypes` | `array of integers` | Only with `new_format: true`. The [`type`](#type) values that exist for the user's brand. Brand-wide: the same for any period, filter or page, so any response (even one with no entries) can be used. Use it to offer only the activity-type filters the brand uses; see [Activity type filter](#activity-type-filter). Absent when the server does not report it — then show all filters. |
 | `eventErrors` | `array` | Failures of the request — see [eventErrors](#eventerrors). Empty when the request succeeded. |
 
 #### ActivityLog
@@ -3301,6 +3302,27 @@ Only `cid` is mandatory; every field below is optional.
 | `user_points_ever` | `number` | `type` `3` only: the user's lifetime points after the change (`-1` when unknown). Kept for compatibility; same as `ctx_meta.user_points_ever`. |
 | `points_collected` | `integer` | `type` `3` only: same as `amount`. For backwards compatibility. |
 | `user_points_balance` | `integer` | `type` `3` only: same as `balance`. For backwards compatibility. |
+
+#### Activity type filter
+
+To offer only the filters the brand uses, show a filter option when at least one of its [`type`](#type) values is in `availableTypes`; always show "All" and Points. The default Smartico UI uses this mapping:
+
+| Filter | `type` values |
+|---|---|
+| Missions | `10`, `11` |
+| Badges | `12` |
+| Levels | `4` |
+| Leaderboards | `17` |
+| Tournaments | `18`, `19` |
+| Clans | `20` |
+| Mini-games | `7`, `15`, `16` |
+| Prize Drop | `6` |
+| Raffles | `8` |
+| Jackpots | `14` |
+| Avatars | `9` |
+| Gems / Diamonds | `1` / `2` |
+
+Don't use `13` (Tangible prize) to decide visibility — it can come from the store, mini-games, raffles or prize drops.
 
 #### Enumerations
 

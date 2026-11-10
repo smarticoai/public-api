@@ -31,6 +31,34 @@ The default Smartico UI exposes these filters on top:
 
 Custom UIs can pick any window; the server scans the full range.
 
+### Activity type filter
+
+With `new_format: true` the default Smartico UI also shows an activity-type
+dropdown ("All", Missions, Badges, …). It offers only the features the brand
+uses: read the brand's types once with
+[`getActivityLogAvailableTypes`](../../api/classes/WSAPIUser.md#getactivitylogavailabletypes)
+and show an option when at least one of its types is in the list. Always show
+"All" and Points. When the list is empty (unknown), show every option.
+
+| Option | `ActivityLogActivities` |
+|---|---|
+| Missions | `Task` (10), `Mission` (11) |
+| Badges | `Badge` (12) |
+| Levels | `LevelChanged` (4) |
+| Leaderboards | `Leaderboard` (17) |
+| Tournaments | `Tournament` (18), `ClanTournament` (19) |
+| Clans | `Clan` (20) |
+| Mini-games | `Minigame` (7), `Spin` (15), `NoPrize` (16) |
+| Prize Drop | `PrizeDrop` (6) |
+| Raffles | `RaffleTicket` (8) |
+| Jackpots | `Jackpot` (14) |
+| Avatars | `Avatar` (9) |
+| Gems / Diamonds | `Gems` (1) / `Diamonds` (2) |
+
+Don't use `TangiblePrize` (13) to decide visibility — it can come from the
+store, mini-games, raffles or prize drops. Selecting an option passes its
+types as the `types` filter of `getActivityLog`.
+
 ## Item card / row
 
 Fields rendered per row:

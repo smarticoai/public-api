@@ -137,7 +137,7 @@ import { GetRelatedAchTourRequest } from './Missions/GetRelatedAchTourRequest';
 import { GetRelatedAchTourResponse } from './Missions/GetRelatedAchTourResponse';
 import { GetRafflesResponse, raffleTransform } from './Raffle/GetRafflesResponse';
 import { GetRafflesRequest } from './Raffle/GetRafflesRequest';
-import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform } from './ActivityLog';
+import { GetActivityLogRequest, GetActivityLogResponse, ActivityLogTransform, ActivityLogActivities } from './ActivityLog';
 import { GetClanListRequest, GetClanListResponse, GetClanInfoRequest, GetClanInfoResponse, JoinClanRequest, JoinClanResponse } from './Clans';
 import { InboxCategories } from './Inbox/InboxCategories';
 import { GetDrawRunRequest, GetDrawRunResponse, GetRaffleDrawRunsHistoryRequest, GetRaffleDrawRunsHistoryResponse, RaffleClaimPrizeRequest, RaffleClaimPrizeResponse, RaffleOptinRequest, RaffleOptinResponse, drawRunTransform, GetRaffleWonPrizesRequest, GetRaffleWonPrizesResponse } from './Raffle';
@@ -1861,6 +1861,11 @@ class SmarticoAPI {
 		);
 
 		return await this.send<GetActivityLogResponse>(message, ClassId.GET_POINT_HISTORY_RESPONSE);
+	}
+
+	public async getActivityLogAvailableTypes(user_ext_id: string): Promise<ActivityLogActivities[]> {
+		const now = Math.floor(Date.now() / 1000);
+		return (await this.getActivityLog(user_ext_id, now - 60, now, 1, 0, undefined, undefined, true)).availableTypes || [];
 	}
 
 	public async getActivityLogT(

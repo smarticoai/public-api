@@ -6,6 +6,8 @@ import { UserBalanceType } from './UserBalanceType';
 
 export interface GetActivityLogResponse extends ProtocolResponse {
 	logHistory: ActivityLogEntry[];
+	/** Activity types that exist for the user's brand (sent only with `new_format: true`). Brand-wide: the same for any window, filter or page. */
+	availableTypes?: ActivityLogActivities[];
 }
 
 export const ActivityLogTransform = (items: ActivityLogEntry[]): TActivityLog[] => {

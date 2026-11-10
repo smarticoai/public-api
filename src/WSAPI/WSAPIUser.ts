@@ -1,5 +1,6 @@
 import { CoreUtils } from '../Core';
 import { ECacheContext, OCache } from '../OCache';
+import { ActivityLogActivities } from '../ActivityLog';
 import {
 	TActivityLog,
 	TLevel,
@@ -635,6 +636,54 @@ export class WSAPIUser extends WSAPIBase {
 			cacheKey,
 			ECacheContext.WSAPI,
 			() => this.api.getActivityLogT(this.userExtId, startTimeSeconds, endTimeSeconds, from, to, types, src_types, new_format),
+			CACHE_DATA_SEC,
+		);
+	}
+
+	/**
+	 * Returns the activity types that exist for the current user's brand —
+	 * the {@link ActivityLogActivities} values that can appear in the full
+	 * activity feed of {@link getActivityLog} (`new_format: true`). Use it to
+	 * build an activity-type filter that offers only the features the brand
+	 * actually uses, the way the default Smartico UI does.
+	 *
+	 * @remarks
+	 * **Preconditions**
+	 * - User must be authenticated.
+	 * - The full activity feed must be enabled on the Smartico side. Where it is
+	 *   not, or the server does not report types yet, the result is an empty
+	 *   array — show every filter option in that case.
+	 *
+	 * **Scope** — the list is brand-wide, not per user and not per time window:
+	 * a type is listed when the brand has that kind of activity at all, even if
+	 * the current user has no rows of it yet.
+	 *
+	 * **Mapping to filter options** — show an option when at least one of its
+	 * types is in the list; always show "All" and Points. Don't use
+	 * `TangiblePrize` (13) to decide visibility: it can come from the store,
+	 * mini-games, raffles or prize drops. See the
+	 * [UI Guide](../../docs/ui/user/UIGuide_getActivityLog.md#activity-type-filter)
+	 * for the mapping the default Smartico UI uses.
+	 *
+	 * **Refresh** — the SDK caches the result for 30 seconds. The list changes
+	 * rarely; reading it once when the activity screen opens is enough.
+	 *
+	 * **Visitor mode**: not supported (activity is per-user).
+	 *
+	 * @returns Array of {@link ActivityLogActivities} values; empty when unknown.
+	 *
+	 * @example
+	 * ```ts
+	 * const types = await window._smartico.api.getActivityLogAvailableTypes();
+	 * const showTournaments = types.length === 0 || types.includes(18) || types.includes(19);
+	 * console.log('[smartico] show the Tournaments filter option:', showTournaments);
+	 * ```
+	 */
+	public async getActivityLogAvailableTypes(): Promise<ActivityLogActivities[]> {
+		return await OCache.use(
+			`${onUpdateContextKey.ActivityLog}:availableTypes`,
+			ECacheContext.WSAPI,
+			() => this.api.getActivityLogAvailableTypes(this.userExtId),
 			CACHE_DATA_SEC,
 		);
 	}
