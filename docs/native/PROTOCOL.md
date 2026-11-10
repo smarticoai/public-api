@@ -118,7 +118,7 @@ This document describes the low-level protocol for communicating with Smartico b
 
 #### Other
 - [getTranslations](#gettranslations)
-- [getPointsHistory](#getpointshistory)
+- [getActivityLog](#getActivityLog)
 - [getRelatedItemsForGame](#getrelateditemsforgame)
 
 #### Raffles
@@ -3246,31 +3246,163 @@ Get UI translations for a specific language.
 
 ---
 
-### getPointsHistory
+### getActivityLog
 
-Get user's points history.
+Get user's activity log: points, gems and diamonds changes, level changes, missions, badges, tasks, minigames, raffles, tournaments, jackpots, leaderboards, clans and bonuses, newest first. Only the logged-in user's own entries are returned.
 
 #### Request
 
-**ClassId:** `545` (GET_POINT_HISTORY_REQUEST)
+**ClassId:** `545` (GET_ACTIVITY_LOG_REQUEST)
 
-| Field | Type | Description |
-|-------|------|-------------|
-| `startTimeSeconds` | `number` | Start time (Unix timestamp in seconds) |
-| `endTimeSeconds` | `number` | End time (Unix timestamp in seconds) |
-| `limit` | `number` | Max items to return |
-| `offset` | `number` | Offset for pagination |
-| `types` | `number[]` | Optional. Activity kinds to include (`ActivityLogActivities` values). Applied only with `new_format: true` |
-| `src_types` | `number[]` | Optional. Sources to include (`PointChangeSourceType` values). Applied only with `new_format: true` |
-| `new_format` | `boolean` | Optional. `true` returns the full activity feed (all activity kinds); omitted returns wallet changes only (points / gems / diamonds) |
+Only `cid` is mandatory; every field below is optional.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `startTimeSeconds` | `integer` | no | Start of the period, Unix epoch seconds, exclusive. Default: 30 days ago. |
+| `endTimeSeconds` | `integer` | no | End of the period, Unix epoch seconds, exclusive. Default: now. |
+| `limit` | `integer` | no | Maximum number of entries to return. |
+| `offset` | `integer` | no | Number of entries to skip. |
+| `types` | `array of integers` | no | Filter by types — see [`type`](#type). Omit or send empty array for all. |
+| `src_types` | `array of integers` | no | Filter by source types — see [`source_type_id`](#source_type_id). Omit or send empty array for all. |
+| `force_language` | `string` | no | ISO 639-1 language of the `name` in `ctx_meta`. Default: the user's language. |
+| `new_format` | `boolean` | no | `true` to receive the entries described below ([`ActivityLog`](#activitylog)). Default: `false`, which returns the previous points history format — points, gems and diamonds only, with `types` and `src_types` ignored. |
+
+**Period limit** - `endTimeSeconds - startTimeSeconds` may not exceed 30 days by default.
+
+**Pagination** - Entries are sorted by `create_date`, newest first. You can query for pages by using `limit` and `offset` over the same time period.
 
 #### Response
 
-**ClassId:** `546` (GET_POINT_HISTORY_RESPONSE)
+**ClassId:** `546` (GET_ACTIVITY_LOG_RESPONSE)
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `logHistory` | [`ActivityLogEntry[]`](../api/interfaces/ActivityLogEntry.md) | Activity rows, newest first. Without `new_format` only wallet rows (points / gems / diamonds); with `new_format: true` all activity kinds, where the full feed is enabled on the Smartico side |
+| `logHistory` | [`ActivityLog[]`](#activitylog) | The entries found, newest first. Empty when nothing matches or the request failed. |
+| `eventErrors` | `array` | Failures of the request — see [eventErrors](#eventerrors). Empty when the request succeeded. |
+
+#### ActivityLog
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `user_id` | `integer` | Smartico's internal user id. |
+| `user_ext_id` | `string` | The user's external id. |
+| `create_date` | `object` | When the entry happened. |
+| `label_id` | `integer` | Smartico label id. |
+| `crm_brand_id` | `string` | Smartico brand id (`"0"` on single-brand labels). |
+| `type` | `integer` | What the entry is about — [`type`](#type). |
+| `source_type_id` | `integer` | What caused it — [`source_type_id`](#source_type_id). |
+| `source_entity_id` | `integer` | Id of the object that caused the entry, depending on `source_type_id` — e.g. the tournament instance for a tournament win, the raffle run for a raffle prize, the task for a completed task, the minigame template for a spin. |
+| `source_ref_id` | `integer` | Id one level above or beside `source_entity_id` — e.g. the tournament (or clan, for clan tournaments) of a tournament win, the won prize of a raffle, the prize of a minigame spin. Can repeat `source_entity_id`. |
+| `source_root_id` | `integer` | The top-level object — e.g. the tournament, the raffle, the mission a task belongs to, the minigame template. Can repeat `source_ref_id`. |
+| `amount` | `integer` | Amount of the change, where relevant. |
+| `balance` | `integer` | The user's balance, where relevant. |
+| `ctx_meta` | `object` | Additional data, depending on `type` — see [`ctx_meta`](#ctx_meta). |
+| `ctx_1` | `integer` | Sub-type of the type entry; its meaning depends on `type` — see [`ctx_1`](#ctx_1). |
+| `user_points_ever` | `number` | `type` `3` only: the user's lifetime points after the change (`-1` when unknown). Kept for compatibility; same as `ctx_meta.user_points_ever`. |
+| `points_collected` | `integer` | `type` `3` only: same as `amount`. For backwards compatibility. |
+| `user_points_balance` | `integer` | `type` `3` only: same as `balance`. For backwards compatibility. |
+
+#### Enumerations
+
+##### `type`
+
+| Id | Name            | Description                                                  |
+|---|-----------------|--------------------------------------------------------------|
+| 0 | Unknown         | Entry type could not be determined.                          |
+| 1 | Gems            | Gems balance change.                                         |
+| 2 | Diamonds        | Diamonds balance change.                                     |
+| 3 | Points          | Points balance change.                                       |
+| 4 | Level Changed   | User level change.                                           |
+| 5 | N/A             | Reserved.                                                    |
+| 6 | Prize Drop      | A prize-drop was given.                                      |
+| 7 | N/A             | Reserved.                                                    |
+| 8 | Raffle          | Raffle registration, raffle win, or raffle tickets received. |
+| 9 | Avatar          | An avatar was given to the user.                             |
+| 10 | Task            | A mission task was completed.                                |
+| 11 | Mission         | A mission was unlocked, opted in to, completed or claimed.   |
+| 12 | Badge           | A badge was unlocked or completed.                           |
+| 13 | Tangible Prize  | A manually fulfilled (physical) prize was won.               |
+| 14 | Jackpot         | Jackpot opt-in or jackpot win.                               |
+| 15 | Minigame Spin   | Minigame spins given to or used by the user.                 |
+| 16 | No Prize        | A minigame was played without winning a prize.               |
+| 17 | Leaderboard     | A leaderboard prize was won.                                 |
+| 18 | Tournament      | Tournament registration, cancellation or win.                |
+| 19 | Clan Tournament | Clan tournament registration, cancellation or win.           |
+| 20 | Clan            | The user joined or was removed from a clan.                  |
+
+##### `source_type_id`
+
+| Id | Name                    | Description                                                                     |
+|----|-------------------------|---------------------------------------------------------------------------------|
+| -1 | Unknown                 | Source could not be determined.                                                 |
+| 1  | Journey                 | On a journey (campaign) action.                                                 |
+| 2  | Task Completion         | On completing a mission task.                                                   |
+| 3  | Achievement Completion  | On completing a mission or badge.                                               |
+| 4  | Level Changed           | By the level system itself, e.g. setting the initial level.                     |
+| 5  | Store Purchase          | On a store purchase.                                                            |
+| 6  | Manual                  | By a manual action in the back office.                                          |
+| 7  | Leaderboard             | On winning a leaderboard.                                                       |
+| 8  | N/A                     | Reserved                                                                        |
+| 9  | N/A                     | Reserved                                                                        |
+| 10 | N/A                     | Reserved                                                                        |
+| 11 | Tournament Win          | On winning a tournament.                                                        |
+| 12 | Automation Rule         | By an automation rule.                                                          |
+| 13 | Tournament Registration | On registering to a tournament, including its buy-in.                           |
+| 14 | Tournament Cancellation | On cancelled tournament registration, including its refund.                     |
+| 15 | Refund Points Failed To Buy | On refund of a store purchase that failed.                                      |
+| 16 | Minigame Spin           | Playing a minigame, including its spin cost.                                    |
+| 17 | Minigame Win            | On winning a minigame.                                                          |
+| 18 | API                     | An external API call.                                                           |
+| 19 | Dynamic                 | A points / gems / diamonds change computed by a formula, given through the internal API. |
+| 20 | Jackpot                 | On jackpot action.                                                              |
+| 21 | Raffle                  | On raffle action.                                                               |
+| 22 | Avatar                  | On avatar action.                                                               |
+| 23 | Clan                    | On clan action.                                                                 |
+| 24 | Prize Drop              | On a prize-drop.                                                                |
+
+##### `ctx_1`
+
+The meaning depends on `type`:
+
+| `type` | Name            | `ctx_1`                                                                                                                                                                                  |
+|--------|-----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 0      | Unknown         | `0` — not used.                                                                                                                                                                          |
+| 1      | Gems            | • `1` Add — added to the balance.<br>• `2` Deduct — deducted from the balance.<br>• `3` Set — balance set to `balance`; `amount` holds the signed difference.                            |
+| 2      | Diamonds        | • `1` Add — added to the balance.<br>• `2` Deduct — deducted from the balance.<br>• `3` Set — balance set to `balance`; `amount` holds the signed difference.                            |
+| 3      | Points          | • `1` Add — added to the balance.<br>• `2` Deduct — deducted from the balance.<br>• `3` Set — balance set to `balance`; `amount` holds the signed difference.                            |
+| 4      | Level Changed   | • `0` Unknown — direction could not be determined.<br>• `1` Up — moved to a higher level (also the initial level).<br>• `2` Down — moved to a lower level.                               |
+| 5      | N/A             | N/A                                                                                                                                                                                      |
+| 6      | Prize Drop      | `0` — not used.                                                                                                                                                                          |
+| 7      | N/A             | N/A                                                                                                                                                                                      |
+| 8      | Raffle          | • `1` Raffle Registration — registered to a raffle draw.<br>• `3` Raffle Win — won a raffle prize.<br>• `4` Raffle Tickets — received raffle tickets; `amount` is the number of tickets. |
+| 9      | Avatar          | `0` — not used.                                                                                                                                                                          |
+| 10     | Task            | • `1` Complete Achievement — a task of a mission / badge to complete.<br>• `2` Unlock Achievement — a task that unlocks a mission / badge.                                               |
+| 11     | Mission         | • `1` Completed — completed, opted in or claimed.<br>• `2` Unlocked — unlocked.                                                                                                          |
+| 12     | Badge           | • `1` Completed — completed, opted in or claimed.<br>• `2` Unlocked — unlocked.                                                                                                          |
+| 13     | Tangible Prize  | `0` — not used.                                                                                                                                                                          |
+| 14     | Jackpot         | • `1` Jackpot Registration — opted in to a jackpot.<br>• `3` Jackpot Win — won a jackpot.                                                                                                |
+| 15     | Minigame Spin   | • `1` Add — spins given, or a spin's result.<br>• `2` Deduct — a spin used.                                                                                                              |
+| 16     | No Prize        | `0` — not used.                                                                                                                                                                          |
+| 17     | Leaderboard     | `0` — not used.                                                                                                                                                                          |
+| 18     | Tournament      | • `1` Tournament Join — registered.<br>• `2` Tournament Cancelled — registration cancelled.<br>• `3` Tournament Win — won a prize.                                                       |
+| 19     | Clan Tournament | • `1` Tournament Join — registered.<br>• `2` Tournament Cancelled — registration cancelled.<br>• `3` Tournament Win — won a prize.                                                       |
+| 20     | Clan            | • `1` Clan Join — joined the clan.<br>• `2` Clan Kicked — removed from the clan.                                                                                                         |
+
+##### `ctx_meta`
+
+A JSON object whose keys depend on the entry. Numbers in it are returned with a decimal part (e.g. `5400.0`). Common keys:
+
+| Key | Present on | Description                                                                                                       |
+|---|---|-------------------------------------------------------------------------------------------------------------------|
+| `name` | most types | Name of the source object (tournament, mission, raffle draw, jackpot, ...), translated to the request's language. |
+| `position`, `score` | tournament and leaderboard wins | The user's final place and score.                                                                                 |
+| `points_requested` | `type` `3` | Points the source asked to give or take; can differ from `amount` when capped.                                    |
+| `user_points_ever`, `user_points_balance_before` | `type` `3` | Lifetime points after, and balance before, the change.                                                            |
+| `affects_current_balance`, `affects_leaderboard`, `affects_level` | `type` `3` | Which totals the points change counts towards.                                                                    |
+| `amount_requested`, `balance_before` | `type` `1`, `2` | Amount the source asked for, and balance before the change.                                                       |
+| `from_level_id`, `to_level_id`, `from_level_public_meta`, `to_level_public_meta`, `level_counter_1`, `level_counter_2`, `points_collected_on_level_change`, `user_points_ever` | `type` `4` | The levels and counters of a level change.                                                                        |
+| `saw_prize_public_meta`, `is_prize_drop` | minigames | The prize won, and whether the game is a prize drop.                                                              |
+| `is_recurring` | missions, badges, tasks | Whether the mission repeats upon completion.                                                                      |
 
 #### Example
 
@@ -3279,9 +3411,12 @@ Get user's points history.
 {
   "cid": 545,
   "uuid": "hist-123",
-  "ts": 1699999999999,
-  "startTimeSeconds": 1699900000,
-  "endTimeSeconds": 1700000000
+  "ts": 1760600000000,
+  "startTimeSeconds": 1760000000,
+  "endTimeSeconds": 1760600000,
+  "limit": 20,
+  "types": [3, 18],
+  "new_format": true
 }
 ```
 
@@ -3293,21 +3428,54 @@ Get user's points history.
   "errCode": 0,
   "logHistory": [
     {
-      "create_date": { "seconds": 1699950000 },
+      "user_id": 364342716,
       "user_ext_id": "user123",
+      "create_date": { "seconds": 1760520104, "nanos": 512000000 },
+      "label_id": 16018,
+      "crm_brand_id": "1",
+      "type": 18,
+      "source_type_id": 11,
+      "source_entity_id": 884213,
+      "source_ref_id": 1204,
+      "source_root_id": 1204,
+      "amount": 0,
+      "balance": 0,
+      "ctx_meta": {
+        "name": "Weekly Race",
+        "position": 1.0,
+        "score": 5400.0
+      },
+      "ctx_1": 3
+    },
+    {
+      "user_id": 364342716,
+      "user_ext_id": "user123",
+      "create_date": { "seconds": 1760461330, "nanos": 87000000 },
+      "label_id": 16018,
       "crm_brand_id": "1",
       "type": 3,
-      "ctx_1": 0,
-      "source_type_id": 1,
-      "source_ref_id": 0,
-      "source_root_id": 0,
+      "source_type_id": 2,
+      "source_entity_id": 5512,
+      "source_ref_id": 5512,
+      "source_root_id": 731,
       "amount": 100,
-      "balance": 1500,
-      "user_points_balance": 1500,
-      "user_points_ever": 5000,
-      "points_collected": -1
+      "balance": 1350,
+      "ctx_meta": {
+        "name": "Deposit 3 times",
+        "affects_current_balance": true,
+        "affects_leaderboard": true,
+        "affects_level": true,
+        "points_requested": 100.0,
+        "user_points_ever": 4200.0,
+        "user_points_balance_before": 1250.0
+      },
+      "ctx_1": 1,
+      "user_points_ever": 4200.0,
+      "points_collected": 100,
+      "user_points_balance": 1350
     }
-  ]
+  ],
+  "eventErrors": []
 }
 ```
 
