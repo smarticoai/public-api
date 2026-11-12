@@ -156,6 +156,7 @@ import {
 import { GetJackpotWinnersRequest } from './Jackpots/GetJackpotWinnersRequest';
 import { GetJackpotEligibleGamesRequest } from './Jackpots/GetJackpotEligibleGamesRequest';
 import { GetJackpotEligibleGamesResponse, GetJackpotEligibleGamesResponseTransform, JackpotEligibleGame, TGetJackpotEligibleGamesResponse } from './Jackpots/GetJackpotEligibleGamesResponse';
+import { DomainRemapEntry, applyDomainRemap, getDomainRemap, replaceSmrDomains, reverseDomainRemap, setDomainRemap, validateDomainRemap } from './Base/DomainRemap';
 import { GamePickGameInfo, GamePickRound, GamePickRoundBoard, GamePickUserInfo, GamesApiResponse } from './GamePick';
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
@@ -163,32 +164,6 @@ const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
 const GAMES_API_URL = 'https://r-games-api.smr.vc';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
 const DEFAULT_LANG_EN = 'EN';
-
-const SMR_TO_CLOUDFRONT_DOMAINS: { [key: string]: string } = {
-	'img.smr.vc': 'd1am61onjxtys8.cloudfront.net',
-	'img3.smr.vc': 'd3dubbodzd2q05.cloudfront.net',
-	'img4.smr.vc': 'dvm0p9vsezqr2.cloudfront.net',
-	'img5.smr.vc': 'd3gen1ksvxhac8.cloudfront.net',
-	'img6.smr.vc': 'db1kmyg7iufeo.cloudfront.net',
-	'img7.smr.vc': 'd36om2g86xefo6.cloudfront.net',
-	'img8.smr.vc': 'd2zme31v54n5pb.cloudfront.net',
-
-	'static.smr.vc': 'dtt380pweilws.cloudfront.net',
-	'static3.smr.vc': 'd1qt8ake8g4imn.cloudfront.net',
-	'static4.smr.vc': 'd146b4m7rkvjkw.cloudfront.net',
-	'static5.smr.vc': 'd3l7suk1kl9rwh.cloudfront.net',
-	'static6.smr.vc': 'd121pfj16xdfcq.cloudfront.net',
-	'static7.smr.vc': 'd21deilz814qgl.cloudfront.net',
-	'static8.smr.vc': 'd1uffsroxjy2ku.cloudfront.net',
-};
-
-// Single combined matcher built once, so a call is one pass instead of one per domain.
-const SMR_DOMAIN_REGEX = new RegExp(
-	Object.keys(SMR_TO_CLOUDFRONT_DOMAINS)
-		.map((d) => d.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
-		.join('|'),
-	'g',
-);
 
 interface Tracker {
 	label_api_key: string;
@@ -217,7 +192,7 @@ class SmarticoAPI {
 	private partnerUrl: string;
 	private gamesApiUrl: string;
 	private baseRgApiParams: Record<string, string>;
-	public avatarDomain: string;
+	private avatarBase: string;
 	private avatarOriginDomain: string;
 	private envId: number;
 
@@ -255,10 +230,14 @@ class SmarticoAPI {
 			}
 		}
 
-		this.avatarDomain = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
+		this.avatarBase = SmarticoAPI.getAvatarUrl(label_api_key || options.tracker?.label_api_key);
 		this.avatarOriginDomain = SmarticoAPI.getAvatarOriginUrl(label_api_key || options.tracker?.label_api_key);
 
 		this.label_api_key = SmarticoAPI.getCleanLabelApiKey(label_api_key);
+	}
+
+	public get avatarDomain(): string {
+		return applyDomainRemap(this.avatarBase);
 	}
 
 	public static getEnvDnsSuffix(label_api_key: string): string {
@@ -271,30 +250,27 @@ class SmarticoAPI {
 	}
 
 	public static replaceSmrDomainsWithCloudfront<T>(value: string | { [key: string]: any }): T {
-		if (!value) {
-			return value as T;
-		}
+		return replaceSmrDomains(value) as T;
+	}
 
-		const isString = typeof value === 'string';
-		const source = isString ? (value as string) : JSON.stringify(value);
-		if (!source.includes('smr.vc')) return value as T;   // ← skip even the regex
+	public static validateDomainRemap(entries: DomainRemapEntry[]): void {
+		validateDomainRemap(entries);
+	}
 
-		const replaced = source.replace(SMR_DOMAIN_REGEX, (match) => SMR_TO_CLOUDFRONT_DOMAINS[match]);
+	public static setDomainRemap(entries?: DomainRemapEntry[] | null): void {
+		setDomainRemap(entries);
+	}
 
-		// No domain matched: skip the JSON re-parse and return the input untouched.
-		if (replaced === source) {
-			return value as T;
-		}
+	public static getDomainRemap(): DomainRemapEntry[] | null {
+		return getDomainRemap();
+	}
 
-		if (isString) {
-			return replaced as T;
-		}
+	public static applyDomainRemap<T>(value: T): T {
+		return applyDomainRemap(value);
+	}
 
-		try {
-			return JSON.parse(replaced);
-		} catch (err) {
-			return value as T;
-		}
+	public static reverseDomainRemap<T>(value: T): T {
+		return reverseDomainRemap(value);
 	}
 
 	public static getEnvId(label_api_key: string): number {
@@ -1431,7 +1407,7 @@ class SmarticoAPI {
 			const inboxCdnUrl = this.tracker.getLabelSetting(PublicLabelSettings.INBOX_PUBLIC_CDN);
 
 			try {
-				const url = `${inboxCdnUrl}${messageGuid}.json`;
+				const url = applyDomainRemap(`${inboxCdnUrl}${messageGuid}.json`);
 
 				const response = await fetch(url, {
 					method: 'GET',
@@ -1442,7 +1418,7 @@ class SmarticoAPI {
 					},
 				});
 				const data = await response.json();
-				return data || {};
+				return applyDomainRemap(data || {});
 			} catch (error) {
 				this.logger.error('Error fetching inbox message body:', error);
 				return null;
@@ -1545,7 +1521,7 @@ class SmarticoAPI {
 
 		const baseParams = this.buildGamesApiParams();
 		const queryString = Object.entries(baseParams).map(([k, v]) => `${k}=${encodeURIComponent(v)}`).join('&');
-		let url = `${GAMES_API_URL}/${method}?${queryString}`;
+		let url = `${applyDomainRemap(GAMES_API_URL)}/${method}?${queryString}`;
 
 		let fetchOptions: RequestInit = {
 			method: 'GET',
@@ -1585,7 +1561,7 @@ class SmarticoAPI {
 			throw new Error(`Avatar APIs are not available in the visitor mode`);
 		}
 
-		const url = `${this.avatarOriginDomain}/${method}`;
+		const url = `${applyDomainRemap(this.avatarOriginDomain)}/${method}`;
 
 		try {
 			const response = await fetch(url, {
@@ -1721,7 +1697,7 @@ class SmarticoAPI {
 				user_ext_id: this.tracker?.getExtUserId(),
 				brand_key: this.brand_api_key || this.tracker?.params?.brand_key,
 				prompt_id: params.prompt_id,
-				avatar_url: params.avatar_url,
+				avatar_url: reverseDomainRemap(params.avatar_url),
 				avatar_real_id: params.avatar_real_id,
 			},
 		});
@@ -1888,3 +1864,4 @@ class SmarticoAPI {
 }
 
 export { SmarticoAPI, MessageSender };
+export type { DomainRemapEntry, DomainRemapPurpose } from './Base/DomainRemap';

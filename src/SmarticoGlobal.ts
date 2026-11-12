@@ -1,5 +1,6 @@
 import type { WSAPI } from './WSAPI/WSAPI';
 import type { PublicProperties } from './Core/PublicProperties';
+import type { DomainRemapEntry } from './Base/DomainRemap';
 
 /**
  * Type-only module. Contains no runtime code — interfaces, type aliases and the
@@ -83,6 +84,8 @@ export interface SmarticoInitParams {
 	lang?: string;
 	/** Override the SDK WebSocket endpoint. */
 	ws_url?: string | null;
+	/** Replace Smartico hosts with your own proxy hosts: each entry maps a Smartico host `from` to your host `to`. */
+	domains_remap?: DomainRemapEntry[] | null;
 	/** Allow additional forward-compatible init options. */
 	[key: string]: unknown;
 }
