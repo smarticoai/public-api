@@ -4,6 +4,7 @@ import { ProtocolResponse } from './Base/ProtocolResponse';
 import { SAWGetTemplatesResponse } from './MiniGames/SAWGetTemplatesResponse';
 import { SAWGetTemplatesRequest } from './MiniGames/SAWGetTemplatesRequest';
 import { IntUtils } from './IntUtils';
+import { ChatClient } from './Chat/ChatClient';
 import { ILogger } from './ILogger';
 import {
 	SAWDoAknowledgeRequest,
@@ -1717,6 +1718,34 @@ class SmarticoAPI {
 
 	public getWSCalls(): WSAPI {
 		return new WSAPI(this);
+	}
+
+	private chatClient: ChatClient;
+
+	/**
+	 * The chat of this page (see WSAPIChat). Visitor mode has no tracker, so it has no chat: every chat method
+	 * then answers CHAT_DISABLED.
+	 */
+	public chat(): ChatClient {
+		if (!this.chatClient) {
+			const t = this.tracker;
+			this.chatClient = new ChatClient(
+				() =>
+					t
+						? {
+								api_url: t.getLabelSetting(PublicLabelSettings.CHAT_API_URL),
+								enabled: String(t.getLabelSetting(PublicLabelSettings.CHAT_ENABLED)) === 'true',
+								label_key: this.label_api_key,
+								brand_key: this.brand_api_key || t.params?.brand_key,
+								user_ext_id: t.getExtUserId(),
+								user_hash: t.getHash?.(),
+								lang: t.userPublicProps?.core_user_language,
+							}
+						: null,
+				this.logger,
+			);
+		}
+		return this.chatClient;
 	}
 
 	public async getRelatedItemsForGame(user_ext_id: string, related_game_id: string,): Promise<GetRelatedAchTourResponse> {

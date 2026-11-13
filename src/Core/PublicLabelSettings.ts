@@ -28,4 +28,7 @@ export enum PublicLabelSettings {
 	_system_gamification_mask_username = '_system_gamification_mask_username',
 
 	INBOX_PUBLIC_CDN = 'INBOX_PUBLIC_CDN',
+
+	CHAT_ENABLED = 'CHAT_ENABLED',
+	CHAT_API_URL = 'CHAT_API_URL',
 }

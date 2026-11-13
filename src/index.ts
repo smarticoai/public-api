@@ -46,3 +46,4 @@ export * from './ActivityLog';
 export * from './Base/AchRelatedGame';
 export * from './Avatars';
 export * from './Clans';
+export * from './Chat';

@@ -4,21 +4,21 @@ import { ECacheContext, OCache } from '../OCache';
 import { SmarticoAPI } from '../SmarticoAPI';
 import { JackpotWinPush, JackpotsOptinResponse, JackpotsOptoutRequest } from '../Jackpots';
 import { onUpdateContextKey } from './WSAPIBase';
-import { WSAPIInbox } from './WSAPIInbox';
+import { WSAPIChat } from './WSAPIChat';
 import { TUserProfile } from './WSAPITypes';
 
 /**
  * Public surface of the Smartico WebSocket API. The consumer reaches every
  * method on this class via `_smartico.api.X(...)`. The class is the
  * terminator of an inheritance chain that splits the surface into focused
- * domain classes (see `WSAPIBase` → `WSAPIUser` → ... → `WSAPIInbox` →
+ * domain classes (see `WSAPIBase` → `WSAPIUser` → ... → `WSAPIInbox` → `WSAPIChat` →
  * `WSAPI`); each domain class hosts its own subset of methods. Consumers
  * don't need to know about the chain — every method is reachable directly
  * on the `WSAPI` instance via prototype-chain lookup.
  *
  * @group General API
  */
-export class WSAPI extends WSAPIInbox {
+export class WSAPI extends WSAPIChat {
 	/** @private */
 	constructor(api: SmarticoAPI, userExtId: string = null) {
 		super(api, userExtId);
@@ -59,8 +59,14 @@ export class WSAPI extends WSAPIInbox {
 				this.updateStoreItems();
 			});
 			on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
-			on(ClassId.LOGOUT_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
-			on(ClassId.IDENTIFY_RESPONSE, () => OCache.clearContext(ECacheContext.WSAPI));
+			on(ClassId.LOGOUT_RESPONSE, () => {
+				OCache.clearContext(ECacheContext.WSAPI);
+				this.chatReset();
+			});
+			on(ClassId.IDENTIFY_RESPONSE, () => {
+				OCache.clearContext(ECacheContext.WSAPI);
+				this.chatReset();
+			});
 			on(ClassId.JP_WIN_PUSH, (_data: JackpotWinPush) => this.jackpotClearCache());
 			on(ClassId.JP_OPTOUT_RESPONSE, (_data: JackpotsOptoutRequest) => this.jackpotClearCache());
 			on(ClassId.JP_OPTIN_RESPONSE, (_data: JackpotsOptinResponse) => this.jackpotClearCache());
