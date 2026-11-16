@@ -42,14 +42,13 @@ export class WSAPI extends WSAPIChat {
 
 			on(ClassId.SAW_SPINS_COUNT_PUSH, (data: SAWSpinsCountPush) => this.updateOnSpin(data));
 			on(ClassId.SAW_SHOW_SPIN_PUSH, () => this.reloadMiniGameTemplate());
-			on(ClassId.SAW_AKNOWLEDGE_RESPONSE, () => {
+			const onSawSpinOrAck = () => {
 				this.reloadMiniGameTemplate();
 				OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
-			});
-			on(ClassId.SAW_DO_SPIN_RESPONSE, () => {
-				this.reloadMiniGameTemplate();
-				OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
-			});
+			};
+			on(ClassId.SAW_AKNOWLEDGE_RESPONSE, onSawSpinOrAck);
+			on(ClassId.SAW_AKNOWLEDGE_BATCH_RESPONSE, onSawSpinOrAck);
+			on(ClassId.SAW_DO_SPIN_RESPONSE, onSawSpinOrAck);
 			on(ClassId.MISSION_OPTIN_RESPONSE, () => this.updateMissions());
 			on(ClassId.ACHIEVEMENT_CLAIM_PRIZE_RESPONSE, () => this.updateMissions());
 			on(ClassId.RELOAD_ACHIEVEMENTS_EVENT, () => this.updateMissions());
@@ -71,10 +70,7 @@ export class WSAPI extends WSAPIChat {
 			on(ClassId.JP_OPTOUT_RESPONSE, (_data: JackpotsOptoutRequest) => this.jackpotClearCache());
 			on(ClassId.JP_OPTIN_RESPONSE, (_data: JackpotsOptinResponse) => this.jackpotClearCache());
 			on(ClassId.CLAIM_BONUS_RESPONSE, () => this.updateBonuses());
-			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, () => {
-				this.reloadMiniGameTemplate();
-				OCache.clearByPrefix(ECacheContext.WSAPI, onUpdateContextKey.SAWHistory);
-			});
+			on(ClassId.SAW_DO_SPIN_BATCH_RESPONSE, onSawSpinOrAck);
 			on(ClassId.RAF_CLAIM_PRIZE_RESPONSE, () => this.updateRaffles());
 			on(ClassId.GET_INBOX_MESSAGES_RESPONSE, (res) => {
 				if (res.unread_count !== undefined && res.unread_count !== null) {

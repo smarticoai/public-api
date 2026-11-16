@@ -749,7 +749,7 @@ class SmarticoAPI {
 	public async doAcknowledgeBatchRequest(user_ext_id: string, request_ids: string[]): Promise<SAWDoAcknowledgeBatchResponse> {
 		const message = this.buildMessage<SAWDoAcknowledgeBatchRequest, SAWDoAcknowledgeBatchResponse>(
 			user_ext_id,
-			ClassId.SAW_AKNOWLEDGE_REQUEST,
+			ClassId.SAW_AKNOWLEDGE_BATCH_REQUEST,
 			{
 				request_ids,
 			},

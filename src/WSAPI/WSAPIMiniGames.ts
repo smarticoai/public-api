@@ -691,7 +691,7 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 		const response = await this.api.sawSpinBatchRequest(this.userExtId, template_id, spin_count);
 
 		const request_ids = response.results.map((result) => result.request_id);
-		this.api.doAcknowledgeBatchRequest(this.userExtId, request_ids);
+		this.api.doAcknowledgeBatchRequest(this.userExtId, request_ids).catch((e) => console.warn('[smartico] batch acknowledge failed', e));
 
 		const o: TMiniGamePlayBatchResult[] = response.results.map((result) => ({
 			errCode: result.errCode,
