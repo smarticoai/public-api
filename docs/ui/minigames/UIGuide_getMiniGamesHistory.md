@@ -26,7 +26,7 @@ Fields rendered per row:
 |---|---|---|
 | Template icon | `saw_template_thumbnail` | 1:1 |
 | Template name | `saw_template_name` | Translated |
-| Prize name | `prize.saw_prize_ui_definition.name` | `prize` is `null` for a spin finalised as lost (`miniGameWinAcknowledgeRequest` with `lose: true`) — render it as a loss. |
+| Prize name | `prize.saw_prize_ui_definition.name` | A lost spin carries the game's "no prize" item: `prize.prize_type_id === SAWPrizeType.NO_PRIZE` — render it as a loss (its `name` is the label set in the BO, e.g. "Try again"). `prize` is `null` only if the prize could not be resolved. |
 | Prize amount | `prize.prize_value` or `prize_amount`; for gems/diamonds prizes `prize.prize_details_json.gems` / `.diamonds` (`prize_details_json._gems_diamonds_type`: `0` gems only, `1` diamonds only, `2` both), for raffle-ticket prizes `prize.prize_details_json.tickets_count` | E.g. "100 points", "50 Diamonds". `prize` is sent as the server stores it, where `prize_value` of a gems/diamonds or raffle-ticket prize is only a default — `getMiniGames()` already resolves it into `prize_value` |
 | Spin date | `create_date_ts` | Format as user-local relative time ("2h ago") or short date |
 | Claim status | `is_claimed` | Show check-mark when true; "Pending claim" CTA when false |

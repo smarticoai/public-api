@@ -25,7 +25,7 @@ export interface SAWPrizesHistory {
 	saw_template_name?: string;
 	/** Protocol version 2+: thumbnail of the template (saw_template_ui_definition.thumbnail) */
 	saw_template_thumbnail?: string;
-	/** Protocol version 2+: the won prize, same shape as an item of template.prizes. Null when nothing was won */
+	/** Protocol version 2+: the won prize, same shape as an item of template.prizes. A lost spin carries the game's NO_PRIZE item (prize_type_id = SAWPrizeType.NO_PRIZE). Null only if the prize could not be resolved */
 	prize?: SAWPrize | null;
 }
 

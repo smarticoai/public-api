@@ -1444,7 +1444,7 @@ export interface TSawHistory {
 	saw_template_name?: string;
 	/** Thumbnail image URL of the mini-game */
 	saw_template_thumbnail?: string;
-	/** The won prize, same shape as an item of template.prizes. Null when nothing was won */
+	/** The won prize, same shape as an item of template.prizes. A lost spin carries the game's NO_PRIZE item (prize_type_id = SAWPrizeType.NO_PRIZE). Null only if the prize could not be resolved */
 	prize?: SAWPrize | null;
 }
 
