@@ -265,7 +265,12 @@ export class MissionUtils {
 
         // a condition's amount first, then the Prop to Prop target's, which Java nests under 'r'
         const amountOf = (src: { [key: string]: any }) => src && src[USER_STATE_PARAMS_KEYS_BET_AMOUNT.find((k) => src[k])];
-        const amount = amountOf(userStateParams) || amountOf(userStateParams.r);
+        const conditionAmount = amountOf(userStateParams);
+        // the condition compares with multiplier x the recommended amount, and Java sends the amount without it
+        const conditionMultiplier = Number(task.task_public_meta?.condition_multiplier);
+        const amount = (conditionAmount && conditionMultiplier > 0 && !isNaN(Number(conditionAmount))
+            ? MissionUtils.formatAmount(conditionAmount, conditionMultiplier)
+            : conditionAmount) || amountOf(userStateParams.r);
         // {{suggested_amount}} is the target itself (multiplier x its recommended amount), so a task with a condition can show both
         const targetAmount = MissionUtils.targetAmountOf(task, amountOf(userStateParams.r));
         const currency = currencySymbol || userStateParams.core_wallet_currency || '';
