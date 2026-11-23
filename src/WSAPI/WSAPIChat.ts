@@ -152,7 +152,8 @@ export class WSAPIChat extends WSAPIInbox {
 	 * - Messages that could not be sent: `failed` holds the code. See {@link chatSendMessage}.
 	 *
 	 * **Paging**: the first answer holds up to 50 newest messages. `more_before: true` means older ones exist —
-	 * load them with {@link chatLoadOlder}. The SDK keeps the newest 300 messages of a room.
+	 * load them with {@link chatLoadOlder}. The SDK keeps the newest 300 messages of a room, and the pages loaded
+	 * with {@link chatLoadOlder} until the next new message.
 	 *
 	 * **After a lost connection** the SDK brings the room up to date by itself; `onUpdate` then fires with the
 	 * complete list, with no doubles and no gaps.
@@ -203,6 +204,9 @@ export class WSAPIChat extends WSAPIInbox {
 	 * the room with {@link chatOpenRoom} are removed; the room keeps its place in the list and its summary keeps
 	 * coming through {@link chatGetRooms}.
 	 *
+	 * A tab has one open room, so this closes it for every widget of the tab. A widget that shares the room with
+	 * another one and leaves on its own calls {@link chatUnsubscribe} with its `onUpdate` instead.
+	 *
 	 * @remarks
 	 * Call it when the user leaves the room view. The messages already loaded stay in the SDK, so opening the
 	 * room again is fast and only loads what is new.
@@ -230,8 +234,8 @@ export class WSAPIChat extends WSAPIInbox {
 	 * Call it when the user scrolls to the top of the room and `more_before` is `true`. Keep the scroll
 	 * position: the new messages are added before the first one on screen.
 	 *
-	 * The SDK keeps the newest 300 messages of a room. Older ones loaded with this method can be dropped again
-	 * when many new messages arrive; `more_before` is then `true` again and they can be loaded once more.
+	 * Pages loaded with this method stay until the next new message arrives in the room. The room is then cut
+	 * back to its newest 300 messages; `more_before` is `true` again and they can be loaded once more.
 	 *
 	 * **Errors**: `ROOM_NOT_FOUND` when the room is not open in this tab; `BANNED` when the player was banned
 	 * meanwhile; `NETWORK` when the service did not answer.

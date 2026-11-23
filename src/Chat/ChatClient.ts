@@ -12,6 +12,7 @@ import {
 	ChatReportReason,
 	ChatResult,
 	ChatRoom,
+	ChatRoomsResponse,
 	ChatRoomView,
 	ChatSendResult,
 	ChatSessionResponse,
@@ -72,7 +73,7 @@ interface Held {
 
 // Every number that makes the client wait, repeat or give up; each loop below is bounded by one of them.
 const PAGE = 50;
-/** Messages kept per room; older ones are dropped and paged in again on demand. */
+/** A new message cuts a room back to this many; the pages loaded with loadOlder stay until then. */
 const ROOM_MAX = 300;
 /** No `hello` in this time: the stream does not get through. */
 const HELLO_MS = 10000;
@@ -155,7 +156,11 @@ export class ChatClient {
 		private identity: () => ChatIdentity | null,
 		private log: { warn: Fn } = console,
 		private f: typeof fetch = (input, init) => fetch(input, init),
-	) {}
+	) {
+		// an open stream keeps the page out of the back/forward cache: it ends when the page is left, and a page
+		// restored from the cache connects again through the ordinary retry after a stream end
+		if (typeof window !== 'undefined' && window.addEventListener) window.addEventListener('pagehide', () => this.ac && this.ac.abort());
+	}
 
 	/**
 	 * The one place that says what happens after a stream ended. It reads only its arguments.
@@ -209,7 +214,7 @@ export class ChatClient {
 		if (!r && !this.err && !this.down) {
 			// Not in the list this tab holds: the room may be new (its `room` event is on the way), or it is not
 			// for this player. Only the service knows which, so it is asked instead of answering "not found".
-			const x = await this.call<{ rooms: ChatRoom[]; me?: ChatMe }>('GET', '/rooms');
+			const x = await this.call<ChatRoomsResponse>('GET', '/rooms');
 			if (!x.err_code) {
 				if (x.me) this.me = x.me;
 				await this.setRooms(x.rooms);
@@ -574,7 +579,7 @@ export class ChatClient {
 		this.setState('polling');
 		const gen = this.gen;
 		const rooms = this.once(async () => {
-			const x = await this.call<{ rooms: ChatRoom[]; me?: ChatMe }>('GET', '/rooms');
+			const x = await this.call<ChatRoomsResponse>('GET', '/rooms');
 			if (gen !== this.gen) return;
 			if (x.err_code === CHAT_DISABLED) return this.halt(x.err_code);
 			if (x.err_code) return this.release(x.err_code);
@@ -883,12 +888,14 @@ export class ChatClient {
 		this.emit(this.onRoom.get(id), this.view(id));
 	}
 
-	/** A callback is consumer code: an error in it must not break the chat. */
+	/** A callback is consumer code: an error in it must not break the chat. Each subscriber gets a copy of its own. */
 	private emit(to: Set<Fn> | undefined, ...args: any[]): void {
 		if (to) {
+			let i = 0;
 			to.forEach((fn) => {
 				try {
-					fn(...args);
+					// the last one gets the copy made for this update; the others one each, made before anyone can change it
+					fn(...(++i < to.size ? args.map(copy) : args));
 				} catch (e) {
 					this.log.warn('[smartico] chat callback failed', e);
 				}

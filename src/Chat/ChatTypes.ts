@@ -162,6 +162,12 @@ export interface ChatSessionResponse {
 	limits: ChatLimits;
 }
 
+/** Answer of `GET /rooms`. `me` is not in the hello-only design: a client that polls has no stream to hear its mute on. */
+export interface ChatRoomsResponse {
+	rooms: ChatRoom[];
+	me: ChatMe;
+}
+
 /** Connection state of the chat in this tab. */
 export type ChatConnectionState = 'idle' | 'connecting' | 'online' | 'retrying' | 'polling' | 'stopped';
 
