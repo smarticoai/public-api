@@ -193,6 +193,13 @@ the Play CTA when the timestamp passes.
 ## Performance
 
 - 30 s cache deduplicates rapid refetches.
+- The full list can be large (hundreds of games, megabytes). To show
+  one game (a deep link, a single game banner), ask only for it:
+  `getMiniGames({ saw_template_ids: [818] })`. It is always fetched
+  from the server, not cached, and takes no `onUpdate`. A game the
+  user can't see is missing from the result.
+- `onUpdate` makes the SDK reload the full list after every spin,
+  acknowledge and spins push. Subscribe only while the lobby is shown.
 - Diff snapshots in `onUpdate` to detect jackpot / spin-count
   changes for animations.
 - Lazy-load game-type renderers (each game type is a substantial

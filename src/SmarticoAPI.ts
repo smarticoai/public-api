@@ -635,11 +635,12 @@ class SmarticoAPI {
 		user_ext_id: string,
 		force_language?: string,
 		is_visitor_mode: boolean = false,
+		saw_template_ids?: number[],
 	): Promise<SAWGetTemplatesResponse> {
 		const message = this.buildMessage<SAWGetTemplatesRequest, SAWGetTemplatesResponse>(
 			user_ext_id,
 			ClassId.SAW_GET_SPINS_REQUEST,
-			{ is_visitor_mode },
+			{ is_visitor_mode, ...(saw_template_ids?.length ? { saw_template_ids } : {}) },
 		);
 
 		const response = await this.send<SAWGetTemplatesResponse>(message, ClassId.SAW_GET_SPINS_RESPONSE, force_language);
@@ -689,8 +690,10 @@ class SmarticoAPI {
 		return response;
 	}
 
-	public async sawGetTemplatesT(user_ext_id: string): Promise<TMiniGameTemplate[]> {
-		return SAWTemplatesTransform((await this.sawGetTemplates(user_ext_id)).templates ?? []);
+	public async sawGetTemplatesT(user_ext_id: string, saw_template_ids?: number[]): Promise<TMiniGameTemplate[]> {
+		const templates = (await this.sawGetTemplates(user_ext_id, undefined, false, saw_template_ids)).templates ?? [];
+		// a server without saw_template_ids support sends the full list
+		return SAWTemplatesTransform(saw_template_ids?.length ? templates.filter((t) => saw_template_ids.includes(t.saw_template_id)) : templates);
 	}
 
 	public async doAcknowledgeRequest(user_ext_id: string, request_id: string, lose?: boolean): Promise<SAWDoAknowledgeResponse> {

@@ -99,6 +99,13 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * {@link playMiniGame} for the visitor-stop semantics).
 	 *
 	 * @param params              Optional. Omit to fetch without subscribing.
+	 * @param params.saw_template_ids Optional. Return only these games (ids),
+	 *                            e.g. to show one game without loading the
+	 *                            whole list. The games pass the same visitor,
+	 *                            date, day and segment checks as the full list;
+	 *                            a game the user can't see is missing from the
+	 *                            result. Always fetched from the server (no
+	 *                            cache) and `onUpdate` is ignored.
 	 * @param params.onUpdate     Callback invoked with the full refreshed
 	 *                            template array after any spin-count
 	 *                            change, spin response, or acknowledge
@@ -127,11 +134,23 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 *     '— spins available:', g.spin_count ?? 0,
 	 *     '— jackpot:', g.jackpot_current, g.jackpot_symbol);
 	 * }
+	 *
+	 * // Only one game, e.g. for a deep link (much smaller than the full list).
+	 * const [game] = await window._smartico.api.getMiniGames({ saw_template_ids: [818] });
 	 * ```
 	 */
-	public async getMiniGames({ onUpdate }: { onUpdate?: (data: TMiniGameTemplate[]) => void } = {}): Promise<
-		TMiniGameTemplate[]
-	> {
+	public async getMiniGames({
+		onUpdate,
+		saw_template_ids,
+	}: { onUpdate?: (data: TMiniGameTemplate[]) => void; saw_template_ids?: number[] } = {}): Promise<TMiniGameTemplate[]> {
+		if (saw_template_ids !== undefined && saw_template_ids !== null) {
+			const ids = (Array.isArray(saw_template_ids) ? saw_template_ids : [saw_template_ids])
+				.map((id) => Number(id))
+				.filter((id, i, all) => Number.isInteger(id) && id > 0 && all.indexOf(id) === i);
+			// only these games: always asked from the server, not cached, no onUpdate subscription
+			return ids.length ? this.api.sawGetTemplatesT(this.userExtId, ids) : [];
+		}
+
 		if (typeof onUpdate === 'function') {
 			this.onUpdateCallback.set(onUpdateContextKey.Saw, onUpdate);
 		}
@@ -712,22 +731,33 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 		return o;
 	}
 
+	// The full list is big, so pushes reload it only for an `onUpdate` subscriber. Without one the cached copy
+	// is patched or dropped, and the next getMiniGames() call loads a fresh list.
+	private hasMiniGamesSubscriber(): boolean {
+		return typeof this.onUpdateCallback.get(onUpdateContextKey.Saw) === 'function';
+	}
+
 	protected async updateOnSpin(data: SAWSpinsCountPush) {
-		const templates: TMiniGameTemplate[] = await OCache.use(
-			onUpdateContextKey.Saw,
-			ECacheContext.WSAPI,
-			() => this.api.sawGetTemplatesT(this.userExtId),
-			CACHE_DATA_SEC,
-		);
-		const index = templates.findIndex((t) => t.id === data.saw_template_id);
-		if (index === -1) {
+		const cached: TMiniGameTemplate[] = OCache.get(onUpdateContextKey.Saw, ECacheContext.WSAPI);
+		const index = cached ? cached.findIndex((t) => t.id === data.saw_template_id) : -1;
+		if (index !== -1) {
+			cached[index].spin_count = data.spin_count;
+			this.updateEntity(onUpdateContextKey.Saw, cached);
 			return;
 		}
-		templates[index].spin_count = data.spin_count;
-		this.updateEntity(onUpdateContextKey.Saw, templates);
+		// no cached list, or a game the cached list doesn't hold (e.g. new spins for a hidden game)
+		if (this.hasMiniGamesSubscriber()) {
+			await this.reloadMiniGameTemplate();
+		} else {
+			OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Saw);
+		}
 	}
 
 	protected async reloadMiniGameTemplate() {
+		if (!this.hasMiniGamesSubscriber()) {
+			OCache.clear(ECacheContext.WSAPI, onUpdateContextKey.Saw);
+			return;
+		}
 		const updatedTemplates = await this.api.sawGetTemplatesT(this.userExtId);
 		this.updateEntity(onUpdateContextKey.Saw, updatedTemplates);
 	}

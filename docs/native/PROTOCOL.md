@@ -1456,7 +1456,39 @@ Get all available mini-games (spin wheels, scratch cards, etc.).
 
 **ClassId:** `700` (SAW_GET_SPINS_REQUEST)
 
-No method-specific fields. Send only the common fields (see [Common Message Fields](#common-message-fields)).
+All fields are optional. Without them the response holds every mini-game available to the user.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `is_visitor_mode` | `boolean` | Request the mini-games for visitors (not logged in) |
+| `saw_template_ids` | `number[]` | Return only these mini-games, after the same visitor, date, day and segment checks as the full list. Send valid integer ids only: when no id can be read, the full list is returned |
+| `only_visible` | `boolean` | Leave out the mini-games a lobby hides: `flow_builder_only` ones, and `visibile_when_can_spin` ones the user can't play (no spins left, or a points / gems / diamonds cost above the balance) |
+| `active_saw_template_id` | `number` | With `only_visible`: the mini-game the user has open. It is kept even when it can't be played any more (a `flow_builder_only` one is still left out) |
+
+`saw_template_ids` and `only_visible` can be combined: both apply. An empty `templates` list means the user can't see any of the asked mini-games.
+
+**Example** (lobby, with one mini-game open):
+
+```json
+{
+  "cid": 700,
+  "uuid": "abc-123",
+  "ts": 1699999999999,
+  "only_visible": true,
+  "active_saw_template_id": 123
+}
+```
+
+**Example** (one mini-game, e.g. opened by a deep link):
+
+```json
+{
+  "cid": 700,
+  "uuid": "abc-124",
+  "ts": 1699999999999,
+  "saw_template_ids": [123]
+}
+```
 
 #### Response
 
