@@ -164,6 +164,13 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * detect end of list when the returned array length is less than
 	 * `limit`.
 	 *
+	 * **Row content**
+	 * Each row carries `saw_game_type_id`, `saw_template_name`,
+	 * `saw_template_thumbnail` and the won `prize` (`null` for a
+	 * lost spin). The `template` field is deprecated and is not sent
+	 * by newer servers — look the full template up in
+	 * {@link getMiniGames} by `saw_template_id` when needed.
+	 *
 	 * **`is_claimed` semantics**
 	 * Maps directly to the server's "acknowledge_date is non-null"
 	 * state. A spin where the auto-acknowledge fire-and-forget

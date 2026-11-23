@@ -3,7 +3,8 @@
 ## Overview
 - Paginated, newest-first list of past spins. Each row carries the
   won prize ID, the spin's `client_request_id`, an `is_claimed`
-  flag, and the template that produced it.
+  flag, the game type, name and thumbnail of the template, and the
+  won prize itself (`prize`).
 - Use to power a "My prizes" / win-history surface, and to surface
   Claim CTAs on unacknowledged spins (`is_claimed === false`).
 - 30 s cache. No subscription / push refresh.
@@ -23,12 +24,17 @@ Fields rendered per row:
 
 | Field | Source | Notes |
 |---|---|---|
-| Template icon | `template.thumbnail` (or similar) | 1:1 |
-| Prize name | Look up `template.prizes[i]` by `saw_prize_id` | Display the prize's `name`. A spin finalised as lost (`miniGameWinAcknowledgeRequest` with `lose: true`) has no prize attached — render it as a loss. |
-| Prize amount | `template.prizes[i].prize_value` or `prize_amount`; for gems/diamonds prizes `prize_details_json.gems` / `.diamonds` (`prize_details_json._gems_diamonds_type`: `0` gems only, `1` diamonds only, `2` both), for raffle-ticket prizes `prize_details_json.tickets_count` | E.g. "100 points", "50 Diamonds". The history row carries the template as sent by the server, where `prize_value` of a gems/diamonds or raffle-ticket prize is only a default — `getMiniGames()` already resolves it into `prize_value` |
+| Template icon | `saw_template_thumbnail` | 1:1 |
+| Template name | `saw_template_name` | Translated |
+| Prize name | `prize.saw_prize_ui_definition.name` | `prize` is `null` for a spin finalised as lost (`miniGameWinAcknowledgeRequest` with `lose: true`) — render it as a loss. |
+| Prize amount | `prize.prize_value` or `prize_amount`; for gems/diamonds prizes `prize.prize_details_json.gems` / `.diamonds` (`prize_details_json._gems_diamonds_type`: `0` gems only, `1` diamonds only, `2` both), for raffle-ticket prizes `prize.prize_details_json.tickets_count` | E.g. "100 points", "50 Diamonds". `prize` is sent as the server stores it, where `prize_value` of a gems/diamonds or raffle-ticket prize is only a default — `getMiniGames()` already resolves it into `prize_value` |
 | Spin date | `create_date_ts` | Format as user-local relative time ("2h ago") or short date |
 | Claim status | `is_claimed` | Show check-mark when true; "Pending claim" CTA when false |
 | Acknowledge date | `acknowledge_date_ts` | Only when `is_claimed === true` |
+
+The `template` field is deprecated and is no longer sent by newer
+servers. Do not read it; use the fields above. For the full template
+(all prizes, rules), look it up in `getMiniGames()` by `saw_template_id`.
 
 **Click target**: typically opens the template detail / play view
 (to "play again" or read prize terms). Optional.

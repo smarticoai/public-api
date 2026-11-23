@@ -1,5 +1,5 @@
 import { BuyStoreItemErrorCode } from '../Store';
-import { AttemptPeriodType, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWExposeUserSpinIdName, SAWGameLayout, SAWGameLayoutName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI } from '../MiniGames';
+import { AttemptPeriodType, MiniGamePrizeTypeName, SAWAcknowledgeTypeName, SAWAskForUsername, SAWBuyInTypeName, SAWExposeUserSpinIdName, SAWGameLayout, SAWGameLayoutName, SAWGameTypeName, SAWSpinErrorCode, SAWTemplate, SAWTemplateUI, SAWGameType, SAWPrize } from '../MiniGames';
 import { TournamentRegistrationError, TournamentRegistrationStatusName, TournamentRegistrationTypeName } from '../Tournaments';
 import { AchievementAvailabilityStatus, BadgesTimeLimitStates } from '../Missions';
 import { LeaderBoardPeriodType } from '../Leaderboard';
@@ -1422,8 +1422,8 @@ export interface TClaimBonusResult {
 }
 
 export interface TSawHistory {
-	/** The initial information about mini-game */
-	template: SAWTemplate,
+	/** The initial information about mini-game. Sent only on protocol version 1; on version 2+ use saw_game_type_id, saw_template_name, saw_template_thumbnail and prize */
+	template?: SAWTemplate,
 	/** ID of the mini-game template */
 	saw_template_id: number,
 	/** The saw_prize_id that user won, details of the prize can be found in the mini-game definition */
@@ -1438,6 +1438,14 @@ export interface TSawHistory {
 	create_date_ts: number;
 	/** Claimed prize date in milliseconds */
 	acknowledge_date_ts: number;
+	/** Game type of the mini-game */
+	saw_game_type_id?: SAWGameType;
+	/** Translated name of the mini-game */
+	saw_template_name?: string;
+	/** Thumbnail image URL of the mini-game */
+	saw_template_thumbnail?: string;
+	/** The won prize, same shape as an item of template.prizes. Null when nothing was won */
+	prize?: SAWPrize | null;
 }
 
 export interface TRaffle {
