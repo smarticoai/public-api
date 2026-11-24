@@ -531,48 +531,81 @@ export class WSAPIChat extends WSAPIInbox {
 	}
 
 	/**
-	 * Reserved for private chats between two players. Not available yet: always answers `NOT_ENABLED`, without
-	 * a network call.
+	 * Opens the private chat with another player, creating it on first use. The private chat is a room of
+	 * `kind: 'dm'`: it appears in {@link chatGetRooms} for both players, carries the other player as `peer`,
+	 * and is read and written with {@link chatOpenRoom} and {@link chatSendMessage} like any room.
+	 *
+	 * @remarks
+	 * **Availability**: only on a site that has private chats (`features.dm` of {@link chatGetStatus});
+	 * elsewhere the method answers `NOT_ENABLED`.
+	 *
+	 * **Errors** (`err_code`):
+	 * - `NO_ACCESS`: this player cannot be reached. The answer is the same whatever the reason (the player does
+	 *   not take private chats, has blocked the current player, or is unknown), so show one neutral text.
+	 * - `RATE_LIMITED`: the current player started too many new private chats; `retry_after_ms` says when to try again.
+	 * - `NOT_ENABLED`, `CHAT_DISABLED`, `NOT_IDENTIFIED`: private chats or chat are not available.
 	 *
 	 * @param params     The other player.
-	 * @param params.uid Public id of the other player (`uid` of a message author).
+	 * @param params.uid Public id of the other player: `uid` of a message author or of a room member.
 	 *
-	 * @returns Promise resolving to `{ err_code: NOT_ENABLED, room: null }` (`CHAT_DISABLED` / `NOT_IDENTIFIED` when chat is not available at all).
+	 * @returns Promise resolving to `{ err_code, err_message, room, retry_after_ms? }`; `room` is `null` on an error.
+	 *
+	 * @example
+	 * ```ts
+	 * const r = await window._smartico.api.chatStartDirect({ uid: message.author.uid });
+	 * if (r.err_code === 0) console.log('[smartico] private chat with', r.room.peer.name, '— open room', r.room.room_id);
+	 * else console.log('[smartico] cannot start the private chat — show:', r.err_message);
+	 * ```
 	 */
 	public chatStartDirect(params: { uid: string }): Promise<ChatEnsureResult> {
-		return Promise.resolve({ err_code: this.chatReserved(), room: null });
+		return this.api.chat().startDirect(params.uid);
 	}
 
 	/**
-	 * Reserved for private chats: blocks or unblocks another player. Not available yet: always answers
-	 * `NOT_ENABLED`, without a network call.
+	 * Blocks or unblocks another player for private chats. While one of two players has blocked the other,
+	 * neither can write in their private chat, and the blocked player cannot start one. The blocked player is
+	 * not told: they get the same answer as for any player who cannot be reached.
+	 *
+	 * @remarks
+	 * The private chat with that player then carries `peer_blocked: true` for the current player; show
+	 * "Unblock" instead of the composer.
 	 *
 	 * @param params         The other player and the new state.
 	 * @param params.uid     Public id of the other player.
 	 * @param params.blocked `true` to block, `false` to unblock.
 	 *
-	 * @returns Promise resolving to `{ err_code: NOT_ENABLED }`.
+	 * @returns Promise resolving to `{ err_code, err_message }` (`NOT_ENABLED` on a site without private chats).
+	 *
+	 * @example
+	 * ```ts
+	 * const r = await window._smartico.api.chatBlockUser({ uid: room.peer.uid, blocked: true });
+	 * console.log('[smartico] block result:', r.err_code === 0 ? 'blocked — replace the composer with "Unblock"' : r.err_message);
+	 * ```
 	 */
 	public chatBlockUser(params: { uid: string; blocked: boolean }): Promise<ChatResult> {
-		return Promise.resolve({ err_code: this.chatReserved() });
+		return this.api.chat().block(params.uid, !!params.blocked);
 	}
 
 	/**
-	 * Reserved for private chats: lets the player switch incoming private chats on or off. Not available yet:
-	 * always answers `NOT_ENABLED`, without a network call.
+	 * Lets the player decide whether other players may start a private chat with them. Private chats the
+	 * player already has go on either way, and the player can still start one.
+	 *
+	 * @remarks
+	 * The current value is `me.dm_incoming` of {@link chatGetStatus}; its `onUpdate` runs when it changes.
 	 *
 	 * @param params         The new state.
-	 * @param params.enabled `true` to accept private chats.
+	 * @param params.enabled `true` to accept new private chats.
 	 *
-	 * @returns Promise resolving to `{ err_code: NOT_ENABLED }`.
+	 * @returns Promise resolving to `{ err_code, err_message }` (`NOT_ENABLED` on a site without private chats).
+	 *
+	 * @example
+	 * ```ts
+	 * await window._smartico.api.chatSetDirectIncoming({ enabled: false });
+	 * console.log('[smartico] new private chats are off — show the toggle as off');
+	 * ```
 	 */
 	public chatSetDirectIncoming(params: { enabled: boolean }): Promise<ChatResult> {
-		return Promise.resolve({ err_code: this.chatReserved() });
-	}
-
-	/** @hidden What a reserved method answers: the reason chat is not available, else NOT_ENABLED. */
-	private chatReserved(): ChatErrorCode {
-		return this.api.chat().gate() || ChatErrorCode.NOT_ENABLED;
+		return this.api.chat().setIncoming(!!params.enabled);
 	}
 
 	/** @hidden The player was identified again or logged out: the chat of another player must not stay. */

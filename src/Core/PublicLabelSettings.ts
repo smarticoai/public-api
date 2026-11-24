@@ -31,4 +31,12 @@ export enum PublicLabelSettings {
 
 	CHAT_ENABLED = 'CHAT_ENABLED',
 	CHAT_API_URL = 'CHAT_API_URL',
+	/** Vibe Studio bundle of the chat bubble; empty = no bubble. */
+	CHAT_BUBBLE_WIDGET_URL = 'CHAT_BUBBLE_WIDGET_URL',
+	/** Vibe Studio bundle of the chat window; required when chat is on. */
+	CHAT_WIDGET_URL = 'CHAT_WIDGET_URL',
+	/** Comma list of address parts; on a matching page there is no bubble and the chat does not open. */
+	CHAT_DISABLE_ON_URLS = 'CHAT_DISABLE_ON_URLS',
+	/** JSON: where the bubble sits per device and how the desktop window looks. */
+	CHAT_LAYOUT = 'CHAT_LAYOUT',
 }

@@ -313,7 +313,7 @@ export class ChatClient {
 	public async ensure(t: ChatTarget): Promise<ChatEnsureResult> {
 		const g = this.gate();
 		if (g) return no(g, { room: null });
-		if ('dm' in t) return no(NOT_ENABLED, { room: null });
+		if ('dm' in t) return this.startDirect(t.dm);
 		if ('room_id' in t) {
 			await this.live();
 			const r = this.rooms.get(t.room_id);
@@ -337,6 +337,51 @@ export class ChatClient {
 			`/rooms/${id}/members?offset=${offset || 0}&limit=${limit || PAGE}${onlineOnly ? '&online=1' : ''}`,
 		);
 		return { ...x, members: x.members || [], more: !!x.more };
+	}
+
+	/** The gate and the session, then the label's switch: `0` when a private chat call can be made. */
+	private async direct(): Promise<E> {
+		return (await this.ready()) || (this.features && this.features.dm ? OK : NOT_ENABLED);
+	}
+
+	public async startDirect(uid: string): Promise<ChatEnsureResult> {
+		const g = await this.direct();
+		if (g) return no(g, { room: null });
+		const x = await this.call<{ room: ChatRoom }>('POST', '/dm/start', { uid });
+		if (!x.err_code) {
+			this.rooms.set(x.room.room_id, x.room);
+			this.emitRooms();
+		}
+		return { ...x, room: copy(x.room) || null };
+	}
+
+	public async block(uid: string, blocked: boolean): Promise<ChatResult> {
+		const g = await this.direct();
+		if (g) return no(g, {});
+		const x = await this.call('POST', '/users/block', { uid, blocked });
+		if (!x.err_code) {
+			// the stream brings the room again; a client that polls is shown the new state at once
+			let changed = false;
+			this.rooms.forEach((r) => {
+				if (r.kind === 'dm' && r.peer && r.peer.uid === uid && r.peer_blocked !== blocked) {
+					r.peer_blocked = blocked;
+					changed = true;
+				}
+			});
+			if (changed) this.emitRooms();
+		}
+		return x;
+	}
+
+	public async setIncoming(enabled: boolean): Promise<ChatResult> {
+		const g = await this.direct();
+		if (g) return no(g, {});
+		const x = await this.call('POST', '/me/settings', { dm_incoming: enabled });
+		if (!x.err_code && this.me) {
+			this.me = { ...this.me, dm_incoming: enabled };
+			this.emitStatus();
+		}
+		return x;
 	}
 
 	public async report(roomId: number, messageId: number, reason: ChatReportReason, comment?: string): Promise<ChatResult> {

@@ -54,8 +54,10 @@ export interface ChatRoom {
 	room_key?: string;
 	/** The tournament, clan or raffle an automatic room belongs to. */
 	source?: { type: 'tournament' | 'clan' | 'raffle'; id: number };
-	/** The other player of a private chat (reserved). */
+	/** The other player of a private chat (`kind: 'dm'`). The room's `name` is that player's name. */
 	peer?: ChatUser;
+	/** A private chat: the current player has blocked the other one (see `chatBlockUser`). */
+	peer_blocked?: boolean;
 	my_role: ChatRole;
 	/** The moderator's text for a read-only or banned player, or null. */
 	my_note: string | null;
@@ -81,6 +83,11 @@ export interface ChatMe extends ChatUser {
 	muted_till: number | null;
 	/** The moderator's text for the mute, or null. */
 	mute_note: string | null;
+	/**
+	 * Other players may start a private chat with this player. Absent on a site without private chats.
+	 * Private chats the player already has go on either way.
+	 */
+	dm_incoming?: boolean;
 }
 
 /** A player in a room's member list. */
