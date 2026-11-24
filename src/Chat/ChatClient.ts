@@ -1,5 +1,6 @@
 import { IntUtils } from '../IntUtils';
 import { ChatErrorCode as E } from './ChatErrorCode';
+import { ChatHistory } from './ChatHistory';
 import {
 	ChatConnectionState,
 	ChatEnsureResult,
@@ -151,11 +152,15 @@ export class ChatClient {
 	private declare up: Promise<void>;
 	private declare upDone: () => void;
 	private reads = new Map<number, { want: number; at: number; t?: any }>();
+	/** The newest message this browser keeps of each private chat: the service sends none with the room. */
+	private tips = new Map<number, ChatMessage>();
 
 	constructor(
 		private identity: () => ChatIdentity | null,
 		private log: { warn: Fn } = console,
 		private f: typeof fetch = (input, init) => fetch(input, init),
+		/** Private chats: the service keeps none of their messages, this browser does. */
+		private kept = new ChatHistory(),
 	) {
 		// an open stream keeps the page out of the back/forward cache: it ends when the page is left, and a page
 		// restored from the cache connects again through the ordinary retry after a stream end
@@ -251,7 +256,9 @@ export class ChatClient {
 		const h = this.held.get(id);
 		if (!h) return no(this.gate() || ROOM_NOT_FOUND, { more_before: false });
 		if (!h.m.length || !h.more) return no(OK, { more_before: false });
-		const x = await this.call<Page>('GET', `/rooms/${id}/messages?before=${h.m[0].id}&limit=${limit || PAGE}`);
+		const x = this.isDm(id)
+			? no(OK, await this.kept.page(this.owner(), id, h.m[0].id, limit || PAGE))
+			: await this.call<Page>('GET', `/rooms/${id}/messages?before=${h.m[0].id}&limit=${limit || PAGE}`);
 		if (!x.err_code && this.held.get(id) === h) {
 			this.merge(h, x.messages, true);
 			h.more = x.more;
@@ -281,6 +288,7 @@ export class ChatClient {
 			this.emitRoom(id);
 		}
 		const x = await this.call<{ message: ChatMessage }>('POST', `/rooms/${id}/messages`, { text, client_msg_id: p.client_msg_id });
+		if (!x.err_code && x.message && this.isDm(id)) await this.keep([x.message]);
 		if (h) {
 			h.p = h.p.filter((m) => m !== p);
 			if (x.err_code) h.p.push({ ...p, pending: false, failed: x.err_code });
@@ -349,7 +357,7 @@ export class ChatClient {
 		if (g) return no(g, { room: null });
 		const x = await this.call<{ room: ChatRoom }>('POST', '/dm/start', { uid });
 		if (!x.err_code) {
-			this.rooms.set(x.room.room_id, x.room);
+			this.rooms.set(x.room.room_id, await this.local(x.room));
 			this.emitRooms();
 		}
 		return { ...x, room: copy(x.room) || null };
@@ -422,6 +430,7 @@ export class ChatClient {
 			this.rooms.clear();
 			this.held.clear();
 			this.reads.clear();
+			this.tips.clear();
 			this.emitRooms();
 		}
 		if (!this.gate() && this.state === 'idle' && this.onRooms.size + this.onEvt.size) this.go(this.live());
@@ -737,7 +746,7 @@ export class ChatClient {
 				if (this.focus !== null) this.sendFocus();
 				break;
 			case 'room':
-				this.rooms.set(d.room_id, d);
+				this.rooms.set(d.room_id, await this.local(d));
 				await this.sync(d);
 				this.emitRooms();
 				this.emitRoom(d.room_id);
@@ -745,12 +754,16 @@ export class ChatClient {
 			case 'room_gone':
 				this.gone(d.room_id);
 				break;
-			case 'msg':
+			case 'msg': {
+				// a message of a room this tab does not know yet can only be of a private chat that has just started
+				const r = this.rooms.get(d.room_id);
+				if (r ? r.kind === 'dm' : d.room_id !== this.focus) await this.keep([d]);
 				if (h) {
 					this.merge(h, [d]);
 					this.emitRoom(d.room_id);
 				}
 				break;
+			}
 			case 'msg_update': {
 				const i = h ? h.m.findIndex((m) => m.id === d.id) : -1;
 				if (h && i >= 0) {
@@ -776,6 +789,7 @@ export class ChatClient {
 	/** The resync rule: the list is replaced, held rooms catch up by ids, rooms that left the list are dropped. */
 	private async setRooms(list: ChatRoom[]): Promise<void> {
 		this.down = OK;
+		list = await Promise.all(list.map((r) => this.local(r)));
 		this.rooms = new Map(list.map((r) => [r.room_id, r]));
 		for (const id of Array.from(this.held.keys())) {
 			const r = this.rooms.get(id);
@@ -797,7 +811,8 @@ export class ChatClient {
 		if (!h || (!now && r.room_id !== this.focus)) return;
 		if (r.my_role === 'banned') {
 			this.held.set(r.room_id, { m: [], p: [], more: false, rev: r.rev, online: [], hidden: true });
-		} else if (h.hidden || h.rev !== r.rev) {
+		} else if (h.hidden || h.rev !== r.rev || (now && r.kind === 'dm')) {
+			// a private chat is read from this browser again: another tab may have kept messages meanwhile
 			await this.load(r);
 		} else if (r.last_message && r.last_message.id > last(h)) {
 			await this.after(r.room_id);
@@ -811,7 +826,10 @@ export class ChatClient {
 		// find the room empty and catch up from its first message
 		const h: Held = { m: [], p: old ? old.p : [], more: false, rev: r.rev, online: old ? old.online : [], paging: true };
 		this.held.set(r.room_id, h);
-		const x = await this.call<Page>('GET', `/rooms/${r.room_id}/messages?limit=${PAGE}`);
+		const x =
+			r.kind === 'dm'
+				? no(OK, await this.kept.page(this.owner(), r.room_id, undefined, PAGE))
+				: await this.call<Page>('GET', `/rooms/${r.room_id}/messages?limit=${PAGE}`);
 		h.paging = false;
 		// events that came meanwhile are already in `h`; merge keeps both
 		if (this.held.get(r.room_id) !== h) return OK;
@@ -832,7 +850,8 @@ export class ChatClient {
 	 */
 	private async after(id: number): Promise<void> {
 		const h = this.held.get(id);
-		if (!h || h.hidden || h.paging) return;
+		// a private chat has nothing to ask the service for: its messages come as events only
+		if (!h || h.hidden || h.paging || this.isDm(id)) return;
 		h.paging = true;
 		let ok = true;
 		let more = true;
@@ -865,6 +884,39 @@ export class ChatClient {
 			h.m.splice(0, h.m.length - ROOM_MAX);
 			h.more = true;
 		}
+	}
+
+	private isDm(id: number): boolean {
+		const r = this.rooms.get(id);
+		return !!r && r.kind === 'dm';
+	}
+
+	/** Whose messages this browser keeps: the public id of the player, so two players of one browser stay apart. */
+	private owner(): string {
+		return this.me ? this.me.uid : '';
+	}
+
+	/** Private messages are kept as they come: the service does not have them later. */
+	private async keep(list: ChatMessage[]): Promise<void> {
+		await this.kept.put(this.owner(), list);
+		for (const m of list) {
+			const tip = this.tips.get(m.room_id);
+			if (!tip || tip.id <= m.id) this.tips.set(m.room_id, m);
+			const r = this.rooms.get(m.room_id);
+			if (r) r.last_message = this.tips.get(m.room_id)!;
+		}
+		this.emitRooms();
+	}
+
+	/** A private chat gets its newest message from this browser; any other room stays as the service sent it. */
+	private async local(r: ChatRoom): Promise<ChatRoom> {
+		if (r.kind !== 'dm') return r;
+		if (!this.tips.has(r.room_id)) {
+			const x = await this.kept.page(this.owner(), r.room_id, undefined, 1);
+			if (x.messages.length && !this.tips.has(r.room_id)) this.tips.set(r.room_id, x.messages[0]);
+		}
+		r.last_message = this.tips.get(r.room_id) || null;
+		return r;
 	}
 
 	/** The room closed or the player lost it: its subscribers hear it once and are dropped. */

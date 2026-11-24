@@ -539,6 +539,12 @@ export class WSAPIChat extends WSAPIInbox {
 	 * **Availability**: only on a site that has private chats (`features.dm` of {@link chatGetStatus});
 	 * elsewhere the method answers `NOT_ENABLED`.
 	 *
+	 * **Where the messages are**: the chat service keeps no private message. It passes one on only while the
+	 * other player has the chat open, and both browsers keep what they sent and received (IndexedDB of the site).
+	 * So {@link chatSendMessage} to a player who is not online answers `NO_ACCESS`, the history of a private chat
+	 * is the history of this browser (another device, or cleared site data, starts empty), and
+	 * {@link chatReportMessage} answers `NOT_ENABLED` for a private chat.
+	 *
 	 * **Errors** (`err_code`):
 	 * - `NO_ACCESS`: this player cannot be reached. The answer is the same whatever the reason (the player does
 	 *   not take private chats, has blocked the current player, or is unknown), so show one neutral text.
