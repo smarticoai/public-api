@@ -1422,7 +1422,7 @@ export interface TClaimBonusResult {
 }
 
 export interface TSawHistory {
-	/** The initial information about mini-game. Sent only on protocol version 1; on version 2+ use saw_game_type_id, saw_template_name, saw_template_thumbnail and prize */
+	/** Full template of the game on protocol version 1. On version 2+ only the game id, type, name, thumbnail and the won prize (as the only item of prizes); use saw_game_type_id, saw_template_name, saw_template_thumbnail, prize, and getMiniGames() for the full prize list */
 	template?: SAWTemplate,
 	/** ID of the mini-game template */
 	saw_template_id: number,

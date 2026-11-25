@@ -31,8 +31,17 @@ export interface SAWPrizesHistory {
 
 export const SAWHistoryTransform = (items: SAWPrizesHistory[]): TSawHistory[] => {
 	return items.map((r) => {
+		const prize = r.prize !== undefined ? r.prize : r.template?.prizes?.find((p) => p.saw_prize_id === r.saw_prize_id) ?? null;
 		const x: TSawHistory = {
-			template: r.template,
+			// v2+ sends no template: keep a small one from the flat fields (won prize only, no prizesMap) so code written for v1 still finds names
+			template:
+				r.template ??
+				({
+					saw_template_id: r.saw_template_id,
+					saw_game_type_id: r.saw_game_type_id,
+					saw_template_ui_definition: { name: r.saw_template_name, thumbnail: r.saw_template_thumbnail },
+					prizes: prize ? [prize] : [],
+				} as unknown as SAWTemplate),
 			saw_template_id: r.saw_template_id,
 			saw_prize_id: r.saw_prize_id,
 			prize_amount: r.prize_amount,
@@ -43,7 +52,7 @@ export const SAWHistoryTransform = (items: SAWPrizesHistory[]): TSawHistory[] =>
 			saw_game_type_id: r.saw_game_type_id ?? r.template?.saw_game_type_id,
 			saw_template_name: r.saw_template_name ?? r.template?.saw_template_ui_definition?.name,
 			saw_template_thumbnail: r.saw_template_thumbnail ?? r.template?.saw_template_ui_definition?.thumbnail,
-			prize: r.prize !== undefined ? r.prize : r.template?.prizes?.find((p) => p.saw_prize_id === r.saw_prize_id) ?? null,
+			prize,
 		}
 		return x;
 	})

@@ -187,9 +187,10 @@ export class WSAPIMiniGames extends WSAPIRaffles {
 	 * Each row carries `saw_game_type_id`, `saw_template_name`,
 	 * `saw_template_thumbnail` and the won `prize`. A lost spin carries
 	 * the game's "no prize" item (`prize.prize_type_id` is
-	 * `SAWPrizeType.NO_PRIZE`). The `template` field is deprecated and is not sent
-	 * by newer servers — look the full template up in
-	 * {@link getMiniGames} by `saw_template_id` when needed.
+	 * `SAWPrizeType.NO_PRIZE`). On newer servers `template` holds only the
+	 * game's id, type, name, thumbnail and the won prize, not the full prize
+	 * list — look the full template up in {@link getMiniGames} by
+	 * `saw_template_id` when needed.
 	 *
 	 * **`is_claimed` semantics**
 	 * Maps directly to the server's "acknowledge_date is non-null"
