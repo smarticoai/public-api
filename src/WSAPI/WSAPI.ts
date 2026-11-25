@@ -60,7 +60,7 @@ export class WSAPI extends WSAPIChat {
 			on(ClassId.CLIENT_ENGAGEMENT_EVENT_NEW, () => this.updateInboxMessages());
 			on(ClassId.LOGOUT_RESPONSE, () => {
 				OCache.clearContext(ECacheContext.WSAPI);
-				this.chatReset();
+				this.chatReset(true);
 			});
 			on(ClassId.IDENTIFY_RESPONSE, () => {
 				OCache.clearContext(ECacheContext.WSAPI);

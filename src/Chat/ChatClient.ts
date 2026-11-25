@@ -421,10 +421,13 @@ export class ChatClient {
 	 * The player was identified again or logged out: nothing of another player stays. Subscribers stay
 	 * registered. When chat can work now, the room list and event subscribers get data at once, also those
 	 * that came while it could not (no settings or no player yet).
+	 * `loggedOut`: the player logged out. The private messages this browser keeps go then, and when another player
+	 * takes over, so the next person at the browser cannot read them. The same player identified again keeps them.
 	 */
-	public reset(): void {
+	public reset(loggedOut = false): void {
 		const id = this.identity();
-		if (this.who && !(id && id.user_ext_id === this.who)) {
+		const left = !!this.who && !(id && id.user_ext_id === this.who);
+		if (left) {
 			this.shut();
 			this.token = this.who = this.me = null;
 			this.rooms.clear();
@@ -433,6 +436,8 @@ export class ChatClient {
 			this.tips.clear();
 			this.emitRooms();
 		}
+		// also after a logout on a page that never opened chat: messages kept by an earlier page are still there
+		if (left || loggedOut) this.kept.clear();
 		if (!this.gate() && this.state === 'idle' && this.onRooms.size + this.onEvt.size) this.go(this.live());
 	}
 
@@ -898,6 +903,8 @@ export class ChatClient {
 
 	/** Private messages are kept as they come: the service does not have them later. */
 	private async keep(list: ChatMessage[]): Promise<void> {
+		// a message that arrives after the player left (reset) belongs to nobody here
+		if (!this.me) return;
 		await this.kept.put(this.owner(), list);
 		for (const m of list) {
 			const tip = this.tips.get(m.room_id);

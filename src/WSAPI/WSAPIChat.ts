@@ -542,7 +542,7 @@ export class WSAPIChat extends WSAPIInbox {
 	 * **Where the messages are**: the chat service keeps no private message. It passes one on only while the
 	 * other player has the chat open, and both browsers keep what they sent and received (IndexedDB of the site).
 	 * So {@link chatSendMessage} to a player who is not online answers `NO_ACCESS`, the history of a private chat
-	 * is the history of this browser (another device, or cleared site data, starts empty), and
+	 * is the history of this browser (another device, cleared site data, or a logout starts empty), and
 	 * {@link chatReportMessage} answers `NOT_ENABLED` for a private chat.
 	 *
 	 * **Errors** (`err_code`):
@@ -614,8 +614,8 @@ export class WSAPIChat extends WSAPIInbox {
 		return this.api.chat().setIncoming(!!params.enabled);
 	}
 
-	/** @hidden The player was identified again or logged out: the chat of another player must not stay. */
-	protected chatReset(): void {
-		this.api.chat().reset();
+	/** @hidden The player was identified again or logged out (`loggedOut`): the chat of another player must not stay. */
+	protected chatReset(loggedOut = false): void {
+		this.api.chat().reset(loggedOut);
 	}
 }

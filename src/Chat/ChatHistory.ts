@@ -8,7 +8,8 @@ const STORE = 'dm';
 /**
  * The private chats of one browser. The chat service keeps no private message: it only passes one on to the
  * players who are connected, so what a player sent and received is kept here, in the IndexedDB of the page's
- * site. Another browser, or this one after its site data was cleared, starts empty.
+ * site. Another browser, or this one after its site data was cleared, starts empty. So does this browser after a
+ * logout or another player's login: the messages of whoever used it before are not left for the next person.
  * Where IndexedDB cannot be used (a private window, an old WebView) the messages live as long as the page.
  * No method throws.
  *
@@ -78,6 +79,26 @@ export class ChatHistory {
 			found = (before ? all.filter((m) => m.id < before) : all).slice(-(limit + 1)).reverse();
 		}
 		return { messages: found.slice(0, limit).reverse(), more: found.length > limit };
+	}
+
+	/**
+	 * Forgets every private message this browser keeps, of every player: the player logged out or another one logged
+	 * in. Not only the leaving player's: who that was is not known when chat was never opened on this page.
+	 */
+	public async clear(): Promise<void> {
+		this.mem.clear();
+		const db = await this.open();
+		if (db) {
+			await new Promise<void>((done) => {
+				try {
+					const tx = db.transaction(STORE, 'readwrite');
+					tx.objectStore(STORE).clear();
+					tx.oncomplete = tx.onerror = tx.onabort = () => done();
+				} catch (e) {
+					done();
+				}
+			});
+		}
 	}
 
 	/** Null when this browser has no IndexedDB to use; asked once. */
