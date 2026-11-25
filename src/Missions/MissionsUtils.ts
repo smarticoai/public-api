@@ -20,6 +20,9 @@ const USER_STATE_PARAMS_KEYS_BET_AMOUNT: UserStateParamsKeys[] = [
     'core_recommended_casino_bet_amount',
     'core_recommended_sport_bet_amount',
 ];
+// the property of a Prop to Prop target, read under 'r' only: Java also sends a condition's own properties at the top
+// level, where the last deposit is the compared amount, not the suggested one
+const USER_STATE_PARAMS_KEYS_TARGET: string[] = [...USER_STATE_PARAMS_KEYS_BET_AMOUNT, 'acc_last_deposit_amount'];
 
 const MINOR_WORDS = new Set([
     'of', 'at', 'in', 'on', 'to', 'up', 'as', 'by', 'for',
@@ -264,15 +267,16 @@ export class MissionUtils {
         }
 
         // a condition's amount first, then the Prop to Prop target's, which Java nests under 'r'
-        const amountOf = (src: { [key: string]: any }) => src && src[USER_STATE_PARAMS_KEYS_BET_AMOUNT.find((k) => src[k])];
+        const amountOf = (src: { [key: string]: any }, keys: string[] = USER_STATE_PARAMS_KEYS_BET_AMOUNT) => src && src[keys.find((k) => src[k])];
         const conditionAmount = amountOf(userStateParams);
+        const targetBase = amountOf(userStateParams.r, USER_STATE_PARAMS_KEYS_TARGET);
         // the condition compares with multiplier x the recommended amount, and Java sends the amount without it
         const conditionMultiplier = Number(task.task_public_meta?.condition_multiplier);
         const amount = (conditionAmount && conditionMultiplier > 0 && !isNaN(Number(conditionAmount))
             ? MissionUtils.formatAmount(conditionAmount, conditionMultiplier)
-            : conditionAmount) || amountOf(userStateParams.r);
-        // {{suggested_amount}} is the target itself (multiplier x its recommended amount), so a task with a condition can show both
-        const targetAmount = MissionUtils.targetAmountOf(task, amountOf(userStateParams.r));
+            : conditionAmount) || targetBase;
+        // {{suggested_amount}} is the target itself (multiplier x its property's amount), so a task with a condition can show both
+        const targetAmount = MissionUtils.targetAmountOf(task, targetBase);
         const currency = currencySymbol || userStateParams.core_wallet_currency || '';
 
         if (amount) {
