@@ -11,6 +11,7 @@ This document describes the low-level protocol for communicating with Smartico b
 - [Connection Lifecycle](#connection-lifecycle)
   - [Ping / Pong](#ping--pong)
   - [Init](#init)
+    - [Protocol version](#protocol-version)
   - [Identify](#identify)
   - [Login](#login)
   - [Logout](#logout)
@@ -183,6 +184,7 @@ First message after WebSocket connection is established. Identifies the label (o
 | `label_key` | `string` | Public API key for the label |
 | `brand_key` | `string` | Brand key (optional, `null` if not used) |
 | `device_id` | `string` | Unique device identifier (persisted across sessions) |
+| `pv` | `number` | Protocol version for this connection (optional, recommended: `2`). Without it the server uses version 1 — see [Protocol version](#protocol-version) |
 
 **Example:**
 
@@ -191,7 +193,8 @@ First message after WebSocket connection is established. Identifies the label (o
   "cid": 3,
   "label_key": "your_label_api_key",
   "brand_key": null,
-  "device_id": "550e8400-e29b-41d4-a716-446655440000"
+  "device_id": "550e8400-e29b-41d4-a716-446655440000",
+  "pv": 2
 }
 ```
 
@@ -206,6 +209,7 @@ First message after WebSocket connection is established. Identifies the label (o
 | `settings` | `object` | Label settings (key-value map) |
 | `products` | `number[]` | Enabled product types for this label |
 | `label_id` | `number` | Internal label ID |
+| `payload.pv` | `number` | Protocol version the server agreed to. Missing = version 1 |
 
 **Example:**
 
@@ -222,6 +226,19 @@ First message after WebSocket connection is established. Identifies the label (o
 ```
 
 > **Important:** Wait for a successful `INIT_RESPONSE` (errCode: 0) before sending `IDENTIFY`.
+
+### Protocol version
+
+Send `"pv": 2` in `INIT` to get smaller mini-game replies. The server answers the version it agreed to in `payload.pv`; when it is missing, the connection stays on version 1 (today's shapes, unchanged).
+
+What version 2 changes:
+
+| ClassId | Version 2 |
+|---------|-----------|
+| `701` SAW_GET_SPINS_RESPONSE | Templates have no `prizesMap` (read prizes from `prizes`) and no server-only fields |
+| `717` GET_SAW_HISTORY_RESPONSE | Rows have no `template`; they carry `saw_game_type_id`, `saw_template_name`, `saw_template_thumbnail` and the won `prize` instead. Max 50 rows per page |
+
+A single request can send its own `pv` (e.g. `"pv": 1`) to get the version 1 shape for that request only.
 
 ---
 
@@ -1496,7 +1513,7 @@ All fields are optional. Without them the response holds every mini-game availab
 
 | Field | Type | Description |
 |-------|------|-------------|
-| `templates` | [`SAWTemplate[]`](../api/interfaces/SAWTemplate.md) | Array of mini-game templates |
+| `templates` | [`SAWTemplate[]`](../api/interfaces/SAWTemplate.md) | Array of mini-game templates. Protocol version 2: no `prizesMap`, use `prizes` |
 
 Note: per-prize stock statistics (`pool`, `wins_count`, `weekdays`, `active_from_ts` / `active_till_ts`) are present on each template's `prizes` only when the template's `expose_game_stat_on_api` is enabled; otherwise the server strips them (`pool` is kept for MatchX / Quiz / Bingo game types).
 
@@ -1651,6 +1668,17 @@ Get mini-game play history.
 |-------|------|-------------|
 | `prizes` | [`SAWPrizesHistory[]`](../api/interfaces/SAWPrizesHistory.md) | Array of history items |
 | `hasMore` | `boolean` | Whether more items are available for pagination |
+
+Protocol version 2: rows have no `template`. Each row carries:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `saw_game_type_id` | `number` | Game type |
+| `saw_template_name` | `string` | Game name in the user's language |
+| `saw_template_thumbnail` | `string` | Game thumbnail URL (`null` when none) |
+| `prize` | `SAWPrize` | The won prize, same shape as an item of the template's `prizes`. A lost spin carries the game's "no prize" item (`prize_type_id` = 1) |
+
+For the full prize list, use `getMiniGames` and match by `saw_template_id`. Pages are capped at 50 rows.
 
 ---
 
