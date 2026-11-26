@@ -38,7 +38,7 @@ Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage
 - `round_status_id` (GPRoundStatus) — Current lifecycle status of the round
 - `events_total` (number) — Total number of events in the round
 - `events_resolved` (number) — Number of events that have been resolved
-- `score_type_id` (GamePickScoreType) — Scoring method used for this round
+- `score_type_id` (GamePickScoreType) — What players predict in this round and how it is scored: exact score or difference in goals (MatchX only)
 - `order_events` (GameRoundOrderType) — How events are ordered for display
 - `board_users_count` (number) — Maximum number of users shown on the leaderboard
 - `hide_users_predictions` (boolean) — Whether other users' predictions are hidden until resolution
@@ -112,8 +112,8 @@ Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage
 		};
 	}) — Per-language overrides for team names, event name, and custom question
   - `user_placed_bet` (boolean) — Whether the current user has submitted a prediction for this event
-  - `team1_user_selection` (number | { from: number; to: number }) — User's predicted score for team 1 (MatchX only). Can be a number or a range object
-  - `team2_user_selection` (number | { from: number; to: number }) — User's predicted score for team 2 (MatchX only). Can be a number or a range object
+  - `team1_user_selection` (number | { from: number; to: number }) — User's prediction for team 1 (MatchX only). A number (the predicted score) in an ExactScore round; in a PointsDifference round a `{ from, to }` margin band when team 1 is the predicted winner, `0` otherwise. See `GamePickScoreType`.
+  - `team2_user_selection` (number | { from: number; to: number }) — User's prediction for team 2 (MatchX only). Same format as `team1_user_selection`, for team 2.
   - `user_selection` (QuizAnswersValueType) — User's selected answer (Quiz only). Value depends on market type (e.g. '1', '2', 'x', 'yes', 'no')
   - `resolution_type_id` (GamePickResolutionType) — How the user's prediction was scored after resolution
   - `resolution_score` (number) — Points awarded for this event based on prediction accuracy

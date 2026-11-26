@@ -263,7 +263,8 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	/**
 	 * Submits all score predictions for a round in a MatchX game in one shot.
 	 * Each event in the round must carry `team1_user_selection` and
-	 * `team2_user_selection` (the predicted scores).
+	 * `team2_user_selection`: the predicted score, or the predicted winner and
+	 * margin band, depending on the round's `score_type_id`.
 	 *
 	 * On the user's FIRST submit for a round, the server charges one buy-in (one
 	 * "spin" / one currency deduction based on the template's `saw_buyin_type_id`).
@@ -277,6 +278,29 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *   either is missing.
 	 * - Each event passed must include `gp_event_id` and the two
 	 *   `team{1,2}_user_selection` fields. Missing events default to "no change".
+	 *
+	 * **Selection format** — read `round.score_type_id` ({@link GamePickScoreType})
+	 * before building the input; the two round types take different values:
+	 * - `ExactScore` (1): two numbers, the predicted final score (`2`, `1`).
+	 * - `PointsDifference` (2, "Difference in goals"): the predicted winner and
+	 *   margin. The winner's selection is a `{ from, to }` band, the other
+	 *   team's is `0`. Home wins by 11–14 → `team1_user_selection: { from: 11, to: 14 }`,
+	 *   `team2_user_selection: 0`. There is no separate draw pick. Offer exactly
+	 *   these bands: the server stores any band, but the default Smartico UI
+	 *   shows only these, so a pick made with another band cannot be shown there:
+	 *   - cricket (`event_meta.sport_type_id` 21): `0–1`, `2–7`, `8–200`;
+	 *   - every other sport: `1–3`, `4–6`, `7–8`, `9–10`, `11–14`, `15–18`,
+	 *     `19–21`, `22–25`, `26–29`, `30–40`, `40–99`.
+	 *
+	 *   A saved pick comes back in the same shape: read the `{ from, to }` side
+	 *   as the winner; never treat the band as a score.
+	 *
+	 * **Scoring** ({@link GamePickResolutionType}, after the round is resolved):
+	 * - `ExactScore`: `FullWin` for the exact score, `PartialWin` for the right
+	 *   outcome (winner or draw) with a different score, `Lost` otherwise.
+	 * - `PointsDifference`: `FullWin` when the final margin is inside the picked
+	 *   band, `PartialWin` for the right winner with the margin outside the band,
+	 *   `Lost` otherwise.
 	 *
 	 * **Error codes** (in `errCode`)
 	 * - `0` — success; the response `data` is the updated round with
@@ -360,6 +384,38 @@ export class WSAPIGamePick extends WSAPIAvatars {
 	 *         break;
 	 *     default:
 	 *         console.error('[smartico] submit failed — show generic error toast:', r.errMessage);
+	 * }
+	 * ```
+	 *
+	 * @example
+	 * ```ts
+	 * // A "Difference in goals" round (score_type_id 2): the away team wins by 4–6.
+	 * const ar = await window._smartico.api.gamePickGetActiveRound({
+	 *     saw_template_id: 1190,
+	 *     round_id:        38665,
+	 * });
+	 * if (ar.errCode !== 0 || !ar.data) {
+	 *     console.error('[smartico] could not fetch round to submit — show error and bounce back');
+	 *     return;
+	 * }
+	 * if (ar.data.score_type_id !== 2) {
+	 *     console.log('[smartico] exact-score round — show two score pickers instead of margin bands');
+	 *     return;
+	 * }
+	 *
+	 * const r = await window._smartico.api.gamePickSubmitSelection({
+	 *     saw_template_id: 1190,
+	 *     round: {
+	 *         round_id: 38665,
+	 *         events: [{
+	 *             gp_event_id:          ar.data.events[0].gp_event_id,
+	 *             team1_user_selection: 0,
+	 *             team2_user_selection: { from: 4, to: 6 },
+	 *         }],
+	 *     },
+	 * });
+	 * if (r.errCode === 0) {
+	 *     console.log('[smartico] margin pick saved — show "Away wins by 4–6" on the match');
 	 * }
 	 * ```
 	 */

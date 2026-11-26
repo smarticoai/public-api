@@ -38,7 +38,7 @@ Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage
 - `round_status_id` (GPRoundStatus) — Current lifecycle status of the round
 - `events_total` (number) — Total number of events in the round
 - `events_resolved` (number) — Number of events that have been resolved
-- `score_type_id` (GamePickScoreType) — Scoring method used for this round
+- `score_type_id` (GamePickScoreType) — What players predict in this round and how it is scored: exact score or difference in goals (MatchX only)
 - `order_events` (GameRoundOrderType) — How events are ordered for display
 - `board_users_count` (number) — Maximum number of users shown on the leaderboard
 - `hide_users_predictions` (boolean) — Whether other users' predictions are hidden until resolution

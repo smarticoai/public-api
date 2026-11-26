@@ -38,7 +38,7 @@ Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage
 - `round_status_id` (GPRoundStatus) — Current lifecycle status of the round
 - `events_total` (number) — Total number of events in the round
 - `events_resolved` (number) — Number of events that have been resolved
-- `score_type_id` (GamePickScoreType) — Scoring method used for this round
+- `score_type_id` (GamePickScoreType) — What players predict in this round and how it is scored: exact score or difference in goals (MatchX only)
 - `order_events` (GameRoundOrderType) — How events are ordered for display
 - `board_users_count` (number) — Maximum number of users shown on the leaderboard
 - `hide_users_predictions` (boolean) — Whether other users' predictions are hidden until resolution
@@ -112,8 +112,8 @@ Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage
 		};
 	}) — Per-language overrides for team names, event name, and custom question
   - `user_placed_bet` (boolean) — Whether the current user has submitted a prediction for this event
-  - `team1_user_selection` (number | { from: number; to: number }) — User's predicted score for team 1 (MatchX only). Can be a number or a range object
-  - `team2_user_selection` (number | { from: number; to: number }) — User's predicted score for team 2 (MatchX only). Can be a number or a range object
+  - `team1_user_selection` (number | { from: number; to: number }) — User's prediction for team 1 (MatchX only). A number (the predicted score) in an ExactScore round; in a PointsDifference round a `{ from, to }` margin band when team 1 is the predicted winner, `0` otherwise. See `GamePickScoreType`.
+  - `team2_user_selection` (number | { from: number; to: number }) — User's prediction for team 2 (MatchX only). Same format as `team1_user_selection`, for team 2.
   - `user_selection` (QuizAnswersValueType) — User's selected answer (Quiz only). Value depends on market type (e.g. '1', '2', 'x', 'yes', 'no')
   - `resolution_type_id` (GamePickResolutionType) — How the user's prediction was scored after resolution
   - `resolution_score` (number) — Points awarded for this event based on prediction accuracy
@@ -132,6 +132,29 @@ Wrapped in `GamesApiResponse`: `errCode` (number — `0` = success), `errMessage
  either is missing.
 - Each event passed must include `gp_event_id` and the two
  `team{1,2}_user_selection` fields. Missing events default to "no change".
+
+**Selection format** — read `round.score_type_id` (`GamePickScoreType`)
+before building the input; the two round types take different values:
+- `ExactScore` (1): two numbers, the predicted final score (`2`, `1`).
+- `PointsDifference` (2, "Difference in goals"): the predicted winner and
+ margin. The winner's selection is a `{ from, to }` band, the other
+ team's is `0`. Home wins by 11–14 → `team1_user_selection: { from: 11, to: 14 }`,
+ `team2_user_selection: 0`. There is no separate draw pick. Offer exactly
+ these bands: the server stores any band, but the default Smartico UI
+ shows only these, so a pick made with another band cannot be shown there:
+ - cricket (`event_meta.sport_type_id` 21): `0–1`, `2–7`, `8–200`;
+ - every other sport: `1–3`, `4–6`, `7–8`, `9–10`, `11–14`, `15–18`,
+ `19–21`, `22–25`, `26–29`, `30–40`, `40–99`.
+
+ A saved pick comes back in the same shape: read the `{ from, to }` side
+ as the winner; never treat the band as a score.
+
+**Scoring** (`GamePickResolutionType`, after the round is resolved):
+- `ExactScore`: `FullWin` for the exact score, `PartialWin` for the right
+ outcome (winner or draw) with a different score, `Lost` otherwise.
+- `PointsDifference`: `FullWin` when the final margin is inside the picked
+ band, `PartialWin` for the right winner with the margin outside the band,
+ `Lost` otherwise.
 
 
 
@@ -194,6 +217,37 @@ switch (r.errCode) {
 }
 ```
 
+```ts
+// A "Difference in goals" round (score_type_id 2): the away team wins by 4–6.
+const ar = await window._smartico.api.gamePickGetActiveRound({
+    saw_template_id: 1190,
+    round_id:        38665,
+});
+if (ar.errCode !== 0 || !ar.data) {
+    console.error('[smartico] could not fetch round to submit — show error and bounce back');
+    return;
+}
+if (ar.data.score_type_id !== 2) {
+    console.log('[smartico] exact-score round — show two score pickers instead of margin bands');
+    return;
+}
+
+const r = await window._smartico.api.gamePickSubmitSelection({
+    saw_template_id: 1190,
+    round: {
+        round_id: 38665,
+        events: [{
+            gp_event_id:          ar.data.events[0].gp_event_id,
+            team1_user_selection: 0,
+            team2_user_selection: { from: 4, to: 6 },
+        }],
+    },
+});
+if (r.errCode === 0) {
+    console.log('[smartico] margin pick saved — show "Away wins by 4–6" on the match');
+}
+```
+
 ## Errors
 **Error codes** (in `errCode`)
 - `0` — success; the response `data` is the updated round with
@@ -217,6 +271,8 @@ submit:
 - `40012` — insufficient diamonds.
 
 ## Related
+- `GamePickScoreType`
+- `GamePickResolutionType`
 - `SAWSpinErrorCode`
 - `GPRoundStatus`
 - `GamesApiResponse`

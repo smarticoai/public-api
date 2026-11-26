@@ -72,7 +72,13 @@ deducted — good luck!"). The user's balance updates via
 
 ## Selection format
 
-Each event must include:
+The round's `score_type_id`
+([`GamePickScoreType`](../../api/enumerations/GamePickScoreType.md)) decides
+both the input and the values. Read it before rendering the round.
+
+### Exact score (`score_type_id` 1)
+
+Two score pickers. Each event must include:
 
 ```ts
 {
@@ -81,6 +87,39 @@ Each event must include:
   team2_user_selection: number,  // predicted score for team 2
 }
 ```
+
+### Difference in goals (`score_type_id` 2)
+
+No score pickers. The player picks the winner and the winning margin from a
+fixed list of bands. The winner's selection is a `{ from, to }` band, the other
+team's is `0`:
+
+```ts
+// home wins by 11–14
+{ gp_event_id, team1_user_selection: { from: 11, to: 14 }, team2_user_selection: 0 }
+// away wins by 1–3
+{ gp_event_id, team1_user_selection: 0, team2_user_selection: { from: 1, to: 3 } }
+```
+
+Offer exactly these bands, the same as the default Smartico UI:
+
+| Sport (`event_meta.sport_type_id`) | Bands, closest margin first |
+|---|---|
+| Cricket (21) | `0–1`, `2–7`, `8–200` |
+| Every other sport | `1–3`, `4–6`, `7–8`, `9–10`, `11–14`, `15–18`, `19–21`, `22–25`, `26–29`, `30–40`, `40–99` |
+
+The default Smartico UI shows one picker across the match: from "home wins by
+40–99" through the closest home bands, a middle "no pick" stop, then the away
+bands up to "away wins by 40–99". The middle stop cannot be submitted, so there
+is no separate draw pick. Label the pick "Home wins by 11–14", never as a score.
+
+A saved pick comes back in the same shape: the side holding `{ from, to }` is
+the predicted winner. Do not flatten the band to a number — an exact-score
+input would then show `11 : 0` and overwrite the pick on the next submit.
+
+Scoring after resolution: `FullWin` when the final margin is inside the band,
+`PartialWin` for the right winner with the margin outside the band, `Lost`
+otherwise.
 
 Events not included in the submit are treated as "no change".
 

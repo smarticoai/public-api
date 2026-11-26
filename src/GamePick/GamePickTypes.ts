@@ -43,12 +43,17 @@ export enum GPRoundStatus {
 }
 
 /**
- * GamePickScoreType defines how scores are calculated for predictions
+ * GamePickScoreType defines what a MatchX player predicts in a round (`GamePickRound.score_type_id`) and how the
+ * prediction is scored. It decides the prediction input and the format of `team1_user_selection` / `team2_user_selection`.
  */
 export enum GamePickScoreType {
-	/** Score based on exact match of predicted result */
+	/** The player predicts the exact final score: both selections are numbers (2 : 1 → `2` and `1`). */
 	ExactScore = 1,
-	/** Score based on closeness (difference) of predicted result */
+	/**
+	 * "Difference in goals": the player predicts the winner and the margin, picked from a fixed list of bands,
+	 * not a score. The winner's selection is a `{ from, to }` band and the other team's is `0` (home wins by 4–6 →
+	 * `{ from: 4, to: 6 }` and `0`). The bands are listed in `gamePickSubmitSelection`.
+	 */
 	PointsDifference = 2,
 }
 
@@ -221,9 +226,13 @@ export interface GamePickEvent {
 	event_meta: GamePickEventMeta;
 	/** Whether the current user has submitted a prediction for this event */
 	user_placed_bet: boolean;
-	/** User's predicted score for team 1 (MatchX only). Can be a number or a range object */
+	/**
+	 * User's prediction for team 1 (MatchX only). A number (the predicted score) in an ExactScore round; in a
+	 * PointsDifference round a `{ from, to }` margin band when team 1 is the predicted winner, `0` otherwise.
+	 * See {@link GamePickScoreType}.
+	 */
 	team1_user_selection?: number | { from: number; to: number };
-	/** User's predicted score for team 2 (MatchX only). Can be a number or a range object */
+	/** User's prediction for team 2 (MatchX only). Same format as `team1_user_selection`, for team 2. */
 	team2_user_selection?: number | { from: number; to: number };
 	/** User's selected answer (Quiz only). Value depends on market type (e.g. '1', '2', 'x', 'yes', 'no') */
 	user_selection?: QuizAnswersValueType;
@@ -331,7 +340,7 @@ export interface GamePickRoundBase {
 	events_total: number;
 	/** Number of events that have been resolved */
 	events_resolved: number;
-	/** Scoring method used for this round */
+	/** What players predict in this round and how it is scored: exact score or difference in goals (MatchX only) */
 	score_type_id: GamePickScoreType;
 	/** How events are ordered for display */
 	order_events: GameRoundOrderType;

@@ -27,7 +27,7 @@ Each event row carries:
 | Match date | `match_date` | "Sat 25 May · 16:00" |
 | Sport | `event_meta.sport` | Small chip |
 | Odds | `odds_details` | Optional display |
-| User selection input | based on `market_type_id` | Score pickers (MatchX) / radio (Quiz) |
+| User selection input | based on `market_type_id`, and the round's `score_type_id` for MatchX | Score pickers or margin bands (MatchX) / radio (Quiz) |
 | Resolution badge | `resolution_type_id` (`GamePickResolutionType`) | Only after resolution |
 | `is_open_for_bets` | boolean | Disable input when false |
 
@@ -35,7 +35,8 @@ Each event row carries:
 
 | Market | Input type |
 |---|---|
-| MatchX Goals / Winner | Two numeric pickers (team1 score / team2 score) |
+| MatchX, `score_type_id` 1 (exact score) | Two numeric pickers (team1 score / team2 score) |
+| MatchX, `score_type_id` 2 (difference in goals) | One winner + margin band picker, see [Selection format](UIGuide_gamePickSubmitSelection.md#selection-format) |
 | Quiz 1×2 | Three buttons (1 / X / 2) |
 | Quiz Yes / No | Two buttons (Yes / No) |
 | Quiz custom | Operator-defined buttons |
