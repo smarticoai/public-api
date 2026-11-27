@@ -162,6 +162,13 @@ import { GamePickGameInfo, GamePickRound, GamePickRoundBoard, GamePickUserInfo, 
 
 const PUBLIC_API_URL = 'https://papi{ENV_ID}.smartico.ai/services/public';
 const C_SOCKET_PROD = 'wss://api{ENV_ID}.smartico.ai/websocket/services';
+/** The Social Chat server of the env, as the other env hosts: no label setting holds it. */
+const CHAT_API_URL = 'https://chat-api{ENV_ID}.smartico.ai';
+/**
+ * Envs where Social Chat may run while it is in development (the BO's beta env, as server isBetaMode): on any other env
+ * every chat method answers CHAT_DISABLED, whatever CHAT_ENABLED says. Remove with the release of the chat.
+ */
+const CHAT_BETA_ENV_IDS = [8];
 const GAMES_API_URL = 'https://r-games-api.smr.vc';
 const AVATAR_DOMAIN = 'https://img{ENV_ID}.smr.vc';
 const DEFAULT_LANG_EN = 'EN';
@@ -1736,8 +1743,14 @@ class SmarticoAPI {
 				() =>
 					t
 						? {
-								api_url: t.getLabelSetting(PublicLabelSettings.CHAT_API_URL),
-								enabled: String(t.getLabelSetting(PublicLabelSettings.CHAT_ENABLED)) === 'true',
+								// the env's chat host; a value only where a local dev build of the tracker stands in for it
+								// (window._smartico_chat_dev), so a local chat server can be tested
+								api_url:
+									t.getLabelSetting(PublicLabelSettings.CHAT_API_URL) ||
+									CHAT_API_URL.replace('{ENV_ID}', SmarticoAPI.getEnvDnsSuffix(this.label_api_key)),
+								enabled:
+									CHAT_BETA_ENV_IDS.indexOf(SmarticoAPI.getEnvId(this.label_api_key)) !== -1 &&
+									String(t.getLabelSetting(PublicLabelSettings.CHAT_ENABLED)) === 'true',
 								label_key: this.label_api_key,
 								brand_key: this.brand_api_key || t.params?.brand_key,
 								user_ext_id: t.getExtUserId(),

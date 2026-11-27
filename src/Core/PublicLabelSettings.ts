@@ -30,6 +30,7 @@ export enum PublicLabelSettings {
 	INBOX_PUBLIC_CDN = 'INBOX_PUBLIC_CDN',
 
 	CHAT_ENABLED = 'CHAT_ENABLED',
+	/** No label setting row: the SDK builds the env's chat host. Set only by a local dev build (window._smartico_chat_dev). */
 	CHAT_API_URL = 'CHAT_API_URL',
 	/** Vibe Studio bundle of the chat bubble; empty = no bubble. */
 	CHAT_BUBBLE_WIDGET_URL = 'CHAT_BUBBLE_WIDGET_URL',

@@ -23,9 +23,9 @@ import {
 
 /** What the chat needs to know about the page and the player. Read again for every session. */
 export interface ChatIdentity {
-	/** `CHAT_API_URL` of the label. */
+	/** The env's chat host (`https://chat-api{env}.smartico.ai`), or a local dev override. */
 	api_url: string;
-	/** `CHAT_ENABLED` of the label. */
+	/** `CHAT_ENABLED` of the label, and only on an env where the chat runs while in development (SmarticoAPI). */
 	enabled: boolean;
 	label_key: string;
 	brand_key?: string | null;
